@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitcherSharp", "TwitcherSharp\TwitcherSharp.csproj", "{F970618D-5CD7-41F2-A590-28970E9AF910}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F970618D-5CD7-41F2-A590-28970E9AF910}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F970618D-5CD7-41F2-A590-28970E9AF910}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F970618D-5CD7-41F2-A590-28970E9AF910}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F970618D-5CD7-41F2-A590-28970E9AF910}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
