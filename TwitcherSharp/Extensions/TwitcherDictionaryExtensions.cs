@@ -53,8 +53,5 @@ public static class TwitcherDictionaryExtensions
 			}
 		}
 	}
-
-	
-
 	
 }

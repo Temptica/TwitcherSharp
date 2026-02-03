@@ -1,0 +1,48 @@
+using TwitcherSharp.Interfaces;
+using TwitcherSharp.Generated.Generic;
+using Godot;
+   
+namespace TwitcherSharp.Generated.Analytics;
+ 
+/// <summary> 
+/// All optional parameters for TwitchAPI.GetGameAnalytics 
+/// </summary>
+public partial class GetGameAnalyticsOpt : Resource, ITwitcherSharp<GetGameAnalyticsOpt>
+{
+    private GodotObject _data;
+	public string GameId { get; set; }
+	public string Type { get; set; }
+	public string StartedAt { get; set; }
+	public string EndedAt { get; set; }
+	public int First { get; set; }
+	public string After { get; set; }
+    /// <summary> 
+    /// Transforms the godot data into a GetGameAnalyticsOpt object.
+    /// </summary> 
+    public static GetGameAnalyticsOpt FromObject(GodotObject data)
+    {
+        return new GetGameAnalyticsOpt
+        {
+
+			GameId = data.Get("game_id").AsString(),
+			Type = data.Get("type").AsString(),
+			StartedAt = data.Get("started_at").AsString(),
+			EndedAt = data.Get("ended_at").AsString(),
+			First = data.Get("first").AsInt32(),
+			After = data.Get("after").AsString(),
+		};
+	}
+
+	public GodotObject ToGodotObject()
+	{
+		var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_game_analytics_opt.gd");
+		var request = script.Call("new").AsGodotObject();
+		request.Set("game_id", GameId);
+		request.Set("type", Type);
+		request.Set("started_at", StartedAt);
+		request.Set("ended_at", EndedAt);
+		request.Set("first", First);
+		request.Set("after", After);
+		return request;
+	}
+}

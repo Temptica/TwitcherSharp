@@ -20,7 +20,7 @@ public partial class TwitchReward : Resource, ITwitcherSharp<TwitchReward>
     /// <summary>
     /// Owner of this reward
     /// </summary>
-    public TwitchUser BroadcasterUser { get; set; }
+    // public TwitchUser BroadcasterUser { get; set; }
 
     /// <summary>
     /// The title of the reward.
@@ -99,7 +99,7 @@ public partial class TwitchReward : Resource, ITwitcherSharp<TwitchReward>
         return new TwitchReward
         {
             Id = data.Get("id").AsString(),
-            BroadcasterUser = new TwitchUser(data.Get("broadcaster_user").AsGodotObject()),
+            // BroadcasterUser = new TwitchUser(data.Get("broadcaster_user").AsGodotObject()),
             Title = data.Get("title").AsString(),
             Description = data.Get("description").AsString(),
             Cost = data.Get("cost").AsInt32(),
@@ -121,5 +121,20 @@ public partial class TwitchReward : Resource, ITwitcherSharp<TwitchReward>
             RedemptionsRedeemedCurrentStream = data.Get("redemptions_redeemed_current_stream").AsInt32(),
             CooldownExpiresAt = data.Get("cooldown_expires_at").AsString(),
         };
+    }
+
+    public GodotObject ToGodotObject()
+    {
+        throw new NotImplementedException();
+    }
+
+    public GodotObject ToObject()
+    {
+        var path = GD.Load<GodotObject>("res://addons/twitcher/reward/twitch_reward.gd");
+        
+        path.Set("id", Id);
+        // path.Set("broadcaster_user_id", BroadcasterUser.);
+        
+        return path;
     }
 }

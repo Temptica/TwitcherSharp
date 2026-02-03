@@ -1,0 +1,45 @@
+using TwitcherSharp.Interfaces;
+using TwitcherSharp.Generated.Generic;
+using Godot;
+   
+namespace TwitcherSharp.Generated.Generic;
+ 
+/// <summary> 
+///  
+/// </summary>
+public partial class ExtensionLiveChannel : Resource, ITwitcherSharp<ExtensionLiveChannel>
+{
+    private GodotObject _data;
+	public string BroadcasterId { get; set; }
+	public string BroadcasterName { get; set; }
+	public string GameName { get; set; }
+	public string GameId { get; set; }
+	public string Title { get; set; }
+    /// <summary> 
+    /// Transforms the godot data into a ExtensionLiveChannel object.
+    /// </summary> 
+    public static ExtensionLiveChannel FromObject(GodotObject data)
+    {
+        return new ExtensionLiveChannel
+        {
+
+			BroadcasterId = data.Get("broadcaster_id").AsString(),
+			BroadcasterName = data.Get("broadcaster_name").AsString(),
+			GameName = data.Get("game_name").AsString(),
+			GameId = data.Get("game_id").AsString(),
+			Title = data.Get("title").AsString(),
+		};
+	}
+
+	public GodotObject ToGodotObject()
+	{
+		var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_extension_live_channel.gd");
+		var request = script.Call("new").AsGodotObject();
+		request.Set("broadcaster_id", BroadcasterId);
+		request.Set("broadcaster_name", BroadcasterName);
+		request.Set("game_name", GameName);
+		request.Set("game_id", GameId);
+		request.Set("title", Title);
+		return request;
+	}
+}

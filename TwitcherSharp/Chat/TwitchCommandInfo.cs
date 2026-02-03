@@ -69,4 +69,9 @@ public partial class TwitchCommandInfo : Resource, ITwitcherSharp<TwitchCommandI
 
 		return info;
 	}
+
+	public GodotObject ToGodotObject()
+	{
+		throw new NotImplementedException();
+	}
 }

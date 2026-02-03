@@ -17,7 +17,7 @@ public partial class TwitchChatMessage : Resource, ITwitcherSharp<TwitchChatMess
     public string MessageId { get; set; }
     public Message Content { get; set; }
     public MessageType ChatMessageType { get; set; }
-    public Array<Badge> Badges { get; set; } = new();
+    public Array<Badge> Badges { get; set; } = [];
     public Cheer CheerMetadata { get; set; }
     public string Color { get; set; }
     public Reply ReplyMetadata { get; set; }
@@ -26,7 +26,7 @@ public partial class TwitchChatMessage : Resource, ITwitcherSharp<TwitchChatMess
     public string SourceBroadcasterUserName { get; set; }
     public string SourceBroadcasterUserLogin { get; set; }
     public string SourceMessageId { get; set; }
-    public Array<Badge> SourceBadges { get; set; } = new();
+    public Array<Badge> SourceBadges { get; set; } = [];
 
     public static TwitchChatMessage FromObject(GodotObject data)
     {
@@ -66,6 +66,11 @@ public partial class TwitchChatMessage : Resource, ITwitcherSharp<TwitchChatMess
         return result;
     }
 
+    public GodotObject ToGodotObject()
+    {
+        throw new NotImplementedException();
+    }
+
     public string GetColor(string defaultColor = "#AAAAAA")
         => string.IsNullOrEmpty(Color) ? defaultColor : Color;
 }
@@ -73,7 +78,7 @@ public partial class TwitchChatMessage : Resource, ITwitcherSharp<TwitchChatMess
 public partial class Message : Resource, ITwitcherSharp<Message>
 {
     public string Text { get; set; }
-    public Array<Fragment> Fragments { get; set; } = new();
+    public Array<Fragment> Fragments { get; set; } = [];
 
     public static Message FromObject(GodotObject data)
     {
@@ -91,6 +96,11 @@ public partial class Message : Resource, ITwitcherSharp<Message>
         }
 
         return result;
+    }
+
+    public GodotObject ToGodotObject()
+    {
+        throw new NotImplementedException();
     }
 }
 
@@ -113,6 +123,11 @@ public partial class Fragment : Resource, ITwitcherSharp<Fragment>
         result.Mention = Mention.FromObject(data.Get("mention").AsGodotObject());
         return result;
     }
+
+    public GodotObject ToGodotObject()
+    {
+        throw new NotImplementedException();
+    }
 }
 
 public partial class Mention : Resource, ITwitcherSharp<Mention>
@@ -131,6 +146,11 @@ public partial class Mention : Resource, ITwitcherSharp<Mention>
             UserLogin = data.Get("user_login").AsString()
         };
     }
+
+    public GodotObject ToGodotObject()
+    {
+        throw new NotImplementedException();
+    }
 }
 
 public partial class Cheermote : Resource, ITwitcherSharp<Cheermote>
@@ -148,6 +168,11 @@ public partial class Cheermote : Resource, ITwitcherSharp<Cheermote>
             Bits = data.Get("bits").AsInt32(),
             Tier = data.Get("tier").AsInt32()
         };
+    }
+
+    public GodotObject ToGodotObject()
+    {
+        throw new NotImplementedException();
     }
 }
 
@@ -180,6 +205,11 @@ public partial class Emote : Resource, ITwitcherSharp<Emote>
 
         return result;
     }
+
+    public GodotObject ToGodotObject()
+    {
+        throw new NotImplementedException();
+    }
 }
 
 public partial class Badge : Resource, ITwitcherSharp<Badge>
@@ -198,6 +228,11 @@ public partial class Badge : Resource, ITwitcherSharp<Badge>
             Info = data.Get("info").AsString()
         };
     }
+
+    public GodotObject ToGodotObject()
+    {
+        throw new NotImplementedException();
+    }
 }
 
 public partial class Cheer : Resource, ITwitcherSharp<Cheer>
@@ -206,6 +241,11 @@ public partial class Cheer : Resource, ITwitcherSharp<Cheer>
 
     public static Cheer FromObject(GodotObject data) =>
         data == null ? null : new Cheer { Bits = data.Get("bits").AsInt32() };
+
+    public GodotObject ToGodotObject()
+    {
+        throw new NotImplementedException();
+    }
 }
 
 public partial class Reply : Resource, ITwitcherSharp<Reply>
@@ -235,6 +275,11 @@ public partial class Reply : Resource, ITwitcherSharp<Reply>
             ThreadUserName = data.Get("thread_user_name").AsString(),
             ThreadUserLogin = data.Get("thread_user_login").AsString()
         };
+    }
+
+    public GodotObject ToGodotObject()
+    {
+        throw new NotImplementedException();
     }
 }
 

@@ -1,0 +1,48 @@
+using TwitcherSharp.Interfaces;
+using TwitcherSharp.Generated.Generic;
+using Godot;
+   
+namespace TwitcherSharp.Generated.Generic;
+ 
+/// <summary> 
+///  
+/// </summary>
+public partial class CharityCampaignDonation : Resource, ITwitcherSharp<CharityCampaignDonation>
+{
+    private GodotObject _data;
+	public string Id { get; set; }
+	public string CampaignId { get; set; }
+	public string UserId { get; set; }
+	public string UserLogin { get; set; }
+	public string UserName { get; set; }
+	public Amount Amount { get; set; }
+    /// <summary> 
+    /// Transforms the godot data into a CharityCampaignDonation object.
+    /// </summary> 
+    public static CharityCampaignDonation FromObject(GodotObject data)
+    {
+        return new CharityCampaignDonation
+        {
+
+			Id = data.Get("id").AsString(),
+			CampaignId = data.Get("campaign_id").AsString(),
+			UserId = data.Get("user_id").AsString(),
+			UserLogin = data.Get("user_login").AsString(),
+			UserName = data.Get("user_name").AsString(),
+			Amount = data.Get("amount").As<Amount>(),
+		};
+	}
+
+	public GodotObject ToGodotObject()
+	{
+		var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_charity_campaign_donation.gd");
+		var request = script.Call("new").AsGodotObject();
+		request.Set("id", Id);
+		request.Set("campaign_id", CampaignId);
+		request.Set("user_id", UserId);
+		request.Set("user_login", UserLogin);
+		request.Set("user_name", UserName);
+		request.Set("amount", Amount);
+		return request;
+	}
+}

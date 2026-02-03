@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>disable</Nullable>
+        <RootNamespace>ClassGenerator</RootNamespace>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <None Update="openapi.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="GodotSharp">
+        <HintPath>..\..\..\.nuget\packages\godotsharp\4.5.1\lib\net8.0\GodotSharp.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.OpenApi.Readers" Version="1.6.28" />
+    </ItemGroup>
+</Project>

@@ -1,9 +1,4 @@
 using Godot;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 // ReSharper disable ClassNeverInstantiated.Global
@@ -35,8 +30,8 @@ public partial class TwitchRedemption : Resource, ITwitcherSharp<TwitchRedemptio
     // Fields/Properties
     public string Id { get; set; }
     public TwitchReward Reward { get; set; }
-    public TwitchUser Broadcaster { get; set; }
-    public TwitchUser User { get; set; }
+    // public TwitchUser Broadcaster { get; set; }
+    // public TwitchUser User { get; set; }
     public string UserInput { get; set; } = string.Empty;
     public Status CurrentStatus { get; set; } = Status.Unfulfilled;
     public string RedeemedAt { get; set; }
@@ -86,13 +81,18 @@ public partial class TwitchRedemption : Resource, ITwitcherSharp<TwitchRedemptio
             _data = data,
             Id = data.Get("id").AsString(),
             Reward = TwitchReward.FromObject(data.Get("reward").AsGodotObject()),
-            Broadcaster =  new TwitchUser(data.Get("broadcaster").AsGodotObject()),
-            User = new TwitchUser(data.Get("user").AsGodotObject()),
+            // Broadcaster =  new TwitchUser(data.Get("broadcaster").AsGodotObject()),
+            // User = new TwitchUser(data.Get("user").AsGodotObject()),
             UserInput = data.Get("user_input").AsString(),
             CurrentStatus = data.Get("current_status").As<Status>(),
             RedeemedAt = data.Get("redeemed_at").AsString(),
         };
         redemption.ConnectToSignals();
         return redemption;
+    }
+
+    public GodotObject ToGodotObject()
+    {
+        throw new NotImplementedException();
     }
 }

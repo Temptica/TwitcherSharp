@@ -25,7 +25,7 @@ public static class CallableExtension
         /// Example usage:
         /// <code>
         /// var redeem = GetNode&lt;GodotObject&gt;("RedeemListener");
-        /// redeem.ConnectRedeem(FromTwitcherSharp&lt;RedeemType&gt;(data => MethodToExecute(data)));
+        /// redeem.ConnectRedeemed(FromTwitcherSharp&lt;RedeemType&gt;(data => MethodToExecute(data)));
         /// </code>
         /// </summary>
         /// <param name="action"></param>

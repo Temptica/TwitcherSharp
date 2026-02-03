@@ -92,4 +92,9 @@ public partial class TwitchCommand : Resource, ITwitcherSharp<TwitchCommand>
         command.ConnectToSignals();
         return command;
     }
+
+    public GodotObject ToGodotObject()
+    {
+        throw new NotImplementedException();
+    }
 }

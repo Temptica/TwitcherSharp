@@ -1,6 +1,7 @@
 using Godot;
 using Godot.Collections;
 using TwitcherSharp.Chat;
+using TwitcherSharp.Interfaces;
 using TwitcherSharp.Reward;
 
 namespace TwitcherSharp.Extensions;
@@ -20,11 +21,11 @@ public static class GodotObjectExtension
         /// Example usage:
         /// <code>
         /// var redeem = GetNode("RedeemListener");
-        /// redeem.ConnectRedeem(MethodToExecute);
+        /// redeem.ConnectRedeemed(MethodToExecute);
         /// </code>
         /// <param name="action">The action that should be executed when the redeem signal has been emitted</param>
         /// </summary>
-        public void ConnectRedeem(Action<TwitchRedemption> action)
+        public void ConnectRedeemed(Action<TwitchRedemption> action)
         {
             obj.Connect(GodotObject.RedeemedSignal, Callable.FromTwitcherSharp(action));
         }
@@ -35,11 +36,11 @@ public static class GodotObjectExtension
         /// Example usage:
         /// <code>
         /// var redeem = GetNode("RedeemListener");
-        /// redeem.ConnectRedeem(MethodToExecute);
+        /// redeem.ConnectRedeemed(MethodToExecute);
         /// </code>
         /// <param name="action">The action that should be executed when the redeem signal has been emitted</param>
         /// </summary>
-        public void ConnectRedeem(Action action)
+        public void ConnectRedeemed(Action action)
         {
             obj.Connect(GodotObject.RedeemedSignal, Callable.From<GodotObject>(_ => action.Invoke()));
         }
@@ -68,12 +69,19 @@ public static class GodotObjectExtension
         // float cooldownRemainingInS
         public void ConnectCooldown(Action<string, TwitchCommandInfo, string[], float> action)
         {
-            obj.Connect(GodotObject.ReceivedInvalidCommand, Callable.FromTwitcherSharp(action));
+            obj.Connect(GodotObject.Cooldown, Callable.FromTwitcherSharp(action));
         }
 
         public void ConnectCooldown(Action action)
         {
-            obj.Connect(GodotObject.ReceivedInvalidCommand, Callable.From<string, GodotObject, string[], float>((_,_,_,_) => action.Invoke()));
+            obj.Connect(GodotObject.Cooldown, Callable.From<string, GodotObject, string[], float>((_,_,_,_) => action.Invoke()));
+        }
+
+        public async Task<T> CallAsync<T>(string methode, params Variant[] args) where T : ITwitcherSharp<T>
+        {
+            var task = obj.Call(methode, args);
+            var result = await obj.ToSignal(task.AsGodotObject(), "completed");
+            return T.FromObject(result[0].AsGodotObject());
         }
     }
 }
