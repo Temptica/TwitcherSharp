@@ -18,9 +18,8 @@ public partial class TwitchPanel : Resource, ITwitcherSharp<TwitchPanel>
     /// </summary> 
     public static TwitchPanel FromObject(GodotObject data)
     {
-        return new TwitchPanel
-        {
-
+		return new TwitchPanel
+		{
 			ViewerUrl = data.Get("viewer_url").AsString(),
 			Height = data.Get("height").AsInt32(),
 			CanLinkExternalContent = data.Get("can_link_external_content").AsBool(),
@@ -29,7 +28,7 @@ public partial class TwitchPanel : Resource, ITwitcherSharp<TwitchPanel>
 
 	public GodotObject ToGodotObject()
 	{
-		var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_twitch_panel.gd");
+		var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_panel.gd");
 		var request = script.Call("new").AsGodotObject();
 		request.Set("viewer_url", ViewerUrl);
 		request.Set("height", Height);

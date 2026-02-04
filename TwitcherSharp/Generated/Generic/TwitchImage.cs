@@ -18,9 +18,8 @@ public partial class TwitchImage : Resource, ITwitcherSharp<TwitchImage>
     /// </summary> 
     public static TwitchImage FromObject(GodotObject data)
     {
-        return new TwitchImage
-        {
-
+		return new TwitchImage
+		{
 			Url1x = data.Get("url_1x").AsString(),
 			Url2x = data.Get("url_2x").AsString(),
 			Url4x = data.Get("url_4x").AsString(),
@@ -29,7 +28,7 @@ public partial class TwitchImage : Resource, ITwitcherSharp<TwitchImage>
 
 	public GodotObject ToGodotObject()
 	{
-		var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_twitch_image.gd");
+		var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_image.gd");
 		var request = script.Call("new").AsGodotObject();
 		request.Set("url_1x", Url1x);
 		request.Set("url_2x", Url2x);

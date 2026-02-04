@@ -25,22 +25,9 @@ public class TwitchGenField
     public string Type { get; set; }
     public bool IsRequired { get; set; }
     public bool IsArray { get; set; }
-    public string CleanedType
-    {
-        get
-        {
-            var type = Type.Split('/')[^1] + (IsArray ? "[]" : "");
-            return type switch
-            {
-                "Stream" => "TwitchStream",
-                "Stream[]" => "TwitchStream[]",
-                _ => type
-            };
-        }
-    }
-
+    public string CleanedType => Type.Split('/')[^1] + (IsArray ? "[]" : "");
     public string CleanedArrayType => Type.Split('/')[^1];
-    public bool IsTyped => Type.Contains('/');
+    public bool IsTyped => Type.Contains("Twitch");
     public string GetAsType()
     {
         return CleanedType switch

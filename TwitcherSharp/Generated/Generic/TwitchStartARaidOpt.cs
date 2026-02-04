@@ -1,0 +1,36 @@
+using TwitcherSharp.Interfaces;
+using TwitcherSharp.Generated.Generic;
+using Godot;
+   
+namespace TwitcherSharp.Generated.Generic;
+ 
+/// <summary> 
+/// All optional parameters for TwitchAPI.StartARaid 
+/// </summary>
+public partial class TwitchStartARaidOpt : Resource, ITwitcherSharp<TwitchStartARaidOpt>
+{
+    private GodotObject _data;
+	public string FromBroadcasterId { get; set; }
+	public string ToBroadcasterId { get; set; }
+    /// <summary> 
+    /// Transforms the godot data into a TwitchStartARaidOpt object.
+    /// </summary> 
+    public static TwitchStartARaidOpt FromObject(GodotObject data)
+    {
+		return new TwitchStartARaidOpt
+		{
+			FromBroadcasterId = data.Get("from_broadcaster_id").AsString(),
+			ToBroadcasterId = data.Get("to_broadcaster_id").AsString(),
+		};
+	}
+
+	public GodotObject ToGodotObject()
+	{
+		var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_start_a_raid.gd");
+		var optClass = script.Get("Opt").AsGodotObject();
+		var request = optClass.Call("new").AsGodotObject();
+		request.Set("from_broadcaster_id", FromBroadcasterId);
+		request.Set("to_broadcaster_id", ToBroadcasterId);
+		return request;
+	}
+}

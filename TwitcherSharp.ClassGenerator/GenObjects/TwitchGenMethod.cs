@@ -14,20 +14,18 @@ public class TwitchGenMethod
     public string BodyType { get; set; }
     public string ResultType { get; set; }
     public string ContentType { get; set; }
-    public bool HasPaging { get; set; }
-    public bool ContainsOptional { get; set; }
+    public bool ContainsOptional { get; private set; }
     public bool ContainsBody => !string.IsNullOrEmpty(BodyType);
 
     public void AddParameter(TwitchGenParameter parameter)
     {
         Parameters.Add(parameter);
         ContainsOptional = ContainsOptional || !parameter.Required;
-        if (parameter.Name == "after") HasPaging = true;
     }
 
     public TwitchGenParameter GetParameterByName(string name) => Parameters.FirstOrDefault(p => p.Name == name);
 
-    public string GetOptionalClassName() => Name + "Opt";
+    public string GetOptionalClassName() => "Twitch" + Name + "Opt";
 
     public string GetOptionalType() => "#/components/schemas/" + GetOptionalClassName();
 

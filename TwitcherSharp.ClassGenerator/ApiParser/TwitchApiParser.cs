@@ -40,15 +40,15 @@ public class TwitchApiParser
             ParseProperties(component, schema);
             Components[name] = component;
         }
-        
+
         //for each component, check for children, 
         foreach (var component in Components.Values)
         {
             foreach (var field in component.GetAllFields())
             {
-                if(!field.IsTyped) continue;
-                
-                if(!Components.TryGetValue(field.CleanedArrayType, out var subComponent)) continue;
+                if (!field.IsTyped) continue;
+
+                if (!Components.TryGetValue(field.CleanedArrayType, out var subComponent)) continue;
                 component.AddComponent(subComponent);
             }
         }
@@ -71,19 +71,23 @@ public class TwitchApiParser
             if (property.Properties.Count > 0)
             {
                 var subComponent = AddSubComponent(className, field.Description, component, property);
-                field.Type = subComponent.Ref;
+                field.Type = "Twitch" + subComponent.Ref.Split("/").Last();
             }
 
             else if (property.Type == "array")
             {
                 field.IsArray = true;
-                field.Type = GetParamType(property.Items);
                 var items = property.Items;
-                if (items.Reference != null) field.Type = items.Reference.ReferenceV3;
+                
+                if (items.Reference != null) field.Type = "Twitch" + items.Reference.ReferenceV3.Split("/").Last();
                 else if (items.Properties.Count > 0)
                 {
                     var subComponent = AddSubComponent(className, field.Description, component, items);
-                    field.Type = subComponent.Ref;
+                    field.Type = "Twitch" + subComponent.Ref.Split("/").Last();
+                }
+                else
+                {
+                    field.Type = GetParamType(property.Items);
                 }
             }
 
@@ -104,7 +108,7 @@ public class TwitchApiParser
     private void ParsingPaths()
     {
         var paths = Definition.Paths;
-        
+
         foreach (var (path, methodSpecs) in paths)
         {
             foreach (var (httpVerb, methodSpec) in methodSpecs.Operations)
@@ -118,7 +122,7 @@ public class TwitchApiParser
                     var component = method.GetOptionalComponent();
                     Components[component.ClassName] = component;
                 }
-                
+
                 //try find child component
                 if (Components.TryGetValue(method.Name + "Body", out var bodyComponent))
                 {
@@ -134,18 +138,24 @@ public class TwitchApiParser
                 {
                     responseComponent.Tag = tag;
                 }
-                
-                if (Components.TryGetValue(method.Name , out var paramComponent))
+
+                if (Components.TryGetValue(method.Name, out var paramComponent))
                 {
                     paramComponent.Tag = tag;
                 }
+
                 Methods.Add(method);
             }
         }
 
         foreach (var component in Components.Values.Where(c => c.IsGlobal))
         {
-            var componentParentTags = component.GetAllSubComponents().Select(s => s.GetTag()).Where(t=>t != "Generic").ToHashSet();
+            var componentParentTags = component
+                .GetAllSubComponents()
+                .Select(s => s.GetTag())
+                .Where(t => t != "Generic")
+                .ToHashSet();
+            
             switch (componentParentTags.Count)
             {
                 case 0 when component.GetTag() != "Generic":
@@ -180,14 +190,14 @@ public class TwitchApiParser
         if (methodSpec.RequestBody != null)
         {
             var @ref = methodSpec.RequestBody.Content["application/json"].Schema.Reference.ReferenceV3;
-                
+
             var component = Components.Values.FirstOrDefault(c => c.Ref == @ref);
             if (component != null) method.BodyType = component.ClassName;
         }
 
         // Result Type
         var response = methodSpec.Responses;
-        
+
         method.ResultType = "ResponseData";
         if (response.ContainsKey("200") || response.ContainsKey("202"))
         {
@@ -200,7 +210,7 @@ public class TwitchApiParser
             else if (content.TryGetValue("application/json", out var responseJson))
             {
                 var result = responseJson.Schema.Reference.ReferenceV3;
-                
+
                 var component = Components.Values.FirstOrDefault(c => c.Ref == result);
                 if (component != null) method.ResultType = component.ClassName;
             }
@@ -239,14 +249,15 @@ public class TwitchApiParser
 
     private static string GetParamType(OpenApiSchema schema)
     {
-        if (schema.Reference != null) return schema.Reference.ReferenceV3.Split('/')[0];
+        if (schema.Reference != null) return "Twitch" + schema.Reference.ReferenceV3.Split('/')[0];
 
         var type = schema.Type;
         var format = schema.Format;
-        
+
         type = type switch
         {
-            "object" when schema.Items?.Reference?.ReferenceV3 is not null => schema.Items.Reference.ReferenceV3.Split('/')[3],
+            "object" when schema.Items?.Reference?.ReferenceV3 is not null 
+                => "Twitch" + schema.Items.Reference.ReferenceV3.Split('/')[3],
             "string" => "string",
             "integer" => "int",
             "number" when format == "float" => "double",
@@ -257,8 +268,8 @@ public class TwitchApiParser
             "array" when schema.Items.Type == "number" => "double[]",
             "array" when schema.Items.Type == "float" => "double[]",
             "array" when schema.Items.Type == "boolean" => "bool[]",
-            "array" when schema.Items.Reference is null => "Variant",
-            "array" => $"{schema.Items.Reference.ReferenceV3.Split('/')[3]}[]",
+            "array" when schema.Items?.Reference is not null 
+                => $"Twitch{schema.Items.Reference.ReferenceV3.Split('/')[3]}[]",
             _ => "Variant"
         };
         return type;

@@ -79,7 +79,5 @@ public static class CodeStrings
                                               /// </summary> 
                                               public static {{className}} FromObject(GodotObject data)
                                               {
-                                                  return new {{className}}
-                                                  {
                                           """;
 }

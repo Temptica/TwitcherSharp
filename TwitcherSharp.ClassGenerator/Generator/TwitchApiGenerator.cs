@@ -13,7 +13,7 @@ public class TwitchApiGenerator
 
     private TwitchApiParser _apiParser;
 
-    private readonly Dictionary<string, TwitchGenComponent> _groupedFiles = [];
+    private readonly Dictionary<string, TwitchGenComponent> _components = [];
 
     public void GenerateApi(string apiPath, TwitchApiParser apiParser)
     {
@@ -27,7 +27,7 @@ public class TwitchApiGenerator
         twitchApiCode.Append(CodeStrings.TwitchApiUsings);
         twitchApiCode.Append(Environment.NewLine);
 
-        var tags = _groupedFiles.Values
+        var tags = _components.Values
             .Select(tgc => tgc.GetTag()).ToHashSet();
 
         foreach (var nameSpace in tags)
@@ -49,9 +49,26 @@ public class TwitchApiGenerator
 
         File.WriteAllText(apiPath + "TwitchApi.cs", twitchApiCode.ToString());
 
-        foreach (var (name, obj) in _groupedFiles)
+        foreach (var (name, obj) in _components)
         {
-            var code = CodeHelper.ComponentCode(obj);
+            string code;
+            if (obj.IsBody)
+            {
+                code = CodeHelper.ComponentCode(obj, "Body");
+            }
+            else if (obj.IsOpt)
+            {
+                code = CodeHelper.ComponentCode(obj, "Opt");
+            }
+            else if (obj.IsResponse)
+            {
+                code = CodeHelper.ComponentCode(obj, "Response");
+            }
+            else
+            {
+                code = CodeHelper.ComponentCode(obj);
+            }
+
             var tag = obj.GetTag();
             Directory.CreateDirectory($"{apiPath}{tag}");
             File.WriteAllText($"{apiPath}{tag}/{name}.cs", code);
@@ -61,10 +78,10 @@ public class TwitchApiGenerator
     private void PrepareComponent(TwitchGenComponent component)
     {
         var baseName = GetBaseName(component.ClassName);
-        
+
         if (baseName == component.ClassName)
         {
-            if (_groupedFiles.ContainsKey(baseName))
+            if (_components.ContainsKey(baseName))
             {
                 Console.WriteLine($"That file shouldn't exist: {baseName}");
             }
@@ -75,11 +92,11 @@ public class TwitchApiGenerator
                 _ => component.ClassName
             };
 
-            _groupedFiles[component.ClassName] = component;
+            _components[component.ClassName] = component;
             return;
         }
 
-        _groupedFiles[component.ClassName] = component;
+        _components[component.ClassName] = component;
         component.AddMeta("fqdn", component.ClassName);
     }
 

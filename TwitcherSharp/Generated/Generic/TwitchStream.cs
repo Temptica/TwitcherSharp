@@ -30,9 +30,8 @@ public partial class TwitchStream : Resource, ITwitcherSharp<TwitchStream>
     /// </summary> 
     public static TwitchStream FromObject(GodotObject data)
     {
-        return new TwitchStream
-        {
-
+		return new TwitchStream
+		{
 			Id = data.Get("id").AsString(),
 			UserId = data.Get("user_id").AsString(),
 			UserLogin = data.Get("user_login").AsString(),
@@ -53,7 +52,7 @@ public partial class TwitchStream : Resource, ITwitcherSharp<TwitchStream>
 
 	public GodotObject ToGodotObject()
 	{
-		var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_twitch_stream.gd");
+		var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_stream.gd");
 		var request = script.Call("new").AsGodotObject();
 		request.Set("id", Id);
 		request.Set("user_id", UserId);

@@ -6,6 +6,8 @@ namespace ClassGenerator.Generator;
 
 public static class CodeHelper
 {
+    private static readonly string[] Suffixes = ["Response", "Body", "Opt"];
+
     public static string ApiMethod(TwitchGenMethod method)
     {
         var methodString = new StringBuilder();
@@ -16,22 +18,14 @@ public static class CodeHelper
             methodString.AppendIndentedLine($"/// {CleanDescription(method.Summary)}", 1);
             methodString.AppendIndentedLine("/// </summary>", 1);
         }
-        if (method.ContainsBody)
-            methodString.AppendIndentedLine($"/// <param name=\"body\">{method.BodyType}</param>", 1);
-        if (method.ContainsOptional)
-            methodString.AppendIndentedLine($"/// <param name=\"opt\">{method.GetOptionalClassName()}</param>", 1);
-        // foreach (var methodRequiredParameter in method.RequiredParameters)
-        // {
-        //     methodString.AppendIndentedLine(
-        //         $"/// <param name=\"{methodRequiredParameter.Name.ToCamelCase()}\"></param>", 1);
-        // }
-        //
-        // foreach (var methodOptionalParameter in method.OptionalParameters)
-        // {
-        //     methodString.AppendIndentedLine(
-        //         $"/// <param name=\"{methodOptionalParameter.Name.ToCamelCase()}\"></param>", 1);
-        // }
 
+        if (method.ContainsBody)
+            methodString.AppendIndentedLine($"/// <param name=\"body\"><see cref=\"{method.BodyType}\"/></param>", 1);
+        if (method.ContainsOptional)
+            methodString.AppendIndentedLine($"/// <param name=\"opt\"><see cref=\"{method.GetOptionalClassName()}\"/></param>", 1);
+
+        methodString.AppendIndentedLine($"/// <returns><see cref=\"{method.ResultType}\"/></returns>", 1);
+        
         methodString
             .AppendIndentedLine($"public async Task<{method.ResultType}> {method.Name}({GetMethodParameter(method)})",
                 1);
@@ -40,11 +34,11 @@ public static class CodeHelper
             .AppendIndentedLine("{", 1);
 
         var methods = GetGodotMethodParameter(method, true);
-        
+
         methodString.AppendIndentedLine(
             !string.IsNullOrEmpty(methods)
-                ? $"return await _data.CallAsync<{method.ResultType}>(\"{method.ResultType.ToSnakeCase()}\", {methods}); "
-                : $"return await _data.CallAsync<{method.ResultType}>(\"{method.ResultType.ToSnakeCase()}\"); ",
+                ? $"return await _data.CallAsync<{method.ResultType}>(\"{method.Name.ToSnakeCase()}\", {methods}); "
+                : $"return await _data.CallAsync<{method.ResultType}>(\"{method.Name.ToSnakeCase()}\"); ",
             2);
 
         methodString.AppendIndentedLine("}", 1);
@@ -82,19 +76,15 @@ public static class CodeHelper
     private static string GetGodotMethodParameter(TwitchGenMethod method, bool toCamel = false)
     {
         var paramsList = new List<string>();
-        if (method.ContainsBody) paramsList.Add("body");
-        if (method.ContainsOptional) paramsList.Add("opt");
-        // foreach (var parameter in method.RequiredParameters)
-        //     paramsList.Add(toCamel ? parameter.Name.ToCamelCase() : parameter.Name);
-        // foreach (var parameter in method.OptionalParameters)
-        //     paramsList.Add(toCamel ? parameter.Name.ToCamelCase() : parameter.Name);
+        if (method.ContainsBody) paramsList.Add("body.ToGodotObject()");
+        if (method.ContainsOptional) paramsList.Add("opt.ToGodotObject()");
         return string.Join(", ", paramsList);
     }
 
     public static string ComponentCode(TwitchGenComponent component, string type = "")
     {
         var code = new StringBuilder();
-        
+
         code.AppendLine(CodeStrings.ComponentHeader
             .Replace("{{root}}", component.GetTag())
             .Replace("{{description}}", CleanDescription(component.Description))
@@ -102,21 +92,36 @@ public static class CodeHelper
 
         //PROPS
         var fields = component.GetAllFields();
-        
+
         foreach (var field in fields)
         {
             //public string TestObject { get; set; }
             code.AppendIndentedLine($"public {field.CleanedType} {field.Name} {{ get; set; }}", 1);
         }
-        
-        
-        code.AppendLine(CodeStrings.ComponentFromBody.Replace("{{className}}", component.ClassName));
-        code.Append(Environment.NewLine);
 
         //FROM OBJECT
+        code.AppendLine(CodeStrings.ComponentFromBody.Replace("{{className}}", component.ClassName));
+
+        foreach (var typedArrayField in fields.Where(f => f.IsArray && f.IsTyped))
+        {
+            code.AppendIndentedLine(
+                $"var {typedArrayField.Name.ToCamelCase()}Array = data.Get(\"{typedArrayField.Name.ToSnakeCase()}\").AsGodotArray<GodotObject>();",
+                2);
+        }
+
+        code.AppendIndentedLine($"return new {component.ClassName}", 2);
+        code.AppendIndentedLine("{", 2);
+
         foreach (var field in fields)
         {
-            code.AppendIndentedLine($"{field.Name} = data.Get(\"{field.Name.ToSnakeCase()}\").{field.GetAsType()},", 3);
+            string fieldData;
+            if (field.IsArray && field.IsTyped)
+            {
+                fieldData = $"{field.Name} = {field.Name.ToCamelCase()}Array.Select({field.CleanedArrayType}.FromObject).ToArray(),";
+            }
+            else fieldData = $"{field.Name} = data.Get(\"{field.Name.ToSnakeCase()}\").{field.GetAsType()},";
+
+            code.AppendIndentedLine(fieldData, 3);
         }
 
         code.AppendIndentedLine("};", 2);
@@ -127,7 +132,7 @@ public static class CodeHelper
         code.AppendIndentedLine("public GodotObject ToGodotObject()", 1);
         code.AppendIndentedLine("{", 1);
 
-        var path = $"res://addons/twitcher/generated/twitch_{component.ClassName.ToSnakeCase()}.gd";
+        var path = $"res://addons/twitcher/generated/{GetBaseName(component.ClassName).ToSnakeCase()}.gd";
         code.AppendIndentedLine($"var script = GD.Load<GDScript>(\"{path}\");", 2);
 
         var scriptName = "script";
@@ -157,5 +162,11 @@ public static class CodeHelper
     private static string CleanDescription(string description, int level = 0)
     {
         return description?.Replace("\n", "\n" + new string('\t', level) + "/// ").Trim();
+    }
+
+    private static string GetBaseName(string name)
+    {
+        return Suffixes.Aggregate(name,
+            (current, suffix) => current.EndsWith(suffix) ? current.Replace(suffix, "") : current);
     }
 }
