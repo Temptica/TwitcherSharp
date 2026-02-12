@@ -12,7 +12,7 @@ public static class StringExtension
             {
                 var chr = type[i];
                 if (i == 0) result += chr.ToString().ToUpper();
-                else if (chr == '_') result += type[++i].ToString().ToUpper();
+                else if (chr is '_' or ' ') result += type[++i].ToString().ToUpper();
                 else result += chr.ToString();
             }
 

@@ -1,0 +1,212 @@
+using ClassGenerator.Extensions;
+using ClassGenerator.GenObjects.EventSub;
+using HtmlAgilityPack;
+
+namespace ClassGenerator.Parsers;
+
+public class TwitchEventSubParser
+{
+    //"https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/";
+    private const string EventSubUrl = "EventSub.html";
+
+    public List<TwitchEventSubGenComponent> Components { get; private set; } = [];
+    private List<TwitchEventSubGenComponent> _subComponents = [];
+
+    public async Task ParseEventSub()
+    {
+        await using var stream = File.OpenRead(EventSubUrl);
+        var html = await new StreamReader(stream).ReadToEndAsync();
+
+        var doc = new HtmlDocument();
+        doc.LoadHtml(html);
+
+        ParseSubComponents(doc);
+
+        ParseComponents(doc);
+        Console.WriteLine($"{Components.Count} eventsub components parsed");
+    }
+
+    private void ParseSubComponents(HtmlDocument doc)
+    {
+        var objectsNode = doc.DocumentNode.SelectSingleNode("//h1[@id='objects']");
+        var lastNode = objectsNode;
+        while (lastNode.GetNextElementSibling() != null)
+        {
+            var h2Node = lastNode.GetNextElementSibling();
+            if (h2Node.Id is "conditions" or "events" or "subscription" or "transport")
+            {
+                var nextNode = h2Node.GetNextElementSibling();
+                while (nextNode?.Name != "h2")
+                {
+                    if (nextNode is null) return;
+
+                    nextNode = nextNode.GetNextElementSibling();
+                }
+
+                lastNode = nextNode.PreviousSibling;
+                continue;
+            }
+
+            var subComponent = new TwitchEventSubGenComponent(h2Node.InnerText.Trim());
+
+            var p = h2Node.GetNextElementSibling();
+            HtmlNode table;
+
+            if (p.Name == "p")
+            {
+                subComponent.Description = p.InnerText.Trim();
+                table = p.GetNextElementSibling();
+            }
+            else
+            {
+                table = p;
+            }
+
+            ParseTable(table, subComponent);
+
+            _subComponents.Add(subComponent);
+
+            lastNode = table;
+        }
+    }
+
+    private void ParseComponents(HtmlDocument doc)
+    {
+        var events = doc.DocumentNode.SelectSingleNode("//h2[@id='events']");
+        var startPos = events.Line;
+        var nextH2Node = doc.DocumentNode.SelectNodes("//h2").FirstOrDefault(n => n.Line > startPos) ??
+                         doc.DocumentNode.LastChild;
+
+        var lastNode = events;
+        while (lastNode.GetNextElementSibling() != nextH2Node)
+        {
+            var h3Node = lastNode.GetNextElementSibling();
+
+            var eventSubComponent = new TwitchEventSubGenComponent(h3Node.InnerText.Trim());
+
+
+            var blockQuote = h3Node.GetNextElementSibling();
+            HtmlNode table;
+
+            if (blockQuote.Name is "blockquote" or "p")
+            {
+                eventSubComponent.Description = blockQuote.InnerText.Trim();
+                table = blockQuote.GetNextElementSibling();
+            }
+            else
+            {
+                table = blockQuote;
+            }
+
+            if (table.Name != "table") break;
+
+            //parse table
+            ParseTable(table, eventSubComponent);
+            Components.Add(eventSubComponent);
+
+            // ReSharper disable once ConditionIsAlwaysTrueOrFalse // can be null!!
+            if (table.GetNextElementSibling() == null)
+            {
+                break;
+            }
+
+            lastNode = table;
+        }
+    }
+
+    private void ParseTable(HtmlNode table, TwitchEventSubGenComponent eventSubComponent)
+    {
+        var rows = table.ChildNodes
+            .First(n => n.Name == "tbody")
+            .ChildNodes
+            .Where(n => n.Name == "tr")
+            .ToList();
+
+        var currentParent = eventSubComponent;
+        var parentWhiteSpaces = -1;
+        foreach (var row in rows)
+        {
+            var whiteSpaces = row.GetFirstElementChild().GetDirectInnerText().TakeWhile(char.IsWhiteSpace).Count();
+
+            // example: current parent has 1 whitespace. You have 1 whitespace. This means you're a sibling, not a child.
+            // so parent goes one up and whitespaces go one up
+            if (whiteSpaces > 0) whiteSpaces /= 3;
+
+            if (whiteSpaces <= parentWhiteSpaces)
+            {
+                var parent = currentParent;
+                for (var i = 0; i <= parentWhiteSpaces - whiteSpaces; i++)
+                {
+                    parent = parent.Parent;
+                }
+
+                currentParent = parent;
+                parentWhiteSpaces = whiteSpaces - 1;
+            }
+
+            var fieldName = row.SelectSingleNode("td[1]/code").InnerText.Trim();
+            var type = row.SelectSingleNode("td[2]").InnerText.Trim();
+            var description = row.SelectSingleNode("td[3]").InnerText.Trim();
+
+            if (type.EndsWith("[]"))
+            {
+                var arrayField = new TwitchEventSubGenField(fieldName, description, type)
+                {
+                    IsArray = true,
+                };
+
+                if (type != "Object[]" && type != "object[]") continue;
+
+                var typedComponent = new TwitchEventSubGenComponent(fieldName)
+                {
+                    Description = description
+                };
+
+                arrayField.TypedComponent = typedComponent;
+                currentParent.AddSubComponent(arrayField.TypedComponent);
+                currentParent = arrayField.TypedComponent;
+                parentWhiteSpaces = whiteSpaces;
+            }
+            else if (type.Contains("Object", StringComparison.InvariantCultureIgnoreCase))
+            {
+                var subComponent = new TwitchEventSubGenComponent(fieldName)
+                {
+                    Description = description
+                };
+
+                currentParent.AddSubComponent(subComponent);
+                currentParent = subComponent;
+                parentWhiteSpaces = whiteSpaces;
+            }
+            else
+            {
+                var field = new TwitchEventSubGenField(fieldName, description, type);
+                currentParent.AddField(field);
+            }
+        }
+    }
+}
+
+//<h2 id="events">Events</h2>
+//<h3 ...> class name </h3>
+//<blockQuote> //optional description </blockQuote>
+//<table>
+//  <thead>
+//      <tr>
+//          <th>ignore</th>
+//          <th>ignore</th>
+//      </tr>
+//  </thead>
+//  <tbody>
+//      <tr>
+//            (optional, one level is 4 spaces)
+//          <td><code>event name</co    de></td>
+//          <td>type</td>
+//          <td>description</td> -> can have <strong>Optional</strong>
+//      </tr>
+//      ...//
+//  </tbody>
+//</table>
+
+
+//bug in their stuff -> Text is somewhere an object instead of string

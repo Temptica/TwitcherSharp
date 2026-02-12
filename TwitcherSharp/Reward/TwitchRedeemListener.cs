@@ -12,7 +12,7 @@ public partial class TwitchRedeemListener : Resource, ITwitcherSharp<TwitchRedee
     /// <summary>
     /// List of all rewards to listen for. Use AddReward to add more rewards. RemoveReward to remove rewards.
     /// </summary>
-    public Array<TwitchReward> RewardsToListen { get; set; } = [];
+    public Array<TwitchReward> RewardsToListen { get; private set; } = [];
 
     /// <summary>
     /// Called when one of the rewards that this node is listening is getting redeemed
@@ -68,7 +68,7 @@ public partial class TwitchRedeemListener : Resource, ITwitcherSharp<TwitchRedee
     
     private void ConnectSignals()
     {
-        //_data.ConnectRedeem(EmitSignalRedeemed);
+        _data.ConnectRedeemed(EmitSignalRedeemed);
     }
 
     public static TwitchRedeemListener FromObject(GodotObject data)

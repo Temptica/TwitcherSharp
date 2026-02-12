@@ -1,13 +1,12 @@
 using Godot;
-using System;
-using Godot.Collections;
-using TwitcherSharp;
-using TwitcherSharp.Extensions;
+using TwitcherSharp.Api.Generated.Generic;
 using TwitcherSharp.Interfaces;
 
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable MemberCanBePrivate.Global
 namespace TwitcherSharp.Reward;
+
+
 
 public partial class TwitchReward : Resource, ITwitcherSharp<TwitchReward>
 {
@@ -20,7 +19,7 @@ public partial class TwitchReward : Resource, ITwitcherSharp<TwitchReward>
     /// <summary>
     /// Owner of this reward
     /// </summary>
-    // public TwitchUser BroadcasterUser { get; set; }
+    public TwitchUser BroadcasterUser { get; set; }
 
     /// <summary>
     /// The title of the reward.
@@ -99,7 +98,7 @@ public partial class TwitchReward : Resource, ITwitcherSharp<TwitchReward>
         return new TwitchReward
         {
             Id = data.Get("id").AsString(),
-            // BroadcasterUser = new TwitchUser(data.Get("broadcaster_user").AsGodotObject()),
+            BroadcasterUser = TwitchUser.FromObject(data.Get("broadcaster_user").AsGodotObject()),
             Title = data.Get("title").AsString(),
             Description = data.Get("description").AsString(),
             Cost = data.Get("cost").AsInt32(),

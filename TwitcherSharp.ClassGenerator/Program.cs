@@ -1,11 +1,22 @@
 ﻿
 using ClassGenerator.ApiParser;
 using ClassGenerator.Generator;
+using ClassGenerator.Generator.Api;
+using ClassGenerator.Generator.EventSub;
+using ClassGenerator.Parsers;
 
-var path = Environment.CurrentDirectory + "/../../../../TwitcherSharp/Generated/";
-Directory.CreateDirectory(path);
+var path = Environment.CurrentDirectory + "/../../../../TwitcherSharp/";
+var apiPath = path + "Api/Generated/";
+var eventSubPath = path + "EventSub/Generated/";
+Directory.CreateDirectory(apiPath);
+Directory.CreateDirectory(eventSubPath);
 
 var apiParser = new TwitchApiParser();
 await apiParser.ParseApi();
-var generator = new TwitchApiGenerator();
-generator.GenerateApi(path, apiParser);
+var apiGenerator = new TwitchApiGenerator();
+apiGenerator.GenerateApi(apiPath, apiParser);
+
+var eventSubParser = new TwitchEventSubParser();
+await eventSubParser.ParseEventSub();
+var eventSubGenerator = new TwitchEventSubGenerator();
+eventSubGenerator.GenerateEventSub(eventSubPath, eventSubParser);
