@@ -53,9 +53,9 @@ public partial class TwitchChannelPointsCustomRewardRedemptionUpdateEvent : Reso
 	public string Status { get; set; }
 
 	/// <summary> 
-	/// Basic information about the reward that was redeemed, at the time it was redeemed.
+	/// 
 	/// </summary>
-	public reward Reward { get; set; }
+	public TwitchReward Reward { get; set; }
 
 	/// <summary> 
 	/// RFC3339 timestamp of when the reward was redeemed.
@@ -75,7 +75,7 @@ public partial class TwitchChannelPointsCustomRewardRedemptionUpdateEvent : Reso
 			UserName = data["user_name"].AsString(),
 			UserInput = data["user_input"].AsString(),
 			Status = data["status"].AsString(),
-			Reward = data["reward"].As<reward>(),
+			Reward = TwitchReward.FromData(data["reward"].AsGodotDictionary()),
 			RedeemedAt = data["redeemed_at"].AsString(),
 		};
 	}

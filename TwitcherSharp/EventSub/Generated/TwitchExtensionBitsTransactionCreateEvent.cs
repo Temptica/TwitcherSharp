@@ -48,9 +48,9 @@ public partial class TwitchExtensionBitsTransactionCreateEvent : Resource, ITwit
 	public string UserName { get; set; }
 
 	/// <summary> 
-	/// Additional extension product information.
+	/// Additional information about a product acquired via a Twitch Extension Bits transaction.
 	/// </summary>
-	public product Product { get; set; }
+	public TwitchProduct Product { get; set; }
 
 	public static TwitchExtensionBitsTransactionCreateEvent FromData(Dictionary data)
 	{
@@ -64,7 +64,7 @@ public partial class TwitchExtensionBitsTransactionCreateEvent : Resource, ITwit
 			UserId = data["user_id"].AsString(),
 			UserLogin = data["user_login"].AsString(),
 			UserName = data["user_name"].AsString(),
-			Product = data["product"].As<product>(),
+			Product = TwitchProduct.FromData(data["product"].AsGodotDictionary()),
 		};
 	}
 

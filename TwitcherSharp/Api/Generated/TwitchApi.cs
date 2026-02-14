@@ -4,7 +4,7 @@ using TwitcherSharp.Interfaces;
 using TwitcherSharp.Lib.Http;
 
 using TwitcherSharp.Api.Generated.Ads;
-using TwitcherSharp.Api.Generated.Generic;
+using TwitcherSharp.Api.Generated.Shared;
 using TwitcherSharp.Api.Generated.Analytics;
 using TwitcherSharp.Api.Generated.Bits;
 using TwitcherSharp.Api.Generated.Channels;

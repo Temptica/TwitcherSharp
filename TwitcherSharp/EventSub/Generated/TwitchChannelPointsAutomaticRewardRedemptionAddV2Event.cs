@@ -45,67 +45,12 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
 	/// <summary> 
 	/// An object that contains the reward information.
 	/// </summary>
-	public object Reward { get; set; }
-
-	/// <summary> 
-	/// The type of reward. One of:  single_message_bypass_sub_modesend_highlighted_messagerandom_sub_emote_unlockchosen_sub_emote_unlockchosen_modified_sub_emote_unlock
-	/// </summary>
-	public string Type { get; set; }
-
-	/// <summary> 
-	/// Number of channel points used.
-	/// </summary>
-	public int ChannelPoints { get; set; }
-
-	/// <summary> 
-	/// Optional. Emote associated with the reward.
-	/// </summary>
-	public object Emote { get; set; }
-
-	/// <summary> 
-	/// The emote ID.
-	/// </summary>
-	public string Id { get; set; }
-
-	/// <summary> 
-	/// The human readable emote token.
-	/// </summary>
-	public string Name { get; set; }
+	public TwitchReward Reward { get; set; }
 
 	/// <summary> 
 	/// Optional. An object that contains the user message and emote information needed to recreate the message.
 	/// </summary>
-	public object Message { get; set; }
-
-	/// <summary> 
-	/// The chat message in plain text.
-	/// </summary>
-	public string Text { get; set; }
-
-	/// <summary> 
-	/// The ordered list of chat message fragments.
-	/// </summary>
-	public array Fragments { get; set; }
-
-	/// <summary> 
-	/// The message text in fragment.
-	/// </summary>
-	public string Text { get; set; }
-
-	/// <summary> 
-	/// The type of message fragment. Possible values are: textemote
-	/// </summary>
-	public string Type { get; set; }
-
-	/// <summary> 
-	/// Optional. The metadata pertaining to the emote.
-	/// </summary>
-	public object Emote { get; set; }
-
-	/// <summary> 
-	/// The ID that uniquely identifies this emote.
-	/// </summary>
-	public string Id { get; set; }
+	public TwitchMessage Message { get; set; }
 
 	/// <summary> 
 	/// The UTC date and time (in RFC3339 format) of when the reward was redeemed.
@@ -123,21 +68,135 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
 			UserLogin = data["user_login"].AsString(),
 			UserName = data["user_name"].AsString(),
 			Id = data["id"].AsString(),
-			Reward = data["reward"].As<object>(),
-			Type = data["type"].AsString(),
-			ChannelPoints = data["channel_points"].AsInt32(),
-			Emote = data["emote"].As<object>(),
-			Id = data["id"].AsString(),
-			Name = data["name"].AsString(),
-			Message = data["message"].As<object>(),
-			Text = data["text"].AsString(),
-			Fragments = data["fragments"].As<array>(),
-			Text = data["text"].AsString(),
-			Type = data["type"].AsString(),
-			Emote = data["emote"].As<object>(),
-			Id = data["id"].AsString(),
+			Reward = TwitchReward.FromData(data["reward"].AsGodotDictionary()),
+			Message = TwitchMessage.FromData(data["message"].AsGodotDictionary()),
 			RedeemedAt = data["redeemed_at"].AsString(),
 		};
 	}
+
+public partial class TwitchReward : Resource, ITwitcherSharpEventSub<TwitchReward>
+{
+
+	/// <summary> 
+	/// The type of reward. One of:  single_message_bypass_sub_modesend_highlighted_messagerandom_sub_emote_unlockchosen_sub_emote_unlockchosen_modified_sub_emote_unlock
+	/// </summary>
+	public string Type { get; set; }
+
+	/// <summary> 
+	/// Number of channel points used.
+	/// </summary>
+	public int ChannelPoints { get; set; }
+
+	/// <summary> 
+	/// Optional. Emote associated with the reward.
+	/// </summary>
+	public TwitchEmote Emote { get; set; }
+
+	public static TwitchReward FromData(Dictionary data)
+	{
+	    return new TwitchReward
+	    {
+			Type = data["type"].AsString(),
+			ChannelPoints = data["channel_points"].AsInt32(),
+			Emote = TwitchEmote.FromData(data["emote"].AsGodotDictionary()),
+		};
+	}
+
+	public partial class TwitchEmote : Resource, ITwitcherSharpEventSub<TwitchEmote>
+	{
+	
+		/// <summary> 
+		/// The emote ID.
+		/// </summary>
+		public string Id { get; set; }
+	
+		/// <summary> 
+		/// The human readable emote token.
+		/// </summary>
+		public string Name { get; set; }
+	
+		public static TwitchEmote FromData(Dictionary data)
+		{
+		    return new TwitchEmote
+		    {
+				Id = data["id"].AsString(),
+				Name = data["name"].AsString(),
+			};
+		}
+	
+}
+
+}
+public partial class TwitchMessage : Resource, ITwitcherSharpEventSub<TwitchMessage>
+{
+
+	/// <summary> 
+	/// The chat message in plain text.
+	/// </summary>
+	public string Text { get; set; }
+
+	/// <summary> 
+	/// The ordered list of chat message fragments.
+	/// </summary>
+	public TwitchFragments[] Fragments { get; set; }
+
+	public static TwitchMessage FromData(Dictionary data)
+	{
+	    return new TwitchMessage
+	    {
+			Text = data["text"].AsString(),
+			Fragments = data["fragments"].AsGodotArray().Select(x => TwitchFragments.FromData(x.AsGodotDictionary())).ToArray(),
+		};
+	}
+
+	public partial class TwitchFragments : Resource, ITwitcherSharpEventSub<TwitchFragments>
+	{
+	
+		/// <summary> 
+		/// The message text in fragment.
+		/// </summary>
+		public string Text { get; set; }
+	
+		/// <summary> 
+		/// The type of message fragment. Possible values are: textemote
+		/// </summary>
+		public string Type { get; set; }
+	
+		/// <summary> 
+		/// Optional. The metadata pertaining to the emote.
+		/// </summary>
+		public TwitchEmote Emote { get; set; }
+	
+		public static TwitchFragments FromData(Dictionary data)
+		{
+		    return new TwitchFragments
+		    {
+				Text = data["text"].AsString(),
+				Type = data["type"].AsString(),
+				Emote = TwitchEmote.FromData(data["emote"].AsGodotDictionary()),
+			};
+		}
+	
+			public partial class TwitchEmote : Resource, ITwitcherSharpEventSub<TwitchEmote>
+			{
+			
+				/// <summary> 
+				/// The ID that uniquely identifies this emote.
+				/// </summary>
+				public string Id { get; set; }
+			
+				public static TwitchEmote FromData(Dictionary data)
+				{
+				    return new TwitchEmote
+				    {
+						Id = data["id"].AsString(),
+					};
+				}
+			
+	}
+	
+}
+
+}
 
 }

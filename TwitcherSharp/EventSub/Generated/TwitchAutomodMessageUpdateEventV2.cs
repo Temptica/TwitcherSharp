@@ -121,14 +121,14 @@ public partial class TwitchMessage : Resource, ITwitcherSharpEventSub<TwitchMess
 	/// <summary> 
 	/// Metadata surrounding the potential inappropriate fragments of the message.
 	/// </summary>
-	public TwitchFragments Fragments { get; set; }
+	public TwitchFragments[] Fragments { get; set; }
 
 	public static TwitchMessage FromData(Dictionary data)
 	{
 	    return new TwitchMessage
 	    {
 			Text = data["text"].AsString(),
-			Fragments = TwitchFragments.FromData(data["fragments"].AsGodotDictionary()),
+			Fragments = data["fragments"].AsGodotArray().Select(x => TwitchFragments.FromData(x.AsGodotDictionary())).ToArray(),
 		};
 	}
 
@@ -238,7 +238,7 @@ public partial class TwitchAutomod : Resource, ITwitcherSharpEventSub<TwitchAuto
 	/// <summary> 
 	/// The bounds of the text that caused the message to be caught.
 	/// </summary>
-	public TwitchBoundaries Boundaries { get; set; }
+	public TwitchBoundaries[] Boundaries { get; set; }
 
 	public static TwitchAutomod FromData(Dictionary data)
 	{
@@ -246,7 +246,7 @@ public partial class TwitchAutomod : Resource, ITwitcherSharpEventSub<TwitchAuto
 	    {
 			Category = data["category"].AsString(),
 			Level = data["level"].AsInt32(),
-			Boundaries = TwitchBoundaries.FromData(data["boundaries"].AsGodotDictionary()),
+			Boundaries = data["boundaries"].AsGodotArray().Select(x => TwitchBoundaries.FromData(x.AsGodotDictionary())).ToArray(),
 		};
 	}
 
@@ -281,13 +281,13 @@ public partial class TwitchBlockedTerm : Resource, ITwitcherSharpEventSub<Twitch
 	/// <summary> 
 	/// The list of blocked terms found in the message.
 	/// </summary>
-	public TwitchTermsFound TermsFound { get; set; }
+	public TwitchTermsFound[] TermsFound { get; set; }
 
 	public static TwitchBlockedTerm FromData(Dictionary data)
 	{
 	    return new TwitchBlockedTerm
 	    {
-			TermsFound = TwitchTermsFound.FromData(data["terms_found"].AsGodotDictionary()),
+			TermsFound = data["terms_found"].AsGodotArray().Select(x => TwitchTermsFound.FromData(x.AsGodotDictionary())).ToArray(),
 		};
 	}
 

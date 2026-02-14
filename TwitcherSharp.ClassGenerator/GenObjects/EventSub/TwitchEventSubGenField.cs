@@ -6,7 +6,7 @@ public class TwitchEventSubGenField(string fieldName, string description, string
 {
     public string Name { get; } = fieldName.ToPascalCase();
     public string Description { get; } = description;
-    public string Type { get; } = SanitizeType(type, fieldName);
+    public string Type { get; set; } = SanitizeType(type, fieldName);
     public bool IsArray { get; set; }
     public bool IsTyped => Type.Contains("Twitch");
     public TwitchEventSubGenComponent TypedComponent { get; set; }
@@ -30,11 +30,15 @@ public class TwitchEventSubGenField(string fieldName, string description, string
         type.ToLower() switch
         {
             "integer" => "int",
-            "int (or null)" => "int?", //WHY TWITCH??
+            "int (or null)" => "int", //WHY TWITCH??
             "[]string" => "string[]", // cmn....
             "number" => "double",
             "boolean" => "bool",
+            "bool" => "bool",
             "object" when name == "Text" => "string",
-            _ => type
+            "object" when name == "Prefix" => "string",
+            "string" => "string",
+            "int" => "int",
+            _ => type.ToPascalCase()
         };
 }

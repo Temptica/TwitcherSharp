@@ -37,5 +37,4 @@ public partial class TwitchUserAuthorizationRevokeEvent : Resource, ITwitcherSha
 			UserName = data["user_name"].AsString(),
 		};
 	}
-
 }

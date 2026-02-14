@@ -13,20 +13,26 @@ public class TwitchEventSubGenComponent(string name)
 
     public TwitchEventSubGenComponent Parent { get; set; }
 
-    public List<TwitchEventSubGenComponent> SubComponents { get; } = [];
+    public  Dictionary<string, TwitchEventSubGenComponent> SubComponents { get; } = [];
 
-    public List<TwitchEventSubGenField> Fields { get; } = [];
+    public Dictionary<string, TwitchEventSubGenField> Fields { get; } = [];
 
     public bool IsRoot => Parent == null;
+    
+    public bool IsShared { get; init; }
 
     public void AddField(TwitchEventSubGenField field)
     {
-        Fields.Add(field);
+        Fields[field.Name] = field;
+        if (field.IsArray && field.IsTyped)
+        {
+            AddFieldSubComponent(field.TypedComponent);
+        }
     }
 
     public void AddSubComponent(TwitchEventSubGenComponent component)
     {
-        SubComponents.Add(component);
+        SubComponents[component.ClassName] = component;
         component.Parent = this;
 
         var field = new TwitchEventSubGenField(component.ClassName.Replace("Twitch", ""), component.Description,
@@ -34,7 +40,14 @@ public class TwitchEventSubGenComponent(string name)
         {
             TypedComponent = component
         };
-        Fields.Add(field);
+        
+        Fields[field.Name] = field;
+    }
+
+    private void AddFieldSubComponent(TwitchEventSubGenComponent component)
+    {
+        SubComponents[component.ClassName] = component;
+        component.Parent = this;
     }
 
     private static string SanitizeName(string name) => name.StartsWith("Twitch") ? name:$"Twitch{name.ToPascalCase()}";

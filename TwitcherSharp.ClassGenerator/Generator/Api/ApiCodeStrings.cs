@@ -60,7 +60,7 @@ public static class ApiCodeStrings
     /// </summary>
     public const string ComponentHeader = """
                                           using TwitcherSharp.Interfaces;
-                                          using TwitcherSharp.Api.Generated.Generic;
+                                          using TwitcherSharp.Api.Generated.Shared;
                                           using Godot;
                                              
                                           namespace TwitcherSharp.Api.Generated.{{root}};

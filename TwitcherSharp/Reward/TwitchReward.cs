@@ -1,12 +1,10 @@
 using Godot;
-using TwitcherSharp.Api.Generated.Generic;
+using TwitcherSharp.Api.Generated.Shared;
 using TwitcherSharp.Interfaces;
 
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable MemberCanBePrivate.Global
 namespace TwitcherSharp.Reward;
-
-
 
 public partial class TwitchReward : Resource, ITwitcherSharp<TwitchReward>
 {

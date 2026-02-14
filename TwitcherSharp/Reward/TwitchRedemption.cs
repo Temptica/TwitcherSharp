@@ -1,5 +1,5 @@
 using Godot;
-using TwitcherSharp.Api.Generated.Generic;
+using TwitcherSharp.Api.Generated.Shared;
 using TwitcherSharp.Interfaces;
 
 // ReSharper disable ClassNeverInstantiated.Global

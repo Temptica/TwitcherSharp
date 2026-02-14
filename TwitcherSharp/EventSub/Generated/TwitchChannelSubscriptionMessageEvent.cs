@@ -43,9 +43,9 @@ public partial class TwitchChannelSubscriptionMessageEvent : Resource, ITwitcher
 	public string Tier { get; set; }
 
 	/// <summary> 
-	/// An object that contains the resubscription message and emote information needed to recreate the message.
+	/// 
 	/// </summary>
-	public message Message { get; set; }
+	public TwitchMessage Message { get; set; }
 
 	/// <summary> 
 	/// The total number of months the user has been subscribed to the channel.
@@ -73,7 +73,7 @@ public partial class TwitchChannelSubscriptionMessageEvent : Resource, ITwitcher
 			BroadcasterUserLogin = data["broadcaster_user_login"].AsString(),
 			BroadcasterUserName = data["broadcaster_user_name"].AsString(),
 			Tier = data["tier"].AsString(),
-			Message = data["message"].As<message>(),
+			Message = TwitchMessage.FromData(data["message"].AsGodotDictionary()),
 			CumulativeMonths = data["cumulative_months"].AsInt32(),
 			StreakMonths = data["streak_months"].AsInt32(),
 			DurationMonths = data["duration_months"].AsInt32(),

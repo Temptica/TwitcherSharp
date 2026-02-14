@@ -40,7 +40,7 @@ public partial class TwitchGoalsEvent : Resource, ITwitcherSharpEventSub<TwitchG
 	/// <summary> 
 	/// A Boolean value that indicates whether the broadcaster achieved their goal. Is true if the goal was achieved; otherwise, false.Only the channel.goal.end event includes this field.
 	/// </summary>
-	public Boolean IsAchieved { get; set; }
+	public bool IsAchieved { get; set; }
 
 	/// <summary> 
 	/// The goal’s current value.The goal’s type determines how this value is increased or decreased.If type is follow, this field is set to the broadcaster's current number of followers. This number increases with new followers and decreases when users unfollow the broadcaster.If type is subscription, this field is increased and decreased by the points value associated with the subscription tier. For example, if a tier-two subscription is worth 2 points, this field is increased or decreased by 2, not 1.If type is subscription_count, this field is increased by 1 for each new subscription and decreased by 1 for each user that unsubscribes.If type is new_subscription, this field is increased by the points value associated with the subscription tier. For example, if a tier-two subscription is worth 2 points, this field is increased by 2, not 1.If type is new_subscription_count, this field is increased by 1 for each new subscription.
@@ -72,7 +72,7 @@ public partial class TwitchGoalsEvent : Resource, ITwitcherSharpEventSub<TwitchG
 			BroadcasterUserLogin = data["broadcaster_user_login"].AsString(),
 			Type = data["type"].AsString(),
 			Description = data["description"].AsString(),
-			IsAchieved = data["is_achieved"].As<Boolean>(),
+			IsAchieved = data["is_achieved"].AsBool(),
 			CurrentAmount = data["current_amount"].AsInt32(),
 			TargetAmount = data["target_amount"].AsInt32(),
 			StartedAt = data["started_at"].AsString(),

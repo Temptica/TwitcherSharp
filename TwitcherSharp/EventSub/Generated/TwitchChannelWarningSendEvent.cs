@@ -60,7 +60,7 @@ public partial class TwitchChannelWarningSendEvent : Resource, ITwitcherSharpEve
 	/// <summary> 
 	/// Optional. The chat rules cited for the warning.
 	/// </summary>
-	public []string ChatRulesCited { get; set; }
+	public string[] ChatRulesCited { get; set; }
 
 	public static TwitchChannelWarningSendEvent FromData(Dictionary data)
 	{
@@ -76,7 +76,7 @@ public partial class TwitchChannelWarningSendEvent : Resource, ITwitcherSharpEve
 			UserLogin = data["user_login"].AsString(),
 			UserName = data["user_name"].AsString(),
 			Reason = data["reason"].AsString(),
-			ChatRulesCited = data["chat_rules_cited"].As<[]string>(),
+			ChatRulesCited = data["chat_rules_cited"].AsStringArray(),
 		};
 	}
 

@@ -154,12 +154,12 @@ public class TwitchApiParser
             var componentParentTags = component
                 .SubComponents
                 .Select(s => s.GetTag())
-                .Where(t => t != "Generic")
+                .Where(t => t != "Shared")
                 .ToHashSet();
 
             switch (componentParentTags.Count)
             {
-                case 0 when component.GetTag() != "Generic":
+                case 0 when component.GetTag() != "Shared":
                     component.IsGlobal = false;
                     continue;
                 case 1:
@@ -168,7 +168,7 @@ public class TwitchApiParser
                     break;
                 default:
                     component.IsGlobal = true;
-                    component.Tag = "Generic";
+                    component.Tag = "Shared";
                     continue;
             }
         }

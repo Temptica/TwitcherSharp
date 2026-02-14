@@ -45,7 +45,7 @@ public partial class TwitchAutomodSettingsUpdateEvent : Resource, ITwitcherSharp
 	/// <summary> 
 	/// The default AutoMod level for the broadcaster. This field is null if the broadcaster has set one or more of the individual settings.
 	/// </summary>
-	public int? OverallLevel { get; set; }
+	public int OverallLevel { get; set; }
 
 	/// <summary> 
 	/// The Automod level for discrimination against disability.
@@ -93,7 +93,7 @@ public partial class TwitchAutomodSettingsUpdateEvent : Resource, ITwitcherSharp
 			ModeratorUserLogin = data["moderator_user_login"].AsString(),
 			ModeratorUserName = data["moderator_user_name"].AsString(),
 			Bullying = data["bullying"].AsInt32(),
-			OverallLevel = data["overall_level"].As<int?>(),
+			OverallLevel = data["overall_level"].AsInt32(),
 			Disability = data["disability"].AsInt32(),
 			RaceEthnicityOrReligion = data["race_ethnicity_or_religion"].AsInt32(),
 			Misogyny = data["misogyny"].AsInt32(),

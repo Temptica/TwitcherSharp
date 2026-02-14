@@ -36,7 +36,7 @@ public class TwitchGenComponent(string name, string @ref, string description)
             return Tag;
         }
 
-        if (IsGlobal || ParentComponent.Count == 0) return "Generic";
+        if (IsGlobal || ParentComponent.Count == 0) return "Shared";
 
         return ParentComponent[0].GetTag();
     }

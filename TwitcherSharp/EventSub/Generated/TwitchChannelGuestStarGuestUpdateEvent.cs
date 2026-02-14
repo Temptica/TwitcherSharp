@@ -85,12 +85,12 @@ public partial class TwitchChannelGuestStarGuestUpdateEvent : Resource, ITwitche
 	/// <summary> 
 	/// Flag that signals whether the host is allowing the slot’s video to be seen by participants within the session. null  if the guest is not slotted.
 	/// </summary>
-	public Bool HostVideoEnabled { get; set; }
+	public bool HostVideoEnabled { get; set; }
 
 	/// <summary> 
 	/// Flag that signals whether the host is allowing the slot’s audio to be heard by participants within the session. null  if the guest is not slotted.
 	/// </summary>
-	public Bool HostAudioEnabled { get; set; }
+	public bool HostAudioEnabled { get; set; }
 
 	/// <summary> 
 	/// Value between 0-100 that represents the slot’s audio level as heard by participants within the session. null  if the guest is not slotted.
@@ -116,8 +116,8 @@ public partial class TwitchChannelGuestStarGuestUpdateEvent : Resource, ITwitche
 			HostUserId = data["host_user_id"].AsString(),
 			HostUserName = data["host_user_name"].AsString(),
 			HostUserLogin = data["host_user_login"].AsString(),
-			HostVideoEnabled = data["host_video_enabled"].As<Bool>(),
-			HostAudioEnabled = data["host_audio_enabled"].As<Bool>(),
+			HostVideoEnabled = data["host_video_enabled"].AsBool(),
+			HostAudioEnabled = data["host_audio_enabled"].AsBool(),
 			HostVolume = data["host_volume"].AsInt32(),
 		};
 	}

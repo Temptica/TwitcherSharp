@@ -35,7 +35,7 @@ public partial class TwitchChannelPredictionLockEvent : Resource, ITwitcherSharp
 	/// <summary> 
 	/// An array of outcomes for the Channel Points Prediction. Includes top_predictors.
 	/// </summary>
-	public outcomes Outcomes { get; set; }
+	public TwitchOutcomes[] Outcomes { get; set; }
 
 	/// <summary> 
 	/// The time the Channel Points Prediction started.
@@ -56,7 +56,7 @@ public partial class TwitchChannelPredictionLockEvent : Resource, ITwitcherSharp
 			BroadcasterUserLogin = data["broadcaster_user_login"].AsString(),
 			BroadcasterUserName = data["broadcaster_user_name"].AsString(),
 			Title = data["title"].AsString(),
-			Outcomes = data["outcomes"].As<outcomes>(),
+			Outcomes = data["outcomes"].AsGodotArray().Select(x => TwitchOutcomes.FromData(x.AsGodotDictionary())).ToArray(),
 			StartedAt = data["started_at"].AsString(),
 			LockedAt = data["locked_at"].AsString(),
 		};

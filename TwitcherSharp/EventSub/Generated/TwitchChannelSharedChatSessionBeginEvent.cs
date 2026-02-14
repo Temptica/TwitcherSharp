@@ -45,7 +45,25 @@ public partial class TwitchChannelSharedChatSessionBeginEvent : Resource, ITwitc
 	/// <summary> 
 	/// The list of participants in the session.
 	/// </summary>
-	public object Participants { get; set; }
+	public TwitchParticipants Participants { get; set; }
+
+	public static TwitchChannelSharedChatSessionBeginEvent FromData(Dictionary data)
+	{
+	    return new TwitchChannelSharedChatSessionBeginEvent
+	    {
+			SessionId = data["session_id"].AsString(),
+			BroadcasterUserId = data["broadcaster_user_id"].AsString(),
+			BroadcasterUserName = data["broadcaster_user_name"].AsString(),
+			BroadcasterUserLogin = data["broadcaster_user_login"].AsString(),
+			HostBroadcasterUserId = data["host_broadcaster_user_id"].AsString(),
+			HostBroadcasterUserName = data["host_broadcaster_user_name"].AsString(),
+			HostBroadcasterUserLogin = data["host_broadcaster_user_login"].AsString(),
+			Participants = TwitchParticipants.FromData(data["participants"].AsGodotDictionary()),
+		};
+	}
+
+public partial class TwitchParticipants : Resource, ITwitcherSharpEventSub<TwitchParticipants>
+{
 
 	/// <summary> 
 	/// The User ID of the participant channel.
@@ -62,22 +80,16 @@ public partial class TwitchChannelSharedChatSessionBeginEvent : Resource, ITwitc
 	/// </summary>
 	public string BroadcasterUserLogin { get; set; }
 
-	public static TwitchChannelSharedChatSessionBeginEvent FromData(Dictionary data)
+	public static TwitchParticipants FromData(Dictionary data)
 	{
-	    return new TwitchChannelSharedChatSessionBeginEvent
+	    return new TwitchParticipants
 	    {
-			SessionId = data["session_id"].AsString(),
-			BroadcasterUserId = data["broadcaster_user_id"].AsString(),
-			BroadcasterUserName = data["broadcaster_user_name"].AsString(),
-			BroadcasterUserLogin = data["broadcaster_user_login"].AsString(),
-			HostBroadcasterUserId = data["host_broadcaster_user_id"].AsString(),
-			HostBroadcasterUserName = data["host_broadcaster_user_name"].AsString(),
-			HostBroadcasterUserLogin = data["host_broadcaster_user_login"].AsString(),
-			Participants = data["participants"].As<object>(),
 			BroadcasterUserId = data["broadcaster_user_id"].AsString(),
 			BroadcasterUserName = data["broadcaster_user_name"].AsString(),
 			BroadcasterUserLogin = data["broadcaster_user_login"].AsString(),
 		};
 	}
+
+}
 
 }

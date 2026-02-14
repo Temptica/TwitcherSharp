@@ -1,6 +1,5 @@
 using System.Text;
 using ClassGenerator.Extensions;
-using ClassGenerator.GenObjects.Api;
 using ClassGenerator.GenObjects.EventSub;
 
 namespace ClassGenerator.Generator.EventSub;
@@ -15,7 +14,6 @@ public static class EventSubCodeHelper
 
         code.AppendLine(GenerateComponent(component));
 
-
         code.AppendLine("}");
 
         return code.ToString();
@@ -29,18 +27,20 @@ public static class EventSubCodeHelper
         code.AppendLine("{");
         code.AppendLine();
 
-        foreach (var field in component.Fields)
+        foreach (var field in component.Fields.Values)
         {
             code.AppendIndentedLine(EventSubCodeStrings.FieldDescription.Replace("{{Description}}", field.Description),
                 1);
-            code.AppendIndentedLine($"public {field.Type} {field.Name} {{ get; set; }}", 1);
+            
+            var type = field.Type;
+            if(field.IsArray && !type.Contains("[]")) type += "[]";
+            code.AppendIndentedLine($"public {type} {field.Name} {{ get; set; }}", 1);
             code.AppendLine();
         }
 
-        code.AppendIndentedLine(EventSubCodeStrings.FromDictionary.Replace("{{ClassName}}", component.ClassName),
-            1);
+        code.AppendIndentedLine(EventSubCodeStrings.FromDictionary.Replace("{{ClassName}}", component.ClassName), 1);
 
-        foreach (var field in component.Fields)
+        foreach (var field in component.Fields.Values)
         {
             var fieldCode = field switch
             {
@@ -49,7 +49,7 @@ public static class EventSubCodeHelper
                 { IsArray: false } =>
                     $"""{field.Name} = {field.Type}.FromData(data["{field.Name.ToSnakeCase()}"].AsGodotDictionary()),""",
                 _ =>
-                    $"""{field.Name} = data["{field.Name.ToSnakeCase()}"].AsGodotArray().Select(x => TwitchData.FromData(x.AsGodotDictionary())).ToArray(),"""
+                    $"""{field.Name} = data["{field.Name.ToSnakeCase()}"].AsGodotArray().Select(x => {field.TypedComponent.ClassName}.FromData(x.AsGodotDictionary())).ToArray(),"""
             };
 
             code.AppendIndentedLine(fieldCode, 3);
@@ -58,12 +58,17 @@ public static class EventSubCodeHelper
         code.AppendIndentedLine("};", 2);
         code.AppendIndentedLine("}", 1);
 
-        if (component.SubComponents.Count != 0)
+        var nonSharedSubComponents = component.SubComponents
+            .Where(s => !s.Value.IsShared)
+            .Select(s => s.Value)
+            .ToList();
+        
+        if (nonSharedSubComponents.Count != 0)
         {
             code.AppendLine();
-            foreach (var subComponent in component.SubComponents)
+            foreach (var subComponent in nonSharedSubComponents)
             {
-                code.AppendIndentedLine(GenerateComponent(subComponent, level + 1), level );
+                code.AppendIndentedLine(GenerateComponent(subComponent, level + 1), level);
                 code.AppendIndentedLine("}");
             }
         }

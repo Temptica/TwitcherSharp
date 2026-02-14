@@ -68,14 +68,14 @@ public partial class TwitchChannelPointsCustomRewardUpdateEvent : Resource, ITwi
 	public bool ShouldRedemptionsSkipRequestQueue { get; set; }
 
 	/// <summary> 
-	/// Whether a maximum per stream is enabled and what the maximum is.
+	/// 
 	/// </summary>
-	public max_per_stream MaxPerStream { get; set; }
+	public TwitchMaxPerStream MaxPerStream { get; set; }
 
 	/// <summary> 
-	/// Whether a maximum per user per stream is enabled and what the maximum is.
+	/// 
 	/// </summary>
-	public max_per_user_per_stream MaxPerUserPerStream { get; set; }
+	public TwitchMaxPerUserPerStream MaxPerUserPerStream { get; set; }
 
 	/// <summary> 
 	/// Custom background color for the reward. Format: Hex with # prefix. Example: #FA1ED2.
@@ -83,19 +83,14 @@ public partial class TwitchChannelPointsCustomRewardUpdateEvent : Resource, ITwi
 	public string BackgroundColor { get; set; }
 
 	/// <summary> 
-	/// Set of custom images of 1x, 2x and 4x sizes for the reward. Can be null if no images have been uploaded.
+	/// 
 	/// </summary>
-	public image Image { get; set; }
+	public TwitchImage Image { get; set; }
 
 	/// <summary> 
-	/// Set of default images of 1x, 2x and 4x sizes for the reward.
+	/// 
 	/// </summary>
-	public image DefaultImage { get; set; }
-
-	/// <summary> 
-	/// Whether a cooldown is enabled and what the cooldown is in seconds.
-	/// </summary>
-	public global_cooldown GlobalCooldown { get; set; }
+	public TwitchGlobalCooldown GlobalCooldown { get; set; }
 
 	/// <summary> 
 	/// Timestamp of the cooldown expiration. null if the reward isn’t on cooldown.
@@ -123,12 +118,11 @@ public partial class TwitchChannelPointsCustomRewardUpdateEvent : Resource, ITwi
 			Prompt = data["prompt"].AsString(),
 			IsUserInputRequired = data["is_user_input_required"].AsBool(),
 			ShouldRedemptionsSkipRequestQueue = data["should_redemptions_skip_request_queue"].AsBool(),
-			MaxPerStream = data["max_per_stream"].As<max_per_stream>(),
-			MaxPerUserPerStream = data["max_per_user_per_stream"].As<max_per_user_per_stream>(),
+			MaxPerStream = TwitchMaxPerStream.FromData(data["max_per_stream"].AsGodotDictionary()),
+			MaxPerUserPerStream = TwitchMaxPerUserPerStream.FromData(data["max_per_user_per_stream"].AsGodotDictionary()),
 			BackgroundColor = data["background_color"].AsString(),
-			Image = data["image"].As<image>(),
-			DefaultImage = data["default_image"].As<image>(),
-			GlobalCooldown = data["global_cooldown"].As<global_cooldown>(),
+			Image = TwitchImage.FromData(data["image"].AsGodotDictionary()),
+			GlobalCooldown = TwitchGlobalCooldown.FromData(data["global_cooldown"].AsGodotDictionary()),
 			CooldownExpiresAt = data["cooldown_expires_at"].AsString(),
 			RedemptionsRedeemedCurrentStream = data["redemptions_redeemed_current_stream"].AsInt32(),
 		};

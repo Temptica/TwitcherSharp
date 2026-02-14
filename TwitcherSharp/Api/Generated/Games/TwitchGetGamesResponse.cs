@@ -1,5 +1,5 @@
 using TwitcherSharp.Interfaces;
-using TwitcherSharp.Api.Generated.Generic;
+using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Games;

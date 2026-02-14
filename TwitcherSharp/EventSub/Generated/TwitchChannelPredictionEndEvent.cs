@@ -40,7 +40,7 @@ public partial class TwitchChannelPredictionEndEvent : Resource, ITwitcherSharpE
 	/// <summary> 
 	/// An array of outcomes for the Channel Points Prediction. Includes top_predictors.
 	/// </summary>
-	public outcomes Outcomes { get; set; }
+	public TwitchOutcomes[] Outcomes { get; set; }
 
 	/// <summary> 
 	/// The status of the Channel Points Prediction. Valid values are resolved and canceled.
@@ -67,7 +67,7 @@ public partial class TwitchChannelPredictionEndEvent : Resource, ITwitcherSharpE
 			BroadcasterUserName = data["broadcaster_user_name"].AsString(),
 			Title = data["title"].AsString(),
 			WinningOutcomeId = data["winning_outcome_id"].AsString(),
-			Outcomes = data["outcomes"].As<outcomes>(),
+			Outcomes = data["outcomes"].AsGodotArray().Select(x => TwitchOutcomes.FromData(x.AsGodotDictionary())).ToArray(),
 			Status = data["status"].AsString(),
 			StartedAt = data["started_at"].AsString(),
 			EndedAt = data["ended_at"].AsString(),

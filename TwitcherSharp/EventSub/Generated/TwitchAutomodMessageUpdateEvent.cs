@@ -115,14 +115,14 @@ public partial class TwitchMessage : Resource, ITwitcherSharpEventSub<TwitchMess
 	/// <summary> 
 	/// Metadata surrounding the potential inappropriate fragments of the message.
 	/// </summary>
-	public TwitchFragments Fragments { get; set; }
+	public TwitchFragments[] Fragments { get; set; }
 
 	public static TwitchMessage FromData(Dictionary data)
 	{
 	    return new TwitchMessage
 	    {
 			Text = data["text"].AsString(),
-			Fragments = TwitchFragments.FromData(data["fragments"].AsGodotDictionary()),
+			Fragments = data["fragments"].AsGodotArray().Select(x => TwitchFragments.FromData(x.AsGodotDictionary())).ToArray(),
 		};
 	}
 

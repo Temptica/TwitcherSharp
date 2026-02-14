@@ -35,17 +35,17 @@ public partial class TwitchChannelPollBeginEvent : Resource, ITwitcherSharpEvent
 	/// <summary> 
 	/// An array of choices for the poll.
 	/// </summary>
-	public choices Choices { get; set; }
+	public TwitchChoices[] Choices { get; set; }
 
 	/// <summary> 
-	/// Not supported.
+	/// NOTE: Bits voting is not supported.
 	/// </summary>
-	public bits_voting BitsVoting { get; set; }
+	public TwitchBitsVoting BitsVoting { get; set; }
 
 	/// <summary> 
-	/// The Channel Points voting settings for the poll.
+	/// 
 	/// </summary>
-	public channel_points_voting ChannelPointsVoting { get; set; }
+	public TwitchChannelPointsVoting ChannelPointsVoting { get; set; }
 
 	/// <summary> 
 	/// The time the poll started.
@@ -66,9 +66,9 @@ public partial class TwitchChannelPollBeginEvent : Resource, ITwitcherSharpEvent
 			BroadcasterUserLogin = data["broadcaster_user_login"].AsString(),
 			BroadcasterUserName = data["broadcaster_user_name"].AsString(),
 			Title = data["title"].AsString(),
-			Choices = data["choices"].As<choices>(),
-			BitsVoting = data["bits_voting"].As<bits_voting>(),
-			ChannelPointsVoting = data["channel_points_voting"].As<channel_points_voting>(),
+			Choices = data["choices"].AsGodotArray().Select(x => TwitchChoices.FromData(x.AsGodotDictionary())).ToArray(),
+			BitsVoting = TwitchBitsVoting.FromData(data["bits_voting"].AsGodotDictionary()),
+			ChannelPointsVoting = TwitchChannelPointsVoting.FromData(data["channel_points_voting"].AsGodotDictionary()),
 			StartedAt = data["started_at"].AsString(),
 			EndsAt = data["ends_at"].AsString(),
 		};

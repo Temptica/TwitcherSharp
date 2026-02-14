@@ -15,15 +15,27 @@ public partial class TwitchDropEntitlementGrantEvent : Resource, ITwitcherSharpE
 	/// <summary> 
 	/// Entitlement object.
 	/// </summary>
-	public array Data { get; set; }
+	public TwitchData[] Data { get; set; }
 
 	public static TwitchDropEntitlementGrantEvent FromData(Dictionary data)
 	{
 	    return new TwitchDropEntitlementGrantEvent
 	    {
 			Id = data["id"].AsString(),
-			Data = data["data"].As<array>(),
+			Data = data["data"].AsGodotArray().Select(x => TwitchData.FromData(x.AsGodotDictionary())).ToArray(),
 		};
 	}
+
+public partial class TwitchData : Resource, ITwitcherSharpEventSub<TwitchData>
+{
+
+	public static TwitchData FromData(Dictionary data)
+	{
+	    return new TwitchData
+	    {
+		};
+	}
+
+}
 
 }
