@@ -11,6 +11,7 @@ public class TwitchEventSubParser
 
     public List<TwitchEventSubGenComponent> Components { get; } = [];
     public List<TwitchEventSubGenComponent> SubComponents { get; } = [];
+    public List<TwitchEventSubGenComponent> ConditionComponents { get; } = [];
 
     public async Task ParseEventSub()
     {
@@ -21,8 +22,8 @@ public class TwitchEventSubParser
         doc.LoadHtml(html);
 
         ParseSubComponents(doc);
-
         ParseComponents(doc);
+        ParseConditions(doc);
         Console.WriteLine($"{Components.Count} eventsub components parsed");
     }
 
@@ -87,7 +88,6 @@ public class TwitchEventSubParser
 
             var eventSubComponent = new TwitchEventSubGenComponent(h3Node.InnerText.Trim());
 
-
             var blockQuote = h3Node.GetNextElementSibling();
             HtmlNode table;
 
@@ -125,8 +125,27 @@ public class TwitchEventSubParser
             lastNode = table;
         }
     }
+    
+    private void ParseConditions(HtmlDocument doc)
+    {
+        var condition = doc.DocumentNode.SelectSingleNode("//h2[@id='conditions']");
+        var startPos = condition.Line;
+        var nextH2Node = doc.DocumentNode.SelectNodes("//h2").FirstOrDefault(n => n.Line > startPos) ??
+                         doc.DocumentNode.LastChild;
+        
+        var lastNode = condition;
+        while (lastNode.GetNextElementSibling() != nextH2Node)
+        {
+            var h3Node = lastNode.GetNextElementSibling();
+            var conditionComponent = new TwitchEventSubGenComponent(h3Node.InnerText.Trim());
+            var table = h3Node.GetNextElementSibling();
+            ParseTable(table, conditionComponent, true);
+            ConditionComponents.Add(conditionComponent);
+            lastNode = table;
+        }
+    }
 
-    private void ParseTable(HtmlNode table, TwitchEventSubGenComponent eventSubComponent)
+    private void ParseTable(HtmlNode table, TwitchEventSubGenComponent eventSubComponent, bool isCondition = false)
     {
         var rows = table.ChildNodes
             .First(n => n.Name == "tbody")
@@ -160,7 +179,7 @@ public class TwitchEventSubParser
 
             var fieldName = row.SelectSingleNode("td[1]/code").InnerText.Trim();
             var type = row.SelectSingleNode("td[2]").InnerText.Trim();
-            var description = row.SelectSingleNode("td[3]").InnerText.Trim();
+            var description = row.SelectSingleNode(isCondition ? "td[4]" : "td[3]").InnerText.Trim();
 
             if (type.EndsWith("[]") || type == "array" || type == "Array" ||
                 description.Contains("array", StringComparison.CurrentCultureIgnoreCase))

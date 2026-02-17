@@ -71,13 +71,14 @@ public static class ApiCodeHelper
         {
             parmsList.Add($"{method.BodyType} body");
         }
+        
+        parmsList.AddRange(method.RequiredParameters.Select(p => $"{p.Type} {p.Name.ToCamelCase()}"));
 
         if (method.ContainsOptional)
         {
-            parmsList.Add($"{method.GetOptionalClassName()} opt");
+            parmsList.Add($"{method.GetOptionalClassName()} opt = null");
         }
 
-        parmsList.AddRange(method.RequiredParameters.Select(p => $"{p.Type} {p.Name.ToCamelCase()}"));
         return string.Join(", ", parmsList);
     }
 
@@ -85,7 +86,7 @@ public static class ApiCodeHelper
     {
         var paramsList = new List<string>();
         if (method.ContainsBody) paramsList.Add("body.ToGodotObject()");
-        if (method.ContainsOptional) paramsList.Add("opt.ToGodotObject()");
+        if (method.ContainsOptional) paramsList.Add("opt?.ToGodotObject()");
         
         paramsList.AddRange(method.RequiredParameters.Select(p => p.Name.ToCamelCase()));
         

@@ -95,7 +95,7 @@ public static class EventSubCodeHelper
             code.AppendIndentedLine("public GodotObject ToGodotObject()", 1);
             code.AppendIndentedLine("{", 1);
 
-            type ??= component.ClassName.Remove("Event");
+            type ??= component.ClassName.Remove("Event").Remove("Condition");
 
             var path =
                 $"res://addons/twitcher/generated_eventsub/{type.Remove("V2").ToSnakeCase().Replace("twitch", "twitch_es")}.gd";
