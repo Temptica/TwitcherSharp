@@ -3,7 +3,7 @@ using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Users;
- 
+
 /// <summary> 
 ///  
 /// </summary>
@@ -32,4 +32,41 @@ public partial class TwitchGetUserActiveExtensionsResponse : Resource, ITwitcher
 		if(Data != null) request.Set("data", Data);
 		return request;
 	}
+	
+	/// <summary> 
+	/// The active extensions that the broadcaster has installed. 
+	/// </summary>
+	public partial class TwitchData : Resource, ITwitcherSharp<TwitchData>
+	{
+	    private GodotObject _data;
+		public Variant? Panel { get; set; }
+		public Variant? Overlay { get; set; }
+		public Variant? Component { get; set; }
+	
+	    /// <summary> 
+	    /// Transforms the godot data into a TwitchData object.
+	    /// </summary> 
+	    public static TwitchData FromObject(GodotObject data)
+	    {
+	        if(data == null) return null;
+			return new TwitchData
+			{
+				Panel = data.Get("panel").As<Variant>(),
+				Overlay = data.Get("overlay").As<Variant>(),
+				Component = data.Get("component").As<Variant>(),
+			};
+		}
+	
+		public GodotObject ToGodotObject()
+		{
+			var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_data.gd");
+			var request = script.Call("new").AsGodotObject();
+			if(Panel.HasValue) request.Set("panel", Panel.Value);
+			if(Overlay.HasValue) request.Set("overlay", Overlay.Value);
+			if(Component.HasValue) request.Set("component", Component.Value);
+			return request;
+		}
+	
+	}
+
 }

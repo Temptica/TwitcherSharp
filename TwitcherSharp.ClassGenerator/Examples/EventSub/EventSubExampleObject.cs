@@ -9,13 +9,24 @@ public partial class EventSubExampleObject : Resource, ITwitcherSharpEventSub<Ev
     public TwitchData[] Data { get; set; }
     public TwitchData DataTest { get; set; }
 
-    public static EventSubExampleObject FromData(Dictionary data)
+    public static EventSubExampleObject FromObject(GodotObject data)
     {
         return new EventSubExampleObject
         {
-            Data = data["data"].AsGodotArray().Select(x => TwitchData.FromData(x.AsGodotDictionary())).ToArray(),
-            DataTest = TwitchData.FromData(data["data"].AsGodotDictionary())
+            Data = data.Get("data").AsGodotObjectArray<GodotObject>().Select(TwitchData.FromObject).ToArray(),
+            DataTest = TwitchData.FromObject(data.Get("data_test").AsGodotObject())
         };
+    }
+
+    public GodotObject ToGodotObject()
+    {
+        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_users.gd");
+
+        var optClass = script.Get("Body").AsGodotObject();
+        var request = optClass.Call("new").AsGodotObject();
+        request.Set("data", Data);
+        request.Set("data_test", DataTest);
+        return request;
     }
 
     public partial class TwitchData : Resource, ITwitcherSharpEventSub<TwitchData>
@@ -24,17 +35,29 @@ public partial class EventSubExampleObject : Resource, ITwitcherSharpEventSub<Ev
         public string BroadcasterUserName { get; set; }
         public string BroadcasterUserLogin { get; set; }
 
-        public static TwitchData FromData(Dictionary data)
+        public static TwitchData FromObject(GodotObject data)
         {
             return new TwitchData
             {
-                BroadcasterUserId = data["broadcaster_user_id"].AsString(),
-                BroadcasterUserName = data["broadcaster_user_name"].AsString(),
-                BroadcasterUserLogin = data["broadcaster_user_login"].AsString()
+                BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
+                BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
+                BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString()
             };
+        }
+
+        public GodotObject ToGodotObject()
+        {
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated_es_automod_message_hold.gd");
+            var optClass = script.Get("Body").AsGodotObject();
+            var request = optClass.Call("new").AsGodotObject();
+            request.Set("broadcaster_user_id", BroadcasterUserId);
+            request.Set("broadcaster_user_name", BroadcasterUserName);
+            request.Set("broadcaster_user_login", BroadcasterUserLogin);
+            return request;
         }
     }
 }
+
 
 // EventSubComponent
 // // Fields

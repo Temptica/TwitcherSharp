@@ -3,7 +3,7 @@ using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Shared;
- 
+
 /// <summary> 
 ///  
 /// </summary>
@@ -61,4 +61,5 @@ public partial class TwitchAutoModSettings : Resource, ITwitcherSharp<TwitchAuto
 		request.Set("sex_based_terms", SexBasedTerms);
 		return request;
 	}
+
 }

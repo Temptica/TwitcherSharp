@@ -3,7 +3,7 @@ using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Polls;
- 
+
 /// <summary> 
 ///  
 /// </summary>
@@ -33,4 +33,5 @@ public partial class TwitchEndPollResponse : Resource, ITwitcherSharp<TwitchEndP
 		request.Set("data", Data);
 		return request;
 	}
+
 }

@@ -3,7 +3,7 @@ using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.GuestStar;
- 
+
 /// <summary> 
 ///  
 /// </summary>
@@ -44,4 +44,5 @@ public partial class TwitchGetChannelGuestStarSettingsResponse : Resource, ITwit
 		request.Set("browser_source_token", BrowserSourceToken);
 		return request;
 	}
+
 }

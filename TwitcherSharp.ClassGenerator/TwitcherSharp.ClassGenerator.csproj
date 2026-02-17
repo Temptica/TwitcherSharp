@@ -27,4 +27,8 @@
       <PackageReference Include="HtmlAgilityPack" Version="1.12.4" />
       <PackageReference Include="Microsoft.OpenApi.Readers" Version="1.6.28" />
     </ItemGroup>
+
+<!--    <ItemGroup>-->
+<!--      <ProjectReference Include="..\TwitcherSharp\TwitcherSharp.csproj" />-->
+<!--    </ItemGroup>-->
 </Project>

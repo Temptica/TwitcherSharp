@@ -3,7 +3,7 @@ using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Predictions;
- 
+
 /// <summary> 
 ///  
 /// </summary>
@@ -41,4 +41,5 @@ public partial class TwitchEndPredictionBody : Resource, ITwitcherSharp<TwitchEn
 		if(WinningOutcomeId != null) request.Set("winning_outcome_id", WinningOutcomeId);
 		return request;
 	}
+
 }

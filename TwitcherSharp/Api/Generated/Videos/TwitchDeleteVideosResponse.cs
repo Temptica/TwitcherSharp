@@ -3,7 +3,7 @@ using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Videos;
- 
+
 /// <summary> 
 ///  
 /// </summary>
@@ -32,4 +32,5 @@ public partial class TwitchDeleteVideosResponse : Resource, ITwitcherSharp<Twitc
 		request.Set("data", Data);
 		return request;
 	}
+
 }

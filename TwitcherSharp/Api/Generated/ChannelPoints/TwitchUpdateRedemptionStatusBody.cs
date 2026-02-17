@@ -3,7 +3,7 @@ using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.ChannelPoints;
- 
+
 /// <summary> 
 ///  
 /// </summary>
@@ -32,4 +32,5 @@ public partial class TwitchUpdateRedemptionStatusBody : Resource, ITwitcherSharp
 		request.Set("status", Status);
 		return request;
 	}
+
 }

@@ -3,7 +3,7 @@ using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Shared;
- 
+
 /// <summary> 
 ///  
 /// </summary>
@@ -61,4 +61,5 @@ public partial class TwitchUser : Resource, ITwitcherSharp<TwitchUser>
 		request.Set("created_at", CreatedAt);
 		return request;
 	}
+
 }

@@ -9,6 +9,7 @@ public partial class ExampleObjectBody : Resource, ITwitcherSharp<ExampleObjectB
     public string TestObject { get; set; }
     public string[] TestArray { get; set; }
     public ExampleObject[] Objects { get; set; }
+    public TwitchData[] Objects2 { get; set; }
 
     public static ExampleObjectBody FromObject(GodotObject data)
     {
@@ -19,6 +20,7 @@ public partial class ExampleObjectBody : Resource, ITwitcherSharp<ExampleObjectB
             TestObject = data.Get("test_object").AsString(),
             TestArray = data.Get("test_array").AsStringArray(),
             Objects = objectsArray.Select(ExampleObject.FromObject).ToArray(),
+            Objects2 = objectsArray.Select(TwitchData.FromObject).ToArray(),
         };
     }
 
@@ -32,6 +34,20 @@ public partial class ExampleObjectBody : Resource, ITwitcherSharp<ExampleObjectB
         request.Set("test_object", TestObject);
         return request;
     }
+    
+    public partial class TwitchData : Resource, ITwitcherSharp<TwitchData>
+    {
+        public static TwitchData FromObject(GodotObject data)
+        {
+            throw new NotImplementedException();
+        }
+
+        public GodotObject ToGodotObject()
+        {
+            throw new NotImplementedException();
+        }
+    }
+    
 }
 
 public partial class ExampleObjectOptionals : Resource, ITwitcherSharp<ExampleObjectOptionals>
@@ -60,6 +76,12 @@ public partial class ExampleObjectResponse : Resource, ITwitcherSharp<ExampleObj
         {
             _data = data
         };
+    }
+
+    public void Test()
+    {
+        var test = new ExampleObjectBody();
+        test.Objects2[0] = new ExampleObjectBody.TwitchData();
     }
 
     public GodotObject ToGodotObject()

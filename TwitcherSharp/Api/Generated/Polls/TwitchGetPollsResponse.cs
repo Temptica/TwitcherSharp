@@ -3,7 +3,7 @@ using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Polls;
- 
+
 /// <summary> 
 ///  
 /// </summary>
@@ -36,4 +36,5 @@ public partial class TwitchGetPollsResponse : Resource, ITwitcherSharp<TwitchGet
 		if(Pagination != null) request.Set("pagination", Pagination);
 		return request;
 	}
+
 }

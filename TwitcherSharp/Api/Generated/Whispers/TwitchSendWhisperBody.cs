@@ -3,7 +3,7 @@ using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Whispers;
- 
+
 /// <summary> 
 ///  
 /// </summary>
@@ -32,4 +32,5 @@ public partial class TwitchSendWhisperBody : Resource, ITwitcherSharp<TwitchSend
 		request.Set("message", Message);
 		return request;
 	}
+
 }

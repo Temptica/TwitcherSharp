@@ -3,7 +3,7 @@ using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Shared;
- 
+
 /// <summary> 
 ///  
 /// </summary>
@@ -49,4 +49,5 @@ public partial class TwitchBlockedTerm : Resource, ITwitcherSharp<TwitchBlockedT
 		request.Set("expires_at", ExpiresAt);
 		return request;
 	}
+
 }

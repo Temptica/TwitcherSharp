@@ -40,4 +40,19 @@ public class TwitchGenParameter : IComparable<TwitchGenParameter>
             _ => "null"
         };
     }
+    
+    public string GetAsType()
+    {
+        return Type switch
+        {
+            "string" => "AsString()",
+            "bool" => "AsBool()",
+            "int" => "AsInt32()",
+            "double" => "AsDouble()",
+            "string[]" => "AsStringArray()",
+            "int[]" => "AsInt32Array()",
+            "double[]" => "AsFloat64Array()",
+            _ => $"As<{Type}>()",
+        };
+    }
 }

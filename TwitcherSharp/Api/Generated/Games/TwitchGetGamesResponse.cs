@@ -3,7 +3,7 @@ using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Games;
- 
+
 /// <summary> 
 ///  
 /// </summary>
@@ -33,4 +33,5 @@ public partial class TwitchGetGamesResponse : Resource, ITwitcherSharp<TwitchGet
 		request.Set("data", Data);
 		return request;
 	}
+
 }

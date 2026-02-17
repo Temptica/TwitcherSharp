@@ -3,7 +3,7 @@ using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Shared;
- 
+
 /// <summary> 
 ///  
 /// </summary>
@@ -49,4 +49,38 @@ public partial class TwitchChannelStreamScheduleSegment : Resource, ITwitcherSha
 		request.Set("is_recurring", IsRecurring);
 		return request;
 	}
+	
+	/// <summary> 
+	/// The type of content that the broadcaster plans to stream or **null** if not specified. 
+	/// </summary>
+	public partial class TwitchCategory : Resource, ITwitcherSharp<TwitchCategory>
+	{
+	    private GodotObject _data;
+		public string Id { get; set; }
+		public string Name { get; set; }
+	
+	    /// <summary> 
+	    /// Transforms the godot data into a TwitchCategory object.
+	    /// </summary> 
+	    public static TwitchCategory FromObject(GodotObject data)
+	    {
+	        if(data == null) return null;
+			return new TwitchCategory
+			{
+				Id = data.Get("id").AsString(),
+				Name = data.Get("name").AsString(),
+			};
+		}
+	
+		public GodotObject ToGodotObject()
+		{
+			var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_category.gd");
+			var request = script.Call("new").AsGodotObject();
+			request.Set("id", Id);
+			request.Set("name", Name);
+			return request;
+		}
+	
+	}
+
 }

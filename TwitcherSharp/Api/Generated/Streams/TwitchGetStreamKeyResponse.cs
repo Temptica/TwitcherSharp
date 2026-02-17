@@ -3,7 +3,7 @@ using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Streams;
- 
+
 /// <summary> 
 ///  
 /// </summary>
@@ -33,4 +33,35 @@ public partial class TwitchGetStreamKeyResponse : Resource, ITwitcherSharp<Twitc
 		request.Set("data", Data);
 		return request;
 	}
+	
+	/// <summary> 
+	/// A list that contains the channel’s stream key. 
+	/// </summary>
+	public partial class TwitchData : Resource, ITwitcherSharp<TwitchData>
+	{
+	    private GodotObject _data;
+		public string StreamKey { get; set; }
+	
+	    /// <summary> 
+	    /// Transforms the godot data into a TwitchData object.
+	    /// </summary> 
+	    public static TwitchData FromObject(GodotObject data)
+	    {
+	        if(data == null) return null;
+			return new TwitchData
+			{
+				StreamKey = data.Get("stream_key").AsString(),
+			};
+		}
+	
+		public GodotObject ToGodotObject()
+		{
+			var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_data.gd");
+			var request = script.Call("new").AsGodotObject();
+			request.Set("stream_key", StreamKey);
+			return request;
+		}
+	
+	}
+
 }

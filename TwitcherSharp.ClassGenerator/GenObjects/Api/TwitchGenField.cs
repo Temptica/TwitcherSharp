@@ -28,7 +28,7 @@ public class TwitchGenField
     public bool IsArray { get; set; }
     public string CleanedType => Type.Split('/')[^1] + (IsArray ? "[]" : "");
     public string CleanedArrayType => Type.Split('/')[^1];
-    public bool IsTyped => Type.Contains("Twitch");
+    public bool IsTyped => TypedComponent != null;
     public string GetAsType()
     {
         return CleanedType switch
@@ -43,4 +43,6 @@ public class TwitchGenField
             _ => $"As<{CleanedType}>()",
         };
     }
+    
+    public TwitchGenComponent TypedComponent { get; set; }
 }

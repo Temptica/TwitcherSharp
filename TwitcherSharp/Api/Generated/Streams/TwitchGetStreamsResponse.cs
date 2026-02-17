@@ -3,7 +3,7 @@ using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Streams;
- 
+
 /// <summary> 
 ///  
 /// </summary>
@@ -36,4 +36,5 @@ public partial class TwitchGetStreamsResponse : Resource, ITwitcherSharp<TwitchG
 		if(Pagination != null) request.Set("pagination", Pagination);
 		return request;
 	}
+
 }

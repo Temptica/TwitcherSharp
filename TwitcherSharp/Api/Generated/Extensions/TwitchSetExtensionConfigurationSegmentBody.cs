@@ -3,7 +3,7 @@ using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Extensions;
- 
+
 /// <summary> 
 ///  
 /// </summary>
@@ -44,4 +44,5 @@ public partial class TwitchSetExtensionConfigurationSegmentBody : Resource, ITwi
 		if(Version != null) request.Set("version", Version);
 		return request;
 	}
+
 }

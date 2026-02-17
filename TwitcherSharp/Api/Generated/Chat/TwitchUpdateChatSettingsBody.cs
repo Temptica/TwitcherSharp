@@ -3,7 +3,7 @@ using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Chat;
- 
+
 /// <summary> 
 ///  
 /// </summary>
@@ -56,4 +56,5 @@ public partial class TwitchUpdateChatSettingsBody : Resource, ITwitcherSharp<Twi
 		if(UniqueChatMode.HasValue) request.Set("unique_chat_mode", UniqueChatMode.Value);
 		return request;
 	}
+
 }

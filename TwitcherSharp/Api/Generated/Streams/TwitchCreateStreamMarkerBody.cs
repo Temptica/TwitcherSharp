@@ -3,7 +3,7 @@ using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Streams;
- 
+
 /// <summary> 
 ///  
 /// </summary>
@@ -35,4 +35,5 @@ public partial class TwitchCreateStreamMarkerBody : Resource, ITwitcherSharp<Twi
 		if(Description != null) request.Set("description", Description);
 		return request;
 	}
+
 }

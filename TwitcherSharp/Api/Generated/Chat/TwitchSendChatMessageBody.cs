@@ -3,7 +3,7 @@ using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Chat;
- 
+
 /// <summary> 
 ///  
 /// </summary>
@@ -44,4 +44,5 @@ public partial class TwitchSendChatMessageBody : Resource, ITwitcherSharp<Twitch
 		if(ForSourceOnly.HasValue) request.Set("for_source_only", ForSourceOnly.Value);
 		return request;
 	}
+
 }

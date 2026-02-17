@@ -3,7 +3,7 @@ using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Schedule;
- 
+
 /// <summary> 
 ///  
 /// </summary>
@@ -47,4 +47,5 @@ public partial class TwitchCreateChannelStreamScheduleSegmentBody : Resource, IT
 		if(Title != null) request.Set("title", Title);
 		return request;
 	}
+
 }

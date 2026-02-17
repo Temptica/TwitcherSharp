@@ -3,7 +3,7 @@ using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Ads;
- 
+
 /// <summary> 
 ///  
 /// </summary>
@@ -33,4 +33,50 @@ public partial class TwitchGetAdScheduleResponse : Resource, ITwitcherSharp<Twit
 		request.Set("data", Data);
 		return request;
 	}
+	
+	/// <summary> 
+	/// A list that contains information related to the channel’s ad schedule. 
+	/// </summary>
+	public partial class TwitchData : Resource, ITwitcherSharp<TwitchData>
+	{
+	    private GodotObject _data;
+		public int SnoozeCount { get; set; }
+		public string SnoozeRefreshAt { get; set; }
+		public string NextAdAt { get; set; }
+		public int Duration { get; set; }
+		public string LastAdAt { get; set; }
+		public int PrerollFreeTime { get; set; }
+	
+	    /// <summary> 
+	    /// Transforms the godot data into a TwitchData object.
+	    /// </summary> 
+	    public static TwitchData FromObject(GodotObject data)
+	    {
+	        if(data == null) return null;
+			return new TwitchData
+			{
+				SnoozeCount = data.Get("snooze_count").AsInt32(),
+				SnoozeRefreshAt = data.Get("snooze_refresh_at").AsString(),
+				NextAdAt = data.Get("next_ad_at").AsString(),
+				Duration = data.Get("duration").AsInt32(),
+				LastAdAt = data.Get("last_ad_at").AsString(),
+				PrerollFreeTime = data.Get("preroll_free_time").AsInt32(),
+			};
+		}
+	
+		public GodotObject ToGodotObject()
+		{
+			var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_data.gd");
+			var request = script.Call("new").AsGodotObject();
+			request.Set("snooze_count", SnoozeCount);
+			request.Set("snooze_refresh_at", SnoozeRefreshAt);
+			request.Set("next_ad_at", NextAdAt);
+			request.Set("duration", Duration);
+			request.Set("last_ad_at", LastAdAt);
+			request.Set("preroll_free_time", PrerollFreeTime);
+			return request;
+		}
+	
+	}
+
 }

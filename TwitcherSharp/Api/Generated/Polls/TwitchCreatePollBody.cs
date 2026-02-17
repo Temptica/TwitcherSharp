@@ -3,7 +3,7 @@ using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Polls;
- 
+
 /// <summary> 
 ///  
 /// </summary>
@@ -48,4 +48,35 @@ public partial class TwitchCreatePollBody : Resource, ITwitcherSharp<TwitchCreat
 		if(ChannelPointsPerVote.HasValue) request.Set("channel_points_per_vote", ChannelPointsPerVote.Value);
 		return request;
 	}
+	
+	/// <summary> 
+	/// A list of choices that viewers may choose from. The list must contain a minimum of 2 choices and up to a maximum of 5 choices. 
+	/// </summary>
+	public partial class TwitchChoices : Resource, ITwitcherSharp<TwitchChoices>
+	{
+	    private GodotObject _data;
+		public string Title { get; set; }
+	
+	    /// <summary> 
+	    /// Transforms the godot data into a TwitchChoices object.
+	    /// </summary> 
+	    public static TwitchChoices FromObject(GodotObject data)
+	    {
+	        if(data == null) return null;
+			return new TwitchChoices
+			{
+				Title = data.Get("title").AsString(),
+			};
+		}
+	
+		public GodotObject ToGodotObject()
+		{
+			var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_choices.gd");
+			var request = script.Call("new").AsGodotObject();
+			request.Set("title", Title);
+			return request;
+		}
+	
+	}
+
 }

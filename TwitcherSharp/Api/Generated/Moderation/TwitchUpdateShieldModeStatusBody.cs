@@ -3,7 +3,7 @@ using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
- 
+
 /// <summary> 
 ///  
 /// </summary>
@@ -32,4 +32,5 @@ public partial class TwitchUpdateShieldModeStatusBody : Resource, ITwitcherSharp
 		request.Set("is_active", IsActive);
 		return request;
 	}
+
 }

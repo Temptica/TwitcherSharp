@@ -3,7 +3,7 @@ using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
- 
+
 /// <summary> 
 ///  
 /// </summary>
@@ -33,4 +33,47 @@ public partial class TwitchBanUserResponse : Resource, ITwitcherSharp<TwitchBanU
 		request.Set("data", Data);
 		return request;
 	}
+	
+	/// <summary> 
+	/// A list that contains the user you successfully banned or put in a timeout. 
+	/// </summary>
+	public partial class TwitchData : Resource, ITwitcherSharp<TwitchData>
+	{
+	    private GodotObject _data;
+		public string BroadcasterId { get; set; }
+		public string ModeratorId { get; set; }
+		public string UserId { get; set; }
+		public string CreatedAt { get; set; }
+		public string EndTime { get; set; }
+	
+	    /// <summary> 
+	    /// Transforms the godot data into a TwitchData object.
+	    /// </summary> 
+	    public static TwitchData FromObject(GodotObject data)
+	    {
+	        if(data == null) return null;
+			return new TwitchData
+			{
+				BroadcasterId = data.Get("broadcaster_id").AsString(),
+				ModeratorId = data.Get("moderator_id").AsString(),
+				UserId = data.Get("user_id").AsString(),
+				CreatedAt = data.Get("created_at").AsString(),
+				EndTime = data.Get("end_time").AsString(),
+			};
+		}
+	
+		public GodotObject ToGodotObject()
+		{
+			var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_data.gd");
+			var request = script.Call("new").AsGodotObject();
+			request.Set("broadcaster_id", BroadcasterId);
+			request.Set("moderator_id", ModeratorId);
+			request.Set("user_id", UserId);
+			request.Set("created_at", CreatedAt);
+			request.Set("end_time", EndTime);
+			return request;
+		}
+	
+	}
+
 }

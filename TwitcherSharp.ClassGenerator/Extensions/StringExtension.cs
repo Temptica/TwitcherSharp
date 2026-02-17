@@ -46,5 +46,10 @@ public static class StringExtension
 
             return result.StartsWith('_') ? result[1..] : result;
         }
+
+        public string Remove(string searchToRemove)
+        {
+            return type.Replace(searchToRemove, "");
+        }
     }
 }

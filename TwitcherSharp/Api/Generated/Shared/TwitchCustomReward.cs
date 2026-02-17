@@ -3,7 +3,7 @@ using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Shared;
- 
+
 /// <summary> 
 ///  
 /// </summary>
@@ -88,4 +88,176 @@ public partial class TwitchCustomReward : Resource, ITwitcherSharp<TwitchCustomR
 		request.Set("cooldown_expires_at", CooldownExpiresAt);
 		return request;
 	}
+	
+	/// <summary> 
+	/// A set of custom images for the reward. This field is **null** if the broadcaster didn’t upload images. 
+	/// </summary>
+	public partial class TwitchImage : Resource, ITwitcherSharp<TwitchImage>
+	{
+	    private GodotObject _data;
+		public string Url1x { get; set; }
+		public string Url2x { get; set; }
+		public string Url4x { get; set; }
+	
+	    /// <summary> 
+	    /// Transforms the godot data into a TwitchImage object.
+	    /// </summary> 
+	    public static TwitchImage FromObject(GodotObject data)
+	    {
+	        if(data == null) return null;
+			return new TwitchImage
+			{
+				Url1x = data.Get("url_1x").AsString(),
+				Url2x = data.Get("url_2x").AsString(),
+				Url4x = data.Get("url_4x").AsString(),
+			};
+		}
+	
+		public GodotObject ToGodotObject()
+		{
+			var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_image.gd");
+			var request = script.Call("new").AsGodotObject();
+			request.Set("url_1x", Url1x);
+			request.Set("url_2x", Url2x);
+			request.Set("url_4x", Url4x);
+			return request;
+		}
+	
+	}
+	
+	/// <summary> 
+	/// A set of default images for the reward. 
+	/// </summary>
+	public partial class TwitchDefaultImage : Resource, ITwitcherSharp<TwitchDefaultImage>
+	{
+	    private GodotObject _data;
+		public string Url1x { get; set; }
+		public string Url2x { get; set; }
+		public string Url4x { get; set; }
+	
+	    /// <summary> 
+	    /// Transforms the godot data into a TwitchDefaultImage object.
+	    /// </summary> 
+	    public static TwitchDefaultImage FromObject(GodotObject data)
+	    {
+	        if(data == null) return null;
+			return new TwitchDefaultImage
+			{
+				Url1x = data.Get("url_1x").AsString(),
+				Url2x = data.Get("url_2x").AsString(),
+				Url4x = data.Get("url_4x").AsString(),
+			};
+		}
+	
+		public GodotObject ToGodotObject()
+		{
+			var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_default_image.gd");
+			var request = script.Call("new").AsGodotObject();
+			request.Set("url_1x", Url1x);
+			request.Set("url_2x", Url2x);
+			request.Set("url_4x", Url4x);
+			return request;
+		}
+	
+	}
+	
+	/// <summary> 
+	/// The settings used to determine whether to apply a maximum to the number of redemptions allowed per live stream. 
+	/// </summary>
+	public partial class TwitchMaxPerStreamSetting : Resource, ITwitcherSharp<TwitchMaxPerStreamSetting>
+	{
+	    private GodotObject _data;
+		public bool IsEnabled { get; set; }
+		public int MaxPerStream { get; set; }
+	
+	    /// <summary> 
+	    /// Transforms the godot data into a TwitchMaxPerStreamSetting object.
+	    /// </summary> 
+	    public static TwitchMaxPerStreamSetting FromObject(GodotObject data)
+	    {
+	        if(data == null) return null;
+			return new TwitchMaxPerStreamSetting
+			{
+				IsEnabled = data.Get("is_enabled").AsBool(),
+				MaxPerStream = data.Get("max_per_stream").AsInt32(),
+			};
+		}
+	
+		public GodotObject ToGodotObject()
+		{
+			var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_max_per_stream_setting.gd");
+			var request = script.Call("new").AsGodotObject();
+			request.Set("is_enabled", IsEnabled);
+			request.Set("max_per_stream", MaxPerStream);
+			return request;
+		}
+	
+	}
+	
+	/// <summary> 
+	/// The settings used to determine whether to apply a maximum to the number of redemptions allowed per user per live stream. 
+	/// </summary>
+	public partial class TwitchMaxPerUserPerStreamSetting : Resource, ITwitcherSharp<TwitchMaxPerUserPerStreamSetting>
+	{
+	    private GodotObject _data;
+		public bool IsEnabled { get; set; }
+		public int MaxPerUserPerStream { get; set; }
+	
+	    /// <summary> 
+	    /// Transforms the godot data into a TwitchMaxPerUserPerStreamSetting object.
+	    /// </summary> 
+	    public static TwitchMaxPerUserPerStreamSetting FromObject(GodotObject data)
+	    {
+	        if(data == null) return null;
+			return new TwitchMaxPerUserPerStreamSetting
+			{
+				IsEnabled = data.Get("is_enabled").AsBool(),
+				MaxPerUserPerStream = data.Get("max_per_user_per_stream").AsInt32(),
+			};
+		}
+	
+		public GodotObject ToGodotObject()
+		{
+			var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_max_per_user_per_stream_setting.gd");
+			var request = script.Call("new").AsGodotObject();
+			request.Set("is_enabled", IsEnabled);
+			request.Set("max_per_user_per_stream", MaxPerUserPerStream);
+			return request;
+		}
+	
+	}
+	
+	/// <summary> 
+	/// The settings used to determine whether to apply a cooldown period between redemptions and the length of the cooldown. 
+	/// </summary>
+	public partial class TwitchGlobalCooldownSetting : Resource, ITwitcherSharp<TwitchGlobalCooldownSetting>
+	{
+	    private GodotObject _data;
+		public bool IsEnabled { get; set; }
+		public int GlobalCooldownSeconds { get; set; }
+	
+	    /// <summary> 
+	    /// Transforms the godot data into a TwitchGlobalCooldownSetting object.
+	    /// </summary> 
+	    public static TwitchGlobalCooldownSetting FromObject(GodotObject data)
+	    {
+	        if(data == null) return null;
+			return new TwitchGlobalCooldownSetting
+			{
+				IsEnabled = data.Get("is_enabled").AsBool(),
+				GlobalCooldownSeconds = data.Get("global_cooldown_seconds").AsInt32(),
+			};
+		}
+	
+		public GodotObject ToGodotObject()
+		{
+			var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_global_cooldown_setting.gd");
+			var request = script.Call("new").AsGodotObject();
+			request.Set("is_enabled", IsEnabled);
+			request.Set("global_cooldown_seconds", GlobalCooldownSeconds);
+			return request;
+		}
+	
+	}
+
 }

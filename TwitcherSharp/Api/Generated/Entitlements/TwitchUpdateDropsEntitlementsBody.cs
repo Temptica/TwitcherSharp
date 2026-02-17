@@ -3,7 +3,7 @@ using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Entitlements;
- 
+
 /// <summary> 
 ///  
 /// </summary>
@@ -35,4 +35,5 @@ public partial class TwitchUpdateDropsEntitlementsBody : Resource, ITwitcherShar
 		if(FulfillmentStatus != null) request.Set("fulfillment_status", FulfillmentStatus);
 		return request;
 	}
+
 }

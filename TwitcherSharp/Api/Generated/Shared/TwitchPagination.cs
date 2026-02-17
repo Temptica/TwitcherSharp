@@ -3,9 +3,9 @@ using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Shared;
- 
+
 /// <summary> 
-/// Contains the information used to page through the list of results. The object is empty if there are no more pages left to page through. [Read More](https://dev.twitch.tv/docs/api/guide#pagination) 
+/// Contains the information used to page through the list of results. The object is empty if there are no more pages left to page through 
 /// </summary>
 public partial class TwitchPagination : Resource, ITwitcherSharp<TwitchPagination>
 {
@@ -31,4 +31,5 @@ public partial class TwitchPagination : Resource, ITwitcherSharp<TwitchPaginatio
 		if(Cursor != null) request.Set("cursor", Cursor);
 		return request;
 	}
+
 }

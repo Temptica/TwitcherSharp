@@ -3,7 +3,7 @@ using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Channels;
- 
+
 /// <summary> 
 ///  
 /// </summary>
@@ -33,4 +33,41 @@ public partial class TwitchGetChannelEditorsResponse : Resource, ITwitcherSharp<
 		request.Set("data", Data);
 		return request;
 	}
+	
+	/// <summary> 
+	///  
+	/// </summary>
+	public partial class TwitchChannelEditor : Resource, ITwitcherSharp<TwitchChannelEditor>
+	{
+	    private GodotObject _data;
+		public string UserId { get; set; }
+		public string UserName { get; set; }
+		public string CreatedAt { get; set; }
+	
+	    /// <summary> 
+	    /// Transforms the godot data into a TwitchChannelEditor object.
+	    /// </summary> 
+	    public static TwitchChannelEditor FromObject(GodotObject data)
+	    {
+	        if(data == null) return null;
+			return new TwitchChannelEditor
+			{
+				UserId = data.Get("user_id").AsString(),
+				UserName = data.Get("user_name").AsString(),
+				CreatedAt = data.Get("created_at").AsString(),
+			};
+		}
+	
+		public GodotObject ToGodotObject()
+		{
+			var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_channel_editor.gd");
+			var request = script.Call("new").AsGodotObject();
+			request.Set("user_id", UserId);
+			request.Set("user_name", UserName);
+			request.Set("created_at", CreatedAt);
+			return request;
+		}
+	
+	}
+
 }

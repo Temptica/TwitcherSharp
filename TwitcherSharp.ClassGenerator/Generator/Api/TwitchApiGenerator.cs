@@ -1,7 +1,7 @@
 using System.Text;
-using ClassGenerator.ApiParser;
 using ClassGenerator.Extensions;
 using ClassGenerator.GenObjects.Api;
+using ClassGenerator.Parsers;
 using Godot;
 
 namespace ClassGenerator.Generator.Api;
@@ -50,20 +50,21 @@ public class TwitchApiGenerator
             string code;
             if (obj.IsBody)
             {
-                code = ApiCodeHelper.ComponentCode(obj, "Body");
+                code = ApiCodeHelper.GlobalComponentCode(obj, "Body");
             }
             else if (obj.IsOpt)
             {
-                code = ApiCodeHelper.ComponentCode(obj, "Opt");
+                code = ApiCodeHelper.GlobalComponentCode(obj, "Opt");
             }
             else if (obj.IsResponse)
             {
-                code = ApiCodeHelper.ComponentCode(obj, "Response");
+                code = ApiCodeHelper.GlobalComponentCode(obj, "Response");
             }
-            else
+            else if(obj.IsGlobal)
             {
-                code = ApiCodeHelper.ComponentCode(obj);
+                code = ApiCodeHelper.GlobalComponentCode(obj);
             }
+            else continue;
 
             var tag = obj.GetTag();
             Directory.CreateDirectory($"{apiPath}{tag}");
@@ -74,6 +75,12 @@ public class TwitchApiGenerator
     private void PrepareComponent(TwitchGenComponent component)
     {
         var baseName = GetBaseName(component.ClassName);
+
+        if (string.IsNullOrEmpty(component.GetTag()))
+        {
+            Console.Error.WriteLine($"No tag found for {component.ClassName}");
+            return;
+        }
 
         if (baseName == component.ClassName)
         {
@@ -87,28 +94,9 @@ public class TwitchApiGenerator
                 "Stream" => "Twitch" + baseName,
                 _ => component.ClassName
             };
-
-            _components[component.ClassName] = component;
-            return;
         }
 
         _components[component.ClassName] = component;
-        component.AddMeta("fqdn", component.ClassName);
-    }
-
-    private string GetType(string type, bool isArray = false, bool fullyQualified = false)
-    {
-        if (!type.StartsWith('#')) return isArray ? $"{type}[]" : type;
-
-        var component = _apiParser.GetComponentByRef(type);
-        var resultType = component.ClassName;
-
-        if (fullyQualified && component.HasMeta("fqdn"))
-        {
-            resultType = component.GetMeta("fqdn");
-        }
-
-        return isArray ? $"{resultType}[]" : resultType;
     }
 
     private static string GetBaseName(string file)

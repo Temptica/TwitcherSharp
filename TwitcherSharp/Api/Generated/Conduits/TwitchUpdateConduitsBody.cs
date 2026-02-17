@@ -3,7 +3,7 @@ using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Conduits;
- 
+
 /// <summary> 
 ///  
 /// </summary>
@@ -35,4 +35,5 @@ public partial class TwitchUpdateConduitsBody : Resource, ITwitcherSharp<TwitchU
 		request.Set("shard_count", ShardCount);
 		return request;
 	}
+
 }

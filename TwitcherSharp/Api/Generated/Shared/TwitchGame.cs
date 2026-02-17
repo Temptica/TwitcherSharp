@@ -3,7 +3,7 @@ using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Shared;
- 
+
 /// <summary> 
 ///  
 /// </summary>
@@ -40,4 +40,5 @@ public partial class TwitchGame : Resource, ITwitcherSharp<TwitchGame>
 		request.Set("igdb_id", IgdbId);
 		return request;
 	}
+
 }

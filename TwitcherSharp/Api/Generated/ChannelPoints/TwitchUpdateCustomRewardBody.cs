@@ -3,7 +3,7 @@ using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.ChannelPoints;
- 
+
 /// <summary> 
 ///  
 /// </summary>
@@ -71,4 +71,5 @@ public partial class TwitchUpdateCustomRewardBody : Resource, ITwitcherSharp<Twi
 		if(ShouldRedemptionsSkipRequestQueue.HasValue) request.Set("should_redemptions_skip_request_queue", ShouldRedemptionsSkipRequestQueue.Value);
 		return request;
 	}
+
 }

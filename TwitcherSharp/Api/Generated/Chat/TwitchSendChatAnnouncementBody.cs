@@ -3,7 +3,7 @@ using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Chat;
- 
+
 /// <summary> 
 ///  
 /// </summary>
@@ -35,4 +35,5 @@ public partial class TwitchSendChatAnnouncementBody : Resource, ITwitcherSharp<T
 		if(Color != null) request.Set("color", Color);
 		return request;
 	}
+
 }

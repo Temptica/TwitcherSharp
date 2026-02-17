@@ -107,10 +107,19 @@ public class TwitchEventSubParser
             ParseTable(table, eventSubComponent);
             Components.Add(eventSubComponent);
 
+            var nextSibling = table.GetNextElementSibling();
             // ReSharper disable once ConditionIsAlwaysTrueOrFalse // can be null!!
-            if (table.GetNextElementSibling() == null)
+            if (nextSibling == null)
             {
                 break;
+            }
+
+            if (nextSibling.Name == "p" && nextSibling.InnerText.Contains("Object")) 
+                //To battle the stupidity of twitch (such as Drop Entitlement Grant Event)
+            {
+                table = nextSibling.GetNextElementSibling();
+                var dataComponent = eventSubComponent.SubComponents.First(s => s.Key == "TwitchData");
+                ParseTable(table, dataComponent.Value);
             }
 
             lastNode = table;
@@ -171,8 +180,8 @@ public class TwitchEventSubParser
                     {
                         Description = description
                     };
-                
-                arrayField.Type = typedComponent.ClassName+"[]";
+
+                arrayField.Type = typedComponent.ClassName + "[]";
                 arrayField.TypedComponent = typedComponent;
                 currentParent.AddField(arrayField);
                 currentParent = typedComponent;

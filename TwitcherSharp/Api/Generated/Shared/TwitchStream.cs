@@ -3,7 +3,7 @@ using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Shared;
- 
+
 /// <summary> 
 ///  
 /// </summary>
@@ -73,4 +73,5 @@ public partial class TwitchStream : Resource, ITwitcherSharp<TwitchStream>
 		request.Set("is_mature", IsMature);
 		return request;
 	}
+
 }

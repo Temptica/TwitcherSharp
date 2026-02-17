@@ -3,7 +3,7 @@ using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Extensions;
- 
+
 /// <summary> 
 ///  
 /// </summary>
@@ -38,4 +38,5 @@ public partial class TwitchSetExtensionRequiredConfigurationBody : Resource, ITw
 		request.Set("required_configuration", RequiredConfiguration);
 		return request;
 	}
+
 }

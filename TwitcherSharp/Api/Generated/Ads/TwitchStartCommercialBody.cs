@@ -3,7 +3,7 @@ using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Ads;
- 
+
 /// <summary> 
 ///  
 /// </summary>
@@ -35,4 +35,5 @@ public partial class TwitchStartCommercialBody : Resource, ITwitcherSharp<Twitch
 		request.Set("length", Length);
 		return request;
 	}
+
 }

@@ -56,15 +56,20 @@ public static class ApiCodeStrings
                                           """;
 
     /// <summary>
-    /// parameters: root, description, className
+    /// parameters: root
     /// </summary>
-    public const string ComponentHeader = """
+    public const string ComponentUsings = """
                                           using TwitcherSharp.Interfaces;
                                           using TwitcherSharp.Api.Generated.Shared;
                                           using Godot;
                                              
                                           namespace TwitcherSharp.Api.Generated.{{root}};
-                                           
+                                          """;
+
+    /// <summary>
+    /// Param: description, className
+    /// </summary>
+    public const string ComponentHeader = """
                                           /// <summary> 
                                           /// {{description}} 
                                           /// </summary>
@@ -74,11 +79,11 @@ public static class ApiCodeStrings
                                           """;
 
     public const string ComponentFromBody = """
-                                              /// <summary> 
-                                              /// Transforms the godot data into a {{className}} object.
-                                              /// </summary> 
-                                              public static {{className}} FromObject(GodotObject data)
-                                              {
-                                                  if(data == null) return null;
-                                          """;
+                                                /// <summary> 
+                                                /// Transforms the godot data into a {{className}} object.
+                                                /// </summary> 
+                                                public static {{className}} FromObject(GodotObject data)
+                                                {
+                                                    if(data == null) return null;
+                                            """;
 }

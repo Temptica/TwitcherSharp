@@ -25,7 +25,12 @@ public static class ApiCodeHelper
             methodString.AppendIndentedLine(
                 $"/// <param name=\"opt\"><see cref=\"{method.GetOptionalClassName()}\"/></param>", 1);
 
-        methodString.AppendIndentedLine($"/// <returns><see cref=\"{method.ResultType}\"/></returns>", 1);
+        if (method.RequiredParameters.Count != 0)
+        {
+            methodString.AppendIndented(GetMethodParameterSummary(method.RequiredParameters),1);
+        }
+
+        methodString.AppendIndentedLine($"/// <returns><see cref=\"{method.ResultType}\"/></returns>", method.RequiredParameters.Count != 0 ? 1 : 0);
 
         methodString
             .AppendIndentedLine($"public async Task<{method.ResultType}> {method.Name}({GetMethodParameter(method)})",
@@ -34,7 +39,7 @@ public static class ApiCodeHelper
         methodString
             .AppendIndentedLine("{", 1);
 
-        var methods = GetGodotMethodParameter(method, true);
+        var methods = GetGodotMethodParameter(method);
 
         methodString.AppendIndentedLine(
             !string.IsNullOrEmpty(methods)
@@ -45,6 +50,17 @@ public static class ApiCodeHelper
         methodString.AppendIndentedLine("}", 1);
 
         return methodString.ToString();
+    }
+
+    private static string GetMethodParameterSummary(List<TwitchGenParameter> methodRequiredParameters)
+    {
+        var code = new StringBuilder();
+
+        foreach (var parameter in methodRequiredParameters)
+        {
+            code.AppendIndentedLine($"/// <param name=\"{parameter.Name.ToCamelCase()}\">{parameter.Description}</param>",0,"/// ");
+        }
+        return code.ToString();
     }
 
     private static string GetMethodParameter(TwitchGenMethod method)
@@ -61,23 +77,41 @@ public static class ApiCodeHelper
             parmsList.Add($"{method.GetOptionalClassName()} opt");
         }
 
+        parmsList.AddRange(method.RequiredParameters.Select(p => $"{p.Type} {p.Name.ToCamelCase()}"));
         return string.Join(", ", parmsList);
     }
 
-    private static string GetGodotMethodParameter(TwitchGenMethod method, bool toCamel = false)
+    private static string GetGodotMethodParameter(TwitchGenMethod method)
     {
         var paramsList = new List<string>();
         if (method.ContainsBody) paramsList.Add("body.ToGodotObject()");
         if (method.ContainsOptional) paramsList.Add("opt.ToGodotObject()");
+        
+        paramsList.AddRange(method.RequiredParameters.Select(p => p.Name.ToCamelCase()));
+        
         return string.Join(", ", paramsList);
     }
 
-    public static string ComponentCode(TwitchGenComponent component, string type = "")
+    public static string GlobalComponentCode(TwitchGenComponent component, string type = "")
     {
         var code = new StringBuilder();
 
+        code.AppendLine(ApiCodeStrings.ComponentUsings
+            .Replace("{{root}}", component.GetTag()));
+
+        code.AppendIndentedLine(ComponentCode(component, type));
+
+        code.AppendLine("}");
+        return code.ToString();
+    }
+
+    private static string ComponentCode(TwitchGenComponent component, string type = "")
+    {
+        var code = new StringBuilder();
+
+        code.AppendLine();
+
         code.AppendLine(ApiCodeStrings.ComponentHeader
-            .Replace("{{root}}", component.GetTag())
             .Replace("{{description}}", CleanDescription(component.Description))
             .Replace("{{className}}", component.ClassName));
 
@@ -86,7 +120,6 @@ public static class ApiCodeHelper
 
         foreach (var field in fields)
         {
-            //public string TestObject { get; set; }
             code.AppendIndentedLine(
                 $"public {field.CleanedType}{(field.IsRequired || field.IsNullableTyped ? "" : "?")} {field.Name} {{ get; set; }}",
                 1);
@@ -143,7 +176,6 @@ public static class ApiCodeHelper
         {
             if (!field.IsRequired)
             {
-                // if({field.Name}.HasValue) request.Set("{field.Name.ToSnakeCase()}", {field.Name.Value}.ToGodotObject());
                 if (field.IsNullableTyped)
                 {
                     code.AppendIndentedLine($"if({field.Name} != null) " + (
@@ -172,9 +204,16 @@ public static class ApiCodeHelper
 
         code.AppendIndentedLine("return request;", 2);
         code.AppendIndentedLine("}", 1);
-        code.AppendLine("}");
+
+        foreach (var subComponent in component.SubComponents.Where(c => !c.IsGlobal))
+        {
+            code.AppendIndentedLine(ComponentCode(subComponent), 1);
+            code.AppendIndentedLine("}", 1);
+        }
+
         return code.ToString();
     }
+
 
     private static string CleanDescription(string description, int level = 0)
     {

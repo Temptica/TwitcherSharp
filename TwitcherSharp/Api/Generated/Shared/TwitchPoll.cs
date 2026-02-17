@@ -3,7 +3,7 @@ using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Shared;
- 
+
 /// <summary> 
 ///  
 /// </summary>
@@ -71,4 +71,47 @@ public partial class TwitchPoll : Resource, ITwitcherSharp<TwitchPoll>
 		request.Set("ended_at", EndedAt);
 		return request;
 	}
+	
+	/// <summary> 
+	/// A list of choices that viewers can choose from. The list will contain a minimum of two choices and up to a maximum of five choices. 
+	/// </summary>
+	public partial class TwitchChoices : Resource, ITwitcherSharp<TwitchChoices>
+	{
+	    private GodotObject _data;
+		public string Id { get; set; }
+		public string Title { get; set; }
+		public int Votes { get; set; }
+		public int ChannelPointsVotes { get; set; }
+		public int BitsVotes { get; set; }
+	
+	    /// <summary> 
+	    /// Transforms the godot data into a TwitchChoices object.
+	    /// </summary> 
+	    public static TwitchChoices FromObject(GodotObject data)
+	    {
+	        if(data == null) return null;
+			return new TwitchChoices
+			{
+				Id = data.Get("id").AsString(),
+				Title = data.Get("title").AsString(),
+				Votes = data.Get("votes").AsInt32(),
+				ChannelPointsVotes = data.Get("channel_points_votes").AsInt32(),
+				BitsVotes = data.Get("bits_votes").AsInt32(),
+			};
+		}
+	
+		public GodotObject ToGodotObject()
+		{
+			var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_choices.gd");
+			var request = script.Call("new").AsGodotObject();
+			request.Set("id", Id);
+			request.Set("title", Title);
+			request.Set("votes", Votes);
+			request.Set("channel_points_votes", ChannelPointsVotes);
+			request.Set("bits_votes", BitsVotes);
+			return request;
+		}
+	
+	}
+
 }

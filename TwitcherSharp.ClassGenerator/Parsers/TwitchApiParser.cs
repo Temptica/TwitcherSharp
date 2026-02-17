@@ -1,10 +1,9 @@
 using ClassGenerator.Extensions;
-using ClassGenerator.GenObjects;
 using ClassGenerator.GenObjects.Api;
 using Microsoft.OpenApi.Models;
 using Microsoft.OpenApi.Readers;
 
-namespace ClassGenerator.ApiParser;
+namespace ClassGenerator.Parsers;
 
 // V2
 public class TwitchApiParser
@@ -13,6 +12,7 @@ public class TwitchApiParser
 
     private OpenApiDocument Definition { get; set; }
     private IDictionary<string, TwitchGenComponent> Components { get; } = new Dictionary<string, TwitchGenComponent>();
+    private TwitchGenComponent Pagination { get; set; }
     private List<TwitchGenMethod> Methods { get; } = [];
 
     public async Task ParseApi()
@@ -24,6 +24,18 @@ public class TwitchApiParser
         Definition = openApiDocument ??
                      throw new Exception(
                          $"Failed to parse OpenAPI document: {diagnostic.Errors.FirstOrDefault()?.Message}");
+
+        var pagination = new TwitchGenComponent("TwitchPagination", "_",
+            "Contains the information used to page through the list of results. The object is empty if there are no more pages left to page through");
+        
+        pagination.AddField(new TwitchGenField
+        {
+            Name = "Cursor",
+            Type = "string",
+        });
+        
+        Components[pagination.ClassName] = pagination;
+        Pagination = pagination;
 
         ParseComponents();
         ParsingPaths();
@@ -66,30 +78,50 @@ public class TwitchApiParser
                 Type = GetParamType(property),
                 IsRequired = schema.Required?.Contains(name) ?? false
             };
+            
+            if (name.Equals("pagination", StringComparison.InvariantCultureIgnoreCase))
+            {
+                field.Type = "TwitchPagination";
+                field.TypedComponent = Pagination;
+                component.AddComponent(Pagination);
+                component.AddField(field);    
+                continue;
+            }
 
             var className = name.ToPascalCase();
 
-            if (property.Properties.Count > 0)
-            {
-                var subComponent = AddSubComponent(className, field.Description, component, property);
-                field.Type = "Twitch" + subComponent.Ref.Split("/").Last();
-            }
-
-            else if (property.Type == "array")
+            //if array of objects => items -> object -> properties
+            if (property.Type == "array")
             {
                 field.IsArray = true;
                 var items = property.Items;
 
-                if (items.Reference != null) field.Type = "Twitch" + items.Reference.ReferenceV3.Split("/").Last();
+                if (items.Reference != null)
+                {
+                    field.Type = "Twitch" + items.Reference.ReferenceV3.Split("/").Last();
+                    field.TypedComponent = GetComponentByRef(items.Reference.ReferenceV3);
+                    component.AddComponent(field.TypedComponent);
+                    
+                }
                 else if (items.Properties.Count > 0)
                 {
                     var subComponent = AddSubComponent(className, field.Description, component, items);
                     field.Type = "Twitch" + subComponent.Ref.Split("/").Last();
+                    field.TypedComponent = subComponent;
+                    component.AddComponent(field.TypedComponent);
+                    
                 }
                 else
                 {
                     field.Type = GetParamType(property.Items);
                 }
+            }
+            else if (property.Properties.Count > 0)
+            {
+                var subComponent = AddSubComponent(className, field.Description, component, property);
+                field.Type = "Twitch" + subComponent.Ref.Split("/").Last();
+                field.TypedComponent = subComponent;
+                component.AddComponent(field.TypedComponent);
             }
 
             component.AddField(field);
@@ -102,7 +134,6 @@ public class TwitchApiParser
         var @ref = $"{parentComponent.Ref}/{className}";
         var subComponent = new TwitchGenComponent(className, @ref, description);
         ParseProperties(subComponent, schema);
-        Components[className] = subComponent;
         return subComponent;
     }
 
@@ -122,27 +153,18 @@ public class TwitchApiParser
                 {
                     var component = method.GetOptionalComponent();
                     Components[component.ClassName] = component;
+                    component.Tag = tag;
                 }
 
                 //try find child component
-                if (Components.TryGetValue(method.Name + "Body", out var bodyComponent))
+                if (method.ContainsBody && Components.TryGetValue(method.BodyType.Replace("Twitch",""), out var bodyComponent))
                 {
                     bodyComponent.Tag = tag;
                 }
 
-                if (Components.TryGetValue(method.Name + "Opt", out var optComponent))
-                {
-                    optComponent.Tag = tag;
-                }
-
-                if (Components.TryGetValue(method.Name + "Response", out var responseComponent))
+                if (Components.TryGetValue(method.ResultType.Replace("Twitch",""), out var responseComponent))
                 {
                     responseComponent.Tag = tag;
-                }
-
-                if (Components.TryGetValue(method.Name, out var paramComponent))
-                {
-                    paramComponent.Tag = tag;
                 }
 
                 Methods.Add(method);
@@ -160,14 +182,11 @@ public class TwitchApiParser
             switch (componentParentTags.Count)
             {
                 case 0 when component.GetTag() != "Shared":
-                    component.IsGlobal = false;
                     continue;
                 case 1:
                     component.Tag = componentParentTags.First();
-                    component.IsGlobal = false;
                     break;
                 default:
-                    component.IsGlobal = true;
                     component.Tag = "Shared";
                     continue;
             }
@@ -266,7 +285,7 @@ public class TwitchApiParser
             "boolean" => "bool",
             "array" when schema.Items.Type == "string" => "string[]",
             "array" when schema.Items.Type == "int" => "int[]",
-            "array" when schema.Items.Type == "number" => "double[]",
+            "array" when schema.Items.Type == "number" => "int[]",
             "array" when schema.Items.Type == "float" => "double[]",
             "array" when schema.Items.Type == "boolean" => "bool[]",
             "array" when schema.Items?.Reference is not null

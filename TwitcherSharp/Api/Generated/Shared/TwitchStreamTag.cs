@@ -3,7 +3,7 @@ using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Shared;
- 
+
 /// <summary> 
 ///  
 /// </summary>
@@ -40,4 +40,5 @@ public partial class TwitchStreamTag : Resource, ITwitcherSharp<TwitchStreamTag>
 		request.Set("localization_descriptions", LocalizationDescriptions);
 		return request;
 	}
+
 }
