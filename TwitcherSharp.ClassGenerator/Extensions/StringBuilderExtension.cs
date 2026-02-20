@@ -11,7 +11,7 @@ public static class StringBuilderExtension
             var tabs = "";
             for (var i = 0; i < level; i++)
             {
-                tabs += "\t";
+                tabs += "    ";
             }
             
             code = code.Replace("\n", "\n"+tabs + prefix);
@@ -22,7 +22,7 @@ public static class StringBuilderExtension
             var tabs = "";
             for (var i = 0; i < level; i++)
             {
-                tabs += "\t";
+                tabs += "    ";
             }
             
             code = code.Replace("\n", "\n"+tabs + prefix);

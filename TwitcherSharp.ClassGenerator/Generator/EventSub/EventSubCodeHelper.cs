@@ -47,8 +47,11 @@ public static class EventSubCodeHelper
         code.AppendLine(header.Replace("{{ClassName}}", component.ClassName));
 
         code.AppendLine("{");
-        if (isCondition) code.AppendIndentedLine($"public string Name => nameof({component.ClassName});", level + 1);
-        code.AppendLine();
+        if (isCondition)
+        {
+            code.AppendIndentedLine($"public string Name => nameof({component.ClassName});", level + 1);
+            code.AppendLine();
+        }
 
         var fields = component.Fields.Values.ToList();
 
@@ -60,7 +63,7 @@ public static class EventSubCodeHelper
             var fieldType = field.Type;
             if (field.IsArray && !fieldType.Contains("[]")) fieldType += "[]";
             code.AppendIndentedLine($"public {fieldType} {field.Name} {{ get; set; }}", 1);
-            code.AppendLine();
+            if(field != fields[^1]) code.AppendLine();
         }
 
 
@@ -172,6 +175,6 @@ public static class EventSubCodeHelper
             }
         }
 
-        return code.ToString();
+        return code.ToString().TrimEnd();
     }
 }

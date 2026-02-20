@@ -7,13 +7,12 @@ namespace TwitcherSharp.EventSub.Generated.ChannelPredictionBegin;
 
 public partial class TwitchChannelPredictionBeginCondition : Resource, ITwitcherSharpCondition<TwitchChannelPredictionBeginCondition>
 {
-	public string Name => nameof(TwitchChannelPredictionBeginCondition);
+    public string Name => nameof(TwitchChannelPredictionBeginCondition);
 
-	/// <summary> 
-	/// The broadcaster user ID of the channel for which “prediction begin” notifications will be received.
-	/// </summary>
-	public string BroadcasterUserId { get; set; }
-
+    /// <summary> 
+    /// The broadcaster user ID of the channel for which “prediction begin” notifications will be received.
+    /// </summary>
+    public string BroadcasterUserId { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelPredictionBeginCondition object.
@@ -21,19 +20,18 @@ public partial class TwitchChannelPredictionBeginCondition : Resource, ITwitcher
     public static TwitchChannelPredictionBeginCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-		return new TwitchChannelPredictionBeginCondition
-		{
-			BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-		};
-	}
+        return new TwitchChannelPredictionBeginCondition
+        {
+            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
+        };
+    }
 
-	public GodotObject ToGodotObject()
-	{
-		var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_prediction_begin.gd");
-		var conditionClass = script.Get("Condition").AsGodotObject();
-		var request = conditionClass.Call("new").AsGodotObject();
-		request.Set("broadcaster_user_id", BroadcasterUserId);
-		return request;
-	}
-
+    public GodotObject ToGodotObject()
+    {
+        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_prediction_begin.gd");
+        var conditionClass = script.Get("Condition").AsGodotObject();
+        var request = conditionClass.Call("new").AsGodotObject();
+        request.Set("broadcaster_user_id", BroadcasterUserId);
+        return request;
+    }
 }

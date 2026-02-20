@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Tags;
 public partial class TwitchGetStreamTagsResponse : Resource, ITwitcherSharp<TwitchGetStreamTagsResponse>
 {
     private GodotObject _data;
-	public TwitchStreamTag[] Data { get; set; }
+    public TwitchStreamTag[] Data { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetStreamTagsResponse object.
@@ -15,20 +15,20 @@ public partial class TwitchGetStreamTagsResponse : Resource, ITwitcherSharp<Twit
     public static TwitchGetStreamTagsResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-		var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-		return new TwitchGetStreamTagsResponse
-		{
-			Data = dataArray.Select(TwitchStreamTag.FromObject).ToArray(),
-		};
-	}
+        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
+        return new TwitchGetStreamTagsResponse
+        {
+            Data = dataArray.Select(TwitchStreamTag.FromObject).ToArray(),
+        };
+    }
 
-	public GodotObject ToGodotObject()
-	{
-		var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_stream_tags.gd");
-		var responseClass = script.Get("Response").AsGodotObject();
-		var request = responseClass.Call("new").AsGodotObject();
-		request.Set("data", Data);
-		return request;
-	}
+    public GodotObject ToGodotObject()
+    {
+        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_stream_tags.gd");
+        var responseClass = script.Get("Response").AsGodotObject();
+        var request = responseClass.Call("new").AsGodotObject();
+        request.Set("data", Data);
+        return request;
+    }
 
 }

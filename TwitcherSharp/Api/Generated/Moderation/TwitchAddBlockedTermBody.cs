@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 public partial class TwitchAddBlockedTermBody : Resource, ITwitcherSharp<TwitchAddBlockedTermBody>
 {
     private GodotObject _data;
-	public string Text { get; set; }
+    public string Text { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchAddBlockedTermBody object.
@@ -15,19 +15,19 @@ public partial class TwitchAddBlockedTermBody : Resource, ITwitcherSharp<TwitchA
     public static TwitchAddBlockedTermBody FromObject(GodotObject data)
     {
         if(data == null) return null;
-		return new TwitchAddBlockedTermBody
-		{
-			Text = data.Get("text").AsString(),
-		};
-	}
+        return new TwitchAddBlockedTermBody
+        {
+            Text = data.Get("text").AsString(),
+        };
+    }
 
-	public GodotObject ToGodotObject()
-	{
-		var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_add_blocked_term.gd");
-		var bodyClass = script.Get("Body").AsGodotObject();
-		var request = bodyClass.Call("new").AsGodotObject();
-		request.Set("text", Text);
-		return request;
-	}
+    public GodotObject ToGodotObject()
+    {
+        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_add_blocked_term.gd");
+        var bodyClass = script.Get("Body").AsGodotObject();
+        var request = bodyClass.Call("new").AsGodotObject();
+        request.Set("text", Text);
+        return request;
+    }
 
 }

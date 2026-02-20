@@ -11,7 +11,7 @@ namespace TwitcherSharp.Api.Generated.Extensions;
 public partial class TwitchCreateExtensionSecretOpt : Resource, ITwitcherSharp<TwitchCreateExtensionSecretOpt>
 {
     private GodotObject _data;
-	public int? Delay { get; set; }
+    public int? Delay { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCreateExtensionSecretOpt object.
@@ -19,19 +19,19 @@ public partial class TwitchCreateExtensionSecretOpt : Resource, ITwitcherSharp<T
     public static TwitchCreateExtensionSecretOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-		return new TwitchCreateExtensionSecretOpt
-		{
-			Delay = data.Get("delay").AsInt32(),
-		};
-	}
+        return new TwitchCreateExtensionSecretOpt
+        {
+            Delay = data.Get("delay").AsInt32(),
+        };
+    }
 
-	public GodotObject ToGodotObject()
-	{
-		var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_create_extension_secret.gd");
-		var optClass = script.Get("Opt").AsGodotObject();
-		var request = optClass.Call("new").AsGodotObject();
-		if(Delay.HasValue) request.Set("delay", Delay.Value);
-		return request;
-	}
+    public GodotObject ToGodotObject()
+    {
+        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_create_extension_secret.gd");
+        var optClass = script.Get("Opt").AsGodotObject();
+        var request = optClass.Call("new").AsGodotObject();
+        if(Delay.HasValue) request.Set("delay", Delay.Value);
+        return request;
+    }
 
 }

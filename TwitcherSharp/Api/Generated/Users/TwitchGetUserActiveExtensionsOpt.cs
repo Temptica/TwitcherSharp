@@ -11,7 +11,7 @@ namespace TwitcherSharp.Api.Generated.Users;
 public partial class TwitchGetUserActiveExtensionsOpt : Resource, ITwitcherSharp<TwitchGetUserActiveExtensionsOpt>
 {
     private GodotObject _data;
-	public string UserId { get; set; }
+    public string UserId { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetUserActiveExtensionsOpt object.
@@ -19,19 +19,19 @@ public partial class TwitchGetUserActiveExtensionsOpt : Resource, ITwitcherSharp
     public static TwitchGetUserActiveExtensionsOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-		return new TwitchGetUserActiveExtensionsOpt
-		{
-			UserId = data.Get("user_id").AsString(),
-		};
-	}
+        return new TwitchGetUserActiveExtensionsOpt
+        {
+            UserId = data.Get("user_id").AsString(),
+        };
+    }
 
-	public GodotObject ToGodotObject()
-	{
-		var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_user_active_extensions.gd");
-		var optClass = script.Get("Opt").AsGodotObject();
-		var request = optClass.Call("new").AsGodotObject();
-		if(UserId != null) request.Set("user_id", UserId);
-		return request;
-	}
+    public GodotObject ToGodotObject()
+    {
+        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_user_active_extensions.gd");
+        var optClass = script.Get("Opt").AsGodotObject();
+        var request = optClass.Call("new").AsGodotObject();
+        if(UserId != null) request.Set("user_id", UserId);
+        return request;
+    }
 
 }

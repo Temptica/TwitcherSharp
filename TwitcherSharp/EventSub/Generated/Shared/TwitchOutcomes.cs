@@ -7,32 +7,30 @@ namespace TwitcherSharp.EventSub.Generated.Shared;
 
 public partial class TwitchOutcomes : Resource, ITwitcherSharpEventSub<TwitchOutcomes>
 {
+    /// <summary> 
+    /// The outcome ID.
+    /// </summary>
+    public string Id { get; set; }
 
-	/// <summary> 
-	/// The outcome ID.
-	/// </summary>
-	public string Id { get; set; }
+    /// <summary> 
+    /// The outcome title.
+    /// </summary>
+    public string Title { get; set; }
 
-	/// <summary> 
-	/// The outcome title.
-	/// </summary>
-	public string Title { get; set; }
+    /// <summary> 
+    /// The color for the outcome. Valid values are pink and blue.
+    /// </summary>
+    public string Color { get; set; }
 
-	/// <summary> 
-	/// The color for the outcome. Valid values are pink and blue.
-	/// </summary>
-	public string Color { get; set; }
+    /// <summary> 
+    /// The number of users who used Channel Points on this outcome.
+    /// </summary>
+    public int Users { get; set; }
 
-	/// <summary> 
-	/// The number of users who used Channel Points on this outcome.
-	/// </summary>
-	public int Users { get; set; }
-
-	/// <summary> 
-	/// The total number of Channel Points used on this outcome.
-	/// </summary>
-	public int ChannelPoints { get; set; }
-
+    /// <summary> 
+    /// The total number of Channel Points used on this outcome.
+    /// </summary>
+    public int ChannelPoints { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchOutcomes object.
@@ -40,27 +38,26 @@ public partial class TwitchOutcomes : Resource, ITwitcherSharpEventSub<TwitchOut
     public static TwitchOutcomes FromObject(GodotObject data)
     {
         if(data == null) return null;
-		return new TwitchOutcomes
-		{
-			Id = data.Get("id").AsString(),
-			Title = data.Get("title").AsString(),
-			Color = data.Get("color").AsString(),
-			Users = data.Get("users").AsInt32(),
-			ChannelPoints = data.Get("channel_points").AsInt32(),
-		};
-	}
+        return new TwitchOutcomes
+        {
+            Id = data.Get("id").AsString(),
+            Title = data.Get("title").AsString(),
+            Color = data.Get("color").AsString(),
+            Users = data.Get("users").AsInt32(),
+            ChannelPoints = data.Get("channel_points").AsInt32(),
+        };
+    }
 
-	public GodotObject ToGodotObject()
-	{
-		var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_outcomes.gd");
-		var twitchOutcomesClass = script.Get("TwitchOutcomes").AsGodotObject();
-		var request = twitchOutcomesClass.Call("new").AsGodotObject();
-		request.Set("id", Id);
-		request.Set("title", Title);
-		request.Set("color", Color);
-		request.Set("users", Users);
-		request.Set("channel_points", ChannelPoints);
-		return request;
-	}
-
+    public GodotObject ToGodotObject()
+    {
+        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_outcomes.gd");
+        var twitchOutcomesClass = script.Get("TwitchOutcomes").AsGodotObject();
+        var request = twitchOutcomesClass.Call("new").AsGodotObject();
+        request.Set("id", Id);
+        request.Set("title", Title);
+        request.Set("color", Color);
+        request.Set("users", Users);
+        request.Set("channel_points", ChannelPoints);
+        return request;
+    }
 }

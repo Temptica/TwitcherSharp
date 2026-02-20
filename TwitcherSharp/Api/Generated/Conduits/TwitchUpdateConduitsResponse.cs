@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Conduits;
 public partial class TwitchUpdateConduitsResponse : Resource, ITwitcherSharp<TwitchUpdateConduitsResponse>
 {
     private GodotObject _data;
-	public TwitchData[] Data { get; set; }
+    public TwitchData[] Data { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUpdateConduitsResponse object.
@@ -15,53 +15,53 @@ public partial class TwitchUpdateConduitsResponse : Resource, ITwitcherSharp<Twi
     public static TwitchUpdateConduitsResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-		var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-		return new TwitchUpdateConduitsResponse
-		{
-			Data = dataArray.Select(TwitchData.FromObject).ToArray(),
-		};
-	}
+        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
+        return new TwitchUpdateConduitsResponse
+        {
+            Data = dataArray.Select(TwitchData.FromObject).ToArray(),
+        };
+    }
 
-	public GodotObject ToGodotObject()
-	{
-		var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_update_conduits.gd");
-		var responseClass = script.Get("Response").AsGodotObject();
-		var request = responseClass.Call("new").AsGodotObject();
-		request.Set("data", Data);
-		return request;
-	}
-	
-	/// <summary> 
-	/// List of information about the client’s conduits. 
-	/// </summary>
-	public partial class TwitchData : Resource, ITwitcherSharp<TwitchData>
-	{
-	    private GodotObject _data;
-		public string Id { get; set; }
-		public int ShardCount { get; set; }
-	
-	    /// <summary> 
-	    /// Transforms the godot data into a TwitchData object.
-	    /// </summary> 
-	    public static TwitchData FromObject(GodotObject data)
-	    {
-	        if(data == null) return null;
-			return new TwitchData
-			{
-				Id = data.Get("id").AsString(),
-				ShardCount = data.Get("shard_count").AsInt32(),
-			};
-		}
-	
-		public GodotObject ToGodotObject()
-		{
-			var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_data.gd");
-			var request = script.Call("new").AsGodotObject();
-			request.Set("id", Id);
-			request.Set("shard_count", ShardCount);
-			return request;
-		}
-	
-	}
+    public GodotObject ToGodotObject()
+    {
+        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_update_conduits.gd");
+        var responseClass = script.Get("Response").AsGodotObject();
+        var request = responseClass.Call("new").AsGodotObject();
+        request.Set("data", Data);
+        return request;
+    }
+    
+    /// <summary> 
+    /// List of information about the client’s conduits. 
+    /// </summary>
+    public partial class TwitchData : Resource, ITwitcherSharp<TwitchData>
+    {
+        private GodotObject _data;
+        public string Id { get; set; }
+        public int ShardCount { get; set; }
+    
+        /// <summary> 
+        /// Transforms the godot data into a TwitchData object.
+        /// </summary> 
+        public static TwitchData FromObject(GodotObject data)
+        {
+            if(data == null) return null;
+            return new TwitchData
+            {
+                Id = data.Get("id").AsString(),
+                ShardCount = data.Get("shard_count").AsInt32(),
+            };
+        }
+    
+        public GodotObject ToGodotObject()
+        {
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_data.gd");
+            var request = script.Call("new").AsGodotObject();
+            request.Set("id", Id);
+            request.Set("shard_count", ShardCount);
+            return request;
+        }
+    
+    }
 
 }

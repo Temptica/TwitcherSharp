@@ -11,7 +11,7 @@ namespace TwitcherSharp.Api.Generated.Extensions;
 public partial class TwitchGetExtensionConfigurationSegmentOpt : Resource, ITwitcherSharp<TwitchGetExtensionConfigurationSegmentOpt>
 {
     private GodotObject _data;
-	public string BroadcasterId { get; set; }
+    public string BroadcasterId { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetExtensionConfigurationSegmentOpt object.
@@ -19,19 +19,19 @@ public partial class TwitchGetExtensionConfigurationSegmentOpt : Resource, ITwit
     public static TwitchGetExtensionConfigurationSegmentOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-		return new TwitchGetExtensionConfigurationSegmentOpt
-		{
-			BroadcasterId = data.Get("broadcaster_id").AsString(),
-		};
-	}
+        return new TwitchGetExtensionConfigurationSegmentOpt
+        {
+            BroadcasterId = data.Get("broadcaster_id").AsString(),
+        };
+    }
 
-	public GodotObject ToGodotObject()
-	{
-		var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_extension_configuration_segment.gd");
-		var optClass = script.Get("Opt").AsGodotObject();
-		var request = optClass.Call("new").AsGodotObject();
-		if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
-		return request;
-	}
+    public GodotObject ToGodotObject()
+    {
+        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_extension_configuration_segment.gd");
+        var optClass = script.Get("Opt").AsGodotObject();
+        var request = optClass.Call("new").AsGodotObject();
+        if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
+        return request;
+    }
 
 }

@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Predictions;
 public partial class TwitchEndPredictionResponse : Resource, ITwitcherSharp<TwitchEndPredictionResponse>
 {
     private GodotObject _data;
-	public TwitchPrediction[] Data { get; set; }
+    public TwitchPrediction[] Data { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchEndPredictionResponse object.
@@ -15,20 +15,20 @@ public partial class TwitchEndPredictionResponse : Resource, ITwitcherSharp<Twit
     public static TwitchEndPredictionResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-		var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-		return new TwitchEndPredictionResponse
-		{
-			Data = dataArray.Select(TwitchPrediction.FromObject).ToArray(),
-		};
-	}
+        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
+        return new TwitchEndPredictionResponse
+        {
+            Data = dataArray.Select(TwitchPrediction.FromObject).ToArray(),
+        };
+    }
 
-	public GodotObject ToGodotObject()
-	{
-		var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_end_prediction.gd");
-		var responseClass = script.Get("Response").AsGodotObject();
-		var request = responseClass.Call("new").AsGodotObject();
-		request.Set("data", Data);
-		return request;
-	}
+    public GodotObject ToGodotObject()
+    {
+        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_end_prediction.gd");
+        var responseClass = script.Get("Response").AsGodotObject();
+        var request = responseClass.Call("new").AsGodotObject();
+        request.Set("data", Data);
+        return request;
+    }
 
 }

@@ -11,7 +11,7 @@ namespace TwitcherSharp.Api.Generated.Users;
 public partial class TwitchUpdateUserOpt : Resource, ITwitcherSharp<TwitchUpdateUserOpt>
 {
     private GodotObject _data;
-	public string Description { get; set; }
+    public string Description { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUpdateUserOpt object.
@@ -19,19 +19,19 @@ public partial class TwitchUpdateUserOpt : Resource, ITwitcherSharp<TwitchUpdate
     public static TwitchUpdateUserOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-		return new TwitchUpdateUserOpt
-		{
-			Description = data.Get("description").AsString(),
-		};
-	}
+        return new TwitchUpdateUserOpt
+        {
+            Description = data.Get("description").AsString(),
+        };
+    }
 
-	public GodotObject ToGodotObject()
-	{
-		var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_update_user.gd");
-		var optClass = script.Get("Opt").AsGodotObject();
-		var request = optClass.Call("new").AsGodotObject();
-		if(Description != null) request.Set("description", Description);
-		return request;
-	}
+    public GodotObject ToGodotObject()
+    {
+        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_update_user.gd");
+        var optClass = script.Get("Opt").AsGodotObject();
+        var request = optClass.Call("new").AsGodotObject();
+        if(Description != null) request.Set("description", Description);
+        return request;
+    }
 
 }

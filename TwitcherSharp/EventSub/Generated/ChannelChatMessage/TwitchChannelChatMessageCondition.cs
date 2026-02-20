@@ -7,18 +7,17 @@ namespace TwitcherSharp.EventSub.Generated.ChannelChatMessage;
 
 public partial class TwitchChannelChatMessageCondition : Resource, ITwitcherSharpCondition<TwitchChannelChatMessageCondition>
 {
-	public string Name => nameof(TwitchChannelChatMessageCondition);
+    public string Name => nameof(TwitchChannelChatMessageCondition);
 
-	/// <summary> 
-	/// The User ID of the channel to receive chat message events for.
-	/// </summary>
-	public string BroadcasterUserId { get; set; }
+    /// <summary> 
+    /// The User ID of the channel to receive chat message events for.
+    /// </summary>
+    public string BroadcasterUserId { get; set; }
 
-	/// <summary> 
-	/// The User ID to read chat as.
-	/// </summary>
-	public string UserId { get; set; }
-
+    /// <summary> 
+    /// The User ID to read chat as.
+    /// </summary>
+    public string UserId { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelChatMessageCondition object.
@@ -26,21 +25,20 @@ public partial class TwitchChannelChatMessageCondition : Resource, ITwitcherShar
     public static TwitchChannelChatMessageCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-		return new TwitchChannelChatMessageCondition
-		{
-			BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-			UserId = data.Get("user_id").AsString(),
-		};
-	}
+        return new TwitchChannelChatMessageCondition
+        {
+            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
+            UserId = data.Get("user_id").AsString(),
+        };
+    }
 
-	public GodotObject ToGodotObject()
-	{
-		var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_message.gd");
-		var conditionClass = script.Get("Condition").AsGodotObject();
-		var request = conditionClass.Call("new").AsGodotObject();
-		request.Set("broadcaster_user_id", BroadcasterUserId);
-		request.Set("user_id", UserId);
-		return request;
-	}
-
+    public GodotObject ToGodotObject()
+    {
+        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_message.gd");
+        var conditionClass = script.Get("Condition").AsGodotObject();
+        var request = conditionClass.Call("new").AsGodotObject();
+        request.Set("broadcaster_user_id", BroadcasterUserId);
+        request.Set("user_id", UserId);
+        return request;
+    }
 }
