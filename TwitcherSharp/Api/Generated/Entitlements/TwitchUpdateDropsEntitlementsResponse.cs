@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Entitlements;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchUpdateDropsEntitlementsResponse : Resource, ITwitcherSharp<TwitchUpdateDropsEntitlementsResponse>
 {
     private GodotObject _data;
@@ -33,10 +30,6 @@ public partial class TwitchUpdateDropsEntitlementsResponse : Resource, ITwitcher
 		request.Set("data", Data);
 		return request;
 	}
-	
-	/// <summary> 
-	///  
-	/// </summary>
 	public partial class TwitchDropsEntitlementUpdated : Resource, ITwitcherSharp<TwitchDropsEntitlementUpdated>
 	{
 	    private GodotObject _data;

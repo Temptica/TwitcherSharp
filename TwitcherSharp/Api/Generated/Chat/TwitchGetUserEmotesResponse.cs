@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Chat;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchGetUserEmotesResponse : Resource, ITwitcherSharp<TwitchGetUserEmotesResponse>
 {
     private GodotObject _data;
@@ -39,10 +36,6 @@ public partial class TwitchGetUserEmotesResponse : Resource, ITwitcherSharp<Twit
 		if(Pagination != null) request.Set("pagination", Pagination);
 		return request;
 	}
-	
-	/// <summary> 
-	///  
-	/// </summary>
 	public partial class TwitchData : Resource, ITwitcherSharp<TwitchData>
 	{
 	    private GodotObject _data;

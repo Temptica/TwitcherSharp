@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelUpdate;
 
-public partial class TwitchChannelUpdateCondition : Resource, ITwitcherSharpEventSub<TwitchChannelUpdateCondition>
+public partial class TwitchChannelUpdateCondition : Resource, ITwitcherSharpCondition<TwitchChannelUpdateCondition>
 {
+	public string Name => nameof(TwitchChannelUpdateCondition);
 
 	/// <summary> 
 	/// The broadcaster user ID for the channel you want to get updates for.

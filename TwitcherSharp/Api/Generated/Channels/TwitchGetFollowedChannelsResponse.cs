@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Channels;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchGetFollowedChannelsResponse : Resource, ITwitcherSharp<TwitchGetFollowedChannelsResponse>
 {
     private GodotObject _data;

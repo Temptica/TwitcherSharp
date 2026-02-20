@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelPointsAutomaticRewardRedemptionAdd;
 
-public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Condition : Resource, ITwitcherSharpEventSub<TwitchChannelPointsAutomaticRewardRedemptionAddV2Condition>
+public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Condition : Resource, ITwitcherSharpCondition<TwitchChannelPointsAutomaticRewardRedemptionAddV2Condition>
 {
+	public string Name => nameof(TwitchChannelPointsAutomaticRewardRedemptionAddV2Condition);
 
 	/// <summary> 
 	/// The broadcaster user ID for the channel you want to receive channel points reward add notifications for.

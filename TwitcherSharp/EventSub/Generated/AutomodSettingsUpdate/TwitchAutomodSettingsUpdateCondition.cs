@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.AutomodSettingsUpdate;
 
-public partial class TwitchAutomodSettingsUpdateCondition : Resource, ITwitcherSharpEventSub<TwitchAutomodSettingsUpdateCondition>
+public partial class TwitchAutomodSettingsUpdateCondition : Resource, ITwitcherSharpCondition<TwitchAutomodSettingsUpdateCondition>
 {
+	public string Name => nameof(TwitchAutomodSettingsUpdateCondition);
 
 	/// <summary> 
 	/// User ID of the broadcaster (channel). Maximum:1.

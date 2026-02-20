@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Chat;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchGetUserChatColorResponse : Resource, ITwitcherSharp<TwitchGetUserChatColorResponse>
 {
     private GodotObject _data;
@@ -33,10 +30,6 @@ public partial class TwitchGetUserChatColorResponse : Resource, ITwitcherSharp<T
 		request.Set("data", Data);
 		return request;
 	}
-	
-	/// <summary> 
-	///  
-	/// </summary>
 	public partial class TwitchUserChatColor : Resource, ITwitcherSharp<TwitchUserChatColor>
 	{
 	    private GodotObject _data;

@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Shared;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchPrediction : Resource, ITwitcherSharp<TwitchPrediction>
 {
     private GodotObject _data;
@@ -65,10 +62,6 @@ public partial class TwitchPrediction : Resource, ITwitcherSharp<TwitchPredictio
 		request.Set("locked_at", LockedAt);
 		return request;
 	}
-	
-	/// <summary> 
-	///  
-	/// </summary>
 	public partial class TwitchPredictionOutcome : Resource, ITwitcherSharp<TwitchPredictionOutcome>
 	{
 	    private GodotObject _data;

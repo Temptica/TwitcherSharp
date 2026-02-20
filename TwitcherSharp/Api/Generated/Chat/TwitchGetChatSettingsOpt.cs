@@ -4,6 +4,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Chat;
 
+
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetChatSettings 
 /// </summary>

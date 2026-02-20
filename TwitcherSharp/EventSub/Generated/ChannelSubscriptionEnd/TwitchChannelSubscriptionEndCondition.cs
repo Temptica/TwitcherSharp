@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelSubscriptionEnd;
 
-public partial class TwitchChannelSubscriptionEndCondition : Resource, ITwitcherSharpEventSub<TwitchChannelSubscriptionEndCondition>
+public partial class TwitchChannelSubscriptionEndCondition : Resource, ITwitcherSharpCondition<TwitchChannelSubscriptionEndCondition>
 {
+	public string Name => nameof(TwitchChannelSubscriptionEndCondition);
 
 	/// <summary> 
 	/// The broadcaster user ID for the channel you want to get subscription end notifications for.

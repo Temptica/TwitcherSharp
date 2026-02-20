@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.UserAuthorizationRevoke;
 
-public partial class TwitchUserAuthorizationRevokeCondition : Resource, ITwitcherSharpEventSub<TwitchUserAuthorizationRevokeCondition>
+public partial class TwitchUserAuthorizationRevokeCondition : Resource, ITwitcherSharpCondition<TwitchUserAuthorizationRevokeCondition>
 {
+	public string Name => nameof(TwitchUserAuthorizationRevokeCondition);
 
 	/// <summary> 
 	/// Your application’s client id. The provided client_id must match the client id in the application access token.

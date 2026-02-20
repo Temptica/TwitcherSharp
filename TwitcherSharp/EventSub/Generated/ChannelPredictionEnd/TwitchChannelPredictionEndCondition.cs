@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelPredictionEnd;
 
-public partial class TwitchChannelPredictionEndCondition : Resource, ITwitcherSharpEventSub<TwitchChannelPredictionEndCondition>
+public partial class TwitchChannelPredictionEndCondition : Resource, ITwitcherSharpCondition<TwitchChannelPredictionEndCondition>
 {
+	public string Name => nameof(TwitchChannelPredictionEndCondition);
 
 	/// <summary> 
 	/// The broadcaster user ID of the channel for which “prediction end” notifications will be received.

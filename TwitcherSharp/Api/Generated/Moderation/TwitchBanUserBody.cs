@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchBanUserBody : Resource, ITwitcherSharp<TwitchBanUserBody>
 {
     private GodotObject _data;

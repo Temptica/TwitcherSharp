@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelChatMessageDelete;
 
-public partial class TwitchChannelChatMessageDeleteCondition : Resource, ITwitcherSharpEventSub<TwitchChannelChatMessageDeleteCondition>
+public partial class TwitchChannelChatMessageDeleteCondition : Resource, ITwitcherSharpCondition<TwitchChannelChatMessageDeleteCondition>
 {
+	public string Name => nameof(TwitchChannelChatMessageDeleteCondition);
 
 	/// <summary> 
 	/// User ID of the channel to receive chat message delete events for.

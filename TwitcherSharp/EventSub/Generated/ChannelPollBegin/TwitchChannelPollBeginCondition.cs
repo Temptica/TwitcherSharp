@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelPollBegin;
 
-public partial class TwitchChannelPollBeginCondition : Resource, ITwitcherSharpEventSub<TwitchChannelPollBeginCondition>
+public partial class TwitchChannelPollBeginCondition : Resource, ITwitcherSharpCondition<TwitchChannelPollBeginCondition>
 {
+	public string Name => nameof(TwitchChannelPollBeginCondition);
 
 	/// <summary> 
 	/// The broadcaster user ID of the channel for which “poll begin” notifications will be received.

@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.HypeTrainProgress;
 
-public partial class TwitchHypeTrainProgressCondition : Resource, ITwitcherSharpEventSub<TwitchHypeTrainProgressCondition>
+public partial class TwitchHypeTrainProgressCondition : Resource, ITwitcherSharpCondition<TwitchHypeTrainProgressCondition>
 {
+	public string Name => nameof(TwitchHypeTrainProgressCondition);
 
 	/// <summary> 
 	/// The ID of the broadcaster that you want to get Hype Train progress notifications for.

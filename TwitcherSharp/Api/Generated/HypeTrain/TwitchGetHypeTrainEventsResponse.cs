@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.HypeTrain;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchGetHypeTrainEventsResponse : Resource, ITwitcherSharp<TwitchGetHypeTrainEventsResponse>
 {
     private GodotObject _data;
@@ -36,10 +33,6 @@ public partial class TwitchGetHypeTrainEventsResponse : Resource, ITwitcherSharp
 		if(Pagination != null) request.Set("pagination", Pagination);
 		return request;
 	}
-	
-	/// <summary> 
-	///  
-	/// </summary>
 	public partial class TwitchHypeTrainEvent : Resource, ITwitcherSharp<TwitchHypeTrainEvent>
 	{
 	    private GodotObject _data;

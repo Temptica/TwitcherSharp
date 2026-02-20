@@ -27,10 +27,11 @@ public static class ApiCodeHelper
 
         if (method.RequiredParameters.Count != 0)
         {
-            methodString.AppendIndented(GetMethodParameterSummary(method.RequiredParameters),1);
+            methodString.AppendIndented(GetMethodParameterSummary(method.RequiredParameters), 1);
         }
 
-        methodString.AppendIndentedLine($"/// <returns><see cref=\"{method.ResultType}\"/></returns>", method.RequiredParameters.Count != 0 ? 1 : 0);
+        methodString.AppendIndentedLine($"/// <returns><see cref=\"{method.ResultType}\"/></returns>",
+            method.RequiredParameters.Count != 0 ? 1 : 0);
 
         methodString
             .AppendIndentedLine($"public async Task<{method.ResultType}> {method.Name}({GetMethodParameter(method)})",
@@ -58,8 +59,10 @@ public static class ApiCodeHelper
 
         foreach (var parameter in methodRequiredParameters)
         {
-            code.AppendIndentedLine($"/// <param name=\"{parameter.Name.ToCamelCase()}\">{parameter.Description}</param>",0,"/// ");
+            code.AppendIndentedLine(
+                $"/// <param name=\"{parameter.Name.ToCamelCase()}\">{parameter.Description}</param>", 0, "/// ");
         }
+
         return code.ToString();
     }
 
@@ -71,7 +74,7 @@ public static class ApiCodeHelper
         {
             parmsList.Add($"{method.BodyType} body");
         }
-        
+
         parmsList.AddRange(method.RequiredParameters.Select(p => $"{p.Type} {p.Name.ToCamelCase()}"));
 
         if (method.ContainsOptional)
@@ -87,9 +90,9 @@ public static class ApiCodeHelper
         var paramsList = new List<string>();
         if (method.ContainsBody) paramsList.Add("body.ToGodotObject()");
         if (method.ContainsOptional) paramsList.Add("opt?.ToGodotObject()");
-        
+
         paramsList.AddRange(method.RequiredParameters.Select(p => p.Name.ToCamelCase()));
-        
+
         return string.Join(", ", paramsList);
     }
 
@@ -99,7 +102,8 @@ public static class ApiCodeHelper
 
         code.AppendLine(ApiCodeStrings.ComponentUsings
             .Replace("{{root}}", component.GetTag()));
-
+        code.AppendLine();
+        
         code.AppendIndentedLine(ComponentCode(component, type));
 
         code.AppendLine("}");
@@ -110,7 +114,10 @@ public static class ApiCodeHelper
     {
         var code = new StringBuilder();
 
-        code.AppendLine();
+        if (!string.IsNullOrWhiteSpace(component.Description))
+        {
+            code.AppendIndentedLine($"\n<summary> \n{component.Description} \n</summary>", 0, "/// ");
+        }
 
         code.AppendLine(ApiCodeStrings.ComponentHeader
             .Replace("{{description}}", CleanDescription(component.Description))

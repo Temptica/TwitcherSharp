@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Conduits;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchCreateConduitsResponse : Resource, ITwitcherSharp<TwitchCreateConduitsResponse>
 {
     private GodotObject _data;

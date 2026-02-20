@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelBan;
 
-public partial class TwitchChannelBanCondition : Resource, ITwitcherSharpEventSub<TwitchChannelBanCondition>
+public partial class TwitchChannelBanCondition : Resource, ITwitcherSharpCondition<TwitchChannelBanCondition>
 {
+	public string Name => nameof(TwitchChannelBanCondition);
 
 	/// <summary> 
 	/// The broadcaster user ID for the channel you want to get ban notifications for.

@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelPollProgress;
 
-public partial class TwitchChannelPollProgressCondition : Resource, ITwitcherSharpEventSub<TwitchChannelPollProgressCondition>
+public partial class TwitchChannelPollProgressCondition : Resource, ITwitcherSharpCondition<TwitchChannelPollProgressCondition>
 {
+	public string Name => nameof(TwitchChannelPollProgressCondition);
 
 	/// <summary> 
 	/// The broadcaster user ID of the channel for which “poll progress” notifications will be received.

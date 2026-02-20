@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Chat;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchGetChannelChatBadgesResponse : Resource, ITwitcherSharp<TwitchGetChannelChatBadgesResponse>
 {
     private GodotObject _data;

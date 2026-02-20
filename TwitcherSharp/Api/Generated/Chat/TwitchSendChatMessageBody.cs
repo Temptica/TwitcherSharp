@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Chat;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchSendChatMessageBody : Resource, ITwitcherSharp<TwitchSendChatMessageBody>
 {
     private GodotObject _data;

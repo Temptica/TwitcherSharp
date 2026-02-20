@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Users;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchGetUserBlockListResponse : Resource, ITwitcherSharp<TwitchGetUserBlockListResponse>
 {
     private GodotObject _data;
@@ -36,10 +33,6 @@ public partial class TwitchGetUserBlockListResponse : Resource, ITwitcherSharp<T
 		if(Pagination != null) request.Set("pagination", Pagination);
 		return request;
 	}
-	
-	/// <summary> 
-	///  
-	/// </summary>
 	public partial class TwitchUserBlockList : Resource, ITwitcherSharp<TwitchUserBlockList>
 	{
 	    private GodotObject _data;

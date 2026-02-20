@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Predictions;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchGetPredictionsResponse : Resource, ITwitcherSharp<TwitchGetPredictionsResponse>
 {
     private GodotObject _data;

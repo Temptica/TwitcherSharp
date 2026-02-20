@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Chat;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchGetChattersResponse : Resource, ITwitcherSharp<TwitchGetChattersResponse>
 {
     private GodotObject _data;
@@ -39,10 +36,6 @@ public partial class TwitchGetChattersResponse : Resource, ITwitcherSharp<Twitch
 		request.Set("total", Total);
 		return request;
 	}
-	
-	/// <summary> 
-	///  
-	/// </summary>
 	public partial class TwitchChatter : Resource, ITwitcherSharp<TwitchChatter>
 	{
 	    private GodotObject _data;

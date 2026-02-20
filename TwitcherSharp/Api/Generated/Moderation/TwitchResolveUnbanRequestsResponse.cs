@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchResolveUnbanRequestsResponse : Resource, ITwitcherSharp<TwitchResolveUnbanRequestsResponse>
 {
     private GodotObject _data;
@@ -33,10 +30,6 @@ public partial class TwitchResolveUnbanRequestsResponse : Resource, ITwitcherSha
 		request.Set("data", Data);
 		return request;
 	}
-	
-	/// <summary> 
-	///  
-	/// </summary>
 	public partial class TwitchData : Resource, ITwitcherSharp<TwitchData>
 	{
 	    private GodotObject _data;

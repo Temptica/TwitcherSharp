@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Videos;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchDeleteVideosResponse : Resource, ITwitcherSharp<TwitchDeleteVideosResponse>
 {
     private GodotObject _data;

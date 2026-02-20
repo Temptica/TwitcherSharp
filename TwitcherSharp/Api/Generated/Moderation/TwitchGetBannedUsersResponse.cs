@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchGetBannedUsersResponse : Resource, ITwitcherSharp<TwitchGetBannedUsersResponse>
 {
     private GodotObject _data;
@@ -36,10 +33,6 @@ public partial class TwitchGetBannedUsersResponse : Resource, ITwitcherSharp<Twi
 		if(Pagination != null) request.Set("pagination", Pagination);
 		return request;
 	}
-	
-	/// <summary> 
-	///  
-	/// </summary>
 	public partial class TwitchBannedUser : Resource, ITwitcherSharp<TwitchBannedUser>
 	{
 	    private GodotObject _data;

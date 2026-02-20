@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Conduits;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchUpdateConduitShardsBody : Resource, ITwitcherSharp<TwitchUpdateConduitShardsBody>
 {
     private GodotObject _data;

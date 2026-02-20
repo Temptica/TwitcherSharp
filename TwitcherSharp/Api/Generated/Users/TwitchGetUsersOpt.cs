@@ -4,6 +4,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Users;
 
+
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetUsers 
 /// </summary>

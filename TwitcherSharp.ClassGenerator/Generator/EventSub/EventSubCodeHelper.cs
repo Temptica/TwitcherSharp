@@ -8,13 +8,13 @@ public static class EventSubCodeHelper
 {
     public static bool UseTwitcherEventSubV2 = true;
 
-    public static string MainEventSub(TwitchEventSubGenComponent component, string nameSpace)
+    public static string MainEventSub(TwitchEventSubGenComponent component, string nameSpace, bool isCondition = false)
     {
         var code = new StringBuilder();
         var hasSharedComponents = false;
         var componentsToCheck = component.SubComponents.Values.ToList();
 
-        while (componentsToCheck.Count >0)
+        while (componentsToCheck.Count > 0)
         {
             var componentToCheck = componentsToCheck[0];
             componentsToCheck.RemoveAt(0);
@@ -23,25 +23,31 @@ public static class EventSubCodeHelper
                 hasSharedComponents = true;
                 break;
             }
+
             componentsToCheck.AddRange(componentToCheck.SubComponents.Values);
         }
-        
-        code.AppendLine(EventSubCodeStrings.EventSubNameSpaces.Replace("{{NameSpace}}", nameSpace).Replace("{{SharedNamespace}}", hasSharedComponents ? "using TwitcherSharp.EventSub.Generated.Shared;" : ""));
+
+        code.AppendLine(EventSubCodeStrings.EventSubNameSpaces.Replace("{{NameSpace}}", nameSpace).Replace(
+            "{{SharedNamespace}}", hasSharedComponents ? "using TwitcherSharp.EventSub.Generated.Shared;" : ""));
         code.AppendLine();
 
-        code.AppendLine(GenerateComponent(component));
+        code.AppendLine(GenerateComponent(component, isCondition: isCondition));
 
         code.AppendLine("}");
 
         return code.ToString();
     }
 
-    private static string GenerateComponent(TwitchEventSubGenComponent component, int level = 0, string type = null)
+    private static string GenerateComponent(TwitchEventSubGenComponent component, int level = 0, string type = null,
+        bool isCondition = false)
     {
         var code = new StringBuilder();
 
-        code.AppendLine(EventSubCodeStrings.EventSubHeader.Replace("{{ClassName}}", component.ClassName));
+        var header = isCondition ? EventSubCodeStrings.ConditionSubHeader : EventSubCodeStrings.EventSubHeader;
+        code.AppendLine(header.Replace("{{ClassName}}", component.ClassName));
+
         code.AppendLine("{");
+        if (isCondition) code.AppendIndentedLine($"public string Name => nameof({component.ClassName});", level + 1);
         code.AppendLine();
 
         var fields = component.Fields.Values.ToList();
@@ -104,10 +110,13 @@ public static class EventSubCodeHelper
 
             var v2String = component.ClassName.Contains("V2") ? "V2" : "";
             string typeToUse;
-            
+
             if (component.ClassName.EndsWith("Event")) typeToUse = "Event" + v2String;
-            else typeToUse = (component.IsShared ? component.ClassName : component.ClassName.Remove(type).Remove("Twitch")) + v2String;
-            
+            else
+                typeToUse = (component.IsShared
+                    ? component.ClassName
+                    : component.ClassName.Remove(type).Remove("Twitch")) + v2String;
+
             var scriptName = $"{typeToUse.ToCamelCase().Remove("Twitch")}Class";
             code.AppendIndentedLine($"var {scriptName} = script.Get(\"{typeToUse}\").AsGodotObject();", 2);
 
@@ -155,12 +164,11 @@ public static class EventSubCodeHelper
 
         if (nonSharedSubComponents.Count != 0)
         {
-            
             foreach (var subComponent in nonSharedSubComponents)
             {
                 code.AppendLine();
-                code.AppendIndentedLine(GenerateComponent(subComponent, level, type), level+1);
-                code.AppendIndentedLine("}", level+1);
+                code.AppendIndentedLine(GenerateComponent(subComponent, level, type), level + 1);
+                code.AppendIndentedLine("}", level + 1);
             }
         }
 

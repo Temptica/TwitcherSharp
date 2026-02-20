@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchManageHeldAutoModMessagesBody : Resource, ITwitcherSharp<TwitchManageHeldAutoModMessagesBody>
 {
     private GodotObject _data;

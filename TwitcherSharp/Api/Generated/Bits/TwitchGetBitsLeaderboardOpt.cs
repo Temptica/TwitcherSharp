@@ -4,6 +4,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Bits;
 
+
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetBitsLeaderboard 
 /// </summary>

@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.GuestStar;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchCreateGuestStarSessionResponse : Resource, ITwitcherSharp<TwitchCreateGuestStarSessionResponse>
 {
     private GodotObject _data;

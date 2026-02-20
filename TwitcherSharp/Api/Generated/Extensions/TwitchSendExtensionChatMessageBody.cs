@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Extensions;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchSendExtensionChatMessageBody : Resource, ITwitcherSharp<TwitchSendExtensionChatMessageBody>
 {
     private GodotObject _data;

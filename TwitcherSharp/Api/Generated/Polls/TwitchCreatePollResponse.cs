@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Polls;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchCreatePollResponse : Resource, ITwitcherSharp<TwitchCreatePollResponse>
 {
     private GodotObject _data;

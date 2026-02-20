@@ -4,6 +4,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Extensions;
 
+
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetExtensionBitsProducts 
 /// </summary>

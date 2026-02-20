@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Chat;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchGetSharedChatSessionResponse : Resource, ITwitcherSharp<TwitchGetSharedChatSessionResponse>
 {
     private GodotObject _data;
@@ -33,10 +30,6 @@ public partial class TwitchGetSharedChatSessionResponse : Resource, ITwitcherSha
 		request.Set("data", Data);
 		return request;
 	}
-	
-	/// <summary> 
-	///  
-	/// </summary>
 	public partial class TwitchData : Resource, ITwitcherSharp<TwitchData>
 	{
 	    private GodotObject _data;

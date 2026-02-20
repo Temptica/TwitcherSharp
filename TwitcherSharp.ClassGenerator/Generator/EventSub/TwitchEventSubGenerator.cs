@@ -27,7 +27,7 @@ public class TwitchEventSubGenerator
         foreach (var component in parser.ConditionComponents)
         {
             var nameSpace = component.ClassName.Remove("Twitch").Remove("Condition").Remove("V2");
-            var code = EventSubCodeHelper.MainEventSub(component, nameSpace);
+            var code = EventSubCodeHelper.MainEventSub(component, nameSpace, true);
             var actualPath = Path.Combine(path, nameSpace);
             Directory.CreateDirectory(actualPath);
             File.WriteAllText(Path.Combine(actualPath, $"{component.ClassName}.cs"), code);

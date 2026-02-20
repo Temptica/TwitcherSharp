@@ -13,7 +13,7 @@ public class TwitchGenComponent(string name, string @ref, string description)
     private List<TwitchGenField> Fields { get; } = [];
     private List<TwitchGenComponent> ParentComponents { get; } = [];
     public List<TwitchGenComponent> SubComponents { get; } = [];
-    public bool IsGlobal => ParentComponents.Count>1;
+    public bool IsGlobal => ParentComponents.Count > 1;
 
     private Dictionary<string, string> Meta { get; } = [];
 
@@ -52,5 +52,11 @@ public class TwitchGenComponent(string name, string @ref, string description)
     public bool HasMeta(string key)
     {
         return Meta.ContainsKey(key);
+    }
+
+    public TwitchGenComponent GetParentOrNull()
+    {
+        if (ParentComponents.Count == 1) return ParentComponents[0];
+        else return null;
     }
 }

@@ -4,6 +4,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.EventSub;
 
+
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetEventsubSubscriptions 
 /// </summary>

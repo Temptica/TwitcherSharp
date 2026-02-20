@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Streams;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchGetStreamMarkersResponse : Resource, ITwitcherSharp<TwitchGetStreamMarkersResponse>
 {
     private GodotObject _data;
@@ -36,10 +33,6 @@ public partial class TwitchGetStreamMarkersResponse : Resource, ITwitcherSharp<T
 		if(Pagination != null) request.Set("pagination", Pagination);
 		return request;
 	}
-	
-	/// <summary> 
-	///  
-	/// </summary>
 	public partial class TwitchStreamMarkers : Resource, ITwitcherSharp<TwitchStreamMarkers>
 	{
 	    private GodotObject _data;

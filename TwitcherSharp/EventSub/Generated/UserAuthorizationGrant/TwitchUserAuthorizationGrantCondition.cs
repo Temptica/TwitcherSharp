@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.UserAuthorizationGrant;
 
-public partial class TwitchUserAuthorizationGrantCondition : Resource, ITwitcherSharpEventSub<TwitchUserAuthorizationGrantCondition>
+public partial class TwitchUserAuthorizationGrantCondition : Resource, ITwitcherSharpCondition<TwitchUserAuthorizationGrantCondition>
 {
+	public string Name => nameof(TwitchUserAuthorizationGrantCondition);
 
 	/// <summary> 
 	/// Your application’s client id. The provided client_id must match the client id in the application access token.

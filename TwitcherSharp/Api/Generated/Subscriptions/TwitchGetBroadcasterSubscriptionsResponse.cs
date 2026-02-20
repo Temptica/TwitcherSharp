@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Subscriptions;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchGetBroadcasterSubscriptionsResponse : Resource, ITwitcherSharp<TwitchGetBroadcasterSubscriptionsResponse>
 {
     private GodotObject _data;
@@ -42,10 +39,6 @@ public partial class TwitchGetBroadcasterSubscriptionsResponse : Resource, ITwit
 		request.Set("total", Total);
 		return request;
 	}
-	
-	/// <summary> 
-	///  
-	/// </summary>
 	public partial class TwitchBroadcasterSubscription : Resource, ITwitcherSharp<TwitchBroadcasterSubscription>
 	{
 	    private GodotObject _data;

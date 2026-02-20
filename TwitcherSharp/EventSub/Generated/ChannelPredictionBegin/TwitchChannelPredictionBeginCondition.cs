@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelPredictionBegin;
 
-public partial class TwitchChannelPredictionBeginCondition : Resource, ITwitcherSharpEventSub<TwitchChannelPredictionBeginCondition>
+public partial class TwitchChannelPredictionBeginCondition : Resource, ITwitcherSharpCondition<TwitchChannelPredictionBeginCondition>
 {
+	public string Name => nameof(TwitchChannelPredictionBeginCondition);
 
 	/// <summary> 
 	/// The broadcaster user ID of the channel for which “prediction begin” notifications will be received.

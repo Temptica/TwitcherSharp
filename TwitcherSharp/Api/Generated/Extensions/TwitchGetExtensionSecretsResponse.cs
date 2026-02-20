@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Extensions;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchGetExtensionSecretsResponse : Resource, ITwitcherSharp<TwitchGetExtensionSecretsResponse>
 {
     private GodotObject _data;

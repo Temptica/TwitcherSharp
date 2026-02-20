@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelChatClear;
 
-public partial class TwitchChannelChatClearCondition : Resource, ITwitcherSharpEventSub<TwitchChannelChatClearCondition>
+public partial class TwitchChannelChatClearCondition : Resource, ITwitcherSharpCondition<TwitchChannelChatClearCondition>
 {
+	public string Name => nameof(TwitchChannelChatClearCondition);
 
 	/// <summary> 
 	/// User ID of the channel to receive chat clear events for.

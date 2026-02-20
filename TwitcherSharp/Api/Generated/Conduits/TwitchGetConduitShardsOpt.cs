@@ -4,6 +4,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Conduits;
 
+
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetConduitShards 
 /// </summary>

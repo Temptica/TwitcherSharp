@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.ChannelPoints;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchUpdateRedemptionStatusResponse : Resource, ITwitcherSharp<TwitchUpdateRedemptionStatusResponse>
 {
     private GodotObject _data;

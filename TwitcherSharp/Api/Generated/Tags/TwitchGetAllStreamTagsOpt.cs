@@ -4,6 +4,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Tags;
 
+
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetAllStreamTags 
 /// </summary>

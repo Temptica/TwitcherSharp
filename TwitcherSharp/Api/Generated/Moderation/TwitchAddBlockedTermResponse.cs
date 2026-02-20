@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchAddBlockedTermResponse : Resource, ITwitcherSharp<TwitchAddBlockedTermResponse>
 {
     private GodotObject _data;

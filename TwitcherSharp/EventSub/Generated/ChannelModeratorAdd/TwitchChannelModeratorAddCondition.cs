@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelModeratorAdd;
 
-public partial class TwitchChannelModeratorAddCondition : Resource, ITwitcherSharpEventSub<TwitchChannelModeratorAddCondition>
+public partial class TwitchChannelModeratorAddCondition : Resource, ITwitcherSharpCondition<TwitchChannelModeratorAddCondition>
 {
+	public string Name => nameof(TwitchChannelModeratorAddCondition);
 
 	/// <summary> 
 	/// The broadcaster user ID for the channel you want to get moderator addition notifications for.

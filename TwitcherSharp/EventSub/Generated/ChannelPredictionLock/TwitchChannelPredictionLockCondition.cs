@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelPredictionLock;
 
-public partial class TwitchChannelPredictionLockCondition : Resource, ITwitcherSharpEventSub<TwitchChannelPredictionLockCondition>
+public partial class TwitchChannelPredictionLockCondition : Resource, ITwitcherSharpCondition<TwitchChannelPredictionLockCondition>
 {
+	public string Name => nameof(TwitchChannelPredictionLockCondition);
 
 	/// <summary> 
 	/// The broadcaster user ID of the channel for which “prediction lock” notifications will be received.

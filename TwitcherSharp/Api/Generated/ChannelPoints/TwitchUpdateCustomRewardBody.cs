@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.ChannelPoints;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchUpdateCustomRewardBody : Resource, ITwitcherSharp<TwitchUpdateCustomRewardBody>
 {
     private GodotObject _data;

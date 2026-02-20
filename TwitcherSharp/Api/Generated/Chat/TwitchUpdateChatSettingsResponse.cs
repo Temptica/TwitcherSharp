@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Chat;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchUpdateChatSettingsResponse : Resource, ITwitcherSharp<TwitchUpdateChatSettingsResponse>
 {
     private GodotObject _data;
@@ -33,10 +30,6 @@ public partial class TwitchUpdateChatSettingsResponse : Resource, ITwitcherSharp
 		request.Set("data", Data);
 		return request;
 	}
-	
-	/// <summary> 
-	///  
-	/// </summary>
 	public partial class TwitchChatSettingsUpdated : Resource, ITwitcherSharp<TwitchChatSettingsUpdated>
 	{
 	    private GodotObject _data;

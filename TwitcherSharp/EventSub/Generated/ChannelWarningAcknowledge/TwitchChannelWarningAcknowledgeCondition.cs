@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelWarningAcknowledge;
 
-public partial class TwitchChannelWarningAcknowledgeCondition : Resource, ITwitcherSharpEventSub<TwitchChannelWarningAcknowledgeCondition>
+public partial class TwitchChannelWarningAcknowledgeCondition : Resource, ITwitcherSharpCondition<TwitchChannelWarningAcknowledgeCondition>
 {
+	public string Name => nameof(TwitchChannelWarningAcknowledgeCondition);
 
 	/// <summary> 
 	/// The User ID of the broadcaster.

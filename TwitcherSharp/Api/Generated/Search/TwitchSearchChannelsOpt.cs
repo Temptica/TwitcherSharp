@@ -4,6 +4,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Search;
 
+
 /// <summary> 
 /// All optional parameters for TwitchAPI.SearchChannels 
 /// </summary>

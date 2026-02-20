@@ -4,6 +4,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Teams;
 
+
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetTeams 
 /// </summary>

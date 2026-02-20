@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.HypeTrainEnd;
 
-public partial class TwitchHypeTrainEndCondition : Resource, ITwitcherSharpEventSub<TwitchHypeTrainEndCondition>
+public partial class TwitchHypeTrainEndCondition : Resource, ITwitcherSharpCondition<TwitchHypeTrainEndCondition>
 {
+	public string Name => nameof(TwitchHypeTrainEndCondition);
 
 	/// <summary> 
 	/// The ID of the broadcaster that you want to get Hype Train end notifications for.

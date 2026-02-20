@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.WhisperReceived;
 
-public partial class TwitchWhisperReceivedCondition : Resource, ITwitcherSharpEventSub<TwitchWhisperReceivedCondition>
+public partial class TwitchWhisperReceivedCondition : Resource, ITwitcherSharpCondition<TwitchWhisperReceivedCondition>
 {
+	public string Name => nameof(TwitchWhisperReceivedCondition);
 
 	/// <summary> 
 	/// The user_id of the person receiving whispers.

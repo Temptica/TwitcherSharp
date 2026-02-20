@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Streams;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchCreateStreamMarkerBody : Resource, ITwitcherSharp<TwitchCreateStreamMarkerBody>
 {
     private GodotObject _data;

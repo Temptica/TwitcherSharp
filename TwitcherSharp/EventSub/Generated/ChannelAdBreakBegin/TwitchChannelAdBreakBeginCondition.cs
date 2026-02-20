@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelAdBreakBegin;
 
-public partial class TwitchChannelAdBreakBeginCondition : Resource, ITwitcherSharpEventSub<TwitchChannelAdBreakBeginCondition>
+public partial class TwitchChannelAdBreakBeginCondition : Resource, ITwitcherSharpCondition<TwitchChannelAdBreakBeginCondition>
 {
+	public string Name => nameof(TwitchChannelAdBreakBeginCondition);
 
 	/// <summary> 
 	/// The ID of the broadcaster that you want to get Channel Ad Break begin notifications for. Maximum: 1

@@ -4,6 +4,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Games;
 
+
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetGames 
 /// </summary>

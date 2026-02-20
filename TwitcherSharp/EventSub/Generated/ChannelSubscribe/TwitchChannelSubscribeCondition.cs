@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelSubscribe;
 
-public partial class TwitchChannelSubscribeCondition : Resource, ITwitcherSharpEventSub<TwitchChannelSubscribeCondition>
+public partial class TwitchChannelSubscribeCondition : Resource, ITwitcherSharpCondition<TwitchChannelSubscribeCondition>
 {
+	public string Name => nameof(TwitchChannelSubscribeCondition);
 
 	/// <summary> 
 	/// The broadcaster user ID for the channel you want to get subscribe notifications for.

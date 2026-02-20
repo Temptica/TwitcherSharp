@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Tags;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchGetAllStreamTagsResponse : Resource, ITwitcherSharp<TwitchGetAllStreamTagsResponse>
 {
     private GodotObject _data;

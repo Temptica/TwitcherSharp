@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchCheckAutoModStatusResponse : Resource, ITwitcherSharp<TwitchCheckAutoModStatusResponse>
 {
     private GodotObject _data;
@@ -33,10 +30,6 @@ public partial class TwitchCheckAutoModStatusResponse : Resource, ITwitcherSharp
 		request.Set("data", Data);
 		return request;
 	}
-	
-	/// <summary> 
-	///  
-	/// </summary>
 	public partial class TwitchAutoModStatus : Resource, ITwitcherSharp<TwitchAutoModStatus>
 	{
 	    private GodotObject _data;

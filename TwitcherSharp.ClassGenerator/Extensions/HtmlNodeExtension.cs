@@ -13,6 +13,7 @@ public static class HtmlNodeExtension
             while (nextNode.NodeType != HtmlNodeType.Element)
             {
                 nextNode = nextNode.NextSibling;
+                // ReSharper disable once ConditionIsAlwaysTrueOrFalse
                 if(nextNode == null) return null;
             }
             return nextNode;

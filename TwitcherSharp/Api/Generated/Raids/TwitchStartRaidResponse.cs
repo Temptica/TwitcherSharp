@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Raids;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchStartRaidResponse : Resource, ITwitcherSharp<TwitchStartRaidResponse>
 {
     private GodotObject _data;

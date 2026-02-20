@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelUnban;
 
-public partial class TwitchChannelUnbanCondition : Resource, ITwitcherSharpEventSub<TwitchChannelUnbanCondition>
+public partial class TwitchChannelUnbanCondition : Resource, ITwitcherSharpCondition<TwitchChannelUnbanCondition>
 {
+	public string Name => nameof(TwitchChannelUnbanCondition);
 
 	/// <summary> 
 	/// The broadcaster user ID for the channel you want to get unban notifications for.

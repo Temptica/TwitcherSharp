@@ -19,6 +19,12 @@ public static class EventSubCodeStrings
     /// </summary>
     public const string EventSubHeader =
         "public partial class {{ClassName}} : Resource, ITwitcherSharpEventSub<{{ClassName}}>";
+    
+    /// <summary>
+    /// Param: {{ClassName}}
+    /// </summary>
+    public const string ConditionSubHeader =
+        "public partial class {{ClassName}} : Resource, ITwitcherSharpCondition<{{ClassName}}>";
 
     public const string FieldDescription = """
                                            /// <summary> 
@@ -34,7 +40,7 @@ public static class EventSubCodeStrings
                                                 {
                                                     if(data == null) return null;
                                             """;
-    
+
     public const string FromDictionary = """
                                          public static {{ClassName}} FromData(Dictionary data)
                                          {

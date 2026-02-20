@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelUnbanRequestCreate;
 
-public partial class TwitchChannelUnbanRequestCreateCondition : Resource, ITwitcherSharpEventSub<TwitchChannelUnbanRequestCreateCondition>
+public partial class TwitchChannelUnbanRequestCreateCondition : Resource, ITwitcherSharpCondition<TwitchChannelUnbanRequestCreateCondition>
 {
+	public string Name => nameof(TwitchChannelUnbanRequestCreateCondition);
 
 	/// <summary> 
 	/// The ID of the user that has permission to moderate the broadcaster’s channel and has granted your app permission to subscribe to this subscription type.

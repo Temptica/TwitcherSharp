@@ -27,13 +27,13 @@ public class TwitchApiParser
 
         var pagination = new TwitchGenComponent("TwitchPagination", "_",
             "Contains the information used to page through the list of results. The object is empty if there are no more pages left to page through");
-        
+
         pagination.AddField(new TwitchGenField
         {
             Name = "Cursor",
             Type = "string",
         });
-        
+
         Components[pagination.ClassName] = pagination;
         Pagination = pagination;
 
@@ -78,13 +78,13 @@ public class TwitchApiParser
                 Type = GetParamType(property),
                 IsRequired = schema.Required?.Contains(name) ?? false
             };
-            
+
             if (name.Equals("pagination", StringComparison.InvariantCultureIgnoreCase))
             {
                 field.Type = "TwitchPagination";
                 field.TypedComponent = Pagination;
                 component.AddComponent(Pagination);
-                component.AddField(field);    
+                component.AddField(field);
                 continue;
             }
 
@@ -101,7 +101,6 @@ public class TwitchApiParser
                     field.Type = "Twitch" + items.Reference.ReferenceV3.Split("/").Last();
                     field.TypedComponent = GetComponentByRef(items.Reference.ReferenceV3);
                     component.AddComponent(field.TypedComponent);
-                    
                 }
                 else if (items.Properties.Count > 0)
                 {
@@ -109,7 +108,6 @@ public class TwitchApiParser
                     field.Type = "Twitch" + subComponent.Ref.Split("/").Last();
                     field.TypedComponent = subComponent;
                     component.AddComponent(field.TypedComponent);
-                    
                 }
                 else
                 {
@@ -122,6 +120,10 @@ public class TwitchApiParser
                 field.Type = "Twitch" + subComponent.Ref.Split("/").Last();
                 field.TypedComponent = subComponent;
                 component.AddComponent(field.TypedComponent);
+            }
+            else if (component.Ref.Contains("GetAdSchedule",StringComparison.CurrentCultureIgnoreCase) && name.EndsWith("At",StringComparison.CurrentCultureIgnoreCase))
+            {
+                field.Type = "float"; //WHYYY TWITCH
             }
 
             component.AddField(field);
@@ -157,12 +159,13 @@ public class TwitchApiParser
                 }
 
                 //try find child component
-                if (method.ContainsBody && Components.TryGetValue(method.BodyType.Replace("Twitch",""), out var bodyComponent))
+                if (method.ContainsBody &&
+                    Components.TryGetValue(method.BodyType.Replace("Twitch", ""), out var bodyComponent))
                 {
                     bodyComponent.Tag = tag;
                 }
 
-                if (Components.TryGetValue(method.ResultType.Replace("Twitch",""), out var responseComponent))
+                if (Components.TryGetValue(method.ResultType.Replace("Twitch", ""), out var responseComponent))
                 {
                     responseComponent.Tag = tag;
                 }

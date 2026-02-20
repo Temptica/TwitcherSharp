@@ -4,6 +4,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Clips;
 
+
 /// <summary> 
 /// All optional parameters for TwitchAPI.CreateClipFromVod 
 /// </summary>

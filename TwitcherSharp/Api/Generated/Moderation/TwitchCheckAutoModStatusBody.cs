@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchCheckAutoModStatusBody : Resource, ITwitcherSharp<TwitchCheckAutoModStatusBody>
 {
     private GodotObject _data;

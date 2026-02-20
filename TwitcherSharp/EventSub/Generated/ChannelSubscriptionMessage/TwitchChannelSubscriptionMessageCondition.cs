@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelSubscriptionMessage;
 
-public partial class TwitchChannelSubscriptionMessageCondition : Resource, ITwitcherSharpEventSub<TwitchChannelSubscriptionMessageCondition>
+public partial class TwitchChannelSubscriptionMessageCondition : Resource, ITwitcherSharpCondition<TwitchChannelSubscriptionMessageCondition>
 {
+	public string Name => nameof(TwitchChannelSubscriptionMessageCondition);
 
 	/// <summary> 
 	/// The broadcaster user ID for the channel you want to get resubscription chat message notifications for.

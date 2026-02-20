@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelGuestStarGuestUpdate;
 
-public partial class TwitchChannelGuestStarGuestUpdateCondition : Resource, ITwitcherSharpEventSub<TwitchChannelGuestStarGuestUpdateCondition>
+public partial class TwitchChannelGuestStarGuestUpdateCondition : Resource, ITwitcherSharpCondition<TwitchChannelGuestStarGuestUpdateCondition>
 {
+	public string Name => nameof(TwitchChannelGuestStarGuestUpdateCondition);
 
 	/// <summary> 
 	/// The broadcaster user ID of the channel hosting the Guest Star Session

@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelModerate;
 
-public partial class TwitchChannelModerateCondition : Resource, ITwitcherSharpEventSub<TwitchChannelModerateCondition>
+public partial class TwitchChannelModerateCondition : Resource, ITwitcherSharpCondition<TwitchChannelModerateCondition>
 {
+	public string Name => nameof(TwitchChannelModerateCondition);
 
 	/// <summary> 
 	/// The user ID of the broadcaster.

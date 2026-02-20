@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Ads;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchGetAdScheduleResponse : Resource, ITwitcherSharp<TwitchGetAdScheduleResponse>
 {
     private GodotObject _data;
@@ -41,10 +38,10 @@ public partial class TwitchGetAdScheduleResponse : Resource, ITwitcherSharp<Twit
 	{
 	    private GodotObject _data;
 		public int SnoozeCount { get; set; }
-		public string SnoozeRefreshAt { get; set; }
-		public string NextAdAt { get; set; }
+		public float SnoozeRefreshAt { get; set; }
+		public float NextAdAt { get; set; }
 		public int Duration { get; set; }
-		public string LastAdAt { get; set; }
+		public float LastAdAt { get; set; }
 		public int PrerollFreeTime { get; set; }
 	
 	    /// <summary> 
@@ -56,10 +53,10 @@ public partial class TwitchGetAdScheduleResponse : Resource, ITwitcherSharp<Twit
 			return new TwitchData
 			{
 				SnoozeCount = data.Get("snooze_count").AsInt32(),
-				SnoozeRefreshAt = data.Get("snooze_refresh_at").AsString(),
-				NextAdAt = data.Get("next_ad_at").AsString(),
+				SnoozeRefreshAt = data.Get("snooze_refresh_at").As<float>(),
+				NextAdAt = data.Get("next_ad_at").As<float>(),
 				Duration = data.Get("duration").AsInt32(),
-				LastAdAt = data.Get("last_ad_at").AsString(),
+				LastAdAt = data.Get("last_ad_at").As<float>(),
 				PrerollFreeTime = data.Get("preroll_free_time").AsInt32(),
 			};
 		}

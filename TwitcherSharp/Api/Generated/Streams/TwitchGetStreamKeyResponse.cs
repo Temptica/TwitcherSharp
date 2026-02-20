@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Streams;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchGetStreamKeyResponse : Resource, ITwitcherSharp<TwitchGetStreamKeyResponse>
 {
     private GodotObject _data;

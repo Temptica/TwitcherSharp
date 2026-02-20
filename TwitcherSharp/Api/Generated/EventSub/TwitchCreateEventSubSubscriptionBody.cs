@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.EventSub;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchCreateEventSubSubscriptionBody : Resource, ITwitcherSharp<TwitchCreateEventSubSubscriptionBody>
 {
     private GodotObject _data;

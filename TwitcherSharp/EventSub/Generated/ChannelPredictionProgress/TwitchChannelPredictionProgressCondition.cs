@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelPredictionProgress;
 
-public partial class TwitchChannelPredictionProgressCondition : Resource, ITwitcherSharpEventSub<TwitchChannelPredictionProgressCondition>
+public partial class TwitchChannelPredictionProgressCondition : Resource, ITwitcherSharpCondition<TwitchChannelPredictionProgressCondition>
 {
+	public string Name => nameof(TwitchChannelPredictionProgressCondition);
 
 	/// <summary> 
 	/// The broadcaster user ID of the channel for which “prediction progress” notifications will be received.

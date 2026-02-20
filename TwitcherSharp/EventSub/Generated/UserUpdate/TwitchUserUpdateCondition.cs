@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.UserUpdate;
 
-public partial class TwitchUserUpdateCondition : Resource, ITwitcherSharpEventSub<TwitchUserUpdateCondition>
+public partial class TwitchUserUpdateCondition : Resource, ITwitcherSharpCondition<TwitchUserUpdateCondition>
 {
+	public string Name => nameof(TwitchUserUpdateCondition);
 
 	/// <summary> 
 	/// The user ID for the user you want update notifications for.

@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelChatMessage;
 
-public partial class TwitchChannelChatMessageCondition : Resource, ITwitcherSharpEventSub<TwitchChannelChatMessageCondition>
+public partial class TwitchChannelChatMessageCondition : Resource, ITwitcherSharpCondition<TwitchChannelChatMessageCondition>
 {
+	public string Name => nameof(TwitchChannelChatMessageCondition);
 
 	/// <summary> 
 	/// The User ID of the channel to receive chat message events for.

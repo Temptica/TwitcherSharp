@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.HypeTrainBegin;
 
-public partial class TwitchHypeTrainBeginCondition : Resource, ITwitcherSharpEventSub<TwitchHypeTrainBeginCondition>
+public partial class TwitchHypeTrainBeginCondition : Resource, ITwitcherSharpCondition<TwitchHypeTrainBeginCondition>
 {
+	public string Name => nameof(TwitchHypeTrainBeginCondition);
 
 	/// <summary> 
 	/// The ID of the broadcaster that you want to get Hype Train begin notifications for.

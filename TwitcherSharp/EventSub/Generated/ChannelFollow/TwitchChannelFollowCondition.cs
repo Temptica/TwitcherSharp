@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelFollow;
 
-public partial class TwitchChannelFollowCondition : Resource, ITwitcherSharpEventSub<TwitchChannelFollowCondition>
+public partial class TwitchChannelFollowCondition : Resource, ITwitcherSharpCondition<TwitchChannelFollowCondition>
 {
+	public string Name => nameof(TwitchChannelFollowCondition);
 
 	/// <summary> 
 	/// The broadcaster user ID for the channel you want to get follow notifications for.

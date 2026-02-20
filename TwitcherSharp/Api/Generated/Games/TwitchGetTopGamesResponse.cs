@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Games;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchGetTopGamesResponse : Resource, ITwitcherSharp<TwitchGetTopGamesResponse>
 {
     private GodotObject _data;

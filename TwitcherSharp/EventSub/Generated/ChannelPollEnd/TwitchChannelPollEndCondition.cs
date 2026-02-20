@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelPollEnd;
 
-public partial class TwitchChannelPollEndCondition : Resource, ITwitcherSharpEventSub<TwitchChannelPollEndCondition>
+public partial class TwitchChannelPollEndCondition : Resource, ITwitcherSharpCondition<TwitchChannelPollEndCondition>
 {
+	public string Name => nameof(TwitchChannelPollEndCondition);
 
 	/// <summary> 
 	/// The broadcaster user ID of the channel for which “poll end” notifications will be received.

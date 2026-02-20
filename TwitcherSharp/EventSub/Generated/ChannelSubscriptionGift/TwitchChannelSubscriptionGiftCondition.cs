@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelSubscriptionGift;
 
-public partial class TwitchChannelSubscriptionGiftCondition : Resource, ITwitcherSharpEventSub<TwitchChannelSubscriptionGiftCondition>
+public partial class TwitchChannelSubscriptionGiftCondition : Resource, ITwitcherSharpCondition<TwitchChannelSubscriptionGiftCondition>
 {
+	public string Name => nameof(TwitchChannelSubscriptionGiftCondition);
 
 	/// <summary> 
 	/// The broadcaster user ID for the channel you want to get subscription gift notifications for.

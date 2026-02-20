@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelVIPRemove;
 
-public partial class TwitchChannelVIPRemoveCondition : Resource, ITwitcherSharpEventSub<TwitchChannelVIPRemoveCondition>
+public partial class TwitchChannelVIPRemoveCondition : Resource, ITwitcherSharpCondition<TwitchChannelVIPRemoveCondition>
 {
+	public string Name => nameof(TwitchChannelVIPRemoveCondition);
 
 	/// <summary> 
 	/// The User ID of the broadcaster (channel) Maximum: 1

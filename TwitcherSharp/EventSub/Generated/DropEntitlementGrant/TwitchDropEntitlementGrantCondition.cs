@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.DropEntitlementGrant;
 
-public partial class TwitchDropEntitlementGrantCondition : Resource, ITwitcherSharpEventSub<TwitchDropEntitlementGrantCondition>
+public partial class TwitchDropEntitlementGrantCondition : Resource, ITwitcherSharpCondition<TwitchDropEntitlementGrantCondition>
 {
+	public string Name => nameof(TwitchDropEntitlementGrantCondition);
 
 	/// <summary> 
 	/// The organization ID of the organization that owns the game on the developer portal.

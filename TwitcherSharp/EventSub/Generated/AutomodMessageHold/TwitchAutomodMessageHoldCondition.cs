@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.AutomodMessageHold;
 
-public partial class TwitchAutomodMessageHoldCondition : Resource, ITwitcherSharpEventSub<TwitchAutomodMessageHoldCondition>
+public partial class TwitchAutomodMessageHoldCondition : Resource, ITwitcherSharpCondition<TwitchAutomodMessageHoldCondition>
 {
+	public string Name => nameof(TwitchAutomodMessageHoldCondition);
 
 	/// <summary> 
 	/// User ID of the broadcaster (channel).

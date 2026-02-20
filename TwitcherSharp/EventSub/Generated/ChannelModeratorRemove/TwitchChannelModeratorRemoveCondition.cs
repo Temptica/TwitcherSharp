@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelModeratorRemove;
 
-public partial class TwitchChannelModeratorRemoveCondition : Resource, ITwitcherSharpEventSub<TwitchChannelModeratorRemoveCondition>
+public partial class TwitchChannelModeratorRemoveCondition : Resource, ITwitcherSharpCondition<TwitchChannelModeratorRemoveCondition>
 {
+	public string Name => nameof(TwitchChannelModeratorRemoveCondition);
 
 	/// <summary> 
 	/// The broadcaster user ID for the channel you want to get moderator removal notifications for.

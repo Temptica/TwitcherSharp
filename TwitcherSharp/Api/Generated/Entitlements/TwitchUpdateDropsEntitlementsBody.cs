@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Entitlements;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchUpdateDropsEntitlementsBody : Resource, ITwitcherSharp<TwitchUpdateDropsEntitlementsBody>
 {
     private GodotObject _data;

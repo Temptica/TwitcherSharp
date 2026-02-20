@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.StreamOffline;
 
-public partial class TwitchStreamOfflineCondition : Resource, ITwitcherSharpEventSub<TwitchStreamOfflineCondition>
+public partial class TwitchStreamOfflineCondition : Resource, ITwitcherSharpCondition<TwitchStreamOfflineCondition>
 {
+	public string Name => nameof(TwitchStreamOfflineCondition);
 
 	/// <summary> 
 	/// The broadcaster user ID you want to get stream offline notifications for.

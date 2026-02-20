@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelBitsUse;
 
-public partial class TwitchChannelBitsUseCondition : Resource, ITwitcherSharpEventSub<TwitchChannelBitsUseCondition>
+public partial class TwitchChannelBitsUseCondition : Resource, ITwitcherSharpCondition<TwitchChannelBitsUseCondition>
 {
+	public string Name => nameof(TwitchChannelBitsUseCondition);
 
 	/// <summary> 
 	/// The user ID of the channel broadcaster. Maximum: 1.

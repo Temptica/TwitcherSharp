@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Clips;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchCreateClipFromVODResponse : Resource, ITwitcherSharp<TwitchCreateClipFromVODResponse>
 {
     private GodotObject _data;

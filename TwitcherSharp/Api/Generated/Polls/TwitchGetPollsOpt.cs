@@ -4,6 +4,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Polls;
 
+
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetPolls 
 /// </summary>

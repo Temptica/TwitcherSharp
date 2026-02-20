@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Ads;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchStartCommercialResponse : Resource, ITwitcherSharp<TwitchStartCommercialResponse>
 {
     private GodotObject _data;

@@ -4,6 +4,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Charity;
 
+
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetCharityCampaignDonations 
 /// </summary>

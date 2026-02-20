@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Charity;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchGetCharityCampaignResponse : Resource, ITwitcherSharp<TwitchGetCharityCampaignResponse>
 {
     private GodotObject _data;
@@ -33,10 +30,6 @@ public partial class TwitchGetCharityCampaignResponse : Resource, ITwitcherSharp
 		request.Set("data", Data);
 		return request;
 	}
-	
-	/// <summary> 
-	///  
-	/// </summary>
 	public partial class TwitchCharityCampaign : Resource, ITwitcherSharp<TwitchCharityCampaign>
 	{
 	    private GodotObject _data;

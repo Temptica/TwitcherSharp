@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelPointsCustomRewardRemove;
 
-public partial class TwitchChannelPointsCustomRewardRemoveCondition : Resource, ITwitcherSharpEventSub<TwitchChannelPointsCustomRewardRemoveCondition>
+public partial class TwitchChannelPointsCustomRewardRemoveCondition : Resource, ITwitcherSharpCondition<TwitchChannelPointsCustomRewardRemoveCondition>
 {
+	public string Name => nameof(TwitchChannelPointsCustomRewardRemoveCondition);
 
 	/// <summary> 
 	/// The broadcaster user ID for the channel you want to receive channel points custom reward remove notifications for.

@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Channels;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchGetChannelInformationResponse : Resource, ITwitcherSharp<TwitchGetChannelInformationResponse>
 {
     private GodotObject _data;
@@ -33,10 +30,6 @@ public partial class TwitchGetChannelInformationResponse : Resource, ITwitcherSh
 		request.Set("data", Data);
 		return request;
 	}
-	
-	/// <summary> 
-	///  
-	/// </summary>
 	public partial class TwitchChannelInformation : Resource, ITwitcherSharp<TwitchChannelInformation>
 	{
 	    private GodotObject _data;

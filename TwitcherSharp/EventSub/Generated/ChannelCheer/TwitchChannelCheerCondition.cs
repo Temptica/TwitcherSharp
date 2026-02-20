@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelCheer;
 
-public partial class TwitchChannelCheerCondition : Resource, ITwitcherSharpEventSub<TwitchChannelCheerCondition>
+public partial class TwitchChannelCheerCondition : Resource, ITwitcherSharpCondition<TwitchChannelCheerCondition>
 {
+	public string Name => nameof(TwitchChannelCheerCondition);
 
 	/// <summary> 
 	/// The broadcaster user ID for the channel you want to get cheer notifications for.

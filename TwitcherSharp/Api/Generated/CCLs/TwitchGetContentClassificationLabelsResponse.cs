@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.CCLs;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchGetContentClassificationLabelsResponse : Resource, ITwitcherSharp<TwitchGetContentClassificationLabelsResponse>
 {
     private GodotObject _data;
@@ -33,10 +30,6 @@ public partial class TwitchGetContentClassificationLabelsResponse : Resource, IT
 		request.Set("data", Data);
 		return request;
 	}
-	
-	/// <summary> 
-	///  
-	/// </summary>
 	public partial class TwitchContentClassificationLabel : Resource, ITwitcherSharp<TwitchContentClassificationLabel>
 	{
 	    private GodotObject _data;

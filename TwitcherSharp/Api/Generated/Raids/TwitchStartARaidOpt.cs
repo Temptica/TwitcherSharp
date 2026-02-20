@@ -4,6 +4,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Raids;
 
+
 /// <summary> 
 /// All optional parameters for TwitchAPI.StartARaid 
 /// </summary>

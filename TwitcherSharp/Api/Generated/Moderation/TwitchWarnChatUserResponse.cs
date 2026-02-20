@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchWarnChatUserResponse : Resource, ITwitcherSharp<TwitchWarnChatUserResponse>
 {
     private GodotObject _data;

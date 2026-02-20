@@ -4,6 +4,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Predictions;
 
+
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetPredictions 
 /// </summary>

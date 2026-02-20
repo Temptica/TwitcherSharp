@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.HypeTrain;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchGetHypeTrainStatusResponse : Resource, ITwitcherSharp<TwitchGetHypeTrainStatusResponse>
 {
     private GodotObject _data;

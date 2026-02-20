@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Shared;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchExtensionBitsProduct : Resource, ITwitcherSharp<TwitchExtensionBitsProduct>
 {
     private GodotObject _data;

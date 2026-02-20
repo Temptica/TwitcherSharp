@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ExtensionBitsTransactionCreate;
 
-public partial class TwitchExtensionBitsTransactionCreateCondition : Resource, ITwitcherSharpEventSub<TwitchExtensionBitsTransactionCreateCondition>
+public partial class TwitchExtensionBitsTransactionCreateCondition : Resource, ITwitcherSharpCondition<TwitchExtensionBitsTransactionCreateCondition>
 {
+	public string Name => nameof(TwitchExtensionBitsTransactionCreateCondition);
 
 	/// <summary> 
 	/// The client ID of the extension.

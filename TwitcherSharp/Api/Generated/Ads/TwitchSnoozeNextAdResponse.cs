@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Ads;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchSnoozeNextAdResponse : Resource, ITwitcherSharp<TwitchSnoozeNextAdResponse>
 {
     private GodotObject _data;

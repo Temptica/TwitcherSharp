@@ -4,6 +4,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.ChannelPoints;
 
+
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetCustomReward 
 /// </summary>

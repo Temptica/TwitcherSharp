@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Users;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchUpdateUserExtensionsBody : Resource, ITwitcherSharp<TwitchUpdateUserExtensionsBody>
 {
     private GodotObject _data;

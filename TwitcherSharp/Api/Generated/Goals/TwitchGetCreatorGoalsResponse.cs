@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Goals;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchGetCreatorGoalsResponse : Resource, ITwitcherSharp<TwitchGetCreatorGoalsResponse>
 {
     private GodotObject _data;
@@ -33,10 +30,6 @@ public partial class TwitchGetCreatorGoalsResponse : Resource, ITwitcherSharp<Tw
 		request.Set("data", Data);
 		return request;
 	}
-	
-	/// <summary> 
-	///  
-	/// </summary>
 	public partial class TwitchCreatorGoal : Resource, ITwitcherSharp<TwitchCreatorGoal>
 	{
 	    private GodotObject _data;

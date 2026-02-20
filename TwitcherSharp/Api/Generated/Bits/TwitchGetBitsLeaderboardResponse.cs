@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Bits;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchGetBitsLeaderboardResponse : Resource, ITwitcherSharp<TwitchGetBitsLeaderboardResponse>
 {
     private GodotObject _data;
@@ -39,10 +36,6 @@ public partial class TwitchGetBitsLeaderboardResponse : Resource, ITwitcherSharp
 		request.Set("total", Total);
 		return request;
 	}
-	
-	/// <summary> 
-	///  
-	/// </summary>
 	public partial class TwitchBitsLeaderboard : Resource, ITwitcherSharp<TwitchBitsLeaderboard>
 	{
 	    private GodotObject _data;

@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.StreamOnline;
 
-public partial class TwitchStreamOnlineCondition : Resource, ITwitcherSharpEventSub<TwitchStreamOnlineCondition>
+public partial class TwitchStreamOnlineCondition : Resource, ITwitcherSharpCondition<TwitchStreamOnlineCondition>
 {
+	public string Name => nameof(TwitchStreamOnlineCondition);
 
 	/// <summary> 
 	/// The broadcaster user ID you want to get stream online notifications for.

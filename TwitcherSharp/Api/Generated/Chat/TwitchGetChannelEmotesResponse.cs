@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Chat;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchGetChannelEmotesResponse : Resource, ITwitcherSharp<TwitchGetChannelEmotesResponse>
 {
     private GodotObject _data;
@@ -36,10 +33,6 @@ public partial class TwitchGetChannelEmotesResponse : Resource, ITwitcherSharp<T
 		request.Set("template", Template);
 		return request;
 	}
-	
-	/// <summary> 
-	///  
-	/// </summary>
 	public partial class TwitchChannelEmote : Resource, ITwitcherSharp<TwitchChannelEmote>
 	{
 	    private GodotObject _data;

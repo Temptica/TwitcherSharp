@@ -4,6 +4,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Schedule;
 
+
 /// <summary> 
 /// All optional parameters for TwitchAPI.UpdateChannelStreamSchedule 
 /// </summary>

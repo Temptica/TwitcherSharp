@@ -67,12 +67,9 @@ public static class ApiCodeStrings
                                           """;
 
     /// <summary>
-    /// Param: description, className
+    /// Param: className
     /// </summary>
     public const string ComponentHeader = """
-                                          /// <summary> 
-                                          /// {{description}} 
-                                          /// </summary>
                                           public partial class {{className}} : Resource, ITwitcherSharp<{{className}}>
                                           {
                                               private GodotObject _data;

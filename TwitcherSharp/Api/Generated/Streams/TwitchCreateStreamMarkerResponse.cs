@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Streams;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchCreateStreamMarkerResponse : Resource, ITwitcherSharp<TwitchCreateStreamMarkerResponse>
 {
     private GodotObject _data;
@@ -33,10 +30,6 @@ public partial class TwitchCreateStreamMarkerResponse : Resource, ITwitcherSharp
 		request.Set("data", Data);
 		return request;
 	}
-	
-	/// <summary> 
-	///  
-	/// </summary>
 	public partial class TwitchStreamMarkerCreated : Resource, ITwitcherSharp<TwitchStreamMarkerCreated>
 	{
 	    private GodotObject _data;

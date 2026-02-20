@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Extensions;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchGetExtensionLiveChannelsResponse : Resource, ITwitcherSharp<TwitchGetExtensionLiveChannelsResponse>
 {
     private GodotObject _data;
@@ -36,10 +33,6 @@ public partial class TwitchGetExtensionLiveChannelsResponse : Resource, ITwitche
 		if(Pagination != null) request.Set("pagination", Pagination);
 		return request;
 	}
-	
-	/// <summary> 
-	///  
-	/// </summary>
 	public partial class TwitchExtensionLiveChannel : Resource, ITwitcherSharp<TwitchExtensionLiveChannel>
 	{
 	    private GodotObject _data;

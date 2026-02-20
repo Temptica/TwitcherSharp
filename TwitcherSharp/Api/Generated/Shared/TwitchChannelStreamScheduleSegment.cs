@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Shared;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchChannelStreamScheduleSegment : Resource, ITwitcherSharp<TwitchChannelStreamScheduleSegment>
 {
     private GodotObject _data;

@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelSharedChatSessionBegin;
 
-public partial class TwitchChannelSharedChatSessionBeginCondition : Resource, ITwitcherSharpEventSub<TwitchChannelSharedChatSessionBeginCondition>
+public partial class TwitchChannelSharedChatSessionBeginCondition : Resource, ITwitcherSharpCondition<TwitchChannelSharedChatSessionBeginCondition>
 {
+	public string Name => nameof(TwitchChannelSharedChatSessionBeginCondition);
 
 	/// <summary> 
 	/// The User ID of the channel to receive shared chat session begin events for.

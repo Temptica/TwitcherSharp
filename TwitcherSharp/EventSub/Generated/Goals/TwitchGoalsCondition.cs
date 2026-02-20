@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.Goals;
 
-public partial class TwitchGoalsCondition : Resource, ITwitcherSharpEventSub<TwitchGoalsCondition>
+public partial class TwitchGoalsCondition : Resource, ITwitcherSharpCondition<TwitchGoalsCondition>
 {
+	public string Name => nameof(TwitchGoalsCondition);
 
 	/// <summary> 
 	/// The ID of the broadcaster to get notified about. The ID must match the user_id in the OAuth access token.

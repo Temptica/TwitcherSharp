@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchUpdateShieldModeStatusResponse : Resource, ITwitcherSharp<TwitchUpdateShieldModeStatusResponse>
 {
     private GodotObject _data;

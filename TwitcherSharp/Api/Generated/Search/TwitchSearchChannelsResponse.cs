@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Search;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchSearchChannelsResponse : Resource, ITwitcherSharp<TwitchSearchChannelsResponse>
 {
     private GodotObject _data;
@@ -36,10 +33,6 @@ public partial class TwitchSearchChannelsResponse : Resource, ITwitcherSharp<Twi
 		if(Pagination != null) request.Set("pagination", Pagination);
 		return request;
 	}
-	
-	/// <summary> 
-	///  
-	/// </summary>
 	public partial class TwitchChannel : Resource, ITwitcherSharp<TwitchChannel>
 	{
 	    private GodotObject _data;

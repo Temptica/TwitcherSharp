@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelSharedChatSessionEnd;
 
-public partial class TwitchChannelSharedChatSessionEndCondition : Resource, ITwitcherSharpEventSub<TwitchChannelSharedChatSessionEndCondition>
+public partial class TwitchChannelSharedChatSessionEndCondition : Resource, ITwitcherSharpCondition<TwitchChannelSharedChatSessionEndCondition>
 {
+	public string Name => nameof(TwitchChannelSharedChatSessionEndCondition);
 
 	/// <summary> 
 	/// The User ID of the channel to receive shared chat session end events for.

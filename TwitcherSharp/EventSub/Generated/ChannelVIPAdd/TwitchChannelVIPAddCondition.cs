@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelVIPAdd;
 
-public partial class TwitchChannelVIPAddCondition : Resource, ITwitcherSharpEventSub<TwitchChannelVIPAddCondition>
+public partial class TwitchChannelVIPAddCondition : Resource, ITwitcherSharpCondition<TwitchChannelVIPAddCondition>
 {
+	public string Name => nameof(TwitchChannelVIPAddCondition);
 
 	/// <summary> 
 	/// The User ID of the broadcaster (channel) Maximum: 1

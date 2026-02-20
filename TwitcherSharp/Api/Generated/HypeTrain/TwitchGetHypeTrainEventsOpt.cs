@@ -4,6 +4,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.HypeTrain;
 
+
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetHypeTrainEvents 
 /// </summary>

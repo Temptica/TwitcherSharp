@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelSuspiciousUserMessage;
 
-public partial class TwitchChannelSuspiciousUserMessageCondition : Resource, ITwitcherSharpEventSub<TwitchChannelSuspiciousUserMessageCondition>
+public partial class TwitchChannelSuspiciousUserMessageCondition : Resource, ITwitcherSharpCondition<TwitchChannelSuspiciousUserMessageCondition>
 {
+	public string Name => nameof(TwitchChannelSuspiciousUserMessageCondition);
 
 	/// <summary> 
 	/// The ID of a user that has permission to moderate the broadcaster’s channel and has granted your app permission to subscribe to this subscription type.

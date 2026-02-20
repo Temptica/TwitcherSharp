@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Bits;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchGetCheermotesResponse : Resource, ITwitcherSharp<TwitchGetCheermotesResponse>
 {
     private GodotObject _data;
@@ -33,10 +30,6 @@ public partial class TwitchGetCheermotesResponse : Resource, ITwitcherSharp<Twit
 		request.Set("data", Data);
 		return request;
 	}
-	
-	/// <summary> 
-	///  
-	/// </summary>
 	public partial class TwitchCheermote : Resource, ITwitcherSharp<TwitchCheermote>
 	{
 	    private GodotObject _data;
@@ -120,10 +113,6 @@ public partial class TwitchGetCheermotesResponse : Resource, ITwitcherSharp<Twit
 				request.Set("show_in_bits_card", ShowInBitsCard);
 				return request;
 			}
-			
-			/// <summary> 
-			///  
-			/// </summary>
 			public partial class TwitchImages : Resource, ITwitcherSharp<TwitchImages>
 			{
 			    private GodotObject _data;
@@ -151,10 +140,6 @@ public partial class TwitchGetCheermotesResponse : Resource, ITwitcherSharp<Twit
 					if(Dark != null) request.Set("dark", Dark);
 					return request;
 				}
-				
-				/// <summary> 
-				///  
-				/// </summary>
 				public partial class TwitchLight : Resource, ITwitcherSharp<TwitchLight>
 				{
 				    private GodotObject _data;
@@ -182,10 +167,6 @@ public partial class TwitchGetCheermotesResponse : Resource, ITwitcherSharp<Twit
 						if(Static != null) request.Set("static", Static);
 						return request;
 					}
-					
-					/// <summary> 
-					///  
-					/// </summary>
 					public partial class TwitchAnimated : Resource, ITwitcherSharp<TwitchAnimated>
 					{
 					    private GodotObject _data;
@@ -224,10 +205,6 @@ public partial class TwitchGetCheermotesResponse : Resource, ITwitcherSharp<Twit
 						}
 					
 					}
-					
-					/// <summary> 
-					///  
-					/// </summary>
 					public partial class TwitchStatic : Resource, ITwitcherSharp<TwitchStatic>
 					{
 					    private GodotObject _data;
@@ -268,10 +245,6 @@ public partial class TwitchGetCheermotesResponse : Resource, ITwitcherSharp<Twit
 					}
 				
 				}
-				
-				/// <summary> 
-				///  
-				/// </summary>
 				public partial class TwitchDark : Resource, ITwitcherSharp<TwitchDark>
 				{
 				    private GodotObject _data;
@@ -299,10 +272,6 @@ public partial class TwitchGetCheermotesResponse : Resource, ITwitcherSharp<Twit
 						if(Static != null) request.Set("static", Static);
 						return request;
 					}
-					
-					/// <summary> 
-					///  
-					/// </summary>
 					public partial class TwitchAnimated : Resource, ITwitcherSharp<TwitchAnimated>
 					{
 					    private GodotObject _data;
@@ -341,10 +310,6 @@ public partial class TwitchGetCheermotesResponse : Resource, ITwitcherSharp<Twit
 						}
 					
 					}
-					
-					/// <summary> 
-					///  
-					/// </summary>
 					public partial class TwitchStatic : Resource, ITwitcherSharp<TwitchStatic>
 					{
 					    private GodotObject _data;

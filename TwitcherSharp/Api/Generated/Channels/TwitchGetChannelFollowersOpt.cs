@@ -4,6 +4,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Channels;
 
+
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetChannelFollowers 
 /// </summary>

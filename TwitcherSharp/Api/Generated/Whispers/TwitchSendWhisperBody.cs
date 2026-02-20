@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Whispers;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchSendWhisperBody : Resource, ITwitcherSharp<TwitchSendWhisperBody>
 {
     private GodotObject _data;

@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelPointsCustomRewardRedemptionUpdate;
 
-public partial class TwitchChannelPointsCustomRewardRedemptionUpdateCondition : Resource, ITwitcherSharpEventSub<TwitchChannelPointsCustomRewardRedemptionUpdateCondition>
+public partial class TwitchChannelPointsCustomRewardRedemptionUpdateCondition : Resource, ITwitcherSharpCondition<TwitchChannelPointsCustomRewardRedemptionUpdateCondition>
 {
+	public string Name => nameof(TwitchChannelPointsCustomRewardRedemptionUpdateCondition);
 
 	/// <summary> 
 	/// The broadcaster user ID for the channel you want to receive channel points custom reward redemption update notifications for.

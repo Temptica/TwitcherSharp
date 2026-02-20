@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelSharedChatSessionUpdate;
 
-public partial class TwitchChannelSharedChatSessionUpdateCondition : Resource, ITwitcherSharpEventSub<TwitchChannelSharedChatSessionUpdateCondition>
+public partial class TwitchChannelSharedChatSessionUpdateCondition : Resource, ITwitcherSharpCondition<TwitchChannelSharedChatSessionUpdateCondition>
 {
+	public string Name => nameof(TwitchChannelSharedChatSessionUpdateCondition);
 
 	/// <summary> 
 	/// The User ID of the channel to receive shared chat session update events for.

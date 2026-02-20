@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ConduitShardDisabled;
 
-public partial class TwitchConduitShardDisabledCondition : Resource, ITwitcherSharpEventSub<TwitchConduitShardDisabledCondition>
+public partial class TwitchConduitShardDisabledCondition : Resource, ITwitcherSharpCondition<TwitchConduitShardDisabledCondition>
 {
+	public string Name => nameof(TwitchConduitShardDisabledCondition);
 
 	/// <summary> 
 	/// Your application’s client id. The provided client_id must match the client ID in the application access token.

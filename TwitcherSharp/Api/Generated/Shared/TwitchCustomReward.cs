@@ -4,9 +4,6 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Shared;
 
-/// <summary> 
-///  
-/// </summary>
 public partial class TwitchCustomReward : Resource, ITwitcherSharp<TwitchCustomReward>
 {
     private GodotObject _data;

@@ -4,6 +4,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Entitlements;
 
+
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetDropsEntitlements 
 /// </summary>

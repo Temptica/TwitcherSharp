@@ -4,6 +4,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.GuestStar;
 
+
 /// <summary> 
 /// All optional parameters for TwitchAPI.DeleteGuestStarSlot 
 /// </summary>

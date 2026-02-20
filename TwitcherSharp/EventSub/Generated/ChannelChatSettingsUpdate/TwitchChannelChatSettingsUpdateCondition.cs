@@ -5,8 +5,9 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelChatSettingsUpdate;
 
-public partial class TwitchChannelChatSettingsUpdateCondition : Resource, ITwitcherSharpEventSub<TwitchChannelChatSettingsUpdateCondition>
+public partial class TwitchChannelChatSettingsUpdateCondition : Resource, ITwitcherSharpCondition<TwitchChannelChatSettingsUpdateCondition>
 {
+	public string Name => nameof(TwitchChannelChatSettingsUpdateCondition);
 
 	/// <summary> 
 	/// User ID of the channel to receive chat settings update events for.
