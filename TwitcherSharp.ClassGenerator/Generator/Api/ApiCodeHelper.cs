@@ -101,7 +101,9 @@ public static class ApiCodeHelper
         var code = new StringBuilder();
 
         var componentsToCheck = component.SubComponents.ToList();
-        var interfacesToImplement = component.InterfacesToImplement.ToHashSet();
+        var nameSpacesToUse = component.InterfacesToImplement
+            .Select(i => i.NameSpace)
+            .ToHashSet();
 
         while (componentsToCheck.Count > 0)
         {
@@ -109,15 +111,22 @@ public static class ApiCodeHelper
             componentsToCheck.RemoveAt(0);
             foreach (var genInterface in componentToCheck.InterfacesToImplement)
             {
-                interfacesToImplement.Add(genInterface);
+                nameSpacesToUse.Add(genInterface.NameSpace);
             }
+
+            if (componentToCheck.GetNameSpace() != component.GetNameSpace())
+            {
+                nameSpacesToUse.Add(componentToCheck.GetNameSpace());
+            }
+            
             componentsToCheck.AddRange(componentToCheck.SubComponents);
         }
 
-        foreach (var interfaceToCheck in interfacesToImplement)
+        foreach (var nameSpace in nameSpacesToUse)
         {
-            code.AppendLine($"using TwitcherSharp.Api.Generated.{interfaceToCheck.NameSpace};");
+            code.AppendLine($"using TwitcherSharp.Api.Generated.{nameSpace};");
         }
+        
         
         code.AppendLine(ApiCodeStrings.ComponentUsings
             .Replace("{{root}}", component.GetNameSpace()));

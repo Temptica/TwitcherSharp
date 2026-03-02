@@ -1,5 +1,4 @@
 using TwitcherSharp.Interfaces;
-using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Subscriptions;

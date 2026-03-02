@@ -1,5 +1,5 @@
-using TwitcherSharp.Interfaces;
 using TwitcherSharp.Api.Generated.Shared;
+using TwitcherSharp.Interfaces;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Entitlements;
