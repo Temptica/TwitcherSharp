@@ -100,7 +100,7 @@ public partial class TwitchChannelChatMessageEvent : Resource, ITwitcherSharpEve
     /// <summary> 
     /// Optional. The list of chat badges for the chatter in the channel the message was sent from. Is null when the message happens in the same channel as the broadcaster. Is not null when in a shared chat session, and the action happens in the channel of a participant other than the broadcaster.
     /// </summary>
-    public TwitchSourceBadges SourceBadges { get; set; }
+    public TwitchSourceBadges[] SourceBadges { get; set; }
 
     /// <summary> 
     /// Optional. Determines if a message delivered during a shared chat session is only sent to the source channel. Has no effect if the message is not sent during a shared chat session.
@@ -114,6 +114,7 @@ public partial class TwitchChannelChatMessageEvent : Resource, ITwitcherSharpEve
     {
         if(data == null) return null;
         var badgesArray = data.Get("badges").AsGodotArray<GodotObject>();
+        var sourceBadgesArray = data.Get("source_badges").AsGodotArray<GodotObject>();
         return new TwitchChannelChatMessageEvent
         {
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
@@ -134,7 +135,7 @@ public partial class TwitchChannelChatMessageEvent : Resource, ITwitcherSharpEve
             SourceBroadcasterUserName = data.Get("source_broadcaster_user_name").AsString(),
             SourceBroadcasterUserLogin = data.Get("source_broadcaster_user_login").AsString(),
             SourceMessageId = data.Get("source_message_id").AsString(),
-            SourceBadges = data.Get("source_badges").As<TwitchSourceBadges>(),
+            SourceBadges = sourceBadgesArray.Select(TwitchSourceBadges.FromObject).ToArray(),
             IsSourceOnly = data.Get("is_source_only").AsBool(),
         };
     }
@@ -320,6 +321,11 @@ public partial class TwitchChannelChatMessageEvent : Resource, ITwitcherSharpEve
                 public string OwnerId { get; set; }
             
                 /// <summary> 
+                /// The formats that the emote is available in. For example, if the emote is available only as a static PNG, the array contains only static. But if the emote is available as a static PNG and an animated GIF, the array contains static and animated. The possible formats are: animated - An animated GIF is available for this emote.static - A static PNG file is available for this emote.
+                /// </summary>
+                public string[] Format { get; set; }
+            
+                /// <summary> 
                 /// Transforms the godot data into a TwitchEmote object.
                 /// </summary> 
                 public static TwitchEmote FromObject(GodotObject data)
@@ -330,6 +336,7 @@ public partial class TwitchChannelChatMessageEvent : Resource, ITwitcherSharpEve
                         Id = data.Get("id").AsString(),
                         EmoteSetId = data.Get("emote_set_id").AsString(),
                         OwnerId = data.Get("owner_id").AsString(),
+                        Format = data.Get("format").AsStringArray(),
                     };
                 }
             
@@ -341,6 +348,7 @@ public partial class TwitchChannelChatMessageEvent : Resource, ITwitcherSharpEve
                     request.Set("id", Id);
                     request.Set("emote_set_id", EmoteSetId);
                     request.Set("owner_id", OwnerId);
+                    request.Set("format", Format);
                     return request;
                 }
             }

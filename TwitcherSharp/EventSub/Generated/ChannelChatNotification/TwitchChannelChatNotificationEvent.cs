@@ -160,7 +160,7 @@ public partial class TwitchChannelChatNotificationEvent : Resource, ITwitcherSha
     /// <summary> 
     /// Optional. The list of chat badges for the chatter in the channel the message was sent from. Is null when the message happens in the same channel as the broadcaster. Is not null when in a shared chat session, and the action happens in the channel of a participant other than the broadcaster.
     /// </summary>
-    public TwitchSourceBadges SourceBadges { get; set; }
+    public TwitchSourceBadges[] SourceBadges { get; set; }
 
     /// <summary> 
     /// Optional. Information about the shared_chat_sub event. Is null if notice_type is not shared_chat_sub. This field has the same information as the sub field but for a notice that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
@@ -214,6 +214,7 @@ public partial class TwitchChannelChatNotificationEvent : Resource, ITwitcherSha
     {
         if(data == null) return null;
         var badgesArray = data.Get("badges").AsGodotArray<GodotObject>();
+        var sourceBadgesArray = data.Get("source_badges").AsGodotArray<GodotObject>();
         return new TwitchChannelChatNotificationEvent
         {
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
@@ -246,7 +247,7 @@ public partial class TwitchChannelChatNotificationEvent : Resource, ITwitcherSha
             SourceBroadcasterUserName = data.Get("source_broadcaster_user_name").AsString(),
             SourceBroadcasterUserLogin = data.Get("source_broadcaster_user_login").AsString(),
             SourceMessageId = data.Get("source_message_id").AsString(),
-            SourceBadges = data.Get("source_badges").As<TwitchSourceBadges>(),
+            SourceBadges = sourceBadgesArray.Select(TwitchSourceBadges.FromObject).ToArray(),
             SharedChatSub = data.Get("shared_chat_sub").As<TwitchSharedChatSub>(),
             SharedChatResub = data.Get("shared_chat_resub").As<TwitchSharedChatResub>(),
             SharedChatSubGift = data.Get("shared_chat_sub_gift").As<TwitchSharedChatSubGift>(),
@@ -549,6 +550,11 @@ public partial class TwitchChannelChatNotificationEvent : Resource, ITwitcherSha
                 public string OwnerId { get; set; }
             
                 /// <summary> 
+                /// The formats that the emote is available in. For example, if the emote is available only as a static PNG, the array contains only static. But if the emote is available as a static PNG and an animated GIF, the array contains static and animated. The possible formats are: animated - An animated GIF is available for this emote.static - A static PNG file is available for this emote.
+                /// </summary>
+                public string[] Format { get; set; }
+            
+                /// <summary> 
                 /// Transforms the godot data into a TwitchEmote object.
                 /// </summary> 
                 public static TwitchEmote FromObject(GodotObject data)
@@ -559,6 +565,7 @@ public partial class TwitchChannelChatNotificationEvent : Resource, ITwitcherSha
                         Id = data.Get("id").AsString(),
                         EmoteSetId = data.Get("emote_set_id").AsString(),
                         OwnerId = data.Get("owner_id").AsString(),
+                        Format = data.Get("format").AsStringArray(),
                     };
                 }
             
@@ -570,6 +577,7 @@ public partial class TwitchChannelChatNotificationEvent : Resource, ITwitcherSha
                     request.Set("id", Id);
                     request.Set("emote_set_id", EmoteSetId);
                     request.Set("owner_id", OwnerId);
+                    request.Set("format", Format);
                     return request;
                 }
             }

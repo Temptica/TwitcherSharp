@@ -1,5 +1,4 @@
 using Godot;
-using Godot.Collections;
 using TwitcherSharp.Chat;
 using TwitcherSharp.Interfaces;
 using TwitcherSharp.Reward;
@@ -84,10 +83,10 @@ public static class GodotObjectExtension
             return T.FromObject(result[0].AsGodotObject());
         }
         
-        public async Task CallAsync(string methode, params Variant[] args)
+        public async Task<Variant> CallAsync(string methode, params Variant[] args)
         {
             var task = obj.Call(methode, args);
-            await obj.ToSignal(task.AsGodotObject(), "completed");
+            return (await obj.ToSignal(task.AsGodotObject(), "completed"))[0];
         }
     }
 }

@@ -33,11 +33,17 @@ public partial class TwitchOutcomes : Resource, ITwitcherSharpEventSub<TwitchOut
     public int ChannelPoints { get; set; }
 
     /// <summary> 
+    /// An array of users who used the most Channel Points on this outcome.
+    /// </summary>
+    public TwitchTopPredictors[] TopPredictors { get; set; }
+
+    /// <summary> 
     /// Transforms the godot data into a TwitchOutcomes object.
     /// </summary> 
     public static TwitchOutcomes FromObject(GodotObject data)
     {
         if(data == null) return null;
+        var topPredictorsArray = data.Get("top_predictors").AsGodotArray<GodotObject>();
         return new TwitchOutcomes
         {
             Id = data.Get("id").AsString(),
@@ -45,6 +51,7 @@ public partial class TwitchOutcomes : Resource, ITwitcherSharpEventSub<TwitchOut
             Color = data.Get("color").AsString(),
             Users = data.Get("users").AsInt32(),
             ChannelPoints = data.Get("channel_points").AsInt32(),
+            TopPredictors = topPredictorsArray.Select(TwitchTopPredictors.FromObject).ToArray(),
         };
     }
 
@@ -58,6 +65,30 @@ public partial class TwitchOutcomes : Resource, ITwitcherSharpEventSub<TwitchOut
         request.Set("color", Color);
         request.Set("users", Users);
         request.Set("channel_points", ChannelPoints);
+        request.Set("top_predictors", TopPredictors);
         return request;
+    }
+
+    public partial class TwitchTopPredictors : Resource, ITwitcherSharpEventSub<TwitchTopPredictors>
+    {
+    
+        /// <summary> 
+        /// Transforms the godot data into a TwitchTopPredictors object.
+        /// </summary> 
+        public static TwitchTopPredictors FromObject(GodotObject data)
+        {
+            if(data == null) return null;
+            return new TwitchTopPredictors
+            {
+            };
+        }
+    
+        public GodotObject ToGodotObject()
+        {
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_outcomes.gd");
+            var topPredictorsClass = script.Get("TopPredictors").AsGodotObject();
+            var request = topPredictorsClass.Call("new").AsGodotObject();
+            return request;
+        }
     }
 }

@@ -12,6 +12,7 @@ public class TwitchApiParser
 
     private OpenApiDocument Definition { get; set; }
     private IDictionary<string, TwitchGenComponent> Components { get; } = new Dictionary<string, TwitchGenComponent>();
+    private List<TwitchGenInterface> Interfaces { get; set; } = [];
     private TwitchGenComponent Pagination { get; set; }
     private List<TwitchGenMethod> Methods { get; } = [];
 
@@ -37,8 +38,35 @@ public class TwitchApiParser
         Components[pagination.ClassName] = pagination;
         Pagination = pagination;
 
+        CreateInterfaces();
         ParseComponents();
         ParsingPaths();
+        MergeInterfacesSubComponents();
+    }
+
+    private void MergeInterfacesSubComponents()
+    {
+        foreach (var genInterface in Interfaces)
+        {
+            var tags = genInterface.SubComponents.Select(c => c.GetNameSpace()).ToHashSet();
+            if (tags.Count == 1)
+            {
+                genInterface.NameSpace = tags.First() + ".Interfaces";
+            }
+
+            var subComponents = genInterface.SubComponents;
+            var firstSub = subComponents[0];
+            var intersected = firstSub.IntersectAndRemove(subComponents.Skip(1).ToList());
+            genInterface.AddFieldsRange(intersected.fields, intersected.subComponentsToGenerate);
+        }
+    }
+
+    private void CreateInterfaces()
+    {
+        Interfaces =
+        [
+            new TwitchGenInterface("ITwitchEmote", ["TwitchGlobalEmote", "TwitchChatEmote", "TwitchEmote"])
+        ];
     }
 
     private void ParseComponents()
@@ -121,7 +149,8 @@ public class TwitchApiParser
                 field.TypedComponent = subComponent;
                 component.AddComponent(field.TypedComponent);
             }
-            else if (component.Ref.Contains("GetAdSchedule",StringComparison.CurrentCultureIgnoreCase) && name.EndsWith("At",StringComparison.CurrentCultureIgnoreCase))
+            else if (component.Ref.Contains("GetAdSchedule", StringComparison.CurrentCultureIgnoreCase) &&
+                     name.EndsWith("At", StringComparison.CurrentCultureIgnoreCase))
             {
                 field.Type = "float"; //WHYYY TWITCH
             }
@@ -135,6 +164,14 @@ public class TwitchApiParser
     {
         var @ref = $"{parentComponent.Ref}/{className}";
         var subComponent = new TwitchGenComponent(className, @ref, description);
+        foreach (var genInterface in Interfaces)
+        {
+            if (genInterface.ComponentsToAdd.Any(c => c.Contains(subComponent.ClassName)))
+            {
+                genInterface.AddSubComponent(subComponent);
+            }
+        }
+
         ParseProperties(subComponent, schema);
         return subComponent;
     }
@@ -155,19 +192,19 @@ public class TwitchApiParser
                 {
                     var component = method.GetOptionalComponent();
                     Components[component.ClassName] = component;
-                    component.Tag = tag;
+                    component.NameSpace = tag;
                 }
 
                 //try find child component
                 if (method.ContainsBody &&
                     Components.TryGetValue(method.BodyType.Replace("Twitch", ""), out var bodyComponent))
                 {
-                    bodyComponent.Tag = tag;
+                    bodyComponent.NameSpace = tag;
                 }
 
                 if (Components.TryGetValue(method.ResultType.Replace("Twitch", ""), out var responseComponent))
                 {
-                    responseComponent.Tag = tag;
+                    responseComponent.NameSpace = tag;
                 }
 
                 Methods.Add(method);
@@ -178,19 +215,19 @@ public class TwitchApiParser
         {
             var componentParentTags = component
                 .SubComponents
-                .Select(s => s.GetTag())
+                .Select(s => s.GetNameSpace())
                 .Where(t => t != "Shared")
                 .ToHashSet();
 
             switch (componentParentTags.Count)
             {
-                case 0 when component.GetTag() != "Shared":
+                case 0 when component.GetNameSpace() != "Shared":
                     continue;
                 case 1:
-                    component.Tag = componentParentTags.First();
+                    component.NameSpace = componentParentTags.First();
                     break;
                 default:
-                    component.Tag = "Shared";
+                    component.NameSpace = "Shared";
                     continue;
             }
         }
@@ -298,7 +335,21 @@ public class TwitchApiParser
         return type;
     }
 
-    public TwitchGenComponent GetComponentByRef(string type) => Components.Values.FirstOrDefault(c => c.Ref == type);
+    public TwitchGenComponent GetComponentByRef(string type)
+    {
+        var component = Components.Values.FirstOrDefault(c => c.Ref == type);
+        if (component == null) return null;
+
+        foreach (var genInterface in Interfaces)
+        {
+            if (genInterface.ComponentsToAdd.Any(c => c.Contains(component.ClassName)))
+            {
+                genInterface.AddSubComponent(component);
+            }
+        }
+
+        return component;
+    }
 
     public IList<TwitchGenComponent> GetComponents()
     {
@@ -308,5 +359,10 @@ public class TwitchApiParser
     public IList<TwitchGenMethod> GetMethods()
     {
         return Methods;
+    }
+
+    public List<TwitchGenInterface> GetInterfaces()
+    {
+        return Interfaces;
     }
 }

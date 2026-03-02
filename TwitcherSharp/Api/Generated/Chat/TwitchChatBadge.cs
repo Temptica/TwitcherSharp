@@ -2,7 +2,7 @@ using TwitcherSharp.Interfaces;
 using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
-namespace TwitcherSharp.Api.Generated.Shared;
+namespace TwitcherSharp.Api.Generated.Chat;
 
 public partial class TwitchChatBadge : Resource, ITwitcherSharp<TwitchChatBadge>
 {

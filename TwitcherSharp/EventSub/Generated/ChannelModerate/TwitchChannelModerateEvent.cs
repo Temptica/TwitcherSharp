@@ -822,6 +822,11 @@ public partial class TwitchChannelModerateEvent : Resource, ITwitcherSharpEventS
         public string List { get; set; }
     
         /// <summary> 
+        /// Terms being added or removed.
+        /// </summary>
+        public string[] Terms { get; set; }
+    
+        /// <summary> 
         /// Whether the terms were added due to an Automod message approve/deny action.
         /// </summary>
         public bool FromAutomod { get; set; }
@@ -836,6 +841,7 @@ public partial class TwitchChannelModerateEvent : Resource, ITwitcherSharpEventS
             {
                 Action = data.Get("action").AsString(),
                 List = data.Get("list").AsString(),
+                Terms = data.Get("terms").AsStringArray(),
                 FromAutomod = data.Get("from_automod").AsBool(),
             };
         }
@@ -847,6 +853,7 @@ public partial class TwitchChannelModerateEvent : Resource, ITwitcherSharpEventS
             var request = automodTermsClass.Call("new").AsGodotObject();
             request.Set("action", Action);
             request.Set("list", List);
+            request.Set("terms", Terms);
             request.Set("from_automod", FromAutomod);
             return request;
         }

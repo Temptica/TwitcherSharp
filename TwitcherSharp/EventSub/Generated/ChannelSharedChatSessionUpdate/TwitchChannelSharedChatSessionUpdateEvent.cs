@@ -45,7 +45,7 @@ public partial class TwitchChannelSharedChatSessionUpdateEvent : Resource, ITwit
     /// <summary> 
     /// The list of participants in the session.
     /// </summary>
-    public TwitchParticipants Participants { get; set; }
+    public TwitchParticipants[] Participants { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelSharedChatSessionUpdateEvent object.
@@ -53,6 +53,7 @@ public partial class TwitchChannelSharedChatSessionUpdateEvent : Resource, ITwit
     public static TwitchChannelSharedChatSessionUpdateEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
+        var participantsArray = data.Get("participants").AsGodotArray<GodotObject>();
         return new TwitchChannelSharedChatSessionUpdateEvent
         {
             SessionId = data.Get("session_id").AsString(),
@@ -62,7 +63,7 @@ public partial class TwitchChannelSharedChatSessionUpdateEvent : Resource, ITwit
             HostBroadcasterUserId = data.Get("host_broadcaster_user_id").AsString(),
             HostBroadcasterUserName = data.Get("host_broadcaster_user_name").AsString(),
             HostBroadcasterUserLogin = data.Get("host_broadcaster_user_login").AsString(),
-            Participants = data.Get("participants").As<TwitchParticipants>(),
+            Participants = participantsArray.Select(TwitchParticipants.FromObject).ToArray(),
         };
     }
 

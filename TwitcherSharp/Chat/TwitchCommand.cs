@@ -1,5 +1,4 @@
 using Godot;
-using Godot.Collections;
 using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 using Array = System.Array;

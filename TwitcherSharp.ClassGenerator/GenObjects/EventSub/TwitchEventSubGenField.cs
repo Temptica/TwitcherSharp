@@ -31,14 +31,15 @@ public class TwitchEventSubGenField(string fieldName, string description, string
         {
             "integer" => "int",
             "int (or null)" => "int", //WHY TWITCH??
-            "[]string" => "string[]", // cmn....
+            "int" => "int",
             "number" => "double",
             "boolean" => "bool",
             "bool" => "bool",
+            "[]string" => "string[]", // cmn....
+            "string[]" => "string[]",
+            "string" => "string",
             "object" when name == "Text" => "string",
             "object" when name == "Prefix" => "string",
-            "string" => "string",
-            "int" => "int",
             _ => type.ToPascalCase()
         };
 }

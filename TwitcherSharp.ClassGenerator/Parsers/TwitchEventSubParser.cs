@@ -114,25 +114,25 @@ public class TwitchEventSubParser
                 break;
             }
 
-            if (nextSibling.Name == "p" && nextSibling.InnerText.Contains("Object")) 
+            if (nextSibling.Name == "p" && nextSibling.InnerText.Contains("Object"))
                 //To battle the stupidity of twitch (such as Drop Entitlement Grant Event)
             {
                 table = nextSibling.GetNextElementSibling();
-                var dataComponent = eventSubComponent.SubComponents.First(s => s.Key == "TwitchData");
-                ParseTable(table, dataComponent.Value);
+                var dataComponent = eventSubComponent.SubComponents.FirstOrDefault(s => s.Key == "TwitchData");
+                if(dataComponent.Value != null) ParseTable(table, dataComponent.Value);
             }
 
             lastNode = table;
         }
     }
-    
+
     private void ParseConditions(HtmlDocument doc)
     {
         var condition = doc.DocumentNode.SelectSingleNode("//h2[@id='conditions']");
         var startPos = condition.Line;
         var nextH2Node = doc.DocumentNode.SelectNodes("//h2").FirstOrDefault(n => n.Line > startPos) ??
                          doc.DocumentNode.LastChild;
-        
+
         var lastNode = condition;
         while (lastNode.GetNextElementSibling() != nextH2Node)
         {
@@ -181,17 +181,21 @@ public class TwitchEventSubParser
             var type = row.SelectSingleNode("td[2]").InnerText.Trim();
             var description = row.SelectSingleNode(isCondition ? "td[4]" : "td[3]").InnerText.Trim();
 
-            if (type.EndsWith("[]") || type == "array" || type == "Array" ||
-                description.Contains("array", StringComparison.CurrentCultureIgnoreCase))
+            if (type.EndsWith("[]") || type == "array" || type == "Array"
+                || description.Contains("array", StringComparison.CurrentCultureIgnoreCase)
+                || description.Contains("list", StringComparison.CurrentCultureIgnoreCase))
             {
                 var arrayField = new TwitchEventSubGenField(fieldName, description, type)
                 {
                     IsArray = true,
                 };
 
-                if (!type.Equals("Object[]", StringComparison.CurrentCultureIgnoreCase)
-                    && !type.Equals("array", StringComparison.CurrentCultureIgnoreCase)
-                    && !SubComponents.Any(s => s.ClassName.Contains(type.ToPascalCase()))) continue;
+                if (type.Equals("string[]", StringComparison.CurrentCultureIgnoreCase) ||
+                    type.Equals("[]string", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    currentParent.AddField(arrayField);
+                    continue;
+                }
 
                 var typedComponent =
                     SubComponents.FirstOrDefault(c => c.ClassName == "Twitch" + type.ToPascalCase())

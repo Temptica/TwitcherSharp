@@ -24,7 +24,7 @@ public partial class TwitchAutomodMessageHoldCondition : Resource, ITwitcherShar
     /// </summary> 
     public static TwitchAutomodMessageHoldCondition FromObject(GodotObject data)
     {
-        if (data == null) return null;
+        if(data == null) return null;
         return new TwitchAutomodMessageHoldCondition
         {
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),

@@ -2,7 +2,7 @@ using TwitcherSharp.Interfaces;
 using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
-namespace TwitcherSharp.Api.Generated.Shared;
+namespace TwitcherSharp.Api.Generated.Schedule;
 
 public partial class TwitchChannelStreamScheduleSegment : Resource, ITwitcherSharp<TwitchChannelStreamScheduleSegment>
 {

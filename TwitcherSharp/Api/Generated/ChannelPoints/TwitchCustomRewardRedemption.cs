@@ -2,7 +2,7 @@ using TwitcherSharp.Interfaces;
 using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
-namespace TwitcherSharp.Api.Generated.Shared;
+namespace TwitcherSharp.Api.Generated.ChannelPoints;
 
 public partial class TwitchCustomRewardRedemption : Resource, ITwitcherSharp<TwitchCustomRewardRedemption>
 {

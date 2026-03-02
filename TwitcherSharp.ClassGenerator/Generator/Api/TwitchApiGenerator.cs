@@ -21,12 +21,23 @@ public class TwitchApiGenerator
         {
             PrepareComponent(component);
         }
+        
+        foreach (var genInterface in apiParser.GetInterfaces())
+        {
+            var code = ApiCodeHelper.InterfaceCode(genInterface);
+            Directory.CreateDirectory($"{apiPath}/{genInterface.NameSpace.Replace('.','/')}");
+            File.WriteAllText($"{apiPath}/{genInterface.NameSpace.Replace('.','/')}/{genInterface.InterfaceName}.cs", code);
+
+            foreach (var component in genInterface.ComponentsToGenerate.Where(c => c.GetNameSpace() != "Shared"))
+            {
+                PrepareComponent(component);
+            }
+        }
 
         var twitchApiCode = new StringBuilder();
         twitchApiCode.AppendLine(ApiCodeStrings.TwitchApiUsings);
-
         var tags = _components.Values
-            .Select(tgc => tgc.GetTag()).ToHashSet();
+            .Select(tgc => tgc.GetNameSpace()).ToHashSet();
 
         foreach (var nameSpace in tags)
         {
@@ -60,13 +71,13 @@ public class TwitchApiGenerator
             {
                 code = ApiCodeHelper.GlobalComponentCode(obj, "Response");
             }
-            else if(obj.IsGlobal)
+            else if(obj.IsGlobal || obj.HasParentInterface())
             {
                 code = ApiCodeHelper.GlobalComponentCode(obj);
             }
             else continue;
 
-            var tag = obj.GetTag();
+            var tag = obj.GetNameSpace();
             Directory.CreateDirectory($"{apiPath}{tag}");
             File.WriteAllText($"{apiPath}{tag}/{name}.cs", code);
         }
@@ -76,7 +87,7 @@ public class TwitchApiGenerator
     {
         var baseName = GetBaseName(component.ClassName);
 
-        if (string.IsNullOrEmpty(component.GetTag()))
+        if (string.IsNullOrEmpty(component.GetNameSpace()))
         {
             Console.Error.WriteLine($"No tag found for {component.ClassName}");
             return;
@@ -84,7 +95,7 @@ public class TwitchApiGenerator
 
         if (baseName == component.ClassName)
         {
-            if (_components.ContainsKey(baseName))
+            if (_components.ContainsKey(baseName) && component.InterfacesToImplement.Count == 0)
             {
                 Console.WriteLine($"That file shouldn't exist: {baseName}");
             }

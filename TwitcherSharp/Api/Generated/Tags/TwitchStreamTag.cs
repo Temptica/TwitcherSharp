@@ -2,7 +2,7 @@ using TwitcherSharp.Interfaces;
 using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
-namespace TwitcherSharp.Api.Generated.Shared;
+namespace TwitcherSharp.Api.Generated.Tags;
 
 public partial class TwitchStreamTag : Resource, ITwitcherSharp<TwitchStreamTag>
 {

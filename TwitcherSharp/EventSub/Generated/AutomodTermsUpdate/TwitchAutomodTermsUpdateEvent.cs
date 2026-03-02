@@ -48,6 +48,11 @@ public partial class TwitchAutomodTermsUpdateEvent : Resource, ITwitcherSharpEve
     public bool FromAutomod { get; set; }
 
     /// <summary> 
+    /// The list of terms that had a status change.
+    /// </summary>
+    public string[] Terms { get; set; }
+
+    /// <summary> 
     /// Transforms the godot data into a TwitchAutomodTermsUpdateEvent object.
     /// </summary> 
     public static TwitchAutomodTermsUpdateEvent FromObject(GodotObject data)
@@ -63,6 +68,7 @@ public partial class TwitchAutomodTermsUpdateEvent : Resource, ITwitcherSharpEve
             ModeratorUserName = data.Get("moderator_user_name").AsString(),
             Action = data.Get("action").AsString(),
             FromAutomod = data.Get("from_automod").AsBool(),
+            Terms = data.Get("terms").AsStringArray(),
         };
     }
 
@@ -79,6 +85,7 @@ public partial class TwitchAutomodTermsUpdateEvent : Resource, ITwitcherSharpEve
         request.Set("moderator_user_name", ModeratorUserName);
         request.Set("action", Action);
         request.Set("from_automod", FromAutomod);
+        request.Set("terms", Terms);
         return request;
     }
 }

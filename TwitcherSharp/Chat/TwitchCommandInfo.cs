@@ -1,7 +1,6 @@
 using Godot;
 using Godot.Collections;
 using TwitcherSharp.Interfaces;
-using TwitcherSharp.Reward;
 
 namespace TwitcherSharp.Chat;
 

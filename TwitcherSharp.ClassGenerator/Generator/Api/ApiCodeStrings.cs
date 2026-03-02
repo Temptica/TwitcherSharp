@@ -70,7 +70,7 @@ public static class ApiCodeStrings
     /// Param: className
     /// </summary>
     public const string ComponentHeader = """
-                                          public partial class {{className}} : Resource, ITwitcherSharp<{{className}}>
+                                          public partial class {{className}} : Resource, ITwitcherSharp<{{className}}>{{interfaces}}
                                           {
                                               private GodotObject _data;
                                           """;
@@ -83,4 +83,10 @@ public static class ApiCodeStrings
                                                 {
                                                     if(data == null) return null;
                                             """;
+
+    public const string InterfaceBody = """
+                                        namespace TwitcherSharp.Api.Generated.{{nameSpace}};
+                                        public interface {{interfaceName}}
+                                        {
+                                        """;
 }

@@ -90,7 +90,7 @@ public partial class TwitchHypeTrainProgressEvent : Resource, ITwitcherSharpEven
     /// <summary> 
     /// Indicates if the Hype Train is shared. When true, shared_train_participants will contain the list of broadcasters the train is shared with.
     /// </summary>
-    public bool IsSharedTrain { get; set; }
+    public TwitchIsSharedTrain[] IsSharedTrain { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchHypeTrainProgressEvent object.
@@ -99,6 +99,7 @@ public partial class TwitchHypeTrainProgressEvent : Resource, ITwitcherSharpEven
     {
         if(data == null) return null;
         var sharedTrainParticipantsArray = data.Get("shared_train_participants").AsGodotArray<GodotObject>();
+        var isSharedTrainArray = data.Get("is_shared_train").AsGodotArray<GodotObject>();
         return new TwitchHypeTrainProgressEvent
         {
             Id = data.Get("id").AsString(),
@@ -117,7 +118,7 @@ public partial class TwitchHypeTrainProgressEvent : Resource, ITwitcherSharpEven
             SharedTrainParticipants = sharedTrainParticipantsArray.Select(TwitchSharedTrainParticipants.FromObject).ToArray(),
             StartedAt = data.Get("started_at").AsString(),
             ExpiresAt = data.Get("expires_at").AsString(),
-            IsSharedTrain = data.Get("is_shared_train").AsBool(),
+            IsSharedTrain = isSharedTrainArray.Select(TwitchIsSharedTrain.FromObject).ToArray(),
         };
     }
 
@@ -144,6 +145,29 @@ public partial class TwitchHypeTrainProgressEvent : Resource, ITwitcherSharpEven
         request.Set("expires_at", ExpiresAt);
         request.Set("is_shared_train", IsSharedTrain);
         return request;
+    }
+
+    public partial class TwitchType : Resource, ITwitcherSharpEventSub<TwitchType>
+    {
+    
+        /// <summary> 
+        /// Transforms the godot data into a TwitchType object.
+        /// </summary> 
+        public static TwitchType FromObject(GodotObject data)
+        {
+            if(data == null) return null;
+            return new TwitchType
+            {
+            };
+        }
+    
+        public GodotObject ToGodotObject()
+        {
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_hype_train_progress.gd");
+            var typeClass = script.Get("Type").AsGodotObject();
+            var request = typeClass.Call("new").AsGodotObject();
+            return request;
+        }
     }
 
     public partial class TwitchSharedTrainParticipants : Resource, ITwitcherSharpEventSub<TwitchSharedTrainParticipants>
@@ -185,6 +209,29 @@ public partial class TwitchHypeTrainProgressEvent : Resource, ITwitcherSharpEven
             request.Set("broadcaster_user_id", BroadcasterUserId);
             request.Set("broadcaster_user_login", BroadcasterUserLogin);
             request.Set("broadcaster_user_name", BroadcasterUserName);
+            return request;
+        }
+    }
+
+    public partial class TwitchIsSharedTrain : Resource, ITwitcherSharpEventSub<TwitchIsSharedTrain>
+    {
+    
+        /// <summary> 
+        /// Transforms the godot data into a TwitchIsSharedTrain object.
+        /// </summary> 
+        public static TwitchIsSharedTrain FromObject(GodotObject data)
+        {
+            if(data == null) return null;
+            return new TwitchIsSharedTrain
+            {
+            };
+        }
+    
+        public GodotObject ToGodotObject()
+        {
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_hype_train_progress.gd");
+            var isSharedTrainClass = script.Get("IsSharedTrain").AsGodotObject();
+            var request = isSharedTrainClass.Call("new").AsGodotObject();
             return request;
         }
     }

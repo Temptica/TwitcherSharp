@@ -30,7 +30,7 @@ public partial class TwitchStreamOnlineEvent : Resource, ITwitcherSharpEventSub<
     /// <summary> 
     /// The stream type. Valid values are: live, playlist, watch_party, premiere, rerun.
     /// </summary>
-    public string Type { get; set; }
+    public TwitchType[] Type { get; set; }
 
     /// <summary> 
     /// The timestamp at which the stream went online at.
@@ -43,13 +43,14 @@ public partial class TwitchStreamOnlineEvent : Resource, ITwitcherSharpEventSub<
     public static TwitchStreamOnlineEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
+        var typeArray = data.Get("type").AsGodotArray<GodotObject>();
         return new TwitchStreamOnlineEvent
         {
             Id = data.Get("id").AsString(),
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
             BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
             BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
-            Type = data.Get("type").AsString(),
+            Type = typeArray.Select(TwitchType.FromObject).ToArray(),
             StartedAt = data.Get("started_at").AsString(),
         };
     }
@@ -66,5 +67,28 @@ public partial class TwitchStreamOnlineEvent : Resource, ITwitcherSharpEventSub<
         request.Set("type", Type);
         request.Set("started_at", StartedAt);
         return request;
+    }
+
+    public partial class TwitchType : Resource, ITwitcherSharpEventSub<TwitchType>
+    {
+    
+        /// <summary> 
+        /// Transforms the godot data into a TwitchType object.
+        /// </summary> 
+        public static TwitchType FromObject(GodotObject data)
+        {
+            if(data == null) return null;
+            return new TwitchType
+            {
+            };
+        }
+    
+        public GodotObject ToGodotObject()
+        {
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_stream_online.gd");
+            var typeClass = script.Get("Type").AsGodotObject();
+            var request = typeClass.Call("new").AsGodotObject();
+            return request;
+        }
     }
 }

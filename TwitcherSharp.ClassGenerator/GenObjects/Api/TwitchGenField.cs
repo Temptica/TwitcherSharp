@@ -2,7 +2,7 @@ using ClassGenerator.Extensions;
 
 namespace ClassGenerator.GenObjects.Api;
 
-public class TwitchGenField
+public class TwitchGenField: IEquatable<TwitchGenField>
 {
     public string Name
     {
@@ -45,4 +45,21 @@ public class TwitchGenField
     }
     
     public TwitchGenComponent TypedComponent { get; set; }
+    public bool Equals(TwitchGenField other)
+    {
+        if (other is null) return false;
+        if (ReferenceEquals(this, other)) return true;
+        return Name == other.Name;
+    }
+
+    public override int GetHashCode()
+    {
+        return Name.GetHashCode();
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj is not TwitchGenField field) return false;
+        return Name.Equals(field.Name) && Type.Equals(field.Type);
+    }
 }

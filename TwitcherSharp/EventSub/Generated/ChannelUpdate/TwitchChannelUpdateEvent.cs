@@ -43,6 +43,11 @@ public partial class TwitchChannelUpdateEvent : Resource, ITwitcherSharpEventSub
     public string CategoryName { get; set; }
 
     /// <summary> 
+    /// Array of content classification label IDs currently applied on the Channel. To retrieve a list of all possible IDs, use the Get Content Classification Labels API endpoint.
+    /// </summary>
+    public string[] ContentClassificationLabels { get; set; }
+
+    /// <summary> 
     /// Transforms the godot data into a TwitchChannelUpdateEvent object.
     /// </summary> 
     public static TwitchChannelUpdateEvent FromObject(GodotObject data)
@@ -57,6 +62,7 @@ public partial class TwitchChannelUpdateEvent : Resource, ITwitcherSharpEventSub
             Language = data.Get("language").AsString(),
             CategoryId = data.Get("category_id").AsString(),
             CategoryName = data.Get("category_name").AsString(),
+            ContentClassificationLabels = data.Get("content_classification_labels").AsStringArray(),
         };
     }
 
@@ -72,6 +78,7 @@ public partial class TwitchChannelUpdateEvent : Resource, ITwitcherSharpEventSub
         request.Set("language", Language);
         request.Set("category_id", CategoryId);
         request.Set("category_name", CategoryName);
+        request.Set("content_classification_labels", ContentClassificationLabels);
         return request;
     }
 }

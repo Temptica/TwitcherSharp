@@ -199,6 +199,11 @@ public partial class TwitchChannelBitsUseEvent : Resource, ITwitcherSharpEventSu
                 public string OwnerId { get; set; }
             
                 /// <summary> 
+                /// The formats that the emote is available in. For example, if the emote is available only as a static PNG, the array contains only static. But if the emote is available as a static PNG and an animated GIF, the array contains static and animated. The possible formats are: animated - An animated GIF is available for this emote.static - A static PNG file is available for this emote.
+                /// </summary>
+                public string[] Format { get; set; }
+            
+                /// <summary> 
                 /// Transforms the godot data into a TwitchEmote object.
                 /// </summary> 
                 public static TwitchEmote FromObject(GodotObject data)
@@ -209,6 +214,7 @@ public partial class TwitchChannelBitsUseEvent : Resource, ITwitcherSharpEventSu
                         Id = data.Get("id").AsString(),
                         EmoteSetId = data.Get("emote_set_id").AsString(),
                         OwnerId = data.Get("owner_id").AsString(),
+                        Format = data.Get("format").AsStringArray(),
                     };
                 }
             
@@ -220,6 +226,7 @@ public partial class TwitchChannelBitsUseEvent : Resource, ITwitcherSharpEventSu
                     request.Set("id", Id);
                     request.Set("emote_set_id", EmoteSetId);
                     request.Set("owner_id", OwnerId);
+                    request.Set("format", Format);
                     return request;
                 }
             }

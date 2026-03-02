@@ -2,7 +2,7 @@ using TwitcherSharp.Interfaces;
 using TwitcherSharp.Api.Generated.Shared;
 using Godot;
    
-namespace TwitcherSharp.Api.Generated.Shared;
+namespace TwitcherSharp.Api.Generated.Moderation;
 
 public partial class TwitchAutoModSettings : Resource, ITwitcherSharp<TwitchAutoModSettings>
 {

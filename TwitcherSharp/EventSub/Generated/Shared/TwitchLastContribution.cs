@@ -25,7 +25,7 @@ public partial class TwitchLastContribution : Resource, ITwitcherSharpEventSub<T
     /// <summary> 
     /// The contribution method used. Possible values are:  bits — Cheering with Bits.subscription — Subscription activity like subscribing or gifting subscriptions.other — Covers other contribution methods not listed.
     /// </summary>
-    public string Type { get; set; }
+    public TwitchType[] Type { get; set; }
 
     /// <summary> 
     /// The total amount contributed. If type is bits, total represents the amount of Bits used. If type is subscription, total is 500, 1000, or 2500 to represent tier 1, 2, or 3 subscriptions, respectively.
@@ -38,12 +38,13 @@ public partial class TwitchLastContribution : Resource, ITwitcherSharpEventSub<T
     public static TwitchLastContribution FromObject(GodotObject data)
     {
         if(data == null) return null;
+        var typeArray = data.Get("type").AsGodotArray<GodotObject>();
         return new TwitchLastContribution
         {
             UserId = data.Get("user_id").AsString(),
             UserLogin = data.Get("user_login").AsString(),
             UserName = data.Get("user_name").AsString(),
-            Type = data.Get("type").AsString(),
+            Type = typeArray.Select(TwitchType.FromObject).ToArray(),
             Total = data.Get("total").AsInt32(),
         };
     }
@@ -59,5 +60,28 @@ public partial class TwitchLastContribution : Resource, ITwitcherSharpEventSub<T
         request.Set("type", Type);
         request.Set("total", Total);
         return request;
+    }
+
+    public partial class TwitchType : Resource, ITwitcherSharpEventSub<TwitchType>
+    {
+    
+        /// <summary> 
+        /// Transforms the godot data into a TwitchType object.
+        /// </summary> 
+        public static TwitchType FromObject(GodotObject data)
+        {
+            if(data == null) return null;
+            return new TwitchType
+            {
+            };
+        }
+    
+        public GodotObject ToGodotObject()
+        {
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_last_contribution.gd");
+            var typeClass = script.Get("Type").AsGodotObject();
+            var request = typeClass.Call("new").AsGodotObject();
+            return request;
+        }
     }
 }

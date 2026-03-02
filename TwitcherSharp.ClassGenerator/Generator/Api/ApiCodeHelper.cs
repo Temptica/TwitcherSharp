@@ -100,10 +100,29 @@ public static class ApiCodeHelper
     {
         var code = new StringBuilder();
 
-        code.AppendLine(ApiCodeStrings.ComponentUsings
-            .Replace("{{root}}", component.GetTag()));
-        code.AppendLine();
+        var componentsToCheck = component.SubComponents.ToList();
+        var interfacesToImplement = component.InterfacesToImplement.ToHashSet();
+
+        while (componentsToCheck.Count > 0)
+        {
+            var componentToCheck = componentsToCheck[0];
+            componentsToCheck.RemoveAt(0);
+            foreach (var genInterface in componentToCheck.InterfacesToImplement)
+            {
+                interfacesToImplement.Add(genInterface);
+            }
+            componentsToCheck.AddRange(componentToCheck.SubComponents);
+        }
+
+        foreach (var interfaceToCheck in interfacesToImplement)
+        {
+            code.AppendLine($"using TwitcherSharp.Api.Generated.{interfaceToCheck.NameSpace};");
+        }
         
+        code.AppendLine(ApiCodeStrings.ComponentUsings
+            .Replace("{{root}}", component.GetNameSpace()));
+        code.AppendLine();
+
         code.AppendIndentedLine(ComponentCode(component, type));
 
         code.AppendLine("}");
@@ -119,9 +138,13 @@ public static class ApiCodeHelper
             code.AppendIndentedLine($"\n<summary> \n{component.Description} \n</summary>", 0, "/// ");
         }
 
+        var interfacesToImplement = string.Join(", ", component.InterfacesToImplement.Select(i => i.InterfaceName));
+        if(interfacesToImplement != "") interfacesToImplement = ", " + interfacesToImplement;
+        
         code.AppendLine(ApiCodeStrings.ComponentHeader
             .Replace("{{description}}", CleanDescription(component.Description))
-            .Replace("{{className}}", component.ClassName));
+            .Replace("{{className}}", component.ClassName)
+            .Replace("{{interfaces}}", interfacesToImplement));
 
         //PROPS
         var fields = component.GetAllFields();
@@ -222,6 +245,33 @@ public static class ApiCodeHelper
         return code.ToString();
     }
 
+    public static string InterfaceCode(TwitchGenInterface genInterface)
+    {
+        var code = new StringBuilder();
+        if (genInterface.Fields.Any(f => f.IsTyped))
+        {
+            if (genInterface.NameSpace == "Interfaces")
+            {
+                code.AppendLine("using TwitcherSharp.Api.Generated.Shared;");
+            }
+            else
+            {
+                foreach (var nameSpace in genInterface.Fields.Where(f => f.IsTyped).Select(f => f.TypedComponent.GetNameSpace()).Distinct())
+                {
+                    code.AppendLine($"using TwitcherSharp.Api.Generated.{nameSpace};");
+                }
+            }
+        }
+
+        code.AppendIndentedLine(ApiCodeStrings.InterfaceBody.Replace("{{nameSpace}}", genInterface.NameSpace).Replace("{{interfaceName}}", genInterface.InterfaceName));
+        foreach (var field in genInterface.Fields)
+        {
+            code.AppendIndentedLine($"public {field.CleanedType} {field.Name} {{ get; set; }}", 1);
+        }
+
+        code.AppendIndentedLine("}");
+        return code.ToString();
+    }
 
     private static string CleanDescription(string description, int level = 0)
     {
