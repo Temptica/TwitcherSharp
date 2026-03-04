@@ -57,7 +57,7 @@ public partial class TwitchEventSubConfig() : Resource, ITwitcherSharp<TwitchEve
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/eventsub/twitch_eventsub_config.gd");
-        var data = script.Call("New").AsGodotObject();
+        var data = script.New().AsGodotObject();
         data.Set("type", (int)Type);
         data.Set("condition", Condition.Select(x => x.ToGodotObject()).ToArray());
         return data;

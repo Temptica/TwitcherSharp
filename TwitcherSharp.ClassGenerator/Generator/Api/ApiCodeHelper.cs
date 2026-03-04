@@ -27,11 +27,10 @@ public static class ApiCodeHelper
 
         if (method.RequiredParameters.Count != 0)
         {
-            methodString.AppendIndented(GetMethodParameterSummary(method.RequiredParameters), 1);
+            methodString.AppendIndentedLine(GetMethodParameterSummary(method.RequiredParameters).TrimEnd(), 1);
         }
 
-        methodString.AppendIndentedLine($"/// <returns><see cref=\"{method.ResultType}\"/></returns>",
-            method.RequiredParameters.Count != 0 ? 1 : 0);
+        methodString.AppendIndentedLine($"/// <returns><see cref=\"{method.ResultType}\"/></returns>", 1);
 
         methodString
             .AppendIndentedLine($"public async Task<{method.ResultType}> {method.Name}({GetMethodParameter(method)})",
@@ -59,8 +58,29 @@ public static class ApiCodeHelper
 
         foreach (var parameter in methodRequiredParameters)
         {
+            var description = parameter.Description.Replace("\\_", "_");
+            if (description.Contains("* ") && !description.Contains("**"))
+            {
+                var idx = description.IndexOf('*');
+                description = description.Insert(idx, "<list type=\"bullet\">\n");
+                
+                while (description.Contains('*'))
+                {
+                    var starIdx = description.IndexOf('*');
+                    description = description.Remove(starIdx, 1);
+                    description = description.Insert(starIdx, "<item>");
+                    var nextNewLine = description.IndexOf('\n', starIdx+7);
+                    if (nextNewLine == -1) nextNewLine = description.Length;
+                    description = description.Insert(nextNewLine, "</item>");
+                }
+                
+                var lastIdx = description.LastIndexOf("</item>", StringComparison.Ordinal);
+                
+                description = description.Insert(lastIdx+7, "\n</list>");
+            }
+            
             code.AppendIndentedLine(
-                $"/// <param name=\"{parameter.Name.ToCamelCase()}\">{parameter.Description}</param>", 0, "/// ");
+                $"/// <param name=\"{parameter.Name.ToCamelCase()}\">{description}</param>", 0, "/// ");
         }
 
         return code.ToString();
@@ -118,7 +138,7 @@ public static class ApiCodeHelper
             {
                 nameSpacesToUse.Add(componentToCheck.GetNameSpace());
             }
-            
+
             componentsToCheck.AddRange(componentToCheck.SubComponents);
         }
 
@@ -126,8 +146,8 @@ public static class ApiCodeHelper
         {
             code.AppendLine($"using TwitcherSharp.Api.Generated.{nameSpace};");
         }
-        
-        
+
+
         code.AppendLine(ApiCodeStrings.ComponentUsings
             .Replace("{{root}}", component.GetNameSpace()));
         code.AppendLine();
@@ -148,8 +168,8 @@ public static class ApiCodeHelper
         }
 
         var interfacesToImplement = string.Join(", ", component.InterfacesToImplement.Select(i => i.InterfaceName));
-        if(interfacesToImplement != "") interfacesToImplement = ", " + interfacesToImplement;
-        
+        if (interfacesToImplement != "") interfacesToImplement = ", " + interfacesToImplement;
+
         code.AppendLine(ApiCodeStrings.ComponentHeader
             .Replace("{{description}}", CleanDescription(component.Description))
             .Replace("{{className}}", component.ClassName)
@@ -265,14 +285,16 @@ public static class ApiCodeHelper
             }
             else
             {
-                foreach (var nameSpace in genInterface.Fields.Where(f => f.IsTyped).Select(f => f.TypedComponent.GetNameSpace()).Distinct())
+                foreach (var nameSpace in genInterface.Fields.Where(f => f.IsTyped)
+                             .Select(f => f.TypedComponent.GetNameSpace()).Distinct())
                 {
                     code.AppendLine($"using TwitcherSharp.Api.Generated.{nameSpace};");
                 }
             }
         }
 
-        code.AppendIndentedLine(ApiCodeStrings.InterfaceBody.Replace("{{nameSpace}}", genInterface.NameSpace).Replace("{{interfaceName}}", genInterface.InterfaceName));
+        code.AppendIndentedLine(ApiCodeStrings.InterfaceBody.Replace("{{nameSpace}}", genInterface.NameSpace)
+            .Replace("{{interfaceName}}", genInterface.InterfaceName));
         foreach (var field in genInterface.Fields)
         {
             code.AppendIndentedLine($"public {field.CleanedType} {field.Name} {{ get; set; }}", 1);

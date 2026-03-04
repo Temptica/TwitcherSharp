@@ -135,27 +135,27 @@ public partial class TwitchChannelModerateEvent : Resource, ITwitcherSharpEventS
     /// <summary> 
     /// Optional. Information about the shared_chat_ban event. Is null if action is not shared_chat_ban. This field has the same information as the ban field but for a action that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
-    public TwitchSharedChatBan SharedChatBan { get; set; }
+    public TwitchBan SharedChatBan { get; set; }
 
     /// <summary> 
     /// Optional. Information about the shared_chat_unban event. Is null if action is not shared_chat_unban. This field has the same information as the unban field but for a action that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
-    public TwitchSharedChatUnban SharedChatUnban { get; set; }
+    public TwitchUnban SharedChatUnban { get; set; }
 
     /// <summary> 
     /// Optional. Information about the shared_chat_timeout event. Is null if action is not shared_chat_timeout. This field has the same information as the timeout field but for a action that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
-    public TwitchSharedChatTimeout SharedChatTimeout { get; set; }
+    public TwitchTimeout SharedChatTimeout { get; set; }
 
     /// <summary> 
     /// Optional. Information about the shared_chat_untimeout event. Is null if action is not shared_chat_untimeout. This field has the same information as the untimeout field but for a action that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
-    public TwitchSharedChatUntimeout SharedChatUntimeout { get; set; }
+    public TwitchUntimeout SharedChatUntimeout { get; set; }
 
     /// <summary> 
     /// Optional. Information about the shared_chat_delete event. Is null if action is not shared_chat_delete. This field has the same information as the delete field but for a action that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
-    public TwitchSharedChatDelete SharedChatDelete { get; set; }
+    public TwitchDelete SharedChatDelete { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelModerateEvent object.
@@ -190,11 +190,11 @@ public partial class TwitchChannelModerateEvent : Resource, ITwitcherSharpEventS
             Delete = data.Get("delete").As<TwitchDelete>(),
             AutomodTerms = data.Get("automod_terms").As<TwitchAutomodTerms>(),
             UnbanRequest = data.Get("unban_request").As<TwitchUnbanRequest>(),
-            SharedChatBan = data.Get("shared_chat_ban").As<TwitchSharedChatBan>(),
-            SharedChatUnban = data.Get("shared_chat_unban").As<TwitchSharedChatUnban>(),
-            SharedChatTimeout = data.Get("shared_chat_timeout").As<TwitchSharedChatTimeout>(),
-            SharedChatUntimeout = data.Get("shared_chat_untimeout").As<TwitchSharedChatUntimeout>(),
-            SharedChatDelete = data.Get("shared_chat_delete").As<TwitchSharedChatDelete>(),
+            SharedChatBan = data.Get("shared_chat_ban").As<TwitchBan>(),
+            SharedChatUnban = data.Get("shared_chat_unban").As<TwitchUnban>(),
+            SharedChatTimeout = data.Get("shared_chat_timeout").As<TwitchTimeout>(),
+            SharedChatUntimeout = data.Get("shared_chat_untimeout").As<TwitchUntimeout>(),
+            SharedChatDelete = data.Get("shared_chat_delete").As<TwitchDelete>(),
         };
     }
 
@@ -912,121 +912,6 @@ public partial class TwitchChannelModerateEvent : Resource, ITwitcherSharpEventS
             request.Set("user_login", UserLogin);
             request.Set("user_name", UserName);
             request.Set("moderator_message", ModeratorMessage);
-            return request;
-        }
-    }
-
-    public partial class TwitchSharedChatBan : Resource, ITwitcherSharpEventSub<TwitchSharedChatBan>
-    {
-    
-        /// <summary> 
-        /// Transforms the godot data into a TwitchSharedChatBan object.
-        /// </summary> 
-        public static TwitchSharedChatBan FromObject(GodotObject data)
-        {
-            if(data == null) return null;
-            return new TwitchSharedChatBan
-            {
-            };
-        }
-    
-        public GodotObject ToGodotObject()
-        {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd");
-            var sharedChatBanClass = script.Get("SharedChatBan").AsGodotObject();
-            var request = sharedChatBanClass.Call("new").AsGodotObject();
-            return request;
-        }
-    }
-
-    public partial class TwitchSharedChatUnban : Resource, ITwitcherSharpEventSub<TwitchSharedChatUnban>
-    {
-    
-        /// <summary> 
-        /// Transforms the godot data into a TwitchSharedChatUnban object.
-        /// </summary> 
-        public static TwitchSharedChatUnban FromObject(GodotObject data)
-        {
-            if(data == null) return null;
-            return new TwitchSharedChatUnban
-            {
-            };
-        }
-    
-        public GodotObject ToGodotObject()
-        {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd");
-            var sharedChatUnbanClass = script.Get("SharedChatUnban").AsGodotObject();
-            var request = sharedChatUnbanClass.Call("new").AsGodotObject();
-            return request;
-        }
-    }
-
-    public partial class TwitchSharedChatTimeout : Resource, ITwitcherSharpEventSub<TwitchSharedChatTimeout>
-    {
-    
-        /// <summary> 
-        /// Transforms the godot data into a TwitchSharedChatTimeout object.
-        /// </summary> 
-        public static TwitchSharedChatTimeout FromObject(GodotObject data)
-        {
-            if(data == null) return null;
-            return new TwitchSharedChatTimeout
-            {
-            };
-        }
-    
-        public GodotObject ToGodotObject()
-        {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd");
-            var sharedChatTimeoutClass = script.Get("SharedChatTimeout").AsGodotObject();
-            var request = sharedChatTimeoutClass.Call("new").AsGodotObject();
-            return request;
-        }
-    }
-
-    public partial class TwitchSharedChatUntimeout : Resource, ITwitcherSharpEventSub<TwitchSharedChatUntimeout>
-    {
-    
-        /// <summary> 
-        /// Transforms the godot data into a TwitchSharedChatUntimeout object.
-        /// </summary> 
-        public static TwitchSharedChatUntimeout FromObject(GodotObject data)
-        {
-            if(data == null) return null;
-            return new TwitchSharedChatUntimeout
-            {
-            };
-        }
-    
-        public GodotObject ToGodotObject()
-        {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd");
-            var sharedChatUntimeoutClass = script.Get("SharedChatUntimeout").AsGodotObject();
-            var request = sharedChatUntimeoutClass.Call("new").AsGodotObject();
-            return request;
-        }
-    }
-
-    public partial class TwitchSharedChatDelete : Resource, ITwitcherSharpEventSub<TwitchSharedChatDelete>
-    {
-    
-        /// <summary> 
-        /// Transforms the godot data into a TwitchSharedChatDelete object.
-        /// </summary> 
-        public static TwitchSharedChatDelete FromObject(GodotObject data)
-        {
-            if(data == null) return null;
-            return new TwitchSharedChatDelete
-            {
-            };
-        }
-    
-        public GodotObject ToGodotObject()
-        {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd");
-            var sharedChatDeleteClass = script.Get("SharedChatDelete").AsGodotObject();
-            var request = sharedChatDeleteClass.Call("new").AsGodotObject();
             return request;
         }
     }

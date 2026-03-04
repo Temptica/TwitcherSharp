@@ -218,6 +218,18 @@ public class TwitchEventSubParser
                                        Description = description
                                    };
 
+                
+                if (fieldName.StartsWith("shared_chat_"))
+                {
+                    var nonSharedField = fieldName[12..];
+                    var sharedComponent = eventSubComponent.SubComponents.First(c => c.Key == "Twitch" + nonSharedField.ToPascalCase());
+                    eventSubComponent.AddField(new TwitchEventSubGenField(fieldName, description, sharedComponent.Key)
+                    {
+                        TypedComponent = sharedComponent.Value
+                    });
+                    
+                    continue;
+                }
                 currentParent.AddSubComponent(subComponent);
                 currentParent = subComponent;
                 parentWhiteSpaces = whiteSpaces;

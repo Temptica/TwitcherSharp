@@ -165,47 +165,47 @@ public partial class TwitchChannelChatNotificationEvent : Resource, ITwitcherSha
     /// <summary> 
     /// Optional. Information about the shared_chat_sub event. Is null if notice_type is not shared_chat_sub. This field has the same information as the sub field but for a notice that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
-    public TwitchSharedChatSub SharedChatSub { get; set; }
+    public TwitchSub SharedChatSub { get; set; }
 
     /// <summary> 
     /// Optional. Information about the shared_chat_resub event. Is null if notice_type is not shared_chat_resub. This field has the same information as the resub field but for a notice that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
-    public TwitchSharedChatResub SharedChatResub { get; set; }
+    public TwitchResub SharedChatResub { get; set; }
 
     /// <summary> 
     /// Optional. Information about the shared_chat_sub_gift event. Is null if notice_type is not shared_chat_sub_gift. This field has the same information as the chat_sub_gift field but for a notice that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
-    public TwitchSharedChatSubGift SharedChatSubGift { get; set; }
+    public TwitchSubGift SharedChatSubGift { get; set; }
 
     /// <summary> 
     /// Optional. Information about the shared_chat_community_sub_gift event. Is null if notice_type is not shared_chat_community_sub_gift. This field has the same information as the community_sub_gift field but for a notice that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
-    public TwitchSharedChatCommunitySubGift SharedChatCommunitySubGift { get; set; }
+    public TwitchCommunitySubGift SharedChatCommunitySubGift { get; set; }
 
     /// <summary> 
     /// Optional. Information about the shared_chat_gift_paid_upgrade event. Is null if notice_type is not shared_chat_gift_paid_upgrade. This field has the same information as the gift_paid_upgrade field but for a notice that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
-    public TwitchSharedChatGiftPaidUpgrade SharedChatGiftPaidUpgrade { get; set; }
+    public TwitchGiftPaidUpgrade SharedChatGiftPaidUpgrade { get; set; }
 
     /// <summary> 
     /// Optional. Information about the shared_chat_chat_prime_paid_upgrade event. Is null if notice_type is not shared_chat_prime_paid_upgrade. This field has the same information as the prime_paid_upgrade field but for a notice that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
-    public TwitchSharedChatPrimePaidUpgrade SharedChatPrimePaidUpgrade { get; set; }
+    public TwitchPrimePaidUpgrade SharedChatPrimePaidUpgrade { get; set; }
 
     /// <summary> 
     /// Optional. Information about the shared_chat_pay_it_forward event. Is null if notice_type is not shared_chat_pay_it_forward. This field has the same information as the pay_it_forward field but for a notice that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
-    public TwitchSharedChatPayItForward SharedChatPayItForward { get; set; }
+    public TwitchPayItForward SharedChatPayItForward { get; set; }
 
     /// <summary> 
     /// Optional. Information about the shared_chat_raid event. Is null if notice_type is not shared_chat_raid. This field has the same information as the raid field but for a notice that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
-    public TwitchSharedChatRaid SharedChatRaid { get; set; }
+    public TwitchRaid SharedChatRaid { get; set; }
 
     /// <summary> 
     /// Optional. Information about the shared_chat_announcement event. Is null if notice_type is not shared_chat_announcement. This field has the same information as the announcement field but for a notice that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
-    public TwitchSharedChatAnnouncement SharedChatAnnouncement { get; set; }
+    public TwitchAnnouncement SharedChatAnnouncement { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelChatNotificationEvent object.
@@ -248,15 +248,15 @@ public partial class TwitchChannelChatNotificationEvent : Resource, ITwitcherSha
             SourceBroadcasterUserLogin = data.Get("source_broadcaster_user_login").AsString(),
             SourceMessageId = data.Get("source_message_id").AsString(),
             SourceBadges = sourceBadgesArray.Select(TwitchSourceBadges.FromObject).ToArray(),
-            SharedChatSub = data.Get("shared_chat_sub").As<TwitchSharedChatSub>(),
-            SharedChatResub = data.Get("shared_chat_resub").As<TwitchSharedChatResub>(),
-            SharedChatSubGift = data.Get("shared_chat_sub_gift").As<TwitchSharedChatSubGift>(),
-            SharedChatCommunitySubGift = data.Get("shared_chat_community_sub_gift").As<TwitchSharedChatCommunitySubGift>(),
-            SharedChatGiftPaidUpgrade = data.Get("shared_chat_gift_paid_upgrade").As<TwitchSharedChatGiftPaidUpgrade>(),
-            SharedChatPrimePaidUpgrade = data.Get("shared_chat_prime_paid_upgrade").As<TwitchSharedChatPrimePaidUpgrade>(),
-            SharedChatPayItForward = data.Get("shared_chat_pay_it_forward").As<TwitchSharedChatPayItForward>(),
-            SharedChatRaid = data.Get("shared_chat_raid").As<TwitchSharedChatRaid>(),
-            SharedChatAnnouncement = data.Get("shared_chat_announcement").As<TwitchSharedChatAnnouncement>(),
+            SharedChatSub = data.Get("shared_chat_sub").As<TwitchSub>(),
+            SharedChatResub = data.Get("shared_chat_resub").As<TwitchResub>(),
+            SharedChatSubGift = data.Get("shared_chat_sub_gift").As<TwitchSubGift>(),
+            SharedChatCommunitySubGift = data.Get("shared_chat_community_sub_gift").As<TwitchCommunitySubGift>(),
+            SharedChatGiftPaidUpgrade = data.Get("shared_chat_gift_paid_upgrade").As<TwitchGiftPaidUpgrade>(),
+            SharedChatPrimePaidUpgrade = data.Get("shared_chat_prime_paid_upgrade").As<TwitchPrimePaidUpgrade>(),
+            SharedChatPayItForward = data.Get("shared_chat_pay_it_forward").As<TwitchPayItForward>(),
+            SharedChatRaid = data.Get("shared_chat_raid").As<TwitchRaid>(),
+            SharedChatAnnouncement = data.Get("shared_chat_announcement").As<TwitchAnnouncement>(),
         };
     }
 
@@ -1225,213 +1225,6 @@ public partial class TwitchChannelChatNotificationEvent : Resource, ITwitcherSha
             request.Set("set_id", SetId);
             request.Set("id", Id);
             request.Set("info", Info);
-            return request;
-        }
-    }
-
-    public partial class TwitchSharedChatSub : Resource, ITwitcherSharpEventSub<TwitchSharedChatSub>
-    {
-    
-        /// <summary> 
-        /// Transforms the godot data into a TwitchSharedChatSub object.
-        /// </summary> 
-        public static TwitchSharedChatSub FromObject(GodotObject data)
-        {
-            if(data == null) return null;
-            return new TwitchSharedChatSub
-            {
-            };
-        }
-    
-        public GodotObject ToGodotObject()
-        {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_notification.gd");
-            var sharedChatSubClass = script.Get("SharedChatSub").AsGodotObject();
-            var request = sharedChatSubClass.Call("new").AsGodotObject();
-            return request;
-        }
-    }
-
-    public partial class TwitchSharedChatResub : Resource, ITwitcherSharpEventSub<TwitchSharedChatResub>
-    {
-    
-        /// <summary> 
-        /// Transforms the godot data into a TwitchSharedChatResub object.
-        /// </summary> 
-        public static TwitchSharedChatResub FromObject(GodotObject data)
-        {
-            if(data == null) return null;
-            return new TwitchSharedChatResub
-            {
-            };
-        }
-    
-        public GodotObject ToGodotObject()
-        {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_notification.gd");
-            var sharedChatResubClass = script.Get("SharedChatResub").AsGodotObject();
-            var request = sharedChatResubClass.Call("new").AsGodotObject();
-            return request;
-        }
-    }
-
-    public partial class TwitchSharedChatSubGift : Resource, ITwitcherSharpEventSub<TwitchSharedChatSubGift>
-    {
-    
-        /// <summary> 
-        /// Transforms the godot data into a TwitchSharedChatSubGift object.
-        /// </summary> 
-        public static TwitchSharedChatSubGift FromObject(GodotObject data)
-        {
-            if(data == null) return null;
-            return new TwitchSharedChatSubGift
-            {
-            };
-        }
-    
-        public GodotObject ToGodotObject()
-        {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_notification.gd");
-            var sharedChatSubGiftClass = script.Get("SharedChatSubGift").AsGodotObject();
-            var request = sharedChatSubGiftClass.Call("new").AsGodotObject();
-            return request;
-        }
-    }
-
-    public partial class TwitchSharedChatCommunitySubGift : Resource, ITwitcherSharpEventSub<TwitchSharedChatCommunitySubGift>
-    {
-    
-        /// <summary> 
-        /// Transforms the godot data into a TwitchSharedChatCommunitySubGift object.
-        /// </summary> 
-        public static TwitchSharedChatCommunitySubGift FromObject(GodotObject data)
-        {
-            if(data == null) return null;
-            return new TwitchSharedChatCommunitySubGift
-            {
-            };
-        }
-    
-        public GodotObject ToGodotObject()
-        {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_notification.gd");
-            var sharedChatCommunitySubGiftClass = script.Get("SharedChatCommunitySubGift").AsGodotObject();
-            var request = sharedChatCommunitySubGiftClass.Call("new").AsGodotObject();
-            return request;
-        }
-    }
-
-    public partial class TwitchSharedChatGiftPaidUpgrade : Resource, ITwitcherSharpEventSub<TwitchSharedChatGiftPaidUpgrade>
-    {
-    
-        /// <summary> 
-        /// Transforms the godot data into a TwitchSharedChatGiftPaidUpgrade object.
-        /// </summary> 
-        public static TwitchSharedChatGiftPaidUpgrade FromObject(GodotObject data)
-        {
-            if(data == null) return null;
-            return new TwitchSharedChatGiftPaidUpgrade
-            {
-            };
-        }
-    
-        public GodotObject ToGodotObject()
-        {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_notification.gd");
-            var sharedChatGiftPaidUpgradeClass = script.Get("SharedChatGiftPaidUpgrade").AsGodotObject();
-            var request = sharedChatGiftPaidUpgradeClass.Call("new").AsGodotObject();
-            return request;
-        }
-    }
-
-    public partial class TwitchSharedChatPrimePaidUpgrade : Resource, ITwitcherSharpEventSub<TwitchSharedChatPrimePaidUpgrade>
-    {
-    
-        /// <summary> 
-        /// Transforms the godot data into a TwitchSharedChatPrimePaidUpgrade object.
-        /// </summary> 
-        public static TwitchSharedChatPrimePaidUpgrade FromObject(GodotObject data)
-        {
-            if(data == null) return null;
-            return new TwitchSharedChatPrimePaidUpgrade
-            {
-            };
-        }
-    
-        public GodotObject ToGodotObject()
-        {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_notification.gd");
-            var sharedChatPrimePaidUpgradeClass = script.Get("SharedChatPrimePaidUpgrade").AsGodotObject();
-            var request = sharedChatPrimePaidUpgradeClass.Call("new").AsGodotObject();
-            return request;
-        }
-    }
-
-    public partial class TwitchSharedChatPayItForward : Resource, ITwitcherSharpEventSub<TwitchSharedChatPayItForward>
-    {
-    
-        /// <summary> 
-        /// Transforms the godot data into a TwitchSharedChatPayItForward object.
-        /// </summary> 
-        public static TwitchSharedChatPayItForward FromObject(GodotObject data)
-        {
-            if(data == null) return null;
-            return new TwitchSharedChatPayItForward
-            {
-            };
-        }
-    
-        public GodotObject ToGodotObject()
-        {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_notification.gd");
-            var sharedChatPayItForwardClass = script.Get("SharedChatPayItForward").AsGodotObject();
-            var request = sharedChatPayItForwardClass.Call("new").AsGodotObject();
-            return request;
-        }
-    }
-
-    public partial class TwitchSharedChatRaid : Resource, ITwitcherSharpEventSub<TwitchSharedChatRaid>
-    {
-    
-        /// <summary> 
-        /// Transforms the godot data into a TwitchSharedChatRaid object.
-        /// </summary> 
-        public static TwitchSharedChatRaid FromObject(GodotObject data)
-        {
-            if(data == null) return null;
-            return new TwitchSharedChatRaid
-            {
-            };
-        }
-    
-        public GodotObject ToGodotObject()
-        {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_notification.gd");
-            var sharedChatRaidClass = script.Get("SharedChatRaid").AsGodotObject();
-            var request = sharedChatRaidClass.Call("new").AsGodotObject();
-            return request;
-        }
-    }
-
-    public partial class TwitchSharedChatAnnouncement : Resource, ITwitcherSharpEventSub<TwitchSharedChatAnnouncement>
-    {
-    
-        /// <summary> 
-        /// Transforms the godot data into a TwitchSharedChatAnnouncement object.
-        /// </summary> 
-        public static TwitchSharedChatAnnouncement FromObject(GodotObject data)
-        {
-            if(data == null) return null;
-            return new TwitchSharedChatAnnouncement
-            {
-            };
-        }
-    
-        public GodotObject ToGodotObject()
-        {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_notification.gd");
-            var sharedChatAnnouncementClass = script.Get("SharedChatAnnouncement").AsGodotObject();
-            var request = sharedChatAnnouncementClass.Call("new").AsGodotObject();
             return request;
         }
     }

@@ -1,145 +1,126 @@
 using Godot;
+using TwitcherSharp.Api.Generated;
+using TwitcherSharp.Api.Generated.Chat;
 using TwitcherSharp.Api.Generated.Users;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Media;
 
 namespace TwitcherSharp.Chat;
 
-public partial class TwitchChat: Resource, ITwitcherSharpSingleton<TwitchChat>
+public partial class TwitchChat : Node, ITwitcherSharpSingleton<TwitchChat>
 {
-	private GodotObject _data;
-	public static TwitchChat Instance { get; set; }
+    protected TwitchChat()
+    {
+    }
 
-	public TwitchUser BroadcasterUser
-	{
-		get => _data != null ? TwitchUser.FromObject(_data.Get("broadcaster_user").AsGodotObject()) : field;
-		set
-		{
-			_data?.Set("broadcaster_user", value.ToGodotObject());
-			field = value;
-		}
-	}
-	
-	public TwitchUser SenderUser
-	{
-		get => _data != null ? TwitchUser.FromObject(_data.Get("sender_user").AsGodotObject()) : field;
-		set
-		{
-			_data?.Set("sender_user", value?.ToGodotObject());
-			field = value;
-		}
-	}
-	
-	public static TwitchChat Create()
-	{
-		throw new NotImplementedException();
-	}
-	public static TwitchChat FromObject(GodotObject data)
-	{
-		throw new NotImplementedException();
-	}
-	public GodotObject ToGodotObject()
-	{
-		throw new NotImplementedException();
-	}
+    private GodotObject _data;
+    public bool IsLinked => _data is not null;
+
+    public static TwitchChat Instance { get; set; }
+
+    /// <summary>
+    /// Twitch API (Will automatically look for first TwitchApi (twitcher) in the scene tree
+    /// </summary>
+    public static TwitchApi Api { get; set; } = TwitchApi.CreateFromInstance();
+
+    public TwitchUser BroadcasterUser
+    {
+        get => _data != null ? TwitchUser.FromObject(_data.Get("broadcaster_user").AsGodotObject()) : field;
+        set
+        {
+            _data?.Set("broadcaster_user", value.ToGodotObject());
+            field = value;
+        }
+    }
+
+    public TwitchUser SenderUser
+    {
+        get => _data != null ? TwitchUser.FromObject(_data.Get("sender_user").AsGodotObject()) : field;
+        set
+        {
+            _data?.Set("sender_user", value?.ToGodotObject());
+            field = value;
+        }
+    }
+
+    /// <summary>
+    /// Media loader it uses for emotes and badges. (Will automatically look for first TwitchMediaLoader (twitcher) in the scene tree)
+    /// </summary>
+    public TwitchMediaLoader MediaLoader { get; set; } = TwitchMediaLoader.CreateFromInstance();
+
+    /// <summary>
+    /// Should it subscribe on ready
+    /// </summary>
+    public bool SubscibeOnReady { get; set; } = true;
+
+    [Signal]
+    public delegate void MessageReceivedEventHandler(TwitchChatMessage message);
+
+    public void Subscribe() => _data.Call("subscribe");
+
+    /// <summary>
+    /// Sends a message to the chat. If twitchApi is connected and linked, it will use the c# code.
+    /// If twitchApi is not connected or linked, it will use the Godot API if this class is linked.
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="replyParentMessageId"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception">throws if neither TwitchApi or TwitchChat is linked</exception>
+    public async Task<TwitchSendChatMessageResponse.TwitchData[]> SendMessage(string message,
+        string replyParentMessageId = null)
+    {
+        if (!Api.IsLinked)
+        {
+            if (!IsLinked) throw new Exception("TwitchChat is not linked to TwitchApi");
+
+            return (await _data.CallAsync("send_message", message, replyParentMessageId))
+                .AsGodotArray<GodotObject>()
+                .Select(TwitchSendChatMessageResponse.TwitchData.FromObject)
+                .ToArray();
+        }
+
+        var request = new TwitchSendChatMessageBody()
+        {
+            BroadcasterId = BroadcasterUser.Id,
+            SenderId = SenderUser.Id,
+            Message = message,
+            ReplyParentMessageId = replyParentMessageId
+        };
+
+        var response = await Api.SendChatMessage(request);
+        return response.Data;
+    }
+
+    private void ConnectSignals()
+    {
+        _data.Connect("message_received",
+            Callable.From<GodotObject>(d => EmitSignalMessageReceived(TwitchChatMessage.FromObject(d))));
+    }
+
+    public static TwitchChat CreateFromInstance()
+    {
+        var script = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_chat.gd");
+        var gdChat = script.New().AsGodotObject();
+        var result = gdChat.Get("instance");
+        if (result.VariantType != Variant.Type.Object) return Create();
+        Instance = FromObject(result.AsGodotObject());
+        return Instance;
+    }
+
+    public static TwitchChat Create()
+    {
+        Instance = new TwitchChat();
+        return Instance;
+    }
+
+    public static TwitchChat FromObject(GodotObject data)
+    {
+        throw new NotImplementedException();
+    }
+
+    public GodotObject ToGodotObject()
+    {
+        throw new NotImplementedException();
+    }
 }
-
-/*
-   
-   
-   
-   ## Media loader it uses for emotes and badges. (Can be empty will automatically look for first [TwitchMediaLoader] 
-   ## in the scene tree)  
-   @export var media_loader: TwitchMediaLoader
-   ## Eventsub to listen for the chat messages. (Can be empty will automatically look for first [TwitchEventsub] 
-   ## in the scene tree)
-   @export var eventsub: TwitchEventsub
-   ## API to send messages. (Can be empty will automatically look for first [TwitchAPI] in the scene tree)
-   @export var api: TwitchAPI
-   
-   ## Should it subscribe on ready
-   @export var subscribe_on_ready: bool = true
-   
-   
-   ## Triggered when a chat message got received
-   signal message_received(message: TwitchChatMessage)
-   
-   
-   func _ready() -> void:
-   	_log.d("is ready")
-   	if media_loader == null: media_loader = TwitchMediaLoader.instance
-   	if api == null: api = TwitchAPI.instance
-   	if eventsub == null: eventsub = TwitchEventsub.instance
-   	eventsub.event.connect(_on_event_received)
-   	if not Engine.is_editor_hint() && subscribe_on_ready:
-   		subscribe()
-   	
-   
-   func _enter_tree() -> void:
-   	if instance == null: instance = self
-   	
-   	
-   func _exit_tree() -> void:
-   	if instance == self: instance = null
-   
-   
-   ## Subscribe to eventsub and preload data if not happend yet
-   func subscribe() -> void:
-   	if broadcaster_user == null:
-   		printerr("BroadcasterUser is not set. Can't subscribe to chat.")
-   		return
-   		
-   	if is_instance_valid(media_loader):
-   		media_loader.preload_badges(broadcaster_user.id)
-   		media_loader.preload_emotes(broadcaster_user.id)
-   			
-   	for subscription: TwitchEventsubConfig in eventsub.get_subscriptions():
-   		if subscription.type == TwitchEventsubDefinition.Type.CHANNEL_CHAT_MESSAGE and \
-   			subscription.condition.broadcaster_user_id == broadcaster_user.id:
-   				# it is already subscribed
-   				return
-   				
-   	if sender_user == null:
-   		var current_user: TwitchGetUsers.Response = await api.get_users(null)
-   		sender_user = current_user.data[0]
-   	
-   	var config: TwitchEventsubConfig = TwitchEventsubConfig.new()
-   	config.type = TwitchEventsubDefinition.Type.CHANNEL_CHAT_MESSAGE
-   	config.condition = {
-   		"broadcaster_user_id": broadcaster_user.id,
-   		"user_id": sender_user.id
-   	}
-   	eventsub.subscribe(config)
-   	_log.i("Listen to Chat of %s (%s)" % [broadcaster_user.display_name, broadcaster_user.id])
-   
-   
-   func _on_event_received(type: StringName, data: Dictionary) -> void:
-   	if type != TwitchEventsubDefinition.CHANNEL_CHAT_MESSAGE.value: return
-   	var message: TwitchChatMessage = TwitchChatMessage.from_json(data)
-   	if message.broadcaster_user_id == broadcaster_user.id:
-   		message_received.emit(message)
-   
-   
-   func send_message(message: String, reply_parent_message_id: String = "") -> Array[TwitchSendChatMessage.ResponseData]:
-   	var message_body: TwitchSendChatMessage.Body = TwitchSendChatMessage.Body.new()
-   	message_body.broadcaster_id = broadcaster_user.id
-   	message_body.sender_id = sender_user.id
-   	message_body.message = message
-   	if reply_parent_message_id:
-   		message_body.reply_parent_message_id = reply_parent_message_id
-   
-   	var response: TwitchSendChatMessage.Response = await api.send_chat_message(message_body)
-   	if _log.enabled:
-   		for message_data: TwitchSendChatMessage.ResponseData in response.data:
-   			if not message_data.is_sent:
-   				_log.w(message_data.drop_reason)
-   
-   	return response.data
-   
-   
-   func _get_configuration_warnings() -> PackedStringArray:
-   	var result: PackedStringArray = []
-   	if broadcaster_user == null:
-   		result.append("Target broadcaster not specified")
-   	return result
-   
- */

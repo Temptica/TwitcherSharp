@@ -4,21 +4,18 @@ namespace ClassGenerator.GenObjects.EventSub;
 
 public class TwitchEventSubGenComponent(string name)
 {
-    public string ClassName
-    {
-        get;
-    } = SanitizeName(name);
+    public string ClassName { get; } = SanitizeName(name);
 
     public string Description { get; set; }
 
     public TwitchEventSubGenComponent Parent { get; set; }
 
-    public  Dictionary<string, TwitchEventSubGenComponent> SubComponents { get; } = [];
+    public Dictionary<string, TwitchEventSubGenComponent> SubComponents { get; } = [];
 
     public Dictionary<string, TwitchEventSubGenField> Fields { get; } = [];
 
     public bool IsRoot => Parent == null;
-    
+
     public bool IsShared { get; init; }
 
     public void AddField(TwitchEventSubGenField field)
@@ -40,7 +37,7 @@ public class TwitchEventSubGenComponent(string name)
         {
             TypedComponent = component
         };
-        
+
         Fields[field.Name] = field;
     }
 
@@ -50,5 +47,7 @@ public class TwitchEventSubGenComponent(string name)
         component.Parent = this;
     }
 
-    private static string SanitizeName(string name) => name.StartsWith("Twitch") ? name:$"Twitch{name.ToPascalCase()}";
+    private static string SanitizeName(string name) =>
+        name.StartsWith("Twitch") ? name : $"Twitch{name.ToPascalCase()}";
+    
 }

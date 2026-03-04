@@ -82,7 +82,7 @@ public partial class TwitchEmoteDefinition(string emoteId) : Resource, ITwitcher
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/media/twitch_emote_definition.gd");
-        var data = script.Call("new").AsGodotObject();
+        var data = script.New().AsGodotObject();
         data.Set("id", Id);
         data.Set("scale", Scale);
         data.Set("type", Type);

@@ -47,7 +47,7 @@ public partial class TwitchImageTransformer : Resource, ITwitcherSharp<TwitchIma
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/media/twitch_image_transformer.gd");
-        var data = script.Call("new").AsGodotObject();
+        var data = script.New().AsGodotObject();
         data.Set("fallback_texture", FallbackTexture);
 
         return data;

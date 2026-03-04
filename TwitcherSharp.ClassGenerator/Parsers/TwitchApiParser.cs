@@ -65,7 +65,7 @@ public class TwitchApiParser
     {
         Interfaces =
         [
-            new TwitchGenInterface("ITwitchEmote", ["TwitchGlobalEmote", "TwitchChatEmote", "TwitchEmote"])
+            new TwitchGenInterface("ITwitchEmote", ["TwitchGlobalEmote", "TwitchChannelEmote", "TwitchEmote"]),
         ];
     }
 
@@ -342,7 +342,7 @@ public class TwitchApiParser
 
         foreach (var genInterface in Interfaces)
         {
-            if (genInterface.ComponentsToAdd.Any(c => c.Contains(component.ClassName)))
+            if (genInterface.ComponentsToAdd.Any(c => c.Equals(component.ClassName)))
             {
                 genInterface.AddSubComponent(component);
             }

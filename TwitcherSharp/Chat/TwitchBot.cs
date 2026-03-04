@@ -11,15 +11,20 @@ namespace TwitcherSharp.Chat;
 /// See also https://dev.twitch.tv/docs/api/reference/#send-chat-message
 /// <p> Note: This node is connected to the godot object. Setting values here will also set those in the godotScript and vice versa</p>
 /// </summary>
-public partial class TwitchBot : Resource, ITwitcherSharpSingleton<TwitchBot>
+public partial class TwitchBot : Node, ITwitcherSharpSingleton<TwitchBot>
 {
+    protected TwitchBot()
+    {
+    }
+
     private GodotObject _data;
+    public bool IsLinked => _data is not null;
     public static TwitchBot Instance { get; private set; }
 
     public TwitchUser Sender
     {
-        get => _data != null 
-            ? TwitchUser.FromObject(_data.Get("sender").AsGodotObject()) 
+        get => _data != null
+            ? TwitchUser.FromObject(_data.Get("sender").AsGodotObject())
             : field;
         set
         {
@@ -28,9 +33,10 @@ public partial class TwitchBot : Resource, ITwitcherSharpSingleton<TwitchBot>
         }
     }
 
-    public TwitchUser Receiver {
-        get => _data != null 
-            ? TwitchUser.FromObject(_data.Get("receiver").AsGodotObject()) 
+    public TwitchUser Receiver
+    {
+        get => _data != null
+            ? TwitchUser.FromObject(_data.Get("receiver").AsGodotObject())
             : field;
         set
         {
@@ -50,7 +56,9 @@ public partial class TwitchBot : Resource, ITwitcherSharpSingleton<TwitchBot>
     public static void SendMessage(string message, string replyParentMessageId = "", bool forSourceOnly = true,
         TwitchUser broadcaster = null)
     {
-        if(Instance?._data == null) throw new NullReferenceException("Bot is not initialized. Call FromObject and add the resulting node to the scene tree.");
+        if (Instance?._data == null)
+            throw new NullReferenceException(
+                "Bot is not initialized. Call FromObject and add the resulting node to the scene tree.");
         Instance._data.Call("send_message", message, replyParentMessageId, forSourceOnly, broadcaster?.ToGodotObject());
     }
 
@@ -70,57 +78,48 @@ public partial class TwitchBot : Resource, ITwitcherSharpSingleton<TwitchBot>
             SendMessage(chunk.ToString(), replyParentMessageId, forSourceOnly, broadcaster);
         }
     }
-    
 
-    /// <summary>
-    /// Transforms the godot data into a TwitchBot object.
-    /// Note: This node is connected to the godot object. Setting values here will also set those in the godotScript and vice versa
-    /// </summary>
-    /// <param name="data"></param>
-    /// <returns></returns>
+
     public static TwitchBot FromObject(GodotObject data)
     {
-        if(data == null)
+        if (data == null)
         {
             return null;
         }
+
         var instance = new TwitchBot();
         instance._data = data;
         return instance;
     }
 
-    /// <summary>
-    /// Creates a new instance. It will try to find an existing gdScript TwitchBot instance and bind to this one.
-    /// <p>If none can be found, it will instead not connect and be it's own instance. </p>
-    /// </summary>
-    /// <returns>The created instance</returns>
-    public static TwitchBot Create()
+    public static TwitchBot CreateFromInstance()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_bot.gd");
         var gdBot = script.New().AsGodotObject();
         var result = gdBot.Get("instance");
-        
-        if(result.VariantType == Variant.Type.Object)
+
+        if (result.VariantType == Variant.Type.Object)
         {
             Instance = FromObject(result.AsGodotObject());
             return Instance;
         }
-        
+
+        return Create();
+    }
+
+    public static TwitchBot Create()
+    {
         Instance = new TwitchBot();
         return Instance;
     }
 
-    /// <summary>
-    /// Returns the linked GodotObject. If there is no linked object, it will create a new one based on this instance and link it.
-    /// </summary>
-    /// <returns></returns>
     public GodotObject ToGodotObject()
     {
-        if(_data != null)
+        if (_data != null)
         {
             return _data;
         }
-        
+
         var script = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_bot.gd");
         var instance = script.New().AsGodotObject();
         instance.Set("sender", Sender.ToGodotObject());
