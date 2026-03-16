@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelSharedChatSessionUpdate;
 
-public partial class TwitchChannelSharedChatSessionUpdateCondition : Resource, ITwitcherSharpCondition<TwitchChannelSharedChatSessionUpdateCondition>
+public partial class TwitchChannelSharedChatSessionUpdateCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelSharedChatSessionUpdateCondition>
 {
     public string Name => nameof(TwitchChannelSharedChatSessionUpdateCondition);
 

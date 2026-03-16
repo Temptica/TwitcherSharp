@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelBan;
 
-public partial class TwitchChannelBanCondition : Resource, ITwitcherSharpCondition<TwitchChannelBanCondition>
+public partial class TwitchChannelBanCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelBanCondition>
 {
     public string Name => nameof(TwitchChannelBanCondition);
 

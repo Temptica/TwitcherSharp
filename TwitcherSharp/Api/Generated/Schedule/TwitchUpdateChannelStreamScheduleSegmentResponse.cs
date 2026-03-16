@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Schedule;
 
-public partial class TwitchUpdateChannelStreamScheduleSegmentResponse : Resource, ITwitcherSharp<TwitchUpdateChannelStreamScheduleSegmentResponse>
+public partial class TwitchUpdateChannelStreamScheduleSegmentResponse : RefCounted, ITwitcherSharp<TwitchUpdateChannelStreamScheduleSegmentResponse>
 {
     private GodotObject _data;
     public TwitchData Data { get; set; }
@@ -32,7 +32,7 @@ public partial class TwitchUpdateChannelStreamScheduleSegmentResponse : Resource
     /// <summary> 
     /// The broadcaster’s streaming scheduled. 
     /// </summary>
-    public partial class TwitchData : Resource, ITwitcherSharp<TwitchData>
+    public partial class TwitchData : RefCounted, ITwitcherSharp<TwitchData>
     {
         private GodotObject _data;
         public TwitchChannelStreamScheduleSegment[] Segments { get; set; }
@@ -73,7 +73,7 @@ public partial class TwitchUpdateChannelStreamScheduleSegmentResponse : Resource
         /// <summary> 
         /// The dates when the broadcaster is on vacation and not streaming. Is set to **null** if vacation mode is not enabled. 
         /// </summary>
-        public partial class TwitchVacation : Resource, ITwitcherSharp<TwitchVacation>
+        public partial class TwitchVacation : RefCounted, ITwitcherSharp<TwitchVacation>
         {
             private GodotObject _data;
             public string StartTime { get; set; }

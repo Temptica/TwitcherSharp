@@ -4,7 +4,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.Auth;
 
-public partial class TwitchAuth : Resource, ITwitcherSharp<TwitchAuth>
+public partial class TwitchAuth : RefCounted, ITwitcherSharp<TwitchAuth>
 {
 	private GodotObject _data;
 

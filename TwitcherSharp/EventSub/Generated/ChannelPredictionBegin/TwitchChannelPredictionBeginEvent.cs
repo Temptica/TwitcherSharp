@@ -5,7 +5,7 @@ using TwitcherSharp.EventSub.Generated.Shared;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelPredictionBegin;
 
-public partial class TwitchChannelPredictionBeginEvent : Resource, ITwitcherSharpEventSub<TwitchChannelPredictionBeginEvent>
+public partial class TwitchChannelPredictionBeginEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelPredictionBeginEvent>
 {
     /// <summary> 
     /// Channel Points Prediction ID.

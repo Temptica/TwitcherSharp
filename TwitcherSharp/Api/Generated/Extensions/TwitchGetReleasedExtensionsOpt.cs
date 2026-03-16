@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Extensions;
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetReleasedExtensions 
 /// </summary>
-public partial class TwitchGetReleasedExtensionsOpt : Resource, ITwitcherSharp<TwitchGetReleasedExtensionsOpt>
+public partial class TwitchGetReleasedExtensionsOpt : RefCounted, ITwitcherSharp<TwitchGetReleasedExtensionsOpt>
 {
     private GodotObject _data;
     public string ExtensionVersion { get; set; }

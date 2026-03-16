@@ -4,7 +4,7 @@ using TwitcherSharp.Interfaces;
 namespace TwitcherSharp.Auth;
 
 public partial class TwitchScopes(StringName val, string description, string category = "")
-    : Resource, ITwitcherSharp<TwitchScopes>
+    : RefCounted, ITwitcherSharp<TwitchScopes>
 {
     public StringName Value { get; set; } = val;
     public string Description { get; set; } = description;

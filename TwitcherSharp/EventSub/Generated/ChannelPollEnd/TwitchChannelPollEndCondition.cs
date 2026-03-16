@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelPollEnd;
 
-public partial class TwitchChannelPollEndCondition : Resource, ITwitcherSharpCondition<TwitchChannelPollEndCondition>
+public partial class TwitchChannelPollEndCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelPollEndCondition>
 {
     public string Name => nameof(TwitchChannelPollEndCondition);
 

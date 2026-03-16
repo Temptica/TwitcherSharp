@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
 
-public partial class TwitchGetShieldModeStatusResponse : Resource, ITwitcherSharp<TwitchGetShieldModeStatusResponse>
+public partial class TwitchGetShieldModeStatusResponse : RefCounted, ITwitcherSharp<TwitchGetShieldModeStatusResponse>
 {
     private GodotObject _data;
     public TwitchData[] Data { get; set; }
@@ -33,7 +33,7 @@ public partial class TwitchGetShieldModeStatusResponse : Resource, ITwitcherShar
     /// <summary> 
     /// A list that contains a single object with the broadcaster’s Shield Mode status. 
     /// </summary>
-    public partial class TwitchData : Resource, ITwitcherSharp<TwitchData>
+    public partial class TwitchData : RefCounted, ITwitcherSharp<TwitchData>
     {
         private GodotObject _data;
         public bool IsActive { get; set; }

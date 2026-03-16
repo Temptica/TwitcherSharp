@@ -2,7 +2,7 @@ using Godot;
 using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.Media;
-public partial class TwitchBadgeDefinition : Resource, ITwitcherSharp<TwitchBadgeDefinition>
+public partial class TwitchBadgeDefinition : RefCounted, ITwitcherSharp<TwitchBadgeDefinition>
 {
     public TwitchBadgeDefinition(string setId, string id, int badgeScale, string badgeChannel)
     {

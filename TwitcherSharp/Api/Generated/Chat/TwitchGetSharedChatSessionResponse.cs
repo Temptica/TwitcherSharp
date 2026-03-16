@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Chat;
 
-public partial class TwitchGetSharedChatSessionResponse : Resource, ITwitcherSharp<TwitchGetSharedChatSessionResponse>
+public partial class TwitchGetSharedChatSessionResponse : RefCounted, ITwitcherSharp<TwitchGetSharedChatSessionResponse>
 {
     private GodotObject _data;
     public TwitchData[] Data { get; set; }
@@ -29,7 +29,7 @@ public partial class TwitchGetSharedChatSessionResponse : Resource, ITwitcherSha
         request.Set("data", Data);
         return request;
     }
-    public partial class TwitchData : Resource, ITwitcherSharp<TwitchData>
+    public partial class TwitchData : RefCounted, ITwitcherSharp<TwitchData>
     {
         private GodotObject _data;
         public string SessionId { get; set; }
@@ -70,7 +70,7 @@ public partial class TwitchGetSharedChatSessionResponse : Resource, ITwitcherSha
         /// <summary> 
         /// The list of participants in the session. 
         /// </summary>
-        public partial class TwitchParticipants : Resource, ITwitcherSharp<TwitchParticipants>
+        public partial class TwitchParticipants : RefCounted, ITwitcherSharp<TwitchParticipants>
         {
             private GodotObject _data;
             public string BroadcasterId { get; set; }

@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelVIPRemove;
 
-public partial class TwitchChannelVIPRemoveEvent : Resource, ITwitcherSharpEventSub<TwitchChannelVIPRemoveEvent>
+public partial class TwitchChannelVIPRemoveEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelVIPRemoveEvent>
 {
     /// <summary> 
     /// The ID of the user who was removed as a VIP.

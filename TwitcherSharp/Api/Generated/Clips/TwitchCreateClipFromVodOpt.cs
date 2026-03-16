@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Clips;
 /// <summary> 
 /// All optional parameters for TwitchAPI.CreateClipFromVod 
 /// </summary>
-public partial class TwitchCreateClipFromVodOpt : Resource, ITwitcherSharp<TwitchCreateClipFromVodOpt>
+public partial class TwitchCreateClipFromVodOpt : RefCounted, ITwitcherSharp<TwitchCreateClipFromVodOpt>
 {
     private GodotObject _data;
     public double? Duration { get; set; }

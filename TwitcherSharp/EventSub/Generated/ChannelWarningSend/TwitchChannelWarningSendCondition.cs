@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelWarningSend;
 
-public partial class TwitchChannelWarningSendCondition : Resource, ITwitcherSharpCondition<TwitchChannelWarningSendCondition>
+public partial class TwitchChannelWarningSendCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelWarningSendCondition>
 {
     public string Name => nameof(TwitchChannelWarningSendCondition);
 

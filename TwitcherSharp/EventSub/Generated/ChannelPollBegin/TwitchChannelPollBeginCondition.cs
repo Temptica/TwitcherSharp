@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelPollBegin;
 
-public partial class TwitchChannelPollBeginCondition : Resource, ITwitcherSharpCondition<TwitchChannelPollBeginCondition>
+public partial class TwitchChannelPollBeginCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelPollBeginCondition>
 {
     public string Name => nameof(TwitchChannelPollBeginCondition);
 

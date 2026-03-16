@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelGuestStarSessionEnd;
 
-public partial class TwitchChannelGuestStarSessionEndEvent : Resource, ITwitcherSharpEventSub<TwitchChannelGuestStarSessionEndEvent>
+public partial class TwitchChannelGuestStarSessionEndEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelGuestStarSessionEndEvent>
 {
     /// <summary> 
     /// The non-host broadcaster user ID.

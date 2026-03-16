@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelSubscriptionEnd;
 
-public partial class TwitchChannelSubscriptionEndCondition : Resource, ITwitcherSharpCondition<TwitchChannelSubscriptionEndCondition>
+public partial class TwitchChannelSubscriptionEndCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelSubscriptionEndCondition>
 {
     public string Name => nameof(TwitchChannelSubscriptionEndCondition);
 

@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Chat;
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetChatters 
 /// </summary>
-public partial class TwitchGetChattersOpt : Resource, ITwitcherSharp<TwitchGetChattersOpt>
+public partial class TwitchGetChattersOpt : RefCounted, ITwitcherSharp<TwitchGetChattersOpt>
 {
     private GodotObject _data;
     public int? First { get; set; }

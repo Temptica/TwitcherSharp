@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelPointsAutomaticRewardRedemptionAdd;
 
-public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Resource, ITwitcherSharpEventSub<TwitchChannelPointsAutomaticRewardRedemptionAddV2Event>
+public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : RefCounted, ITwitcherSharpEventSub<TwitchChannelPointsAutomaticRewardRedemptionAddV2Event>
 {
     /// <summary> 
     /// The ID of the channel where the reward was redeemed.
@@ -96,7 +96,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
         return request;
     }
 
-    public partial class TwitchReward : Resource, ITwitcherSharpEventSub<TwitchReward>
+    public partial class TwitchReward : RefCounted, ITwitcherSharpEventSub<TwitchReward>
     {
         /// <summary> 
         /// The type of reward. One of:  single_message_bypass_sub_modesend_highlighted_messagerandom_sub_emote_unlockchosen_sub_emote_unlockchosen_modified_sub_emote_unlock
@@ -138,7 +138,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
             return request;
         }
     
-        public partial class TwitchEmote : Resource, ITwitcherSharpEventSub<TwitchEmote>
+        public partial class TwitchEmote : RefCounted, ITwitcherSharpEventSub<TwitchEmote>
         {
             /// <summary> 
             /// The emote ID.
@@ -175,7 +175,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
         }
     }
 
-    public partial class TwitchMessage : Resource, ITwitcherSharpEventSub<TwitchMessage>
+    public partial class TwitchMessage : RefCounted, ITwitcherSharpEventSub<TwitchMessage>
     {
         /// <summary> 
         /// The chat message in plain text.
@@ -211,7 +211,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
             return request;
         }
     
-        public partial class TwitchFragments : Resource, ITwitcherSharpEventSub<TwitchFragments>
+        public partial class TwitchFragments : RefCounted, ITwitcherSharpEventSub<TwitchFragments>
         {
             /// <summary> 
             /// The message text in fragment.
@@ -253,7 +253,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
                 return request;
             }
         
-            public partial class TwitchEmote : Resource, ITwitcherSharpEventSub<TwitchEmote>
+            public partial class TwitchEmote : RefCounted, ITwitcherSharpEventSub<TwitchEmote>
             {
                 /// <summary> 
                 /// The ID that uniquely identifies this emote.

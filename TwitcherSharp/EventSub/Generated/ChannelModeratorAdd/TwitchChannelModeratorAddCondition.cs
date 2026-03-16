@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelModeratorAdd;
 
-public partial class TwitchChannelModeratorAddCondition : Resource, ITwitcherSharpCondition<TwitchChannelModeratorAddCondition>
+public partial class TwitchChannelModeratorAddCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelModeratorAddCondition>
 {
     public string Name => nameof(TwitchChannelModeratorAddCondition);
 

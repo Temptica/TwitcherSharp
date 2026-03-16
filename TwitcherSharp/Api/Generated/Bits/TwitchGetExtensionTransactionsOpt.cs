@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Bits;
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetExtensionTransactions 
 /// </summary>
-public partial class TwitchGetExtensionTransactionsOpt : Resource, ITwitcherSharp<TwitchGetExtensionTransactionsOpt>
+public partial class TwitchGetExtensionTransactionsOpt : RefCounted, ITwitcherSharp<TwitchGetExtensionTransactionsOpt>
 {
     private GodotObject _data;
     public string[] Id { get; set; }

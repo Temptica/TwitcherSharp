@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Goals;
 
-public partial class TwitchGetCreatorGoalsResponse : Resource, ITwitcherSharp<TwitchGetCreatorGoalsResponse>
+public partial class TwitchGetCreatorGoalsResponse : RefCounted, ITwitcherSharp<TwitchGetCreatorGoalsResponse>
 {
     private GodotObject _data;
     public TwitchCreatorGoal[] Data { get; set; }
@@ -29,7 +29,7 @@ public partial class TwitchGetCreatorGoalsResponse : Resource, ITwitcherSharp<Tw
         request.Set("data", Data);
         return request;
     }
-    public partial class TwitchCreatorGoal : Resource, ITwitcherSharp<TwitchCreatorGoal>
+    public partial class TwitchCreatorGoal : RefCounted, ITwitcherSharp<TwitchCreatorGoal>
     {
         private GodotObject _data;
         public string Id { get; set; }

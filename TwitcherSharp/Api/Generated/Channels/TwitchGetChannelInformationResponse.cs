@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Channels;
 
-public partial class TwitchGetChannelInformationResponse : Resource, ITwitcherSharp<TwitchGetChannelInformationResponse>
+public partial class TwitchGetChannelInformationResponse : RefCounted, ITwitcherSharp<TwitchGetChannelInformationResponse>
 {
     private GodotObject _data;
     public TwitchChannelInformation[] Data { get; set; }
@@ -29,7 +29,7 @@ public partial class TwitchGetChannelInformationResponse : Resource, ITwitcherSh
         request.Set("data", Data);
         return request;
     }
-    public partial class TwitchChannelInformation : Resource, ITwitcherSharp<TwitchChannelInformation>
+    public partial class TwitchChannelInformation : RefCounted, ITwitcherSharp<TwitchChannelInformation>
     {
         private GodotObject _data;
         public string BroadcasterId { get; set; }

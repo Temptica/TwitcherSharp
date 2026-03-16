@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Chat;
 
-public partial class TwitchGetUserChatColorResponse : Resource, ITwitcherSharp<TwitchGetUserChatColorResponse>
+public partial class TwitchGetUserChatColorResponse : RefCounted, ITwitcherSharp<TwitchGetUserChatColorResponse>
 {
     private GodotObject _data;
     public TwitchUserChatColor[] Data { get; set; }
@@ -29,7 +29,7 @@ public partial class TwitchGetUserChatColorResponse : Resource, ITwitcherSharp<T
         request.Set("data", Data);
         return request;
     }
-    public partial class TwitchUserChatColor : Resource, ITwitcherSharp<TwitchUserChatColor>
+    public partial class TwitchUserChatColor : RefCounted, ITwitcherSharp<TwitchUserChatColor>
     {
         private GodotObject _data;
         public string UserId { get; set; }

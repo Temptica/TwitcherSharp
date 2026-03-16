@@ -3,7 +3,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub;
 
-public partial class TwitchEventSubDefinition() : Resource, ITwitcherSharp<TwitchEventSubDefinition>
+public partial class TwitchEventSubDefinition() : RefCounted, ITwitcherSharp<TwitchEventSubDefinition>
 {
     private GodotObject _data;
 

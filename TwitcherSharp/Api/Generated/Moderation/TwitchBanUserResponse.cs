@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
 
-public partial class TwitchBanUserResponse : Resource, ITwitcherSharp<TwitchBanUserResponse>
+public partial class TwitchBanUserResponse : RefCounted, ITwitcherSharp<TwitchBanUserResponse>
 {
     private GodotObject _data;
     public TwitchData[] Data { get; set; }
@@ -33,7 +33,7 @@ public partial class TwitchBanUserResponse : Resource, ITwitcherSharp<TwitchBanU
     /// <summary> 
     /// A list that contains the user you successfully banned or put in a timeout. 
     /// </summary>
-    public partial class TwitchData : Resource, ITwitcherSharp<TwitchData>
+    public partial class TwitchData : RefCounted, ITwitcherSharp<TwitchData>
     {
         private GodotObject _data;
         public string BroadcasterId { get; set; }

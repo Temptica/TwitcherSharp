@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.HypeTrain;
 
-public partial class TwitchGetHypeTrainStatusResponse : Resource, ITwitcherSharp<TwitchGetHypeTrainStatusResponse>
+public partial class TwitchGetHypeTrainStatusResponse : RefCounted, ITwitcherSharp<TwitchGetHypeTrainStatusResponse>
 {
     private GodotObject _data;
     public TwitchData[] Data { get; set; }
@@ -39,7 +39,7 @@ public partial class TwitchGetHypeTrainStatusResponse : Resource, ITwitcherSharp
     /// <summary> 
     /// A list that contains information related to the channel’s Hype Train. 
     /// </summary>
-    public partial class TwitchData : Resource, ITwitcherSharp<TwitchData>
+    public partial class TwitchData : RefCounted, ITwitcherSharp<TwitchData>
     {
         private GodotObject _data;
         public TwitchCurrent Current { get; set; }
@@ -67,7 +67,7 @@ public partial class TwitchGetHypeTrainStatusResponse : Resource, ITwitcherSharp
         /// <summary> 
         /// An object describing the current Hype Train. Null if a Hype Train is not active. 
         /// </summary>
-        public partial class TwitchCurrent : Resource, ITwitcherSharp<TwitchCurrent>
+        public partial class TwitchCurrent : RefCounted, ITwitcherSharp<TwitchCurrent>
         {
             private GodotObject _data;
             public string Id { get; set; }
@@ -120,7 +120,7 @@ public partial class TwitchGetHypeTrainStatusResponse : Resource, ITwitcherSharp
             /// <summary> 
             /// The contributors with the most points contributed. 
             /// </summary>
-            public partial class TwitchTopContributions : Resource, ITwitcherSharp<TwitchTopContributions>
+            public partial class TwitchTopContributions : RefCounted, ITwitcherSharp<TwitchTopContributions>
             {
                 private GodotObject _data;
                 public string UserId { get; set; }
@@ -173,7 +173,7 @@ public partial class TwitchGetHypeTrainStatusResponse : Resource, ITwitcherSharp
                 /// <summary> 
                 /// A list containing the broadcasters participating in the shared Hype Train. Null if the Hype Train is not shared. 
                 /// </summary>
-                public partial class TwitchSharedTrainParticipants : Resource, ITwitcherSharp<TwitchSharedTrainParticipants>
+                public partial class TwitchSharedTrainParticipants : RefCounted, ITwitcherSharp<TwitchSharedTrainParticipants>
                 {
                     private GodotObject _data;
                     public string BroadcasterUserId { get; set; }
@@ -215,7 +215,7 @@ public partial class TwitchGetHypeTrainStatusResponse : Resource, ITwitcherSharp
     /// <summary> 
     /// An object with information about the channel’s Hype Train records. Null if a Hype Train has not occurred. 
     /// </summary>
-    public partial class TwitchAllTimeHigh : Resource, ITwitcherSharp<TwitchAllTimeHigh>
+    public partial class TwitchAllTimeHigh : RefCounted, ITwitcherSharp<TwitchAllTimeHigh>
     {
         private GodotObject _data;
         public int Level { get; set; }
@@ -251,7 +251,7 @@ public partial class TwitchGetHypeTrainStatusResponse : Resource, ITwitcherSharp
     /// <summary> 
     /// An object with information about the channel’s shared Hype Train records. Null if a Hype Train has not occurred. 
     /// </summary>
-    public partial class TwitchSharedAllTimeHigh : Resource, ITwitcherSharp<TwitchSharedAllTimeHigh>
+    public partial class TwitchSharedAllTimeHigh : RefCounted, ITwitcherSharp<TwitchSharedAllTimeHigh>
     {
         private GodotObject _data;
         public int Level { get; set; }

@@ -5,7 +5,7 @@ using TwitcherSharp.EventSub.Generated.Shared;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelSubscriptionMessage;
 
-public partial class TwitchChannelSubscriptionMessageEvent : Resource, ITwitcherSharpEventSub<TwitchChannelSubscriptionMessageEvent>
+public partial class TwitchChannelSubscriptionMessageEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelSubscriptionMessageEvent>
 {
     /// <summary> 
     /// The user ID of the user who sent a resubscription chat message.

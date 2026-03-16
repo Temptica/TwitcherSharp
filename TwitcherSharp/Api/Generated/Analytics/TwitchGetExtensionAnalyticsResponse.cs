@@ -4,7 +4,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Analytics;
 
-public partial class TwitchGetExtensionAnalyticsResponse : Resource, ITwitcherSharp<TwitchGetExtensionAnalyticsResponse>
+public partial class TwitchGetExtensionAnalyticsResponse : RefCounted, ITwitcherSharp<TwitchGetExtensionAnalyticsResponse>
 {
     private GodotObject _data;
     public TwitchExtensionAnalytics[] Data { get; set; }
@@ -33,7 +33,7 @@ public partial class TwitchGetExtensionAnalyticsResponse : Resource, ITwitcherSh
         if(Pagination != null) request.Set("pagination", Pagination);
         return request;
     }
-    public partial class TwitchExtensionAnalytics : Resource, ITwitcherSharp<TwitchExtensionAnalytics>
+    public partial class TwitchExtensionAnalytics : RefCounted, ITwitcherSharp<TwitchExtensionAnalytics>
     {
         private GodotObject _data;
         public string ExtensionId { get; set; }
@@ -70,7 +70,7 @@ public partial class TwitchGetExtensionAnalyticsResponse : Resource, ITwitcherSh
         /// <summary> 
         /// The reporting window’s start and end dates, in RFC3339 format. 
         /// </summary>
-        public partial class TwitchDateRange : Resource, ITwitcherSharp<TwitchDateRange>
+        public partial class TwitchDateRange : RefCounted, ITwitcherSharp<TwitchDateRange>
         {
             private GodotObject _data;
             public string StartedAt { get; set; }

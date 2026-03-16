@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Extensions;
 
-public partial class TwitchExtension : Resource, ITwitcherSharp<TwitchExtension>
+public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtension>
 {
     private GodotObject _data;
     public string AuthorName { get; set; }
@@ -97,7 +97,7 @@ public partial class TwitchExtension : Resource, ITwitcherSharp<TwitchExtension>
     /// <summary> 
     /// A dictionary that contains URLs to different sizes of the default icon. The dictionary’s key identifies the icon’s size (for example, 24x24), and the dictionary’s value contains the URL to the icon. 
     /// </summary>
-    public partial class TwitchIconUrls : Resource, ITwitcherSharp<TwitchIconUrls>
+    public partial class TwitchIconUrls : RefCounted, ITwitcherSharp<TwitchIconUrls>
     {
         private GodotObject _data;
         public string _100x100 { get; set; }
@@ -133,7 +133,7 @@ public partial class TwitchExtension : Resource, ITwitcherSharp<TwitchExtension>
     /// <summary> 
     /// Describes all views-related information such as how the extension is displayed on mobile devices. 
     /// </summary>
-    public partial class TwitchViews : Resource, ITwitcherSharp<TwitchViews>
+    public partial class TwitchViews : RefCounted, ITwitcherSharp<TwitchViews>
     {
         private GodotObject _data;
         public TwitchMobile Mobile { get; set; }
@@ -173,7 +173,7 @@ public partial class TwitchExtension : Resource, ITwitcherSharp<TwitchExtension>
         /// <summary> 
         /// Describes how the extension is displayed on mobile devices. 
         /// </summary>
-        public partial class TwitchMobile : Resource, ITwitcherSharp<TwitchMobile>
+        public partial class TwitchMobile : RefCounted, ITwitcherSharp<TwitchMobile>
         {
             private GodotObject _data;
             public string ViewerUrl { get; set; }
@@ -203,7 +203,7 @@ public partial class TwitchExtension : Resource, ITwitcherSharp<TwitchExtension>
         /// <summary> 
         /// Describes how the extension is rendered if the extension may be activated as a panel extension. 
         /// </summary>
-        public partial class TwitchPanel : Resource, ITwitcherSharp<TwitchPanel>
+        public partial class TwitchPanel : RefCounted, ITwitcherSharp<TwitchPanel>
         {
             private GodotObject _data;
             public string ViewerUrl { get; set; }
@@ -239,7 +239,7 @@ public partial class TwitchExtension : Resource, ITwitcherSharp<TwitchExtension>
         /// <summary> 
         /// Describes how the extension is rendered if the extension may be activated as a video-overlay extension. 
         /// </summary>
-        public partial class TwitchVideoOverlay : Resource, ITwitcherSharp<TwitchVideoOverlay>
+        public partial class TwitchVideoOverlay : RefCounted, ITwitcherSharp<TwitchVideoOverlay>
         {
             private GodotObject _data;
             public string ViewerUrl { get; set; }
@@ -272,7 +272,7 @@ public partial class TwitchExtension : Resource, ITwitcherSharp<TwitchExtension>
         /// <summary> 
         /// Describes how the extension is rendered if the extension may be activated as a video-component extension. 
         /// </summary>
-        public partial class TwitchComponent : Resource, ITwitcherSharp<TwitchComponent>
+        public partial class TwitchComponent : RefCounted, ITwitcherSharp<TwitchComponent>
         {
             private GodotObject _data;
             public string ViewerUrl { get; set; }
@@ -320,7 +320,7 @@ public partial class TwitchExtension : Resource, ITwitcherSharp<TwitchExtension>
         /// <summary> 
         /// Describes the view that is shown to broadcasters while they are configuring your extension within the Extension Manager. 
         /// </summary>
-        public partial class TwitchConfig : Resource, ITwitcherSharp<TwitchConfig>
+        public partial class TwitchConfig : RefCounted, ITwitcherSharp<TwitchConfig>
         {
             private GodotObject _data;
             public string ViewerUrl { get; set; }

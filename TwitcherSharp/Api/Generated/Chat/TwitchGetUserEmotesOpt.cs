@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Chat;
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetUserEmotes 
 /// </summary>
-public partial class TwitchGetUserEmotesOpt : Resource, ITwitcherSharp<TwitchGetUserEmotesOpt>
+public partial class TwitchGetUserEmotesOpt : RefCounted, ITwitcherSharp<TwitchGetUserEmotesOpt>
 {
     private GodotObject _data;
     public string After { get; set; }

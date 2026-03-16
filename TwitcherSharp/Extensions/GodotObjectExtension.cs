@@ -9,10 +9,11 @@ public static class GodotObjectExtension
 {
     extension(GodotObject obj)
     {
-        private static StringName RedeemedSignal => "redeemed";
-        private static StringName CommandReceived => "command_received";
-        private static StringName Cooldown => "cooldown";
-        private static StringName ReceivedInvalidCommand => "received_invalid_command";
+        internal static StringName RedeemedSignal => "redeemed";
+        internal static StringName CommandReceived => "command_received";
+        internal static StringName Cooldown => "cooldown";
+        internal static StringName ReceivedInvalidCommand => "received_invalid_command";
+        internal static StringName InvalidPermission => "invalid_permission";
 
         /// <summary>
         /// A Type-safe way to listen to Twitcher redeems.

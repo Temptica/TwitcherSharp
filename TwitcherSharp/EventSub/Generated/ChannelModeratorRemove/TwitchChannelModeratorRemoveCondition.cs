@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelModeratorRemove;
 
-public partial class TwitchChannelModeratorRemoveCondition : Resource, ITwitcherSharpCondition<TwitchChannelModeratorRemoveCondition>
+public partial class TwitchChannelModeratorRemoveCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelModeratorRemoveCondition>
 {
     public string Name => nameof(TwitchChannelModeratorRemoveCondition);
 

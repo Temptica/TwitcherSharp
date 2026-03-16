@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.Shared;
 
-public partial class TwitchReward : Resource, ITwitcherSharpEventSub<TwitchReward>
+public partial class TwitchReward : RefCounted, ITwitcherSharpEventSub<TwitchReward>
 {
     /// <summary> 
     /// The reward identifier.

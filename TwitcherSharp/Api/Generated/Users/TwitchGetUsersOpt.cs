@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Users;
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetUsers 
 /// </summary>
-public partial class TwitchGetUsersOpt : Resource, ITwitcherSharp<TwitchGetUsersOpt>
+public partial class TwitchGetUsersOpt : RefCounted, ITwitcherSharp<TwitchGetUsersOpt>
 {
     private GodotObject _data;
     public string[] Id { get; set; }

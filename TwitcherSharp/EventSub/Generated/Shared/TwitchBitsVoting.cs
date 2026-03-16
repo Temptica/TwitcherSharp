@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.Shared;
 
-public partial class TwitchBitsVoting : Resource, ITwitcherSharpEventSub<TwitchBitsVoting>
+public partial class TwitchBitsVoting : RefCounted, ITwitcherSharpEventSub<TwitchBitsVoting>
 {
     /// <summary> 
     /// Not used; will be set to false.

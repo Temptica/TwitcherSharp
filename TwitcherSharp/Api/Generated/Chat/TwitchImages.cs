@@ -9,7 +9,7 @@ namespace TwitcherSharp.Api.Generated.Chat;
 ///   
 /// **NOTE:** You should use the templated URL in the `template` field to fetch the image instead of using these URLs. 
 /// </summary>
-public partial class TwitchImages : Resource, ITwitcherSharp<TwitchImages>
+public partial class TwitchImages : RefCounted, ITwitcherSharp<TwitchImages>
 {
     private GodotObject _data;
     public string Url1x { get; set; }

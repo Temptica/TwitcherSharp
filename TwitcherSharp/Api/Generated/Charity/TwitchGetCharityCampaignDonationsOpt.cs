@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Charity;
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetCharityCampaignDonations 
 /// </summary>
-public partial class TwitchGetCharityCampaignDonationsOpt : Resource, ITwitcherSharp<TwitchGetCharityCampaignDonationsOpt>
+public partial class TwitchGetCharityCampaignDonationsOpt : RefCounted, ITwitcherSharp<TwitchGetCharityCampaignDonationsOpt>
 {
     private GodotObject _data;
     public int? First { get; set; }

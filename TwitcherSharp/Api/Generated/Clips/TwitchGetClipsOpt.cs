@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Clips;
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetClips 
 /// </summary>
-public partial class TwitchGetClipsOpt : Resource, ITwitcherSharp<TwitchGetClipsOpt>
+public partial class TwitchGetClipsOpt : RefCounted, ITwitcherSharp<TwitchGetClipsOpt>
 {
     private GodotObject _data;
     public string BroadcasterId { get; set; }

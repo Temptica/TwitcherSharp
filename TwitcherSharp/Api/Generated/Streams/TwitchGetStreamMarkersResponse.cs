@@ -4,7 +4,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Streams;
 
-public partial class TwitchGetStreamMarkersResponse : Resource, ITwitcherSharp<TwitchGetStreamMarkersResponse>
+public partial class TwitchGetStreamMarkersResponse : RefCounted, ITwitcherSharp<TwitchGetStreamMarkersResponse>
 {
     private GodotObject _data;
     public TwitchStreamMarkers[] Data { get; set; }
@@ -33,7 +33,7 @@ public partial class TwitchGetStreamMarkersResponse : Resource, ITwitcherSharp<T
         if(Pagination != null) request.Set("pagination", Pagination);
         return request;
     }
-    public partial class TwitchStreamMarkers : Resource, ITwitcherSharp<TwitchStreamMarkers>
+    public partial class TwitchStreamMarkers : RefCounted, ITwitcherSharp<TwitchStreamMarkers>
     {
         private GodotObject _data;
         public string UserId { get; set; }
@@ -71,7 +71,7 @@ public partial class TwitchGetStreamMarkersResponse : Resource, ITwitcherSharp<T
         /// <summary> 
         /// A list of videos that contain markers. The list contains a single video. 
         /// </summary>
-        public partial class TwitchVideos : Resource, ITwitcherSharp<TwitchVideos>
+        public partial class TwitchVideos : RefCounted, ITwitcherSharp<TwitchVideos>
         {
             private GodotObject _data;
             public string VideoId { get; set; }
@@ -103,7 +103,7 @@ public partial class TwitchGetStreamMarkersResponse : Resource, ITwitcherSharp<T
             /// <summary> 
             /// The list of markers in this video. The list in ascending order by when the marker was created. 
             /// </summary>
-            public partial class TwitchMarkers : Resource, ITwitcherSharp<TwitchMarkers>
+            public partial class TwitchMarkers : RefCounted, ITwitcherSharp<TwitchMarkers>
             {
                 private GodotObject _data;
                 public string Id { get; set; }

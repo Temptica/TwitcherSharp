@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.Shared;
 
-public partial class TwitchMaxPerUserPerStream : Resource, ITwitcherSharpEventSub<TwitchMaxPerUserPerStream>
+public partial class TwitchMaxPerUserPerStream : RefCounted, ITwitcherSharpEventSub<TwitchMaxPerUserPerStream>
 {
     /// <summary> 
     /// Is the setting enabled.

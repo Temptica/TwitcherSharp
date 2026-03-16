@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelPointsCustomRewardRedemptionAdd;
 
-public partial class TwitchChannelPointsCustomRewardRedemptionAddCondition : Resource, ITwitcherSharpCondition<TwitchChannelPointsCustomRewardRedemptionAddCondition>
+public partial class TwitchChannelPointsCustomRewardRedemptionAddCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelPointsCustomRewardRedemptionAddCondition>
 {
     public string Name => nameof(TwitchChannelPointsCustomRewardRedemptionAddCondition);
 

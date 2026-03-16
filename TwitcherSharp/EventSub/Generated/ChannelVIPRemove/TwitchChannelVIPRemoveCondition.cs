@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelVIPRemove;
 
-public partial class TwitchChannelVIPRemoveCondition : Resource, ITwitcherSharpCondition<TwitchChannelVIPRemoveCondition>
+public partial class TwitchChannelVIPRemoveCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelVIPRemoveCondition>
 {
     public string Name => nameof(TwitchChannelVIPRemoveCondition);
 

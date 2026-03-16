@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.Shared;
 
-public partial class TwitchImage : Resource, ITwitcherSharpEventSub<TwitchImage>
+public partial class TwitchImage : RefCounted, ITwitcherSharpEventSub<TwitchImage>
 {
     /// <summary> 
     /// URL for the image at 1x size.

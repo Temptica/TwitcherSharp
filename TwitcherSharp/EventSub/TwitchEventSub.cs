@@ -5,10 +5,11 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub;
 
-public partial class TwitchEventSub : Resource, ITwitcherSharp<TwitchEventSub>
+public partial class TwitchEventSub : RefCounted, ITwitcherSharpSingleton<TwitchEventSub>
 {
-    public static TwitchEventSub Instance { get; set; }
     private GodotObject _data;
+    public static TwitchEventSub Instance { get; set; }
+    public bool IsLinked => _data != null;
 
     [Signal]
     public delegate void SessionIdReceivedEventHandler(string id);
@@ -51,16 +52,16 @@ public partial class TwitchEventSub : Resource, ITwitcherSharp<TwitchEventSub>
     /// <param name="config"></param>
     public void Subscribe(TwitchEventSubConfig config) => _data.Call("subscribe", config.ToGodotObject());
 
-    public List<TwitchEventSubConfig> GetSubscriptionsByType(TwitchEventSubDefinitionType type) 
+    public List<TwitchEventSubConfig> GetSubscriptionsByType(TwitchEventSubDefinitionType type)
         => _data.Call("get_subscription_by_type", (int)type)
             .AsGodotArray<GodotObject>()
             .Select(TwitchEventSubConfig.FromObject)
             .ToList();
 
-    public bool HasSubscription(TwitchEventSubConfig config) 
+    public bool HasSubscription(TwitchEventSubConfig config)
         => _data.Call("has_subscription", config.ToGodotObject()).AsBool();
 
-    public void Unsubscribe(TwitchEventSubConfig config) 
+    public void Unsubscribe(TwitchEventSubConfig config)
         => _data.Call("unsubscribe", config.ToGodotObject());
 
     public List<TwitchEventSubConfig> GetSubscriptions()
@@ -79,6 +80,36 @@ public partial class TwitchEventSub : Resource, ITwitcherSharp<TwitchEventSub>
 
     public GodotObject ToGodotObject()
     {
+        if (_data is not null) return _data;
+
+        var script = GD.Load<GDScript>("res://addons/twitcher/eventsub/twitch_eventsub.gd");
+        _data = script.New().AsGodotObject();
         return _data;
+    }
+
+    public void FreeInstance()
+    {
+        if (_data is not null && !_data.IsQueuedForDeletion()) _data.RemoveMeta(nameof(TwitchEventSub));
+        Instance = null;
+    }
+
+    public override void _Notification(int what)
+    {
+        if (what == NotificationPredelete) FreeInstance();
+    }
+
+    public static TwitchEventSub GetOrCreateInstance()
+    {
+        var script = GD.Load<GDScript>("res://addons/twitcher/eventsub/twitch_eventsub.gd");
+        var instance = script.New().AsGodotObject().Get("instance");
+        if (instance.VariantType != Variant.Type.Object) return Create();
+        FromObject(instance.AsGodotObject());
+        return Instance;
+    }
+
+    public static TwitchEventSub Create()
+    {
+        Instance = new TwitchEventSub();
+        return Instance;
     }
 }

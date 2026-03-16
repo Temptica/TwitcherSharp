@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelModeratorAdd;
 
-public partial class TwitchChannelModeratorAddEvent : Resource, ITwitcherSharpEventSub<TwitchChannelModeratorAddEvent>
+public partial class TwitchChannelModeratorAddEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelModeratorAddEvent>
 {
     /// <summary> 
     /// The requested broadcaster ID.

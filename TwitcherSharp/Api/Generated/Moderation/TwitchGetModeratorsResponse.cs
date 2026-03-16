@@ -4,7 +4,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
 
-public partial class TwitchGetModeratorsResponse : Resource, ITwitcherSharp<TwitchGetModeratorsResponse>
+public partial class TwitchGetModeratorsResponse : RefCounted, ITwitcherSharp<TwitchGetModeratorsResponse>
 {
     private GodotObject _data;
     public TwitchUserModerator[] Data { get; set; }
@@ -33,7 +33,7 @@ public partial class TwitchGetModeratorsResponse : Resource, ITwitcherSharp<Twit
         if(Pagination != null) request.Set("pagination", Pagination);
         return request;
     }
-    public partial class TwitchUserModerator : Resource, ITwitcherSharp<TwitchUserModerator>
+    public partial class TwitchUserModerator : RefCounted, ITwitcherSharp<TwitchUserModerator>
     {
         private GodotObject _data;
         public string UserId { get; set; }

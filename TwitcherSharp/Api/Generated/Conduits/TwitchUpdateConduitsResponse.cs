@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Conduits;
 
-public partial class TwitchUpdateConduitsResponse : Resource, ITwitcherSharp<TwitchUpdateConduitsResponse>
+public partial class TwitchUpdateConduitsResponse : RefCounted, ITwitcherSharp<TwitchUpdateConduitsResponse>
 {
     private GodotObject _data;
     public TwitchData[] Data { get; set; }
@@ -33,7 +33,7 @@ public partial class TwitchUpdateConduitsResponse : Resource, ITwitcherSharp<Twi
     /// <summary> 
     /// List of information about the client’s conduits. 
     /// </summary>
-    public partial class TwitchData : Resource, ITwitcherSharp<TwitchData>
+    public partial class TwitchData : RefCounted, ITwitcherSharp<TwitchData>
     {
         private GodotObject _data;
         public string Id { get; set; }

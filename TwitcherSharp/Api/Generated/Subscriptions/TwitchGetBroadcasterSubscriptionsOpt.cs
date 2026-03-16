@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Subscriptions;
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetBroadcasterSubscriptions 
 /// </summary>
-public partial class TwitchGetBroadcasterSubscriptionsOpt : Resource, ITwitcherSharp<TwitchGetBroadcasterSubscriptionsOpt>
+public partial class TwitchGetBroadcasterSubscriptionsOpt : RefCounted, ITwitcherSharp<TwitchGetBroadcasterSubscriptionsOpt>
 {
     private GodotObject _data;
     public string[] UserId { get; set; }

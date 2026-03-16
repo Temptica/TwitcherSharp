@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.GuestStar;
 /// <summary> 
 /// All optional parameters for TwitchAPI.UpdateGuestStarSlotSettings 
 /// </summary>
-public partial class TwitchUpdateGuestStarSlotSettingsOpt : Resource, ITwitcherSharp<TwitchUpdateGuestStarSlotSettingsOpt>
+public partial class TwitchUpdateGuestStarSlotSettingsOpt : RefCounted, ITwitcherSharp<TwitchUpdateGuestStarSlotSettingsOpt>
 {
     private GodotObject _data;
     public bool? IsAudioEnabled { get; set; }

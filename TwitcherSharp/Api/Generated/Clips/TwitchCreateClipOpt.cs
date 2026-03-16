@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Clips;
 /// <summary> 
 /// All optional parameters for TwitchAPI.CreateClip 
 /// </summary>
-public partial class TwitchCreateClipOpt : Resource, ITwitcherSharp<TwitchCreateClipOpt>
+public partial class TwitchCreateClipOpt : RefCounted, ITwitcherSharp<TwitchCreateClipOpt>
 {
     private GodotObject _data;
     public string Title { get; set; }

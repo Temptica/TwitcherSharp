@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
 
-public partial class TwitchBanUserBody : Resource, ITwitcherSharp<TwitchBanUserBody>
+public partial class TwitchBanUserBody : RefCounted, ITwitcherSharp<TwitchBanUserBody>
 {
     private GodotObject _data;
     public TwitchData Data { get; set; }
@@ -32,7 +32,7 @@ public partial class TwitchBanUserBody : Resource, ITwitcherSharp<TwitchBanUserB
     /// <summary> 
     /// Identifies the user and type of ban. 
     /// </summary>
-    public partial class TwitchData : Resource, ITwitcherSharp<TwitchData>
+    public partial class TwitchData : RefCounted, ITwitcherSharp<TwitchData>
     {
         private GodotObject _data;
         public string UserId { get; set; }

@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Bits;
 
-public partial class TwitchGetBitsLeaderboardResponse : Resource, ITwitcherSharp<TwitchGetBitsLeaderboardResponse>
+public partial class TwitchGetBitsLeaderboardResponse : RefCounted, ITwitcherSharp<TwitchGetBitsLeaderboardResponse>
 {
     private GodotObject _data;
     public TwitchBitsLeaderboard[] Data { get; set; }
@@ -35,7 +35,7 @@ public partial class TwitchGetBitsLeaderboardResponse : Resource, ITwitcherSharp
         request.Set("total", Total);
         return request;
     }
-    public partial class TwitchBitsLeaderboard : Resource, ITwitcherSharp<TwitchBitsLeaderboard>
+    public partial class TwitchBitsLeaderboard : RefCounted, ITwitcherSharp<TwitchBitsLeaderboard>
     {
         private GodotObject _data;
         public string UserId { get; set; }
@@ -77,7 +77,7 @@ public partial class TwitchGetBitsLeaderboardResponse : Resource, ITwitcherSharp
     /// <summary> 
     /// The reporting window’s start and end dates, in RFC3339 format. The dates are calculated by using the _started\_at_ and _period_ query parameters. If you don’t specify the _started\_at_ query parameter, the fields contain empty strings. 
     /// </summary>
-    public partial class TwitchDateRange : Resource, ITwitcherSharp<TwitchDateRange>
+    public partial class TwitchDateRange : RefCounted, ITwitcherSharp<TwitchDateRange>
     {
         private GodotObject _data;
         public string StartedAt { get; set; }

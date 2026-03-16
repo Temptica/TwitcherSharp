@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.StreamOffline;
 
-public partial class TwitchStreamOfflineEvent : Resource, ITwitcherSharpEventSub<TwitchStreamOfflineEvent>
+public partial class TwitchStreamOfflineEvent : RefCounted, ITwitcherSharpEventSub<TwitchStreamOfflineEvent>
 {
     /// <summary> 
     /// The broadcaster’s user id.

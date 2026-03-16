@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.StreamOnline;
 
-public partial class TwitchStreamOnlineEvent : Resource, ITwitcherSharpEventSub<TwitchStreamOnlineEvent>
+public partial class TwitchStreamOnlineEvent : RefCounted, ITwitcherSharpEventSub<TwitchStreamOnlineEvent>
 {
     /// <summary> 
     /// The id of the stream.
@@ -69,7 +69,7 @@ public partial class TwitchStreamOnlineEvent : Resource, ITwitcherSharpEventSub<
         return request;
     }
 
-    public partial class TwitchType : Resource, ITwitcherSharpEventSub<TwitchType>
+    public partial class TwitchType : RefCounted, ITwitcherSharpEventSub<TwitchType>
     {
     
         /// <summary> 

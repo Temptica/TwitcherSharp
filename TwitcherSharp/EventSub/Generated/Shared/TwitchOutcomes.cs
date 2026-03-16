@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.Shared;
 
-public partial class TwitchOutcomes : Resource, ITwitcherSharpEventSub<TwitchOutcomes>
+public partial class TwitchOutcomes : RefCounted, ITwitcherSharpEventSub<TwitchOutcomes>
 {
     /// <summary> 
     /// The outcome ID.
@@ -69,7 +69,7 @@ public partial class TwitchOutcomes : Resource, ITwitcherSharpEventSub<TwitchOut
         return request;
     }
 
-    public partial class TwitchTopPredictors : Resource, ITwitcherSharpEventSub<TwitchTopPredictors>
+    public partial class TwitchTopPredictors : RefCounted, ITwitcherSharpEventSub<TwitchTopPredictors>
     {
     
         /// <summary> 

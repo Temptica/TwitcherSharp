@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelSharedChatSessionEnd;
 
-public partial class TwitchChannelSharedChatSessionEndEvent : Resource, ITwitcherSharpEventSub<TwitchChannelSharedChatSessionEndEvent>
+public partial class TwitchChannelSharedChatSessionEndEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelSharedChatSessionEndEvent>
 {
     /// <summary> 
     /// The unique identifier for the shared chat session.

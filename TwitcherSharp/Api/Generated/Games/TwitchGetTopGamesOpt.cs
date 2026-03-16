@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Games;
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetTopGames 
 /// </summary>
-public partial class TwitchGetTopGamesOpt : Resource, ITwitcherSharp<TwitchGetTopGamesOpt>
+public partial class TwitchGetTopGamesOpt : RefCounted, ITwitcherSharp<TwitchGetTopGamesOpt>
 {
     private GodotObject _data;
     public int? First { get; set; }

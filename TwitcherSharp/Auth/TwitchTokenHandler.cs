@@ -5,7 +5,7 @@ using TwitcherSharp.Lib.Http;
 
 namespace TwitcherSharp.Auth;
 
-public partial class TwitchTokenHandler : Resource, ITwitcherSharp<TwitchTokenHandler>
+public partial class TwitchTokenHandler : RefCounted, ITwitcherSharp<TwitchTokenHandler>
 {
     private GodotObject _data;
 

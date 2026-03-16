@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Chat;
 
-public partial class TwitchSendChatAnnouncementBody : Resource, ITwitcherSharp<TwitchSendChatAnnouncementBody>
+public partial class TwitchSendChatAnnouncementBody : RefCounted, ITwitcherSharp<TwitchSendChatAnnouncementBody>
 {
     private GodotObject _data;
     public string Message { get; set; }

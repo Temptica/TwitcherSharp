@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Subscriptions;
 
-public partial class TwitchCheckUserSubscriptionResponse : Resource, ITwitcherSharp<TwitchCheckUserSubscriptionResponse>
+public partial class TwitchCheckUserSubscriptionResponse : RefCounted, ITwitcherSharp<TwitchCheckUserSubscriptionResponse>
 {
     private GodotObject _data;
     public TwitchUserSubscription[] Data { get; set; }
@@ -29,7 +29,7 @@ public partial class TwitchCheckUserSubscriptionResponse : Resource, ITwitcherSh
         request.Set("data", Data);
         return request;
     }
-    public partial class TwitchUserSubscription : Resource, ITwitcherSharp<TwitchUserSubscription>
+    public partial class TwitchUserSubscription : RefCounted, ITwitcherSharp<TwitchUserSubscription>
     {
         private GodotObject _data;
         public string BroadcasterId { get; set; }

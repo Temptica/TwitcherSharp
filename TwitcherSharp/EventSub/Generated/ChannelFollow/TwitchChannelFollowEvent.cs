@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelFollow;
 
-public partial class TwitchChannelFollowEvent : Resource, ITwitcherSharpEventSub<TwitchChannelFollowEvent>
+public partial class TwitchChannelFollowEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelFollowEvent>
 {
     /// <summary> 
     /// The user ID for the user now following the specified channel.

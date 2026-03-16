@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetModerators 
 /// </summary>
-public partial class TwitchGetModeratorsOpt : Resource, ITwitcherSharp<TwitchGetModeratorsOpt>
+public partial class TwitchGetModeratorsOpt : RefCounted, ITwitcherSharp<TwitchGetModeratorsOpt>
 {
     private GodotObject _data;
     public string[] UserId { get; set; }

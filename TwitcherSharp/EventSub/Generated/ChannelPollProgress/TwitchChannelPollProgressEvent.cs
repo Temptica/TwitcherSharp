@@ -5,7 +5,7 @@ using TwitcherSharp.EventSub.Generated.Shared;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelPollProgress;
 
-public partial class TwitchChannelPollProgressEvent : Resource, ITwitcherSharpEventSub<TwitchChannelPollProgressEvent>
+public partial class TwitchChannelPollProgressEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelPollProgressEvent>
 {
     /// <summary> 
     /// ID of the poll.

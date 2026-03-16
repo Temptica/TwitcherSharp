@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelPointsCustomRewardRemove;
 
-public partial class TwitchChannelPointsCustomRewardRemoveCondition : Resource, ITwitcherSharpCondition<TwitchChannelPointsCustomRewardRemoveCondition>
+public partial class TwitchChannelPointsCustomRewardRemoveCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelPointsCustomRewardRemoveCondition>
 {
     public string Name => nameof(TwitchChannelPointsCustomRewardRemoveCondition);
 

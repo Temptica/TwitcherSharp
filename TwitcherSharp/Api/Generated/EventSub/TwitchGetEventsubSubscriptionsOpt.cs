@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.EventSub;
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetEventsubSubscriptions 
 /// </summary>
-public partial class TwitchGetEventsubSubscriptionsOpt : Resource, ITwitcherSharp<TwitchGetEventsubSubscriptionsOpt>
+public partial class TwitchGetEventsubSubscriptionsOpt : RefCounted, ITwitcherSharp<TwitchGetEventsubSubscriptionsOpt>
 {
     private GodotObject _data;
     public string Status { get; set; }

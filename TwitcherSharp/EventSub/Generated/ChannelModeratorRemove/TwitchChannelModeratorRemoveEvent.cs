@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelModeratorRemove;
 
-public partial class TwitchChannelModeratorRemoveEvent : Resource, ITwitcherSharpEventSub<TwitchChannelModeratorRemoveEvent>
+public partial class TwitchChannelModeratorRemoveEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelModeratorRemoveEvent>
 {
     /// <summary> 
     /// The requested broadcaster ID.

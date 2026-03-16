@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.GuestStar;
 /// <summary> 
 /// All optional parameters for TwitchAPI.DeleteGuestStarSlot 
 /// </summary>
-public partial class TwitchDeleteGuestStarSlotOpt : Resource, ITwitcherSharp<TwitchDeleteGuestStarSlotOpt>
+public partial class TwitchDeleteGuestStarSlotOpt : RefCounted, ITwitcherSharp<TwitchDeleteGuestStarSlotOpt>
 {
     private GodotObject _data;
     public string ShouldReinviteGuest { get; set; }

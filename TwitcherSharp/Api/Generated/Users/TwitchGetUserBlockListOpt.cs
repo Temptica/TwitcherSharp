@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Users;
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetUserBlockList 
 /// </summary>
-public partial class TwitchGetUserBlockListOpt : Resource, ITwitcherSharp<TwitchGetUserBlockListOpt>
+public partial class TwitchGetUserBlockListOpt : RefCounted, ITwitcherSharp<TwitchGetUserBlockListOpt>
 {
     private GodotObject _data;
     public int? First { get; set; }

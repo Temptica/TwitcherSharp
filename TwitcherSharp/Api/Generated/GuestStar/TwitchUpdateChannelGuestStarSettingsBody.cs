@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.GuestStar;
 
-public partial class TwitchUpdateChannelGuestStarSettingsBody : Resource, ITwitcherSharp<TwitchUpdateChannelGuestStarSettingsBody>
+public partial class TwitchUpdateChannelGuestStarSettingsBody : RefCounted, ITwitcherSharp<TwitchUpdateChannelGuestStarSettingsBody>
 {
     private GodotObject _data;
     public bool? IsModeratorSendLiveEnabled { get; set; }

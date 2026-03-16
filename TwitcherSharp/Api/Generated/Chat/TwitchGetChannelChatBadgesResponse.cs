@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Chat;
 
-public partial class TwitchGetChannelChatBadgesResponse : Resource, ITwitcherSharp<TwitchGetChannelChatBadgesResponse>
+public partial class TwitchGetChannelChatBadgesResponse : RefCounted, ITwitcherSharp<TwitchGetChannelChatBadgesResponse>
 {
     private GodotObject _data;
     public TwitchChatBadge[] Data { get; set; }

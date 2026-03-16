@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelBitsUse;
 
-public partial class TwitchChannelBitsUseEvent : Resource, ITwitcherSharpEventSub<TwitchChannelBitsUseEvent>
+public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelBitsUseEvent>
 {
     /// <summary> 
     /// The User ID of the channel where the Bits were redeemed.
@@ -96,7 +96,7 @@ public partial class TwitchChannelBitsUseEvent : Resource, ITwitcherSharpEventSu
         return request;
     }
 
-    public partial class TwitchMessage : Resource, ITwitcherSharpEventSub<TwitchMessage>
+    public partial class TwitchMessage : RefCounted, ITwitcherSharpEventSub<TwitchMessage>
     {
         /// <summary> 
         /// The chat message in plain text.
@@ -132,7 +132,7 @@ public partial class TwitchChannelBitsUseEvent : Resource, ITwitcherSharpEventSu
             return request;
         }
     
-        public partial class TwitchFragments : Resource, ITwitcherSharpEventSub<TwitchFragments>
+        public partial class TwitchFragments : RefCounted, ITwitcherSharpEventSub<TwitchFragments>
         {
             /// <summary> 
             /// The message text in fragment.
@@ -181,7 +181,7 @@ public partial class TwitchChannelBitsUseEvent : Resource, ITwitcherSharpEventSu
                 return request;
             }
         
-            public partial class TwitchEmote : Resource, ITwitcherSharpEventSub<TwitchEmote>
+            public partial class TwitchEmote : RefCounted, ITwitcherSharpEventSub<TwitchEmote>
             {
                 /// <summary> 
                 /// The ID that uniquely identifies this emote.
@@ -231,7 +231,7 @@ public partial class TwitchChannelBitsUseEvent : Resource, ITwitcherSharpEventSu
                 }
             }
         
-            public partial class TwitchCheermote : Resource, ITwitcherSharpEventSub<TwitchCheermote>
+            public partial class TwitchCheermote : RefCounted, ITwitcherSharpEventSub<TwitchCheermote>
             {
                 /// <summary> 
                 /// The name portion of the Cheermote string that you use in chat to cheer Bits. The full Cheermote string is the concatenation of {prefix} + {number of Bits}. For example, if the prefix is “Cheer” and you want to cheer 100 Bits, the full Cheermote string is Cheer100. When the Cheermote string is entered in chat, Twitch converts it to the image associated with the Bits tier that was cheered.
@@ -276,7 +276,7 @@ public partial class TwitchChannelBitsUseEvent : Resource, ITwitcherSharpEventSu
         }
     }
 
-    public partial class TwitchPowerUp : Resource, ITwitcherSharpEventSub<TwitchPowerUp>
+    public partial class TwitchPowerUp : RefCounted, ITwitcherSharpEventSub<TwitchPowerUp>
     {
         /// <summary> 
         /// Possible values: message_effectcelebrationgigantify_an_emote
@@ -318,7 +318,7 @@ public partial class TwitchChannelBitsUseEvent : Resource, ITwitcherSharpEventSu
             return request;
         }
     
-        public partial class TwitchEmote : Resource, ITwitcherSharpEventSub<TwitchEmote>
+        public partial class TwitchEmote : RefCounted, ITwitcherSharpEventSub<TwitchEmote>
         {
             /// <summary> 
             /// The ID that uniquely identifies this emote.

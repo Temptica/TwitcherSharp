@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.UserUpdate;
 
-public partial class TwitchUserUpdateEvent : Resource, ITwitcherSharpEventSub<TwitchUserUpdateEvent>
+public partial class TwitchUserUpdateEvent : RefCounted, ITwitcherSharpEventSub<TwitchUserUpdateEvent>
 {
     /// <summary> 
     /// The user’s user id.

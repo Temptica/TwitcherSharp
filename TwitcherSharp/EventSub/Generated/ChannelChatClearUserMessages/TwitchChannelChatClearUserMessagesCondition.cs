@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelChatClearUserMessages;
 
-public partial class TwitchChannelChatClearUserMessagesCondition : Resource, ITwitcherSharpCondition<TwitchChannelChatClearUserMessagesCondition>
+public partial class TwitchChannelChatClearUserMessagesCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelChatClearUserMessagesCondition>
 {
     public string Name => nameof(TwitchChannelChatClearUserMessagesCondition);
 

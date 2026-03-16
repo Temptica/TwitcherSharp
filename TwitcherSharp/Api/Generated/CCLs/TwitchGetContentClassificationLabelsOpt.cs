@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.CCLs;
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetContentClassificationLabels 
 /// </summary>
-public partial class TwitchGetContentClassificationLabelsOpt : Resource, ITwitcherSharp<TwitchGetContentClassificationLabelsOpt>
+public partial class TwitchGetContentClassificationLabelsOpt : RefCounted, ITwitcherSharp<TwitchGetContentClassificationLabelsOpt>
 {
     private GodotObject _data;
     public string Locale { get; set; }

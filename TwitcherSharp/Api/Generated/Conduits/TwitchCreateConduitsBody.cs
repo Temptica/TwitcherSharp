@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Conduits;
 
-public partial class TwitchCreateConduitsBody : Resource, ITwitcherSharp<TwitchCreateConduitsBody>
+public partial class TwitchCreateConduitsBody : RefCounted, ITwitcherSharp<TwitchCreateConduitsBody>
 {
     private GodotObject _data;
     public int ShardCount { get; set; }

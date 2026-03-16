@@ -5,7 +5,7 @@ using TwitcherSharp.EventSub.Generated.Shared;
 
 namespace TwitcherSharp.EventSub.Generated.Shared;
 
-public partial class TwitchMessage : Resource, ITwitcherSharpEventSub<TwitchMessage>
+public partial class TwitchMessage : RefCounted, ITwitcherSharpEventSub<TwitchMessage>
 {
     /// <summary> 
     /// The text of the resubscription chat message.

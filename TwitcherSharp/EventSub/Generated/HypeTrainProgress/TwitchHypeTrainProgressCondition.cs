@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.HypeTrainProgress;
 
-public partial class TwitchHypeTrainProgressCondition : Resource, ITwitcherSharpCondition<TwitchHypeTrainProgressCondition>
+public partial class TwitchHypeTrainProgressCondition : RefCounted, ITwitcherSharpCondition<TwitchHypeTrainProgressCondition>
 {
     public string Name => nameof(TwitchHypeTrainProgressCondition);
 

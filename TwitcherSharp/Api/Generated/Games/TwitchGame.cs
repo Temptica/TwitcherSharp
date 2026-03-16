@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Games;
 
-public partial class TwitchGame : Resource, ITwitcherSharp<TwitchGame>
+public partial class TwitchGame : RefCounted, ITwitcherSharp<TwitchGame>
 {
     private GodotObject _data;
     public string Id { get; set; }

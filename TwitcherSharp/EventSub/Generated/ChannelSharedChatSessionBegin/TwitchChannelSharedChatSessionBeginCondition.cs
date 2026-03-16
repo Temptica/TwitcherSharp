@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelSharedChatSessionBegin;
 
-public partial class TwitchChannelSharedChatSessionBeginCondition : Resource, ITwitcherSharpCondition<TwitchChannelSharedChatSessionBeginCondition>
+public partial class TwitchChannelSharedChatSessionBeginCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelSharedChatSessionBeginCondition>
 {
     public string Name => nameof(TwitchChannelSharedChatSessionBeginCondition);
 

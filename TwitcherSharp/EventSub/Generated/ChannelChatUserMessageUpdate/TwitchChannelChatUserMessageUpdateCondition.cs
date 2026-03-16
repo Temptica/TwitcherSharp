@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelChatUserMessageUpdate;
 
-public partial class TwitchChannelChatUserMessageUpdateCondition : Resource, ITwitcherSharpCondition<TwitchChannelChatUserMessageUpdateCondition>
+public partial class TwitchChannelChatUserMessageUpdateCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelChatUserMessageUpdateCondition>
 {
     public string Name => nameof(TwitchChannelChatUserMessageUpdateCondition);
 

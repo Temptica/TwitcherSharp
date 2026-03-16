@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelGuestStarSessionBegin;
 
-public partial class TwitchChannelGuestStarSessionBeginEvent : Resource, ITwitcherSharpEventSub<TwitchChannelGuestStarSessionBeginEvent>
+public partial class TwitchChannelGuestStarSessionBeginEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelGuestStarSessionBeginEvent>
 {
     /// <summary> 
     /// The broadcaster user ID.

@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Chat;
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetChatSettings 
 /// </summary>
-public partial class TwitchGetChatSettingsOpt : Resource, ITwitcherSharp<TwitchGetChatSettingsOpt>
+public partial class TwitchGetChatSettingsOpt : RefCounted, ITwitcherSharp<TwitchGetChatSettingsOpt>
 {
     private GodotObject _data;
     public string ModeratorId { get; set; }

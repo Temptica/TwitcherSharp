@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.WhisperReceived;
 
-public partial class TwitchWhisperReceivedEvent : Resource, ITwitcherSharpEventSub<TwitchWhisperReceivedEvent>
+public partial class TwitchWhisperReceivedEvent : RefCounted, ITwitcherSharpEventSub<TwitchWhisperReceivedEvent>
 {
     /// <summary> 
     /// The ID of the user sending the message.
@@ -82,7 +82,7 @@ public partial class TwitchWhisperReceivedEvent : Resource, ITwitcherSharpEventS
         return request;
     }
 
-    public partial class TwitchWhisper : Resource, ITwitcherSharpEventSub<TwitchWhisper>
+    public partial class TwitchWhisper : RefCounted, ITwitcherSharpEventSub<TwitchWhisper>
     {
         /// <summary> 
         /// The body of the whisper message.

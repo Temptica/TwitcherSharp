@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelUnbanRequestCreate;
 
-public partial class TwitchChannelUnbanRequestCreateEvent : Resource, ITwitcherSharpEventSub<TwitchChannelUnbanRequestCreateEvent>
+public partial class TwitchChannelUnbanRequestCreateEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelUnbanRequestCreateEvent>
 {
     /// <summary> 
     /// The ID of the unban request.

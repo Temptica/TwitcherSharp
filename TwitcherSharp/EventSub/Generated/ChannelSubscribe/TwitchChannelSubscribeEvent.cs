@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelSubscribe;
 
-public partial class TwitchChannelSubscribeEvent : Resource, ITwitcherSharpEventSub<TwitchChannelSubscribeEvent>
+public partial class TwitchChannelSubscribeEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelSubscribeEvent>
 {
     /// <summary> 
     /// The user ID for the user who subscribed to the specified channel.

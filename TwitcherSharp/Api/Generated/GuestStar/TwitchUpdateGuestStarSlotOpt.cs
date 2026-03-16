@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.GuestStar;
 /// <summary> 
 /// All optional parameters for TwitchAPI.UpdateGuestStarSlot 
 /// </summary>
-public partial class TwitchUpdateGuestStarSlotOpt : Resource, ITwitcherSharp<TwitchUpdateGuestStarSlotOpt>
+public partial class TwitchUpdateGuestStarSlotOpt : RefCounted, ITwitcherSharp<TwitchUpdateGuestStarSlotOpt>
 {
     private GodotObject _data;
     public string DestinationSlotId { get; set; }

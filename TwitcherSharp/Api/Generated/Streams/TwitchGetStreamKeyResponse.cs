@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Streams;
 
-public partial class TwitchGetStreamKeyResponse : Resource, ITwitcherSharp<TwitchGetStreamKeyResponse>
+public partial class TwitchGetStreamKeyResponse : RefCounted, ITwitcherSharp<TwitchGetStreamKeyResponse>
 {
     private GodotObject _data;
     public TwitchData[] Data { get; set; }
@@ -33,7 +33,7 @@ public partial class TwitchGetStreamKeyResponse : Resource, ITwitcherSharp<Twitc
     /// <summary> 
     /// A list that contains the channel’s stream key. 
     /// </summary>
-    public partial class TwitchData : Resource, ITwitcherSharp<TwitchData>
+    public partial class TwitchData : RefCounted, ITwitcherSharp<TwitchData>
     {
         private GodotObject _data;
         public string StreamKey { get; set; }

@@ -4,7 +4,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Clips;
 
-public partial class TwitchGetClipsResponse : Resource, ITwitcherSharp<TwitchGetClipsResponse>
+public partial class TwitchGetClipsResponse : RefCounted, ITwitcherSharp<TwitchGetClipsResponse>
 {
     private GodotObject _data;
     public TwitchClip[] Data { get; set; }
@@ -33,7 +33,7 @@ public partial class TwitchGetClipsResponse : Resource, ITwitcherSharp<TwitchGet
         if(Pagination != null) request.Set("pagination", Pagination);
         return request;
     }
-    public partial class TwitchClip : Resource, ITwitcherSharp<TwitchClip>
+    public partial class TwitchClip : RefCounted, ITwitcherSharp<TwitchClip>
     {
         private GodotObject _data;
         public string Id { get; set; }

@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.Goals;
 
-public partial class TwitchGoalsEvent : Resource, ITwitcherSharpEventSub<TwitchGoalsEvent>
+public partial class TwitchGoalsEvent : RefCounted, ITwitcherSharpEventSub<TwitchGoalsEvent>
 {
     /// <summary> 
     /// An ID that identifies this event.

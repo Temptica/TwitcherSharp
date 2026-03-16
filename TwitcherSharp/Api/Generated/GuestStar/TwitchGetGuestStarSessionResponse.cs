@@ -4,7 +4,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.GuestStar;
 
-public partial class TwitchGetGuestStarSessionResponse : Resource, ITwitcherSharp<TwitchGetGuestStarSessionResponse>
+public partial class TwitchGetGuestStarSessionResponse : RefCounted, ITwitcherSharp<TwitchGetGuestStarSessionResponse>
 {
     private GodotObject _data;
     public TwitchGuestStarSession[] Data { get; set; }

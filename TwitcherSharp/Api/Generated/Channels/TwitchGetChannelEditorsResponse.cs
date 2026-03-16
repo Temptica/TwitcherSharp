@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Channels;
 
-public partial class TwitchGetChannelEditorsResponse : Resource, ITwitcherSharp<TwitchGetChannelEditorsResponse>
+public partial class TwitchGetChannelEditorsResponse : RefCounted, ITwitcherSharp<TwitchGetChannelEditorsResponse>
 {
     private GodotObject _data;
     public TwitchChannelEditor[] Data { get; set; }
@@ -29,7 +29,7 @@ public partial class TwitchGetChannelEditorsResponse : Resource, ITwitcherSharp<
         request.Set("data", Data);
         return request;
     }
-    public partial class TwitchChannelEditor : Resource, ITwitcherSharp<TwitchChannelEditor>
+    public partial class TwitchChannelEditor : RefCounted, ITwitcherSharp<TwitchChannelEditor>
     {
         private GodotObject _data;
         public string UserId { get; set; }

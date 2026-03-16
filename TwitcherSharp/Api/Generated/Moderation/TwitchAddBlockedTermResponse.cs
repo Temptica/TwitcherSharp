@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
 
-public partial class TwitchAddBlockedTermResponse : Resource, ITwitcherSharp<TwitchAddBlockedTermResponse>
+public partial class TwitchAddBlockedTermResponse : RefCounted, ITwitcherSharp<TwitchAddBlockedTermResponse>
 {
     private GodotObject _data;
     public TwitchBlockedTerm[] Data { get; set; }

@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelWarningSend;
 
-public partial class TwitchChannelWarningSendEvent : Resource, ITwitcherSharpEventSub<TwitchChannelWarningSendEvent>
+public partial class TwitchChannelWarningSendEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelWarningSendEvent>
 {
     /// <summary> 
     /// The user ID of the broadcaster.

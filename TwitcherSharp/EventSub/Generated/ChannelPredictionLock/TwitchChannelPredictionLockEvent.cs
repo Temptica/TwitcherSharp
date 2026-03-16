@@ -5,7 +5,7 @@ using TwitcherSharp.EventSub.Generated.Shared;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelPredictionLock;
 
-public partial class TwitchChannelPredictionLockEvent : Resource, ITwitcherSharpEventSub<TwitchChannelPredictionLockEvent>
+public partial class TwitchChannelPredictionLockEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelPredictionLockEvent>
 {
     /// <summary> 
     /// Channel Points Prediction ID.

@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Extensions;
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetExtensionBitsProducts 
 /// </summary>
-public partial class TwitchGetExtensionBitsProductsOpt : Resource, ITwitcherSharp<TwitchGetExtensionBitsProductsOpt>
+public partial class TwitchGetExtensionBitsProductsOpt : RefCounted, ITwitcherSharp<TwitchGetExtensionBitsProductsOpt>
 {
     private GodotObject _data;
     public bool? ShouldIncludeAll { get; set; }

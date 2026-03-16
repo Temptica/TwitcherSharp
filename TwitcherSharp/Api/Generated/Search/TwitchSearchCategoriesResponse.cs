@@ -4,7 +4,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Search;
 
-public partial class TwitchSearchCategoriesResponse : Resource, ITwitcherSharp<TwitchSearchCategoriesResponse>
+public partial class TwitchSearchCategoriesResponse : RefCounted, ITwitcherSharp<TwitchSearchCategoriesResponse>
 {
     private GodotObject _data;
     public TwitchCategory[] Data { get; set; }
@@ -33,7 +33,7 @@ public partial class TwitchSearchCategoriesResponse : Resource, ITwitcherSharp<T
         if(Pagination != null) request.Set("pagination", Pagination);
         return request;
     }
-    public partial class TwitchCategory : Resource, ITwitcherSharp<TwitchCategory>
+    public partial class TwitchCategory : RefCounted, ITwitcherSharp<TwitchCategory>
     {
         private GodotObject _data;
         public string BoxArtUrl { get; set; }

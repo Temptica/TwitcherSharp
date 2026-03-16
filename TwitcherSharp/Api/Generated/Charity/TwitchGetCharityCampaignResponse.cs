@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Charity;
 
-public partial class TwitchGetCharityCampaignResponse : Resource, ITwitcherSharp<TwitchGetCharityCampaignResponse>
+public partial class TwitchGetCharityCampaignResponse : RefCounted, ITwitcherSharp<TwitchGetCharityCampaignResponse>
 {
     private GodotObject _data;
     public TwitchCharityCampaign[] Data { get; set; }
@@ -29,7 +29,7 @@ public partial class TwitchGetCharityCampaignResponse : Resource, ITwitcherSharp
         request.Set("data", Data);
         return request;
     }
-    public partial class TwitchCharityCampaign : Resource, ITwitcherSharp<TwitchCharityCampaign>
+    public partial class TwitchCharityCampaign : RefCounted, ITwitcherSharp<TwitchCharityCampaign>
     {
         private GodotObject _data;
         public string Id { get; set; }
@@ -84,7 +84,7 @@ public partial class TwitchGetCharityCampaignResponse : Resource, ITwitcherSharp
         /// <summary> 
         /// The current amount of donations that the campaign has received. 
         /// </summary>
-        public partial class TwitchCurrentAmount : Resource, ITwitcherSharp<TwitchCurrentAmount>
+        public partial class TwitchCurrentAmount : RefCounted, ITwitcherSharp<TwitchCurrentAmount>
         {
             private GodotObject _data;
             public int Value { get; set; }
@@ -120,7 +120,7 @@ public partial class TwitchGetCharityCampaignResponse : Resource, ITwitcherSharp
         /// <summary> 
         /// The campaign’s fundraising goal. This field is **null** if the broadcaster has not defined a fundraising goal. 
         /// </summary>
-        public partial class TwitchTargetAmount : Resource, ITwitcherSharp<TwitchTargetAmount>
+        public partial class TwitchTargetAmount : RefCounted, ITwitcherSharp<TwitchTargetAmount>
         {
             private GodotObject _data;
             public int Value { get; set; }

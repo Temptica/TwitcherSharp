@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Entitlements;
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetDropsEntitlements 
 /// </summary>
-public partial class TwitchGetDropsEntitlementsOpt : Resource, ITwitcherSharp<TwitchGetDropsEntitlementsOpt>
+public partial class TwitchGetDropsEntitlementsOpt : RefCounted, ITwitcherSharp<TwitchGetDropsEntitlementsOpt>
 {
     private GodotObject _data;
     public string[] Id { get; set; }

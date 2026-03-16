@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Bits;
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetCheermotes 
 /// </summary>
-public partial class TwitchGetCheermotesOpt : Resource, ITwitcherSharp<TwitchGetCheermotesOpt>
+public partial class TwitchGetCheermotesOpt : RefCounted, ITwitcherSharp<TwitchGetCheermotesOpt>
 {
     private GodotObject _data;
     public string BroadcasterId { get; set; }

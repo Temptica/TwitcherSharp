@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Raids;
 /// <summary> 
 /// All optional parameters for TwitchAPI.StartARaid 
 /// </summary>
-public partial class TwitchStartARaidOpt : Resource, ITwitcherSharp<TwitchStartARaidOpt>
+public partial class TwitchStartARaidOpt : RefCounted, ITwitcherSharp<TwitchStartARaidOpt>
 {
     private GodotObject _data;
     public string FromBroadcasterId { get; set; }

@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetBannedUsers 
 /// </summary>
-public partial class TwitchGetBannedUsersOpt : Resource, ITwitcherSharp<TwitchGetBannedUsersOpt>
+public partial class TwitchGetBannedUsersOpt : RefCounted, ITwitcherSharp<TwitchGetBannedUsersOpt>
 {
     private GodotObject _data;
     public string[] UserId { get; set; }

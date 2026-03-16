@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Extensions;
 /// <summary> 
 /// All optional parameters for TwitchAPI.CreateExtensionSecret 
 /// </summary>
-public partial class TwitchCreateExtensionSecretOpt : Resource, ITwitcherSharp<TwitchCreateExtensionSecretOpt>
+public partial class TwitchCreateExtensionSecretOpt : RefCounted, ITwitcherSharp<TwitchCreateExtensionSecretOpt>
 {
     private GodotObject _data;
     public int? Delay { get; set; }

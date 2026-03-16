@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.AutomodTermsUpdate;
 
-public partial class TwitchAutomodTermsUpdateEvent : Resource, ITwitcherSharpEventSub<TwitchAutomodTermsUpdateEvent>
+public partial class TwitchAutomodTermsUpdateEvent : RefCounted, ITwitcherSharpEventSub<TwitchAutomodTermsUpdateEvent>
 {
     /// <summary> 
     /// The ID of the broadcaster specified in the request.

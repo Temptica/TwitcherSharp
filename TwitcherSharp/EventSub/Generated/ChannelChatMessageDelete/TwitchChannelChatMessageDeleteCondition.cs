@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelChatMessageDelete;
 
-public partial class TwitchChannelChatMessageDeleteCondition : Resource, ITwitcherSharpCondition<TwitchChannelChatMessageDeleteCondition>
+public partial class TwitchChannelChatMessageDeleteCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelChatMessageDeleteCondition>
 {
     public string Name => nameof(TwitchChannelChatMessageDeleteCondition);
 

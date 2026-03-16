@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Tags;
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetAllStreamTags 
 /// </summary>
-public partial class TwitchGetAllStreamTagsOpt : Resource, ITwitcherSharp<TwitchGetAllStreamTagsOpt>
+public partial class TwitchGetAllStreamTagsOpt : RefCounted, ITwitcherSharp<TwitchGetAllStreamTagsOpt>
 {
     private GodotObject _data;
     public string[] TagId { get; set; }

@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Ads;
 
-public partial class TwitchStartCommercialBody : Resource, ITwitcherSharp<TwitchStartCommercialBody>
+public partial class TwitchStartCommercialBody : RefCounted, ITwitcherSharp<TwitchStartCommercialBody>
 {
     private GodotObject _data;
     public string BroadcasterId { get; set; }

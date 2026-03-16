@@ -5,7 +5,7 @@ using TwitcherSharp.EventSub.Generated.Shared;
 
 namespace TwitcherSharp.EventSub.Generated.ExtensionBitsTransactionCreate;
 
-public partial class TwitchExtensionBitsTransactionCreateEvent : Resource, ITwitcherSharpEventSub<TwitchExtensionBitsTransactionCreateEvent>
+public partial class TwitchExtensionBitsTransactionCreateEvent : RefCounted, ITwitcherSharpEventSub<TwitchExtensionBitsTransactionCreateEvent>
 {
     /// <summary> 
     /// Client ID of the extension.

@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
 
-public partial class TwitchCheckAutoModStatusBody : Resource, ITwitcherSharp<TwitchCheckAutoModStatusBody>
+public partial class TwitchCheckAutoModStatusBody : RefCounted, ITwitcherSharp<TwitchCheckAutoModStatusBody>
 {
     private GodotObject _data;
     public TwitchData[] Data { get; set; }
@@ -33,7 +33,7 @@ public partial class TwitchCheckAutoModStatusBody : Resource, ITwitcherSharp<Twi
     /// <summary> 
     /// The list of messages to check. The list must contain at least one message and may contain up to a maximum of 100 messages. 
     /// </summary>
-    public partial class TwitchData : Resource, ITwitcherSharp<TwitchData>
+    public partial class TwitchData : RefCounted, ITwitcherSharp<TwitchData>
     {
         private GodotObject _data;
         public string MsgId { get; set; }

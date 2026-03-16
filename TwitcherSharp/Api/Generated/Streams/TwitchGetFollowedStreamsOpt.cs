@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Streams;
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetFollowedStreams 
 /// </summary>
-public partial class TwitchGetFollowedStreamsOpt : Resource, ITwitcherSharp<TwitchGetFollowedStreamsOpt>
+public partial class TwitchGetFollowedStreamsOpt : RefCounted, ITwitcherSharp<TwitchGetFollowedStreamsOpt>
 {
     private GodotObject _data;
     public int? First { get; set; }

@@ -4,7 +4,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Bits;
 
-public partial class TwitchGetExtensionTransactionsResponse : Resource, ITwitcherSharp<TwitchGetExtensionTransactionsResponse>
+public partial class TwitchGetExtensionTransactionsResponse : RefCounted, ITwitcherSharp<TwitchGetExtensionTransactionsResponse>
 {
     private GodotObject _data;
     public TwitchExtensionTransaction[] Data { get; set; }
@@ -33,7 +33,7 @@ public partial class TwitchGetExtensionTransactionsResponse : Resource, ITwitche
         if(Pagination != null) request.Set("pagination", Pagination);
         return request;
     }
-    public partial class TwitchExtensionTransaction : Resource, ITwitcherSharp<TwitchExtensionTransaction>
+    public partial class TwitchExtensionTransaction : RefCounted, ITwitcherSharp<TwitchExtensionTransaction>
     {
         private GodotObject _data;
         public string Id { get; set; }
@@ -88,7 +88,7 @@ public partial class TwitchGetExtensionTransactionsResponse : Resource, ITwitche
         /// <summary> 
         /// Contains details about the digital product. 
         /// </summary>
-        public partial class TwitchProductData : Resource, ITwitcherSharp<TwitchProductData>
+        public partial class TwitchProductData : RefCounted, ITwitcherSharp<TwitchProductData>
         {
             private GodotObject _data;
             public string Sku { get; set; }
@@ -134,7 +134,7 @@ public partial class TwitchGetExtensionTransactionsResponse : Resource, ITwitche
             /// <summary> 
             /// Contains details about the digital product’s cost. 
             /// </summary>
-            public partial class TwitchCost : Resource, ITwitcherSharp<TwitchCost>
+            public partial class TwitchCost : RefCounted, ITwitcherSharp<TwitchCost>
             {
                 private GodotObject _data;
                 public int Amount { get; set; }

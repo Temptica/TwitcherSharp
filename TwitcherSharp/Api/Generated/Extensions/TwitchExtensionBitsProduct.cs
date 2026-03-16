@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Extensions;
 
-public partial class TwitchExtensionBitsProduct : Resource, ITwitcherSharp<TwitchExtensionBitsProduct>
+public partial class TwitchExtensionBitsProduct : RefCounted, ITwitcherSharp<TwitchExtensionBitsProduct>
 {
     private GodotObject _data;
     public string Sku { get; set; }
@@ -46,7 +46,7 @@ public partial class TwitchExtensionBitsProduct : Resource, ITwitcherSharp<Twitc
     /// <summary> 
     /// An object that contains the product's cost information. 
     /// </summary>
-    public partial class TwitchCost : Resource, ITwitcherSharp<TwitchCost>
+    public partial class TwitchCost : RefCounted, ITwitcherSharp<TwitchCost>
     {
         private GodotObject _data;
         public int Amount { get; set; }

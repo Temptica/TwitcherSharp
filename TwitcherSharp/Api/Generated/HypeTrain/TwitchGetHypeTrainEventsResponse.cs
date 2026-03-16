@@ -4,7 +4,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.HypeTrain;
 
-public partial class TwitchGetHypeTrainEventsResponse : Resource, ITwitcherSharp<TwitchGetHypeTrainEventsResponse>
+public partial class TwitchGetHypeTrainEventsResponse : RefCounted, ITwitcherSharp<TwitchGetHypeTrainEventsResponse>
 {
     private GodotObject _data;
     public TwitchHypeTrainEvent[] Data { get; set; }
@@ -33,7 +33,7 @@ public partial class TwitchGetHypeTrainEventsResponse : Resource, ITwitcherSharp
         if(Pagination != null) request.Set("pagination", Pagination);
         return request;
     }
-    public partial class TwitchHypeTrainEvent : Resource, ITwitcherSharp<TwitchHypeTrainEvent>
+    public partial class TwitchHypeTrainEvent : RefCounted, ITwitcherSharp<TwitchHypeTrainEvent>
     {
         private GodotObject _data;
         public string Id { get; set; }
@@ -73,7 +73,7 @@ public partial class TwitchGetHypeTrainEventsResponse : Resource, ITwitcherSharp
         /// <summary> 
         /// The event’s data. 
         /// </summary>
-        public partial class TwitchEventData : Resource, ITwitcherSharp<TwitchEventData>
+        public partial class TwitchEventData : RefCounted, ITwitcherSharp<TwitchEventData>
         {
             private GodotObject _data;
             public string BroadcasterId { get; set; }
@@ -129,7 +129,7 @@ public partial class TwitchGetHypeTrainEventsResponse : Resource, ITwitcherSharp
             /// <summary> 
             /// The most recent contribution towards the Hype Train’s goal. 
             /// </summary>
-            public partial class TwitchLastContribution : Resource, ITwitcherSharp<TwitchLastContribution>
+            public partial class TwitchLastContribution : RefCounted, ITwitcherSharp<TwitchLastContribution>
             {
                 private GodotObject _data;
                 public int Total { get; set; }
@@ -165,7 +165,7 @@ public partial class TwitchGetHypeTrainEventsResponse : Resource, ITwitcherSharp
             /// <summary> 
             /// The top contributors for each contribution type. For example, the top contributor using BITS (by aggregate) and the top contributor using SUBS (by count). 
             /// </summary>
-            public partial class TwitchTopContributions : Resource, ITwitcherSharp<TwitchTopContributions>
+            public partial class TwitchTopContributions : RefCounted, ITwitcherSharp<TwitchTopContributions>
             {
                 private GodotObject _data;
                 public int Total { get; set; }

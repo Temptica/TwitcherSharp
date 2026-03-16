@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelUnbanRequestResolve;
 
-public partial class TwitchChannelUnbanRequestResolveCondition : Resource, ITwitcherSharpCondition<TwitchChannelUnbanRequestResolveCondition>
+public partial class TwitchChannelUnbanRequestResolveCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelUnbanRequestResolveCondition>
 {
     public string Name => nameof(TwitchChannelUnbanRequestResolveCondition);
 

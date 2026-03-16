@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelAdBreakBegin;
 
-public partial class TwitchChannelAdBreakBeginCondition : Resource, ITwitcherSharpCondition<TwitchChannelAdBreakBeginCondition>
+public partial class TwitchChannelAdBreakBeginCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelAdBreakBeginCondition>
 {
     public string Name => nameof(TwitchChannelAdBreakBeginCondition);
 

@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Raids;
 
-public partial class TwitchStartRaidResponse : Resource, ITwitcherSharp<TwitchStartRaidResponse>
+public partial class TwitchStartRaidResponse : RefCounted, ITwitcherSharp<TwitchStartRaidResponse>
 {
     private GodotObject _data;
     public TwitchData[] Data { get; set; }
@@ -33,7 +33,7 @@ public partial class TwitchStartRaidResponse : Resource, ITwitcherSharp<TwitchSt
     /// <summary> 
     /// A list that contains a single object with information about the pending raid. 
     /// </summary>
-    public partial class TwitchData : Resource, ITwitcherSharp<TwitchData>
+    public partial class TwitchData : RefCounted, ITwitcherSharp<TwitchData>
     {
         private GodotObject _data;
         public string CreatedAt { get; set; }

@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelPredictionEnd;
 
-public partial class TwitchChannelPredictionEndCondition : Resource, ITwitcherSharpCondition<TwitchChannelPredictionEndCondition>
+public partial class TwitchChannelPredictionEndCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelPredictionEndCondition>
 {
     public string Name => nameof(TwitchChannelPredictionEndCondition);
 

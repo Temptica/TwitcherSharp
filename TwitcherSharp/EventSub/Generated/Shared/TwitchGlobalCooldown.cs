@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.Shared;
 
-public partial class TwitchGlobalCooldown : Resource, ITwitcherSharpEventSub<TwitchGlobalCooldown>
+public partial class TwitchGlobalCooldown : RefCounted, ITwitcherSharpEventSub<TwitchGlobalCooldown>
 {
     /// <summary> 
     /// Is the setting enabled.

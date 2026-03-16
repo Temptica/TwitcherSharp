@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
 
-public partial class TwitchResolveUnbanRequestsResponse : Resource, ITwitcherSharp<TwitchResolveUnbanRequestsResponse>
+public partial class TwitchResolveUnbanRequestsResponse : RefCounted, ITwitcherSharp<TwitchResolveUnbanRequestsResponse>
 {
     private GodotObject _data;
     public TwitchData[] Data { get; set; }
@@ -29,7 +29,7 @@ public partial class TwitchResolveUnbanRequestsResponse : Resource, ITwitcherSha
         request.Set("data", Data);
         return request;
     }
-    public partial class TwitchData : Resource, ITwitcherSharp<TwitchData>
+    public partial class TwitchData : RefCounted, ITwitcherSharp<TwitchData>
     {
         private GodotObject _data;
         public string Id { get; set; }

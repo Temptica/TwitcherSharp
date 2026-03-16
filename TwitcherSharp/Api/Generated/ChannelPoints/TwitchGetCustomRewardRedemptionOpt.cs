@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.ChannelPoints;
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetCustomRewardRedemption 
 /// </summary>
-public partial class TwitchGetCustomRewardRedemptionOpt : Resource, ITwitcherSharp<TwitchGetCustomRewardRedemptionOpt>
+public partial class TwitchGetCustomRewardRedemptionOpt : RefCounted, ITwitcherSharp<TwitchGetCustomRewardRedemptionOpt>
 {
     private GodotObject _data;
     public string Status { get; set; }

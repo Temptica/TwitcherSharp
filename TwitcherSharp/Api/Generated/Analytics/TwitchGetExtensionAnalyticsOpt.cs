@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Analytics;
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetExtensionAnalytics 
 /// </summary>
-public partial class TwitchGetExtensionAnalyticsOpt : Resource, ITwitcherSharp<TwitchGetExtensionAnalyticsOpt>
+public partial class TwitchGetExtensionAnalyticsOpt : RefCounted, ITwitcherSharp<TwitchGetExtensionAnalyticsOpt>
 {
     private GodotObject _data;
     public string ExtensionId { get; set; }

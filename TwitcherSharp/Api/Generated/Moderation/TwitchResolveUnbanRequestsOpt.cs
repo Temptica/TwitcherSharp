@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 /// <summary> 
 /// All optional parameters for TwitchAPI.ResolveUnbanRequests 
 /// </summary>
-public partial class TwitchResolveUnbanRequestsOpt : Resource, ITwitcherSharp<TwitchResolveUnbanRequestsOpt>
+public partial class TwitchResolveUnbanRequestsOpt : RefCounted, ITwitcherSharp<TwitchResolveUnbanRequestsOpt>
 {
     private GodotObject _data;
     public string ResolutionText { get; set; }

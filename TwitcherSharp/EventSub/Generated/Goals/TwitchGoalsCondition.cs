@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.Goals;
 
-public partial class TwitchGoalsCondition : Resource, ITwitcherSharpCondition<TwitchGoalsCondition>
+public partial class TwitchGoalsCondition : RefCounted, ITwitcherSharpCondition<TwitchGoalsCondition>
 {
     public string Name => nameof(TwitchGoalsCondition);
 

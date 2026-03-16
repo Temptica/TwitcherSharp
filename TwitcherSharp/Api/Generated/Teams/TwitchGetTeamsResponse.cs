@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Teams;
 
-public partial class TwitchGetTeamsResponse : Resource, ITwitcherSharp<TwitchGetTeamsResponse>
+public partial class TwitchGetTeamsResponse : RefCounted, ITwitcherSharp<TwitchGetTeamsResponse>
 {
     private GodotObject _data;
     public TwitchTeam[] Data { get; set; }
@@ -29,7 +29,7 @@ public partial class TwitchGetTeamsResponse : Resource, ITwitcherSharp<TwitchGet
         request.Set("data", Data);
         return request;
     }
-    public partial class TwitchTeam : Resource, ITwitcherSharp<TwitchTeam>
+    public partial class TwitchTeam : RefCounted, ITwitcherSharp<TwitchTeam>
     {
         private GodotObject _data;
         public TwitchUsers[] Users { get; set; }
@@ -85,7 +85,7 @@ public partial class TwitchGetTeamsResponse : Resource, ITwitcherSharp<TwitchGet
         /// <summary> 
         /// The list of team members. 
         /// </summary>
-        public partial class TwitchUsers : Resource, ITwitcherSharp<TwitchUsers>
+        public partial class TwitchUsers : RefCounted, ITwitcherSharp<TwitchUsers>
         {
             private GodotObject _data;
             public string UserId { get; set; }

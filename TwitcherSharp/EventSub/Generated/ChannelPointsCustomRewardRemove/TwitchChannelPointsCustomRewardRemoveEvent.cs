@@ -5,7 +5,7 @@ using TwitcherSharp.EventSub.Generated.Shared;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelPointsCustomRewardRemove;
 
-public partial class TwitchChannelPointsCustomRewardRemoveEvent : Resource, ITwitcherSharpEventSub<TwitchChannelPointsCustomRewardRemoveEvent>
+public partial class TwitchChannelPointsCustomRewardRemoveEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelPointsCustomRewardRemoveEvent>
 {
     /// <summary> 
     /// The reward identifier.

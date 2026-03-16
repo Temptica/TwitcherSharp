@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelSuspiciousUserUpdate;
 
-public partial class TwitchChannelSuspiciousUserUpdateEvent : Resource, ITwitcherSharpEventSub<TwitchChannelSuspiciousUserUpdateEvent>
+public partial class TwitchChannelSuspiciousUserUpdateEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelSuspiciousUserUpdateEvent>
 {
     /// <summary> 
     /// The ID of the channel where the treatment for a suspicious user was updated.

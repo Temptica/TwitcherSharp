@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelWarningAcknowledge;
 
-public partial class TwitchChannelWarningAcknowledgeCondition : Resource, ITwitcherSharpCondition<TwitchChannelWarningAcknowledgeCondition>
+public partial class TwitchChannelWarningAcknowledgeCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelWarningAcknowledgeCondition>
 {
     public string Name => nameof(TwitchChannelWarningAcknowledgeCondition);
 

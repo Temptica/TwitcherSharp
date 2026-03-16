@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Channels;
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetChannelFollowers 
 /// </summary>
-public partial class TwitchGetChannelFollowersOpt : Resource, ITwitcherSharp<TwitchGetChannelFollowersOpt>
+public partial class TwitchGetChannelFollowersOpt : RefCounted, ITwitcherSharp<TwitchGetChannelFollowersOpt>
 {
     private GodotObject _data;
     public string UserId { get; set; }

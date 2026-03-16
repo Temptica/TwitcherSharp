@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ConduitShardDisabled;
 
-public partial class TwitchConduitShardDisabledCondition : Resource, ITwitcherSharpCondition<TwitchConduitShardDisabledCondition>
+public partial class TwitchConduitShardDisabledCondition : RefCounted, ITwitcherSharpCondition<TwitchConduitShardDisabledCondition>
 {
     public string Name => nameof(TwitchConduitShardDisabledCondition);
 

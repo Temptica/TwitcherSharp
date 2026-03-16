@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelSharedChatSessionBegin;
 
-public partial class TwitchChannelSharedChatSessionBeginEvent : Resource, ITwitcherSharpEventSub<TwitchChannelSharedChatSessionBeginEvent>
+public partial class TwitchChannelSharedChatSessionBeginEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelSharedChatSessionBeginEvent>
 {
     /// <summary> 
     /// The unique identifier for the shared chat session.
@@ -83,7 +83,7 @@ public partial class TwitchChannelSharedChatSessionBeginEvent : Resource, ITwitc
         return request;
     }
 
-    public partial class TwitchParticipants : Resource, ITwitcherSharpEventSub<TwitchParticipants>
+    public partial class TwitchParticipants : RefCounted, ITwitcherSharpEventSub<TwitchParticipants>
     {
         /// <summary> 
         /// The User ID of the participant channel.

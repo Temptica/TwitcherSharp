@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Videos;
 
-public partial class TwitchDeleteVideosResponse : Resource, ITwitcherSharp<TwitchDeleteVideosResponse>
+public partial class TwitchDeleteVideosResponse : RefCounted, ITwitcherSharp<TwitchDeleteVideosResponse>
 {
     private GodotObject _data;
     public string[] Data { get; set; }

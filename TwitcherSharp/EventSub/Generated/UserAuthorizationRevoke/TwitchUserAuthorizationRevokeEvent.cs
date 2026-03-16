@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.UserAuthorizationRevoke;
 
-public partial class TwitchUserAuthorizationRevokeEvent : Resource, ITwitcherSharpEventSub<TwitchUserAuthorizationRevokeEvent>
+public partial class TwitchUserAuthorizationRevokeEvent : RefCounted, ITwitcherSharpEventSub<TwitchUserAuthorizationRevokeEvent>
 {
     /// <summary> 
     /// The client_id of the application with revoked user access.

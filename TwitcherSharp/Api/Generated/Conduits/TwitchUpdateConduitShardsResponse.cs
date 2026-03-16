@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Conduits;
 
-public partial class TwitchUpdateConduitShardsResponse : Resource, ITwitcherSharp<TwitchUpdateConduitShardsResponse>
+public partial class TwitchUpdateConduitShardsResponse : RefCounted, ITwitcherSharp<TwitchUpdateConduitShardsResponse>
 {
     private GodotObject _data;
     public TwitchData[] Data { get; set; }
@@ -37,7 +37,7 @@ public partial class TwitchUpdateConduitShardsResponse : Resource, ITwitcherShar
     /// <summary> 
     /// List of successful shard updates. 
     /// </summary>
-    public partial class TwitchData : Resource, ITwitcherSharp<TwitchData>
+    public partial class TwitchData : RefCounted, ITwitcherSharp<TwitchData>
     {
         private GodotObject _data;
         public string Id { get; set; }
@@ -71,7 +71,7 @@ public partial class TwitchUpdateConduitShardsResponse : Resource, ITwitcherShar
         /// <summary> 
         /// The transport details used to send the notifications. 
         /// </summary>
-        public partial class TwitchTransport : Resource, ITwitcherSharp<TwitchTransport>
+        public partial class TwitchTransport : RefCounted, ITwitcherSharp<TwitchTransport>
         {
             private GodotObject _data;
             public string Method { get; set; }
@@ -115,7 +115,7 @@ public partial class TwitchUpdateConduitShardsResponse : Resource, ITwitcherShar
     /// <summary> 
     /// List of unsuccessful updates. 
     /// </summary>
-    public partial class TwitchErrors : Resource, ITwitcherSharp<TwitchErrors>
+    public partial class TwitchErrors : RefCounted, ITwitcherSharp<TwitchErrors>
     {
         private GodotObject _data;
         public string Id { get; set; }

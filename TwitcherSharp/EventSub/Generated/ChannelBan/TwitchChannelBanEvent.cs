@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelBan;
 
-public partial class TwitchChannelBanEvent : Resource, ITwitcherSharpEventSub<TwitchChannelBanEvent>
+public partial class TwitchChannelBanEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelBanEvent>
 {
     /// <summary> 
     /// The user ID for the user who was banned on the specified channel.

@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Entitlements;
 
-public partial class TwitchUpdateDropsEntitlementsResponse : Resource, ITwitcherSharp<TwitchUpdateDropsEntitlementsResponse>
+public partial class TwitchUpdateDropsEntitlementsResponse : RefCounted, ITwitcherSharp<TwitchUpdateDropsEntitlementsResponse>
 {
     private GodotObject _data;
     public TwitchDropsEntitlementUpdated[] Data { get; set; }
@@ -29,7 +29,7 @@ public partial class TwitchUpdateDropsEntitlementsResponse : Resource, ITwitcher
         request.Set("data", Data);
         return request;
     }
-    public partial class TwitchDropsEntitlementUpdated : Resource, ITwitcherSharp<TwitchDropsEntitlementUpdated>
+    public partial class TwitchDropsEntitlementUpdated : RefCounted, ITwitcherSharp<TwitchDropsEntitlementUpdated>
     {
         private GodotObject _data;
         public string Status { get; set; }

@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.StreamOffline;
 
-public partial class TwitchStreamOfflineCondition : Resource, ITwitcherSharpCondition<TwitchStreamOfflineCondition>
+public partial class TwitchStreamOfflineCondition : RefCounted, ITwitcherSharpCondition<TwitchStreamOfflineCondition>
 {
     public string Name => nameof(TwitchStreamOfflineCondition);
 

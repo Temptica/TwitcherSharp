@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.CharityCampaignStart;
 
-public partial class TwitchCharityCampaignStartEvent : Resource, ITwitcherSharpEventSub<TwitchCharityCampaignStartEvent>
+public partial class TwitchCharityCampaignStartEvent : RefCounted, ITwitcherSharpEventSub<TwitchCharityCampaignStartEvent>
 {
     /// <summary> 
     /// An ID that identifies the charity campaign.
@@ -103,7 +103,7 @@ public partial class TwitchCharityCampaignStartEvent : Resource, ITwitcherSharpE
         return request;
     }
 
-    public partial class TwitchCurrentAmount : Resource, ITwitcherSharpEventSub<TwitchCurrentAmount>
+    public partial class TwitchCurrentAmount : RefCounted, ITwitcherSharpEventSub<TwitchCurrentAmount>
     {
         /// <summary> 
         /// The monetary amount. The amount is specified in the currency’s minor unit. For example, the minor units for USD is cents, so if the amount is $5.50 USD, value is set to 550.
@@ -146,7 +146,7 @@ public partial class TwitchCharityCampaignStartEvent : Resource, ITwitcherSharpE
         }
     }
 
-    public partial class TwitchTargetAmount : Resource, ITwitcherSharpEventSub<TwitchTargetAmount>
+    public partial class TwitchTargetAmount : RefCounted, ITwitcherSharpEventSub<TwitchTargetAmount>
     {
         /// <summary> 
         /// The monetary amount. The amount is specified in the currency’s minor unit. For example, the minor units for USD is cents, so if the amount is $5.50 USD, value is set to 550.

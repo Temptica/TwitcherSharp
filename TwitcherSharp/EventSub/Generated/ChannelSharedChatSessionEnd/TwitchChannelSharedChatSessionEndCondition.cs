@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelSharedChatSessionEnd;
 
-public partial class TwitchChannelSharedChatSessionEndCondition : Resource, ITwitcherSharpCondition<TwitchChannelSharedChatSessionEndCondition>
+public partial class TwitchChannelSharedChatSessionEndCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelSharedChatSessionEndCondition>
 {
     public string Name => nameof(TwitchChannelSharedChatSessionEndCondition);
 

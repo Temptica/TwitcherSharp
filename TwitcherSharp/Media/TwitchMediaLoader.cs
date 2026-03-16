@@ -8,12 +8,8 @@ using TwitchCheermote = TwitcherSharp.Api.Generated.Bits.TwitchGetCheermotesResp
 
 namespace TwitcherSharp.Media;
 
-public partial class TwitchMediaLoader : Node, ITwitcherSharpSingleton<TwitchMediaLoader>
+public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<TwitchMediaLoader>
 {
-    protected TwitchMediaLoader()
-    {
-    }
-
     private GodotObject _data;
     public bool IsLinked => _data is not null;
     public static TwitchMediaLoader Instance { get; private set; }
@@ -272,6 +268,8 @@ public partial class TwitchMediaLoader : Node, ITwitcherSharpSingleton<TwitchMed
             CacheProfile = data.Get("cache_profile").AsString(),
             _data = data, //must be last to avoid setting itself (performance boost)
         };
+        data.SetMeta("_twitcher_sharp_instance", mediaLoader);
+        
 
         Instance = mediaLoader;
 
@@ -296,20 +294,30 @@ public partial class TwitchMediaLoader : Node, ITwitcherSharpSingleton<TwitchMed
         return _data;
     }
 
-    public static TwitchMediaLoader CreateFromInstance()
+    public void FreeInstance()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_media_loader.gd");
-        var result = script.New().AsGodotObject().Call("instance");
-        
-        if (result.VariantType != Variant.Type.Object) return Create();
-        
-        Instance = FromObject(result.AsGodotObject());
-        return Instance;
+        if (_data is null) return;
+        _data.SetMeta("_twitcher_sharp_instance", Instance);
+        _data = null;
     }
-
-    public static TwitchMediaLoader Create()
+    
+    public static TwitchMediaLoader GetOrCreateInstance()
     {
-        Instance = new TwitchMediaLoader();
+        if (Instance != null) return Instance;
+        
+        var script = GD.Load<GDScript>("res://addons/twitcher/media/twitch_media_loader.gd");
+        var twitchMediaLoader = script.New().AsGodotObject();
+        var instance = twitchMediaLoader.Get("instance");
+    
+        if (instance.VariantType != Variant.Type.Object)
+        {
+            var root = (Engine.GetMainLoop() as SceneTree)!.Root;
+            root.AddChild(twitchMediaLoader as Node);
+            FromObject(twitchMediaLoader);
+            return Instance;
+        }
+        
+        FromObject(instance.AsGodotObject());
         return Instance;
     }
 }

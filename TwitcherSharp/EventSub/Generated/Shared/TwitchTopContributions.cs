@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.Shared;
 
-public partial class TwitchTopContributions : Resource, ITwitcherSharpEventSub<TwitchTopContributions>
+public partial class TwitchTopContributions : RefCounted, ITwitcherSharpEventSub<TwitchTopContributions>
 {
     /// <summary> 
     /// The ID of the user that made the contribution.
@@ -62,7 +62,7 @@ public partial class TwitchTopContributions : Resource, ITwitcherSharpEventSub<T
         return request;
     }
 
-    public partial class TwitchType : Resource, ITwitcherSharpEventSub<TwitchType>
+    public partial class TwitchType : RefCounted, ITwitcherSharpEventSub<TwitchType>
     {
     
         /// <summary> 

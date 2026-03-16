@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelChatSettingsUpdate;
 
-public partial class TwitchChannelChatSettingsUpdateEvent : Resource, ITwitcherSharpEventSub<TwitchChannelChatSettingsUpdateEvent>
+public partial class TwitchChannelChatSettingsUpdateEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelChatSettingsUpdateEvent>
 {
     /// <summary> 
     /// The ID of the broadcaster specified in the request.

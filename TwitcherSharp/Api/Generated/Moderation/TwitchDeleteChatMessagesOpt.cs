@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 /// <summary> 
 /// All optional parameters for TwitchAPI.DeleteChatMessages 
 /// </summary>
-public partial class TwitchDeleteChatMessagesOpt : Resource, ITwitcherSharp<TwitchDeleteChatMessagesOpt>
+public partial class TwitchDeleteChatMessagesOpt : RefCounted, ITwitcherSharp<TwitchDeleteChatMessagesOpt>
 {
     private GodotObject _data;
     public string MessageId { get; set; }

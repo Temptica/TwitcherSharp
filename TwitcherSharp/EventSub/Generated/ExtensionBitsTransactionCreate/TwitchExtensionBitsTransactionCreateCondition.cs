@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ExtensionBitsTransactionCreate;
 
-public partial class TwitchExtensionBitsTransactionCreateCondition : Resource, ITwitcherSharpCondition<TwitchExtensionBitsTransactionCreateCondition>
+public partial class TwitchExtensionBitsTransactionCreateCondition : RefCounted, ITwitcherSharpCondition<TwitchExtensionBitsTransactionCreateCondition>
 {
     public string Name => nameof(TwitchExtensionBitsTransactionCreateCondition);
 

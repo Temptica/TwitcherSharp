@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Polls;
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetPolls 
 /// </summary>
-public partial class TwitchGetPollsOpt : Resource, ITwitcherSharp<TwitchGetPollsOpt>
+public partial class TwitchGetPollsOpt : RefCounted, ITwitcherSharp<TwitchGetPollsOpt>
 {
     private GodotObject _data;
     public string[] Id { get; set; }

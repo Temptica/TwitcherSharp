@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.AutomodMessageUpdate;
 
-public partial class TwitchAutomodMessageUpdateCondition : Resource, ITwitcherSharpCondition<TwitchAutomodMessageUpdateCondition>
+public partial class TwitchAutomodMessageUpdateCondition : RefCounted, ITwitcherSharpCondition<TwitchAutomodMessageUpdateCondition>
 {
     public string Name => nameof(TwitchAutomodMessageUpdateCondition);
 

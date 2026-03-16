@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.GuestStar;
 
-public partial class TwitchGetGuestStarInvitesResponse : Resource, ITwitcherSharp<TwitchGetGuestStarInvitesResponse>
+public partial class TwitchGetGuestStarInvitesResponse : RefCounted, ITwitcherSharp<TwitchGetGuestStarInvitesResponse>
 {
     private GodotObject _data;
     public TwitchGuestStarInvite[] Data { get; set; }
@@ -29,7 +29,7 @@ public partial class TwitchGetGuestStarInvitesResponse : Resource, ITwitcherShar
         request.Set("data", Data);
         return request;
     }
-    public partial class TwitchGuestStarInvite : Resource, ITwitcherSharp<TwitchGuestStarInvite>
+    public partial class TwitchGuestStarInvite : RefCounted, ITwitcherSharp<TwitchGuestStarInvite>
     {
         private GodotObject _data;
         public string UserId { get; set; }

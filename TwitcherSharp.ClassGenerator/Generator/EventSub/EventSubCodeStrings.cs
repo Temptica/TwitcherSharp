@@ -18,13 +18,13 @@ public static class EventSubCodeStrings
     /// Param: {{ClassName}}
     /// </summary>
     public const string EventSubHeader =
-        "public partial class {{ClassName}} : Resource, ITwitcherSharpEventSub<{{ClassName}}>";
+        "public partial class {{ClassName}} : RefCounted, ITwitcherSharpEventSub<{{ClassName}}>";
     
     /// <summary>
     /// Param: {{ClassName}}
     /// </summary>
     public const string ConditionSubHeader =
-        "public partial class {{ClassName}} : Resource, ITwitcherSharpCondition<{{ClassName}}>";
+        "public partial class {{ClassName}} : RefCounted, ITwitcherSharpCondition<{{ClassName}}>";
 
     public const string FieldDescription = """
                                            /// <summary> 

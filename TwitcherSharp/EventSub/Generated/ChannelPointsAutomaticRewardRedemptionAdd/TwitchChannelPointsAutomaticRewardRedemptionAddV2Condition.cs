@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelPointsAutomaticRewardRedemptionAdd;
 
-public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Condition : Resource, ITwitcherSharpCondition<TwitchChannelPointsAutomaticRewardRedemptionAddV2Condition>
+public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Condition : RefCounted, ITwitcherSharpCondition<TwitchChannelPointsAutomaticRewardRedemptionAddV2Condition>
 {
     public string Name => nameof(TwitchChannelPointsAutomaticRewardRedemptionAddV2Condition);
 

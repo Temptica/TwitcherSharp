@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.EventSub;
 
-public partial class TwitchCreateEventSubSubscriptionResponse : Resource, ITwitcherSharp<TwitchCreateEventSubSubscriptionResponse>
+public partial class TwitchCreateEventSubSubscriptionResponse : RefCounted, ITwitcherSharp<TwitchCreateEventSubSubscriptionResponse>
 {
     private GodotObject _data;
     public TwitchEventSubSubscription[] Data { get; set; }

@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Users;
 
-public partial class TwitchGetAuthorizationByUserResponse : Resource, ITwitcherSharp<TwitchGetAuthorizationByUserResponse>
+public partial class TwitchGetAuthorizationByUserResponse : RefCounted, ITwitcherSharp<TwitchGetAuthorizationByUserResponse>
 {
     private GodotObject _data;
     public TwitchData[] Data { get; set; }
@@ -33,7 +33,7 @@ public partial class TwitchGetAuthorizationByUserResponse : Resource, ITwitcherS
     /// <summary> 
     /// List of users and their authorized scopes. 
     /// </summary>
-    public partial class TwitchData : Resource, ITwitcherSharp<TwitchData>
+    public partial class TwitchData : RefCounted, ITwitcherSharp<TwitchData>
     {
         private GodotObject _data;
         public string UserId { get; set; }

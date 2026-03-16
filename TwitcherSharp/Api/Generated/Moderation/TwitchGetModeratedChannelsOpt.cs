@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetModeratedChannels 
 /// </summary>
-public partial class TwitchGetModeratedChannelsOpt : Resource, ITwitcherSharp<TwitchGetModeratedChannelsOpt>
+public partial class TwitchGetModeratedChannelsOpt : RefCounted, ITwitcherSharp<TwitchGetModeratedChannelsOpt>
 {
     private GodotObject _data;
     public string After { get; set; }

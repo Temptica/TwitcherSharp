@@ -4,7 +4,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Videos;
 
-public partial class TwitchGetVideosResponse : Resource, ITwitcherSharp<TwitchGetVideosResponse>
+public partial class TwitchGetVideosResponse : RefCounted, ITwitcherSharp<TwitchGetVideosResponse>
 {
     private GodotObject _data;
     public TwitchVideo[] Data { get; set; }
@@ -33,7 +33,7 @@ public partial class TwitchGetVideosResponse : Resource, ITwitcherSharp<TwitchGe
         if(Pagination != null) request.Set("pagination", Pagination);
         return request;
     }
-    public partial class TwitchVideo : Resource, ITwitcherSharp<TwitchVideo>
+    public partial class TwitchVideo : RefCounted, ITwitcherSharp<TwitchVideo>
     {
         private GodotObject _data;
         public string Id { get; set; }
@@ -110,7 +110,7 @@ public partial class TwitchGetVideosResponse : Resource, ITwitcherSharp<TwitchGe
         /// <summary> 
         /// The segments that Twitch Audio Recognition muted; otherwise, **null**. 
         /// </summary>
-        public partial class TwitchMutedSegments : Resource, ITwitcherSharp<TwitchMutedSegments>
+        public partial class TwitchMutedSegments : RefCounted, ITwitcherSharp<TwitchMutedSegments>
         {
             private GodotObject _data;
             public int Duration { get; set; }

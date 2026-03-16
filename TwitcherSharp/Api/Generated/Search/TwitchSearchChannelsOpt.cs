@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Search;
 /// <summary> 
 /// All optional parameters for TwitchAPI.SearchChannels 
 /// </summary>
-public partial class TwitchSearchChannelsOpt : Resource, ITwitcherSharp<TwitchSearchChannelsOpt>
+public partial class TwitchSearchChannelsOpt : RefCounted, ITwitcherSharp<TwitchSearchChannelsOpt>
 {
     private GodotObject _data;
     public bool? LiveOnly { get; set; }

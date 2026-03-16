@@ -3,7 +3,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.Media;
 
-public partial class TwitchEmoteDefinition(string emoteId) : Resource, ITwitcherSharp<TwitchEmoteDefinition>
+public partial class TwitchEmoteDefinition(string emoteId) : RefCounted, ITwitcherSharp<TwitchEmoteDefinition>
 {
     public string Id { get; set; } = emoteId;
     public int Scale { get; set; }

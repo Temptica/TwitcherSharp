@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Ads;
 
-public partial class TwitchSnoozeNextAdResponse : Resource, ITwitcherSharp<TwitchSnoozeNextAdResponse>
+public partial class TwitchSnoozeNextAdResponse : RefCounted, ITwitcherSharp<TwitchSnoozeNextAdResponse>
 {
     private GodotObject _data;
     public TwitchData[] Data { get; set; }
@@ -33,7 +33,7 @@ public partial class TwitchSnoozeNextAdResponse : Resource, ITwitcherSharp<Twitc
     /// <summary> 
     /// A list that contains information about the channel’s snoozes and next upcoming ad after successfully snoozing. 
     /// </summary>
-    public partial class TwitchData : Resource, ITwitcherSharp<TwitchData>
+    public partial class TwitchData : RefCounted, ITwitcherSharp<TwitchData>
     {
         private GodotObject _data;
         public int SnoozeCount { get; set; }

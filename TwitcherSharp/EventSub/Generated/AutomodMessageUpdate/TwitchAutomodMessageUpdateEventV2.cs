@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.AutomodMessageUpdate;
 
-public partial class TwitchAutomodMessageUpdateEventV2 : Resource, ITwitcherSharpEventSub<TwitchAutomodMessageUpdateEventV2>
+public partial class TwitchAutomodMessageUpdateEventV2 : RefCounted, ITwitcherSharpEventSub<TwitchAutomodMessageUpdateEventV2>
 {
     /// <summary> 
     /// The ID of the broadcaster specified in the request.
@@ -138,7 +138,7 @@ public partial class TwitchAutomodMessageUpdateEventV2 : Resource, ITwitcherShar
         return request;
     }
 
-    public partial class TwitchMessage : Resource, ITwitcherSharpEventSub<TwitchMessage>
+    public partial class TwitchMessage : RefCounted, ITwitcherSharpEventSub<TwitchMessage>
     {
         /// <summary> 
         /// The contents of the message caught by automod.
@@ -174,7 +174,7 @@ public partial class TwitchAutomodMessageUpdateEventV2 : Resource, ITwitcherShar
             return request;
         }
     
-        public partial class TwitchFragments : Resource, ITwitcherSharpEventSub<TwitchFragments>
+        public partial class TwitchFragments : RefCounted, ITwitcherSharpEventSub<TwitchFragments>
         {
             /// <summary> 
             /// Message text in a fragment.
@@ -223,7 +223,7 @@ public partial class TwitchAutomodMessageUpdateEventV2 : Resource, ITwitcherShar
                 return request;
             }
         
-            public partial class TwitchEmote : Resource, ITwitcherSharpEventSub<TwitchEmote>
+            public partial class TwitchEmote : RefCounted, ITwitcherSharpEventSub<TwitchEmote>
             {
                 /// <summary> 
                 /// An ID that uniquely identifies this emote.
@@ -259,7 +259,7 @@ public partial class TwitchAutomodMessageUpdateEventV2 : Resource, ITwitcherShar
                 }
             }
         
-            public partial class TwitchCheermote : Resource, ITwitcherSharpEventSub<TwitchCheermote>
+            public partial class TwitchCheermote : RefCounted, ITwitcherSharpEventSub<TwitchCheermote>
             {
                 /// <summary> 
                 /// The name portion of the Cheermote string that you use in chat to cheer Bits. The full Cheermote string is the concatenation of {prefix} + {number of Bits}.  For example, if the prefix is “Cheer” and you want to cheer 100 Bits, the full Cheermote string is Cheer100. When the Cheermote string is entered in chat, Twitch converts it to the image associated with the Bits tier that was cheered.
@@ -304,7 +304,7 @@ public partial class TwitchAutomodMessageUpdateEventV2 : Resource, ITwitcherShar
         }
     }
 
-    public partial class TwitchAutomod : Resource, ITwitcherSharpEventSub<TwitchAutomod>
+    public partial class TwitchAutomod : RefCounted, ITwitcherSharpEventSub<TwitchAutomod>
     {
         /// <summary> 
         /// The category of the caught message.
@@ -347,7 +347,7 @@ public partial class TwitchAutomodMessageUpdateEventV2 : Resource, ITwitcherShar
             return request;
         }
     
-        public partial class TwitchBoundaries : Resource, ITwitcherSharpEventSub<TwitchBoundaries>
+        public partial class TwitchBoundaries : RefCounted, ITwitcherSharpEventSub<TwitchBoundaries>
         {
             /// <summary> 
             /// Index in the message for the start of the problem (Starting at 0).
@@ -384,7 +384,7 @@ public partial class TwitchAutomodMessageUpdateEventV2 : Resource, ITwitcherShar
         }
     }
 
-    public partial class TwitchBlockedTerm : Resource, ITwitcherSharpEventSub<TwitchBlockedTerm>
+    public partial class TwitchBlockedTerm : RefCounted, ITwitcherSharpEventSub<TwitchBlockedTerm>
     {
         /// <summary> 
         /// The list of blocked terms found in the message.
@@ -413,7 +413,7 @@ public partial class TwitchAutomodMessageUpdateEventV2 : Resource, ITwitcherShar
             return request;
         }
     
-        public partial class TwitchTermsFound : Resource, ITwitcherSharpEventSub<TwitchTermsFound>
+        public partial class TwitchTermsFound : RefCounted, ITwitcherSharpEventSub<TwitchTermsFound>
         {
             /// <summary> 
             /// The id of the blocked term found.
@@ -469,7 +469,7 @@ public partial class TwitchAutomodMessageUpdateEventV2 : Resource, ITwitcherShar
                 return request;
             }
         
-            public partial class TwitchBoundary : Resource, ITwitcherSharpEventSub<TwitchBoundary>
+            public partial class TwitchBoundary : RefCounted, ITwitcherSharpEventSub<TwitchBoundary>
             {
                 /// <summary> 
                 /// Index in the message for the start of the problem (0 indexed, inclusive).

@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelModerate;
 
-public partial class TwitchChannelModerateCondition : Resource, ITwitcherSharpCondition<TwitchChannelModerateCondition>
+public partial class TwitchChannelModerateCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelModerateCondition>
 {
     public string Name => nameof(TwitchChannelModerateCondition);
 

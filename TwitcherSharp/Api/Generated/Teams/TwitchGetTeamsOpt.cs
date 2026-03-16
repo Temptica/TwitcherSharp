@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Teams;
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetTeams 
 /// </summary>
-public partial class TwitchGetTeamsOpt : Resource, ITwitcherSharp<TwitchGetTeamsOpt>
+public partial class TwitchGetTeamsOpt : RefCounted, ITwitcherSharp<TwitchGetTeamsOpt>
 {
     private GodotObject _data;
     public string Name { get; set; }

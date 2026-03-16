@@ -8,7 +8,7 @@ using TwitcherSharp.Media;
 
 namespace TwitcherSharp.Chat;
 
-public partial class TwitchChat : Node, ITwitcherSharpSingleton<TwitchChat>
+public partial class TwitchChat : RefCounted, ITwitcherSharpSingleton<TwitchChat>
 {
     protected TwitchChat()
     {
@@ -22,7 +22,7 @@ public partial class TwitchChat : Node, ITwitcherSharpSingleton<TwitchChat>
     /// <summary>
     /// Twitch API (Will automatically look for first TwitchApi (twitcher) in the scene tree
     /// </summary>
-    public static TwitchApi Api { get; set; } = TwitchApi.CreateFromInstance();
+    public static TwitchApi Api { get; set; } = TwitchApi.GetOrCreateInstance();
 
     public TwitchUser BroadcasterUser
     {
@@ -47,7 +47,7 @@ public partial class TwitchChat : Node, ITwitcherSharpSingleton<TwitchChat>
     /// <summary>
     /// Media loader it uses for emotes and badges. (Will automatically look for first TwitchMediaLoader (twitcher) in the scene tree)
     /// </summary>
-    public TwitchMediaLoader MediaLoader { get; set; } = TwitchMediaLoader.CreateFromInstance();
+    public TwitchMediaLoader MediaLoader { get; set; } = TwitchMediaLoader.GetOrCreateInstance();
 
     /// <summary>
     /// Should it subscribe on ready
@@ -98,29 +98,59 @@ public partial class TwitchChat : Node, ITwitcherSharpSingleton<TwitchChat>
             Callable.From<GodotObject>(d => EmitSignalMessageReceived(TwitchChatMessage.FromObject(d))));
     }
 
-    public static TwitchChat CreateFromInstance()
+    public static TwitchChat GetOrCreateInstance()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_chat.gd");
         var gdChat = script.New().AsGodotObject();
-        var result = gdChat.Get("instance");
-        if (result.VariantType != Variant.Type.Object) return Create();
-        Instance = FromObject(result.AsGodotObject());
-        return Instance;
-    }
-
-    public static TwitchChat Create()
-    {
-        Instance = new TwitchChat();
+        var instance = gdChat.Get("instance");
+        
+        if (instance.VariantType != Variant.Type.Object)
+        {
+            var root = (Engine.GetMainLoop() as SceneTree)!.Root;
+            root.AddChild(gdChat as Node);
+            FromObject(gdChat);
+            return Instance;
+        }
+        
+        FromObject(instance.AsGodotObject());
         return Instance;
     }
 
     public static TwitchChat FromObject(GodotObject data)
     {
-        throw new NotImplementedException();
+        if (data == null) return null;
+
+        Instance = new TwitchChat();
+        Instance._data = data;
+        Instance.SetMeta("_twitcher_sharp_instance", Instance);
+        return Instance;   
     }
 
     public GodotObject ToGodotObject()
     {
-        throw new NotImplementedException();
+        if (_data != null)
+        {
+            return _data;
+        }
+        
+        var script = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_chat.gd");
+        var instance = script.New().AsGodotObject();
+        _data = instance;
+        _data.SetMeta("_twitcher_sharp_instance", this);
+        _data.Set("broadcaster_user", BroadcasterUser.ToGodotObject());
+        _data.Set("sender_user", SenderUser.ToGodotObject());
+        ConnectSignals();
+        return instance;
+    }
+
+    public void FreeInstance()
+    {
+        if(_data is not null && !_data.IsQueuedForDeletion()) _data.RemoveMeta("_twitcher_sharp_instance");
+        Instance = null;
+    }
+
+    public override void _Notification(int what)
+    {
+        if(what == NotificationPredelete) FreeInstance();
     }
 }

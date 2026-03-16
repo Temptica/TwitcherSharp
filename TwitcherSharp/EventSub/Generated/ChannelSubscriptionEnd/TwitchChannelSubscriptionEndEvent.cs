@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelSubscriptionEnd;
 
-public partial class TwitchChannelSubscriptionEndEvent : Resource, ITwitcherSharpEventSub<TwitchChannelSubscriptionEndEvent>
+public partial class TwitchChannelSubscriptionEndEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelSubscriptionEndEvent>
 {
     /// <summary> 
     /// The user ID for the user whose subscription ended.

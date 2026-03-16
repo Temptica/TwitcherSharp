@@ -4,7 +4,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Streams;
 
-public partial class TwitchGetStreamsResponse : Resource, ITwitcherSharp<TwitchGetStreamsResponse>
+public partial class TwitchGetStreamsResponse : RefCounted, ITwitcherSharp<TwitchGetStreamsResponse>
 {
     private GodotObject _data;
     public TwitchStream[] Data { get; set; }

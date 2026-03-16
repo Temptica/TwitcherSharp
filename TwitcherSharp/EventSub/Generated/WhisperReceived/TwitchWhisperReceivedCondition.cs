@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.WhisperReceived;
 
-public partial class TwitchWhisperReceivedCondition : Resource, ITwitcherSharpCondition<TwitchWhisperReceivedCondition>
+public partial class TwitchWhisperReceivedCondition : RefCounted, ITwitcherSharpCondition<TwitchWhisperReceivedCondition>
 {
     public string Name => nameof(TwitchWhisperReceivedCondition);
 

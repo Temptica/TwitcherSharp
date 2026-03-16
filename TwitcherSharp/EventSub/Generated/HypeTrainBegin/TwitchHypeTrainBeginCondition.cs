@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.HypeTrainBegin;
 
-public partial class TwitchHypeTrainBeginCondition : Resource, ITwitcherSharpCondition<TwitchHypeTrainBeginCondition>
+public partial class TwitchHypeTrainBeginCondition : RefCounted, ITwitcherSharpCondition<TwitchHypeTrainBeginCondition>
 {
     public string Name => nameof(TwitchHypeTrainBeginCondition);
 

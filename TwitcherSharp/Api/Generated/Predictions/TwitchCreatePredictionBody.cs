@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Predictions;
 
-public partial class TwitchCreatePredictionBody : Resource, ITwitcherSharp<TwitchCreatePredictionBody>
+public partial class TwitchCreatePredictionBody : RefCounted, ITwitcherSharp<TwitchCreatePredictionBody>
 {
     private GodotObject _data;
     public string BroadcasterId { get; set; }
@@ -42,7 +42,7 @@ public partial class TwitchCreatePredictionBody : Resource, ITwitcherSharp<Twitc
     /// <summary> 
     /// The list of possible outcomes that the viewers may choose from. The list must contain a minimum of 2 choices and up to a maximum of 10 choices. 
     /// </summary>
-    public partial class TwitchOutcomes : Resource, ITwitcherSharp<TwitchOutcomes>
+    public partial class TwitchOutcomes : RefCounted, ITwitcherSharp<TwitchOutcomes>
     {
         private GodotObject _data;
         public string Title { get; set; }

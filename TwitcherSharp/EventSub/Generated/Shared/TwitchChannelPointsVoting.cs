@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.Shared;
 
-public partial class TwitchChannelPointsVoting : Resource, ITwitcherSharpEventSub<TwitchChannelPointsVoting>
+public partial class TwitchChannelPointsVoting : RefCounted, ITwitcherSharpEventSub<TwitchChannelPointsVoting>
 {
     /// <summary> 
     /// Indicates if Channel Points can be used for voting.

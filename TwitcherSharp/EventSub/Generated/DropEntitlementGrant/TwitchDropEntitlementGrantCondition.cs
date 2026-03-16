@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.DropEntitlementGrant;
 
-public partial class TwitchDropEntitlementGrantCondition : Resource, ITwitcherSharpCondition<TwitchDropEntitlementGrantCondition>
+public partial class TwitchDropEntitlementGrantCondition : RefCounted, ITwitcherSharpCondition<TwitchDropEntitlementGrantCondition>
 {
     public string Name => nameof(TwitchDropEntitlementGrantCondition);
 

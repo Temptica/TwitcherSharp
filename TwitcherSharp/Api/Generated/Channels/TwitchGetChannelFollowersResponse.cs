@@ -4,7 +4,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Channels;
 
-public partial class TwitchGetChannelFollowersResponse : Resource, ITwitcherSharp<TwitchGetChannelFollowersResponse>
+public partial class TwitchGetChannelFollowersResponse : RefCounted, ITwitcherSharp<TwitchGetChannelFollowersResponse>
 {
     private GodotObject _data;
     public TwitchData[] Data { get; set; }
@@ -40,7 +40,7 @@ public partial class TwitchGetChannelFollowersResponse : Resource, ITwitcherShar
     /// <summary> 
     /// The list of users that follow the specified broadcaster. The list is in descending order by `followed_at` (with the most recent follower first). The list is empty if nobody follows the broadcaster, the specified `user_id` isn’t in the follower list, the user access token is missing the **moderator:read:followers** scope, or the user isn’t the broadcaster or moderator for the channel. 
     /// </summary>
-    public partial class TwitchData : Resource, ITwitcherSharp<TwitchData>
+    public partial class TwitchData : RefCounted, ITwitcherSharp<TwitchData>
     {
         private GodotObject _data;
         public string FollowedAt { get; set; }

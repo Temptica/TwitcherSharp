@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Predictions;
 
-public partial class TwitchPrediction : Resource, ITwitcherSharp<TwitchPrediction>
+public partial class TwitchPrediction : RefCounted, ITwitcherSharp<TwitchPrediction>
 {
     private GodotObject _data;
     public string Id { get; set; }
@@ -61,7 +61,7 @@ public partial class TwitchPrediction : Resource, ITwitcherSharp<TwitchPredictio
         request.Set("locked_at", LockedAt);
         return request;
     }
-    public partial class TwitchPredictionOutcome : Resource, ITwitcherSharp<TwitchPredictionOutcome>
+    public partial class TwitchPredictionOutcome : RefCounted, ITwitcherSharp<TwitchPredictionOutcome>
     {
         private GodotObject _data;
         public string Id { get; set; }
@@ -105,7 +105,7 @@ public partial class TwitchPrediction : Resource, ITwitcherSharp<TwitchPredictio
         /// <summary> 
         /// A list of viewers who were the top predictors; otherwise, **null** if none. 
         /// </summary>
-        public partial class TwitchTopPredictors : Resource, ITwitcherSharp<TwitchTopPredictors>
+        public partial class TwitchTopPredictors : RefCounted, ITwitcherSharp<TwitchTopPredictors>
         {
             private GodotObject _data;
             public string UserId { get; set; }

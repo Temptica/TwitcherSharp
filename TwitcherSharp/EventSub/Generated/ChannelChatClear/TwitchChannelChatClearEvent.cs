@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelChatClear;
 
-public partial class TwitchChannelChatClearEvent : Resource, ITwitcherSharpEventSub<TwitchChannelChatClearEvent>
+public partial class TwitchChannelChatClearEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelChatClearEvent>
 {
     /// <summary> 
     /// The broadcaster user ID.

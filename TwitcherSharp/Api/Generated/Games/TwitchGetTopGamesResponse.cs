@@ -4,7 +4,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Games;
 
-public partial class TwitchGetTopGamesResponse : Resource, ITwitcherSharp<TwitchGetTopGamesResponse>
+public partial class TwitchGetTopGamesResponse : RefCounted, ITwitcherSharp<TwitchGetTopGamesResponse>
 {
     private GodotObject _data;
     public TwitchGame[] Data { get; set; }

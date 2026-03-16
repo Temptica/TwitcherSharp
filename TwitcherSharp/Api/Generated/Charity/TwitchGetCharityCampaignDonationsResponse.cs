@@ -4,7 +4,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Charity;
 
-public partial class TwitchGetCharityCampaignDonationsResponse : Resource, ITwitcherSharp<TwitchGetCharityCampaignDonationsResponse>
+public partial class TwitchGetCharityCampaignDonationsResponse : RefCounted, ITwitcherSharp<TwitchGetCharityCampaignDonationsResponse>
 {
     private GodotObject _data;
     public TwitchCharityCampaignDonation[] Data { get; set; }
@@ -33,7 +33,7 @@ public partial class TwitchGetCharityCampaignDonationsResponse : Resource, ITwit
         if(Pagination != null) request.Set("pagination", Pagination);
         return request;
     }
-    public partial class TwitchCharityCampaignDonation : Resource, ITwitcherSharp<TwitchCharityCampaignDonation>
+    public partial class TwitchCharityCampaignDonation : RefCounted, ITwitcherSharp<TwitchCharityCampaignDonation>
     {
         private GodotObject _data;
         public string Id { get; set; }
@@ -76,7 +76,7 @@ public partial class TwitchGetCharityCampaignDonationsResponse : Resource, ITwit
         /// <summary> 
         /// An object that contains the amount of money that the user donated. 
         /// </summary>
-        public partial class TwitchAmount : Resource, ITwitcherSharp<TwitchAmount>
+        public partial class TwitchAmount : RefCounted, ITwitcherSharp<TwitchAmount>
         {
             private GodotObject _data;
             public int Value { get; set; }

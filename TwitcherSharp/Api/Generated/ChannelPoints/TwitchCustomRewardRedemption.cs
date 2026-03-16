@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.ChannelPoints;
 
-public partial class TwitchCustomRewardRedemption : Resource, ITwitcherSharp<TwitchCustomRewardRedemption>
+public partial class TwitchCustomRewardRedemption : RefCounted, ITwitcherSharp<TwitchCustomRewardRedemption>
 {
     private GodotObject _data;
     public string BroadcasterId { get; set; }
@@ -61,7 +61,7 @@ public partial class TwitchCustomRewardRedemption : Resource, ITwitcherSharp<Twi
     /// <summary> 
     /// An object that describes the reward that the user redeemed. 
     /// </summary>
-    public partial class TwitchReward : Resource, ITwitcherSharp<TwitchReward>
+    public partial class TwitchReward : RefCounted, ITwitcherSharp<TwitchReward>
     {
         private GodotObject _data;
         public string Id { get; set; }

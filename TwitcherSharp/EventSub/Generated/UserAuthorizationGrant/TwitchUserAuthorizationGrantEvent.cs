@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.UserAuthorizationGrant;
 
-public partial class TwitchUserAuthorizationGrantEvent : Resource, ITwitcherSharpEventSub<TwitchUserAuthorizationGrantEvent>
+public partial class TwitchUserAuthorizationGrantEvent : RefCounted, ITwitcherSharpEventSub<TwitchUserAuthorizationGrantEvent>
 {
     /// <summary> 
     /// The client_id of the application that was granted user access.

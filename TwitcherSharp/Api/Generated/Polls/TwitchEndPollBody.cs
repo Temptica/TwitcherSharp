@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Polls;
 
-public partial class TwitchEndPollBody : Resource, ITwitcherSharp<TwitchEndPollBody>
+public partial class TwitchEndPollBody : RefCounted, ITwitcherSharp<TwitchEndPollBody>
 {
     private GodotObject _data;
     public string BroadcasterId { get; set; }

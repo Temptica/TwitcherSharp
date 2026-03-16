@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.Shared;
 
-public partial class TwitchProduct : Resource, ITwitcherSharpEventSub<TwitchProduct>
+public partial class TwitchProduct : RefCounted, ITwitcherSharpEventSub<TwitchProduct>
 {
     /// <summary> 
     /// Product name.

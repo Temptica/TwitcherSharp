@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.ChannelPoints;
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetCustomReward 
 /// </summary>
-public partial class TwitchGetCustomRewardOpt : Resource, ITwitcherSharp<TwitchGetCustomRewardOpt>
+public partial class TwitchGetCustomRewardOpt : RefCounted, ITwitcherSharp<TwitchGetCustomRewardOpt>
 {
     private GodotObject _data;
     public string[] Id { get; set; }

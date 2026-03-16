@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Streams;
 
-public partial class TwitchCreateStreamMarkerResponse : Resource, ITwitcherSharp<TwitchCreateStreamMarkerResponse>
+public partial class TwitchCreateStreamMarkerResponse : RefCounted, ITwitcherSharp<TwitchCreateStreamMarkerResponse>
 {
     private GodotObject _data;
     public TwitchStreamMarkerCreated[] Data { get; set; }
@@ -29,7 +29,7 @@ public partial class TwitchCreateStreamMarkerResponse : Resource, ITwitcherSharp
         request.Set("data", Data);
         return request;
     }
-    public partial class TwitchStreamMarkerCreated : Resource, ITwitcherSharp<TwitchStreamMarkerCreated>
+    public partial class TwitchStreamMarkerCreated : RefCounted, ITwitcherSharp<TwitchStreamMarkerCreated>
     {
         private GodotObject _data;
         public string Id { get; set; }

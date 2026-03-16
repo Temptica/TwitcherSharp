@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelSubscriptionGift;
 
-public partial class TwitchChannelSubscriptionGiftEvent : Resource, ITwitcherSharpEventSub<TwitchChannelSubscriptionGiftEvent>
+public partial class TwitchChannelSubscriptionGiftEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelSubscriptionGiftEvent>
 {
     /// <summary> 
     /// The user ID of the user who sent the subscription gift. Set to null if it was an anonymous subscription gift.

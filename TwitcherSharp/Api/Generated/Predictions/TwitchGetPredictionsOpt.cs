@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Predictions;
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetPredictions 
 /// </summary>
-public partial class TwitchGetPredictionsOpt : Resource, ITwitcherSharp<TwitchGetPredictionsOpt>
+public partial class TwitchGetPredictionsOpt : RefCounted, ITwitcherSharp<TwitchGetPredictionsOpt>
 {
     private GodotObject _data;
     public string[] Id { get; set; }

@@ -5,7 +5,7 @@ using TwitcherSharp.EventSub.Generated.Shared;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelPointsCustomRewardRedemptionAdd;
 
-public partial class TwitchChannelPointsCustomRewardRedemptionAddEvent : Resource, ITwitcherSharpEventSub<TwitchChannelPointsCustomRewardRedemptionAddEvent>
+public partial class TwitchChannelPointsCustomRewardRedemptionAddEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelPointsCustomRewardRedemptionAddEvent>
 {
     /// <summary> 
     /// The redemption identifier.

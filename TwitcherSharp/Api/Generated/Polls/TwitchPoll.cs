@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Polls;
 
-public partial class TwitchPoll : Resource, ITwitcherSharp<TwitchPoll>
+public partial class TwitchPoll : RefCounted, ITwitcherSharp<TwitchPoll>
 {
     private GodotObject _data;
     public string Id { get; set; }
@@ -71,7 +71,7 @@ public partial class TwitchPoll : Resource, ITwitcherSharp<TwitchPoll>
     /// <summary> 
     /// A list of choices that viewers can choose from. The list will contain a minimum of two choices and up to a maximum of five choices. 
     /// </summary>
-    public partial class TwitchChoices : Resource, ITwitcherSharp<TwitchChoices>
+    public partial class TwitchChoices : RefCounted, ITwitcherSharp<TwitchChoices>
     {
         private GodotObject _data;
         public string Id { get; set; }

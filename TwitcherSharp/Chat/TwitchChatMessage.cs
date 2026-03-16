@@ -4,7 +4,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.Chat;
 
-public partial class TwitchChatMessage : Resource, ITwitcherSharp<TwitchChatMessage>
+public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMessage>
 {
     public string BroadcasterUserId { get; set; }
     public string BroadcasterUserName { get; set; }
@@ -85,7 +85,7 @@ public partial class TwitchChatMessage : Resource, ITwitcherSharp<TwitchChatMess
     private string GetColor(string defaultColor = "#AAAAAA") => string.IsNullOrEmpty(Color) ? defaultColor : Color;
 }
 
-public partial class Message : Resource, ITwitcherSharp<Message>
+public partial class Message : RefCounted, ITwitcherSharp<Message>
 {
     public string Text { get; set; }
     public Fragment[] Fragments { get; set; } = [];
@@ -112,7 +112,7 @@ public partial class Message : Resource, ITwitcherSharp<Message>
     }
 }
 
-public partial class Fragment : Resource, ITwitcherSharp<Fragment>
+public partial class Fragment : RefCounted, ITwitcherSharp<Fragment>
 {
     public FragmentType Type { get; set; }
     public string Text { get; set; }
@@ -145,7 +145,7 @@ public partial class Fragment : Resource, ITwitcherSharp<Fragment>
     }
 }
 
-public partial class Mention : Resource, ITwitcherSharp<Mention>
+public partial class Mention : RefCounted, ITwitcherSharp<Mention>
 {
     public string UserId { get; set; }
     public string UserName { get; set; }
@@ -173,7 +173,7 @@ public partial class Mention : Resource, ITwitcherSharp<Mention>
     }
 }
 
-public partial class Cheermote : Resource, ITwitcherSharp<Cheermote>
+public partial class Cheermote : RefCounted, ITwitcherSharp<Cheermote>
 {
     public string Prefix { get; set; }
     public int Bits { get; set; }
@@ -201,7 +201,7 @@ public partial class Cheermote : Resource, ITwitcherSharp<Cheermote>
     }
 }
 
-public partial class Emote : Resource, ITwitcherSharp<Emote>
+public partial class Emote : RefCounted, ITwitcherSharp<Emote>
 {
     public string Id { get; set; }
     public string EmoteSetId { get; set; }
@@ -234,7 +234,7 @@ public partial class Emote : Resource, ITwitcherSharp<Emote>
     }
 }
 
-public partial class Badge : Resource, ITwitcherSharp<Badge>
+public partial class Badge : RefCounted, ITwitcherSharp<Badge>
 {
     public string SetId { get; set; }
     public string Id { get; set; }
@@ -262,7 +262,7 @@ public partial class Badge : Resource, ITwitcherSharp<Badge>
     }
 }
 
-public partial class Cheer : Resource, ITwitcherSharp<Cheer>
+public partial class Cheer : RefCounted, ITwitcherSharp<Cheer>
 {
     public int Bits { get; set; }
 
@@ -278,7 +278,7 @@ public partial class Cheer : Resource, ITwitcherSharp<Cheer>
     }
 }
 
-public partial class Reply : Resource, ITwitcherSharp<Reply>
+public partial class Reply : RefCounted, ITwitcherSharp<Reply>
 {
     public string ParentMessageId { get; set; }
     public string ParentMessageBody { get; set; }

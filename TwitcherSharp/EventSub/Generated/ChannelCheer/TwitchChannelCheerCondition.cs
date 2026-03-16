@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelCheer;
 
-public partial class TwitchChannelCheerCondition : Resource, ITwitcherSharpCondition<TwitchChannelCheerCondition>
+public partial class TwitchChannelCheerCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelCheerCondition>
 {
     public string Name => nameof(TwitchChannelCheerCondition);
 

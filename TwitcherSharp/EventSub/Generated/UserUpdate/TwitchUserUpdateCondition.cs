@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.UserUpdate;
 
-public partial class TwitchUserUpdateCondition : Resource, ITwitcherSharpCondition<TwitchUserUpdateCondition>
+public partial class TwitchUserUpdateCondition : RefCounted, ITwitcherSharpCondition<TwitchUserUpdateCondition>
 {
     public string Name => nameof(TwitchUserUpdateCondition);
 

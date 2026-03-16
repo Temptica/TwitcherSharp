@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Ads;
 
-public partial class TwitchStartCommercialResponse : Resource, ITwitcherSharp<TwitchStartCommercialResponse>
+public partial class TwitchStartCommercialResponse : RefCounted, ITwitcherSharp<TwitchStartCommercialResponse>
 {
     private GodotObject _data;
     public TwitchData[] Data { get; set; }
@@ -33,7 +33,7 @@ public partial class TwitchStartCommercialResponse : Resource, ITwitcherSharp<Tw
     /// <summary> 
     /// An array that contains a single object with the status of your start commercial request. 
     /// </summary>
-    public partial class TwitchData : Resource, ITwitcherSharp<TwitchData>
+    public partial class TwitchData : RefCounted, ITwitcherSharp<TwitchData>
     {
         private GodotObject _data;
         public int Length { get; set; }

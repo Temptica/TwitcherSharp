@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelSuspiciousUserUpdate;
 
-public partial class TwitchChannelSuspiciousUserUpdateCondition : Resource, ITwitcherSharpCondition<TwitchChannelSuspiciousUserUpdateCondition>
+public partial class TwitchChannelSuspiciousUserUpdateCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelSuspiciousUserUpdateCondition>
 {
     public string Name => nameof(TwitchChannelSuspiciousUserUpdateCondition);
 

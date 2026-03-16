@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 // ReSharper disable ClassNeverInstantiated.Global
 namespace TwitcherSharp.Reward;
 
-public partial class TwitchRedemption : Resource, ITwitcherSharp<TwitchRedemption>
+public partial class TwitchRedemption : RefCounted, ITwitcherSharp<TwitchRedemption>
 {
     private TwitchRedemption()
     {

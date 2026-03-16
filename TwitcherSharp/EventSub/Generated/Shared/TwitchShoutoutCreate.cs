@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.Shared;
 
-public partial class TwitchShoutoutCreate : Resource, ITwitcherSharpEventSub<TwitchShoutoutCreate>
+public partial class TwitchShoutoutCreate : RefCounted, ITwitcherSharpEventSub<TwitchShoutoutCreate>
 {
     /// <summary> 
     /// An ID that identifies the broadcaster that sent the Shoutout.

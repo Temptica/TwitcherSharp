@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.UserAuthorizationRevoke;
 
-public partial class TwitchUserAuthorizationRevokeCondition : Resource, ITwitcherSharpCondition<TwitchUserAuthorizationRevokeCondition>
+public partial class TwitchUserAuthorizationRevokeCondition : RefCounted, ITwitcherSharpCondition<TwitchUserAuthorizationRevokeCondition>
 {
     public string Name => nameof(TwitchUserAuthorizationRevokeCondition);
 

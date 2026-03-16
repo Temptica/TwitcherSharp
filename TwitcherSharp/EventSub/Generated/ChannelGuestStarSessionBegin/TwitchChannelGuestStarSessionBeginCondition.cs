@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelGuestStarSessionBegin;
 
-public partial class TwitchChannelGuestStarSessionBeginCondition : Resource, ITwitcherSharpCondition<TwitchChannelGuestStarSessionBeginCondition>
+public partial class TwitchChannelGuestStarSessionBeginCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelGuestStarSessionBeginCondition>
 {
     public string Name => nameof(TwitchChannelGuestStarSessionBeginCondition);
 

@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Channels;
 
-public partial class TwitchModifyChannelInformationBody : Resource, ITwitcherSharp<TwitchModifyChannelInformationBody>
+public partial class TwitchModifyChannelInformationBody : RefCounted, ITwitcherSharp<TwitchModifyChannelInformationBody>
 {
     private GodotObject _data;
     public string GameId { get; set; }
@@ -51,7 +51,7 @@ public partial class TwitchModifyChannelInformationBody : Resource, ITwitcherSha
     /// <summary> 
     /// List of labels that should be set as the Channel’s CCLs. 
     /// </summary>
-    public partial class TwitchContentClassificationLabels : Resource, ITwitcherSharp<TwitchContentClassificationLabels>
+    public partial class TwitchContentClassificationLabels : RefCounted, ITwitcherSharp<TwitchContentClassificationLabels>
     {
         private GodotObject _data;
         public string Id { get; set; }

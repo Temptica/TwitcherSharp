@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.ChannelPoints;
 
-public partial class TwitchUpdateRedemptionStatusBody : Resource, ITwitcherSharp<TwitchUpdateRedemptionStatusBody>
+public partial class TwitchUpdateRedemptionStatusBody : RefCounted, ITwitcherSharp<TwitchUpdateRedemptionStatusBody>
 {
     private GodotObject _data;
     public string Status { get; set; }

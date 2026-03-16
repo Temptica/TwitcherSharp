@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.Shared;
 
-public partial class TwitchChoices : Resource, ITwitcherSharpEventSub<TwitchChoices>
+public partial class TwitchChoices : RefCounted, ITwitcherSharpEventSub<TwitchChoices>
 {
     /// <summary> 
     /// ID for the choice.

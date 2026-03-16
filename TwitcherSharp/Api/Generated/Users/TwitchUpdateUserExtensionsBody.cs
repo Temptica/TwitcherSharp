@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Users;
 
-public partial class TwitchUpdateUserExtensionsBody : Resource, ITwitcherSharp<TwitchUpdateUserExtensionsBody>
+public partial class TwitchUpdateUserExtensionsBody : RefCounted, ITwitcherSharp<TwitchUpdateUserExtensionsBody>
 {
     private GodotObject _data;
     public TwitchData Data { get; set; }
@@ -36,7 +36,7 @@ public partial class TwitchUpdateUserExtensionsBody : Resource, ITwitcherSharp<T
     ///   
     /// For component extensions, the key’s value includes the above fields plus the `x` and `y` fields, which identify the coordinate where the extension is placed. 
     /// </summary>
-    public partial class TwitchData : Resource, ITwitcherSharp<TwitchData>
+    public partial class TwitchData : RefCounted, ITwitcherSharp<TwitchData>
     {
         private GodotObject _data;
         public Variant? Panel { get; set; }

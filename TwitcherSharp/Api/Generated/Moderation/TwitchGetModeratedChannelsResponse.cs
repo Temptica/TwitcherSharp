@@ -4,7 +4,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
 
-public partial class TwitchGetModeratedChannelsResponse : Resource, ITwitcherSharp<TwitchGetModeratedChannelsResponse>
+public partial class TwitchGetModeratedChannelsResponse : RefCounted, ITwitcherSharp<TwitchGetModeratedChannelsResponse>
 {
     private GodotObject _data;
     public TwitchData[] Data { get; set; }
@@ -37,7 +37,7 @@ public partial class TwitchGetModeratedChannelsResponse : Resource, ITwitcherSha
     /// <summary> 
     /// The list of channels that the user has moderator privileges in. 
     /// </summary>
-    public partial class TwitchData : Resource, ITwitcherSharp<TwitchData>
+    public partial class TwitchData : RefCounted, ITwitcherSharp<TwitchData>
     {
         private GodotObject _data;
         public string BroadcasterId { get; set; }

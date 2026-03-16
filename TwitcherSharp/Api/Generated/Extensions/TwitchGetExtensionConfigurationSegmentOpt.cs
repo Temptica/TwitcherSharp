@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Extensions;
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetExtensionConfigurationSegment 
 /// </summary>
-public partial class TwitchGetExtensionConfigurationSegmentOpt : Resource, ITwitcherSharp<TwitchGetExtensionConfigurationSegmentOpt>
+public partial class TwitchGetExtensionConfigurationSegmentOpt : RefCounted, ITwitcherSharp<TwitchGetExtensionConfigurationSegmentOpt>
 {
     private GodotObject _data;
     public string BroadcasterId { get; set; }

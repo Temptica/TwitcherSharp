@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelVIPAdd;
 
-public partial class TwitchChannelVIPAddEvent : Resource, ITwitcherSharpEventSub<TwitchChannelVIPAddEvent>
+public partial class TwitchChannelVIPAddEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelVIPAddEvent>
 {
     /// <summary> 
     /// The ID of the user who was added as a VIP.

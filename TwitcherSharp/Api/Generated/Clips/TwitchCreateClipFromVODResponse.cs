@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Clips;
 
-public partial class TwitchCreateClipFromVODResponse : Resource, ITwitcherSharp<TwitchCreateClipFromVODResponse>
+public partial class TwitchCreateClipFromVODResponse : RefCounted, ITwitcherSharp<TwitchCreateClipFromVODResponse>
 {
     private GodotObject _data;
     public TwitchData[] Data { get; set; }
@@ -33,7 +33,7 @@ public partial class TwitchCreateClipFromVODResponse : Resource, ITwitcherSharp<
     /// <summary> 
     /// A list containing the created clip. 
     /// </summary>
-    public partial class TwitchData : Resource, ITwitcherSharp<TwitchData>
+    public partial class TwitchData : RefCounted, ITwitcherSharp<TwitchData>
     {
         private GodotObject _data;
         public string Id { get; set; }

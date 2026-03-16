@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Chat;
 
-public partial class TwitchUpdateChatSettingsBody : Resource, ITwitcherSharp<TwitchUpdateChatSettingsBody>
+public partial class TwitchUpdateChatSettingsBody : RefCounted, ITwitcherSharp<TwitchUpdateChatSettingsBody>
 {
     private GodotObject _data;
     public bool? EmoteMode { get; set; }

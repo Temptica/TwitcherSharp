@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelUpdate;
 
-public partial class TwitchChannelUpdateCondition : Resource, ITwitcherSharpCondition<TwitchChannelUpdateCondition>
+public partial class TwitchChannelUpdateCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelUpdateCondition>
 {
     public string Name => nameof(TwitchChannelUpdateCondition);
 

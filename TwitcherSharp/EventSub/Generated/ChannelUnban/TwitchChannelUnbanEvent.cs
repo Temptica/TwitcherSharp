@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelUnban;
 
-public partial class TwitchChannelUnbanEvent : Resource, ITwitcherSharpEventSub<TwitchChannelUnbanEvent>
+public partial class TwitchChannelUnbanEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelUnbanEvent>
 {
     /// <summary> 
     /// The user id for the user who was unbanned on the specified channel.

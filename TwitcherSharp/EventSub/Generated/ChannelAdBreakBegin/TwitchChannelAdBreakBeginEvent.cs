@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelAdBreakBegin;
 
-public partial class TwitchChannelAdBreakBeginEvent : Resource, ITwitcherSharpEventSub<TwitchChannelAdBreakBeginEvent>
+public partial class TwitchChannelAdBreakBeginEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelAdBreakBeginEvent>
 {
     /// <summary> 
     /// Length in seconds of the mid-roll ad break requested

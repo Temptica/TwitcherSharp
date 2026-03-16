@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelPredictionProgress;
 
-public partial class TwitchChannelPredictionProgressCondition : Resource, ITwitcherSharpCondition<TwitchChannelPredictionProgressCondition>
+public partial class TwitchChannelPredictionProgressCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelPredictionProgressCondition>
 {
     public string Name => nameof(TwitchChannelPredictionProgressCondition);
 

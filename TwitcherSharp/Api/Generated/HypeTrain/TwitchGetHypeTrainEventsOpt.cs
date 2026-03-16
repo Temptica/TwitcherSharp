@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.HypeTrain;
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetHypeTrainEvents 
 /// </summary>
-public partial class TwitchGetHypeTrainEventsOpt : Resource, ITwitcherSharp<TwitchGetHypeTrainEventsOpt>
+public partial class TwitchGetHypeTrainEventsOpt : RefCounted, ITwitcherSharp<TwitchGetHypeTrainEventsOpt>
 {
     private GodotObject _data;
     public int? First { get; set; }

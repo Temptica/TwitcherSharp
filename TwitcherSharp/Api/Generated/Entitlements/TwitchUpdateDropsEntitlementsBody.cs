@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Entitlements;
 
-public partial class TwitchUpdateDropsEntitlementsBody : Resource, ITwitcherSharp<TwitchUpdateDropsEntitlementsBody>
+public partial class TwitchUpdateDropsEntitlementsBody : RefCounted, ITwitcherSharp<TwitchUpdateDropsEntitlementsBody>
 {
     private GodotObject _data;
     public string[] EntitlementIds { get; set; }

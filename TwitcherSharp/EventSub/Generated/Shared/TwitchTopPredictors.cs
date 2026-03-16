@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.Shared;
 
-public partial class TwitchTopPredictors : Resource, ITwitcherSharpEventSub<TwitchTopPredictors>
+public partial class TwitchTopPredictors : RefCounted, ITwitcherSharpEventSub<TwitchTopPredictors>
 {
     /// <summary> 
     /// The ID of the user.

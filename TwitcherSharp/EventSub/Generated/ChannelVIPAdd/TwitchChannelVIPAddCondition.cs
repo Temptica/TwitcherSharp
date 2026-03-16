@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelVIPAdd;
 
-public partial class TwitchChannelVIPAddCondition : Resource, ITwitcherSharpCondition<TwitchChannelVIPAddCondition>
+public partial class TwitchChannelVIPAddCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelVIPAddCondition>
 {
     public string Name => nameof(TwitchChannelVIPAddCondition);
 

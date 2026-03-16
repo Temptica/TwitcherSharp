@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Extensions;
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetExtensionLiveChannels 
 /// </summary>
-public partial class TwitchGetExtensionLiveChannelsOpt : Resource, ITwitcherSharp<TwitchGetExtensionLiveChannelsOpt>
+public partial class TwitchGetExtensionLiveChannelsOpt : RefCounted, ITwitcherSharp<TwitchGetExtensionLiveChannelsOpt>
 {
     private GodotObject _data;
     public int? First { get; set; }

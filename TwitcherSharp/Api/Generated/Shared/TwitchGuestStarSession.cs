@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Shared;
 
-public partial class TwitchGuestStarSession : Resource, ITwitcherSharp<TwitchGuestStarSession>
+public partial class TwitchGuestStarSession : RefCounted, ITwitcherSharp<TwitchGuestStarSession>
 {
     private GodotObject _data;
     public string Id { get; set; }
@@ -31,7 +31,7 @@ public partial class TwitchGuestStarSession : Resource, ITwitcherSharp<TwitchGue
         request.Set("guests", Guests);
         return request;
     }
-    public partial class TwitchGuest : Resource, ITwitcherSharp<TwitchGuest>
+    public partial class TwitchGuest : RefCounted, ITwitcherSharp<TwitchGuest>
     {
         private GodotObject _data;
         public string SlotId { get; set; }
@@ -83,7 +83,7 @@ public partial class TwitchGuestStarSession : Resource, ITwitcherSharp<TwitchGue
         /// <summary> 
         /// Information about the guest’s audio settings 
         /// </summary>
-        public partial class TwitchAudioSettings : Resource, ITwitcherSharp<TwitchAudioSettings>
+        public partial class TwitchAudioSettings : RefCounted, ITwitcherSharp<TwitchAudioSettings>
         {
             private GodotObject _data;
             public bool IsHostEnabled { get; set; }
@@ -119,7 +119,7 @@ public partial class TwitchGuestStarSession : Resource, ITwitcherSharp<TwitchGue
         /// <summary> 
         /// Information about the guest’s video settings 
         /// </summary>
-        public partial class TwitchVideoSettings : Resource, ITwitcherSharp<TwitchVideoSettings>
+        public partial class TwitchVideoSettings : RefCounted, ITwitcherSharp<TwitchVideoSettings>
         {
             private GodotObject _data;
             public bool IsHostEnabled { get; set; }

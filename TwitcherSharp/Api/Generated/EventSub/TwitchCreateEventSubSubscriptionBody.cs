@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.EventSub;
 
-public partial class TwitchCreateEventSubSubscriptionBody : Resource, ITwitcherSharp<TwitchCreateEventSubSubscriptionBody>
+public partial class TwitchCreateEventSubSubscriptionBody : RefCounted, ITwitcherSharp<TwitchCreateEventSubSubscriptionBody>
 {
     private GodotObject _data;
     public string Type { get; set; }
@@ -41,7 +41,7 @@ public partial class TwitchCreateEventSubSubscriptionBody : Resource, ITwitcherS
     /// <summary> 
     /// The transport details that you want Twitch to use when sending you notifications. 
     /// </summary>
-    public partial class TwitchTransport : Resource, ITwitcherSharp<TwitchTransport>
+    public partial class TwitchTransport : RefCounted, ITwitcherSharp<TwitchTransport>
     {
         private GodotObject _data;
         public string Method { get; set; }

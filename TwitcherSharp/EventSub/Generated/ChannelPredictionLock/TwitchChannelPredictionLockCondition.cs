@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelPredictionLock;
 
-public partial class TwitchChannelPredictionLockCondition : Resource, ITwitcherSharpCondition<TwitchChannelPredictionLockCondition>
+public partial class TwitchChannelPredictionLockCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelPredictionLockCondition>
 {
     public string Name => nameof(TwitchChannelPredictionLockCondition);
 

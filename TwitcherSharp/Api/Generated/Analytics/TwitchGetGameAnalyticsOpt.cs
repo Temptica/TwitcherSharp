@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Analytics;
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetGameAnalytics 
 /// </summary>
-public partial class TwitchGetGameAnalyticsOpt : Resource, ITwitcherSharp<TwitchGetGameAnalyticsOpt>
+public partial class TwitchGetGameAnalyticsOpt : RefCounted, ITwitcherSharp<TwitchGetGameAnalyticsOpt>
 {
     private GodotObject _data;
     public string GameId { get; set; }

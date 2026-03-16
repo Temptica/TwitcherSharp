@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelCheer;
 
-public partial class TwitchChannelCheerEvent : Resource, ITwitcherSharpEventSub<TwitchChannelCheerEvent>
+public partial class TwitchChannelCheerEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelCheerEvent>
 {
     /// <summary> 
     /// Whether the user cheered anonymously or not.

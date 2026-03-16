@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
 
-public partial class TwitchUpdateShieldModeStatusBody : Resource, ITwitcherSharp<TwitchUpdateShieldModeStatusBody>
+public partial class TwitchUpdateShieldModeStatusBody : RefCounted, ITwitcherSharp<TwitchUpdateShieldModeStatusBody>
 {
     private GodotObject _data;
     public bool IsActive { get; set; }

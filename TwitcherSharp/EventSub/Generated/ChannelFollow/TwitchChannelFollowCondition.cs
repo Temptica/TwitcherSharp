@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelFollow;
 
-public partial class TwitchChannelFollowCondition : Resource, ITwitcherSharpCondition<TwitchChannelFollowCondition>
+public partial class TwitchChannelFollowCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelFollowCondition>
 {
     public string Name => nameof(TwitchChannelFollowCondition);
 

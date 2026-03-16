@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Schedule;
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetChannelStreamSchedule 
 /// </summary>
-public partial class TwitchGetChannelStreamScheduleOpt : Resource, ITwitcherSharp<TwitchGetChannelStreamScheduleOpt>
+public partial class TwitchGetChannelStreamScheduleOpt : RefCounted, ITwitcherSharp<TwitchGetChannelStreamScheduleOpt>
 {
     private GodotObject _data;
     public string[] Id { get; set; }

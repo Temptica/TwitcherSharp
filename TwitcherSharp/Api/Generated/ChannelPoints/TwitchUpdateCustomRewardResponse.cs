@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.ChannelPoints;
 
-public partial class TwitchUpdateCustomRewardResponse : Resource, ITwitcherSharp<TwitchUpdateCustomRewardResponse>
+public partial class TwitchUpdateCustomRewardResponse : RefCounted, ITwitcherSharp<TwitchUpdateCustomRewardResponse>
 {
     private GodotObject _data;
     public TwitchCustomReward[] Data { get; set; }

@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelChatNotification;
 
-public partial class TwitchChannelChatNotificationEvent : Resource, ITwitcherSharpEventSub<TwitchChannelChatNotificationEvent>
+public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelChatNotificationEvent>
 {
     /// <summary> 
     /// The broadcaster user ID.
@@ -308,7 +308,7 @@ public partial class TwitchChannelChatNotificationEvent : Resource, ITwitcherSha
         return request;
     }
 
-    public partial class TwitchBadges : Resource, ITwitcherSharpEventSub<TwitchBadges>
+    public partial class TwitchBadges : RefCounted, ITwitcherSharpEventSub<TwitchBadges>
     {
         /// <summary> 
         /// An ID that identifies this set of chat badges. For example, Bits or Subscriber.
@@ -351,7 +351,7 @@ public partial class TwitchChannelChatNotificationEvent : Resource, ITwitcherSha
         }
     }
 
-    public partial class TwitchMessage : Resource, ITwitcherSharpEventSub<TwitchMessage>
+    public partial class TwitchMessage : RefCounted, ITwitcherSharpEventSub<TwitchMessage>
     {
         /// <summary> 
         /// The chat message in plain text.
@@ -387,7 +387,7 @@ public partial class TwitchChannelChatNotificationEvent : Resource, ITwitcherSha
             return request;
         }
     
-        public partial class TwitchText : Resource, ITwitcherSharpEventSub<TwitchText>
+        public partial class TwitchText : RefCounted, ITwitcherSharpEventSub<TwitchText>
         {
         
             /// <summary> 
@@ -410,7 +410,7 @@ public partial class TwitchChannelChatNotificationEvent : Resource, ITwitcherSha
             }
         }
     
-        public partial class TwitchFragments : Resource, ITwitcherSharpEventSub<TwitchFragments>
+        public partial class TwitchFragments : RefCounted, ITwitcherSharpEventSub<TwitchFragments>
         {
             /// <summary> 
             /// The type of message fragment. Possible values: textcheermoteemotemention
@@ -466,7 +466,7 @@ public partial class TwitchChannelChatNotificationEvent : Resource, ITwitcherSha
                 return request;
             }
         
-            public partial class TwitchCheermote : Resource, ITwitcherSharpEventSub<TwitchCheermote>
+            public partial class TwitchCheermote : RefCounted, ITwitcherSharpEventSub<TwitchCheermote>
             {
                 /// <summary> 
                 /// The name portion of the Cheermote string that you use in chat to cheer Bits. The full Cheermote string is the concatenation of {prefix} + {number of Bits}. For example, if the prefix is “Cheer” and you want to cheer 100 Bits, the full Cheermote string is Cheer100. When the Cheermote string is entered in chat, Twitch converts it to the image associated with the Bits tier that was cheered.
@@ -508,7 +508,7 @@ public partial class TwitchChannelChatNotificationEvent : Resource, ITwitcherSha
                     return request;
                 }
             
-                public partial class TwitchPrefix : Resource, ITwitcherSharpEventSub<TwitchPrefix>
+                public partial class TwitchPrefix : RefCounted, ITwitcherSharpEventSub<TwitchPrefix>
                 {
                 
                     /// <summary> 
@@ -532,7 +532,7 @@ public partial class TwitchChannelChatNotificationEvent : Resource, ITwitcherSha
                 }
             }
         
-            public partial class TwitchEmote : Resource, ITwitcherSharpEventSub<TwitchEmote>
+            public partial class TwitchEmote : RefCounted, ITwitcherSharpEventSub<TwitchEmote>
             {
                 /// <summary> 
                 /// An ID that uniquely identifies this emote.
@@ -582,7 +582,7 @@ public partial class TwitchChannelChatNotificationEvent : Resource, ITwitcherSha
                 }
             }
         
-            public partial class TwitchMention : Resource, ITwitcherSharpEventSub<TwitchMention>
+            public partial class TwitchMention : RefCounted, ITwitcherSharpEventSub<TwitchMention>
             {
                 /// <summary> 
                 /// The user ID of the mentioned user.
@@ -627,7 +627,7 @@ public partial class TwitchChannelChatNotificationEvent : Resource, ITwitcherSha
         }
     }
 
-    public partial class TwitchSub : Resource, ITwitcherSharpEventSub<TwitchSub>
+    public partial class TwitchSub : RefCounted, ITwitcherSharpEventSub<TwitchSub>
     {
         /// <summary> 
         /// The type of subscription plan being used. Possible values are: 1000 - First level of paid or Prime subscription.2000 - Second level of paid subscription.3000 - Third level of paid subscription.
@@ -670,7 +670,7 @@ public partial class TwitchChannelChatNotificationEvent : Resource, ITwitcherSha
         }
     }
 
-    public partial class TwitchResub : Resource, ITwitcherSharpEventSub<TwitchResub>
+    public partial class TwitchResub : RefCounted, ITwitcherSharpEventSub<TwitchResub>
     {
         /// <summary> 
         /// The total number of months the user has subscribed.
@@ -762,7 +762,7 @@ public partial class TwitchChannelChatNotificationEvent : Resource, ITwitcherSha
         }
     }
 
-    public partial class TwitchSubGift : Resource, ITwitcherSharpEventSub<TwitchSubGift>
+    public partial class TwitchSubGift : RefCounted, ITwitcherSharpEventSub<TwitchSubGift>
     {
         /// <summary> 
         /// The number of months the subscription is for.
@@ -833,7 +833,7 @@ public partial class TwitchChannelChatNotificationEvent : Resource, ITwitcherSha
         }
     }
 
-    public partial class TwitchCommunitySubGift : Resource, ITwitcherSharpEventSub<TwitchCommunitySubGift>
+    public partial class TwitchCommunitySubGift : RefCounted, ITwitcherSharpEventSub<TwitchCommunitySubGift>
     {
         /// <summary> 
         /// The ID of the associated community gift.
@@ -883,7 +883,7 @@ public partial class TwitchChannelChatNotificationEvent : Resource, ITwitcherSha
         }
     }
 
-    public partial class TwitchGiftPaidUpgrade : Resource, ITwitcherSharpEventSub<TwitchGiftPaidUpgrade>
+    public partial class TwitchGiftPaidUpgrade : RefCounted, ITwitcherSharpEventSub<TwitchGiftPaidUpgrade>
     {
         /// <summary> 
         /// Whether the gift was given anonymously.
@@ -926,7 +926,7 @@ public partial class TwitchChannelChatNotificationEvent : Resource, ITwitcherSha
         }
     }
 
-    public partial class TwitchPrimePaidUpgrade : Resource, ITwitcherSharpEventSub<TwitchPrimePaidUpgrade>
+    public partial class TwitchPrimePaidUpgrade : RefCounted, ITwitcherSharpEventSub<TwitchPrimePaidUpgrade>
     {
         /// <summary> 
         /// The type of subscription plan being used. Possible values are: 1000 - First level of paid or Prime subscription.2000 - Second level of paid subscription.3000 - Third level of paid subscription.
@@ -955,7 +955,7 @@ public partial class TwitchChannelChatNotificationEvent : Resource, ITwitcherSha
         }
     }
 
-    public partial class TwitchPayItForward : Resource, ITwitcherSharpEventSub<TwitchPayItForward>
+    public partial class TwitchPayItForward : RefCounted, ITwitcherSharpEventSub<TwitchPayItForward>
     {
         /// <summary> 
         /// Whether the gift was given anonymously.
@@ -1005,7 +1005,7 @@ public partial class TwitchChannelChatNotificationEvent : Resource, ITwitcherSha
         }
     }
 
-    public partial class TwitchRaid : Resource, ITwitcherSharpEventSub<TwitchRaid>
+    public partial class TwitchRaid : RefCounted, ITwitcherSharpEventSub<TwitchRaid>
     {
         /// <summary> 
         /// The user ID of the broadcaster raiding this channel.
@@ -1062,7 +1062,7 @@ public partial class TwitchChannelChatNotificationEvent : Resource, ITwitcherSha
         }
     }
 
-    public partial class TwitchUnraid : Resource, ITwitcherSharpEventSub<TwitchUnraid>
+    public partial class TwitchUnraid : RefCounted, ITwitcherSharpEventSub<TwitchUnraid>
     {
     
         /// <summary> 
@@ -1085,7 +1085,7 @@ public partial class TwitchChannelChatNotificationEvent : Resource, ITwitcherSha
         }
     }
 
-    public partial class TwitchAnnouncement : Resource, ITwitcherSharpEventSub<TwitchAnnouncement>
+    public partial class TwitchAnnouncement : RefCounted, ITwitcherSharpEventSub<TwitchAnnouncement>
     {
         /// <summary> 
         /// Color of the announcement.
@@ -1114,7 +1114,7 @@ public partial class TwitchChannelChatNotificationEvent : Resource, ITwitcherSha
         }
     }
 
-    public partial class TwitchBitsBadgeTier : Resource, ITwitcherSharpEventSub<TwitchBitsBadgeTier>
+    public partial class TwitchBitsBadgeTier : RefCounted, ITwitcherSharpEventSub<TwitchBitsBadgeTier>
     {
         /// <summary> 
         /// The tier of the Bits badge the user just earned. For example, 100, 1000, or 10000.
@@ -1143,7 +1143,7 @@ public partial class TwitchChannelChatNotificationEvent : Resource, ITwitcherSha
         }
     }
 
-    public partial class TwitchAmount : Resource, ITwitcherSharpEventSub<TwitchAmount>
+    public partial class TwitchAmount : RefCounted, ITwitcherSharpEventSub<TwitchAmount>
     {
         /// <summary> 
         /// The monetary amount. The amount is specified in the currency’s minor unit. For example, the minor units for USD is cents, so if the amount is $5.50 USD, value is set to 550.
@@ -1186,7 +1186,7 @@ public partial class TwitchChannelChatNotificationEvent : Resource, ITwitcherSha
         }
     }
 
-    public partial class TwitchSourceBadges : Resource, ITwitcherSharpEventSub<TwitchSourceBadges>
+    public partial class TwitchSourceBadges : RefCounted, ITwitcherSharpEventSub<TwitchSourceBadges>
     {
         /// <summary> 
         /// The ID that identifies this set of chat badges. For example, Bits or Subscriber.

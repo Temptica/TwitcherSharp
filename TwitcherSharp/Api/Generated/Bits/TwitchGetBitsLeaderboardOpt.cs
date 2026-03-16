@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Bits;
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetBitsLeaderboard 
 /// </summary>
-public partial class TwitchGetBitsLeaderboardOpt : Resource, ITwitcherSharp<TwitchGetBitsLeaderboardOpt>
+public partial class TwitchGetBitsLeaderboardOpt : RefCounted, ITwitcherSharp<TwitchGetBitsLeaderboardOpt>
 {
     private GodotObject _data;
     public int? Count { get; set; }

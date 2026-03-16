@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Chat;
 
-public partial class TwitchUpdateChatSettingsResponse : Resource, ITwitcherSharp<TwitchUpdateChatSettingsResponse>
+public partial class TwitchUpdateChatSettingsResponse : RefCounted, ITwitcherSharp<TwitchUpdateChatSettingsResponse>
 {
     private GodotObject _data;
     public TwitchChatSettingsUpdated[] Data { get; set; }
@@ -29,7 +29,7 @@ public partial class TwitchUpdateChatSettingsResponse : Resource, ITwitcherSharp
         request.Set("data", Data);
         return request;
     }
-    public partial class TwitchChatSettingsUpdated : Resource, ITwitcherSharp<TwitchChatSettingsUpdated>
+    public partial class TwitchChatSettingsUpdated : RefCounted, ITwitcherSharp<TwitchChatSettingsUpdated>
     {
         private GodotObject _data;
         public string BroadcasterId { get; set; }

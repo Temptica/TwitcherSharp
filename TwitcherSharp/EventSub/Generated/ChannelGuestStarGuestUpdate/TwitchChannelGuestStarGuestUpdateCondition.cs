@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelGuestStarGuestUpdate;
 
-public partial class TwitchChannelGuestStarGuestUpdateCondition : Resource, ITwitcherSharpCondition<TwitchChannelGuestStarGuestUpdateCondition>
+public partial class TwitchChannelGuestStarGuestUpdateCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelGuestStarGuestUpdateCondition>
 {
     public string Name => nameof(TwitchChannelGuestStarGuestUpdateCondition);
 

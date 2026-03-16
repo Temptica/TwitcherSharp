@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Teams;
 
-public partial class TwitchGetChannelTeamsResponse : Resource, ITwitcherSharp<TwitchGetChannelTeamsResponse>
+public partial class TwitchGetChannelTeamsResponse : RefCounted, ITwitcherSharp<TwitchGetChannelTeamsResponse>
 {
     private GodotObject _data;
     public TwitchChannelTeam[] Data { get; set; }
@@ -29,7 +29,7 @@ public partial class TwitchGetChannelTeamsResponse : Resource, ITwitcherSharp<Tw
         request.Set("data", Data);
         return request;
     }
-    public partial class TwitchChannelTeam : Resource, ITwitcherSharp<TwitchChannelTeam>
+    public partial class TwitchChannelTeam : RefCounted, ITwitcherSharp<TwitchChannelTeam>
     {
         private GodotObject _data;
         public string BroadcasterId { get; set; }

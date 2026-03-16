@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Schedule;
 
-public partial class TwitchChannelStreamScheduleSegment : Resource, ITwitcherSharp<TwitchChannelStreamScheduleSegment>
+public partial class TwitchChannelStreamScheduleSegment : RefCounted, ITwitcherSharp<TwitchChannelStreamScheduleSegment>
 {
     private GodotObject _data;
     public string Id { get; set; }
@@ -49,7 +49,7 @@ public partial class TwitchChannelStreamScheduleSegment : Resource, ITwitcherSha
     /// <summary> 
     /// The type of content that the broadcaster plans to stream or **null** if not specified. 
     /// </summary>
-    public partial class TwitchCategory : Resource, ITwitcherSharp<TwitchCategory>
+    public partial class TwitchCategory : RefCounted, ITwitcherSharp<TwitchCategory>
     {
         private GodotObject _data;
         public string Id { get; set; }

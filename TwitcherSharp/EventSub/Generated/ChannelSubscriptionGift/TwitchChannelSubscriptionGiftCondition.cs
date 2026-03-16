@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelSubscriptionGift;
 
-public partial class TwitchChannelSubscriptionGiftCondition : Resource, ITwitcherSharpCondition<TwitchChannelSubscriptionGiftCondition>
+public partial class TwitchChannelSubscriptionGiftCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelSubscriptionGiftCondition>
 {
     public string Name => nameof(TwitchChannelSubscriptionGiftCondition);
 

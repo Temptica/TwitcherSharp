@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelBitsUse;
 
-public partial class TwitchChannelBitsUseCondition : Resource, ITwitcherSharpCondition<TwitchChannelBitsUseCondition>
+public partial class TwitchChannelBitsUseCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelBitsUseCondition>
 {
     public string Name => nameof(TwitchChannelBitsUseCondition);
 

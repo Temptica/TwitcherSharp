@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.StreamOnline;
 
-public partial class TwitchStreamOnlineCondition : Resource, ITwitcherSharpCondition<TwitchStreamOnlineCondition>
+public partial class TwitchStreamOnlineCondition : RefCounted, ITwitcherSharpCondition<TwitchStreamOnlineCondition>
 {
     public string Name => nameof(TwitchStreamOnlineCondition);
 

@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Conduits;
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetConduitShards 
 /// </summary>
-public partial class TwitchGetConduitShardsOpt : Resource, ITwitcherSharp<TwitchGetConduitShardsOpt>
+public partial class TwitchGetConduitShardsOpt : RefCounted, ITwitcherSharp<TwitchGetConduitShardsOpt>
 {
     private GodotObject _data;
     public string Status { get; set; }

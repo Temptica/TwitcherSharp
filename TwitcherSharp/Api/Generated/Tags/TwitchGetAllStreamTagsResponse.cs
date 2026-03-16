@@ -4,7 +4,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Tags;
 
-public partial class TwitchGetAllStreamTagsResponse : Resource, ITwitcherSharp<TwitchGetAllStreamTagsResponse>
+public partial class TwitchGetAllStreamTagsResponse : RefCounted, ITwitcherSharp<TwitchGetAllStreamTagsResponse>
 {
     private GodotObject _data;
     public TwitchStreamTag[] Data { get; set; }

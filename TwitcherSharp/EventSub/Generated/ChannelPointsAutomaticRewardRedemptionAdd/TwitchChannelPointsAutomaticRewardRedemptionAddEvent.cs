@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelPointsAutomaticRewardRedemptionAdd;
 
-public partial class TwitchChannelPointsAutomaticRewardRedemptionAddEvent : Resource, ITwitcherSharpEventSub<TwitchChannelPointsAutomaticRewardRedemptionAddEvent>
+public partial class TwitchChannelPointsAutomaticRewardRedemptionAddEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelPointsAutomaticRewardRedemptionAddEvent>
 {
     /// <summary> 
     /// The ID of the channel where the reward was redeemed.
@@ -103,7 +103,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddEvent : Reso
         return request;
     }
 
-    public partial class TwitchReward : Resource, ITwitcherSharpEventSub<TwitchReward>
+    public partial class TwitchReward : RefCounted, ITwitcherSharpEventSub<TwitchReward>
     {
         /// <summary> 
         /// The type of reward. One of: single_message_bypass_sub_modesend_highlighted_messagerandom_sub_emote_unlockchosen_sub_emote_unlockchosen_modified_sub_emote_unlockmessage_effectgigantify_an_emotecelebration
@@ -145,7 +145,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddEvent : Reso
             return request;
         }
     
-        public partial class TwitchUnlockedEmote : Resource, ITwitcherSharpEventSub<TwitchUnlockedEmote>
+        public partial class TwitchUnlockedEmote : RefCounted, ITwitcherSharpEventSub<TwitchUnlockedEmote>
         {
             /// <summary> 
             /// The emote ID.
@@ -182,7 +182,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddEvent : Reso
         }
     }
 
-    public partial class TwitchMessage : Resource, ITwitcherSharpEventSub<TwitchMessage>
+    public partial class TwitchMessage : RefCounted, ITwitcherSharpEventSub<TwitchMessage>
     {
         /// <summary> 
         /// The text of the chat message.
@@ -218,7 +218,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddEvent : Reso
             return request;
         }
     
-        public partial class TwitchEmotes : Resource, ITwitcherSharpEventSub<TwitchEmotes>
+        public partial class TwitchEmotes : RefCounted, ITwitcherSharpEventSub<TwitchEmotes>
         {
             /// <summary> 
             /// The emote ID.

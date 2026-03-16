@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Videos;
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetVideos 
 /// </summary>
-public partial class TwitchGetVideosOpt : Resource, ITwitcherSharp<TwitchGetVideosOpt>
+public partial class TwitchGetVideosOpt : RefCounted, ITwitcherSharp<TwitchGetVideosOpt>
 {
     private GodotObject _data;
     public string[] Id { get; set; }

@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.CCLs;
 
-public partial class TwitchGetContentClassificationLabelsResponse : Resource, ITwitcherSharp<TwitchGetContentClassificationLabelsResponse>
+public partial class TwitchGetContentClassificationLabelsResponse : RefCounted, ITwitcherSharp<TwitchGetContentClassificationLabelsResponse>
 {
     private GodotObject _data;
     public TwitchContentClassificationLabel[] Data { get; set; }
@@ -29,7 +29,7 @@ public partial class TwitchGetContentClassificationLabelsResponse : Resource, IT
         request.Set("data", Data);
         return request;
     }
-    public partial class TwitchContentClassificationLabel : Resource, ITwitcherSharp<TwitchContentClassificationLabel>
+    public partial class TwitchContentClassificationLabel : RefCounted, ITwitcherSharp<TwitchContentClassificationLabel>
     {
         private GodotObject _data;
         public string Id { get; set; }

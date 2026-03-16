@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetUnbanRequests 
 /// </summary>
-public partial class TwitchGetUnbanRequestsOpt : Resource, ITwitcherSharp<TwitchGetUnbanRequestsOpt>
+public partial class TwitchGetUnbanRequestsOpt : RefCounted, ITwitcherSharp<TwitchGetUnbanRequestsOpt>
 {
     private GodotObject _data;
     public string UserId { get; set; }

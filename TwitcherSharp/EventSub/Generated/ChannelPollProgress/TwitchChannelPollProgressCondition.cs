@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelPollProgress;
 
-public partial class TwitchChannelPollProgressCondition : Resource, ITwitcherSharpCondition<TwitchChannelPollProgressCondition>
+public partial class TwitchChannelPollProgressCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelPollProgressCondition>
 {
     public string Name => nameof(TwitchChannelPollProgressCondition);
 

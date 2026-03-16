@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ConduitShardDisabled;
 
-public partial class TwitchConduitShardDisabledEvent : Resource, ITwitcherSharpEventSub<TwitchConduitShardDisabledEvent>
+public partial class TwitchConduitShardDisabledEvent : RefCounted, ITwitcherSharpEventSub<TwitchConduitShardDisabledEvent>
 {
     /// <summary> 
     /// The ID of the conduit.
@@ -89,7 +89,7 @@ public partial class TwitchConduitShardDisabledEvent : Resource, ITwitcherSharpE
         return request;
     }
 
-    public partial class TwitchTransport : Resource, ITwitcherSharpEventSub<TwitchTransport>
+    public partial class TwitchTransport : RefCounted, ITwitcherSharpEventSub<TwitchTransport>
     {
     
         /// <summary> 

@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelUpdate;
 
-public partial class TwitchChannelUpdateEvent : Resource, ITwitcherSharpEventSub<TwitchChannelUpdateEvent>
+public partial class TwitchChannelUpdateEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelUpdateEvent>
 {
     /// <summary> 
     /// The broadcaster’s user ID.

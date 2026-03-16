@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Extensions;
 
-public partial class TwitchSetExtensionConfigurationSegmentBody : Resource, ITwitcherSharp<TwitchSetExtensionConfigurationSegmentBody>
+public partial class TwitchSetExtensionConfigurationSegmentBody : RefCounted, ITwitcherSharp<TwitchSetExtensionConfigurationSegmentBody>
 {
     private GodotObject _data;
     public string ExtensionId { get; set; }

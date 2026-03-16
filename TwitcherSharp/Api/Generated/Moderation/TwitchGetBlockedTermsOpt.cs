@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetBlockedTerms 
 /// </summary>
-public partial class TwitchGetBlockedTermsOpt : Resource, ITwitcherSharp<TwitchGetBlockedTermsOpt>
+public partial class TwitchGetBlockedTermsOpt : RefCounted, ITwitcherSharp<TwitchGetBlockedTermsOpt>
 {
     private GodotObject _data;
     public int? First { get; set; }

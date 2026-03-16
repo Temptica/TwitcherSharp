@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.Reward;
 
-public partial class TwitchRedeemListener : Resource, ITwitcherSharp<TwitchRedeemListener>
+public partial class TwitchRedeemListener : RefCounted, ITwitcherSharp<TwitchRedeemListener>
 {
     private GodotObject _data;
     

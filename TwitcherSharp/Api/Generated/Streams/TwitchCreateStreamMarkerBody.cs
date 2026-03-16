@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Streams;
 
-public partial class TwitchCreateStreamMarkerBody : Resource, ITwitcherSharp<TwitchCreateStreamMarkerBody>
+public partial class TwitchCreateStreamMarkerBody : RefCounted, ITwitcherSharp<TwitchCreateStreamMarkerBody>
 {
     private GodotObject _data;
     public string UserId { get; set; }

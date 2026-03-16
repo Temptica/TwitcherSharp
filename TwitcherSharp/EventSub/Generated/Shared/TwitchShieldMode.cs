@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.Shared;
 
-public partial class TwitchShieldMode : Resource, ITwitcherSharpEventSub<TwitchShieldMode>
+public partial class TwitchShieldMode : RefCounted, ITwitcherSharpEventSub<TwitchShieldMode>
 {
     /// <summary> 
     /// An ID that identifies the broadcaster whose Shield Mode status was updated.

@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelGuestStarSettingsUpdate;
 
-public partial class TwitchChannelGuestStarSettingsUpdateEvent : Resource, ITwitcherSharpEventSub<TwitchChannelGuestStarSettingsUpdateEvent>
+public partial class TwitchChannelGuestStarSettingsUpdateEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelGuestStarSettingsUpdateEvent>
 {
     /// <summary> 
     /// User ID of the host channel.

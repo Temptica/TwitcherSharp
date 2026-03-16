@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
 
-public partial class TwitchUpdateAutoModSettingsResponse : Resource, ITwitcherSharp<TwitchUpdateAutoModSettingsResponse>
+public partial class TwitchUpdateAutoModSettingsResponse : RefCounted, ITwitcherSharp<TwitchUpdateAutoModSettingsResponse>
 {
     private GodotObject _data;
     public TwitchAutoModSettings[] Data { get; set; }

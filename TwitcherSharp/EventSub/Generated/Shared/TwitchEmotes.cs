@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.Shared;
 
-public partial class TwitchEmotes : Resource, ITwitcherSharpEventSub<TwitchEmotes>
+public partial class TwitchEmotes : RefCounted, ITwitcherSharpEventSub<TwitchEmotes>
 {
     /// <summary> 
     /// The index of where the Emote starts in the text.

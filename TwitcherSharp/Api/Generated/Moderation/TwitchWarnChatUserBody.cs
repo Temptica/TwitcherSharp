@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
 
-public partial class TwitchWarnChatUserBody : Resource, ITwitcherSharp<TwitchWarnChatUserBody>
+public partial class TwitchWarnChatUserBody : RefCounted, ITwitcherSharp<TwitchWarnChatUserBody>
 {
     private GodotObject _data;
     public TwitchData Data { get; set; }
@@ -32,7 +32,7 @@ public partial class TwitchWarnChatUserBody : Resource, ITwitcherSharp<TwitchWar
     /// <summary> 
     /// A list that contains information about the warning. 
     /// </summary>
-    public partial class TwitchData : Resource, ITwitcherSharp<TwitchData>
+    public partial class TwitchData : RefCounted, ITwitcherSharp<TwitchData>
     {
         private GodotObject _data;
         public string UserId { get; set; }

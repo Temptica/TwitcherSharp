@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Predictions;
 
-public partial class TwitchEndPredictionResponse : Resource, ITwitcherSharp<TwitchEndPredictionResponse>
+public partial class TwitchEndPredictionResponse : RefCounted, ITwitcherSharp<TwitchEndPredictionResponse>
 {
     private GodotObject _data;
     public TwitchPrediction[] Data { get; set; }

@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.DropEntitlementGrant;
 
-public partial class TwitchDropEntitlementGrantEvent : Resource, ITwitcherSharpEventSub<TwitchDropEntitlementGrantEvent>
+public partial class TwitchDropEntitlementGrantEvent : RefCounted, ITwitcherSharpEventSub<TwitchDropEntitlementGrantEvent>
 {
     /// <summary> 
     /// Individual event ID, as assigned by EventSub. Use this for de-duplicating messages.
@@ -41,7 +41,7 @@ public partial class TwitchDropEntitlementGrantEvent : Resource, ITwitcherSharpE
         return request;
     }
 
-    public partial class TwitchData : Resource, ITwitcherSharpEventSub<TwitchData>
+    public partial class TwitchData : RefCounted, ITwitcherSharpEventSub<TwitchData>
     {
         /// <summary> 
         /// The ID of the organization that owns the game that has Drops enabled.

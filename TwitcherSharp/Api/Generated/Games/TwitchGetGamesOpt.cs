@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Games;
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetGames 
 /// </summary>
-public partial class TwitchGetGamesOpt : Resource, ITwitcherSharp<TwitchGetGamesOpt>
+public partial class TwitchGetGamesOpt : RefCounted, ITwitcherSharp<TwitchGetGamesOpt>
 {
     private GodotObject _data;
     public string[] Id { get; set; }

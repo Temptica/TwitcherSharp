@@ -3,7 +3,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.Media;
 
-public partial class TwitchImageTransformer : Resource, ITwitcherSharp<TwitchImageTransformer>
+public partial class TwitchImageTransformer : RefCounted, ITwitcherSharp<TwitchImageTransformer>
 {
     public Texture2D FallbackTexture { get; set; }
 

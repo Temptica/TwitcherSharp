@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetVips 
 /// </summary>
-public partial class TwitchGetVipsOpt : Resource, ITwitcherSharp<TwitchGetVipsOpt>
+public partial class TwitchGetVipsOpt : RefCounted, ITwitcherSharp<TwitchGetVipsOpt>
 {
     private GodotObject _data;
     public string[] UserId { get; set; }

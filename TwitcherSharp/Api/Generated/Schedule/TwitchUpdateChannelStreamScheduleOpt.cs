@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Schedule;
 /// <summary> 
 /// All optional parameters for TwitchAPI.UpdateChannelStreamSchedule 
 /// </summary>
-public partial class TwitchUpdateChannelStreamScheduleOpt : Resource, ITwitcherSharp<TwitchUpdateChannelStreamScheduleOpt>
+public partial class TwitchUpdateChannelStreamScheduleOpt : RefCounted, ITwitcherSharp<TwitchUpdateChannelStreamScheduleOpt>
 {
     private GodotObject _data;
     public bool? IsVacationEnabled { get; set; }

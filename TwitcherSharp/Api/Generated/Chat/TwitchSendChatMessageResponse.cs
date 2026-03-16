@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Chat;
 
-public partial class TwitchSendChatMessageResponse : Resource, ITwitcherSharp<TwitchSendChatMessageResponse>
+public partial class TwitchSendChatMessageResponse : RefCounted, ITwitcherSharp<TwitchSendChatMessageResponse>
 {
     private GodotObject _data;
     public TwitchData[] Data { get; set; }
@@ -29,7 +29,7 @@ public partial class TwitchSendChatMessageResponse : Resource, ITwitcherSharp<Tw
         request.Set("data", Data);
         return request;
     }
-    public partial class TwitchData : Resource, ITwitcherSharp<TwitchData>
+    public partial class TwitchData : RefCounted, ITwitcherSharp<TwitchData>
     {
         private GodotObject _data;
         public string MessageId { get; set; }
@@ -63,7 +63,7 @@ public partial class TwitchSendChatMessageResponse : Resource, ITwitcherSharp<Tw
         /// <summary> 
         /// The reason the message was dropped, if any. 
         /// </summary>
-        public partial class TwitchDropReason : Resource, ITwitcherSharp<TwitchDropReason>
+        public partial class TwitchDropReason : RefCounted, ITwitcherSharp<TwitchDropReason>
         {
             private GodotObject _data;
             public string Code { get; set; }

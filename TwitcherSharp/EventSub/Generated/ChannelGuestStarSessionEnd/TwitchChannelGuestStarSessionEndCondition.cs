@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelGuestStarSessionEnd;
 
-public partial class TwitchChannelGuestStarSessionEndCondition : Resource, ITwitcherSharpCondition<TwitchChannelGuestStarSessionEndCondition>
+public partial class TwitchChannelGuestStarSessionEndCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelGuestStarSessionEndCondition>
 {
     public string Name => nameof(TwitchChannelGuestStarSessionEndCondition);
 

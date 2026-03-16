@@ -5,7 +5,7 @@ using TwitcherSharp.EventSub.Generated.Shared;
 
 namespace TwitcherSharp.EventSub.Generated.HypeTrainProgress;
 
-public partial class TwitchHypeTrainProgressEvent : Resource, ITwitcherSharpEventSub<TwitchHypeTrainProgressEvent>
+public partial class TwitchHypeTrainProgressEvent : RefCounted, ITwitcherSharpEventSub<TwitchHypeTrainProgressEvent>
 {
     /// <summary> 
     /// The Hype Train ID.
@@ -147,7 +147,7 @@ public partial class TwitchHypeTrainProgressEvent : Resource, ITwitcherSharpEven
         return request;
     }
 
-    public partial class TwitchType : Resource, ITwitcherSharpEventSub<TwitchType>
+    public partial class TwitchType : RefCounted, ITwitcherSharpEventSub<TwitchType>
     {
     
         /// <summary> 
@@ -170,7 +170,7 @@ public partial class TwitchHypeTrainProgressEvent : Resource, ITwitcherSharpEven
         }
     }
 
-    public partial class TwitchSharedTrainParticipants : Resource, ITwitcherSharpEventSub<TwitchSharedTrainParticipants>
+    public partial class TwitchSharedTrainParticipants : RefCounted, ITwitcherSharpEventSub<TwitchSharedTrainParticipants>
     {
         /// <summary> 
         /// The ID of the broadcaster participating in the shared Hype Train.
@@ -213,7 +213,7 @@ public partial class TwitchHypeTrainProgressEvent : Resource, ITwitcherSharpEven
         }
     }
 
-    public partial class TwitchIsSharedTrain : Resource, ITwitcherSharpEventSub<TwitchIsSharedTrain>
+    public partial class TwitchIsSharedTrain : RefCounted, ITwitcherSharpEventSub<TwitchIsSharedTrain>
     {
     
         /// <summary> 

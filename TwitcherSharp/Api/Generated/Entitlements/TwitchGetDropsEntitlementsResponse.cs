@@ -4,7 +4,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Entitlements;
 
-public partial class TwitchGetDropsEntitlementsResponse : Resource, ITwitcherSharp<TwitchGetDropsEntitlementsResponse>
+public partial class TwitchGetDropsEntitlementsResponse : RefCounted, ITwitcherSharp<TwitchGetDropsEntitlementsResponse>
 {
     private GodotObject _data;
     public TwitchDropsEntitlement[] Data { get; set; }
@@ -33,7 +33,7 @@ public partial class TwitchGetDropsEntitlementsResponse : Resource, ITwitcherSha
         if(Pagination != null) request.Set("pagination", Pagination);
         return request;
     }
-    public partial class TwitchDropsEntitlement : Resource, ITwitcherSharp<TwitchDropsEntitlement>
+    public partial class TwitchDropsEntitlement : RefCounted, ITwitcherSharp<TwitchDropsEntitlement>
     {
         private GodotObject _data;
         public string Id { get; set; }

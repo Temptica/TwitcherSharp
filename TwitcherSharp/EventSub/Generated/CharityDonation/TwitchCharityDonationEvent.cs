@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.CharityDonation;
 
-public partial class TwitchCharityDonationEvent : Resource, ITwitcherSharpEventSub<TwitchCharityDonationEvent>
+public partial class TwitchCharityDonationEvent : RefCounted, ITwitcherSharpEventSub<TwitchCharityDonationEvent>
 {
     /// <summary> 
     /// An ID that identifies the donation. The ID is unique across campaigns.
@@ -117,7 +117,7 @@ public partial class TwitchCharityDonationEvent : Resource, ITwitcherSharpEventS
         return request;
     }
 
-    public partial class TwitchAmount : Resource, ITwitcherSharpEventSub<TwitchAmount>
+    public partial class TwitchAmount : RefCounted, ITwitcherSharpEventSub<TwitchAmount>
     {
         /// <summary> 
         /// The monetary amount. The amount is specified in the currency’s minor unit. For example, the minor units for USD is cents, so if the amount is $5.50 USD, value is set to 550.

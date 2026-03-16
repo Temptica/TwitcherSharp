@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Streams;
 /// <summary> 
 /// All optional parameters for TwitchAPI.GetStreams 
 /// </summary>
-public partial class TwitchGetStreamsOpt : Resource, ITwitcherSharp<TwitchGetStreamsOpt>
+public partial class TwitchGetStreamsOpt : RefCounted, ITwitcherSharp<TwitchGetStreamsOpt>
 {
     private GodotObject _data;
     public string[] UserId { get; set; }

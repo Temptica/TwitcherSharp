@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelModerate;
 
-public partial class TwitchChannelModerateEventV2 : Resource, ITwitcherSharpEventSub<TwitchChannelModerateEventV2>
+public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEventSub<TwitchChannelModerateEventV2>
 {
     /// <summary> 
     /// The ID of the broadcaster.
@@ -243,7 +243,7 @@ public partial class TwitchChannelModerateEventV2 : Resource, ITwitcherSharpEven
         return request;
     }
 
-    public partial class TwitchFollowers : Resource, ITwitcherSharpEventSub<TwitchFollowers>
+    public partial class TwitchFollowers : RefCounted, ITwitcherSharpEventSub<TwitchFollowers>
     {
         /// <summary> 
         /// The length of time, in minutes, that the followers must have followed the broadcaster to participate in the chat room.
@@ -272,7 +272,7 @@ public partial class TwitchChannelModerateEventV2 : Resource, ITwitcherSharpEven
         }
     }
 
-    public partial class TwitchSlow : Resource, ITwitcherSharpEventSub<TwitchSlow>
+    public partial class TwitchSlow : RefCounted, ITwitcherSharpEventSub<TwitchSlow>
     {
         /// <summary> 
         /// The amount of time, in seconds, that users need to wait between sending messages.
@@ -301,7 +301,7 @@ public partial class TwitchChannelModerateEventV2 : Resource, ITwitcherSharpEven
         }
     }
 
-    public partial class TwitchVip : Resource, ITwitcherSharpEventSub<TwitchVip>
+    public partial class TwitchVip : RefCounted, ITwitcherSharpEventSub<TwitchVip>
     {
         /// <summary> 
         /// The ID of the user gaining VIP status.
@@ -344,7 +344,7 @@ public partial class TwitchChannelModerateEventV2 : Resource, ITwitcherSharpEven
         }
     }
 
-    public partial class TwitchUnvip : Resource, ITwitcherSharpEventSub<TwitchUnvip>
+    public partial class TwitchUnvip : RefCounted, ITwitcherSharpEventSub<TwitchUnvip>
     {
         /// <summary> 
         /// The ID of the user losing VIP status.
@@ -387,7 +387,7 @@ public partial class TwitchChannelModerateEventV2 : Resource, ITwitcherSharpEven
         }
     }
 
-    public partial class TwitchMod : Resource, ITwitcherSharpEventSub<TwitchMod>
+    public partial class TwitchMod : RefCounted, ITwitcherSharpEventSub<TwitchMod>
     {
         /// <summary> 
         /// The ID of the user gaining mod status.
@@ -430,7 +430,7 @@ public partial class TwitchChannelModerateEventV2 : Resource, ITwitcherSharpEven
         }
     }
 
-    public partial class TwitchUnmod : Resource, ITwitcherSharpEventSub<TwitchUnmod>
+    public partial class TwitchUnmod : RefCounted, ITwitcherSharpEventSub<TwitchUnmod>
     {
         /// <summary> 
         /// The ID of the user losing mod status.
@@ -473,7 +473,7 @@ public partial class TwitchChannelModerateEventV2 : Resource, ITwitcherSharpEven
         }
     }
 
-    public partial class TwitchBan : Resource, ITwitcherSharpEventSub<TwitchBan>
+    public partial class TwitchBan : RefCounted, ITwitcherSharpEventSub<TwitchBan>
     {
         /// <summary> 
         /// The ID of the user being banned.
@@ -523,7 +523,7 @@ public partial class TwitchChannelModerateEventV2 : Resource, ITwitcherSharpEven
         }
     }
 
-    public partial class TwitchUnban : Resource, ITwitcherSharpEventSub<TwitchUnban>
+    public partial class TwitchUnban : RefCounted, ITwitcherSharpEventSub<TwitchUnban>
     {
         /// <summary> 
         /// The ID of the user being unbanned.
@@ -566,7 +566,7 @@ public partial class TwitchChannelModerateEventV2 : Resource, ITwitcherSharpEven
         }
     }
 
-    public partial class TwitchTimeout : Resource, ITwitcherSharpEventSub<TwitchTimeout>
+    public partial class TwitchTimeout : RefCounted, ITwitcherSharpEventSub<TwitchTimeout>
     {
         /// <summary> 
         /// The ID of the user being timed out.
@@ -623,7 +623,7 @@ public partial class TwitchChannelModerateEventV2 : Resource, ITwitcherSharpEven
         }
     }
 
-    public partial class TwitchUntimeout : Resource, ITwitcherSharpEventSub<TwitchUntimeout>
+    public partial class TwitchUntimeout : RefCounted, ITwitcherSharpEventSub<TwitchUntimeout>
     {
         /// <summary> 
         /// The ID of the user being untimed out.
@@ -666,7 +666,7 @@ public partial class TwitchChannelModerateEventV2 : Resource, ITwitcherSharpEven
         }
     }
 
-    public partial class TwitchRaid : Resource, ITwitcherSharpEventSub<TwitchRaid>
+    public partial class TwitchRaid : RefCounted, ITwitcherSharpEventSub<TwitchRaid>
     {
         /// <summary> 
         /// The ID of the user being raided.
@@ -716,7 +716,7 @@ public partial class TwitchChannelModerateEventV2 : Resource, ITwitcherSharpEven
         }
     }
 
-    public partial class TwitchUnraid : Resource, ITwitcherSharpEventSub<TwitchUnraid>
+    public partial class TwitchUnraid : RefCounted, ITwitcherSharpEventSub<TwitchUnraid>
     {
         /// <summary> 
         /// The ID of the user no longer being raided.
@@ -759,7 +759,7 @@ public partial class TwitchChannelModerateEventV2 : Resource, ITwitcherSharpEven
         }
     }
 
-    public partial class TwitchDelete : Resource, ITwitcherSharpEventSub<TwitchDelete>
+    public partial class TwitchDelete : RefCounted, ITwitcherSharpEventSub<TwitchDelete>
     {
         /// <summary> 
         /// The ID of the user whose message is being deleted.
@@ -816,7 +816,7 @@ public partial class TwitchChannelModerateEventV2 : Resource, ITwitcherSharpEven
         }
     }
 
-    public partial class TwitchAutomodTerms : Resource, ITwitcherSharpEventSub<TwitchAutomodTerms>
+    public partial class TwitchAutomodTerms : RefCounted, ITwitcherSharpEventSub<TwitchAutomodTerms>
     {
         /// <summary> 
         /// Either “add” or “remove”.
@@ -866,7 +866,7 @@ public partial class TwitchChannelModerateEventV2 : Resource, ITwitcherSharpEven
         }
     }
 
-    public partial class TwitchUnbanRequest : Resource, ITwitcherSharpEventSub<TwitchUnbanRequest>
+    public partial class TwitchUnbanRequest : RefCounted, ITwitcherSharpEventSub<TwitchUnbanRequest>
     {
         /// <summary> 
         /// Whether or not the unban request was approved or denied.
@@ -923,7 +923,7 @@ public partial class TwitchChannelModerateEventV2 : Resource, ITwitcherSharpEven
         }
     }
 
-    public partial class TwitchWarn : Resource, ITwitcherSharpEventSub<TwitchWarn>
+    public partial class TwitchWarn : RefCounted, ITwitcherSharpEventSub<TwitchWarn>
     {
         /// <summary> 
         /// The ID of the user being warned.

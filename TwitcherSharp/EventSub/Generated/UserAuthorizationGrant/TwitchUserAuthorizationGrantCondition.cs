@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.UserAuthorizationGrant;
 
-public partial class TwitchUserAuthorizationGrantCondition : Resource, ITwitcherSharpCondition<TwitchUserAuthorizationGrantCondition>
+public partial class TwitchUserAuthorizationGrantCondition : RefCounted, ITwitcherSharpCondition<TwitchUserAuthorizationGrantCondition>
 {
     public string Name => nameof(TwitchUserAuthorizationGrantCondition);
 

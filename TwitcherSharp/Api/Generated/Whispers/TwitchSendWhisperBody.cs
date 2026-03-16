@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Whispers;
 
-public partial class TwitchSendWhisperBody : Resource, ITwitcherSharp<TwitchSendWhisperBody>
+public partial class TwitchSendWhisperBody : RefCounted, ITwitcherSharp<TwitchSendWhisperBody>
 {
     private GodotObject _data;
     public string Message { get; set; }

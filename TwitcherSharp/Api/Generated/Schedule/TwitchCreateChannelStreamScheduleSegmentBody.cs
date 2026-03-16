@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Schedule;
 
-public partial class TwitchCreateChannelStreamScheduleSegmentBody : Resource, ITwitcherSharp<TwitchCreateChannelStreamScheduleSegmentBody>
+public partial class TwitchCreateChannelStreamScheduleSegmentBody : RefCounted, ITwitcherSharp<TwitchCreateChannelStreamScheduleSegmentBody>
 {
     private GodotObject _data;
     public string StartTime { get; set; }

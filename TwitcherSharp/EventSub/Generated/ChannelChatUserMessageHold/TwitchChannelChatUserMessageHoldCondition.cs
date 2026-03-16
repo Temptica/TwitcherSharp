@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelChatUserMessageHold;
 
-public partial class TwitchChannelChatUserMessageHoldCondition : Resource, ITwitcherSharpCondition<TwitchChannelChatUserMessageHoldCondition>
+public partial class TwitchChannelChatUserMessageHoldCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelChatUserMessageHoldCondition>
 {
     public string Name => nameof(TwitchChannelChatUserMessageHoldCondition);
 

@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 namespace TwitcherSharp.Media;
 
 public partial class TwitchCheermoteDefinition(string prefix, string tier)
-    : Resource, ITwitcherSharp<TwitchCheermoteDefinition>
+    : RefCounted, ITwitcherSharp<TwitchCheermoteDefinition>
 {
     public const string ThemeDark = "dark";
     public const string ThemeLight = "light";

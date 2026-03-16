@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.ChannelPoints;
 
-public partial class TwitchCustomReward : Resource, ITwitcherSharp<TwitchCustomReward>
+public partial class TwitchCustomReward : RefCounted, ITwitcherSharp<TwitchCustomReward>
 {
     private GodotObject _data;
     public string BroadcasterId { get; set; }
@@ -88,7 +88,7 @@ public partial class TwitchCustomReward : Resource, ITwitcherSharp<TwitchCustomR
     /// <summary> 
     /// A set of custom images for the reward. This field is **null** if the broadcaster didn’t upload images. 
     /// </summary>
-    public partial class TwitchImage : Resource, ITwitcherSharp<TwitchImage>
+    public partial class TwitchImage : RefCounted, ITwitcherSharp<TwitchImage>
     {
         private GodotObject _data;
         public string Url1x { get; set; }
@@ -124,7 +124,7 @@ public partial class TwitchCustomReward : Resource, ITwitcherSharp<TwitchCustomR
     /// <summary> 
     /// A set of default images for the reward. 
     /// </summary>
-    public partial class TwitchDefaultImage : Resource, ITwitcherSharp<TwitchDefaultImage>
+    public partial class TwitchDefaultImage : RefCounted, ITwitcherSharp<TwitchDefaultImage>
     {
         private GodotObject _data;
         public string Url1x { get; set; }
@@ -160,7 +160,7 @@ public partial class TwitchCustomReward : Resource, ITwitcherSharp<TwitchCustomR
     /// <summary> 
     /// The settings used to determine whether to apply a maximum to the number of redemptions allowed per live stream. 
     /// </summary>
-    public partial class TwitchMaxPerStreamSetting : Resource, ITwitcherSharp<TwitchMaxPerStreamSetting>
+    public partial class TwitchMaxPerStreamSetting : RefCounted, ITwitcherSharp<TwitchMaxPerStreamSetting>
     {
         private GodotObject _data;
         public bool IsEnabled { get; set; }
@@ -193,7 +193,7 @@ public partial class TwitchCustomReward : Resource, ITwitcherSharp<TwitchCustomR
     /// <summary> 
     /// The settings used to determine whether to apply a maximum to the number of redemptions allowed per user per live stream. 
     /// </summary>
-    public partial class TwitchMaxPerUserPerStreamSetting : Resource, ITwitcherSharp<TwitchMaxPerUserPerStreamSetting>
+    public partial class TwitchMaxPerUserPerStreamSetting : RefCounted, ITwitcherSharp<TwitchMaxPerUserPerStreamSetting>
     {
         private GodotObject _data;
         public bool IsEnabled { get; set; }
@@ -226,7 +226,7 @@ public partial class TwitchCustomReward : Resource, ITwitcherSharp<TwitchCustomR
     /// <summary> 
     /// The settings used to determine whether to apply a cooldown period between redemptions and the length of the cooldown. 
     /// </summary>
-    public partial class TwitchGlobalCooldownSetting : Resource, ITwitcherSharp<TwitchGlobalCooldownSetting>
+    public partial class TwitchGlobalCooldownSetting : RefCounted, ITwitcherSharp<TwitchGlobalCooldownSetting>
     {
         private GodotObject _data;
         public bool IsEnabled { get; set; }

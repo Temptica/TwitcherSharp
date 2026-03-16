@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Search;
 /// <summary> 
 /// All optional parameters for TwitchAPI.SearchCategories 
 /// </summary>
-public partial class TwitchSearchCategoriesOpt : Resource, ITwitcherSharp<TwitchSearchCategoriesOpt>
+public partial class TwitchSearchCategoriesOpt : RefCounted, ITwitcherSharp<TwitchSearchCategoriesOpt>
 {
     private GodotObject _data;
     public int? First { get; set; }

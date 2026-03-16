@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.Bits;
 
-public partial class TwitchGetCheermotesResponse : Resource, ITwitcherSharp<TwitchGetCheermotesResponse>
+public partial class TwitchGetCheermotesResponse : RefCounted, ITwitcherSharp<TwitchGetCheermotesResponse>
 {
     private GodotObject _data;
     public TwitchCheermote[] Data { get; set; }
@@ -29,7 +29,7 @@ public partial class TwitchGetCheermotesResponse : Resource, ITwitcherSharp<Twit
         request.Set("data", Data);
         return request;
     }
-    public partial class TwitchCheermote : Resource, ITwitcherSharp<TwitchCheermote>
+    public partial class TwitchCheermote : RefCounted, ITwitcherSharp<TwitchCheermote>
     {
         private GodotObject _data;
         public string Prefix { get; set; }
@@ -73,7 +73,7 @@ public partial class TwitchGetCheermotesResponse : Resource, ITwitcherSharp<Twit
         /// <summary> 
         /// A list of tier levels that the Cheermote supports. Each tier identifies the range of Bits that you can cheer at that tier level and an image that graphically identifies the tier level. 
         /// </summary>
-        public partial class TwitchTiers : Resource, ITwitcherSharp<TwitchTiers>
+        public partial class TwitchTiers : RefCounted, ITwitcherSharp<TwitchTiers>
         {
             private GodotObject _data;
             public int MinBits { get; set; }
@@ -112,7 +112,7 @@ public partial class TwitchGetCheermotesResponse : Resource, ITwitcherSharp<Twit
                 request.Set("show_in_bits_card", ShowInBitsCard);
                 return request;
             }
-            public partial class TwitchImages : Resource, ITwitcherSharp<TwitchImages>
+            public partial class TwitchImages : RefCounted, ITwitcherSharp<TwitchImages>
             {
                 private GodotObject _data;
                 public TwitchLight Light { get; set; }
@@ -139,7 +139,7 @@ public partial class TwitchGetCheermotesResponse : Resource, ITwitcherSharp<Twit
                     if(Dark != null) request.Set("dark", Dark);
                     return request;
                 }
-                public partial class TwitchLight : Resource, ITwitcherSharp<TwitchLight>
+                public partial class TwitchLight : RefCounted, ITwitcherSharp<TwitchLight>
                 {
                     private GodotObject _data;
                     public TwitchAnimated Animated { get; set; }
@@ -166,7 +166,7 @@ public partial class TwitchGetCheermotesResponse : Resource, ITwitcherSharp<Twit
                         if(Static != null) request.Set("static", Static);
                         return request;
                     }
-                    public partial class TwitchAnimated : Resource, ITwitcherSharp<TwitchAnimated>
+                    public partial class TwitchAnimated : RefCounted, ITwitcherSharp<TwitchAnimated>
                     {
                         private GodotObject _data;
                         public string _1 { get; set; }
@@ -204,7 +204,7 @@ public partial class TwitchGetCheermotesResponse : Resource, ITwitcherSharp<Twit
                         }
                     
                     }
-                    public partial class TwitchStatic : Resource, ITwitcherSharp<TwitchStatic>
+                    public partial class TwitchStatic : RefCounted, ITwitcherSharp<TwitchStatic>
                     {
                         private GodotObject _data;
                         public string _1 { get; set; }
@@ -244,7 +244,7 @@ public partial class TwitchGetCheermotesResponse : Resource, ITwitcherSharp<Twit
                     }
                 
                 }
-                public partial class TwitchDark : Resource, ITwitcherSharp<TwitchDark>
+                public partial class TwitchDark : RefCounted, ITwitcherSharp<TwitchDark>
                 {
                     private GodotObject _data;
                     public TwitchAnimated Animated { get; set; }
@@ -271,7 +271,7 @@ public partial class TwitchGetCheermotesResponse : Resource, ITwitcherSharp<Twit
                         if(Static != null) request.Set("static", Static);
                         return request;
                     }
-                    public partial class TwitchAnimated : Resource, ITwitcherSharp<TwitchAnimated>
+                    public partial class TwitchAnimated : RefCounted, ITwitcherSharp<TwitchAnimated>
                     {
                         private GodotObject _data;
                         public string _1 { get; set; }
@@ -309,7 +309,7 @@ public partial class TwitchGetCheermotesResponse : Resource, ITwitcherSharp<Twit
                         }
                     
                     }
-                    public partial class TwitchStatic : Resource, ITwitcherSharp<TwitchStatic>
+                    public partial class TwitchStatic : RefCounted, ITwitcherSharp<TwitchStatic>
                     {
                         private GodotObject _data;
                         public string _1 { get; set; }

@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelRaid;
 
-public partial class TwitchChannelRaidEvent : Resource, ITwitcherSharpEventSub<TwitchChannelRaidEvent>
+public partial class TwitchChannelRaidEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelRaidEvent>
 {
     /// <summary> 
     /// The broadcaster ID that created the raid.
