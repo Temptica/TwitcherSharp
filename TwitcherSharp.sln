@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitcherSharp", "TwitcherSharp\TwitcherSharp.csproj", "{F970618D-5CD7-41F2-A590-28970E9AF910}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitcherSharp.ClassGenerator", "TwitcherSharp.ClassGenerator\TwitcherSharp.ClassGenerator.csproj", "{E549A753-1483-4E1A-B4C4-5CE25A60BD6C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{F970618D-5CD7-41F2-A590-28970E9AF910}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F970618D-5CD7-41F2-A590-28970E9AF910}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F970618D-5CD7-41F2-A590-28970E9AF910}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E549A753-1483-4E1A-B4C4-5CE25A60BD6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E549A753-1483-4E1A-B4C4-5CE25A60BD6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E549A753-1483-4E1A-B4C4-5CE25A60BD6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E549A753-1483-4E1A-B4C4-5CE25A60BD6C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

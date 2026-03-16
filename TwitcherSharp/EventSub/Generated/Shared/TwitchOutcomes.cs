@@ -1,0 +1,94 @@
+using Godot;
+using Godot.Collections;
+using TwitcherSharp.Interfaces;
+
+
+namespace TwitcherSharp.EventSub.Generated.Shared;
+
+public partial class TwitchOutcomes : RefCounted, ITwitcherSharpEventSub<TwitchOutcomes>
+{
+    /// <summary> 
+    /// The outcome ID.
+    /// </summary>
+    public string Id { get; set; }
+
+    /// <summary> 
+    /// The outcome title.
+    /// </summary>
+    public string Title { get; set; }
+
+    /// <summary> 
+    /// The color for the outcome. Valid values are pink and blue.
+    /// </summary>
+    public string Color { get; set; }
+
+    /// <summary> 
+    /// The number of users who used Channel Points on this outcome.
+    /// </summary>
+    public int Users { get; set; }
+
+    /// <summary> 
+    /// The total number of Channel Points used on this outcome.
+    /// </summary>
+    public int ChannelPoints { get; set; }
+
+    /// <summary> 
+    /// An array of users who used the most Channel Points on this outcome.
+    /// </summary>
+    public TwitchTopPredictors[] TopPredictors { get; set; }
+
+    /// <summary> 
+    /// Transforms the godot data into a TwitchOutcomes object.
+    /// </summary> 
+    public static TwitchOutcomes FromObject(GodotObject data)
+    {
+        if(data == null) return null;
+        var topPredictorsArray = data.Get("top_predictors").AsGodotArray<GodotObject>();
+        return new TwitchOutcomes
+        {
+            Id = data.Get("id").AsString(),
+            Title = data.Get("title").AsString(),
+            Color = data.Get("color").AsString(),
+            Users = data.Get("users").AsInt32(),
+            ChannelPoints = data.Get("channel_points").AsInt32(),
+            TopPredictors = topPredictorsArray.Select(TwitchTopPredictors.FromObject).ToArray(),
+        };
+    }
+
+    public GodotObject ToGodotObject()
+    {
+        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_outcomes.gd");
+        var twitchOutcomesClass = script.Get("TwitchOutcomes").AsGodotObject();
+        var request = twitchOutcomesClass.Call("new").AsGodotObject();
+        request.Set("id", Id);
+        request.Set("title", Title);
+        request.Set("color", Color);
+        request.Set("users", Users);
+        request.Set("channel_points", ChannelPoints);
+        request.Set("top_predictors", TopPredictors);
+        return request;
+    }
+
+    public partial class TwitchTopPredictors : RefCounted, ITwitcherSharpEventSub<TwitchTopPredictors>
+    {
+    
+        /// <summary> 
+        /// Transforms the godot data into a TwitchTopPredictors object.
+        /// </summary> 
+        public static TwitchTopPredictors FromObject(GodotObject data)
+        {
+            if(data == null) return null;
+            return new TwitchTopPredictors
+            {
+            };
+        }
+    
+        public GodotObject ToGodotObject()
+        {
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_outcomes.gd");
+            var topPredictorsClass = script.Get("TopPredictors").AsGodotObject();
+            var request = topPredictorsClass.Call("new").AsGodotObject();
+            return request;
+        }
+    }
+}

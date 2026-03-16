@@ -1,15 +1,12 @@
 using Godot;
-using System;
-using Godot.Collections;
-using TwitcherSharp;
-using TwitcherSharp.Extensions;
+using TwitcherSharp.Api.Generated.Users;
 using TwitcherSharp.Interfaces;
 
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable MemberCanBePrivate.Global
 namespace TwitcherSharp.Reward;
 
-public partial class TwitchReward : Resource, ITwitcherSharp<TwitchReward>
+public partial class TwitchReward : RefCounted, ITwitcherSharp<TwitchReward>
 {
     /// <summary>
     /// The ID that uniquely identifies this custom reward.
@@ -99,7 +96,7 @@ public partial class TwitchReward : Resource, ITwitcherSharp<TwitchReward>
         return new TwitchReward
         {
             Id = data.Get("id").AsString(),
-            BroadcasterUser = new TwitchUser(data.Get("broadcaster_user").AsGodotObject()),
+            BroadcasterUser = TwitchUser.FromObject(data.Get("broadcaster_user").AsGodotObject()),
             Title = data.Get("title").AsString(),
             Description = data.Get("description").AsString(),
             Cost = data.Get("cost").AsInt32(),
@@ -121,5 +118,20 @@ public partial class TwitchReward : Resource, ITwitcherSharp<TwitchReward>
             RedemptionsRedeemedCurrentStream = data.Get("redemptions_redeemed_current_stream").AsInt32(),
             CooldownExpiresAt = data.Get("cooldown_expires_at").AsString(),
         };
+    }
+
+    public GodotObject ToGodotObject()
+    {
+        throw new NotImplementedException();
+    }
+
+    public GodotObject ToObject()
+    {
+        var path = GD.Load<GodotObject>("res://addons/twitcher/reward/twitch_reward.gd");
+        
+        path.Set("id", Id);
+        // path.Set("broadcaster_user_id", BroadcasterUser.);
+        
+        return path;
     }
 }

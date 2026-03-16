@@ -1,0 +1,7 @@
+{
+  "properties": {
+    "runtimeOptions": {
+      "tfm": "net10.0"
+    }
+  }
+}
