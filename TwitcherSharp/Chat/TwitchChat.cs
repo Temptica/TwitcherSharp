@@ -20,7 +20,7 @@ public partial class TwitchChat : RefCounted, ITwitcherSharpSingleton<TwitchChat
     public static TwitchChat Instance { get; set; }
 
     /// <summary>
-    /// Twitch API (Will automatically look for first TwitchApi (twitcher) in the scene tree
+    /// Twitch API (Will automatically look for first TwitchApi (twitcher) in the scene tree. Else will create a new one and add it to the root)
     /// </summary>
     public static TwitchApi Api { get; set; } = TwitchApi.GetOrCreateInstance();
 

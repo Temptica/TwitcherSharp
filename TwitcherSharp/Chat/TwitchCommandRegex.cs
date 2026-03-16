@@ -8,9 +8,7 @@ namespace TwitcherSharp.Chat;
 /// </summary>
 public partial class TwitchCommandRegex : TwitchCommandBase, ITwitcherSharp<TwitchCommandRegex>
 {
-    const string MetaRegexResult = "twitch_command_regex_regex_result";
     public string RegexToListen { get; set; }
-
 
     public static TwitchCommandRegex FromObject(GodotObject data)
     {
