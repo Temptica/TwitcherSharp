@@ -11,7 +11,6 @@ public partial class TwitchReward : RefCounted, ITwitcherSharp<TwitchReward>
     /// <summary>
     /// The ID that uniquely identifies this custom reward.
     /// </summary>
-    
     public string Id { get; set; }
 
     /// <summary>
@@ -32,7 +31,7 @@ public partial class TwitchReward : RefCounted, ITwitcherSharp<TwitchReward>
     /// <summary>
     /// The cost of the reward in Channel Points.
     /// </summary>
-    public int Cost { get; set; }
+    public int Cost { get; set; } = 1;
 
     // Custom Images
     public Image Image1 { get; set; }
@@ -75,20 +74,17 @@ public partial class TwitchReward : RefCounted, ITwitcherSharp<TwitchReward>
 
     public Texture2D GetImage1()
     {
-        if (Image1 != null) return ImageTexture.CreateFromImage(Image1);
-        return DefaultImage1;
+        return Image1 != null ? ImageTexture.CreateFromImage(Image1) : DefaultImage1;
     }
 
     public Texture2D GetImage2()
     {
-        if (Image2 != null) return ImageTexture.CreateFromImage(Image2);
-        return DefaultImage2;
+        return Image2 != null ? ImageTexture.CreateFromImage(Image2) : DefaultImage2;
     }
 
     public Texture2D GetImage4()
     {
-        if (Image4 != null) return ImageTexture.CreateFromImage(Image4);
-        return DefaultImage4;
+        return Image4 != null ? ImageTexture.CreateFromImage(Image4) : DefaultImage4;
     }
 
     public static TwitchReward FromObject(GodotObject data)
@@ -122,16 +118,31 @@ public partial class TwitchReward : RefCounted, ITwitcherSharp<TwitchReward>
 
     public GodotObject ToGodotObject()
     {
-        throw new NotImplementedException();
-    }
-
-    public GodotObject ToObject()
-    {
-        var path = GD.Load<GodotObject>("res://addons/twitcher/reward/twitch_reward.gd");
+        var script = GD.Load<GDScript>("res://addons/twitcher/reward/twitch_reward.gd");
+        var reward = script.New().AsGodotObject();
+        reward.Set("id", Id);
+        reward.Set("broadcaster_user", BroadcasterUser.ToGodotObject());
+        reward.Set("title", Title);
+        reward.Set("description", Description);
+        reward.Set("cost", Cost);
+        reward.Set("image_1", Image1);
+        reward.Set("image_2", Image2);
+        reward.Set("image_4", Image4);
+        reward.Set("background_color", BackgroundColor);
+        reward.Set("is_enabled", IsEnabled);
+        reward.Set("is_user_input_required", IsUserInputRequired);
+        reward.Set("is_paused", IsPaused);
+        reward.Set("should_redemptions_skip_request_queue", ShouldRedemptionsSkipRequestQueue);
+        reward.Set("is_max_per_stream_enabled", IsMaxPerStreamEnabled);
+        reward.Set("max_per_stream", MaxPerStream);
+        reward.Set("is_max_per_user_per_stream_enabled", IsMaxPerUserPerStreamEnabled);
+        reward.Set("max_per_user_per_stream", MaxPerUserPerStream);
+        reward.Set("is_global_cooldown_enabled", IsGlobalCooldownEnabled);
+        reward.Set("global_cooldown_seconds", GlobalCooldownSeconds);
+        reward.Set("is_in_stock", IsInStock);
+        reward.Set("redemptions_redeemed_current_stream", RedemptionsRedeemedCurrentStream);
+        reward.Set("cooldown_expires_at", CooldownExpiresAt);
         
-        path.Set("id", Id);
-        // path.Set("broadcaster_user_id", BroadcasterUser.);
-        
-        return path;
+        return reward;
     }
 }
