@@ -89,6 +89,7 @@ public partial class TwitchConduitShardDisabledEvent : RefCounted, ITwitcherShar
         return request;
     }
 
+
     public partial class TwitchTransport : RefCounted, ITwitcherSharpEventSub<TwitchTransport>
     {
     

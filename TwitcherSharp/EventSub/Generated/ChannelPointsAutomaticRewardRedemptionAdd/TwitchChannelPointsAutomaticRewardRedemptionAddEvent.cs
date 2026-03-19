@@ -103,6 +103,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddEvent : RefC
         return request;
     }
 
+
     public partial class TwitchReward : RefCounted, ITwitcherSharpEventSub<TwitchReward>
     {
         /// <summary> 
@@ -144,6 +145,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddEvent : RefC
             request.Set("unlocked_emote", UnlockedEmote);
             return request;
         }
+    
     
         public partial class TwitchUnlockedEmote : RefCounted, ITwitcherSharpEventSub<TwitchUnlockedEmote>
         {
@@ -217,6 +219,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddEvent : RefC
             request.Set("emotes", Emotes);
             return request;
         }
+    
     
         public partial class TwitchEmotes : RefCounted, ITwitcherSharpEventSub<TwitchEmotes>
         {

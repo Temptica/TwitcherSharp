@@ -24,7 +24,7 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
             : TwitchImageTransformer.FromObject(_data.Get("image_transformer").AsGodotObject());
         set
         {
-            _data?.Set("image_transformer", value.ToGodotObject());
+            _data?.Set("image_transformer", value?.ToGodotObject());
             field = value;
         }
     } = new();
@@ -140,7 +140,7 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
         TwitchEmoteDefinition[] emoteDefinitions)
     {
         var param = emoteDefinitions.Select(ed => ed.ToGodotObject()).ToArray();
-        return _data.CallDictionary<TwitchEmoteDefinition, SpriteFrames>("get_emotes_by_definition", param);
+        return _data.CallDictionaryKey<TwitchEmoteDefinition, SpriteFrames>("get_emotes_by_definition", param);
     }
 
     public async Task<Dictionary<string, ITwitchEmote>> GetCachedEmotes(string channelId)
@@ -168,7 +168,7 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
 
     public async Task<Godot.Collections.Dictionary<TwitchBadgeDefinition, SpriteFrames>> GetBadges(
         TwitchBadgeDefinition[] badges)
-        => await _data.CallAsyncDictionary<TwitchBadgeDefinition, SpriteFrames>("get_badges",
+        => await _data.CallDictionaryKeyAsync<TwitchBadgeDefinition, SpriteFrames>("get_badges",
             badges.Select(badge => badge.ToGodotObject()).ToArray());
 
     #endregion
@@ -234,7 +234,7 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
     /// <returns><see cref="SpriteFrames"/> mapped by <see cref="TwitchCheermote.TwitchTiers"/> for a <see cref="TwitchCheermote"/></returns>
     public async Task<Godot.Collections.Dictionary<TwitchCheermote.TwitchTiers, SpriteFrames>> GetCheermotes(
         TwitchCheermoteDefinition cheermoteDefinition)
-        => await _data.CallAsyncDictionary<TwitchCheermote.TwitchTiers, SpriteFrames>("get_cheermotes",
+        => await _data.CallDictionaryKeyAsync<TwitchCheermote.TwitchTiers, SpriteFrames>("get_cheermotes",
             cheermoteDefinition.ToGodotObject());
 
     #endregion
@@ -282,7 +282,7 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
 
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_media_loader.gd");
         _data = script.New().AsGodotObject();
-        _data.Set("image_transformer", ImageTransformer.ToGodotObject());
+        _data.Set("image_transformer", ImageTransformer?.ToGodotObject());
         _data.Set("fallback_texture", FallbackTexture);
         _data.Set("fallback_profile", FallbackProfile);
         _data.Set("image_cdn_host", ImageCdnHost);

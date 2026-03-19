@@ -236,6 +236,7 @@ public partial class TwitchChannelModerateEvent : RefCounted, ITwitcherSharpEven
         return request;
     }
 
+
     public partial class TwitchFollowers : RefCounted, ITwitcherSharpEventSub<TwitchFollowers>
     {
         /// <summary> 

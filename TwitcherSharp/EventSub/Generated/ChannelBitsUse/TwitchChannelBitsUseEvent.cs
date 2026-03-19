@@ -96,6 +96,7 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
         return request;
     }
 
+
     public partial class TwitchMessage : RefCounted, ITwitcherSharpEventSub<TwitchMessage>
     {
         /// <summary> 
@@ -131,6 +132,7 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
             request.Set("fragments", Fragments);
             return request;
         }
+    
     
         public partial class TwitchFragments : RefCounted, ITwitcherSharpEventSub<TwitchFragments>
         {
@@ -180,6 +182,7 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
                 request.Set("cheermote", Cheermote);
                 return request;
             }
+        
         
             public partial class TwitchEmote : RefCounted, ITwitcherSharpEventSub<TwitchEmote>
             {
@@ -317,6 +320,7 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
             request.Set("message_effect_id", MessageEffectId);
             return request;
         }
+    
     
         public partial class TwitchEmote : RefCounted, ITwitcherSharpEventSub<TwitchEmote>
         {

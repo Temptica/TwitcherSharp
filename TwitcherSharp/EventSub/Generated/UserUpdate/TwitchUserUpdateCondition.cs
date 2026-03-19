@@ -34,4 +34,20 @@ public partial class TwitchUserUpdateCondition : RefCounted, ITwitcherSharpCondi
         request.Set("user_id", UserId);
         return request;
     }
+
+    public static TwitchUserUpdateCondition FromDictionary(Dictionary data)
+    {
+        return new TwitchUserUpdateCondition
+        {
+            UserId = data["user_id"].AsString(),
+        };
+    }
+
+    public Dictionary ToDictionary()
+    {
+        return new Dictionary
+        {
+            {"user_id", UserId},
+        };
+    }
 }

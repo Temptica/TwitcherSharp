@@ -96,6 +96,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
         return request;
     }
 
+
     public partial class TwitchReward : RefCounted, ITwitcherSharpEventSub<TwitchReward>
     {
         /// <summary> 
@@ -137,6 +138,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
             request.Set("emote", Emote);
             return request;
         }
+    
     
         public partial class TwitchEmote : RefCounted, ITwitcherSharpEventSub<TwitchEmote>
         {
@@ -211,6 +213,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
             return request;
         }
     
+    
         public partial class TwitchFragments : RefCounted, ITwitcherSharpEventSub<TwitchFragments>
         {
             /// <summary> 
@@ -252,6 +255,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
                 request.Set("emote", Emote);
                 return request;
             }
+        
         
             public partial class TwitchEmote : RefCounted, ITwitcherSharpEventSub<TwitchEmote>
             {

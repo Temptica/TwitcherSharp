@@ -82,6 +82,7 @@ public partial class TwitchWhisperReceivedEvent : RefCounted, ITwitcherSharpEven
         return request;
     }
 
+
     public partial class TwitchWhisper : RefCounted, ITwitcherSharpEventSub<TwitchWhisper>
     {
         /// <summary> 

@@ -48,4 +48,24 @@ public partial class TwitchDropEntitlementGrantCondition : RefCounted, ITwitcher
         request.Set("campaign_id", CampaignId);
         return request;
     }
+
+    public static TwitchDropEntitlementGrantCondition FromDictionary(Dictionary data)
+    {
+        return new TwitchDropEntitlementGrantCondition
+        {
+            OrganizationId = data["organization_id"].AsString(),
+            CategoryId = data["category_id"].AsString(),
+            CampaignId = data["campaign_id"].AsString(),
+        };
+    }
+
+    public Dictionary ToDictionary()
+    {
+        return new Dictionary
+        {
+            {"organization_id", OrganizationId},
+            {"category_id", CategoryId},
+            {"campaign_id", CampaignId},
+        };
+    }
 }

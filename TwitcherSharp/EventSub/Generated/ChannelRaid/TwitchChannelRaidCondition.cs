@@ -41,4 +41,22 @@ public partial class TwitchChannelRaidCondition : RefCounted, ITwitcherSharpCond
         request.Set("to_broadcaster_user_id", ToBroadcasterUserId);
         return request;
     }
+
+    public static TwitchChannelRaidCondition FromDictionary(Dictionary data)
+    {
+        return new TwitchChannelRaidCondition
+        {
+            FromBroadcasterUserId = data["from_broadcaster_user_id"].AsString(),
+            ToBroadcasterUserId = data["to_broadcaster_user_id"].AsString(),
+        };
+    }
+
+    public Dictionary ToDictionary()
+    {
+        return new Dictionary
+        {
+            {"from_broadcaster_user_id", FromBroadcasterUserId},
+            {"to_broadcaster_user_id", ToBroadcasterUserId},
+        };
+    }
 }

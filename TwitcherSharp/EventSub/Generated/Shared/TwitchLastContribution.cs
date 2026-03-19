@@ -62,6 +62,7 @@ public partial class TwitchLastContribution : RefCounted, ITwitcherSharpEventSub
         return request;
     }
 
+
     public partial class TwitchType : RefCounted, ITwitcherSharpEventSub<TwitchType>
     {
     

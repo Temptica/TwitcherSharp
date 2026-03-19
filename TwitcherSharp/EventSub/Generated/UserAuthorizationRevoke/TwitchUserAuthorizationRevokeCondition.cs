@@ -34,4 +34,20 @@ public partial class TwitchUserAuthorizationRevokeCondition : RefCounted, ITwitc
         request.Set("client_id", ClientId);
         return request;
     }
+
+    public static TwitchUserAuthorizationRevokeCondition FromDictionary(Dictionary data)
+    {
+        return new TwitchUserAuthorizationRevokeCondition
+        {
+            ClientId = data["client_id"].AsString(),
+        };
+    }
+
+    public Dictionary ToDictionary()
+    {
+        return new Dictionary
+        {
+            {"client_id", ClientId},
+        };
+    }
 }

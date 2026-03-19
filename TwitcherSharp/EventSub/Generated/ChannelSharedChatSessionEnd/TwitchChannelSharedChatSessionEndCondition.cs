@@ -34,4 +34,20 @@ public partial class TwitchChannelSharedChatSessionEndCondition : RefCounted, IT
         request.Set("broadcaster_user_id", BroadcasterUserId);
         return request;
     }
+
+    public static TwitchChannelSharedChatSessionEndCondition FromDictionary(Dictionary data)
+    {
+        return new TwitchChannelSharedChatSessionEndCondition
+        {
+            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
+        };
+    }
+
+    public Dictionary ToDictionary()
+    {
+        return new Dictionary
+        {
+            {"broadcaster_user_id", BroadcasterUserId},
+        };
+    }
 }

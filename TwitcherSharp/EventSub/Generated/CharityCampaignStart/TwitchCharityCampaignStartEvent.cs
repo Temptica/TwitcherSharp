@@ -103,6 +103,7 @@ public partial class TwitchCharityCampaignStartEvent : RefCounted, ITwitcherShar
         return request;
     }
 
+
     public partial class TwitchCurrentAmount : RefCounted, ITwitcherSharpEventSub<TwitchCurrentAmount>
     {
         /// <summary> 

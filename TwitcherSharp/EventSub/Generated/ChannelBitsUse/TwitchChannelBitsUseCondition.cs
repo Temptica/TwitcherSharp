@@ -34,4 +34,20 @@ public partial class TwitchChannelBitsUseCondition : RefCounted, ITwitcherSharpC
         request.Set("broadcaster_user_id", BroadcasterUserId);
         return request;
     }
+
+    public static TwitchChannelBitsUseCondition FromDictionary(Dictionary data)
+    {
+        return new TwitchChannelBitsUseCondition
+        {
+            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
+        };
+    }
+
+    public Dictionary ToDictionary()
+    {
+        return new Dictionary
+        {
+            {"broadcaster_user_id", BroadcasterUserId},
+        };
+    }
 }

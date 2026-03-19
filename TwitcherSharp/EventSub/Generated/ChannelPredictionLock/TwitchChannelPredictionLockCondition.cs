@@ -34,4 +34,20 @@ public partial class TwitchChannelPredictionLockCondition : RefCounted, ITwitche
         request.Set("broadcaster_user_id", BroadcasterUserId);
         return request;
     }
+
+    public static TwitchChannelPredictionLockCondition FromDictionary(Dictionary data)
+    {
+        return new TwitchChannelPredictionLockCondition
+        {
+            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
+        };
+    }
+
+    public Dictionary ToDictionary()
+    {
+        return new Dictionary
+        {
+            {"broadcaster_user_id", BroadcasterUserId},
+        };
+    }
 }

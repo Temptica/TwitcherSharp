@@ -44,7 +44,7 @@ public abstract partial class TwitchCommandBase : RefCounted, ITwitcherSharp
     /// Required permission to execute the command
     /// </summary>
     [Flags]
-    public enum PermissionFlags
+    public enum PermissionFlag
     {
         Everyone = 0,
         Vip = 1,
@@ -80,7 +80,7 @@ public abstract partial class TwitchCommandBase : RefCounted, ITwitcherSharp
     /// <summary>
     /// Wich role of user is allowed to use it
     /// </summary>
-    public PermissionFlags PermissionLevel { get; set; }
+    public PermissionFlag PermissionLevel { get; set; }
 
     /// <summary>
     /// Where the command should be accepted
@@ -134,7 +134,7 @@ public abstract partial class TwitchCommandBase : RefCounted, ITwitcherSharp
     {
         Command = Data.Get("command").AsString();
         Description = Data.Get("description").AsString();
-        PermissionLevel = (PermissionFlags)Data.Get("permission_level").AsInt32();
+        PermissionLevel = (PermissionFlag)Data.Get("permission_level").AsInt32();
         Where = (WhereFlag)Data.Get("where").AsInt32();
         AllowedUsers = Data.Get("allowed_users").AsStringArray().ToList();
         ListenToChatrooms = Data.Get("listen_to_chatrooms").AsStringArray().ToList();
@@ -168,6 +168,6 @@ public abstract partial class TwitchCommandBase : RefCounted, ITwitcherSharp
         data.Set("case_insensitive", CaseInsensitive);
         data.Set("user_cooldown", UserCooldown);
         data.Set("global_cooldown", GlobalCooldown);
-        data.Set("all_commands", AllCommands.Select(c => c.ToGodotObject()).ToArray());
+        data.Set("all_commands", AllCommands.Select(c => c?.ToGodotObject()).ToArray());
     }
 }

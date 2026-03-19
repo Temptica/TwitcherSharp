@@ -34,4 +34,20 @@ public partial class TwitchChannelModeratorRemoveCondition : RefCounted, ITwitch
         request.Set("broadcaster_user_id", BroadcasterUserId);
         return request;
     }
+
+    public static TwitchChannelModeratorRemoveCondition FromDictionary(Dictionary data)
+    {
+        return new TwitchChannelModeratorRemoveCondition
+        {
+            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
+        };
+    }
+
+    public Dictionary ToDictionary()
+    {
+        return new Dictionary
+        {
+            {"broadcaster_user_id", BroadcasterUserId},
+        };
+    }
 }

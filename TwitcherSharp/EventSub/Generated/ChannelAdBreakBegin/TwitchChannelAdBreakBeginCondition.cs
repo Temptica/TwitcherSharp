@@ -34,4 +34,20 @@ public partial class TwitchChannelAdBreakBeginCondition : RefCounted, ITwitcherS
         request.Set("broadcaster_id", BroadcasterId);
         return request;
     }
+
+    public static TwitchChannelAdBreakBeginCondition FromDictionary(Dictionary data)
+    {
+        return new TwitchChannelAdBreakBeginCondition
+        {
+            BroadcasterId = data["broadcaster_id"].AsString(),
+        };
+    }
+
+    public Dictionary ToDictionary()
+    {
+        return new Dictionary
+        {
+            {"broadcaster_id", BroadcasterId},
+        };
+    }
 }

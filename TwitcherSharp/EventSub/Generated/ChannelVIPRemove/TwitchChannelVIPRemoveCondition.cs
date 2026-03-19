@@ -34,4 +34,20 @@ public partial class TwitchChannelVIPRemoveCondition : RefCounted, ITwitcherShar
         request.Set("broadcaster_user_id", BroadcasterUserId);
         return request;
     }
+
+    public static TwitchChannelVIPRemoveCondition FromDictionary(Dictionary data)
+    {
+        return new TwitchChannelVIPRemoveCondition
+        {
+            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
+        };
+    }
+
+    public Dictionary ToDictionary()
+    {
+        return new Dictionary
+        {
+            {"broadcaster_user_id", BroadcasterUserId},
+        };
+    }
 }

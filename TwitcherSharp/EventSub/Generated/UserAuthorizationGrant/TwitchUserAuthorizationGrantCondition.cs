@@ -34,4 +34,20 @@ public partial class TwitchUserAuthorizationGrantCondition : RefCounted, ITwitch
         request.Set("client_id", ClientId);
         return request;
     }
+
+    public static TwitchUserAuthorizationGrantCondition FromDictionary(Dictionary data)
+    {
+        return new TwitchUserAuthorizationGrantCondition
+        {
+            ClientId = data["client_id"].AsString(),
+        };
+    }
+
+    public Dictionary ToDictionary()
+    {
+        return new Dictionary
+        {
+            {"client_id", ClientId},
+        };
+    }
 }

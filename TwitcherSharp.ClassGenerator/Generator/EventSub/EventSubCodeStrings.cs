@@ -42,9 +42,15 @@ public static class EventSubCodeStrings
                                             """;
 
     public const string FromDictionary = """
-                                         public static {{ClassName}} FromData(Dictionary data)
+                                         public static {{ClassName}} FromDictionary(Dictionary data)
                                          {
                                              return new {{ClassName}}
+                                             {
+                                         """;
+    public const string ToDictionary = """
+                                         public Dictionary ToDictionary()
+                                         {
+                                             return new Dictionary
                                              {
                                          """;
 }

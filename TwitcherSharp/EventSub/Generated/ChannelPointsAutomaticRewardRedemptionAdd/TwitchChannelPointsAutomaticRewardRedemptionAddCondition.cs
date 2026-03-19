@@ -34,4 +34,20 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddCondition : 
         request.Set("broadcaster_user_id", BroadcasterUserId);
         return request;
     }
+
+    public static TwitchChannelPointsAutomaticRewardRedemptionAddCondition FromDictionary(Dictionary data)
+    {
+        return new TwitchChannelPointsAutomaticRewardRedemptionAddCondition
+        {
+            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
+        };
+    }
+
+    public Dictionary ToDictionary()
+    {
+        return new Dictionary
+        {
+            {"broadcaster_user_id", BroadcasterUserId},
+        };
+    }
 }

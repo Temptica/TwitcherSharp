@@ -34,4 +34,20 @@ public partial class TwitchChannelSubscribeCondition : RefCounted, ITwitcherShar
         request.Set("broadcaster_user_id", BroadcasterUserId);
         return request;
     }
+
+    public static TwitchChannelSubscribeCondition FromDictionary(Dictionary data)
+    {
+        return new TwitchChannelSubscribeCondition
+        {
+            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
+        };
+    }
+
+    public Dictionary ToDictionary()
+    {
+        return new Dictionary
+        {
+            {"broadcaster_user_id", BroadcasterUserId},
+        };
+    }
 }

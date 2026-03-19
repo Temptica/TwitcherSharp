@@ -41,4 +41,22 @@ public partial class TwitchChannelGuestStarSessionEndCondition : RefCounted, ITw
         request.Set("moderator_user_id", ModeratorUserId);
         return request;
     }
+
+    public static TwitchChannelGuestStarSessionEndCondition FromDictionary(Dictionary data)
+    {
+        return new TwitchChannelGuestStarSessionEndCondition
+        {
+            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
+            ModeratorUserId = data["moderator_user_id"].AsString(),
+        };
+    }
+
+    public Dictionary ToDictionary()
+    {
+        return new Dictionary
+        {
+            {"broadcaster_user_id", BroadcasterUserId},
+            {"moderator_user_id", ModeratorUserId},
+        };
+    }
 }

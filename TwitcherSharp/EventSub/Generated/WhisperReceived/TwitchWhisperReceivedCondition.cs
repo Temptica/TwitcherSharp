@@ -34,4 +34,20 @@ public partial class TwitchWhisperReceivedCondition : RefCounted, ITwitcherSharp
         request.Set("user_id", UserId);
         return request;
     }
+
+    public static TwitchWhisperReceivedCondition FromDictionary(Dictionary data)
+    {
+        return new TwitchWhisperReceivedCondition
+        {
+            UserId = data["user_id"].AsString(),
+        };
+    }
+
+    public Dictionary ToDictionary()
+    {
+        return new Dictionary
+        {
+            {"user_id", UserId},
+        };
+    }
 }

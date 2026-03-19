@@ -34,4 +34,20 @@ public partial class TwitchChannelPollProgressCondition : RefCounted, ITwitcherS
         request.Set("broadcaster_user_id", BroadcasterUserId);
         return request;
     }
+
+    public static TwitchChannelPollProgressCondition FromDictionary(Dictionary data)
+    {
+        return new TwitchChannelPollProgressCondition
+        {
+            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
+        };
+    }
+
+    public Dictionary ToDictionary()
+    {
+        return new Dictionary
+        {
+            {"broadcaster_user_id", BroadcasterUserId},
+        };
+    }
 }

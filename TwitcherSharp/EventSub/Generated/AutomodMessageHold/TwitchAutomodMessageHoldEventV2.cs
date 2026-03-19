@@ -110,6 +110,7 @@ public partial class TwitchAutomodMessageHoldEventV2 : RefCounted, ITwitcherShar
         return request;
     }
 
+
     public partial class TwitchMessage : RefCounted, ITwitcherSharpEventSub<TwitchMessage>
     {
         /// <summary> 
@@ -145,6 +146,7 @@ public partial class TwitchAutomodMessageHoldEventV2 : RefCounted, ITwitcherShar
             request.Set("fragments", Fragments);
             return request;
         }
+    
     
         public partial class TwitchFragments : RefCounted, ITwitcherSharpEventSub<TwitchFragments>
         {
@@ -194,6 +196,7 @@ public partial class TwitchAutomodMessageHoldEventV2 : RefCounted, ITwitcherShar
                 request.Set("cheermote", Cheermote);
                 return request;
             }
+        
         
             public partial class TwitchEmote : RefCounted, ITwitcherSharpEventSub<TwitchEmote>
             {
@@ -319,6 +322,7 @@ public partial class TwitchAutomodMessageHoldEventV2 : RefCounted, ITwitcherShar
             return request;
         }
     
+    
         public partial class TwitchBoundaries : RefCounted, ITwitcherSharpEventSub<TwitchBoundaries>
         {
             /// <summary> 
@@ -385,6 +389,7 @@ public partial class TwitchAutomodMessageHoldEventV2 : RefCounted, ITwitcherShar
             return request;
         }
     
+    
         public partial class TwitchTermsFound : RefCounted, ITwitcherSharpEventSub<TwitchTermsFound>
         {
             /// <summary> 
@@ -440,6 +445,7 @@ public partial class TwitchAutomodMessageHoldEventV2 : RefCounted, ITwitcherShar
                 request.Set("owner_broadcaster_user_name", OwnerBroadcasterUserName);
                 return request;
             }
+        
         
             public partial class TwitchBoundary : RefCounted, ITwitcherSharpEventSub<TwitchBoundary>
             {

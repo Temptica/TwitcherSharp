@@ -34,4 +34,20 @@ public partial class TwitchChannelPointsCustomRewardAddCondition : RefCounted, I
         request.Set("broadcaster_user_id", BroadcasterUserId);
         return request;
     }
+
+    public static TwitchChannelPointsCustomRewardAddCondition FromDictionary(Dictionary data)
+    {
+        return new TwitchChannelPointsCustomRewardAddCondition
+        {
+            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
+        };
+    }
+
+    public Dictionary ToDictionary()
+    {
+        return new Dictionary
+        {
+            {"broadcaster_user_id", BroadcasterUserId},
+        };
+    }
 }

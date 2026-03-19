@@ -34,4 +34,20 @@ public partial class TwitchHypeTrainBeginCondition : RefCounted, ITwitcherSharpC
         request.Set("broadcaster_user_id", BroadcasterUserId);
         return request;
     }
+
+    public static TwitchHypeTrainBeginCondition FromDictionary(Dictionary data)
+    {
+        return new TwitchHypeTrainBeginCondition
+        {
+            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
+        };
+    }
+
+    public Dictionary ToDictionary()
+    {
+        return new Dictionary
+        {
+            {"broadcaster_user_id", BroadcasterUserId},
+        };
+    }
 }

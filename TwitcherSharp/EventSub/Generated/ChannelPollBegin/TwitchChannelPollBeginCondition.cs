@@ -34,4 +34,20 @@ public partial class TwitchChannelPollBeginCondition : RefCounted, ITwitcherShar
         request.Set("broadcaster_user_id", BroadcasterUserId);
         return request;
     }
+
+    public static TwitchChannelPollBeginCondition FromDictionary(Dictionary data)
+    {
+        return new TwitchChannelPollBeginCondition
+        {
+            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
+        };
+    }
+
+    public Dictionary ToDictionary()
+    {
+        return new Dictionary
+        {
+            {"broadcaster_user_id", BroadcasterUserId},
+        };
+    }
 }

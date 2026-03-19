@@ -86,6 +86,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     
     public static TwitchApi FromObject(GodotObject data)
     {
+        if (data is null) return null;
         var twitchApi = new TwitchApi
         {
             _data = data,

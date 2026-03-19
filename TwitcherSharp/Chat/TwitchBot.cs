@@ -27,7 +27,7 @@ public partial class TwitchBot : RefCounted, ITwitcherSharpSingleton<TwitchBot>
             : field;
         set
         {
-            _data?.Set("sender", value.ToGodotObject());
+            _data?.Set("sender", value?.ToGodotObject());
             field = value;
         }
     }
@@ -39,7 +39,7 @@ public partial class TwitchBot : RefCounted, ITwitcherSharpSingleton<TwitchBot>
             : field;
         set
         {
-            _data?.Set("receiver", value.ToGodotObject());
+            _data?.Set("receiver", value?.ToGodotObject());
             field = value;
         }
     }
@@ -137,8 +137,8 @@ public partial class TwitchBot : RefCounted, ITwitcherSharpSingleton<TwitchBot>
 
         var script = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_bot.gd");
         var instance = script.New().AsGodotObject();
-        instance.Set("sender", Sender.ToGodotObject());
-        instance.Set("receiver", Receiver.ToGodotObject());
+        instance.Set("sender", Sender?.ToGodotObject());
+        instance.Set("receiver", Receiver?.ToGodotObject());
         _data = instance;
         instance.SetMeta("_twitcher_sharp_instance", this);
         return instance;

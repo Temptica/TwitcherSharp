@@ -41,4 +41,22 @@ public partial class TwitchChannelChatUserMessageHoldCondition : RefCounted, ITw
         request.Set("user_id", UserId);
         return request;
     }
+
+    public static TwitchChannelChatUserMessageHoldCondition FromDictionary(Dictionary data)
+    {
+        return new TwitchChannelChatUserMessageHoldCondition
+        {
+            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
+            UserId = data["user_id"].AsString(),
+        };
+    }
+
+    public Dictionary ToDictionary()
+    {
+        return new Dictionary
+        {
+            {"broadcaster_user_id", BroadcasterUserId},
+            {"user_id", UserId},
+        };
+    }
 }

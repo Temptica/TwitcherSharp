@@ -161,6 +161,7 @@ public partial class TwitchHypeTrainBeginEvent : RefCounted, ITwitcherSharpEvent
         return request;
     }
 
+
     public partial class TwitchType : RefCounted, ITwitcherSharpEventSub<TwitchType>
     {
     

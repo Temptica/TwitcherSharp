@@ -1,6 +1,8 @@
 using TwitcherSharp.Api.Generated.Chat;
+using TwitcherSharp.Interfaces;
+
 namespace TwitcherSharp.Api.Generated.Chat.Interfaces;
-public interface ITwitchEmote
+public interface ITwitchEmote : ITwitcherSharp
 {
     public string Id { get; set; }
     public string Name { get; set; }

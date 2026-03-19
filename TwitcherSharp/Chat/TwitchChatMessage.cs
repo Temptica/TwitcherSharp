@@ -67,18 +67,18 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
         instance.Set("chatter_user_name", ChatterUserName);
         instance.Set("chatter_user_login", ChatterUserLogin);
         instance.Set("message_id", MessageId);
-        instance.Set("message", Content.ToGodotObject());
+        instance.Set("message", Content?.ToGodotObject());
         instance.Set("message_type", (int)ChatMessageType);
-        instance.Set("cheer", CheerMetadata.ToGodotObject());
+        instance.Set("cheer", CheerMetadata?.ToGodotObject());
         instance.Set("color", Color);
-        instance.Set("reply", ReplyMetadata.ToGodotObject());
+        instance.Set("reply", ReplyMetadata?.ToGodotObject());
         instance.Set("channel_points_custom_reward_id", ChannelPointsCustomRewardId);
         instance.Set("source_broadcaster_user_id", SourceBroadcasterUserId);
         instance.Set("source_broadcaster_user_name", SourceBroadcasterUserName);
         instance.Set("source_broadcaster_user_login", SourceBroadcasterUserLogin);
         instance.Set("source_message_id", SourceMessageId);
-        instance.Set("badges", Badges.Select(b => b.ToGodotObject()).ToArray());
-        instance.Set("source_badges", SourceBadges.Select(b => b.ToGodotObject()).ToArray());
+        instance.Set("badges", Badges.Select(b => b?.ToGodotObject()).ToArray());
+        instance.Set("source_badges", SourceBadges.Select(b => b?.ToGodotObject()).ToArray());
         return instance;
     }
 
@@ -107,7 +107,7 @@ public partial class Message : RefCounted, ITwitcherSharp<Message>
         var script = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_chat_message.gd");
         var message = script.Get("Message").AsGodotObject().Call("new").AsGodotObject();
         message.Set("text", Text);
-        message.Set("fragments", Fragments.Select(f => f.ToGodotObject()).ToArray());
+        message.Set("fragments", Fragments.Select(f => f?.ToGodotObject()).ToArray());
         return message;
     }
 }
@@ -138,9 +138,9 @@ public partial class Fragment : RefCounted, ITwitcherSharp<Fragment>
         var instance = script.Get("Fragment").AsGodotObject().Call("new").AsGodotObject();
         instance.Set("type", (int)Type);
         instance.Set("text", Text);
-        instance.Set("cheermote", Cheermote.ToGodotObject());
-        instance.Set("emote", Emote.ToGodotObject());
-        instance.Set("mention", Mention.ToGodotObject());
+        instance.Set("cheermote", Cheermote?.ToGodotObject());
+        instance.Set("emote", Emote?.ToGodotObject());
+        instance.Set("mention", Mention?.ToGodotObject());
         return instance;
     }
 }

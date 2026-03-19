@@ -41,4 +41,22 @@ public partial class TwitchChannelWarningSendCondition : RefCounted, ITwitcherSh
         request.Set("moderator_user_id", ModeratorUserId);
         return request;
     }
+
+    public static TwitchChannelWarningSendCondition FromDictionary(Dictionary data)
+    {
+        return new TwitchChannelWarningSendCondition
+        {
+            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
+            ModeratorUserId = data["moderator_user_id"].AsString(),
+        };
+    }
+
+    public Dictionary ToDictionary()
+    {
+        return new Dictionary
+        {
+            {"broadcaster_user_id", BroadcasterUserId},
+            {"moderator_user_id", ModeratorUserId},
+        };
+    }
 }

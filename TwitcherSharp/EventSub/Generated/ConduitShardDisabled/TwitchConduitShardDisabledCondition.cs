@@ -41,4 +41,22 @@ public partial class TwitchConduitShardDisabledCondition : RefCounted, ITwitcher
         request.Set("conduit_id", ConduitId);
         return request;
     }
+
+    public static TwitchConduitShardDisabledCondition FromDictionary(Dictionary data)
+    {
+        return new TwitchConduitShardDisabledCondition
+        {
+            ClientId = data["client_id"].AsString(),
+            ConduitId = data["conduit_id"].AsString(),
+        };
+    }
+
+    public Dictionary ToDictionary()
+    {
+        return new Dictionary
+        {
+            {"client_id", ClientId},
+            {"conduit_id", ConduitId},
+        };
+    }
 }

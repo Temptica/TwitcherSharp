@@ -41,4 +41,22 @@ public partial class TwitchChannelUnbanRequestResolveCondition : RefCounted, ITw
         request.Set("broadcaster_user_id", BroadcasterUserId);
         return request;
     }
+
+    public static TwitchChannelUnbanRequestResolveCondition FromDictionary(Dictionary data)
+    {
+        return new TwitchChannelUnbanRequestResolveCondition
+        {
+            ModeratorUserId = data["moderator_user_id"].AsString(),
+            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
+        };
+    }
+
+    public Dictionary ToDictionary()
+    {
+        return new Dictionary
+        {
+            {"moderator_user_id", ModeratorUserId},
+            {"broadcaster_user_id", BroadcasterUserId},
+        };
+    }
 }

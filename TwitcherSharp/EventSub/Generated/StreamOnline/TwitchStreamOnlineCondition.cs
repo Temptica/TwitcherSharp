@@ -34,4 +34,20 @@ public partial class TwitchStreamOnlineCondition : RefCounted, ITwitcherSharpCon
         request.Set("broadcaster_user_id", BroadcasterUserId);
         return request;
     }
+
+    public static TwitchStreamOnlineCondition FromDictionary(Dictionary data)
+    {
+        return new TwitchStreamOnlineCondition
+        {
+            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
+        };
+    }
+
+    public Dictionary ToDictionary()
+    {
+        return new Dictionary
+        {
+            {"broadcaster_user_id", BroadcasterUserId},
+        };
+    }
 }

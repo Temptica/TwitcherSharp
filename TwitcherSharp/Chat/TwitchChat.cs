@@ -29,7 +29,7 @@ public partial class TwitchChat : RefCounted, ITwitcherSharpSingleton<TwitchChat
         get => _data != null ? TwitchUser.FromObject(_data.Get("broadcaster_user").AsGodotObject()) : field;
         set
         {
-            _data?.Set("broadcaster_user", value.ToGodotObject());
+            _data?.Set("broadcaster_user", value?.ToGodotObject());
             field = value;
         }
     }
@@ -137,8 +137,8 @@ public partial class TwitchChat : RefCounted, ITwitcherSharpSingleton<TwitchChat
         var instance = script.New().AsGodotObject();
         _data = instance;
         _data.SetMeta("_twitcher_sharp_instance", this);
-        _data.Set("broadcaster_user", BroadcasterUser.ToGodotObject());
-        _data.Set("sender_user", SenderUser.ToGodotObject());
+        _data.Set("broadcaster_user", BroadcasterUser?.ToGodotObject());
+        _data.Set("sender_user", SenderUser?.ToGodotObject());
         ConnectSignals();
         return instance;
     }

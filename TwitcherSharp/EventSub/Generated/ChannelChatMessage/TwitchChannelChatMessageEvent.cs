@@ -168,6 +168,7 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
         return request;
     }
 
+
     public partial class TwitchMessage : RefCounted, ITwitcherSharpEventSub<TwitchMessage>
     {
         /// <summary> 
@@ -203,6 +204,7 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
             request.Set("fragments", Fragments);
             return request;
         }
+    
     
         public partial class TwitchFragments : RefCounted, ITwitcherSharpEventSub<TwitchFragments>
         {
@@ -259,6 +261,7 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
                 request.Set("mention", Mention);
                 return request;
             }
+        
         
             public partial class TwitchCheermote : RefCounted, ITwitcherSharpEventSub<TwitchCheermote>
             {

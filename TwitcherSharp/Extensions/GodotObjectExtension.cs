@@ -90,13 +90,44 @@ public static class GodotObjectExtension
             return (await obj.ToSignal(task.AsGodotObject(), "completed"))[0];
         }
 
-        public async Task<Godot.Collections.Dictionary<T, TVariant>> CallAsyncDictionary<[MustBeVariant] T,[MustBeVariant] TVariant>(string method, params Variant[] args) 
+        /// <summary>
+        /// Calls a godot method and returns a typed dictionary. Expects the TwitcherSharp object to be the key
+        /// </summary>
+        /// <param name="method">method to call (snake-cased)</param>
+        /// <param name="args">parameters for the method to call</param>
+        /// <typeparam name="T">An implementation of <see cref="ITwitcherSharp{T}"/></typeparam>
+        /// <typeparam name="TVariant">A <see cref="Variant"/></typeparam>
+        /// <returns>Returns a <see cref="Godot.Collections.Dictionary{Tkey, TValue}"/> with the result data</returns>
+        public async Task<Godot.Collections.Dictionary<T, TVariant>> CallDictionaryKeyAsync<[MustBeVariant] T,[MustBeVariant] TVariant>(string method, params Variant[] args) 
             where T : ITwitcherSharp<T>
         {
             var dictionary = new Godot.Collections.Dictionary<T, TVariant>();
             var result = await obj.CallAsync(method, args);
             var resultDictionary = result.AsGodotDictionary<GodotObject, TVariant>()
                 .Select(x => (T.FromObject(x.Key), x.Value));
+            
+            foreach (var (key, value) in resultDictionary)
+            {
+                dictionary.Add(key, value);
+            }
+            return dictionary;
+        }
+        
+        /// <summary>
+        /// Calls a godot method and returns a typed dictionary. Expects the TwitcherSharp object to be the value
+        /// </summary>
+        /// <param name="method">method to call (snake-cased)</param>
+        /// <param name="args">parameters for the method to call</param>
+        /// <typeparam name="T">A <see cref="Variant"/></typeparam>
+        /// <typeparam name="TVariant">An implementation of <see cref="ITwitcherSharp{TVariant}"/></typeparam>
+        /// <returns>Returns a <see cref="Godot.Collections.Dictionary{Tkey, TValue}"/> with the result data</returns>
+        public async Task<Godot.Collections.Dictionary<TVariant, T>> CallDictionaryValueAsync<[MustBeVariant] TVariant,[MustBeVariant] T>(string method, params Variant[] args) 
+            where T : ITwitcherSharp<T>
+        {
+            var dictionary = new Godot.Collections.Dictionary<TVariant, T>();
+            var result = await obj.CallAsync(method, args);
+            var resultDictionary = result.AsGodotDictionary<TVariant,GodotObject>()
+                .Select(x => (x.Key, T.FromObject(x.Value)));
             
             foreach (var (key, value) in resultDictionary)
             {
@@ -113,7 +144,7 @@ public static class GodotObjectExtension
         /// <typeparam name="T">An implementation of <see cref="ITwitcherSharp{T}"/></typeparam>
         /// <typeparam name="TVariant">A <see cref="Variant"/></typeparam>
         /// <returns>Returns a <see cref="Godot.Collections.Dictionary{Tkey, TValue}"/> with the result data</returns>
-        public Godot.Collections.Dictionary<T,TVariant> CallDictionary<[MustBeVariant] T,[MustBeVariant] TVariant>(string method, params Variant[] args) 
+        public Godot.Collections.Dictionary<T,TVariant> CallDictionaryKey<[MustBeVariant] T,[MustBeVariant] TVariant>(string method, params Variant[] args) 
             where T : ITwitcherSharp<T>
         {
             var dictionary = new Godot.Collections.Dictionary<T, TVariant>();
@@ -126,6 +157,59 @@ public static class GodotObjectExtension
                 dictionary.Add(key, value);
             }
             return dictionary;
+        }
+        
+        /// <summary>
+        /// Calls a godot method and returns a typed dictionary. Expects the TwitcherSharp object to be the value
+        /// </summary>
+        /// <param name="method">method to call (snake-cased)</param>
+        /// <param name="args">parameters for the method to call</param>
+        /// <typeparam name="T">A <see cref="Variant"/></typeparam>
+        /// <typeparam name="TVariant">An implementation of <see cref="ITwitcherSharp{TVariant}"/></typeparam>
+        /// <returns>Returns a <see cref="Godot.Collections.Dictionary{Tkey, TValue}"/> with the result data</returns>
+        public Godot.Collections.Dictionary<TVariant,T> CallDictionaryValue<[MustBeVariant] TVariant,[MustBeVariant] T>(string method, params Variant[] args) 
+            where T : ITwitcherSharp<T>
+        {
+            var dictionary = new Godot.Collections.Dictionary<TVariant,T>();
+            var result = obj.Call(method, args);
+            var resultDictionary = result.AsGodotDictionary<TVariant, GodotObject>()
+                .Select(x => (x.Key, T.FromObject(x.Value)));
+            
+            foreach (var (key, value) in resultDictionary)
+            {
+                dictionary.Add(key, value);
+            }
+            return dictionary;
+        }
+        
+        /// <summary>
+        /// Calls a godot method and returns a list of typed objects.
+        /// </summary>
+        /// <param name="method">method to call (snake-cased)</param>
+        /// <param name="args">parameters for the method to call</param>
+        /// <typeparam name="T">An implementation of <see cref="ITwitcherSharp{T}"/></typeparam>
+        /// <returns>Returns a <see cref="List{T}"/> with the result data</returns>
+        public List<T> CallList<[MustBeVariant] T>(string method, params Variant[] args) where T : ITwitcherSharp<T>
+        {
+            var result = obj.Call(method, args);
+            return result.AsGodotArray<GodotObject>()
+                .Select(T.FromObject)
+                .ToList();
+        }
+        
+        /// <summary>
+        /// Calls a godot method and returns a list of typed objects.
+        /// </summary>
+        /// <param name="method">method to call (snake-cased)</param>
+        /// <param name="args">parameters for the method to call</param>
+        /// <typeparam name="T">An implementation of <see cref="ITwitcherSharp{T}"/></typeparam>
+        /// <returns>Returns a <see cref="List{T}"/> with the result data</returns>
+        public async Task<List<T>> CallListAsync<T>(string method, params Variant[] args) where T : ITwitcherSharp<T>
+        {
+            var result = await obj.CallAsync(method, args);
+            return result.AsGodotArray<GodotObject>()
+                .Select(T.FromObject)
+                .ToList();
         }
     }
 }

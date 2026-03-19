@@ -34,4 +34,20 @@ public partial class TwitchChannelPredictionBeginCondition : RefCounted, ITwitch
         request.Set("broadcaster_user_id", BroadcasterUserId);
         return request;
     }
+
+    public static TwitchChannelPredictionBeginCondition FromDictionary(Dictionary data)
+    {
+        return new TwitchChannelPredictionBeginCondition
+        {
+            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
+        };
+    }
+
+    public Dictionary ToDictionary()
+    {
+        return new Dictionary
+        {
+            {"broadcaster_user_id", BroadcasterUserId},
+        };
+    }
 }

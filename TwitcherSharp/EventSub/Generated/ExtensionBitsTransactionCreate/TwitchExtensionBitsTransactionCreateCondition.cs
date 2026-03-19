@@ -34,4 +34,20 @@ public partial class TwitchExtensionBitsTransactionCreateCondition : RefCounted,
         request.Set("extension_client_id", ExtensionClientId);
         return request;
     }
+
+    public static TwitchExtensionBitsTransactionCreateCondition FromDictionary(Dictionary data)
+    {
+        return new TwitchExtensionBitsTransactionCreateCondition
+        {
+            ExtensionClientId = data["extension_client_id"].AsString(),
+        };
+    }
+
+    public Dictionary ToDictionary()
+    {
+        return new Dictionary
+        {
+            {"extension_client_id", ExtensionClientId},
+        };
+    }
 }

@@ -121,7 +121,7 @@ public partial class TwitchReward : RefCounted, ITwitcherSharp<TwitchReward>
         var script = GD.Load<GDScript>("res://addons/twitcher/reward/twitch_reward.gd");
         var reward = script.New().AsGodotObject();
         reward.Set("id", Id);
-        reward.Set("broadcaster_user", BroadcasterUser.ToGodotObject());
+        reward.Set("broadcaster_user", BroadcasterUser?.ToGodotObject());
         reward.Set("title", Title);
         reward.Set("description", Description);
         reward.Set("cost", Cost);

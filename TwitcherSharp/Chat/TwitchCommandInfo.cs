@@ -66,7 +66,7 @@ public partial class TwitchCommandInfo : Resource, ITwitcherSharp<TwitchCommandI
 		instance.Set("arguments", Arguments.ToArray());
 		instance.Set("original_message", OriginalMessage);
 		instance.Set("text_message", TextMessage);
-		instance.Set("command", Command.ToGodotObject());
+		instance.Set("command", Command?.ToGodotObject());
 		return instance;
 	}
 }

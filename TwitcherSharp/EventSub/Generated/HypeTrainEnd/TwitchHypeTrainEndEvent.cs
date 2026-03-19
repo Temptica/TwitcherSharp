@@ -120,6 +120,7 @@ public partial class TwitchHypeTrainEndEvent : RefCounted, ITwitcherSharpEventSu
         return request;
     }
 
+
     public partial class TwitchTopContributions : RefCounted, ITwitcherSharpEventSub<TwitchTopContributions>
     {
         /// <summary> 
@@ -176,6 +177,7 @@ public partial class TwitchHypeTrainEndEvent : RefCounted, ITwitcherSharpEventSu
             request.Set("total", Total);
             return request;
         }
+    
     
         public partial class TwitchType : RefCounted, ITwitcherSharpEventSub<TwitchType>
         {

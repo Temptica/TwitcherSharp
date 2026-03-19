@@ -34,4 +34,20 @@ public partial class TwitchChannelModeratorAddCondition : RefCounted, ITwitcherS
         request.Set("broadcaster_user_id", BroadcasterUserId);
         return request;
     }
+
+    public static TwitchChannelModeratorAddCondition FromDictionary(Dictionary data)
+    {
+        return new TwitchChannelModeratorAddCondition
+        {
+            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
+        };
+    }
+
+    public Dictionary ToDictionary()
+    {
+        return new Dictionary
+        {
+            {"broadcaster_user_id", BroadcasterUserId},
+        };
+    }
 }

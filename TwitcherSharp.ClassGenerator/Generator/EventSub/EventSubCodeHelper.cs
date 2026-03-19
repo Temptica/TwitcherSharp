@@ -63,7 +63,7 @@ public static class EventSubCodeHelper
             var fieldType = field.Type;
             if (field.IsArray && !fieldType.Contains("[]")) fieldType += "[]";
             code.AppendIndentedLine($"public {fieldType} {field.Name} {{ get; set; }}", 1);
-            if(field != fields[^1]) code.AppendLine();
+            if (field != fields[^1]) code.AppendLine();
         }
 
 
@@ -135,8 +135,13 @@ public static class EventSubCodeHelper
 
             code.AppendIndentedLine("return request;", 2);
         }
-        else
+
+        code.AppendIndentedLine("}", 1);
+        code.AppendLine();
+
+        if (isCondition)
         {
+            //FROM DICTIONARY
             code.AppendIndentedLine(EventSubCodeStrings.FromDictionary.Replace("{{ClassName}}", component.ClassName),
                 1);
 
@@ -156,9 +161,22 @@ public static class EventSubCodeHelper
             }
 
             code.AppendIndentedLine("};", 2);
-        }
+            code.AppendIndentedLine("}", 1);
+            code.AppendLine();
 
-        code.AppendIndentedLine("}", 1);
+            //TO DICTIONARY
+            code.AppendIndentedLine(EventSubCodeStrings.ToDictionary, 1);
+
+            foreach (var field in component.Fields.Values)
+            {
+                var fieldCode = $$"""{"{{field.Name.ToSnakeCase()}}", {{field.Name}}},""";
+
+                code.AppendIndentedLine(fieldCode, 3);
+            }
+
+            code.AppendIndentedLine("};", 2);
+            code.AppendIndentedLine("}", 1);
+        }
 
         var nonSharedSubComponents = component.SubComponents
             .Where(s => !s.Value.IsShared)

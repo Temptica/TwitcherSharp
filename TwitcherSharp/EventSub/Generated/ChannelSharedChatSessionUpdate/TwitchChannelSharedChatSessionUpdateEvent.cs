@@ -83,6 +83,7 @@ public partial class TwitchChannelSharedChatSessionUpdateEvent : RefCounted, ITw
         return request;
     }
 
+
     public partial class TwitchParticipants : RefCounted, ITwitcherSharpEventSub<TwitchParticipants>
     {
         /// <summary> 

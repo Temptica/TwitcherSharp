@@ -103,6 +103,7 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
         return request;
     }
 
+
     public partial class TwitchMessage : RefCounted, ITwitcherSharpEventSub<TwitchMessage>
     {
         /// <summary> 
@@ -145,6 +146,7 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
             request.Set("fragments", Fragments);
             return request;
         }
+    
     
         public partial class TwitchFragments : RefCounted, ITwitcherSharpEventSub<TwitchFragments>
         {
@@ -194,6 +196,7 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
                 request.Set("emote", Emote);
                 return request;
             }
+        
         
             public partial class TwitchCheermote : RefCounted, ITwitcherSharpEventSub<TwitchCheermote>
             {

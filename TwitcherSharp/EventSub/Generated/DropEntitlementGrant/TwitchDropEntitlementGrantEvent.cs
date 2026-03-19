@@ -41,6 +41,7 @@ public partial class TwitchDropEntitlementGrantEvent : RefCounted, ITwitcherShar
         return request;
     }
 
+
     public partial class TwitchData : RefCounted, ITwitcherSharpEventSub<TwitchData>
     {
         /// <summary> 

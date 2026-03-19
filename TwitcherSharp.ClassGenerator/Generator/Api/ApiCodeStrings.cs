@@ -63,6 +63,7 @@ public static class ApiCodeStrings
                                               
                                               public static TwitchApi FromObject(GodotObject data)
                                               {
+                                                  if (data is null) return null;
                                                   var twitchApi = new TwitchApi
                                                   {
                                                       _data = data,
@@ -125,8 +126,10 @@ public static class ApiCodeStrings
                                             """;
 
     public const string InterfaceBody = """
+                                        using TwitcherSharp.Interfaces;
+                                        
                                         namespace TwitcherSharp.Api.Generated.{{nameSpace}};
-                                        public interface {{interfaceName}}
+                                        public interface {{interfaceName}} : ITwitcherSharp
                                         {
                                         """;
 }
