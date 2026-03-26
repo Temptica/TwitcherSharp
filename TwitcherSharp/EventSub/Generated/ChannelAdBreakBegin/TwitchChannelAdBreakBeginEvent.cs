@@ -75,8 +75,8 @@ public partial class TwitchChannelAdBreakBeginEvent : RefCounted, ITwitcherSharp
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_ad_break_begin.gd");
-        var eventClass = script.Get("Event").AsGodotObject();
-        var request = eventClass.Call("new").AsGodotObject();
+        var eventClass = script.Get("Event").As<GDScript>();
+        var request = eventClass.New().AsGodotObject();
         request.Set("duration_seconds", DurationSeconds);
         request.Set("started_at", StartedAt);
         request.Set("is_automatic", IsAutomatic);

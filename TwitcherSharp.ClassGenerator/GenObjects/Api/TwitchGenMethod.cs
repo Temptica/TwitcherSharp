@@ -14,8 +14,10 @@ public class TwitchGenMethod
     public string BodyType { get; set; }
     public string ResultType { get; set; }
     public string ContentType { get; set; }
+    public string GenericType { get; set; }
     public bool ContainsOptional { get; private set; }
     public bool ContainsBody => !string.IsNullOrEmpty(BodyType);
+    public bool HasGeneric => !string.IsNullOrEmpty(GenericType);
 
     public void AddParameter(TwitchGenParameter parameter)
     {

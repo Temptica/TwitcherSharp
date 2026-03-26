@@ -35,8 +35,8 @@ public partial class TwitchChannelChatSettingsUpdateCondition : RefCounted, ITwi
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_settings_update.gd");
-        var conditionClass = script.Get("Condition").AsGodotObject();
-        var request = conditionClass.Call("new").AsGodotObject();
+        var conditionClass = script.Get("Condition").As<GDScript>();
+        var request = conditionClass.New().AsGodotObject();
         request.Set("broadcaster_user_id", BroadcasterUserId);
         request.Set("user_id", UserId);
         return request;

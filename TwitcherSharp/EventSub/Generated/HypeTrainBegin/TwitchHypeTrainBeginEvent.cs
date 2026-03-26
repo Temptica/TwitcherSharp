@@ -100,7 +100,7 @@ public partial class TwitchHypeTrainBeginEvent : RefCounted, ITwitcherSharpEvent
     /// <summary> 
     /// Indicates if the Hype Train is shared. When true, shared_train_participants will contain the list of broadcasters the train is shared with.
     /// </summary>
-    public TwitchIsSharedTrain[] IsSharedTrain { get; set; }
+    public bool IsSharedTrain { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchHypeTrainBeginEvent object.
@@ -109,7 +109,6 @@ public partial class TwitchHypeTrainBeginEvent : RefCounted, ITwitcherSharpEvent
     {
         if(data == null) return null;
         var sharedTrainParticipantsArray = data.Get("shared_train_participants").AsGodotArray<GodotObject>();
-        var isSharedTrainArray = data.Get("is_shared_train").AsGodotArray<GodotObject>();
         return new TwitchHypeTrainBeginEvent
         {
             Id = data.Get("id").AsString(),
@@ -130,15 +129,15 @@ public partial class TwitchHypeTrainBeginEvent : RefCounted, ITwitcherSharpEvent
             SharedTrainParticipants = sharedTrainParticipantsArray.Select(TwitchSharedTrainParticipants.FromObject).ToArray(),
             StartedAt = data.Get("started_at").AsString(),
             ExpiresAt = data.Get("expires_at").AsString(),
-            IsSharedTrain = isSharedTrainArray.Select(TwitchIsSharedTrain.FromObject).ToArray(),
+            IsSharedTrain = data.Get("is_shared_train").AsBool(),
         };
     }
 
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_hype_train_begin.gd");
-        var eventClass = script.Get("Event").AsGodotObject();
-        var request = eventClass.Call("new").AsGodotObject();
+        var eventClass = script.Get("Event").As<GDScript>();
+        var request = eventClass.New().AsGodotObject();
         request.Set("id", Id);
         request.Set("broadcaster_user_id", BroadcasterUserId);
         request.Set("broadcaster_user_login", BroadcasterUserLogin);
@@ -161,29 +160,6 @@ public partial class TwitchHypeTrainBeginEvent : RefCounted, ITwitcherSharpEvent
         return request;
     }
 
-
-    public partial class TwitchType : RefCounted, ITwitcherSharpEventSub<TwitchType>
-    {
-    
-        /// <summary> 
-        /// Transforms the godot data into a TwitchType object.
-        /// </summary> 
-        public static TwitchType FromObject(GodotObject data)
-        {
-            if(data == null) return null;
-            return new TwitchType
-            {
-            };
-        }
-    
-        public GodotObject ToGodotObject()
-        {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_hype_train_begin.gd");
-            var typeClass = script.Get("Type").AsGodotObject();
-            var request = typeClass.Call("new").AsGodotObject();
-            return request;
-        }
-    }
 
     public partial class TwitchSharedTrainParticipants : RefCounted, ITwitcherSharpEventSub<TwitchSharedTrainParticipants>
     {
@@ -219,34 +195,11 @@ public partial class TwitchHypeTrainBeginEvent : RefCounted, ITwitcherSharpEvent
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_hype_train_begin.gd");
-            var sharedTrainParticipantsClass = script.Get("SharedTrainParticipants").AsGodotObject();
-            var request = sharedTrainParticipantsClass.Call("new").AsGodotObject();
+            var sharedTrainParticipantsClass = script.Get("SharedTrainParticipants").As<GDScript>();
+            var request = sharedTrainParticipantsClass.New().AsGodotObject();
             request.Set("broadcaster_user_id", BroadcasterUserId);
             request.Set("broadcaster_user_login", BroadcasterUserLogin);
             request.Set("broadcaster_user_name", BroadcasterUserName);
-            return request;
-        }
-    }
-
-    public partial class TwitchIsSharedTrain : RefCounted, ITwitcherSharpEventSub<TwitchIsSharedTrain>
-    {
-    
-        /// <summary> 
-        /// Transforms the godot data into a TwitchIsSharedTrain object.
-        /// </summary> 
-        public static TwitchIsSharedTrain FromObject(GodotObject data)
-        {
-            if(data == null) return null;
-            return new TwitchIsSharedTrain
-            {
-            };
-        }
-    
-        public GodotObject ToGodotObject()
-        {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_hype_train_begin.gd");
-            var isSharedTrainClass = script.Get("IsSharedTrain").AsGodotObject();
-            var request = isSharedTrainClass.Call("new").AsGodotObject();
             return request;
         }
     }

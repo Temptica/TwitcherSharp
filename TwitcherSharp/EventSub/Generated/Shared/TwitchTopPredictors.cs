@@ -51,8 +51,7 @@ public partial class TwitchTopPredictors : RefCounted, ITwitcherSharpEventSub<Tw
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_top_predictors.gd");
-        var twitchTopPredictorsClass = script.Get("TwitchTopPredictors").AsGodotObject();
-        var request = twitchTopPredictorsClass.Call("new").AsGodotObject();
+        var request = script.New().AsGodotObject();
         request.Set("user_id", UserId);
         request.Set("user_login", UserLogin);
         request.Set("user_name", UserName);

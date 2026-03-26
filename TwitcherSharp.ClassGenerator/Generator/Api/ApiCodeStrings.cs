@@ -116,20 +116,44 @@ public static class ApiCodeStrings
                                               private GodotObject _data;
                                           """;
 
+    public const string GenericComponentHeader = """
+                                                 public partial class {{className}}<T> : RefCounted, ITwitcherSharp<{{className}}<T>>{{interfaces}} where T : {{type}}
+                                                 {
+                                                     private GodotObject _data;
+                                                 """;
+
     public const string ComponentFromBody = """
-                                                /// <summary> 
-                                                /// Transforms the godot data into a {{className}} object.
-                                                /// </summary> 
-                                                public static {{className}} FromObject(GodotObject data)
-                                                {
-                                                    if(data == null) return null;
+                                            /// <summary> 
+                                            /// Transforms the godot data into a {{className}} object.
+                                            /// </summary> 
+                                            public static {{className}} FromObject(GodotObject data)
+                                            {
+                                                if(data == null) return null;
                                             """;
+
+    public const string GenericComponentFromBody = """
+                                                   /// <summary> 
+                                                   /// Transforms the godot data into a {{className}} object.
+                                                   /// </summary> 
+                                                   public static {{className}}<T> FromObject(GodotObject data)
+                                                   {
+                                                       if(data == null) return null;
+                                                   """;
 
     public const string InterfaceBody = """
                                         using TwitcherSharp.Interfaces;
-                                        
+
                                         namespace TwitcherSharp.Api.Generated.{{nameSpace}};
                                         public interface {{interfaceName}} : ITwitcherSharp
                                         {
                                         """;
+
+    /// <summary>
+    /// parameters: response
+    /// </summary>
+    public const string NextPageCode = """
+                                       public async Task<{{response}}> NextPage() =>
+                                           await _data.CallAsync<{{response}}>("next_page");
+                                       """;
+    
 }

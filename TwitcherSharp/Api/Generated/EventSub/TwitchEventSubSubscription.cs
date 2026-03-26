@@ -3,14 +3,14 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.EventSub;
 
-public partial class TwitchEventSubSubscription : RefCounted, ITwitcherSharp<TwitchEventSubSubscription>
+public partial class TwitchEventSubSubscription<T> : RefCounted, ITwitcherSharp<TwitchEventSubSubscription<T>> where T : ITwitcherSharpCondition<T>
 {
     private GodotObject _data;
     public string Id { get; set; }
     public string Status { get; set; }
     public string Type { get; set; }
     public string Version { get; set; }
-    public Variant Condition { get; set; }
+    public ITwitcherSharpCondition<T> Condition { get; set; }
     public string CreatedAt { get; set; }
     public TwitchTransport Transport { get; set; }
     public int Cost { get; set; }
@@ -18,16 +18,16 @@ public partial class TwitchEventSubSubscription : RefCounted, ITwitcherSharp<Twi
     /// <summary> 
     /// Transforms the godot data into a TwitchEventSubSubscription object.
     /// </summary> 
-    public static TwitchEventSubSubscription FromObject(GodotObject data)
+    public static TwitchEventSubSubscription<T> FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchEventSubSubscription
+        return new TwitchEventSubSubscription<T>
         {
             Id = data.Get("id").AsString(),
             Status = data.Get("status").AsString(),
             Type = data.Get("type").AsString(),
             Version = data.Get("version").AsString(),
-            Condition = data.Get("condition").As<Variant>(),
+            Condition = T.FromDictionary(data.Get("condition").AsGodotDictionary()),
             CreatedAt = data.Get("created_at").AsString(),
             Transport = data.Get("transport").As<TwitchTransport>(),
             Cost = data.Get("cost").AsInt32(),
@@ -42,7 +42,7 @@ public partial class TwitchEventSubSubscription : RefCounted, ITwitcherSharp<Twi
         request.Set("status", Status);
         request.Set("type", Type);
         request.Set("version", Version);
-        request.Set("condition", Condition);
+        request.Set("condition", Condition.ToDictionary());
         request.Set("created_at", CreatedAt);
         request.Set("transport", Transport);
         request.Set("cost", Cost);

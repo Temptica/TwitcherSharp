@@ -3,25 +3,25 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.EventSub;
 
-public partial class TwitchCreateEventSubSubscriptionBody : RefCounted, ITwitcherSharp<TwitchCreateEventSubSubscriptionBody>
+public partial class TwitchCreateEventSubSubscriptionBody<T> : RefCounted, ITwitcherSharp<TwitchCreateEventSubSubscriptionBody<T>> where T : ITwitcherSharpCondition<T>
 {
     private GodotObject _data;
     public string Type { get; set; }
     public string Version { get; set; }
-    public Variant Condition { get; set; }
+    public ITwitcherSharpCondition<T> Condition { get; set; }
     public TwitchTransport Transport { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCreateEventSubSubscriptionBody object.
     /// </summary> 
-    public static TwitchCreateEventSubSubscriptionBody FromObject(GodotObject data)
+    public static TwitchCreateEventSubSubscriptionBody<T> FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchCreateEventSubSubscriptionBody
+        return new TwitchCreateEventSubSubscriptionBody<T>
         {
             Type = data.Get("type").AsString(),
             Version = data.Get("version").AsString(),
-            Condition = data.Get("condition").As<Variant>(),
+            Condition = T.FromDictionary(data.Get("condition").AsGodotDictionary()),
             Transport = data.Get("transport").As<TwitchTransport>(),
         };
     }
@@ -33,7 +33,7 @@ public partial class TwitchCreateEventSubSubscriptionBody : RefCounted, ITwitche
         var request = bodyClass.Call("new").AsGodotObject();
         request.Set("type", Type);
         request.Set("version", Version);
-        request.Set("condition", Condition);
+        request.Set("condition", Condition.ToDictionary());
         request.Set("transport", Transport);
         return request;
     }

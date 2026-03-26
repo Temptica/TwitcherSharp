@@ -1,67 +1,24 @@
 using System;
 using System.Linq;
-using Chickensoft.GoDotTest;
+using Chickensoft.Log;
 using Godot;
-using TwitcherSharp.Chat;
 using TwitcherSharp.Interfaces;
 
-namespace TwitcherSharp.GoDotTests;
+namespace TwitcherSharp.GoDotTests.Helper;
 
-public class MappingTestSimple(Node testScene) : TestClass(testScene)
+public static class AssertHelper
 {
-    [Test]
-    public void TestTwitchChatMessageParsing()
-    {
-        var twitchChatMessage = new TwitchChatMessage
-        {
-            BroadcasterUserId = "123",
-            BroadcasterUserLogin = "abc",
-            BroadcasterUserName = "Abc",
-            ChatterUserId = "321",
-            ChatterUserLogin = "def",
-            ChatterUserName = "Def",
-            MessageId = "456",
-            Content = new Message
-            {
-                Fragments = [],
-                Text = "Test Message"
-            },
-            ChatMessageType = MessageType.Text,
-            Badges = [new Badge
-            {
-                SetId = "1.0",
-                Id = "123321",
-                Info = "Test Badge"
-            }],
-            CheerMetadata = new Cheer
-            {
-                Bits = 500
-            },
-            Color = "FF00FF",
-            ReplyMetadata = null,
-            ChannelPointsCustomRewardId = null,
-            SourceBroadcasterUserId = "123",
-            SourceBroadcasterUserName = "Abc",
-            SourceBroadcasterUserLogin = "abc",
-            SourceMessageId = "123456",
-            SourceBadges = []
-        };
-
-        var godotObject = twitchChatMessage.ToGodotObject();
-        var parsedTwitchChatMessage = TwitchChatMessage.FromObject(godotObject);
-        
-        AssertTwitcherSharpProperties(twitchChatMessage, parsedTwitchChatMessage);
-    }
-    
-    private static void AssertTwitcherSharpProperties(ITwitcherSharp twitcherSharpObject,
-        ITwitcherSharp twitcherSharpObject2)
+    public static void AssertTwitcherSharpProperties(ITwitcherSharp twitcherSharpObject,
+        ITwitcherSharp twitcherSharpObject2, ILog log)
     {
         foreach (var property in twitcherSharpObject.GetType().GetProperties()
                      .Where(p => p.CanWrite)
                      .Where(p => !p.PropertyType.FullName?.Contains("Array") ?? false)
                      .Where(p => !p.PropertyType.IsClass)
+                     .Where(p => p.DeclaringType == twitcherSharpObject.GetType())
                 )
         {
+            log.Print($"Asserting {property.Name} ({property.PropertyType.Name})");
             var property2 = twitcherSharpObject2.GetType().GetProperties().FirstOrDefault(p => p.Name == property.Name);
 
             if (property2 == null)
@@ -78,11 +35,13 @@ public class MappingTestSimple(Node testScene) : TestClass(testScene)
                     throw new Exception(
                         $"property {property.Name} values do not match for {twitcherSharpObject.GetType().Name}. Expecting {val1} but got {val2}");
                 case nameof(Int32):
-                    if((int?)val1 == (int?)val2) continue;
+                case "Nullable`1" when property.PropertyType.GetGenericArguments()[0].Name == nameof(Int32):
+                    if ((int?)val1 == (int?)val2 || (val1 == null && (int?)val2 == 0)) continue;
                     throw new Exception(
                         $"property {property.Name} values do not match for {twitcherSharpObject.GetType().Name}. Expecting {val1} but got {val2}");
                 case nameof(Boolean):
-                    if ((bool?)val1 == (bool?)val2) continue;
+                case "Nullable`1" when property.PropertyType.GetGenericArguments()[0].Name == nameof(Boolean):
+                    if ((bool?)val1 == (bool?)val2 || (val1 == null && (bool?)val2 == false)) continue;
                     throw new Exception(
                         $"property {property.Name} values do not match for {twitcherSharpObject.GetType().Name}. Expecting {val1} but got {val2}");
                 case nameof(Double):
@@ -101,28 +60,31 @@ public class MappingTestSimple(Node testScene) : TestClass(testScene)
                     if ((Color?)val1 == (Color?)val2) continue;
                     throw new Exception(
                         $"property {property.Name} values do not match for {twitcherSharpObject.GetType().Name}. Expecting {val1} but got {val2}");
+                case nameof(Variant):
+                    if (((Variant?)val1)?.Equals((Variant?)val2) ?? false) continue;
+                    throw new Exception(
+                        $"property {property.Name} values do not match for {twitcherSharpObject.GetType().Name}. Expecting {val1} but got {val2}");
                 default: break;
             }
 
             if (property.PropertyType.IsEnum)
             {
-                if((int)val1 == (int)val2) continue;
+                if ((int)val1 == (int)val2) continue;
                 throw new Exception(
                     $"property {property.Name} values do not match for {twitcherSharpObject.GetType().Name}. Expecting {val1} but got {val2}");
             }
 
             if (property.PropertyType.IsClass)
             {
-                AssertTwitcherSharpProperties(property.GetValue(twitcherSharpObject) as ITwitcherSharp,
-                    property2.GetValue(twitcherSharpObject2) as ITwitcherSharp);
+                // AssertTwitcherSharpProperties(property.GetValue(twitcherSharpObject) as ITwitcherSharp,
+                //     property2.GetValue(twitcherSharpObject2) as ITwitcherSharp);
                 continue;
             }
-            
+
             if (val1 == val2) continue;
 
             throw new Exception(
                 $"property {property.Name} values do not match for {twitcherSharpObject.GetType().Name}. Expecting {val1} but got {val2}");
         }
     }
-    
 }

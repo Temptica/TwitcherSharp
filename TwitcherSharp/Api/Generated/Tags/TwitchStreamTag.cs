@@ -8,8 +8,8 @@ public partial class TwitchStreamTag : RefCounted, ITwitcherSharp<TwitchStreamTa
     private GodotObject _data;
     public string TagId { get; set; }
     public bool IsAuto { get; set; }
-    public Variant LocalizationNames { get; set; }
-    public Variant LocalizationDescriptions { get; set; }
+    public Godot.Collections.Dictionary<string, string> LocalizationNames { get; set; }
+    public Godot.Collections.Dictionary<string, string> LocalizationDescriptions { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchStreamTag object.
@@ -21,8 +21,8 @@ public partial class TwitchStreamTag : RefCounted, ITwitcherSharp<TwitchStreamTa
         {
             TagId = data.Get("tag_id").AsString(),
             IsAuto = data.Get("is_auto").AsBool(),
-            LocalizationNames = data.Get("localization_names").As<Variant>(),
-            LocalizationDescriptions = data.Get("localization_descriptions").As<Variant>(),
+            LocalizationNames = data.Get("localization_names").AsGodotDictionary<string, string>(),
+            LocalizationDescriptions = data.Get("localization_descriptions").AsGodotDictionary<string, string>(),
         };
     }
 

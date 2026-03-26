@@ -117,8 +117,8 @@ public partial class TwitchAutomodMessageUpdateEventV2 : RefCounted, ITwitcherSh
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_automod_message_update.gd");
-        var automodMessageUpdateEventV2V2Class = script.Get("AutomodMessageUpdateEventV2V2").AsGodotObject();
-        var request = automodMessageUpdateEventV2V2Class.Call("new").AsGodotObject();
+        var eventV2Class = script.Get("EventV2").As<GDScript>();
+        var request = eventV2Class.New().AsGodotObject();
         request.Set("broadcaster_user_id", BroadcasterUserId);
         request.Set("broadcaster_user_login", BroadcasterUserLogin);
         request.Set("broadcaster_user_name", BroadcasterUserName);
@@ -168,8 +168,8 @@ public partial class TwitchAutomodMessageUpdateEventV2 : RefCounted, ITwitcherSh
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_automod_message_update.gd");
-            var messageClass = script.Get("Message").AsGodotObject();
-            var request = messageClass.Call("new").AsGodotObject();
+            var messageClass = script.Get("Message").As<GDScript>();
+            var request = messageClass.New().AsGodotObject();
             request.Set("text", Text);
             request.Set("fragments", Fragments);
             return request;
@@ -216,8 +216,8 @@ public partial class TwitchAutomodMessageUpdateEventV2 : RefCounted, ITwitcherSh
             public GodotObject ToGodotObject()
             {
                 var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_automod_message_update.gd");
-                var fragmentsClass = script.Get("Fragments").AsGodotObject();
-                var request = fragmentsClass.Call("new").AsGodotObject();
+                var fragmentsClass = script.Get("Fragments").As<GDScript>();
+                var request = fragmentsClass.New().AsGodotObject();
                 request.Set("text", Text);
                 request.Set("type", Type);
                 request.Set("emote", Emote);
@@ -254,8 +254,8 @@ public partial class TwitchAutomodMessageUpdateEventV2 : RefCounted, ITwitcherSh
                 public GodotObject ToGodotObject()
                 {
                     var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_automod_message_update.gd");
-                    var emoteClass = script.Get("Emote").AsGodotObject();
-                    var request = emoteClass.Call("new").AsGodotObject();
+                    var emoteClass = script.Get("Emote").As<GDScript>();
+                    var request = emoteClass.New().AsGodotObject();
                     request.Set("id", Id);
                     request.Set("emote_set_id", EmoteSetId);
                     return request;
@@ -296,8 +296,8 @@ public partial class TwitchAutomodMessageUpdateEventV2 : RefCounted, ITwitcherSh
                 public GodotObject ToGodotObject()
                 {
                     var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_automod_message_update.gd");
-                    var cheermoteClass = script.Get("Cheermote").AsGodotObject();
-                    var request = cheermoteClass.Call("new").AsGodotObject();
+                    var cheermoteClass = script.Get("Cheermote").As<GDScript>();
+                    var request = cheermoteClass.New().AsGodotObject();
                     request.Set("prefix", Prefix);
                     request.Set("bits", Bits);
                     request.Set("tier", Tier);
@@ -342,8 +342,8 @@ public partial class TwitchAutomodMessageUpdateEventV2 : RefCounted, ITwitcherSh
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_automod_message_update.gd");
-            var automodClass = script.Get("Automod").AsGodotObject();
-            var request = automodClass.Call("new").AsGodotObject();
+            var automodClass = script.Get("Automod").As<GDScript>();
+            var request = automodClass.New().AsGodotObject();
             request.Set("category", Category);
             request.Set("level", Level);
             request.Set("boundaries", Boundaries);
@@ -379,8 +379,8 @@ public partial class TwitchAutomodMessageUpdateEventV2 : RefCounted, ITwitcherSh
             public GodotObject ToGodotObject()
             {
                 var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_automod_message_update.gd");
-                var boundariesClass = script.Get("Boundaries").AsGodotObject();
-                var request = boundariesClass.Call("new").AsGodotObject();
+                var boundariesClass = script.Get("Boundaries").As<GDScript>();
+                var request = boundariesClass.New().AsGodotObject();
                 request.Set("start_pos", StartPos);
                 request.Set("end_pos", EndPos);
                 return request;
@@ -411,8 +411,8 @@ public partial class TwitchAutomodMessageUpdateEventV2 : RefCounted, ITwitcherSh
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_automod_message_update.gd");
-            var blockedTermClass = script.Get("BlockedTerm").AsGodotObject();
-            var request = blockedTermClass.Call("new").AsGodotObject();
+            var blockedTermClass = script.Get("BlockedTerm").As<GDScript>();
+            var request = blockedTermClass.New().AsGodotObject();
             request.Set("terms_found", TermsFound);
             return request;
         }
@@ -464,8 +464,8 @@ public partial class TwitchAutomodMessageUpdateEventV2 : RefCounted, ITwitcherSh
             public GodotObject ToGodotObject()
             {
                 var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_automod_message_update.gd");
-                var termsFoundClass = script.Get("TermsFound").AsGodotObject();
-                var request = termsFoundClass.Call("new").AsGodotObject();
+                var termsFoundClass = script.Get("TermsFound").As<GDScript>();
+                var request = termsFoundClass.New().AsGodotObject();
                 request.Set("term_id", TermId);
                 request.Set("boundary", Boundary);
                 request.Set("owner_broadcaster_user_id", OwnerBroadcasterUserId);
@@ -503,8 +503,8 @@ public partial class TwitchAutomodMessageUpdateEventV2 : RefCounted, ITwitcherSh
                 public GodotObject ToGodotObject()
                 {
                     var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_automod_message_update.gd");
-                    var boundaryClass = script.Get("Boundary").AsGodotObject();
-                    var request = boundaryClass.Call("new").AsGodotObject();
+                    var boundaryClass = script.Get("Boundary").As<GDScript>();
+                    var request = boundaryClass.New().AsGodotObject();
                     request.Set("start_pos", StartPos);
                     request.Set("end_pos", EndPos);
                     return request;

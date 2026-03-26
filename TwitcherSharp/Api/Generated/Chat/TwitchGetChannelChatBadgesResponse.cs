@@ -26,7 +26,7 @@ public partial class TwitchGetChannelChatBadgesResponse : RefCounted, ITwitcherS
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_channel_chat_badges.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        request.Set("data", Data);
+        request.Set("data", Data.Select(x => x.ToGodotObject()).ToArray());
         return request;
     }
 

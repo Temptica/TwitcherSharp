@@ -3,10 +3,10 @@ using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 using TwitcherSharp.Lib.Http;
 
-using TwitcherSharp.Api.Generated.Shared;
 using TwitcherSharp.Api.Generated.Ads;
 using TwitcherSharp.Api.Generated.Analytics;
 using TwitcherSharp.Api.Generated.Bits;
+using TwitcherSharp.Api.Generated.Shared;
 using TwitcherSharp.Api.Generated.Channels;
 using TwitcherSharp.Api.Generated.ChannelPoints;
 using TwitcherSharp.Api.Generated.Charity;
@@ -803,11 +803,11 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <summary>
     /// Creates an EventSub subscription.
     /// </summary>
-    /// <param name="body"><see cref="TwitchCreateEventSubSubscriptionBody"/></param>
-    /// <returns><see cref="TwitchCreateEventSubSubscriptionResponse"/></returns>
-    public async Task<TwitchCreateEventSubSubscriptionResponse> CreateEventsubSubscription(TwitchCreateEventSubSubscriptionBody body)
+    /// <param name="body"><see cref="TwitchCreateEventSubSubscriptionBody&lt;T&gt;"/></param>
+    /// <returns><see cref="TwitchCreateEventSubSubscriptionResponse&lt;T&gt;"/></returns>
+    public async Task<TwitchCreateEventSubSubscriptionResponse<T>> CreateEventsubSubscription<T>(TwitchCreateEventSubSubscriptionBody<T> body) where T : ITwitcherSharpCondition<T>
     {
-        return await _data.CallAsync<TwitchCreateEventSubSubscriptionResponse>("create_eventsub_subscription", body.ToGodotObject()); 
+        return await _data.CallAsync<TwitchCreateEventSubSubscriptionResponse<T>>("create_eventsub_subscription", body.ToGodotObject()); 
     }
 
     /// <summary>
@@ -823,11 +823,12 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <summary>
     /// Gets a list of EventSub subscriptions that the client in the access token created.
     /// </summary>
+    /// <param name="body"><see cref="TwitchGetEventSubSubscriptionsResponse&lt;T&gt;"/></param>
     /// <param name="opt"><see cref="TwitchGetEventsubSubscriptionsOpt"/></param>
-    /// <returns><see cref="TwitchGetEventSubSubscriptionsResponse"/></returns>
-    public async Task<TwitchGetEventSubSubscriptionsResponse> GetEventsubSubscriptions(TwitchGetEventsubSubscriptionsOpt opt = null)
+    /// <returns><see cref="TwitchGetEventSubSubscriptionsResponse&lt;T&gt;"/></returns>
+    public async Task<TwitchGetEventSubSubscriptionsResponse<T>> GetEventsubSubscriptions<T>(TwitchGetEventSubSubscriptionsResponse<T> body, TwitchGetEventsubSubscriptionsOpt opt = null) where T : ITwitcherSharpCondition<T>
     {
-        return await _data.CallAsync<TwitchGetEventSubSubscriptionsResponse>("get_eventsub_subscriptions", opt?.ToGodotObject()); 
+        return await _data.CallAsync<TwitchGetEventSubSubscriptionsResponse<T>>("get_eventsub_subscriptions", body.ToGodotObject(), opt?.ToGodotObject()); 
     }
 
     /// <summary>

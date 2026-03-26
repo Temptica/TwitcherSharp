@@ -51,8 +51,7 @@ public partial class TwitchChoices : RefCounted, ITwitcherSharpEventSub<TwitchCh
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_choices.gd");
-        var twitchChoicesClass = script.Get("TwitchChoices").AsGodotObject();
-        var request = twitchChoicesClass.Call("new").AsGodotObject();
+        var request = script.New().AsGodotObject();
         request.Set("id", Id);
         request.Set("title", Title);
         request.Set("bits_votes", BitsVotes);

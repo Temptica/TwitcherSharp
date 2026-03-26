@@ -23,13 +23,13 @@ public partial class TwitchCommand : TwitchCommandBase, ITwitcherSharp<TwitchCom
     /// Max amount of arguments -1 means infinite
     /// </summary>
     public int ArgsMax { get; set; } = -1;
-    
+
     public void AddAlias(string alias)
     {
         Data.Call("add_alias", alias);
         Aliases = Data.Get("aliases").AsStringArray().ToList();
     }
-    
+
     public void RemoveAlias(string alias)
     {
         Data.Call("remove_alias", alias);
@@ -37,9 +37,10 @@ public partial class TwitchCommand : TwitchCommandBase, ITwitcherSharp<TwitchCom
     }
 
     public override string ToString() => $"{CommandPrefixes[0]}{Command}";
-    
+
     public static TwitchCommand FromObject(GodotObject data)
     {
+        if (data == null) return null;
         var command = new TwitchCommand
         {
             Data = data,
@@ -48,12 +49,12 @@ public partial class TwitchCommand : TwitchCommandBase, ITwitcherSharp<TwitchCom
             ArgsMin = data.Get("args_min").AsInt32(),
             ArgsMax = data.Get("args_max").AsInt32(),
         };
-        
+
         command.SetBaseProperties();
         return command;
     }
 
-    
+
     public override GodotObject ToGodotObject()
     {
         var data = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_command.gd").New().AsGodotObject();

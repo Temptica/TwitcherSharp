@@ -35,8 +35,8 @@ public partial class TwitchChannelChatClearUserMessagesCondition : RefCounted, I
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_clear_user_messages.gd");
-        var conditionClass = script.Get("Condition").AsGodotObject();
-        var request = conditionClass.Call("new").AsGodotObject();
+        var conditionClass = script.Get("Condition").As<GDScript>();
+        var request = conditionClass.New().AsGodotObject();
         request.Set("broadcaster_user_id", BroadcasterUserId);
         request.Set("user_id", UserId);
         return request;

@@ -63,8 +63,8 @@ public partial class TwitchChannelRaidEvent : RefCounted, ITwitcherSharpEventSub
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_raid.gd");
-        var eventClass = script.Get("Event").AsGodotObject();
-        var request = eventClass.Call("new").AsGodotObject();
+        var eventClass = script.Get("Event").As<GDScript>();
+        var request = eventClass.New().AsGodotObject();
         request.Set("from_broadcaster_user_id", FromBroadcasterUserId);
         request.Set("from_broadcaster_user_login", FromBroadcasterUserLogin);
         request.Set("from_broadcaster_user_name", FromBroadcasterUserName);

@@ -45,8 +45,7 @@ public partial class TwitchProduct : RefCounted, ITwitcherSharpEventSub<TwitchPr
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_product.gd");
-        var twitchProductClass = script.Get("TwitchProduct").AsGodotObject();
-        var request = twitchProductClass.Call("new").AsGodotObject();
+        var request = script.New().AsGodotObject();
         request.Set("name", Name);
         request.Set("bits", Bits);
         request.Set("sku", Sku);

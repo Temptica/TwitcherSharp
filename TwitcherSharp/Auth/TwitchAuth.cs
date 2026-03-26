@@ -28,15 +28,21 @@ public partial class TwitchAuth : RefCounted, ITwitcherSharp<TwitchAuth>
 	
 	public bool IsConfigured() => _data.Call("is_configured").AsBool();
 	
-	
 
 	public static TwitchAuth FromObject(GodotObject data)
 	{
-		throw new NotImplementedException();
+		var auth = new TwitchAuth();
+		auth._data = data;
+		auth.ForceVerify = data.Get("force_verify").AsBool();
+		return auth;
 	}
 
 	public GodotObject ToGodotObject()
 	{
-		throw new NotImplementedException();
+		var script = GD.Load<GDScript>("res://addons/twitcher/auth/twitch_auth.gd");
+		var token = script.New().AsGodotObject();
+		token.Set("force_verify", ForceVerify);
+		
+		return token;
 	}
 }

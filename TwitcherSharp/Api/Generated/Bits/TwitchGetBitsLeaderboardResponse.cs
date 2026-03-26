@@ -30,7 +30,7 @@ public partial class TwitchGetBitsLeaderboardResponse : RefCounted, ITwitcherSha
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_bits_leaderboard.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        request.Set("data", Data);
+        request.Set("data", Data.Select(x => x.ToGodotObject()).ToArray());
         request.Set("date_range", DateRange);
         request.Set("total", Total);
         return request;

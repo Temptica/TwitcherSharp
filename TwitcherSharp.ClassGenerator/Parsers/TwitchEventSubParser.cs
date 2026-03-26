@@ -119,7 +119,7 @@ public class TwitchEventSubParser
             {
                 table = nextSibling.GetNextElementSibling();
                 var dataComponent = eventSubComponent.SubComponents.FirstOrDefault(s => s.Key == "TwitchData");
-                if(dataComponent.Value != null) ParseTable(table, dataComponent.Value);
+                if (dataComponent.Value != null) ParseTable(table, dataComponent.Value);
             }
 
             lastNode = table;
@@ -183,7 +183,10 @@ public class TwitchEventSubParser
 
             if (type.EndsWith("[]") || type == "array" || type == "Array"
                 || description.Contains("array", StringComparison.CurrentCultureIgnoreCase)
-                || description.Contains("list", StringComparison.CurrentCultureIgnoreCase))
+                || (description.Contains("list ", StringComparison.CurrentCultureIgnoreCase) &&
+                    !type.Equals("string", StringComparison.CurrentCultureIgnoreCase) &&
+                    !type.Equals("integer", StringComparison.CurrentCultureIgnoreCase) &&
+                    !type.Equals("boolean", StringComparison.CurrentCultureIgnoreCase)))
             {
                 var arrayField = new TwitchEventSubGenField(fieldName, description, type)
                 {
@@ -218,18 +221,20 @@ public class TwitchEventSubParser
                                        Description = description
                                    };
 
-                
+
                 if (fieldName.StartsWith("shared_chat_"))
                 {
                     var nonSharedField = fieldName[12..];
-                    var sharedComponent = eventSubComponent.SubComponents.First(c => c.Key == "Twitch" + nonSharedField.ToPascalCase());
+                    var sharedComponent =
+                        eventSubComponent.SubComponents.First(c => c.Key == "Twitch" + nonSharedField.ToPascalCase());
                     eventSubComponent.AddField(new TwitchEventSubGenField(fieldName, description, sharedComponent.Key)
                     {
                         TypedComponent = sharedComponent.Value
                     });
-                    
+
                     continue;
                 }
+
                 currentParent.AddSubComponent(subComponent);
                 currentParent = subComponent;
                 parentWhiteSpaces = whiteSpaces;

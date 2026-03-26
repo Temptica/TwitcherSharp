@@ -33,8 +33,7 @@ public partial class TwitchMaxPerUserPerStream : RefCounted, ITwitcherSharpEvent
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_max_per_user_per_stream.gd");
-        var twitchMaxPerUserPerStreamClass = script.Get("TwitchMaxPerUserPerStream").AsGodotObject();
-        var request = twitchMaxPerUserPerStreamClass.Call("new").AsGodotObject();
+        var request = script.New().AsGodotObject();
         request.Set("is_enabled", IsEnabled);
         request.Set("value", Value);
         return request;

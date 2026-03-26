@@ -37,11 +37,29 @@ public static class StringExtension
         public string ToSnakeCase()
         {
             var result = "";
-            
-            foreach (var chr in type)
+
+            for (var i = 0; i < type.Length; i++)
             {
-                if (string.Equals(chr.ToString().ToUpper(),chr.ToString())) result += $"_{chr.ToString().ToLower()}";
-                else result += chr.ToString();
+                var chr = type[i];
+
+                if (char.IsUpper(chr))
+                {
+                    if (i > 0 && (char.IsLower(type[i - 1]) || char.IsDigit(type[i - 1]) || (i + 1 < type.Length && char.IsLower(type[i + 1]))))
+                        result += "_";
+
+                    result += char.ToLowerInvariant(chr);
+                }
+                else if (char.IsDigit(chr))
+                {
+                    if (i > 0 && !char.IsDigit(type[i - 1]) && type[i - 1] != '_')
+                        result += "_";
+
+                    result += chr;
+                }
+                else
+                {
+                    result += chr;
+                }
             }
 
             return result.StartsWith('_') ? result[1..] : result;

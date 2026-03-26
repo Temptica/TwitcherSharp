@@ -81,8 +81,8 @@ public partial class TwitchCharityCampaignProgressEvent : RefCounted, ITwitcherS
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_charity_campaign_progress.gd");
-        var eventClass = script.Get("Event").AsGodotObject();
-        var request = eventClass.Call("new").AsGodotObject();
+        var eventClass = script.Get("Event").As<GDScript>();
+        var request = eventClass.New().AsGodotObject();
         request.Set("id", Id);
         request.Set("broadcaster_id", BroadcasterId);
         request.Set("broadcaster_login", BroadcasterLogin);
@@ -131,8 +131,8 @@ public partial class TwitchCharityCampaignProgressEvent : RefCounted, ITwitcherS
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_charity_campaign_progress.gd");
-            var currentAmountClass = script.Get("CurrentAmount").AsGodotObject();
-            var request = currentAmountClass.Call("new").AsGodotObject();
+            var currentAmountClass = script.Get("CurrentAmount").As<GDScript>();
+            var request = currentAmountClass.New().AsGodotObject();
             request.Set("value", Value);
             request.Set("decimal_places", DecimalPlaces);
             request.Set("currency", Currency);
@@ -174,8 +174,8 @@ public partial class TwitchCharityCampaignProgressEvent : RefCounted, ITwitcherS
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_charity_campaign_progress.gd");
-            var targetAmountClass = script.Get("TargetAmount").AsGodotObject();
-            var request = targetAmountClass.Call("new").AsGodotObject();
+            var targetAmountClass = script.Get("TargetAmount").As<GDScript>();
+            var request = targetAmountClass.New().AsGodotObject();
             request.Set("value", Value);
             request.Set("decimal_places", DecimalPlaces);
             request.Set("currency", Currency);

@@ -35,8 +35,8 @@ public partial class TwitchChannelFollowCondition : RefCounted, ITwitcherSharpCo
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_follow.gd");
-        var conditionClass = script.Get("Condition").AsGodotObject();
-        var request = conditionClass.Call("new").AsGodotObject();
+        var conditionClass = script.Get("Condition").As<GDScript>();
+        var request = conditionClass.New().AsGodotObject();
         request.Set("broadcaster_user_id", BroadcasterUserId);
         request.Set("moderator_user_id", ModeratorUserId);
         return request;

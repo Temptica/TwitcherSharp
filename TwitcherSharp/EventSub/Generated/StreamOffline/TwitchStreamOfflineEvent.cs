@@ -39,8 +39,8 @@ public partial class TwitchStreamOfflineEvent : RefCounted, ITwitcherSharpEventS
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_stream_offline.gd");
-        var eventClass = script.Get("Event").AsGodotObject();
-        var request = eventClass.Call("new").AsGodotObject();
+        var eventClass = script.Get("Event").As<GDScript>();
+        var request = eventClass.New().AsGodotObject();
         request.Set("broadcaster_user_id", BroadcasterUserId);
         request.Set("broadcaster_user_login", BroadcasterUserLogin);
         request.Set("broadcaster_user_name", BroadcasterUserName);

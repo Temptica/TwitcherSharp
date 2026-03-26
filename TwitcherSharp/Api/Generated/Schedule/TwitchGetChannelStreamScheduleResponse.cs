@@ -1,4 +1,4 @@
-using TwitcherSharp.Api.Generated.Shared;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 using Godot;
    
@@ -29,7 +29,7 @@ public partial class TwitchGetChannelStreamScheduleResponse : RefCounted, ITwitc
         request.Set("data", Data);
         return request;
     }
-    
+        
     /// <summary> 
     /// The broadcaster’s streaming schedule. 
     /// </summary>
@@ -41,7 +41,7 @@ public partial class TwitchGetChannelStreamScheduleResponse : RefCounted, ITwitc
         public string BroadcasterName { get; set; }
         public string BroadcasterLogin { get; set; }
         public TwitchVacation Vacation { get; set; }
-        public TwitchPagination Pagination { get; set; }
+        public ResponsePagination Pagination { get; set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchData object.
@@ -57,7 +57,7 @@ public partial class TwitchGetChannelStreamScheduleResponse : RefCounted, ITwitc
                 BroadcasterName = data.Get("broadcaster_name").AsString(),
                 BroadcasterLogin = data.Get("broadcaster_login").AsString(),
                 Vacation = data.Get("vacation").As<TwitchVacation>(),
-                Pagination = data.Get("pagination").As<TwitchPagination>(),
+                Pagination = data.Get("pagination").As<ResponsePagination>(),
             };
         }
     
@@ -65,13 +65,46 @@ public partial class TwitchGetChannelStreamScheduleResponse : RefCounted, ITwitc
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_data.gd");
             var request = script.Call("new").AsGodotObject();
-            request.Set("segments", Segments);
+            request.Set("segments", Segments.Select(x => x.ToGodotObject()).ToArray());
             request.Set("broadcaster_id", BroadcasterId);
             request.Set("broadcaster_name", BroadcasterName);
             request.Set("broadcaster_login", BroadcasterLogin);
             request.Set("vacation", Vacation);
             if(Pagination != null) request.Set("pagination", Pagination);
             return request;
+        }
+        public async Task<TwitchData> NextPage() =>
+            await _data.CallAsync<TwitchData>("next_page");
+        
+        /// <summary> 
+        /// Contains the information used to page through the list of results. The object is empty if there are no more pages left to page through 
+        /// </summary>
+        public partial class ResponsePagination : RefCounted, ITwitcherSharp<ResponsePagination>
+        {
+            private GodotObject _data;
+            public string Cursor { get; set; }
+        
+            /// <summary> 
+            /// Transforms the godot data into a ResponsePagination object.
+            /// </summary> 
+            public static ResponsePagination FromObject(GodotObject data)
+            {
+                if(data == null) return null;
+                return new ResponsePagination
+                {
+                    Cursor = data.Get("cursor").AsString(),
+                };
+            }
+        
+            public GodotObject ToGodotObject()
+            {
+                var script = GD.Load<GDScript>("res://addons/twitcher/generated/response_pagination.gd");
+                var paginationClass = script.Get("Pagination").AsGodotObject();
+                var request = paginationClass.Call("new").AsGodotObject();
+                if(Cursor != null) request.Set("cursor", Cursor);
+                return request;
+            }
+        
         }
         
         /// <summary> 

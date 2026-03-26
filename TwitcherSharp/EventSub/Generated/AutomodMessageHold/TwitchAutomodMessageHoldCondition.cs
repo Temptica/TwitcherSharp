@@ -35,8 +35,8 @@ public partial class TwitchAutomodMessageHoldCondition : RefCounted, ITwitcherSh
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_automod_message_hold.gd");
-        var conditionClass = script.Get("Condition").AsGodotObject();
-        var request = conditionClass.Call("new").AsGodotObject();
+        var conditionClass = script.Get("Condition").As<GDScript>();
+        var request = conditionClass.New().AsGodotObject();
         request.Set("broadcaster_user_id", BroadcasterUserId);
         request.Set("moderator_user_id", ModeratorUserId);
         return request;

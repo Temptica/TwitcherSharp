@@ -10,9 +10,11 @@ public partial class TwitchCommandHelp: TwitchCommand, ITwitcherSharp<TwitchComm
 	/// Sender User that will send the answers on the command. Can be empty then the current user will be used
 	/// </summary>
 	public TwitchUser SenderUser { get; set; }
+	
 	public TwitchUser CurrentUser { get; set; }
 
 	public void CleanupRedundantCommands() => Data.Call("cleanup_redundant_commands");
+	
 	public new static TwitchCommandHelp FromObject(GodotObject data)
 	{
 		var command = new TwitchCommandHelp

@@ -73,9 +73,9 @@ public partial class TwitchEventSub : RefCounted, ITwitcherSharpSingleton<Twitch
     public static TwitchEventSub FromObject(GodotObject data)
     {
         if (data == null) return null;
-        var instance = new TwitchEventSub();
-        instance._data = data;
-        return instance;
+        Instance = new TwitchEventSub();
+        Instance._data = data;
+        return Instance;
     }
 
     public GodotObject ToGodotObject()

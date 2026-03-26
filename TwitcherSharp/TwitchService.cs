@@ -165,8 +165,6 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
     /// </summary>
     /// <param name="message"></param>
     /// <param name="username"></param>
-    [Obsolete(
-        "Not supported by twitch anymore. Need to be fixed by Kani to use Api instead. See https://github.com/kanimaru/twitcher/issues/102")]
     public void Whisper(string message, string username)
     {
         _data.Call("whisper", message, username);

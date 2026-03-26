@@ -13,7 +13,6 @@ public class TwitchApiParser
     private OpenApiDocument Definition { get; set; }
     private IDictionary<string, TwitchGenComponent> Components { get; } = new Dictionary<string, TwitchGenComponent>();
     private List<TwitchGenInterface> Interfaces { get; set; } = [];
-    private TwitchGenComponent Pagination { get; set; }
     private List<TwitchGenMethod> Methods { get; } = [];
 
     public async Task ParseApi()
@@ -25,18 +24,6 @@ public class TwitchApiParser
         Definition = openApiDocument ??
                      throw new Exception(
                          $"Failed to parse OpenAPI document: {diagnostic.Errors.FirstOrDefault()?.Message}");
-
-        var pagination = new TwitchGenComponent("TwitchPagination", "_",
-            "Contains the information used to page through the list of results. The object is empty if there are no more pages left to page through");
-
-        pagination.AddField(new TwitchGenField
-        {
-            Name = "Cursor",
-            Type = "string",
-        });
-
-        Components[pagination.ClassName] = pagination;
-        Pagination = pagination;
 
         CreateInterfaces();
         ParseComponents();
@@ -109,9 +96,10 @@ public class TwitchApiParser
 
             if (name.Equals("pagination", StringComparison.InvariantCultureIgnoreCase))
             {
-                field.Type = "TwitchPagination";
-                field.TypedComponent = Pagination;
-                component.AddComponent(Pagination);
+                var pagination = GetPaginationCopy();
+                field.Type = pagination.ClassName;
+                field.TypedComponent = pagination;
+                component.AddComponent(pagination);
                 component.AddField(field);
                 continue;
             }
@@ -156,6 +144,12 @@ public class TwitchApiParser
             }
 
             component.AddField(field);
+            
+            if (name.Equals("condition"))
+            {
+                component.GenericField = field;
+                component.AddGenericType("ITwitcherSharpCondition<T>", field.Name);
+            }
         }
     }
 
@@ -197,12 +191,12 @@ public class TwitchApiParser
 
                 //try find child component
                 if (method.ContainsBody &&
-                    Components.TryGetValue(method.BodyType.Replace("Twitch", ""), out var bodyComponent))
+                    Components.TryGetValue(method.BodyType.Remove("Twitch").Remove("<T>"), out var bodyComponent))
                 {
                     bodyComponent.NameSpace = tag;
                 }
 
-                if (Components.TryGetValue(method.ResultType.Replace("Twitch", ""), out var responseComponent))
+                if (Components.TryGetValue(method.ResultType.Remove("Twitch").Remove("<T>"), out var responseComponent))
                 {
                     responseComponent.NameSpace = tag;
                 }
@@ -252,7 +246,11 @@ public class TwitchApiParser
             var @ref = methodSpec.RequestBody.Content["application/json"].Schema.Reference.ReferenceV3;
 
             var component = Components.Values.FirstOrDefault(c => c.Ref == @ref);
-            if (component != null) method.BodyType = component.ClassName;
+            if (component != null)
+            {
+                method.BodyType = component.ClassName + (component.HasGeneric ? "<T>" : "");
+                method.GenericType = component.GenericType;
+            }
         }
 
         // Result Type
@@ -272,7 +270,15 @@ public class TwitchApiParser
                 var result = responseJson.Schema.Reference.ReferenceV3;
 
                 var component = Components.Values.FirstOrDefault(c => c.Ref == result);
-                if (component != null) method.ResultType = component.ClassName;
+                if (component != null)
+                {
+                    method.ResultType = component.ClassName + (component.HasGeneric ? "<T>" : "");
+                    if (!method.HasGeneric && component.HasGeneric)
+                    {
+                        method.BodyType = component.ClassName + (component.HasGeneric ? "<T>" : "");
+                        method.GenericType = component.GenericType;
+                    }
+                }
             }
         }
 
@@ -330,6 +336,8 @@ public class TwitchApiParser
             "array" when schema.Items.Type == "boolean" => "bool[]",
             "array" when schema.Items?.Reference is not null
                 => $"Twitch{schema.Items.Reference.ReferenceV3.Split('/')[3]}[]",
+            "object" when schema.AdditionalProperties != null && schema.AdditionalProperties.Type != "object" =>
+                $"Godot.Collections.Dictionary<string, {schema.AdditionalProperties.Type}>",
             _ => "Variant"
         };
         return type;
@@ -364,5 +372,19 @@ public class TwitchApiParser
     public List<TwitchGenInterface> GetInterfaces()
     {
         return Interfaces;
+    }
+
+    private static TwitchGenComponent GetPaginationCopy()
+    {
+        var pagination = new TwitchGenComponent("ResponsePagination", "_",
+            "Contains the information used to page through the list of results. The object is empty if there are no more pages left to page through");
+
+        pagination.AddField(new TwitchGenField
+        {
+            Name = "Cursor",
+            Type = "string",
+        });
+
+        return pagination;
     }
 }

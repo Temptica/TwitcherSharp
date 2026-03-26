@@ -29,8 +29,8 @@ public partial class TwitchUserAuthorizationGrantCondition : RefCounted, ITwitch
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_user_authorization_grant.gd");
-        var conditionClass = script.Get("Condition").AsGodotObject();
-        var request = conditionClass.Call("new").AsGodotObject();
+        var conditionClass = script.Get("Condition").As<GDScript>();
+        var request = conditionClass.New().AsGodotObject();
         request.Set("client_id", ClientId);
         return request;
     }

@@ -33,8 +33,7 @@ public partial class TwitchMaxPerStream : RefCounted, ITwitcherSharpEventSub<Twi
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_max_per_stream.gd");
-        var twitchMaxPerStreamClass = script.Get("TwitchMaxPerStream").AsGodotObject();
-        var request = twitchMaxPerStreamClass.Call("new").AsGodotObject();
+        var request = script.New().AsGodotObject();
         request.Set("is_enabled", IsEnabled);
         request.Set("value", Value);
         return request;

@@ -99,8 +99,7 @@ public partial class TwitchShoutoutCreate : RefCounted, ITwitcherSharpEventSub<T
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_shoutout_create.gd");
-        var twitchShoutoutCreateClass = script.Get("TwitchShoutoutCreate").AsGodotObject();
-        var request = twitchShoutoutCreateClass.Call("new").AsGodotObject();
+        var request = script.New().AsGodotObject();
         request.Set("broadcaster_user_id", BroadcasterUserId);
         request.Set("broadcaster_user_login", BroadcasterUserLogin);
         request.Set("broadcaster_user_name", BroadcasterUserName);

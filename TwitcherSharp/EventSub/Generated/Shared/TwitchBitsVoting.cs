@@ -33,8 +33,7 @@ public partial class TwitchBitsVoting : RefCounted, ITwitcherSharpEventSub<Twitc
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_bits_voting.gd");
-        var twitchBitsVotingClass = script.Get("TwitchBitsVoting").AsGodotObject();
-        var request = twitchBitsVotingClass.Call("new").AsGodotObject();
+        var request = script.New().AsGodotObject();
         request.Set("is_enabled", IsEnabled);
         request.Set("amount_per_vote", AmountPerVote);
         return request;

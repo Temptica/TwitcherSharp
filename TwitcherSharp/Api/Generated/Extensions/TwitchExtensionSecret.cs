@@ -28,7 +28,7 @@ public partial class TwitchExtensionSecret : RefCounted, ITwitcherSharp<TwitchEx
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_extension_secret.gd");
         var request = script.Call("new").AsGodotObject();
         request.Set("format_version", FormatVersion);
-        request.Set("secrets", Secrets);
+        request.Set("secrets", Secrets.Select(x => x.ToGodotObject()).ToArray());
         return request;
     }
     

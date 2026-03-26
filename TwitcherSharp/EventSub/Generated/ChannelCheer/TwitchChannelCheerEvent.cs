@@ -75,8 +75,8 @@ public partial class TwitchChannelCheerEvent : RefCounted, ITwitcherSharpEventSu
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_cheer.gd");
-        var eventClass = script.Get("Event").AsGodotObject();
-        var request = eventClass.Call("new").AsGodotObject();
+        var eventClass = script.Get("Event").As<GDScript>();
+        var request = eventClass.New().AsGodotObject();
         request.Set("is_anonymous", IsAnonymous);
         request.Set("user_id", UserId);
         request.Set("user_login", UserLogin);

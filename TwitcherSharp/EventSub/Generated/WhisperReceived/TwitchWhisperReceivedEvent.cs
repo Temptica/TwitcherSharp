@@ -69,8 +69,8 @@ public partial class TwitchWhisperReceivedEvent : RefCounted, ITwitcherSharpEven
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_whisper_received.gd");
-        var eventClass = script.Get("Event").AsGodotObject();
-        var request = eventClass.Call("new").AsGodotObject();
+        var eventClass = script.Get("Event").As<GDScript>();
+        var request = eventClass.New().AsGodotObject();
         request.Set("from_user_id", FromUserId);
         request.Set("from_user_name", FromUserName);
         request.Set("from_user_login", FromUserLogin);
@@ -105,8 +105,8 @@ public partial class TwitchWhisperReceivedEvent : RefCounted, ITwitcherSharpEven
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_whisper_received.gd");
-            var whisperClass = script.Get("Whisper").AsGodotObject();
-            var request = whisperClass.Call("new").AsGodotObject();
+            var whisperClass = script.Get("Whisper").As<GDScript>();
+            var request = whisperClass.New().AsGodotObject();
             request.Set("text", Text);
             return request;
         }

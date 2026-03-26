@@ -56,9 +56,9 @@ public partial class TwitchChannelVIPAddEvent : RefCounted, ITwitcherSharpEventS
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_v_i_p_add.gd");
-        var eventClass = script.Get("Event").AsGodotObject();
-        var request = eventClass.Call("new").AsGodotObject();
+        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_vip_add.gd");
+        var eventClass = script.Get("Event").As<GDScript>();
+        var request = eventClass.New().AsGodotObject();
         request.Set("user_id", UserId);
         request.Set("user_login", UserLogin);
         request.Set("user_name", UserName);

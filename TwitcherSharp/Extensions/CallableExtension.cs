@@ -20,7 +20,7 @@ public static class CallableExtension
 
         /// <summary>
         /// Makes it easier to create a <see cref="Callable"/> while assuring type safety on TwitcherSharp objects.<br/>
-        /// Best way to do this is by using <see cref="Node.GetNode{GodotObject}(NodePath)"/> from the scene's tree (usually a direct child).<br/>
+        /// The best way to do this is by using <see cref="Node.GetNode{GodotObject}(NodePath)"/> from the scene's tree (usually a direct child).<br/>
         /// Example usage:
         /// <code>
         /// var redeem = GetNode&lt;GodotObject&gt;("RedeemListener");

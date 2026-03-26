@@ -32,13 +32,11 @@ public partial class TwitchEventSubDefinition() : RefCounted, ITwitcherSharp<Twi
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/eventsub/twitch_eventsub_definition.gd");
-        var data = script.New().AsGodotObject();
-        data.Set("type", (int)Type);
-        data.Set("value", Value);
-        data.Set("version", Version);
-        data.Set("conditions", Conditions.ToArray());
-        data.Set("scopes", Scopes.ToArray());
-        data.Set("documentation_link", DocumentationLink);
+        
+        var conditions = new Godot.Collections.Array<StringName>(Conditions ?? []);
+        var scopes = new Godot.Collections.Array<StringName>(Scopes ?? []);
+        var data = script.New((int)Type, Value, Version, conditions, scopes, DocumentationLink)
+            .AsGodotObject();
         return data;
     }
 
@@ -63,7 +61,8 @@ public partial class TwitchEventSubDefinition() : RefCounted, ITwitcherSharp<Twi
         "automod.message.update", "1", ["broadcaster_user_id", "moderator_user_id"], ["moderator:manage:automod"],
         "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#automodmessageupdate");
 
-    public static TwitchEventSubDefinition AutomodSettingsUpdate = new(TwitchEventSubDefinitionType.AutomodSettingsUpdate,
+    public static TwitchEventSubDefinition AutomodSettingsUpdate = new(
+        TwitchEventSubDefinitionType.AutomodSettingsUpdate,
         "automod.settings.update", "1", ["broadcaster_user_id", "moderator_user_id"],
         ["moderator:read:automod_settings"],
         "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#automodsettingsupdate");
@@ -451,7 +450,7 @@ public partial class TwitchEventSubDefinition() : RefCounted, ITwitcherSharp<Twi
 
     #endregion
 
-    public static List<TwitchEventSubDefinition> All =
+    public static readonly List<TwitchEventSubDefinition> All =
     [
         AutomodMessageHold, AutomodMessageUpdate, AutomodSettingsUpdate, AutomodTermsUpdate, ChannelUpdate,
         ChannelFollow, ChannelAdBreakBegin, ChannelChatClear, ChannelChatClearUserMessages, ChannelChatMessage,

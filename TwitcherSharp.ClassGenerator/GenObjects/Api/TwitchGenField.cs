@@ -2,7 +2,7 @@ using ClassGenerator.Extensions;
 
 namespace ClassGenerator.GenObjects.Api;
 
-public class TwitchGenField: IEquatable<TwitchGenField>
+public class TwitchGenField : IEquatable<TwitchGenField>
 {
     public string Name
     {
@@ -26,9 +26,10 @@ public class TwitchGenField: IEquatable<TwitchGenField>
     public bool IsRequired { get; set; }
     public bool IsNullableTyped => IsTyped || IsArray || Type == "string" || Type == "string[]";
     public bool IsArray { get; set; }
-    public string CleanedType => Type.Split('/')[^1] + (IsArray ? "[]" : "");
-    public string CleanedArrayType => Type.Split('/')[^1];
+    public string CleanedType => CleanedArrayType + (IsArray ? "[]" : "");
+    public string CleanedArrayType => Type.Split('/')[^1] + (TypedComponent?.HasGeneric == true ? "<T>" : "");
     public bool IsTyped => TypedComponent != null;
+
     public string GetAsType()
     {
         return CleanedType switch
@@ -40,11 +41,14 @@ public class TwitchGenField: IEquatable<TwitchGenField>
             "string[]" => "AsStringArray()",
             "int[]" => "AsInt32Array()",
             "double[]" => "AsFloat64Array()",
+            _ when CleanedType.Contains("Dictionary<string,") =>
+                $"AsGodotDictionary<string,{CleanedArrayType.Replace("Godot.Collections.Dictionary<string,", "").Replace(">", "")}>()",
             _ => $"As<{CleanedType}>()",
         };
     }
-    
+
     public TwitchGenComponent TypedComponent { get; set; }
+
     public bool Equals(TwitchGenField other)
     {
         if (other is null) return false;

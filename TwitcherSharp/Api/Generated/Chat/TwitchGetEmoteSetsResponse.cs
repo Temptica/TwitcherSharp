@@ -29,7 +29,7 @@ public partial class TwitchGetEmoteSetsResponse : RefCounted, ITwitcherSharp<Twi
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_emote_sets.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        request.Set("data", Data);
+        request.Set("data", Data.Select(x => x.ToGodotObject()).ToArray());
         request.Set("template", Template);
         return request;
     }

@@ -38,9 +38,8 @@ public partial class TwitchImage : RefCounted, ITwitcherSharpEventSub<TwitchImag
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_image.gd");
-        var twitchImageClass = script.Get("TwitchImage").AsGodotObject();
-        var request = twitchImageClass.Call("new").AsGodotObject();
+        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_twitch_image.gd");
+        var request = script.New().AsGodotObject();
         request.Set("url_1x", Url1x);
         request.Set("url_2x", Url2x);
         request.Set("url_4x", Url4x);

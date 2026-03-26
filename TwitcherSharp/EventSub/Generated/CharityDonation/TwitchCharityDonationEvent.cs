@@ -99,8 +99,8 @@ public partial class TwitchCharityDonationEvent : RefCounted, ITwitcherSharpEven
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_charity_donation.gd");
-        var eventClass = script.Get("Event").AsGodotObject();
-        var request = eventClass.Call("new").AsGodotObject();
+        var eventClass = script.Get("Event").As<GDScript>();
+        var request = eventClass.New().AsGodotObject();
         request.Set("id", Id);
         request.Set("campaign_id", CampaignId);
         request.Set("broadcaster_user_id", BroadcasterUserId);
@@ -152,8 +152,8 @@ public partial class TwitchCharityDonationEvent : RefCounted, ITwitcherSharpEven
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_charity_donation.gd");
-            var amountClass = script.Get("Amount").AsGodotObject();
-            var request = amountClass.Call("new").AsGodotObject();
+            var amountClass = script.Get("Amount").As<GDScript>();
+            var request = amountClass.New().AsGodotObject();
             request.Set("value", Value);
             request.Set("decimal_places", DecimalPlaces);
             request.Set("currency", Currency);

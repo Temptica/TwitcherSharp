@@ -34,8 +34,8 @@ public partial class TwitchDropEntitlementGrantEvent : RefCounted, ITwitcherShar
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_drop_entitlement_grant.gd");
-        var eventClass = script.Get("Event").AsGodotObject();
-        var request = eventClass.Call("new").AsGodotObject();
+        var eventClass = script.Get("Event").As<GDScript>();
+        var request = eventClass.New().AsGodotObject();
         request.Set("id", Id);
         request.Set("data", Data);
         return request;
@@ -118,8 +118,8 @@ public partial class TwitchDropEntitlementGrantEvent : RefCounted, ITwitcherShar
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_drop_entitlement_grant.gd");
-            var dataClass = script.Get("Data").AsGodotObject();
-            var request = dataClass.Call("new").AsGodotObject();
+            var dataClass = script.Get("Data").As<GDScript>();
+            var request = dataClass.New().AsGodotObject();
             request.Set("organization_id", OrganizationId);
             request.Set("category_id", CategoryId);
             request.Set("category_name", CategoryName);

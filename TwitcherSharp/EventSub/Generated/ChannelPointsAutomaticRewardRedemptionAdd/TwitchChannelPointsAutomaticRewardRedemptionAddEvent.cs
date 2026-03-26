@@ -87,8 +87,8 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddEvent : RefC
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_points_automatic_reward_redemption_add.gd");
-        var eventClass = script.Get("Event").AsGodotObject();
-        var request = eventClass.Call("new").AsGodotObject();
+        var eventClass = script.Get("Event").As<GDScript>();
+        var request = eventClass.New().AsGodotObject();
         request.Set("broadcaster_user_id", BroadcasterUserId);
         request.Set("broadcaster_user_login", BroadcasterUserLogin);
         request.Set("broadcaster_user_name", BroadcasterUserName);
@@ -138,8 +138,8 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddEvent : RefC
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_points_automatic_reward_redemption_add.gd");
-            var rewardClass = script.Get("Reward").AsGodotObject();
-            var request = rewardClass.Call("new").AsGodotObject();
+            var rewardClass = script.Get("Reward").As<GDScript>();
+            var request = rewardClass.New().AsGodotObject();
             request.Set("type", Type);
             request.Set("cost", Cost);
             request.Set("unlocked_emote", UnlockedEmote);
@@ -175,8 +175,8 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddEvent : RefC
             public GodotObject ToGodotObject()
             {
                 var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_points_automatic_reward_redemption_add.gd");
-                var unlockedEmoteClass = script.Get("UnlockedEmote").AsGodotObject();
-                var request = unlockedEmoteClass.Call("new").AsGodotObject();
+                var unlockedEmoteClass = script.Get("UnlockedEmote").As<GDScript>();
+                var request = unlockedEmoteClass.New().AsGodotObject();
                 request.Set("id", Id);
                 request.Set("name", Name);
                 return request;
@@ -213,8 +213,8 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddEvent : RefC
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_points_automatic_reward_redemption_add.gd");
-            var messageClass = script.Get("Message").AsGodotObject();
-            var request = messageClass.Call("new").AsGodotObject();
+            var messageClass = script.Get("Message").As<GDScript>();
+            var request = messageClass.New().AsGodotObject();
             request.Set("text", Text);
             request.Set("emotes", Emotes);
             return request;
@@ -255,8 +255,8 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddEvent : RefC
             public GodotObject ToGodotObject()
             {
                 var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_points_automatic_reward_redemption_add.gd");
-                var emotesClass = script.Get("Emotes").AsGodotObject();
-                var request = emotesClass.Call("new").AsGodotObject();
+                var emotesClass = script.Get("Emotes").As<GDScript>();
+                var request = emotesClass.New().AsGodotObject();
                 request.Set("id", Id);
                 request.Set("begin", Begin);
                 request.Set("end", End);

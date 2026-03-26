@@ -4,7 +4,7 @@ namespace ClassGenerator.GenObjects.EventSub;
 
 public class TwitchEventSubGenComponent(string name)
 {
-    public string ClassName { get; } = SanitizeName(name);
+    public string ClassName { get; set; } = SanitizeName(name);
 
     public string Description { get; set; }
 

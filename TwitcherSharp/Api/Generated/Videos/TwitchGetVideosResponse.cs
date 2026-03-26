@@ -1,4 +1,4 @@
-using TwitcherSharp.Api.Generated.Shared;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 using Godot;
    
@@ -8,7 +8,7 @@ public partial class TwitchGetVideosResponse : RefCounted, ITwitcherSharp<Twitch
 {
     private GodotObject _data;
     public TwitchVideo[] Data { get; set; }
-    public TwitchPagination Pagination { get; set; }
+    public ResponsePagination Pagination { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetVideosResponse object.
@@ -20,7 +20,7 @@ public partial class TwitchGetVideosResponse : RefCounted, ITwitcherSharp<Twitch
         return new TwitchGetVideosResponse
         {
             Data = dataArray.Select(TwitchVideo.FromObject).ToArray(),
-            Pagination = data.Get("pagination").As<TwitchPagination>(),
+            Pagination = data.Get("pagination").As<ResponsePagination>(),
         };
     }
 
@@ -29,9 +29,42 @@ public partial class TwitchGetVideosResponse : RefCounted, ITwitcherSharp<Twitch
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_videos.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        request.Set("data", Data);
+        request.Set("data", Data.Select(x => x.ToGodotObject()).ToArray());
         if(Pagination != null) request.Set("pagination", Pagination);
         return request;
+    }
+    public async Task<TwitchGetVideosResponse> NextPage() =>
+        await _data.CallAsync<TwitchGetVideosResponse>("next_page");
+    
+    /// <summary> 
+    /// Contains the information used to page through the list of results. The object is empty if there are no more pages left to page through 
+    /// </summary>
+    public partial class ResponsePagination : RefCounted, ITwitcherSharp<ResponsePagination>
+    {
+        private GodotObject _data;
+        public string Cursor { get; set; }
+    
+        /// <summary> 
+        /// Transforms the godot data into a ResponsePagination object.
+        /// </summary> 
+        public static ResponsePagination FromObject(GodotObject data)
+        {
+            if(data == null) return null;
+            return new ResponsePagination
+            {
+                Cursor = data.Get("cursor").AsString(),
+            };
+        }
+    
+        public GodotObject ToGodotObject()
+        {
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/response_pagination.gd");
+            var paginationClass = script.Get("Pagination").AsGodotObject();
+            var request = paginationClass.Call("new").AsGodotObject();
+            if(Cursor != null) request.Set("cursor", Cursor);
+            return request;
+        }
+    
     }
     public partial class TwitchVideo : RefCounted, ITwitcherSharp<TwitchVideo>
     {
@@ -103,7 +136,7 @@ public partial class TwitchGetVideosResponse : RefCounted, ITwitcherSharp<Twitch
             request.Set("language", Language);
             request.Set("type", Type);
             request.Set("duration", Duration);
-            request.Set("muted_segments", MutedSegments);
+            request.Set("muted_segments", MutedSegments.Select(x => x.ToGodotObject()).ToArray());
             return request;
         }
         

@@ -58,8 +58,7 @@ public partial class TwitchOutcomes : RefCounted, ITwitcherSharpEventSub<TwitchO
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_outcomes.gd");
-        var twitchOutcomesClass = script.Get("TwitchOutcomes").AsGodotObject();
-        var request = twitchOutcomesClass.Call("new").AsGodotObject();
+        var request = script.New().AsGodotObject();
         request.Set("id", Id);
         request.Set("title", Title);
         request.Set("color", Color);
@@ -87,8 +86,8 @@ public partial class TwitchOutcomes : RefCounted, ITwitcherSharpEventSub<TwitchO
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_outcomes.gd");
-            var topPredictorsClass = script.Get("TopPredictors").AsGodotObject();
-            var request = topPredictorsClass.Call("new").AsGodotObject();
+            var topPredictorsClass = script.Get("TopPredictors").As<GDScript>();
+            var request = topPredictorsClass.New().AsGodotObject();
             return request;
         }
     }

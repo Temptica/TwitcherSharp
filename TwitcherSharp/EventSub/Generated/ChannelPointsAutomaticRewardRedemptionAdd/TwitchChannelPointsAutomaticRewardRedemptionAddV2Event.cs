@@ -81,8 +81,8 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_points_automatic_reward_redemption_add.gd");
-        var eventV2Class = script.Get("EventV2").AsGodotObject();
-        var request = eventV2Class.Call("new").AsGodotObject();
+        var eventClass = script.Get("Event").As<GDScript>();
+        var request = eventClass.New().AsGodotObject();
         request.Set("broadcaster_user_id", BroadcasterUserId);
         request.Set("broadcaster_user_login", BroadcasterUserLogin);
         request.Set("broadcaster_user_name", BroadcasterUserName);
@@ -131,8 +131,8 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_points_automatic_reward_redemption_add.gd");
-            var rewardClass = script.Get("Reward").AsGodotObject();
-            var request = rewardClass.Call("new").AsGodotObject();
+            var rewardClass = script.Get("Reward").As<GDScript>();
+            var request = rewardClass.New().AsGodotObject();
             request.Set("type", Type);
             request.Set("channel_points", ChannelPoints);
             request.Set("emote", Emote);
@@ -168,8 +168,8 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
             public GodotObject ToGodotObject()
             {
                 var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_points_automatic_reward_redemption_add.gd");
-                var emoteClass = script.Get("Emote").AsGodotObject();
-                var request = emoteClass.Call("new").AsGodotObject();
+                var emoteClass = script.Get("Emote").As<GDScript>();
+                var request = emoteClass.New().AsGodotObject();
                 request.Set("id", Id);
                 request.Set("name", Name);
                 return request;
@@ -206,8 +206,8 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_points_automatic_reward_redemption_add.gd");
-            var messageClass = script.Get("Message").AsGodotObject();
-            var request = messageClass.Call("new").AsGodotObject();
+            var messageClass = script.Get("Message").As<GDScript>();
+            var request = messageClass.New().AsGodotObject();
             request.Set("text", Text);
             request.Set("fragments", Fragments);
             return request;
@@ -248,8 +248,8 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
             public GodotObject ToGodotObject()
             {
                 var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_points_automatic_reward_redemption_add.gd");
-                var fragmentsClass = script.Get("Fragments").AsGodotObject();
-                var request = fragmentsClass.Call("new").AsGodotObject();
+                var fragmentsClass = script.Get("Fragments").As<GDScript>();
+                var request = fragmentsClass.New().AsGodotObject();
                 request.Set("text", Text);
                 request.Set("type", Type);
                 request.Set("emote", Emote);
@@ -279,8 +279,8 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
                 public GodotObject ToGodotObject()
                 {
                     var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_points_automatic_reward_redemption_add.gd");
-                    var emoteClass = script.Get("Emote").AsGodotObject();
-                    var request = emoteClass.Call("new").AsGodotObject();
+                    var emoteClass = script.Get("Emote").As<GDScript>();
+                    var request = emoteClass.New().AsGodotObject();
                     request.Set("id", Id);
                     return request;
                 }

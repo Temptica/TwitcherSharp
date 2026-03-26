@@ -41,8 +41,8 @@ public partial class TwitchDropEntitlementGrantCondition : RefCounted, ITwitcher
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_drop_entitlement_grant.gd");
-        var conditionClass = script.Get("Condition").AsGodotObject();
-        var request = conditionClass.Call("new").AsGodotObject();
+        var conditionClass = script.Get("Condition").As<GDScript>();
+        var request = conditionClass.New().AsGodotObject();
         request.Set("organization_id", OrganizationId);
         request.Set("category_id", CategoryId);
         request.Set("campaign_id", CampaignId);

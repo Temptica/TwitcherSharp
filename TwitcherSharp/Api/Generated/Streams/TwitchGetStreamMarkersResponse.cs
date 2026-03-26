@@ -1,4 +1,4 @@
-using TwitcherSharp.Api.Generated.Shared;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 using Godot;
    
@@ -8,7 +8,7 @@ public partial class TwitchGetStreamMarkersResponse : RefCounted, ITwitcherSharp
 {
     private GodotObject _data;
     public TwitchStreamMarkers[] Data { get; set; }
-    public TwitchPagination Pagination { get; set; }
+    public ResponsePagination Pagination { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetStreamMarkersResponse object.
@@ -20,7 +20,7 @@ public partial class TwitchGetStreamMarkersResponse : RefCounted, ITwitcherSharp
         return new TwitchGetStreamMarkersResponse
         {
             Data = dataArray.Select(TwitchStreamMarkers.FromObject).ToArray(),
-            Pagination = data.Get("pagination").As<TwitchPagination>(),
+            Pagination = data.Get("pagination").As<ResponsePagination>(),
         };
     }
 
@@ -29,9 +29,42 @@ public partial class TwitchGetStreamMarkersResponse : RefCounted, ITwitcherSharp
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_stream_markers.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        request.Set("data", Data);
+        request.Set("data", Data.Select(x => x.ToGodotObject()).ToArray());
         if(Pagination != null) request.Set("pagination", Pagination);
         return request;
+    }
+    public async Task<TwitchGetStreamMarkersResponse> NextPage() =>
+        await _data.CallAsync<TwitchGetStreamMarkersResponse>("next_page");
+    
+    /// <summary> 
+    /// Contains the information used to page through the list of results. The object is empty if there are no more pages left to page through 
+    /// </summary>
+    public partial class ResponsePagination : RefCounted, ITwitcherSharp<ResponsePagination>
+    {
+        private GodotObject _data;
+        public string Cursor { get; set; }
+    
+        /// <summary> 
+        /// Transforms the godot data into a ResponsePagination object.
+        /// </summary> 
+        public static ResponsePagination FromObject(GodotObject data)
+        {
+            if(data == null) return null;
+            return new ResponsePagination
+            {
+                Cursor = data.Get("cursor").AsString(),
+            };
+        }
+    
+        public GodotObject ToGodotObject()
+        {
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/response_pagination.gd");
+            var paginationClass = script.Get("Pagination").AsGodotObject();
+            var request = paginationClass.Call("new").AsGodotObject();
+            if(Cursor != null) request.Set("cursor", Cursor);
+            return request;
+        }
+    
     }
     public partial class TwitchStreamMarkers : RefCounted, ITwitcherSharp<TwitchStreamMarkers>
     {
@@ -64,7 +97,7 @@ public partial class TwitchGetStreamMarkersResponse : RefCounted, ITwitcherSharp
             request.Set("user_id", UserId);
             request.Set("user_name", UserName);
             request.Set("user_login", UserLogin);
-            request.Set("videos", Videos);
+            request.Set("videos", Videos.Select(x => x.ToGodotObject()).ToArray());
             return request;
         }
         
@@ -96,7 +129,7 @@ public partial class TwitchGetStreamMarkersResponse : RefCounted, ITwitcherSharp
                 var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_videos.gd");
                 var request = script.Call("new").AsGodotObject();
                 request.Set("video_id", VideoId);
-                request.Set("markers", Markers);
+                request.Set("markers", Markers.Select(x => x.ToGodotObject()).ToArray());
                 return request;
             }
             

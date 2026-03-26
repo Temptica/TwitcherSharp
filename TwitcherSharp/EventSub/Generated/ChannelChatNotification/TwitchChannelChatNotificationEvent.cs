@@ -263,8 +263,8 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_notification.gd");
-        var eventClass = script.Get("Event").AsGodotObject();
-        var request = eventClass.Call("new").AsGodotObject();
+        var eventClass = script.Get("Event").As<GDScript>();
+        var request = eventClass.New().AsGodotObject();
         request.Set("broadcaster_user_id", BroadcasterUserId);
         request.Set("broadcaster_user_name", BroadcasterUserName);
         request.Set("broadcaster_user_login", BroadcasterUserLogin);
@@ -343,8 +343,8 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_notification.gd");
-            var badgesClass = script.Get("Badges").AsGodotObject();
-            var request = badgesClass.Call("new").AsGodotObject();
+            var badgesClass = script.Get("Badges").As<GDScript>();
+            var request = badgesClass.New().AsGodotObject();
             request.Set("set_id", SetId);
             request.Set("id", Id);
             request.Set("info", Info);
@@ -381,8 +381,8 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_notification.gd");
-            var messageClass = script.Get("Message").AsGodotObject();
-            var request = messageClass.Call("new").AsGodotObject();
+            var messageClass = script.Get("Message").As<GDScript>();
+            var request = messageClass.New().AsGodotObject();
             request.Set("text", Text);
             request.Set("fragments", Fragments);
             return request;
@@ -406,8 +406,8 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
             public GodotObject ToGodotObject()
             {
                 var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_notification.gd");
-                var textClass = script.Get("Text").AsGodotObject();
-                var request = textClass.Call("new").AsGodotObject();
+                var textClass = script.Get("Text").As<GDScript>();
+                var request = textClass.New().AsGodotObject();
                 return request;
             }
         }
@@ -458,8 +458,8 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
             public GodotObject ToGodotObject()
             {
                 var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_notification.gd");
-                var fragmentsClass = script.Get("Fragments").AsGodotObject();
-                var request = fragmentsClass.Call("new").AsGodotObject();
+                var fragmentsClass = script.Get("Fragments").As<GDScript>();
+                var request = fragmentsClass.New().AsGodotObject();
                 request.Set("type", Type);
                 request.Set("text", Text);
                 request.Set("cheermote", Cheermote);
@@ -503,8 +503,8 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
                 public GodotObject ToGodotObject()
                 {
                     var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_notification.gd");
-                    var cheermoteClass = script.Get("Cheermote").AsGodotObject();
-                    var request = cheermoteClass.Call("new").AsGodotObject();
+                    var cheermoteClass = script.Get("Cheermote").As<GDScript>();
+                    var request = cheermoteClass.New().AsGodotObject();
                     request.Set("prefix", Prefix);
                     request.Set("bits", Bits);
                     request.Set("tier", Tier);
@@ -529,8 +529,8 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
                     public GodotObject ToGodotObject()
                     {
                         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_notification.gd");
-                        var prefixClass = script.Get("Prefix").AsGodotObject();
-                        var request = prefixClass.Call("new").AsGodotObject();
+                        var prefixClass = script.Get("Prefix").As<GDScript>();
+                        var request = prefixClass.New().AsGodotObject();
                         return request;
                     }
                 }
@@ -576,8 +576,8 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
                 public GodotObject ToGodotObject()
                 {
                     var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_notification.gd");
-                    var emoteClass = script.Get("Emote").AsGodotObject();
-                    var request = emoteClass.Call("new").AsGodotObject();
+                    var emoteClass = script.Get("Emote").As<GDScript>();
+                    var request = emoteClass.New().AsGodotObject();
                     request.Set("id", Id);
                     request.Set("emote_set_id", EmoteSetId);
                     request.Set("owner_id", OwnerId);
@@ -620,8 +620,8 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
                 public GodotObject ToGodotObject()
                 {
                     var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_notification.gd");
-                    var mentionClass = script.Get("Mention").AsGodotObject();
-                    var request = mentionClass.Call("new").AsGodotObject();
+                    var mentionClass = script.Get("Mention").As<GDScript>();
+                    var request = mentionClass.New().AsGodotObject();
                     request.Set("user_id", UserId);
                     request.Set("user_name", UserName);
                     request.Set("user_login", UserLogin);
@@ -665,8 +665,8 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_notification.gd");
-            var subClass = script.Get("Sub").AsGodotObject();
-            var request = subClass.Call("new").AsGodotObject();
+            var subClass = script.Get("Sub").As<GDScript>();
+            var request = subClass.New().AsGodotObject();
             request.Set("sub_tier", SubTier);
             request.Set("is_prime", IsPrime);
             request.Set("duration_months", DurationMonths);
@@ -750,8 +750,8 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_notification.gd");
-            var resubClass = script.Get("Resub").AsGodotObject();
-            var request = resubClass.Call("new").AsGodotObject();
+            var resubClass = script.Get("Resub").As<GDScript>();
+            var request = resubClass.New().AsGodotObject();
             request.Set("cumulative_months", CumulativeMonths);
             request.Set("duration_months", DurationMonths);
             request.Set("streak_months", StreakMonths);
@@ -824,8 +824,8 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_notification.gd");
-            var subGiftClass = script.Get("SubGift").AsGodotObject();
-            var request = subGiftClass.Call("new").AsGodotObject();
+            var subGiftClass = script.Get("SubGift").As<GDScript>();
+            var request = subGiftClass.New().AsGodotObject();
             request.Set("duration_months", DurationMonths);
             request.Set("cumulative_total", CumulativeTotal);
             request.Set("recipient_user_id", RecipientUserId);
@@ -877,8 +877,8 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_notification.gd");
-            var communitySubGiftClass = script.Get("CommunitySubGift").AsGodotObject();
-            var request = communitySubGiftClass.Call("new").AsGodotObject();
+            var communitySubGiftClass = script.Get("CommunitySubGift").As<GDScript>();
+            var request = communitySubGiftClass.New().AsGodotObject();
             request.Set("id", Id);
             request.Set("total", Total);
             request.Set("sub_tier", SubTier);
@@ -921,8 +921,8 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_notification.gd");
-            var giftPaidUpgradeClass = script.Get("GiftPaidUpgrade").AsGodotObject();
-            var request = giftPaidUpgradeClass.Call("new").AsGodotObject();
+            var giftPaidUpgradeClass = script.Get("GiftPaidUpgrade").As<GDScript>();
+            var request = giftPaidUpgradeClass.New().AsGodotObject();
             request.Set("gifter_is_anonymous", GifterIsAnonymous);
             request.Set("gifter_user_id", GifterUserId);
             request.Set("gifter_user_name", GifterUserName);
@@ -952,8 +952,8 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_notification.gd");
-            var primePaidUpgradeClass = script.Get("PrimePaidUpgrade").AsGodotObject();
-            var request = primePaidUpgradeClass.Call("new").AsGodotObject();
+            var primePaidUpgradeClass = script.Get("PrimePaidUpgrade").As<GDScript>();
+            var request = primePaidUpgradeClass.New().AsGodotObject();
             request.Set("sub_tier", SubTier);
             return request;
         }
@@ -999,8 +999,8 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_notification.gd");
-            var payItForwardClass = script.Get("PayItForward").AsGodotObject();
-            var request = payItForwardClass.Call("new").AsGodotObject();
+            var payItForwardClass = script.Get("PayItForward").As<GDScript>();
+            var request = payItForwardClass.New().AsGodotObject();
             request.Set("gifter_is_anonymous", GifterIsAnonymous);
             request.Set("gifter_user_id", GifterUserId);
             request.Set("gifter_user_name", GifterUserName);
@@ -1055,8 +1055,8 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_notification.gd");
-            var raidClass = script.Get("Raid").AsGodotObject();
-            var request = raidClass.Call("new").AsGodotObject();
+            var raidClass = script.Get("Raid").As<GDScript>();
+            var request = raidClass.New().AsGodotObject();
             request.Set("user_id", UserId);
             request.Set("user_name", UserName);
             request.Set("user_login", UserLogin);
@@ -1083,8 +1083,8 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_notification.gd");
-            var unraidClass = script.Get("Unraid").AsGodotObject();
-            var request = unraidClass.Call("new").AsGodotObject();
+            var unraidClass = script.Get("Unraid").As<GDScript>();
+            var request = unraidClass.New().AsGodotObject();
             return request;
         }
     }
@@ -1111,8 +1111,8 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_notification.gd");
-            var announcementClass = script.Get("Announcement").AsGodotObject();
-            var request = announcementClass.Call("new").AsGodotObject();
+            var announcementClass = script.Get("Announcement").As<GDScript>();
+            var request = announcementClass.New().AsGodotObject();
             request.Set("color", Color);
             return request;
         }
@@ -1140,8 +1140,8 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_notification.gd");
-            var bitsBadgeTierClass = script.Get("BitsBadgeTier").AsGodotObject();
-            var request = bitsBadgeTierClass.Call("new").AsGodotObject();
+            var bitsBadgeTierClass = script.Get("BitsBadgeTier").As<GDScript>();
+            var request = bitsBadgeTierClass.New().AsGodotObject();
             request.Set("tier", Tier);
             return request;
         }
@@ -1181,8 +1181,8 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_notification.gd");
-            var amountClass = script.Get("Amount").AsGodotObject();
-            var request = amountClass.Call("new").AsGodotObject();
+            var amountClass = script.Get("Amount").As<GDScript>();
+            var request = amountClass.New().AsGodotObject();
             request.Set("value", Value);
             request.Set("decimal_place", DecimalPlace);
             request.Set("currency", Currency);
@@ -1224,8 +1224,8 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_notification.gd");
-            var sourceBadgesClass = script.Get("SourceBadges").AsGodotObject();
-            var request = sourceBadgesClass.Call("new").AsGodotObject();
+            var sourceBadgesClass = script.Get("SourceBadges").As<GDScript>();
+            var request = sourceBadgesClass.New().AsGodotObject();
             request.Set("set_id", SetId);
             request.Set("id", Id);
             request.Set("info", Info);

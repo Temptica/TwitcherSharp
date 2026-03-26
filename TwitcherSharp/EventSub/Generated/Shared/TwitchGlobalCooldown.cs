@@ -33,8 +33,7 @@ public partial class TwitchGlobalCooldown : RefCounted, ITwitcherSharpEventSub<T
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_global_cooldown.gd");
-        var twitchGlobalCooldownClass = script.Get("TwitchGlobalCooldown").AsGodotObject();
-        var request = twitchGlobalCooldownClass.Call("new").AsGodotObject();
+        var request = script.New().AsGodotObject();
         request.Set("is_enabled", IsEnabled);
         request.Set("seconds", Seconds);
         return request;

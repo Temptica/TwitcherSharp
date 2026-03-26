@@ -26,7 +26,7 @@ public partial class TwitchGetTeamsResponse : RefCounted, ITwitcherSharp<TwitchG
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_teams.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        request.Set("data", Data);
+        request.Set("data", Data.Select(x => x.ToGodotObject()).ToArray());
         return request;
     }
     public partial class TwitchTeam : RefCounted, ITwitcherSharp<TwitchTeam>
@@ -69,7 +69,7 @@ public partial class TwitchGetTeamsResponse : RefCounted, ITwitcherSharp<TwitchG
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_team.gd");
             var request = script.Call("new").AsGodotObject();
-            request.Set("users", Users);
+            request.Set("users", Users.Select(x => x.ToGodotObject()).ToArray());
             request.Set("background_image_url", BackgroundImageUrl);
             request.Set("banner", Banner);
             request.Set("created_at", CreatedAt);

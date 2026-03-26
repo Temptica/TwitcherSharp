@@ -14,6 +14,7 @@ public partial class TwitchCommandRegex : TwitchCommandBase, ITwitcherSharp<Twit
     {
         var regex = new TwitchCommandRegex();
         regex.RegexToListen = data.Get("regex_to_listen").AsString();
+        regex.Data = data;
         regex.SetBaseProperties();
         
         return regex;

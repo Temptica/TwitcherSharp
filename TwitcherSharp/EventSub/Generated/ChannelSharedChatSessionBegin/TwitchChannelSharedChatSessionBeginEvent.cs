@@ -70,8 +70,8 @@ public partial class TwitchChannelSharedChatSessionBeginEvent : RefCounted, ITwi
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_shared_chat_session_begin.gd");
-        var eventClass = script.Get("Event").AsGodotObject();
-        var request = eventClass.Call("new").AsGodotObject();
+        var eventClass = script.Get("Event").As<GDScript>();
+        var request = eventClass.New().AsGodotObject();
         request.Set("session_id", SessionId);
         request.Set("broadcaster_user_id", BroadcasterUserId);
         request.Set("broadcaster_user_name", BroadcasterUserName);
@@ -118,8 +118,8 @@ public partial class TwitchChannelSharedChatSessionBeginEvent : RefCounted, ITwi
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_shared_chat_session_begin.gd");
-            var participantsClass = script.Get("Participants").AsGodotObject();
-            var request = participantsClass.Call("new").AsGodotObject();
+            var participantsClass = script.Get("Participants").As<GDScript>();
+            var request = participantsClass.New().AsGodotObject();
             request.Set("broadcaster_user_id", BroadcasterUserId);
             request.Set("broadcaster_user_name", BroadcasterUserName);
             request.Set("broadcaster_user_login", BroadcasterUserLogin);

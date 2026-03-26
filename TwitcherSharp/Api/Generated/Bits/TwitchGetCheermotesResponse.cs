@@ -26,7 +26,7 @@ public partial class TwitchGetCheermotesResponse : RefCounted, ITwitcherSharp<Tw
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_cheermotes.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        request.Set("data", Data);
+        request.Set("data", Data.Select(x => x.ToGodotObject()).ToArray());
         return request;
     }
     public partial class TwitchCheermote : RefCounted, ITwitcherSharp<TwitchCheermote>
@@ -62,7 +62,7 @@ public partial class TwitchGetCheermotesResponse : RefCounted, ITwitcherSharp<Tw
             var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_cheermote.gd");
             var request = script.Call("new").AsGodotObject();
             request.Set("prefix", Prefix);
-            request.Set("tiers", Tiers);
+            request.Set("tiers", Tiers.Select(x => x.ToGodotObject()).ToArray());
             request.Set("type", Type);
             request.Set("order", Order);
             request.Set("last_updated", LastUpdated);
@@ -183,11 +183,11 @@ public partial class TwitchGetCheermotesResponse : RefCounted, ITwitcherSharp<Tw
                             if(data == null) return null;
                             return new TwitchAnimated
                             {
-                                _1 = data.Get("__1").AsString(),
-                                _2 = data.Get("__2").AsString(),
-                                _3 = data.Get("__3").AsString(),
-                                _4 = data.Get("__4").AsString(),
-                                _1_5 = data.Get("__1___5").AsString(),
+                                _1 = data.Get("1").AsString(),
+                                _2 = data.Get("2").AsString(),
+                                _3 = data.Get("3").AsString(),
+                                _4 = data.Get("4").AsString(),
+                                _1_5 = data.Get("1_5").AsString(),
                             };
                         }
                     
@@ -195,11 +195,11 @@ public partial class TwitchGetCheermotesResponse : RefCounted, ITwitcherSharp<Tw
                         {
                             var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_animated.gd");
                             var request = script.Call("new").AsGodotObject();
-                            if(_1 != null) request.Set("__1", _1);
-                            if(_2 != null) request.Set("__2", _2);
-                            if(_3 != null) request.Set("__3", _3);
-                            if(_4 != null) request.Set("__4", _4);
-                            if(_1_5 != null) request.Set("__1___5", _1_5);
+                            if(_1 != null) request.Set("1", _1);
+                            if(_2 != null) request.Set("2", _2);
+                            if(_3 != null) request.Set("3", _3);
+                            if(_4 != null) request.Set("4", _4);
+                            if(_1_5 != null) request.Set("1_5", _1_5);
                             return request;
                         }
                     
@@ -221,11 +221,11 @@ public partial class TwitchGetCheermotesResponse : RefCounted, ITwitcherSharp<Tw
                             if(data == null) return null;
                             return new TwitchStatic
                             {
-                                _1 = data.Get("__1").AsString(),
-                                _2 = data.Get("__2").AsString(),
-                                _3 = data.Get("__3").AsString(),
-                                _4 = data.Get("__4").AsString(),
-                                _1_5 = data.Get("__1___5").AsString(),
+                                _1 = data.Get("1").AsString(),
+                                _2 = data.Get("2").AsString(),
+                                _3 = data.Get("3").AsString(),
+                                _4 = data.Get("4").AsString(),
+                                _1_5 = data.Get("1_5").AsString(),
                             };
                         }
                     
@@ -233,11 +233,11 @@ public partial class TwitchGetCheermotesResponse : RefCounted, ITwitcherSharp<Tw
                         {
                             var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_static.gd");
                             var request = script.Call("new").AsGodotObject();
-                            if(_1 != null) request.Set("__1", _1);
-                            if(_2 != null) request.Set("__2", _2);
-                            if(_3 != null) request.Set("__3", _3);
-                            if(_4 != null) request.Set("__4", _4);
-                            if(_1_5 != null) request.Set("__1___5", _1_5);
+                            if(_1 != null) request.Set("1", _1);
+                            if(_2 != null) request.Set("2", _2);
+                            if(_3 != null) request.Set("3", _3);
+                            if(_4 != null) request.Set("4", _4);
+                            if(_1_5 != null) request.Set("1_5", _1_5);
                             return request;
                         }
                     
@@ -288,11 +288,11 @@ public partial class TwitchGetCheermotesResponse : RefCounted, ITwitcherSharp<Tw
                             if(data == null) return null;
                             return new TwitchAnimated
                             {
-                                _1 = data.Get("__1").AsString(),
-                                _2 = data.Get("__2").AsString(),
-                                _3 = data.Get("__3").AsString(),
-                                _4 = data.Get("__4").AsString(),
-                                _1_5 = data.Get("__1___5").AsString(),
+                                _1 = data.Get("1").AsString(),
+                                _2 = data.Get("2").AsString(),
+                                _3 = data.Get("3").AsString(),
+                                _4 = data.Get("4").AsString(),
+                                _1_5 = data.Get("1_5").AsString(),
                             };
                         }
                     
@@ -300,11 +300,11 @@ public partial class TwitchGetCheermotesResponse : RefCounted, ITwitcherSharp<Tw
                         {
                             var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_animated.gd");
                             var request = script.Call("new").AsGodotObject();
-                            if(_1 != null) request.Set("__1", _1);
-                            if(_2 != null) request.Set("__2", _2);
-                            if(_3 != null) request.Set("__3", _3);
-                            if(_4 != null) request.Set("__4", _4);
-                            if(_1_5 != null) request.Set("__1___5", _1_5);
+                            if(_1 != null) request.Set("1", _1);
+                            if(_2 != null) request.Set("2", _2);
+                            if(_3 != null) request.Set("3", _3);
+                            if(_4 != null) request.Set("4", _4);
+                            if(_1_5 != null) request.Set("1_5", _1_5);
                             return request;
                         }
                     
@@ -326,11 +326,11 @@ public partial class TwitchGetCheermotesResponse : RefCounted, ITwitcherSharp<Tw
                             if(data == null) return null;
                             return new TwitchStatic
                             {
-                                _1 = data.Get("__1").AsString(),
-                                _2 = data.Get("__2").AsString(),
-                                _3 = data.Get("__3").AsString(),
-                                _4 = data.Get("__4").AsString(),
-                                _1_5 = data.Get("__1___5").AsString(),
+                                _1 = data.Get("1").AsString(),
+                                _2 = data.Get("2").AsString(),
+                                _3 = data.Get("3").AsString(),
+                                _4 = data.Get("4").AsString(),
+                                _1_5 = data.Get("1_5").AsString(),
                             };
                         }
                     
@@ -338,11 +338,11 @@ public partial class TwitchGetCheermotesResponse : RefCounted, ITwitcherSharp<Tw
                         {
                             var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_static.gd");
                             var request = script.Call("new").AsGodotObject();
-                            if(_1 != null) request.Set("__1", _1);
-                            if(_2 != null) request.Set("__2", _2);
-                            if(_3 != null) request.Set("__3", _3);
-                            if(_4 != null) request.Set("__4", _4);
-                            if(_1_5 != null) request.Set("__1___5", _1_5);
+                            if(_1 != null) request.Set("1", _1);
+                            if(_2 != null) request.Set("2", _2);
+                            if(_3 != null) request.Set("3", _3);
+                            if(_4 != null) request.Set("4", _4);
+                            if(_1_5 != null) request.Set("1_5", _1_5);
                             return request;
                         }
                     

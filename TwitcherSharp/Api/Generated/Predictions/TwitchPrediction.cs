@@ -53,7 +53,7 @@ public partial class TwitchPrediction : RefCounted, ITwitcherSharp<TwitchPredict
         request.Set("broadcaster_login", BroadcasterLogin);
         request.Set("title", Title);
         request.Set("winning_outcome_id", WinningOutcomeId);
-        request.Set("outcomes", Outcomes);
+        request.Set("outcomes", Outcomes.Select(x => x.ToGodotObject()).ToArray());
         request.Set("prediction_window", PredictionWindow);
         request.Set("status", Status);
         request.Set("created_at", CreatedAt);
@@ -97,7 +97,7 @@ public partial class TwitchPrediction : RefCounted, ITwitcherSharp<TwitchPredict
             request.Set("title", Title);
             request.Set("users", Users);
             request.Set("channel_points", ChannelPoints);
-            request.Set("top_predictors", TopPredictors);
+            request.Set("top_predictors", TopPredictors.Select(x => x.ToGodotObject()).ToArray());
             request.Set("color", Color);
             return request;
         }

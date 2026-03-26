@@ -29,8 +29,8 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Condition 
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_points_automatic_reward_redemption_add.gd");
-        var conditionV2Class = script.Get("ConditionV2").AsGodotObject();
-        var request = conditionV2Class.Call("new").AsGodotObject();
+        var conditionClass = script.Get("Condition").As<GDScript>();
+        var request = conditionClass.New().AsGodotObject();
         request.Set("broadcaster_user_id", BroadcasterUserId);
         return request;
     }

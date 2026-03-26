@@ -45,8 +45,7 @@ public partial class TwitchReward : RefCounted, ITwitcherSharpEventSub<TwitchRew
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_reward.gd");
-        var twitchRewardClass = script.Get("TwitchReward").AsGodotObject();
-        var request = twitchRewardClass.Call("new").AsGodotObject();
+        var request = script.New().AsGodotObject();
         request.Set("id", Id);
         request.Set("title", Title);
         request.Set("cost", Cost);

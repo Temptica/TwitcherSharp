@@ -35,8 +35,8 @@ public partial class TwitchChannelSuspiciousUserMessageCondition : RefCounted, I
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_suspicious_user_message.gd");
-        var conditionClass = script.Get("Condition").AsGodotObject();
-        var request = conditionClass.Call("new").AsGodotObject();
+        var conditionClass = script.Get("Condition").As<GDScript>();
+        var request = conditionClass.New().AsGodotObject();
         request.Set("moderator_user_id", ModeratorUserId);
         request.Set("broadcaster_user_id", BroadcasterUserId);
         return request;

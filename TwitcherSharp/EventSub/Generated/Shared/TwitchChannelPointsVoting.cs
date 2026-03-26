@@ -33,8 +33,7 @@ public partial class TwitchChannelPointsVoting : RefCounted, ITwitcherSharpEvent
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_points_voting.gd");
-        var twitchChannelPointsVotingClass = script.Get("TwitchChannelPointsVoting").AsGodotObject();
-        var request = twitchChannelPointsVotingClass.Call("new").AsGodotObject();
+        var request = script.New().AsGodotObject();
         request.Set("is_enabled", IsEnabled);
         request.Set("amount_per_vote", AmountPerVote);
         return request;

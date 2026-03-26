@@ -35,8 +35,8 @@ public partial class TwitchConduitShardDisabledCondition : RefCounted, ITwitcher
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_conduit_shard_disabled.gd");
-        var conditionClass = script.Get("Condition").AsGodotObject();
-        var request = conditionClass.Call("new").AsGodotObject();
+        var conditionClass = script.Get("Condition").As<GDScript>();
+        var request = conditionClass.New().AsGodotObject();
         request.Set("client_id", ClientId);
         request.Set("conduit_id", ConduitId);
         return request;

@@ -101,14 +101,14 @@ public partial class TwitchPollListener : RefCounted, ITwitcherSharp<TwitchPollL
     {
         var pollListener = new TwitchPollListener()
         {
-            TwitchEventSub = TwitchEventSub.FromObject(data.Get("twitch_event_sub").As<GodotObject>()),
-            TwitchApi = TwitchApi.FromObject(data.Get("twitch_api").As<GodotObject>()),
+            _data = data,
             EnsureSubscriptionsOnReady = data.Get("ensure_subscriptions_on_ready").AsBool(),
             Broadcaster = TwitchUser.FromObject(data.Get("broadcaster").As<GodotObject>()),
         };
+        
         pollListener.TwitchEventSub ??= TwitchEventSub.GetOrCreateInstance();
         pollListener.TwitchApi ??= TwitchApi.GetOrCreateInstance();
-        pollListener.Broadcaster ??= TwitchApi.Instance.GetUsers().Result.Data[0];
+        pollListener.Broadcaster ??= TwitchApi.Instance.GetUsers().GetAwaiter().GetResult().Data[0];
         
         pollListener.ConnectSignals();
         
@@ -119,8 +119,6 @@ public partial class TwitchPollListener : RefCounted, ITwitcherSharp<TwitchPollL
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/poll/twitch_poll_listener.gd");
         var obj = script.New().AsGodotObject();
-        obj.Set("twitch_event_sub", TwitchEventSub?.ToGodotObject());
-        obj.Set("twitch_api", TwitchApi?.ToGodotObject());
         obj.Set("ensure_subscriptions_on_ready", EnsureSubscriptionsOnReady);
         obj.Set("broadcaster", Broadcaster?.ToGodotObject());
         return obj;

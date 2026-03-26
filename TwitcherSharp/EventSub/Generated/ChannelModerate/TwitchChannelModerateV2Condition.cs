@@ -35,8 +35,8 @@ public partial class TwitchChannelModerateV2Condition : RefCounted, ITwitcherSha
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd");
-        var conditionV2Class = script.Get("ConditionV2").AsGodotObject();
-        var request = conditionV2Class.Call("new").AsGodotObject();
+        var conditionClass = script.Get("Condition").As<GDScript>();
+        var request = conditionClass.New().AsGodotObject();
         request.Set("broadcaster_user_id", BroadcasterUserId);
         request.Set("moderator_user_id", ModeratorUserId);
         return request;

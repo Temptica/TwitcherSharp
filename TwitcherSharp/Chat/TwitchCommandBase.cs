@@ -159,6 +159,7 @@ public abstract partial class TwitchCommandBase : RefCounted, ITwitcherSharp
 
     protected void GetBaseProperties(GodotObject data)
     {
+        Data = data;
         data.Set("command", Command);
         data.Set("description", Description);
         data.Set("permission_level", (int)PermissionLevel);

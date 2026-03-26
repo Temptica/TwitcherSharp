@@ -35,8 +35,8 @@ public partial class TwitchChannelRaidCondition : RefCounted, ITwitcherSharpCond
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_raid.gd");
-        var conditionClass = script.Get("Condition").AsGodotObject();
-        var request = conditionClass.Call("new").AsGodotObject();
+        var conditionClass = script.Get("Condition").As<GDScript>();
+        var request = conditionClass.New().AsGodotObject();
         request.Set("from_broadcaster_user_id", FromBroadcasterUserId);
         request.Set("to_broadcaster_user_id", ToBroadcasterUserId);
         return request;

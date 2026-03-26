@@ -34,7 +34,7 @@ public partial class TwitchCreatePredictionBody : RefCounted, ITwitcherSharp<Twi
         var request = bodyClass.Call("new").AsGodotObject();
         request.Set("broadcaster_id", BroadcasterId);
         request.Set("title", Title);
-        request.Set("outcomes", Outcomes);
+        request.Set("outcomes", Outcomes.Select(x => x.ToGodotObject()).ToArray());
         request.Set("prediction_window", PredictionWindow);
         return request;
     }

@@ -109,21 +109,34 @@ public static class EventSubCodeHelper
             var path =
                 $"res://addons/twitcher/generated_eventsub/{type.Remove("V2").ToSnakeCase().Replace("twitch", "twitch_es")}.gd";
 
+            if (component.ClassName.Contains("Image"))
+            {
+                path = $"res://addons/twitcher/generated_eventsub/{type.ToSnakeCase().Replace("twitch", "twitch_es").Replace("image", "twitch_image")}.gd";
+            }
+            
             code.AppendIndentedLine($"var script = GD.Load<GDScript>(\"{path}\");", 2);
 
-            var v2String = component.ClassName.Contains("V2") ? "V2" : "";
             string typeToUse;
 
-            if (component.ClassName.EndsWith("Event")) typeToUse = "Event" + v2String;
+            if (component.ClassName.EndsWith("Event")) typeToUse = "Event";
+            else if(component.ClassName.EndsWith("EventV2")) typeToUse = "EventV2";
+            else if(component.ClassName.EndsWith("Condition")) typeToUse = "Condition";
+            else if(component.ClassName.EndsWith("ConditionV2")) typeToUse = "ConditionV2";
             else
-                typeToUse = (component.IsShared
-                    ? component.ClassName
-                    : component.ClassName.Remove(type).Remove("Twitch")) + v2String;
+                typeToUse = component.IsShared
+                    ? component.ClassName.Replace("Twitch", "TwitchES")
+                    : component.ClassName.Remove(type).Remove("Twitch");
 
             var scriptName = $"{typeToUse.ToCamelCase().Remove("Twitch")}Class";
-            code.AppendIndentedLine($"var {scriptName} = script.Get(\"{typeToUse}\").AsGodotObject();", 2);
-
-            code.AppendIndentedLine($"var request = {scriptName}.Call(\"new\").AsGodotObject();", 2);
+            if (component.IsShared)
+            {
+                code.AppendIndentedLine($"var request = script.New().AsGodotObject();", 2);
+            }
+            else
+            {
+                code.AppendIndentedLine($"var {scriptName} = script.Get(\"{typeToUse}\").As<GDScript>();", 2);
+                code.AppendIndentedLine($"var request = {scriptName}.New().AsGodotObject();", 2);
+            }
 
             foreach (var field in fields)
             {

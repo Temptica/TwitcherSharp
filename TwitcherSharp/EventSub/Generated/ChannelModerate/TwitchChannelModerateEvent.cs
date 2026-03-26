@@ -201,8 +201,8 @@ public partial class TwitchChannelModerateEvent : RefCounted, ITwitcherSharpEven
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd");
-        var eventClass = script.Get("Event").AsGodotObject();
-        var request = eventClass.Call("new").AsGodotObject();
+        var eventClass = script.Get("Event").As<GDScript>();
+        var request = eventClass.New().AsGodotObject();
         request.Set("broadcaster_user_id", BroadcasterUserId);
         request.Set("broadcaster_user_login", BroadcasterUserLogin);
         request.Set("broadcaster_user_name", BroadcasterUserName);
@@ -259,8 +259,8 @@ public partial class TwitchChannelModerateEvent : RefCounted, ITwitcherSharpEven
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd");
-            var followersClass = script.Get("Followers").AsGodotObject();
-            var request = followersClass.Call("new").AsGodotObject();
+            var followersClass = script.Get("Followers").As<GDScript>();
+            var request = followersClass.New().AsGodotObject();
             request.Set("follow_duration_minutes", FollowDurationMinutes);
             return request;
         }
@@ -288,8 +288,8 @@ public partial class TwitchChannelModerateEvent : RefCounted, ITwitcherSharpEven
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd");
-            var slowClass = script.Get("Slow").AsGodotObject();
-            var request = slowClass.Call("new").AsGodotObject();
+            var slowClass = script.Get("Slow").As<GDScript>();
+            var request = slowClass.New().AsGodotObject();
             request.Set("wait_time_seconds", WaitTimeSeconds);
             return request;
         }
@@ -329,8 +329,8 @@ public partial class TwitchChannelModerateEvent : RefCounted, ITwitcherSharpEven
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd");
-            var vipClass = script.Get("Vip").AsGodotObject();
-            var request = vipClass.Call("new").AsGodotObject();
+            var vipClass = script.Get("Vip").As<GDScript>();
+            var request = vipClass.New().AsGodotObject();
             request.Set("user_id", UserId);
             request.Set("user_login", UserLogin);
             request.Set("user_name", UserName);
@@ -372,8 +372,8 @@ public partial class TwitchChannelModerateEvent : RefCounted, ITwitcherSharpEven
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd");
-            var unvipClass = script.Get("Unvip").AsGodotObject();
-            var request = unvipClass.Call("new").AsGodotObject();
+            var unvipClass = script.Get("Unvip").As<GDScript>();
+            var request = unvipClass.New().AsGodotObject();
             request.Set("user_id", UserId);
             request.Set("user_login", UserLogin);
             request.Set("user_name", UserName);
@@ -415,8 +415,8 @@ public partial class TwitchChannelModerateEvent : RefCounted, ITwitcherSharpEven
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd");
-            var modClass = script.Get("Mod").AsGodotObject();
-            var request = modClass.Call("new").AsGodotObject();
+            var modClass = script.Get("Mod").As<GDScript>();
+            var request = modClass.New().AsGodotObject();
             request.Set("user_id", UserId);
             request.Set("user_login", UserLogin);
             request.Set("user_name", UserName);
@@ -458,8 +458,8 @@ public partial class TwitchChannelModerateEvent : RefCounted, ITwitcherSharpEven
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd");
-            var unmodClass = script.Get("Unmod").AsGodotObject();
-            var request = unmodClass.Call("new").AsGodotObject();
+            var unmodClass = script.Get("Unmod").As<GDScript>();
+            var request = unmodClass.New().AsGodotObject();
             request.Set("user_id", UserId);
             request.Set("user_login", UserLogin);
             request.Set("user_name", UserName);
@@ -507,8 +507,8 @@ public partial class TwitchChannelModerateEvent : RefCounted, ITwitcherSharpEven
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd");
-            var banClass = script.Get("Ban").AsGodotObject();
-            var request = banClass.Call("new").AsGodotObject();
+            var banClass = script.Get("Ban").As<GDScript>();
+            var request = banClass.New().AsGodotObject();
             request.Set("user_id", UserId);
             request.Set("user_login", UserLogin);
             request.Set("user_name", UserName);
@@ -551,8 +551,8 @@ public partial class TwitchChannelModerateEvent : RefCounted, ITwitcherSharpEven
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd");
-            var unbanClass = script.Get("Unban").AsGodotObject();
-            var request = unbanClass.Call("new").AsGodotObject();
+            var unbanClass = script.Get("Unban").As<GDScript>();
+            var request = unbanClass.New().AsGodotObject();
             request.Set("user_id", UserId);
             request.Set("user_login", UserLogin);
             request.Set("user_name", UserName);
@@ -606,8 +606,8 @@ public partial class TwitchChannelModerateEvent : RefCounted, ITwitcherSharpEven
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd");
-            var timeoutClass = script.Get("Timeout").AsGodotObject();
-            var request = timeoutClass.Call("new").AsGodotObject();
+            var timeoutClass = script.Get("Timeout").As<GDScript>();
+            var request = timeoutClass.New().AsGodotObject();
             request.Set("user_id", UserId);
             request.Set("user_login", UserLogin);
             request.Set("user_name", UserName);
@@ -651,8 +651,8 @@ public partial class TwitchChannelModerateEvent : RefCounted, ITwitcherSharpEven
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd");
-            var untimeoutClass = script.Get("Untimeout").AsGodotObject();
-            var request = untimeoutClass.Call("new").AsGodotObject();
+            var untimeoutClass = script.Get("Untimeout").As<GDScript>();
+            var request = untimeoutClass.New().AsGodotObject();
             request.Set("user_id", UserId);
             request.Set("user_login", UserLogin);
             request.Set("user_name", UserName);
@@ -700,8 +700,8 @@ public partial class TwitchChannelModerateEvent : RefCounted, ITwitcherSharpEven
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd");
-            var raidClass = script.Get("Raid").AsGodotObject();
-            var request = raidClass.Call("new").AsGodotObject();
+            var raidClass = script.Get("Raid").As<GDScript>();
+            var request = raidClass.New().AsGodotObject();
             request.Set("user_id", UserId);
             request.Set("user_login", UserLogin);
             request.Set("user_name", UserName);
@@ -744,8 +744,8 @@ public partial class TwitchChannelModerateEvent : RefCounted, ITwitcherSharpEven
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd");
-            var unraidClass = script.Get("Unraid").AsGodotObject();
-            var request = unraidClass.Call("new").AsGodotObject();
+            var unraidClass = script.Get("Unraid").As<GDScript>();
+            var request = unraidClass.New().AsGodotObject();
             request.Set("user_id", UserId);
             request.Set("user_login", UserLogin);
             request.Set("user_name", UserName);
@@ -799,8 +799,8 @@ public partial class TwitchChannelModerateEvent : RefCounted, ITwitcherSharpEven
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd");
-            var deleteClass = script.Get("Delete").AsGodotObject();
-            var request = deleteClass.Call("new").AsGodotObject();
+            var deleteClass = script.Get("Delete").As<GDScript>();
+            var request = deleteClass.New().AsGodotObject();
             request.Set("user_id", UserId);
             request.Set("user_login", UserLogin);
             request.Set("user_name", UserName);
@@ -850,8 +850,8 @@ public partial class TwitchChannelModerateEvent : RefCounted, ITwitcherSharpEven
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd");
-            var automodTermsClass = script.Get("AutomodTerms").AsGodotObject();
-            var request = automodTermsClass.Call("new").AsGodotObject();
+            var automodTermsClass = script.Get("AutomodTerms").As<GDScript>();
+            var request = automodTermsClass.New().AsGodotObject();
             request.Set("action", Action);
             request.Set("list", List);
             request.Set("terms", Terms);
@@ -906,8 +906,8 @@ public partial class TwitchChannelModerateEvent : RefCounted, ITwitcherSharpEven
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd");
-            var unbanRequestClass = script.Get("UnbanRequest").AsGodotObject();
-            var request = unbanRequestClass.Call("new").AsGodotObject();
+            var unbanRequestClass = script.Get("UnbanRequest").As<GDScript>();
+            var request = unbanRequestClass.New().AsGodotObject();
             request.Set("is_approved", IsApproved);
             request.Set("user_id", UserId);
             request.Set("user_login", UserLogin);

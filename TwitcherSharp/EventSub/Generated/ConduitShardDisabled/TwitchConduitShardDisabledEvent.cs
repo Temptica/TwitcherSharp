@@ -75,8 +75,8 @@ public partial class TwitchConduitShardDisabledEvent : RefCounted, ITwitcherShar
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_conduit_shard_disabled.gd");
-        var eventClass = script.Get("Event").AsGodotObject();
-        var request = eventClass.Call("new").AsGodotObject();
+        var eventClass = script.Get("Event").As<GDScript>();
+        var request = eventClass.New().AsGodotObject();
         request.Set("conduit_id", ConduitId);
         request.Set("shard_id", ShardId);
         request.Set("status", Status);
@@ -107,8 +107,8 @@ public partial class TwitchConduitShardDisabledEvent : RefCounted, ITwitcherShar
         public GodotObject ToGodotObject()
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_conduit_shard_disabled.gd");
-            var transportClass = script.Get("Transport").AsGodotObject();
-            var request = transportClass.Call("new").AsGodotObject();
+            var transportClass = script.Get("Transport").As<GDScript>();
+            var request = transportClass.New().AsGodotObject();
             return request;
         }
     }

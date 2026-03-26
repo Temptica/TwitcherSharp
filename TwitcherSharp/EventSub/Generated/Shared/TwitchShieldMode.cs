@@ -69,8 +69,7 @@ public partial class TwitchShieldMode : RefCounted, ITwitcherSharpEventSub<Twitc
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_shield_mode.gd");
-        var twitchShieldModeClass = script.Get("TwitchShieldMode").AsGodotObject();
-        var request = twitchShieldModeClass.Call("new").AsGodotObject();
+        var request = script.New().AsGodotObject();
         request.Set("broadcaster_user_id", BroadcasterUserId);
         request.Set("broadcaster_user_login", BroadcasterUserLogin);
         request.Set("broadcaster_user_name", BroadcasterUserName);

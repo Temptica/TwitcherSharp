@@ -39,8 +39,7 @@ public partial class TwitchEmotes : RefCounted, ITwitcherSharpEventSub<TwitchEmo
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_emotes.gd");
-        var twitchEmotesClass = script.Get("TwitchEmotes").AsGodotObject();
-        var request = twitchEmotesClass.Call("new").AsGodotObject();
+        var request = script.New().AsGodotObject();
         request.Set("begin", Begin);
         request.Set("end", End);
         request.Set("id", Id);

@@ -63,8 +63,8 @@ public partial class TwitchChannelGuestStarSettingsUpdateEvent : RefCounted, ITw
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_guest_star_settings_update.gd");
-        var eventClass = script.Get("Event").AsGodotObject();
-        var request = eventClass.Call("new").AsGodotObject();
+        var eventClass = script.Get("Event").As<GDScript>();
+        var request = eventClass.New().AsGodotObject();
         request.Set("broadcaster_user_id", BroadcasterUserId);
         request.Set("broadcaster_user_name", BroadcasterUserName);
         request.Set("broadcaster_user_login", BroadcasterUserLogin);
