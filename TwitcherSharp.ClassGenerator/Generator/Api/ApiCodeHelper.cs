@@ -283,7 +283,7 @@ public static class ApiCodeHelper
             if (field.IsArray && field.IsTyped)
             {
                 code.AppendIndentedLine(
-                    $"request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name}.Select(x => x.ToGodotObject()).ToArray());",
+                    $"request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name}?.Select(x => x.ToGodotObject()).ToArray());",
                     2);
                 continue;
             }
@@ -353,7 +353,7 @@ public static class ApiCodeHelper
         {
             if (genInterface.NameSpace == "Interfaces")
             {
-                code.AppendLine("using TwitcherSharp.Api.Generated.Shared;");
+                //code.AppendLine("using TwitcherSharp.Api.Generated.Shared;");
             }
             else
             {

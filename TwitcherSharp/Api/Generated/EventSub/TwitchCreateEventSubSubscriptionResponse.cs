@@ -32,7 +32,7 @@ public partial class TwitchCreateEventSubSubscriptionResponse<T> : RefCounted, I
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_create_event_sub_subscription.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        request.Set("data", Data.Select(x => x.ToGodotObject()).ToArray());
+        request.Set("data", Data?.Select(x => x.ToGodotObject()).ToArray());
         request.Set("total", Total);
         request.Set("total_cost", TotalCost);
         request.Set("max_total_cost", MaxTotalCost);

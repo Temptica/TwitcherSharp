@@ -8,7 +8,8 @@ namespace ClassGenerator.Parsers;
 // V2
 public class TwitchApiParser
 {
-    private const string Path = "openapi.json";
+    private const string Path =
+        "https://raw.githubusercontent.com/DmitryScaletta/twitch-api-swagger/refs/heads/main/openapi.json";
 
     private OpenApiDocument Definition { get; set; }
     private IDictionary<string, TwitchGenComponent> Components { get; } = new Dictionary<string, TwitchGenComponent>();
@@ -17,7 +18,9 @@ public class TwitchApiParser
 
     public async Task ParseApi()
     {
-        await using var stream = File.OpenRead(Path);
+        await using var stream = Path.StartsWith("https://") || Path.StartsWith("http://")
+            ? await new HttpClient().GetStreamAsync(Path)
+            : File.OpenRead(Path);
 
         var openApiDocument = new OpenApiStreamReader().Read(stream, out var diagnostic);
 
@@ -144,7 +147,7 @@ public class TwitchApiParser
             }
 
             component.AddField(field);
-            
+
             if (name.Equals("condition"))
             {
                 component.GenericField = field;

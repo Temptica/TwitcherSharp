@@ -26,7 +26,7 @@ public partial class TwitchGetUserExtensionsResponse : RefCounted, ITwitcherShar
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_user_extensions.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        request.Set("data", Data.Select(x => x.ToGodotObject()).ToArray());
+        request.Set("data", Data?.Select(x => x.ToGodotObject()).ToArray());
         return request;
     }
     public partial class TwitchUserExtension : RefCounted, ITwitcherSharp<TwitchUserExtension>

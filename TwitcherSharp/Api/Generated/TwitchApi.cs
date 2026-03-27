@@ -6,7 +6,6 @@ using TwitcherSharp.Lib.Http;
 using TwitcherSharp.Api.Generated.Ads;
 using TwitcherSharp.Api.Generated.Analytics;
 using TwitcherSharp.Api.Generated.Bits;
-using TwitcherSharp.Api.Generated.Shared;
 using TwitcherSharp.Api.Generated.Channels;
 using TwitcherSharp.Api.Generated.ChannelPoints;
 using TwitcherSharp.Api.Generated.Charity;
@@ -440,7 +439,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// NEW Retrieves emotes available to the user across all channels.
+    /// Retrieves emotes available to the user across all channels.
     /// </summary>
     /// <param name="opt"><see cref="TwitchGetUserEmotesOpt"/></param>
     /// <param name="userId">The ID of the user. This ID must match the user ID in the user access token.</param>
@@ -475,7 +474,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// NEW Sends a message to the broadcaster’s chat room.
+    /// Sends a message to the broadcaster’s chat room.
     /// </summary>
     /// <param name="body"><see cref="TwitchSendChatMessageBody"/></param>
     /// <returns><see cref="TwitchSendChatMessageResponse"/></returns>
@@ -549,7 +548,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// BETA Creates a clip from the broadcaster’s VOD.
+    /// NEW  Creates a clip from the broadcaster’s VOD.
     /// </summary>
     /// <param name="opt"><see cref="TwitchCreateClipFromVodOpt"/></param>
     /// <param name="editorId">The user ID of the editor for the channel you want to create a clip for. If using the broadcaster’s auth token, this is the same as broadcaster_id. This must match the user_id in the user access token.</param>
@@ -576,7 +575,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// NEW  Gets the conduits for a client ID.
+    /// Gets the conduits for a client ID.
     /// </summary>
     /// <returns><see cref="TwitchGetConduitsResponse"/></returns>
     public async Task<TwitchGetConduitsResponse> GetConduits()
@@ -585,7 +584,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// NEW Creates a new conduit.
+    /// Creates a new conduit.
     /// </summary>
     /// <param name="body"><see cref="TwitchCreateConduitsBody"/></param>
     /// <returns><see cref="TwitchCreateConduitsResponse"/></returns>
@@ -595,7 +594,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// NEW Updates a conduit’s shard count.
+    /// Updates a conduit’s shard count.
     /// </summary>
     /// <param name="body"><see cref="TwitchUpdateConduitsBody"/></param>
     /// <returns><see cref="TwitchUpdateConduitsResponse"/></returns>
@@ -605,7 +604,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// NEW Deletes a specified conduit.
+    /// Deletes a specified conduit.
     /// </summary>
     /// <param name="id">Conduit ID.</param>
     /// <returns><see cref="ResponseData"/></returns>
@@ -615,7 +614,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// NEW Gets a lists of all shards for a conduit.
+    /// Gets a lists of all shards for a conduit.
     /// </summary>
     /// <param name="opt"><see cref="TwitchGetConduitShardsOpt"/></param>
     /// <param name="conduitId">Conduit ID.</param>
@@ -626,7 +625,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// NEW Updates shard(s) for a conduit.
+    /// Updates shard(s) for a conduit.
     /// </summary>
     /// <param name="body"><see cref="TwitchUpdateConduitShardsBody"/></param>
     /// <returns><see cref="TwitchUpdateConduitShardsResponse"/></returns>
@@ -909,10 +908,10 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// </summary>
     /// <param name="broadcasterId">The ID of the broadcaster you want to end a Guest Star session for. Provided `broadcaster_id` must match the `user_id` in the auth token.</param>
     /// <param name="sessionId">ID for the session to end on behalf of the broadcaster.</param>
-    /// <returns><see cref="ResponseData"/></returns>
-    public async Task<ResponseData> EndGuestStarSession(string broadcasterId, string sessionId)
+    /// <returns><see cref="TwitchEndGuestStarSessionResponse"/></returns>
+    public async Task<TwitchEndGuestStarSessionResponse> EndGuestStarSession(string broadcasterId, string sessionId)
     {
-        return await _data.CallAsync<ResponseData>("end_guest_star_session", broadcasterId, sessionId); 
+        return await _data.CallAsync<TwitchEndGuestStarSessionResponse>("end_guest_star_session", broadcasterId, sessionId); 
     }
 
     /// <summary>
@@ -1011,17 +1010,6 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// DEPRECATED Gets information about the broadcaster’s current or most recent Hype Train event.
-    /// </summary>
-    /// <param name="opt"><see cref="TwitchGetHypeTrainEventsOpt"/></param>
-    /// <param name="broadcasterId">The ID of the broadcaster that’s running the Hype Train. This ID must match the User ID in the user access token.</param>
-    /// <returns><see cref="TwitchGetHypeTrainEventsResponse"/></returns>
-    public async Task<TwitchGetHypeTrainEventsResponse> GetHypeTrainEvents(string broadcasterId, TwitchGetHypeTrainEventsOpt opt = null)
-    {
-        return await _data.CallAsync<TwitchGetHypeTrainEventsResponse>("get_hype_train_events", opt?.ToGodotObject(), broadcasterId); 
-    }
-
-    /// <summary>
     /// NEW Gets the status of a Hype Train for the specified broadcaster.
     /// </summary>
     /// <param name="broadcasterId">The User ID of the channel broadcaster.</param>
@@ -1111,7 +1099,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// NEW Gets a list of unban requests for a broadcaster’s channel.
+    /// Gets a list of unban requests for a broadcaster’s channel.
     /// </summary>
     /// <param name="opt"><see cref="TwitchGetUnbanRequestsOpt"/></param>
     /// <param name="broadcasterId">The ID of the broadcaster whose channel is receiving unban requests.</param>
@@ -1132,7 +1120,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// NEW Resolves an unban request by approving or denying it.
+    /// Resolves an unban request by approving or denying it.
     /// </summary>
     /// <param name="opt"><see cref="TwitchResolveUnbanRequestsOpt"/></param>
     /// <param name="broadcasterId">The ID of the broadcaster whose channel is approving or denying the unban request.</param>
@@ -1299,7 +1287,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// NEW Warns a user in the specified broadcaster’s chat room, preventing them from chat interaction until the warning is acknowledged.
+    /// Warns a user in the specified broadcaster’s chat room, preventing them from chat interaction until the warning is acknowledged.
     /// </summary>
     /// <param name="body"><see cref="TwitchWarnChatUserBody"/></param>
     /// <param name="broadcasterId">The ID of the channel in which the warning will take effect.</param>
@@ -1308,6 +1296,30 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     public async Task<TwitchWarnChatUserResponse> WarnChatUser(TwitchWarnChatUserBody body, string broadcasterId, string moderatorId)
     {
         return await _data.CallAsync<TwitchWarnChatUserResponse>("warn_chat_user", body.ToGodotObject(), broadcasterId, moderatorId); 
+    }
+
+    /// <summary>
+    /// NEW Adds a suspicious user status to a chatter on the broadcaster’s channel.
+    /// </summary>
+    /// <param name="body"><see cref="TwitchAddSuspiciousStatusToChatUserBody"/></param>
+    /// <param name="broadcasterId">The user ID of the broadcaster, indicating the channel where the status is being applied.</param>
+    /// <param name="moderatorId">The user ID of the moderator who is applying the status.</param>
+    /// <returns><see cref="TwitchAddSuspiciousStatusToChatUserResponse"/></returns>
+    public async Task<TwitchAddSuspiciousStatusToChatUserResponse> AddSuspiciousStatusToChatUser(TwitchAddSuspiciousStatusToChatUserBody body, string broadcasterId, string moderatorId)
+    {
+        return await _data.CallAsync<TwitchAddSuspiciousStatusToChatUserResponse>("add_suspicious_status_to_chat_user", body.ToGodotObject(), broadcasterId, moderatorId); 
+    }
+
+    /// <summary>
+    /// NEW Remove a suspicious user status from a chatter on broadcaster’s channel.
+    /// </summary>
+    /// <param name="broadcasterId">The user ID of the broadcaster, indicating the channel where the status is being removed.</param>
+    /// <param name="moderatorId">The user ID of the moderator who is removing the status.</param>
+    /// <param name="userId">The ID of the user having the suspicious status removed.</param>
+    /// <returns><see cref="TwitchRemoveSuspiciousStatusFromChatUserResponse"/></returns>
+    public async Task<TwitchRemoveSuspiciousStatusFromChatUserResponse> RemoveSuspiciousStatusFromChatUser(string broadcasterId, string moderatorId, string userId)
+    {
+        return await _data.CallAsync<TwitchRemoveSuspiciousStatusFromChatUserResponse>("remove_suspicious_status_from_chat_user", broadcasterId, moderatorId, userId); 
     }
 
     /// <summary>
@@ -1376,10 +1388,10 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// Raid another channel by sending the broadcaster’s viewers to the targeted channel.
     /// </summary>
     /// <param name="opt"><see cref="TwitchStartARaidOpt"/></param>
-    /// <returns><see cref="TwitchStartRaidResponse"/></returns>
-    public async Task<TwitchStartRaidResponse> StartARaid(TwitchStartARaidOpt opt = null)
+    /// <returns><see cref="TwitchStartARaidResponse"/></returns>
+    public async Task<TwitchStartARaidResponse> StartARaid(TwitchStartARaidOpt opt = null)
     {
-        return await _data.CallAsync<TwitchStartRaidResponse>("start_a_raid", opt?.ToGodotObject()); 
+        return await _data.CallAsync<TwitchStartARaidResponse>("start_a_raid", opt?.ToGodotObject()); 
     }
 
     /// <summary>

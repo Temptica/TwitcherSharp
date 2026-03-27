@@ -29,7 +29,7 @@ public partial class TwitchUpdateConduitShardsBody : RefCounted, ITwitcherSharp<
         var bodyClass = script.Get("Body").AsGodotObject();
         var request = bodyClass.Call("new").AsGodotObject();
         request.Set("conduit_id", ConduitId);
-        request.Set("shards", Shards.Select(x => x.ToGodotObject()).ToArray());
+        request.Set("shards", Shards?.Select(x => x.ToGodotObject()).ToArray());
         return request;
     }
     

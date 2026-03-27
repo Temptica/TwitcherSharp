@@ -60,29 +60,38 @@ public static class TwitchMockupHelper
 
     private static void Start()
     {
-        var startInfo = new ProcessStartInfo
+        try
         {
-            FileName = "twitch",
-            Arguments = "mock-api start",
-            RedirectStandardOutput = true,
-            UseShellExecute = false,
-            CreateNoWindow = true,
-            WorkingDirectory = Environment.CurrentDirectory
-        };
+            var startInfo = new ProcessStartInfo
+            {
+                FileName = "/home/linuxbrew/.linuxbrew/bin/twitch",
+                Arguments = "mock-api start",
+                RedirectStandardOutput = true,
+                UseShellExecute = false,
+                CreateNoWindow = true,
+                WorkingDirectory = Environment.CurrentDirectory
+            };
 
-        _process = new Process { StartInfo = startInfo };
+            _process = new Process { StartInfo = startInfo };
 
-        // Log output in the background so it doesn't block
-        _process.OutputDataReceived += (s, e) =>
+            // Log output in the background so it doesn't block
+            _process.OutputDataReceived += (s, e) =>
+            {
+                if (!string.IsNullOrEmpty(e.Data))
+                    Console.WriteLine($"[Twitch Mock]: {e.Data}");
+            };
+
+            _process.Start();
+            _process.BeginOutputReadLine();
+
+            Console.WriteLine("Background process kicked off!");
+        }
+        catch (Exception e)
         {
-            if (!string.IsNullOrEmpty(e.Data))
-                Console.WriteLine($"[Twitch Mock]: {e.Data}");
-        };
-
-        _process.Start();
-        _process.BeginOutputReadLine();
-
-        Console.WriteLine("Background process kicked off!");
+            Console.WriteLine(e);
+            throw;
+        }
+        
     }
 
     public static void Stop()

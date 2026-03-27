@@ -37,7 +37,7 @@ public class TwitchApiGenerator
         var twitchApiCode = new StringBuilder();
         twitchApiCode.AppendLine(ApiCodeStrings.TwitchApiUsings);
         var tags = _components.Values
-            .Select(tgc => tgc.GetNameSpace()).ToHashSet();
+            .Select(tgc => tgc.GetNameSpace()).Where(t => t != "Shared").ToHashSet();
 
         foreach (var nameSpace in tags)
         {

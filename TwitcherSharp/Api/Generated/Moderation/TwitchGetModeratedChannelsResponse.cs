@@ -29,7 +29,7 @@ public partial class TwitchGetModeratedChannelsResponse : RefCounted, ITwitcherS
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_moderated_channels.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        request.Set("data", Data.Select(x => x.ToGodotObject()).ToArray());
+        request.Set("data", Data?.Select(x => x.ToGodotObject()).ToArray());
         if(Pagination != null) request.Set("pagination", Pagination);
         return request;
     }

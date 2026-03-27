@@ -30,7 +30,7 @@ public partial class TwitchGetHypeTrainStatusResponse : RefCounted, ITwitcherSha
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_hype_train_status.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        request.Set("data", Data.Select(x => x.ToGodotObject()).ToArray());
+        request.Set("data", Data?.Select(x => x.ToGodotObject()).ToArray());
         request.Set("all_time_high", AllTimeHigh);
         request.Set("shared_all_time_high", SharedAllTimeHigh);
         return request;
@@ -113,7 +113,7 @@ public partial class TwitchGetHypeTrainStatusResponse : RefCounted, ITwitcherSha
                 request.Set("total", Total);
                 request.Set("progress", Progress);
                 request.Set("goal", Goal);
-                request.Set("top_contributions", TopContributions.Select(x => x.ToGodotObject()).ToArray());
+                request.Set("top_contributions", TopContributions?.Select(x => x.ToGodotObject()).ToArray());
                 return request;
             }
             
@@ -163,7 +163,7 @@ public partial class TwitchGetHypeTrainStatusResponse : RefCounted, ITwitcherSha
                     request.Set("user_name", UserName);
                     request.Set("type", Type);
                     request.Set("total", Total);
-                    request.Set("shared_train_participants", SharedTrainParticipants.Select(x => x.ToGodotObject()).ToArray());
+                    request.Set("shared_train_participants", SharedTrainParticipants?.Select(x => x.ToGodotObject()).ToArray());
                     request.Set("started_at", StartedAt);
                     request.Set("expires_at", ExpiresAt);
                     request.Set("is_shared_train", IsSharedTrain);

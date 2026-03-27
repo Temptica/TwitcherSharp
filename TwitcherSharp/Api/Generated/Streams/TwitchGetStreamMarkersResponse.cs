@@ -29,7 +29,7 @@ public partial class TwitchGetStreamMarkersResponse : RefCounted, ITwitcherSharp
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_stream_markers.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        request.Set("data", Data.Select(x => x.ToGodotObject()).ToArray());
+        request.Set("data", Data?.Select(x => x.ToGodotObject()).ToArray());
         if(Pagination != null) request.Set("pagination", Pagination);
         return request;
     }
@@ -97,7 +97,7 @@ public partial class TwitchGetStreamMarkersResponse : RefCounted, ITwitcherSharp
             request.Set("user_id", UserId);
             request.Set("user_name", UserName);
             request.Set("user_login", UserLogin);
-            request.Set("videos", Videos.Select(x => x.ToGodotObject()).ToArray());
+            request.Set("videos", Videos?.Select(x => x.ToGodotObject()).ToArray());
             return request;
         }
         
@@ -129,7 +129,7 @@ public partial class TwitchGetStreamMarkersResponse : RefCounted, ITwitcherSharp
                 var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_videos.gd");
                 var request = script.Call("new").AsGodotObject();
                 request.Set("video_id", VideoId);
-                request.Set("markers", Markers.Select(x => x.ToGodotObject()).ToArray());
+                request.Set("markers", Markers?.Select(x => x.ToGodotObject()).ToArray());
                 return request;
             }
             

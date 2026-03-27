@@ -26,7 +26,7 @@ public partial class TwitchGetCheermotesResponse : RefCounted, ITwitcherSharp<Tw
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_cheermotes.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        request.Set("data", Data.Select(x => x.ToGodotObject()).ToArray());
+        request.Set("data", Data?.Select(x => x.ToGodotObject()).ToArray());
         return request;
     }
     public partial class TwitchCheermote : RefCounted, ITwitcherSharp<TwitchCheermote>
@@ -62,7 +62,7 @@ public partial class TwitchGetCheermotesResponse : RefCounted, ITwitcherSharp<Tw
             var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_cheermote.gd");
             var request = script.Call("new").AsGodotObject();
             request.Set("prefix", Prefix);
-            request.Set("tiers", Tiers.Select(x => x.ToGodotObject()).ToArray());
+            request.Set("tiers", Tiers?.Select(x => x.ToGodotObject()).ToArray());
             request.Set("type", Type);
             request.Set("order", Order);
             request.Set("last_updated", LastUpdated);

@@ -33,7 +33,7 @@ public partial class TwitchGetBroadcasterSubscriptionsResponse : RefCounted, ITw
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_broadcaster_subscriptions.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        request.Set("data", Data.Select(x => x.ToGodotObject()).ToArray());
+        request.Set("data", Data?.Select(x => x.ToGodotObject()).ToArray());
         if(Pagination != null) request.Set("pagination", Pagination);
         request.Set("points", Points);
         request.Set("total", Total);

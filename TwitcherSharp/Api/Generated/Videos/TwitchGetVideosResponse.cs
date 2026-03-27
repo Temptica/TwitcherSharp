@@ -29,7 +29,7 @@ public partial class TwitchGetVideosResponse : RefCounted, ITwitcherSharp<Twitch
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_videos.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        request.Set("data", Data.Select(x => x.ToGodotObject()).ToArray());
+        request.Set("data", Data?.Select(x => x.ToGodotObject()).ToArray());
         if(Pagination != null) request.Set("pagination", Pagination);
         return request;
     }
@@ -136,7 +136,7 @@ public partial class TwitchGetVideosResponse : RefCounted, ITwitcherSharp<Twitch
             request.Set("language", Language);
             request.Set("type", Type);
             request.Set("duration", Duration);
-            request.Set("muted_segments", MutedSegments.Select(x => x.ToGodotObject()).ToArray());
+            request.Set("muted_segments", MutedSegments?.Select(x => x.ToGodotObject()).ToArray());
             return request;
         }
         

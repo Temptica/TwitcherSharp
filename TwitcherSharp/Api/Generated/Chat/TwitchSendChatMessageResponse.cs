@@ -26,7 +26,7 @@ public partial class TwitchSendChatMessageResponse : RefCounted, ITwitcherSharp<
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_send_chat_message.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        request.Set("data", Data.Select(x => x.ToGodotObject()).ToArray());
+        request.Set("data", Data?.Select(x => x.ToGodotObject()).ToArray());
         return request;
     }
     public partial class TwitchData : RefCounted, ITwitcherSharp<TwitchData>
