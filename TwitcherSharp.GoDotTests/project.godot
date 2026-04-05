@@ -1,0 +1,39 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="TwitcherSharp.GoDotTests"
+run/main_scene="uid://4r5ut2p4tg4t"
+config/features=PackedStringArray("4.6", "C#", "Forward Plus")
+config/icon="res://icon.svg"
+
+[dotnet]
+
+project/assembly_name="TwitcherSharp.GoDotTests"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/twitcher/plugin.cfg")
+
+[physics]
+
+3d/physics_engine="Jolt Physics"
+
+[rendering]
+
+rendering_device/driver.windows="d3d12"
+
+[twitcher]
+
+editor/game_oauth_token="res://addons/twitcher/default_oauth_token.tres"
+editor/game_oauth_setting="res://addons/twitcher/twitch_oauth_setting.tres"
+editor/project_preset=&"Overlay"
+editor/show_setup_on_startup=false

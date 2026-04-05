@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://4r5ut2p4tg4t"]
+
+[ext_resource type="Script" uid="uid://n04dbfsr3d1d" path="res://Main.cs" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://6asioor7cftl" path="res://Nodes/Twitcher.tscn" id="2_0xm2m"]
+[ext_resource type="Script" uid="uid://b3n3et8mebjcc" path="res://addons/twitcher/auth/twitch_oauth_scopes.gd" id="2_h2yge"]
+
+[sub_resource type="Resource" id="Resource_1bvp3"]
+script = ExtResource("2_h2yge")
+used_scopes = Array[StringName]([&"analytics:read:extensions", &"analytics:read:games", &"bits:read", &"channel:bot", &"channel:edit:commercial", &"channel:manage:ads", &"channel:manage:extensions", &"channel:manage:broadcast", &"channel:manage:guest_star", &"channel:manage:polls", &"channel:manage:moderators", &"channel:manage:predictions", &"channel:manage:raids", &"channel:manage:redemptions", &"channel:manage:schedule", &"channel:manage:videos", &"channel:manage:vips", &"channel:read:ads", &"channel:read:charity", &"channel:read:editors", &"channel:read:goals", &"channel:read:guest_star", &"channel:read:hype_train", &"channel:read:predictions", &"channel:read:polls", &"channel:read:redemptions", &"channel:read:stream_key", &"channel:read:subscriptions", &"channel:read:vips", &"clips:edit", &"moderation:read", &"moderator:manage:announcements", &"moderator:manage:automod", &"moderator:manage:automod_settings", &"moderator:manage:banned_users", &"moderator:manage:blocked_terms", &"moderator:manage:chat_messages", &"moderator:manage:shield_mode", &"moderator:manage:guest_star", &"moderator:manage:chat_settings", &"moderator:manage:shoutouts", &"moderator:manage:unban_requests", &"moderator:manage:warnings", &"moderator:read:automod_settings", &"moderator:read:banned_users", &"moderator:read:blocked_terms", &"moderator:read:chat_messages", &"moderator:read:chat_settings", &"moderator:read:chatters", &"moderator:read:followers", &"moderator:read:guest_star", &"moderator:read:moderators", &"moderator:read:shield_mode", &"moderator:read:shoutouts", &"moderator:read:suspicious_users", &"moderator:read:unban_requests", &"moderator:read:vips", &"moderator:read:warnings", &"user:bot", &"user:edit", &"user:edit:broadcast", &"user:manage:blocked_users", &"user:manage:chat_color", &"user:manage:whispers", &"user:read:blocked_users", &"user:read:broadcast", &"user:read:chat", &"user:read:email", &"user:read:emotes", &"user:read:follows", &"user:read:moderated_channels", &"user:read:subscriptions", &"user:write:chat", &"user:read:whispers", &"chat:edit", &"chat:read"])
+metadata/_custom_type_script = "uid://b3n3et8mebjcc"
+
+[node name="Main" type="Node3D" unique_id=1926802701 node_paths=PackedStringArray("TokenHandler")]
+script = ExtResource("1_ig7tw")
+TokenHandler = NodePath("Twitcher/TwitchService/TwitchAuth/TokenHandler")
+TwitchOAuthScopes = SubResource("Resource_1bvp3")
+
+[node name="Twitcher" parent="." unique_id=1938467298 instance=ExtResource("2_0xm2m")]
+
+[editable path="Twitcher"]

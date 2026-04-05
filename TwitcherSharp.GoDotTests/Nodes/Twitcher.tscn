@@ -1,0 +1,86 @@
+[gd_scene format=3 uid="uid://6asioor7cftl"]
+
+[ext_resource type="Script" uid="uid://i8st3lv0lidh" path="res://addons/twitcher/twitch_service.gd" id="1_kbn2o"]
+[ext_resource type="Script" uid="uid://cw30cwveway65" path="res://addons/twitcher/generated/twitch_api.gd" id="2_t7elf"]
+[ext_resource type="Resource" uid="uid://c4scwuk8q0r40" path="res://addons/twitcher/lib/oOuch/default_key_provider.tres" id="3_3526r"]
+[ext_resource type="Script" uid="uid://b52xp7c23ucfk" path="res://addons/twitcher/lib/oOuch/oauth_token.gd" id="4_532we"]
+[ext_resource type="Script" uid="uid://00xbijwpi8xa" path="res://addons/twitcher/lib/oOuch/oauth_setting.gd" id="5_qtemx"]
+[ext_resource type="Script" uid="uid://bol5ltrjr6ux8" path="res://addons/twitcher/eventsub/twitch_event_listener.gd" id="6_8p70n"]
+[ext_resource type="Script" uid="uid://iv0mgv0lu8b0" path="res://addons/twitcher/auth/twitch_auth.gd" id="7_famrm"]
+[ext_resource type="Script" uid="uid://b3n3et8mebjcc" path="res://addons/twitcher/auth/twitch_oauth_scopes.gd" id="8_lra32"]
+[ext_resource type="Script" uid="uid://bf0wi70haua35" path="res://addons/twitcher/lib/oOuch/oauth.gd" id="9_hny0l"]
+[ext_resource type="Script" uid="uid://blnbogtrshw4r" path="res://addons/twitcher/auth/twitch_token_handler.gd" id="10_w43gn"]
+[ext_resource type="Script" uid="uid://blmhj3j00yk45" path="res://addons/twitcher/eventsub/twitch_eventsub.gd" id="11_msfs6"]
+[ext_resource type="Script" uid="uid://cjug64e3433g0" path="res://addons/twitcher/eventsub/twitch_eventsub_config.gd" id="12_qhix5"]
+
+[sub_resource type="Resource" id="Resource_xo5b3"]
+script = ExtResource("5_qtemx")
+token_url = "http://localhost:8080/oauth2/token"
+authorization_url = "http://localhost:8080/auth/authorize"
+device_authorization_url = "http://localhost:8080/oauth2/device"
+cache_file = "user://auth.conf"
+client_id = "79f217b824a2a74f2a16d895118ba2"
+client_secret = "PuSAKV2xR4c1iod8lExd3w5OiRD5JvqgSwiKaN4zXbk="
+
+[sub_resource type="Resource" id="Resource_elmc5"]
+script = ExtResource("8_lra32")
+used_scopes = Array[StringName]([&"analytics:read:extensions", &"analytics:read:games", &"bits:read", &"channel:bot", &"channel:edit:commercial", &"channel:manage:ads", &"channel:manage:extensions", &"channel:manage:broadcast", &"channel:manage:guest_star", &"channel:manage:polls", &"channel:manage:moderators", &"channel:manage:predictions", &"channel:manage:raids", &"channel:manage:redemptions", &"channel:manage:schedule", &"channel:manage:videos", &"channel:manage:vips", &"channel:read:ads", &"channel:read:charity", &"channel:read:editors", &"channel:read:goals", &"channel:read:guest_star", &"channel:read:hype_train", &"channel:read:predictions", &"channel:read:polls", &"channel:read:redemptions", &"channel:read:stream_key", &"channel:read:subscriptions", &"channel:read:vips", &"clips:edit", &"moderation:read", &"moderator:manage:announcements", &"moderator:manage:automod", &"moderator:manage:automod_settings", &"moderator:manage:banned_users", &"moderator:manage:blocked_terms", &"moderator:manage:chat_messages", &"moderator:manage:shield_mode", &"moderator:manage:guest_star", &"moderator:manage:chat_settings", &"moderator:manage:shoutouts", &"moderator:manage:unban_requests", &"moderator:manage:warnings", &"moderator:read:automod_settings", &"moderator:read:banned_users", &"moderator:read:blocked_terms", &"moderator:read:chat_messages", &"moderator:read:chat_settings", &"moderator:read:chatters", &"moderator:read:followers", &"moderator:read:guest_star", &"moderator:read:moderators", &"moderator:read:shield_mode", &"moderator:read:shoutouts", &"moderator:read:suspicious_users", &"moderator:read:unban_requests", &"moderator:read:vips", &"moderator:read:warnings", &"user:bot", &"user:edit", &"user:edit:broadcast", &"user:manage:blocked_users", &"user:manage:chat_color", &"user:manage:whispers", &"user:read:blocked_users", &"user:read:broadcast", &"user:read:chat", &"user:read:email", &"user:read:emotes", &"user:read:follows", &"user:read:moderated_channels", &"user:read:subscriptions", &"user:write:chat", &"user:read:whispers", &"chat:edit", &"chat:read"])
+metadata/_custom_type_script = "uid://b3n3et8mebjcc"
+
+[sub_resource type="Resource" id="Resource_d6mrb"]
+script = ExtResource("4_532we")
+_identifier = "Auth8157"
+metadata/_custom_type_script = "uid://b52xp7c23ucfk"
+
+[sub_resource type="Resource" id="Resource_crapp"]
+script = ExtResource("12_qhix5")
+condition = {
+&"broadcaster_user_id": "",
+&"moderator_user_id": ""
+}
+metadata/_custom_type_script = "uid://cjug64e3433g0"
+
+[node name="Node" type="Node" unique_id=1938467298]
+
+[node name="TwitchService" type="Node" parent="." unique_id=1859338766]
+script = ExtResource("1_kbn2o")
+oauth_setting = SubResource("Resource_xo5b3")
+scopes = SubResource("Resource_elmc5")
+token = SubResource("Resource_d6mrb")
+metadata/_custom_type_script = "uid://i8st3lv0lidh"
+
+[node name="TwitchAPI" type="Node" parent="TwitchService" unique_id=841988605]
+script = ExtResource("2_t7elf")
+token = SubResource("Resource_d6mrb")
+oauth_setting = SubResource("Resource_xo5b3")
+api_host = "http://localhost:8080/mock"
+metadata/_custom_type_script = "uid://cw30cwveway65"
+
+[node name="TwitchEventListener" type="Node" parent="TwitchService" unique_id=805838467 node_paths=PackedStringArray("eventsub")]
+script = ExtResource("6_8p70n")
+eventsub = NodePath("../TwitchEventsub")
+metadata/_custom_type_script = "uid://bol5ltrjr6ux8"
+
+[node name="TwitchAuth" type="Node" parent="TwitchService" unique_id=813022654]
+script = ExtResource("7_famrm")
+oauth_setting = SubResource("Resource_xo5b3")
+token = SubResource("Resource_d6mrb")
+scopes = SubResource("Resource_elmc5")
+metadata/_custom_type_script = "uid://iv0mgv0lu8b0"
+
+[node name="OAuth" type="Node" parent="TwitchService/TwitchAuth" unique_id=1617914013 node_paths=PackedStringArray("token_handler")]
+script = ExtResource("9_hny0l")
+oauth_setting = SubResource("Resource_xo5b3")
+scopes = SubResource("Resource_elmc5")
+token_handler = NodePath("../TokenHandler")
+
+[node name="TokenHandler" type="Node" parent="TwitchService/TwitchAuth" unique_id=1116857324]
+script = ExtResource("10_w43gn")
+oauth_setting = SubResource("Resource_xo5b3")
+token = SubResource("Resource_d6mrb")
+
+[node name="TwitchEventsub" type="Node" parent="TwitchService" unique_id=1100435106 node_paths=PackedStringArray("api")]
+script = ExtResource("11_msfs6")
+api = NodePath("../TwitchAPI")
+_subscriptions = Array[ExtResource("12_qhix5")]([SubResource("Resource_crapp")])
+metadata/_custom_type_script = "uid://blmhj3j00yk45"
