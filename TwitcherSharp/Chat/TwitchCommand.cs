@@ -1,95 +1,70 @@
 using Godot;
-using Godot.Collections;
 using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 using Array = System.Array;
 
 namespace TwitcherSharp.Chat;
 
-public partial class TwitchCommand : Resource, ITwitcherSharp<TwitchCommand>
+public partial class TwitchCommand : TwitchCommandBase, ITwitcherSharp<TwitchCommand>
 {
-    private GodotObject _data;
+    public List<string> CommandPrefixes { get; set; } = ["!"];
 
-    #region Signals
+    /// <summary>
+    /// Optional names of commands
+    /// </summary>
+    public List<string> Aliases { get; set; } = [];
 
-    [Signal]
-    public delegate void CommandReceivedEventHandler(string fromUsername, TwitchCommandInfo info, string[] args);
+    /// <summary>
+    /// Minimal amount of argument 0 means no argument needed
+    /// </summary>
+    public int ArgsMin { get; set; }
 
-    [Signal]
-    public delegate void ReceivedInvalidCommandEventHandler(string fromUsername, TwitchCommandInfo info, string[] args);
-
-    [Signal]
-    public delegate void CooldownEventHandler(string fromUsername, TwitchCommandInfo info, string[] args,
-        float cooldownRemainingInS);
-
-    #endregion
-
-    #region Enums
-
-    [Flags]
-    public enum PermissionFlags
-    {
-        Everyone = 0,
-        Vip = 1,
-        Sub = 2,
-        Mod = 4,
-        Streamer = 8,
-        ModStreamer = Mod | Streamer,
-        NonRegular = 15
-    }
-
-    public enum WhereFlag
-    {
-        Chat = 1,
-        Whisper = 2,
-        Anywhere = 3
-    }
-
-    #endregion
-
-    public string[] CommandPrefixes { get; set; } = { "!" };
-    public string Command { get; set; }
-    public string[] Aliases { get; set; } = [];
-    public string Description { get; set; }
-    public int ArgsMin { get; set; } = 0;
+    /// <summary>
+    /// Max amount of arguments -1 means infinite
+    /// </summary>
     public int ArgsMax { get; set; } = -1;
-    public PermissionFlags PermissionLevel { get; set; } = PermissionFlags.Everyone;
-    public WhereFlag Where { get; set; } = WhereFlag.Chat;
-    public string[] AllowedUsers { get; set; } = Array.Empty<string>();
-    public string[] ListenToChatrooms { get; set; } = Array.Empty<string>();
-    public bool CaseInsensitive { get; set; } = true;
-    public float UserCooldown { get; set; } = 0;
-    public float GlobalCooldown { get; set; } = 0;
-    public GodotObject Eventsub { get; set; }
 
-    private void ConnectToSignals()
+    public void AddAlias(string alias)
     {
-        _data.ConnectCommandReceived(EmitSignalCommandReceived);
-        _data.ConnectReceivedInvalidCommand(EmitSignalReceivedInvalidCommand);
-        _data.ConnectCooldown(EmitSignalCooldown);
+        Data.Call("add_alias", alias);
+        Aliases = Data.Get("aliases").AsStringArray().ToList();
     }
+
+    public void RemoveAlias(string alias)
+    {
+        Data.Call("remove_alias", alias);
+        Aliases = Data.Get("aliases").AsStringArray().ToList();
+    }
+
+    public override string ToString() => $"{CommandPrefixes[0]}{Command}";
 
     public static TwitchCommand FromObject(GodotObject data)
     {
+        if (data == null) return null;
         var command = new TwitchCommand
         {
-            _data = data,
-            CommandPrefixes = data.Get("command_prefixes").AsStringArray(),
-            Command = data.Get("command").AsString(),
-            Description = data.Get("description").AsString(),
+            Data = data,
+            CommandPrefixes = data.Get("command_prefixes").AsStringArray().ToList(),
+            Aliases = data.Get("aliases").AsStringArray().ToList(),
             ArgsMin = data.Get("args_min").AsInt32(),
             ArgsMax = data.Get("args_max").AsInt32(),
-            PermissionLevel = data.Get("permission_level").As<PermissionFlags>(),
-            Where = data.Get("where").As<WhereFlag>(),
-            AllowedUsers = data.Get("allowed_users").AsStringArray(),
-            ListenToChatrooms = data.Get("listen_to_chatrooms").AsStringArray(),
-            CaseInsensitive = data.Get("case_insensitive").AsBool(),
-            UserCooldown = data.Get("user_cooldown").AsInt32(),
-            GlobalCooldown = data.Get("global_cooldown").AsInt32(),
-            Eventsub = data.Get("eventsub").AsGodotObject(),
         };
 
-        command.ConnectToSignals();
+        command.SetBaseProperties();
         return command;
+    }
+
+
+    public override GodotObject ToGodotObject()
+    {
+        var data = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_command.gd").New().AsGodotObject();
+        data.Set("command_prefixes", CommandPrefixes.ToArray());
+        data.Set("aliases", Aliases.ToArray());
+        data.Set("args_min", ArgsMin);
+        data.Set("args_max", ArgsMax);
+        GetBaseProperties(data);
+        Data = data;
+        ConnectSignals();
+        return data;
     }
 }

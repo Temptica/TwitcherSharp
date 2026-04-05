@@ -1,0 +1,112 @@
+using TwitcherSharp.Extensions;
+using TwitcherSharp.Interfaces;
+using Godot;
+   
+namespace TwitcherSharp.Api.Generated.Channels;
+
+public partial class TwitchGetFollowedChannelsResponse : RefCounted, ITwitcherSharp<TwitchGetFollowedChannelsResponse>
+{
+    private GodotObject _data;
+    public TwitchData[] Data { get; set; }
+    public ResponsePagination Pagination { get; set; }
+    public int Total { get; set; }
+
+    /// <summary> 
+    /// Transforms the godot data into a TwitchGetFollowedChannelsResponse object.
+    /// </summary> 
+    public static TwitchGetFollowedChannelsResponse FromObject(GodotObject data)
+    {
+        if(data == null) return null;
+        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
+        return new TwitchGetFollowedChannelsResponse
+        {
+            Data = dataArray.Select(TwitchData.FromObject).ToArray(),
+            Pagination = data.Get("pagination").As<ResponsePagination>(),
+            Total = data.Get("total").AsInt32(),
+        };
+    }
+
+    public GodotObject ToGodotObject()
+    {
+        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_followed_channels.gd");
+        var responseClass = script.Get("Response").AsGodotObject();
+        var request = responseClass.Call("new").AsGodotObject();
+        if(Data != null) request.Set("data", new Godot.Collections.Array<GodotObject>(Data.Select(x => x.ToGodotObject()).ToArray()));
+        if(Pagination != null) request.Set("pagination", Pagination);
+        request.Set("total", Total);
+        return request;
+    }
+    public async Task<TwitchGetFollowedChannelsResponse> NextPage() =>
+        await _data.CallAsync<TwitchGetFollowedChannelsResponse>("next_page");
+    
+    /// <summary> 
+    /// Contains the information used to page through the list of results. The object is empty if there are no more pages left to page through 
+    /// </summary>
+    public partial class ResponsePagination : RefCounted, ITwitcherSharp<ResponsePagination>
+    {
+        private GodotObject _data;
+        public string Cursor { get; set; }
+    
+        /// <summary> 
+        /// Transforms the godot data into a ResponsePagination object.
+        /// </summary> 
+        public static ResponsePagination FromObject(GodotObject data)
+        {
+            if(data == null) return null;
+            return new ResponsePagination
+            {
+                Cursor = data.Get("cursor").AsString(),
+            };
+        }
+    
+        public GodotObject ToGodotObject()
+        {
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/response_pagination.gd");
+            var paginationClass = script.Get("Pagination").AsGodotObject();
+            var request = paginationClass.Call("new").AsGodotObject();
+            if(Cursor != null) request.Set("cursor", Cursor);
+            return request;
+        }
+    
+    }
+    
+    /// <summary> 
+    /// The list of broadcasters that the user follows. The list is in descending order by `followed_at` (with the most recently followed broadcaster first). The list is empty if the user doesn’t follow anyone. 
+    /// </summary>
+    public partial class TwitchData : RefCounted, ITwitcherSharp<TwitchData>
+    {
+        private GodotObject _data;
+        public string BroadcasterId { get; set; }
+        public string BroadcasterLogin { get; set; }
+        public string BroadcasterName { get; set; }
+        public string FollowedAt { get; set; }
+    
+        /// <summary> 
+        /// Transforms the godot data into a TwitchData object.
+        /// </summary> 
+        public static TwitchData FromObject(GodotObject data)
+        {
+            if(data == null) return null;
+            return new TwitchData
+            {
+                BroadcasterId = data.Get("broadcaster_id").AsString(),
+                BroadcasterLogin = data.Get("broadcaster_login").AsString(),
+                BroadcasterName = data.Get("broadcaster_name").AsString(),
+                FollowedAt = data.Get("followed_at").AsString(),
+            };
+        }
+    
+        public GodotObject ToGodotObject()
+        {
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_data.gd");
+            var request = script.Call("new").AsGodotObject();
+            request.Set("broadcaster_id", BroadcasterId);
+            request.Set("broadcaster_login", BroadcasterLogin);
+            request.Set("broadcaster_name", BroadcasterName);
+            request.Set("followed_at", FollowedAt);
+            return request;
+        }
+    
+    }
+
+}
