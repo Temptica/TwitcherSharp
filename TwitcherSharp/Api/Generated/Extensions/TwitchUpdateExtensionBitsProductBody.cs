@@ -36,7 +36,7 @@ public partial class TwitchUpdateExtensionBitsProductBody : RefCounted, ITwitche
         var bodyClass = script.Get("Body").AsGodotObject();
         var request = bodyClass.Call("new").AsGodotObject();
         request.Set("sku", Sku);
-        request.Set("cost", Cost);
+        request.Set("cost", Cost?.ToGodotObject());
         request.Set("display_name", DisplayName);
         if(InDevelopment.HasValue) request.Set("in_development", InDevelopment.Value);
         if(Expiration != null) request.Set("expiration", Expiration);

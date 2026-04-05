@@ -7,7 +7,7 @@ public static class StringExtension
         public string ToPascalCase()
         {
             var result = "";
-            
+
             for (var i = 0; i < type.Length; i++)
             {
                 var chr = type[i];
@@ -22,7 +22,7 @@ public static class StringExtension
         public string ToCamelCase()
         {
             var result = "";
-            
+
             for (var i = 0; i < type.Length; i++)
             {
                 var chr = type[i];
@@ -37,6 +37,7 @@ public static class StringExtension
         public string ToSnakeCase()
         {
             var result = "";
+            type = type.Replace("VIPs", "_vips");
 
             for (var i = 0; i < type.Length; i++)
             {

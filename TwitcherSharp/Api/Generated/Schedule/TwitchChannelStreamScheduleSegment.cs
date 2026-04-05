@@ -41,7 +41,7 @@ public partial class TwitchChannelStreamScheduleSegment : RefCounted, ITwitcherS
         request.Set("end_time", EndTime);
         request.Set("title", Title);
         request.Set("canceled_until", CanceledUntil);
-        request.Set("category", Category);
+        request.Set("category", Category?.ToGodotObject());
         request.Set("is_recurring", IsRecurring);
         return request;
     }

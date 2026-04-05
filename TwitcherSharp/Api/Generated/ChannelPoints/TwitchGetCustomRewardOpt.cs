@@ -31,7 +31,7 @@ public partial class TwitchGetCustomRewardOpt : RefCounted, ITwitcherSharp<Twitc
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_custom_reward.gd");
         var optClass = script.Get("Opt").AsGodotObject();
         var request = optClass.Call("new").AsGodotObject();
-        if(Id != null) request.Set("id", Id);
+        if(Id != null) request.Set("id", new Godot.Collections.Array<string>(Id));
         if(OnlyManageableRewards.HasValue) request.Set("only_manageable_rewards", OnlyManageableRewards.Value);
         return request;
     }

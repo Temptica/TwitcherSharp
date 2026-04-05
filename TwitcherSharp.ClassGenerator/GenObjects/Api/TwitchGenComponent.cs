@@ -12,14 +12,14 @@ public class TwitchGenComponent(string name, string @ref, string description) : 
     public string Description { get; } = description;
     private List<TwitchGenField> Fields { get; } = [];
     private List<TwitchGenComponent> ParentComponents { get; } = [];
-    private List<TwitchGenInterface> ParentInterfaces { get; } = [];
+    public List<TwitchGenInterface> ParentInterfaces { get; } = [];
     public List<TwitchGenComponent> SubComponents { get; } = [];
     public List<TwitchGenInterface> InterfacesToImplement { get; } = [];
     public TwitchGenField GenericField { get; set; }
     public string GenericType { get; set; }
     public bool IsPagination => ClassName == "ResponsePagination";
     public bool HasPagination => Fields.Any(c => c.Name == "Pagination");
-    public bool IsGlobal => ParentComponents.Count > 1;
+    public bool IsGlobal { get; set; }
     public bool HasGeneric => GenericType != null;
 
     public void AddField(TwitchGenField field)
@@ -48,9 +48,11 @@ public class TwitchGenComponent(string name, string @ref, string description) : 
         if (ClassName == "ResponsePagination")
             if (ParentComponents.Count == 0)
                 return "";
+        
+        
         var parentTags = ParentComponents.Select(c => c.GetNameSpace()).ToHashSet();
         foreach (var parentInterface in ParentInterfaces.Select(pi => pi.NameSpace)) parentTags.Add(parentInterface);
-        return parentTags.Count == 1 ? ParentComponents[0].GetNameSpace() : "Shared";
+        return parentTags.Count > 0 ? parentTags.First() : "Shared";
     }
 
     private static string SanitizeName(string name) => name.Equals("ResponsePagination")
@@ -93,7 +95,7 @@ public class TwitchGenComponent(string name, string @ref, string description) : 
     public (List<TwitchGenField> fields, List<TwitchGenComponent> subComponentsToGenerate) IntersectAndRemove(
         List<TwitchGenComponent> others)
     {
-        var intersection = Fields;
+        var intersection = Fields.ToList();
         var subComponentsToGenerate = new List<TwitchGenComponent>();
         foreach (var component in others)
         {
@@ -125,7 +127,7 @@ public class TwitchGenComponent(string name, string @ref, string description) : 
     public bool Equals(TwitchGenComponent other)
     {
         if (other == null) return false;
-        return ClassName == other.ClassName || Ref == other.Ref;
+        return ClassName == other.ClassName && GetNameSpace() == other.GetNameSpace() || Ref == other.Ref;
     }
 
     public override int GetHashCode()

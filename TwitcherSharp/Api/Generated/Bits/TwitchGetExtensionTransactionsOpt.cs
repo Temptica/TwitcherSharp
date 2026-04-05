@@ -33,7 +33,7 @@ public partial class TwitchGetExtensionTransactionsOpt : RefCounted, ITwitcherSh
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_extension_transactions.gd");
         var optClass = script.Get("Opt").AsGodotObject();
         var request = optClass.Call("new").AsGodotObject();
-        if(Id != null) request.Set("id", Id);
+        if(Id != null) request.Set("id", new Godot.Collections.Array<string>(Id));
         if(First.HasValue) request.Set("first", First.Value);
         if(After != null) request.Set("after", After);
         return request;

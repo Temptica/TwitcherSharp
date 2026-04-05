@@ -73,8 +73,8 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
             UserName = data.Get("user_name").AsString(),
             Bits = data.Get("bits").AsInt32(),
             Type = data.Get("type").AsString(),
-            Message = data.Get("message").As<TwitchMessage>(),
-            PowerUp = data.Get("power_up").As<TwitchPowerUp>(),
+            Message = TwitchMessage.FromObject(data.Get("message").AsGodotObject()),
+            PowerUp = TwitchPowerUp.FromObject(data.Get("power_up").AsGodotObject()),
         };
     }
 
@@ -91,8 +91,8 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
         request.Set("user_name", UserName);
         request.Set("bits", Bits);
         request.Set("type", Type);
-        request.Set("message", Message);
-        request.Set("power_up", PowerUp);
+        request.Set("message", Message.ToGodotObject());
+        request.Set("power_up", PowerUp.ToGodotObject());
         return request;
     }
 
@@ -129,7 +129,7 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
             var messageClass = script.Get("Message").As<GDScript>();
             var request = messageClass.New().AsGodotObject();
             request.Set("text", Text);
-            request.Set("fragments", Fragments);
+            request.Set("fragments", new Godot.Collections.Array(Fragments.Select(x => x.ToGodotObject()).ToArray()));
             return request;
         }
     
@@ -166,8 +166,8 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
                 {
                     Text = data.Get("text").AsString(),
                     Type = data.Get("type").AsString(),
-                    Emote = data.Get("emote").As<TwitchEmote>(),
-                    Cheermote = data.Get("cheermote").As<TwitchCheermote>(),
+                    Emote = TwitchEmote.FromObject(data.Get("emote").AsGodotObject()),
+                    Cheermote = TwitchCheermote.FromObject(data.Get("cheermote").AsGodotObject()),
                 };
             }
         
@@ -178,8 +178,8 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
                 var request = fragmentsClass.New().AsGodotObject();
                 request.Set("text", Text);
                 request.Set("type", Type);
-                request.Set("emote", Emote);
-                request.Set("cheermote", Cheermote);
+                request.Set("emote", Emote.ToGodotObject());
+                request.Set("cheermote", Cheermote.ToGodotObject());
                 return request;
             }
         
@@ -229,7 +229,7 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
                     request.Set("id", Id);
                     request.Set("emote_set_id", EmoteSetId);
                     request.Set("owner_id", OwnerId);
-                    request.Set("format", Format);
+                    request.Set("format", new Godot.Collections.Array<string>(Format));
                     return request;
                 }
             }
@@ -305,7 +305,7 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
             return new TwitchPowerUp
             {
                 Type = data.Get("type").AsString(),
-                Emote = data.Get("emote").As<TwitchEmote>(),
+                Emote = TwitchEmote.FromObject(data.Get("emote").AsGodotObject()),
                 MessageEffectId = data.Get("message_effect_id").AsString(),
             };
         }
@@ -316,7 +316,7 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
             var powerUpClass = script.Get("PowerUp").As<GDScript>();
             var request = powerUpClass.New().AsGodotObject();
             request.Set("type", Type);
-            request.Set("emote", Emote);
+            request.Set("emote", Emote.ToGodotObject());
             request.Set("message_effect_id", MessageEffectId);
             return request;
         }

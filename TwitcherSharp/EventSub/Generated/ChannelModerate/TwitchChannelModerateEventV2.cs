@@ -180,27 +180,27 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
             ModeratorUserLogin = data.Get("moderator_user_login").AsString(),
             ModeratorUserName = data.Get("moderator_user_name").AsString(),
             Action = data.Get("action").AsString(),
-            Followers = data.Get("followers").As<TwitchFollowers>(),
-            Slow = data.Get("slow").As<TwitchSlow>(),
-            Vip = data.Get("vip").As<TwitchVip>(),
-            Unvip = data.Get("unvip").As<TwitchUnvip>(),
-            Mod = data.Get("mod").As<TwitchMod>(),
-            Unmod = data.Get("unmod").As<TwitchUnmod>(),
-            Ban = data.Get("ban").As<TwitchBan>(),
-            Unban = data.Get("unban").As<TwitchUnban>(),
-            Timeout = data.Get("timeout").As<TwitchTimeout>(),
-            Untimeout = data.Get("untimeout").As<TwitchUntimeout>(),
-            Raid = data.Get("raid").As<TwitchRaid>(),
-            Unraid = data.Get("unraid").As<TwitchUnraid>(),
-            Delete = data.Get("delete").As<TwitchDelete>(),
-            AutomodTerms = data.Get("automod_terms").As<TwitchAutomodTerms>(),
-            UnbanRequest = data.Get("unban_request").As<TwitchUnbanRequest>(),
-            Warn = data.Get("warn").As<TwitchWarn>(),
-            SharedChatBan = data.Get("shared_chat_ban").As<TwitchBan>(),
-            SharedChatUnban = data.Get("shared_chat_unban").As<TwitchUnban>(),
-            SharedChatTimeout = data.Get("shared_chat_timeout").As<TwitchTimeout>(),
-            SharedChatUntimeout = data.Get("shared_chat_untimeout").As<TwitchUntimeout>(),
-            SharedChatDelete = data.Get("shared_chat_delete").As<TwitchDelete>(),
+            Followers = TwitchFollowers.FromObject(data.Get("followers").AsGodotObject()),
+            Slow = TwitchSlow.FromObject(data.Get("slow").AsGodotObject()),
+            Vip = TwitchVip.FromObject(data.Get("vip").AsGodotObject()),
+            Unvip = TwitchUnvip.FromObject(data.Get("unvip").AsGodotObject()),
+            Mod = TwitchMod.FromObject(data.Get("mod").AsGodotObject()),
+            Unmod = TwitchUnmod.FromObject(data.Get("unmod").AsGodotObject()),
+            Ban = TwitchBan.FromObject(data.Get("ban").AsGodotObject()),
+            Unban = TwitchUnban.FromObject(data.Get("unban").AsGodotObject()),
+            Timeout = TwitchTimeout.FromObject(data.Get("timeout").AsGodotObject()),
+            Untimeout = TwitchUntimeout.FromObject(data.Get("untimeout").AsGodotObject()),
+            Raid = TwitchRaid.FromObject(data.Get("raid").AsGodotObject()),
+            Unraid = TwitchUnraid.FromObject(data.Get("unraid").AsGodotObject()),
+            Delete = TwitchDelete.FromObject(data.Get("delete").AsGodotObject()),
+            AutomodTerms = TwitchAutomodTerms.FromObject(data.Get("automod_terms").AsGodotObject()),
+            UnbanRequest = TwitchUnbanRequest.FromObject(data.Get("unban_request").AsGodotObject()),
+            Warn = TwitchWarn.FromObject(data.Get("warn").AsGodotObject()),
+            SharedChatBan = TwitchBan.FromObject(data.Get("shared_chat_ban").AsGodotObject()),
+            SharedChatUnban = TwitchUnban.FromObject(data.Get("shared_chat_unban").AsGodotObject()),
+            SharedChatTimeout = TwitchTimeout.FromObject(data.Get("shared_chat_timeout").AsGodotObject()),
+            SharedChatUntimeout = TwitchUntimeout.FromObject(data.Get("shared_chat_untimeout").AsGodotObject()),
+            SharedChatDelete = TwitchDelete.FromObject(data.Get("shared_chat_delete").AsGodotObject()),
         };
     }
 
@@ -219,27 +219,27 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
         request.Set("moderator_user_login", ModeratorUserLogin);
         request.Set("moderator_user_name", ModeratorUserName);
         request.Set("action", Action);
-        request.Set("followers", Followers);
-        request.Set("slow", Slow);
-        request.Set("vip", Vip);
-        request.Set("unvip", Unvip);
-        request.Set("mod", Mod);
-        request.Set("unmod", Unmod);
-        request.Set("ban", Ban);
-        request.Set("unban", Unban);
-        request.Set("timeout", Timeout);
-        request.Set("untimeout", Untimeout);
-        request.Set("raid", Raid);
-        request.Set("unraid", Unraid);
-        request.Set("delete", Delete);
-        request.Set("automod_terms", AutomodTerms);
-        request.Set("unban_request", UnbanRequest);
-        request.Set("warn", Warn);
-        request.Set("shared_chat_ban", SharedChatBan);
-        request.Set("shared_chat_unban", SharedChatUnban);
-        request.Set("shared_chat_timeout", SharedChatTimeout);
-        request.Set("shared_chat_untimeout", SharedChatUntimeout);
-        request.Set("shared_chat_delete", SharedChatDelete);
+        request.Set("followers", Followers.ToGodotObject());
+        request.Set("slow", Slow.ToGodotObject());
+        request.Set("vip", Vip.ToGodotObject());
+        request.Set("unvip", Unvip.ToGodotObject());
+        request.Set("mod", Mod.ToGodotObject());
+        request.Set("unmod", Unmod.ToGodotObject());
+        request.Set("ban", Ban.ToGodotObject());
+        request.Set("unban", Unban.ToGodotObject());
+        request.Set("timeout", Timeout.ToGodotObject());
+        request.Set("untimeout", Untimeout.ToGodotObject());
+        request.Set("raid", Raid.ToGodotObject());
+        request.Set("unraid", Unraid.ToGodotObject());
+        request.Set("delete", Delete.ToGodotObject());
+        request.Set("automod_terms", AutomodTerms.ToGodotObject());
+        request.Set("unban_request", UnbanRequest.ToGodotObject());
+        request.Set("warn", Warn.ToGodotObject());
+        request.Set("shared_chat_ban", SharedChatBan.ToGodotObject());
+        request.Set("shared_chat_unban", SharedChatUnban.ToGodotObject());
+        request.Set("shared_chat_timeout", SharedChatTimeout.ToGodotObject());
+        request.Set("shared_chat_untimeout", SharedChatUntimeout.ToGodotObject());
+        request.Set("shared_chat_delete", SharedChatDelete.ToGodotObject());
         return request;
     }
 
@@ -861,7 +861,7 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
             var request = automodTermsClass.New().AsGodotObject();
             request.Set("action", Action);
             request.Set("list", List);
-            request.Set("terms", Terms);
+            request.Set("terms", new Godot.Collections.Array<string>(Terms));
             request.Set("from_automod", FromAutomod);
             return request;
         }

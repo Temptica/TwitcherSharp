@@ -68,7 +68,7 @@ public partial class TwitchExtensionBitsTransactionCreateEvent : RefCounted, ITw
             UserId = data.Get("user_id").AsString(),
             UserLogin = data.Get("user_login").AsString(),
             UserName = data.Get("user_name").AsString(),
-            Product = data.Get("product").As<TwitchProduct>(),
+            Product = TwitchProduct.FromObject(data.Get("product").AsGodotObject()),
         };
     }
 
@@ -85,7 +85,7 @@ public partial class TwitchExtensionBitsTransactionCreateEvent : RefCounted, ITw
         request.Set("user_id", UserId);
         request.Set("user_login", UserLogin);
         request.Set("user_name", UserName);
-        request.Set("product", Product);
+        request.Set("product", Product.ToGodotObject());
         return request;
     }
 }

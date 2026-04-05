@@ -25,7 +25,7 @@ public partial class TwitchUpdateUserExtensionsBody : RefCounted, ITwitcherSharp
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_update_user_extensions.gd");
         var bodyClass = script.Get("Body").AsGodotObject();
         var request = bodyClass.Call("new").AsGodotObject();
-        request.Set("data", Data);
+        request.Set("data", Data?.ToGodotObject());
         return request;
     }
     

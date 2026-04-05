@@ -33,7 +33,7 @@ public partial class TwitchGetAllStreamTagsOpt : RefCounted, ITwitcherSharp<Twit
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_all_stream_tags.gd");
         var optClass = script.Get("Opt").AsGodotObject();
         var request = optClass.Call("new").AsGodotObject();
-        if(TagId != null) request.Set("tag_id", TagId);
+        if(TagId != null) request.Set("tag_id", new Godot.Collections.Array<string>(TagId));
         if(First.HasValue) request.Set("first", First.Value);
         if(After != null) request.Set("after", After);
         return request;

@@ -5,8 +5,8 @@ namespace TwitcherSharp.Interfaces;
 /// <summary>
 /// The typed variant of the base interface for all TwitcherSharp classes.
 /// </summary>
-/// <typeparam name="TSelf"></typeparam>
-public interface ITwitcherSharp<out TSelf> : ITwitcherSharp where TSelf: ITwitcherSharp<TSelf>
+/// <typeparam name="TSelf">A RefCounted class</typeparam>
+public interface ITwitcherSharp<out TSelf> : ITwitcherSharp where TSelf: RefCounted, ITwitcherSharp<TSelf>
 {
     /// <summary>
     /// Creates a new instance of the class from a GodotObject instance.

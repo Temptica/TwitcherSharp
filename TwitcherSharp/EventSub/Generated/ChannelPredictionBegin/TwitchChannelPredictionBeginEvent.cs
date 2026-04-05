@@ -77,7 +77,7 @@ public partial class TwitchChannelPredictionBeginEvent : RefCounted, ITwitcherSh
         request.Set("broadcaster_user_login", BroadcasterUserLogin);
         request.Set("broadcaster_user_name", BroadcasterUserName);
         request.Set("title", Title);
-        request.Set("outcomes", Outcomes);
+        request.Set("outcomes", new Godot.Collections.Array(Outcomes.Select(x => x.ToGodotObject()).ToArray()));
         request.Set("started_at", StartedAt);
         request.Set("locks_at", LocksAt);
         return request;

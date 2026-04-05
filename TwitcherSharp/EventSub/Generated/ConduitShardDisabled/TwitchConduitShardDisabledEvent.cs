@@ -63,7 +63,7 @@ public partial class TwitchConduitShardDisabledEvent : RefCounted, ITwitcherShar
             ConduitId = data.Get("conduit_id").AsString(),
             ShardId = data.Get("shard_id").AsString(),
             Status = data.Get("status").AsString(),
-            Transport = data.Get("transport").As<TwitchTransport>(),
+            Transport = TwitchTransport.FromObject(data.Get("transport").AsGodotObject()),
             Method = data.Get("method").AsString(),
             Callback = data.Get("callback").AsString(),
             SessionId = data.Get("session_id").AsString(),
@@ -80,7 +80,7 @@ public partial class TwitchConduitShardDisabledEvent : RefCounted, ITwitcherShar
         request.Set("conduit_id", ConduitId);
         request.Set("shard_id", ShardId);
         request.Set("status", Status);
-        request.Set("transport", Transport);
+        request.Set("transport", Transport.ToGodotObject());
         request.Set("method", Method);
         request.Set("callback", Callback);
         request.Set("session_id", SessionId);

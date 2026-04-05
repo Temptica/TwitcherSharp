@@ -7,7 +7,7 @@ public static class VariantExtension
 {
     extension(Variant task)
     {
-        public async Task<T> ToResultAsync<T>(Node context) where T : ITwitcherSharp<T>
+        public async Task<T> ToResultAsync<T>(Node context) where T : RefCounted, ITwitcherSharp<T>
         {
             var result = await context.ToSignal(task.AsGodotObject(), "completed");
             return T.FromObject(result[0].AsGodotObject());

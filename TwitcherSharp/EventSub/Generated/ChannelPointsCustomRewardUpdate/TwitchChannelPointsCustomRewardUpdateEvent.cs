@@ -122,11 +122,11 @@ public partial class TwitchChannelPointsCustomRewardUpdateEvent : RefCounted, IT
             Prompt = data.Get("prompt").AsString(),
             IsUserInputRequired = data.Get("is_user_input_required").AsBool(),
             ShouldRedemptionsSkipRequestQueue = data.Get("should_redemptions_skip_request_queue").AsBool(),
-            MaxPerStream = data.Get("max_per_stream").As<TwitchMaxPerStream>(),
-            MaxPerUserPerStream = data.Get("max_per_user_per_stream").As<TwitchMaxPerUserPerStream>(),
+            MaxPerStream = TwitchMaxPerStream.FromObject(data.Get("max_per_stream").AsGodotObject()),
+            MaxPerUserPerStream = TwitchMaxPerUserPerStream.FromObject(data.Get("max_per_user_per_stream").AsGodotObject()),
             BackgroundColor = data.Get("background_color").AsString(),
-            Image = data.Get("image").As<TwitchImage>(),
-            GlobalCooldown = data.Get("global_cooldown").As<TwitchGlobalCooldown>(),
+            Image = TwitchImage.FromObject(data.Get("image").AsGodotObject()),
+            GlobalCooldown = TwitchGlobalCooldown.FromObject(data.Get("global_cooldown").AsGodotObject()),
             CooldownExpiresAt = data.Get("cooldown_expires_at").AsString(),
             RedemptionsRedeemedCurrentStream = data.Get("redemptions_redeemed_current_stream").AsInt32(),
         };
@@ -149,11 +149,11 @@ public partial class TwitchChannelPointsCustomRewardUpdateEvent : RefCounted, IT
         request.Set("prompt", Prompt);
         request.Set("is_user_input_required", IsUserInputRequired);
         request.Set("should_redemptions_skip_request_queue", ShouldRedemptionsSkipRequestQueue);
-        request.Set("max_per_stream", MaxPerStream);
-        request.Set("max_per_user_per_stream", MaxPerUserPerStream);
+        request.Set("max_per_stream", MaxPerStream.ToGodotObject());
+        request.Set("max_per_user_per_stream", MaxPerUserPerStream.ToGodotObject());
         request.Set("background_color", BackgroundColor);
-        request.Set("image", Image);
-        request.Set("global_cooldown", GlobalCooldown);
+        request.Set("image", Image.ToGodotObject());
+        request.Set("global_cooldown", GlobalCooldown.ToGodotObject());
         request.Set("cooldown_expires_at", CooldownExpiresAt);
         request.Set("redemptions_redeemed_current_stream", RedemptionsRedeemedCurrentStream);
         return request;

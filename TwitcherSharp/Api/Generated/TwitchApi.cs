@@ -206,7 +206,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetChannelInformationResponse"/></returns>
     public async Task<TwitchGetChannelInformationResponse> GetChannelInformation(string[] broadcasterId)
     {
-        return await _data.CallAsync<TwitchGetChannelInformationResponse>("get_channel_information", broadcasterId); 
+        return await _data.CallAsync<TwitchGetChannelInformationResponse>("get_channel_information", new Godot.Collections.Array<string>(broadcasterId)); 
     }
 
     /// <summary>
@@ -319,7 +319,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchUpdateRedemptionStatusResponse"/></returns>
     public async Task<TwitchUpdateRedemptionStatusResponse> UpdateRedemptionStatus(TwitchUpdateRedemptionStatusBody body, string[] id, string broadcasterId, string rewardId)
     {
-        return await _data.CallAsync<TwitchUpdateRedemptionStatusResponse>("update_redemption_status", body.ToGodotObject(), id, broadcasterId, rewardId); 
+        return await _data.CallAsync<TwitchUpdateRedemptionStatusResponse>("update_redemption_status", body.ToGodotObject(), new Godot.Collections.Array<string>(id), broadcasterId, rewardId); 
     }
 
     /// <summary>
@@ -383,7 +383,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetEmoteSetsResponse"/></returns>
     public async Task<TwitchGetEmoteSetsResponse> GetEmoteSets(string[] emoteSetId)
     {
-        return await _data.CallAsync<TwitchGetEmoteSetsResponse>("get_emote_sets", emoteSetId); 
+        return await _data.CallAsync<TwitchGetEmoteSetsResponse>("get_emote_sets", new Godot.Collections.Array<string>(emoteSetId)); 
     }
 
     /// <summary>
@@ -492,7 +492,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetUserChatColorResponse"/></returns>
     public async Task<TwitchGetUserChatColorResponse> GetUserChatColor(string[] userId)
     {
-        return await _data.CallAsync<TwitchGetUserChatColorResponse>("get_user_chat_color", userId); 
+        return await _data.CallAsync<TwitchGetUserChatColorResponse>("get_user_chat_color", new Godot.Collections.Array<string>(userId)); 
     }
 
     /// <summary>
@@ -571,7 +571,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetClipsDownloadResponse"/></returns>
     public async Task<TwitchGetClipsDownloadResponse> GetClipsDownload(string editorId, string broadcasterId, string[] clipId)
     {
-        return await _data.CallAsync<TwitchGetClipsDownloadResponse>("get_clips_download", editorId, broadcasterId, clipId); 
+        return await _data.CallAsync<TwitchGetClipsDownloadResponse>("get_clips_download", editorId, broadcasterId, new Godot.Collections.Array<string>(clipId)); 
     }
 
     /// <summary>
@@ -804,7 +804,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// </summary>
     /// <param name="body"><see cref="TwitchCreateEventSubSubscriptionBody&lt;T&gt;"/></param>
     /// <returns><see cref="TwitchCreateEventSubSubscriptionResponse&lt;T&gt;"/></returns>
-    public async Task<TwitchCreateEventSubSubscriptionResponse<T>> CreateEventsubSubscription<T>(TwitchCreateEventSubSubscriptionBody<T> body) where T : ITwitcherSharpCondition<T>
+    public async Task<TwitchCreateEventSubSubscriptionResponse<T>> CreateEventsubSubscription<T>(TwitchCreateEventSubSubscriptionBody<T> body) where T : RefCounted, ITwitcherSharpCondition<T>
     {
         return await _data.CallAsync<TwitchCreateEventSubSubscriptionResponse<T>>("create_eventsub_subscription", body.ToGodotObject()); 
     }
@@ -825,7 +825,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <param name="body"><see cref="TwitchGetEventSubSubscriptionsResponse&lt;T&gt;"/></param>
     /// <param name="opt"><see cref="TwitchGetEventsubSubscriptionsOpt"/></param>
     /// <returns><see cref="TwitchGetEventSubSubscriptionsResponse&lt;T&gt;"/></returns>
-    public async Task<TwitchGetEventSubSubscriptionsResponse<T>> GetEventsubSubscriptions<T>(TwitchGetEventSubSubscriptionsResponse<T> body, TwitchGetEventsubSubscriptionsOpt opt = null) where T : ITwitcherSharpCondition<T>
+    public async Task<TwitchGetEventSubSubscriptionsResponse<T>> GetEventsubSubscriptions<T>(TwitchGetEventSubSubscriptionsResponse<T> body, TwitchGetEventsubSubscriptionsOpt opt = null) where T : RefCounted, ITwitcherSharpCondition<T>
     {
         return await _data.CallAsync<TwitchGetEventSubSubscriptionsResponse<T>>("get_eventsub_subscriptions", body.ToGodotObject(), opt?.ToGodotObject()); 
     }
@@ -1632,7 +1632,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetAuthorizationByUserResponse"/></returns>
     public async Task<TwitchGetAuthorizationByUserResponse> GetAuthorizationByUser(string[] userId)
     {
-        return await _data.CallAsync<TwitchGetAuthorizationByUserResponse>("get_authorization_by_user", userId); 
+        return await _data.CallAsync<TwitchGetAuthorizationByUserResponse>("get_authorization_by_user", new Godot.Collections.Array<string>(userId)); 
     }
 
     /// <summary>
@@ -1715,7 +1715,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchDeleteVideosResponse"/></returns>
     public async Task<TwitchDeleteVideosResponse> DeleteVideos(string[] id)
     {
-        return await _data.CallAsync<TwitchDeleteVideosResponse>("delete_videos", id); 
+        return await _data.CallAsync<TwitchDeleteVideosResponse>("delete_videos", new Godot.Collections.Array<string>(id)); 
     }
 
     /// <summary>

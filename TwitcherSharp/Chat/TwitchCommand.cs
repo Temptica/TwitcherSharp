@@ -63,6 +63,8 @@ public partial class TwitchCommand : TwitchCommandBase, ITwitcherSharp<TwitchCom
         data.Set("args_min", ArgsMin);
         data.Set("args_max", ArgsMax);
         GetBaseProperties(data);
+        Data = data;
+        ConnectSignals();
         return data;
     }
 }

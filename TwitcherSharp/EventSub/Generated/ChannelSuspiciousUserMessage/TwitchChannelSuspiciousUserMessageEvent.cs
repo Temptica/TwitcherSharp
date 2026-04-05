@@ -80,7 +80,7 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
             SharedBanChannelIds = data.Get("shared_ban_channel_ids").AsStringArray(),
             Types = data.Get("types").AsStringArray(),
             BanEvasionEvaluation = data.Get("ban_evasion_evaluation").AsString(),
-            Message = data.Get("message").As<TwitchMessage>(),
+            Message = TwitchMessage.FromObject(data.Get("message").AsGodotObject()),
         };
     }
 
@@ -96,10 +96,10 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
         request.Set("user_name", UserName);
         request.Set("user_login", UserLogin);
         request.Set("low_trust_status", LowTrustStatus);
-        request.Set("shared_ban_channel_ids", SharedBanChannelIds);
+        request.Set("shared_ban_channel_ids", new Godot.Collections.Array<string>(SharedBanChannelIds));
         request.Set("types", Types);
         request.Set("ban_evasion_evaluation", BanEvasionEvaluation);
-        request.Set("message", Message);
+        request.Set("message", Message.ToGodotObject());
         return request;
     }
 
@@ -143,7 +143,7 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
             var request = messageClass.New().AsGodotObject();
             request.Set("message_id", MessageId);
             request.Set("text", Text);
-            request.Set("fragments", Fragments);
+            request.Set("fragments", new Godot.Collections.Array(Fragments.Select(x => x.ToGodotObject()).ToArray()));
             return request;
         }
     
@@ -180,8 +180,8 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
                 {
                     Type = data.Get("type").AsString(),
                     Text = data.Get("text").AsString(),
-                    Cheermote = data.Get("cheermote").As<TwitchCheermote>(),
-                    Emote = data.Get("emote").As<TwitchEmote>(),
+                    Cheermote = TwitchCheermote.FromObject(data.Get("cheermote").AsGodotObject()),
+                    Emote = TwitchEmote.FromObject(data.Get("emote").AsGodotObject()),
                 };
             }
         
@@ -192,8 +192,8 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
                 var request = fragmentsClass.New().AsGodotObject();
                 request.Set("type", Type);
                 request.Set("text", Text);
-                request.Set("cheermote", Cheermote);
-                request.Set("emote", Emote);
+                request.Set("cheermote", Cheermote.ToGodotObject());
+                request.Set("emote", Emote.ToGodotObject());
                 return request;
             }
         

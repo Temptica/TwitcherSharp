@@ -1,5 +1,4 @@
-﻿using ClassGenerator.Generator;
-using ClassGenerator.Generator.Api;
+﻿using ClassGenerator.Generator.Api;
 using ClassGenerator.Generator.EventSub;
 using ClassGenerator.Parsers;
 

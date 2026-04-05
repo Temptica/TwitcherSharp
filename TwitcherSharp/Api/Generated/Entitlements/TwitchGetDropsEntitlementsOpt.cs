@@ -39,7 +39,7 @@ public partial class TwitchGetDropsEntitlementsOpt : RefCounted, ITwitcherSharp<
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_drops_entitlements.gd");
         var optClass = script.Get("Opt").AsGodotObject();
         var request = optClass.Call("new").AsGodotObject();
-        if(Id != null) request.Set("id", Id);
+        if(Id != null) request.Set("id", new Godot.Collections.Array<string>(Id));
         if(UserId != null) request.Set("user_id", UserId);
         if(GameId != null) request.Set("game_id", GameId);
         if(FulfillmentStatus != null) request.Set("fulfillment_status", FulfillmentStatus);

@@ -33,9 +33,9 @@ public partial class TwitchGetGamesOpt : RefCounted, ITwitcherSharp<TwitchGetGam
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_games.gd");
         var optClass = script.Get("Opt").AsGodotObject();
         var request = optClass.Call("new").AsGodotObject();
-        if(Id != null) request.Set("id", Id);
-        if(Name != null) request.Set("name", Name);
-        if(IgdbId != null) request.Set("igdb_id", IgdbId);
+        if(Id != null) request.Set("id", new Godot.Collections.Array<string>(Id));
+        if(Name != null) request.Set("name", new Godot.Collections.Array<string>(Name));
+        if(IgdbId != null) request.Set("igdb_id", new Godot.Collections.Array<string>(IgdbId));
         return request;
     }
 

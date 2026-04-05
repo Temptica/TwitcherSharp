@@ -9,7 +9,6 @@ using Godot;
 using TwitcherSharp.Api.Generated.EventSub;
 using TwitcherSharp.Api.Generated.Users;
 using TwitcherSharp.EventSub;
-using TwitcherSharp.EventSub.Generated.ChannelModerate;
 using TwitcherSharp.GoDotTests.Helper;
 using TwitcherSharp.Interfaces;
 using TwitcherSharp.Lib.Http;
@@ -21,6 +20,7 @@ public class MappingTestComplex(Node testScene) : TestClass(testScene)
 {
     private readonly ILog _log = new Log(nameof(MappingTestComplex), new TraceWriter());
     public List<ITwitcherSharp> TwitcherSharpObjects { get; set; }
+    public static int TestCounter { get; set; } = 0;
 
     private const string TestString = "TestString";
     private const int TestInt = 42;
@@ -33,7 +33,6 @@ public class MappingTestComplex(Node testScene) : TestClass(testScene)
             nameof(ResponseData), //Ignoring this for tests 
             nameof(TwitchPollListener), //Doesn't want to work during test due to authentication stuff
             nameof(TwitchEventSubDefinition), //Special one tested manually in ManualMappingTest.cs
-            nameof(TwitchChannelModerateEventV2), // Broken on Twitcher's side. Awaiting Kani's fix.
             nameof(TwitchGetAuthorizationByUserResponse), // Broken on Twitcher's side. Awaiting Kani's implementation.
         ];
 
@@ -64,8 +63,8 @@ public class MappingTestComplex(Node testScene) : TestClass(testScene)
             var godotObject = twitcherSharpObject.ToGodotObject();
             var parsedTwitcherSharpObject = FromGodotObject(twitcherSharpObject.GetType(), godotObject);
             AssertHelper.AssertTwitcherSharpProperties(twitcherSharpObject, parsedTwitcherSharpObject, _log);
-
-            _log.Print("test successful" + twitcherSharpObject.GetType().Name);
+            TestCounter++;
+            _log.Print($"test {TestCounter} successful {twitcherSharpObject.GetType().Name}");
         }
     }
 

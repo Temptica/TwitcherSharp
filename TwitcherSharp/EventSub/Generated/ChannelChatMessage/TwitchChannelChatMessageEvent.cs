@@ -124,12 +124,12 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
             ChatterUserName = data.Get("chatter_user_name").AsString(),
             ChatterUserLogin = data.Get("chatter_user_login").AsString(),
             MessageId = data.Get("message_id").AsString(),
-            Message = data.Get("message").As<TwitchMessage>(),
+            Message = TwitchMessage.FromObject(data.Get("message").AsGodotObject()),
             MessageType = data.Get("message_type").AsString(),
             Badges = badgesArray.Select(TwitchBadges.FromObject).ToArray(),
-            Cheer = data.Get("cheer").As<TwitchCheer>(),
+            Cheer = TwitchCheer.FromObject(data.Get("cheer").AsGodotObject()),
             Color = data.Get("color").AsString(),
-            Reply = data.Get("reply").As<TwitchReply>(),
+            Reply = TwitchReply.FromObject(data.Get("reply").AsGodotObject()),
             ChannelPointsCustomRewardId = data.Get("channel_points_custom_reward_id").AsString(),
             SourceBroadcasterUserId = data.Get("source_broadcaster_user_id").AsString(),
             SourceBroadcasterUserName = data.Get("source_broadcaster_user_name").AsString(),
@@ -152,18 +152,18 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
         request.Set("chatter_user_name", ChatterUserName);
         request.Set("chatter_user_login", ChatterUserLogin);
         request.Set("message_id", MessageId);
-        request.Set("message", Message);
+        request.Set("message", Message.ToGodotObject());
         request.Set("message_type", MessageType);
-        request.Set("badges", Badges);
-        request.Set("cheer", Cheer);
+        request.Set("badges", new Godot.Collections.Array(Badges.Select(x => x.ToGodotObject()).ToArray()));
+        request.Set("cheer", Cheer.ToGodotObject());
         request.Set("color", Color);
-        request.Set("reply", Reply);
+        request.Set("reply", Reply.ToGodotObject());
         request.Set("channel_points_custom_reward_id", ChannelPointsCustomRewardId);
         request.Set("source_broadcaster_user_id", SourceBroadcasterUserId);
         request.Set("source_broadcaster_user_name", SourceBroadcasterUserName);
         request.Set("source_broadcaster_user_login", SourceBroadcasterUserLogin);
         request.Set("source_message_id", SourceMessageId);
-        request.Set("source_badges", SourceBadges);
+        request.Set("source_badges", new Godot.Collections.Array(SourceBadges.Select(x => x.ToGodotObject()).ToArray()));
         request.Set("is_source_only", IsSourceOnly);
         return request;
     }
@@ -201,7 +201,7 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
             var messageClass = script.Get("Message").As<GDScript>();
             var request = messageClass.New().AsGodotObject();
             request.Set("text", Text);
-            request.Set("fragments", Fragments);
+            request.Set("fragments", new Godot.Collections.Array(Fragments.Select(x => x.ToGodotObject()).ToArray()));
             return request;
         }
     
@@ -243,9 +243,9 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
                 {
                     Type = data.Get("type").AsString(),
                     Text = data.Get("text").AsString(),
-                    Cheermote = data.Get("cheermote").As<TwitchCheermote>(),
-                    Emote = data.Get("emote").As<TwitchEmote>(),
-                    Mention = data.Get("mention").As<TwitchMention>(),
+                    Cheermote = TwitchCheermote.FromObject(data.Get("cheermote").AsGodotObject()),
+                    Emote = TwitchEmote.FromObject(data.Get("emote").AsGodotObject()),
+                    Mention = TwitchMention.FromObject(data.Get("mention").AsGodotObject()),
                 };
             }
         
@@ -256,9 +256,9 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
                 var request = fragmentsClass.New().AsGodotObject();
                 request.Set("type", Type);
                 request.Set("text", Text);
-                request.Set("cheermote", Cheermote);
-                request.Set("emote", Emote);
-                request.Set("mention", Mention);
+                request.Set("cheermote", Cheermote.ToGodotObject());
+                request.Set("emote", Emote.ToGodotObject());
+                request.Set("mention", Mention.ToGodotObject());
                 return request;
             }
         
@@ -351,7 +351,7 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
                     request.Set("id", Id);
                     request.Set("emote_set_id", EmoteSetId);
                     request.Set("owner_id", OwnerId);
-                    request.Set("format", Format);
+                    request.Set("format", new Godot.Collections.Array<string>(Format));
                     return request;
                 }
             }

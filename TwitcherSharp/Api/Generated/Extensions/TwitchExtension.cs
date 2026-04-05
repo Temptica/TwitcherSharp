@@ -76,21 +76,21 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
         request.Set("eula_tos_url", EulaTosUrl);
         request.Set("has_chat_support", HasChatSupport);
         request.Set("icon_url", IconUrl);
-        request.Set("icon_urls", IconUrls);
+        request.Set("icon_urls", IconUrls?.ToGodotObject());
         request.Set("id", Id);
         request.Set("name", Name);
         request.Set("privacy_policy_url", PrivacyPolicyUrl);
         request.Set("request_identity_link", RequestIdentityLink);
-        request.Set("screenshot_urls", ScreenshotUrls);
+        request.Set("screenshot_urls", new Godot.Collections.Array<string>(ScreenshotUrls));
         request.Set("state", State);
         request.Set("subscriptions_support_level", SubscriptionsSupportLevel);
         request.Set("summary", Summary);
         request.Set("support_email", SupportEmail);
         request.Set("version", Version);
         request.Set("viewer_summary", ViewerSummary);
-        request.Set("views", Views);
-        request.Set("allowlisted_config_urls", AllowlistedConfigUrls);
-        request.Set("allowlisted_panel_urls", AllowlistedPanelUrls);
+        request.Set("views", Views?.ToGodotObject());
+        request.Set("allowlisted_config_urls", new Godot.Collections.Array<string>(AllowlistedConfigUrls));
+        request.Set("allowlisted_panel_urls", new Godot.Collections.Array<string>(AllowlistedPanelUrls));
         return request;
     }
     
@@ -162,11 +162,11 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_views.gd");
             var request = script.Call("new").AsGodotObject();
-            request.Set("mobile", Mobile);
-            request.Set("panel", Panel);
-            request.Set("video_overlay", VideoOverlay);
-            request.Set("component", Component);
-            request.Set("config", Config);
+            request.Set("mobile", Mobile?.ToGodotObject());
+            request.Set("panel", Panel?.ToGodotObject());
+            request.Set("video_overlay", VideoOverlay?.ToGodotObject());
+            request.Set("component", Component?.ToGodotObject());
+            request.Set("config", Config?.ToGodotObject());
             return request;
         }
         

@@ -29,7 +29,7 @@ public partial class TwitchGetConduitShardsResponse : RefCounted, ITwitcherSharp
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_conduit_shards.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        request.Set("data", Data?.Select(x => x.ToGodotObject()).ToArray());
+        if(Data != null) request.Set("data", new Godot.Collections.Array<GodotObject>(Data.Select(x => x.ToGodotObject()).ToArray()));
         if(Pagination != null) request.Set("pagination", Pagination);
         return request;
     }
@@ -97,7 +97,7 @@ public partial class TwitchGetConduitShardsResponse : RefCounted, ITwitcherSharp
             var request = script.Call("new").AsGodotObject();
             request.Set("id", Id);
             request.Set("status", Status);
-            request.Set("transport", Transport);
+            request.Set("transport", Transport?.ToGodotObject());
             return request;
         }
         

@@ -37,7 +37,7 @@ public partial class TwitchGetChannelStreamScheduleOpt : RefCounted, ITwitcherSh
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_channel_stream_schedule.gd");
         var optClass = script.Get("Opt").AsGodotObject();
         var request = optClass.Call("new").AsGodotObject();
-        if(Id != null) request.Set("id", Id);
+        if(Id != null) request.Set("id", new Godot.Collections.Array<string>(Id));
         if(StartTime != null) request.Set("start_time", StartTime);
         if(UtcOffset != null) request.Set("utc_offset", UtcOffset);
         if(First.HasValue) request.Set("first", First.Value);

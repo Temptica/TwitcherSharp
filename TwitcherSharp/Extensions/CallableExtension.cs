@@ -13,7 +13,7 @@ public static class CallableExtension
         /// <param name="action">The action to be executed when the <see cref="Callable"/> gets called.</param>
         /// <typeparam name="T">The type of the TwitcherSharp object (must implement ITwitcherSharp).</typeparam>
         /// <returns>A Godot <see cref="Callable"/> that handles the type conversion automatically.</returns>
-        internal static Callable FromTwitcherSharp<T>(Action<T> action) where T : ITwitcherSharp<T>
+        public static Callable FromTwitcherSharp<T>(Action<T> action) where T : RefCounted, ITwitcherSharp<T>
         {
             return Callable.From<GodotObject>(data => action.Invoke(T.FromObject(data)));
         }
@@ -30,14 +30,14 @@ public static class CallableExtension
         /// <param name="action"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        internal static Callable FromTwitcherSharp<T>(Action<string, T, string[]> action) where T : ITwitcherSharp<T>
+        internal static Callable FromTwitcherSharp<T>(Action<string, T, string[]> action) where T : RefCounted, ITwitcherSharp<T>
         {
             return Callable.From<string, GodotObject, string[]>((userName, info, args) =>
                 action.Invoke(userName, T.FromObject(info), args));
         }
 
         internal static Callable FromTwitcherSharp<T>(Action<string, T, string[], float> action)
-            where T : ITwitcherSharp<T>
+            where T : RefCounted, ITwitcherSharp<T>
         {
             return Callable.From<string, GodotObject, string[], float>((userName, info, args, cooldown) =>
                 action.Invoke(userName, T.FromObject(info), args, cooldown));

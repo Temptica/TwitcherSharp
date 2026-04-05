@@ -22,37 +22,4 @@ public class TwitchGenParameter : IComparable<TwitchGenParameter>
             _ => string.CompareOrdinal(Name, other.Name)
         };
     }
-    
-    public string GetTypeString()
-    {
-        return IsArray ? $"{Type}[]" : Type;
-    }
-
-    public string GetTypeDefault()
-    {
-        if (IsArray) return "[]";
-        return Type switch
-        {
-            "string" => "\"\"",
-            "int" => "0",
-            "double" => "0",
-            "bool" => "false",
-            _ => "null"
-        };
-    }
-    
-    public string GetAsType()
-    {
-        return Type switch
-        {
-            "string" => "AsString()",
-            "bool" => "AsBool()",
-            "int" => "AsInt32()",
-            "double" => "AsDouble()",
-            "string[]" => "AsStringArray()",
-            "int[]" => "AsInt32Array()",
-            "double[]" => "AsFloat64Array()",
-            _ => $"As<{Type}>()",
-        };
-    }
 }

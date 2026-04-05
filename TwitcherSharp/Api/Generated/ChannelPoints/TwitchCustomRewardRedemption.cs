@@ -51,7 +51,7 @@ public partial class TwitchCustomRewardRedemption : RefCounted, ITwitcherSharp<T
         request.Set("user_id", UserId);
         request.Set("user_name", UserName);
         request.Set("user_login", UserLogin);
-        request.Set("reward", Reward);
+        request.Set("reward", Reward?.ToGodotObject());
         request.Set("user_input", UserInput);
         request.Set("status", Status);
         request.Set("redeemed_at", RedeemedAt);

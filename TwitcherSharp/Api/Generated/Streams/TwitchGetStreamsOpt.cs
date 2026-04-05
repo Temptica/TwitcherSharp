@@ -43,11 +43,11 @@ public partial class TwitchGetStreamsOpt : RefCounted, ITwitcherSharp<TwitchGetS
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_streams.gd");
         var optClass = script.Get("Opt").AsGodotObject();
         var request = optClass.Call("new").AsGodotObject();
-        if(UserId != null) request.Set("user_id", UserId);
-        if(UserLogin != null) request.Set("user_login", UserLogin);
-        if(GameId != null) request.Set("game_id", GameId);
+        if(UserId != null) request.Set("user_id", new Godot.Collections.Array<string>(UserId));
+        if(UserLogin != null) request.Set("user_login", new Godot.Collections.Array<string>(UserLogin));
+        if(GameId != null) request.Set("game_id", new Godot.Collections.Array<string>(GameId));
         if(Type != null) request.Set("type", Type);
-        if(Language != null) request.Set("language", Language);
+        if(Language != null) request.Set("language", new Godot.Collections.Array<string>(Language));
         if(First.HasValue) request.Set("first", First.Value);
         if(Before != null) request.Set("before", Before);
         if(After != null) request.Set("after", After);

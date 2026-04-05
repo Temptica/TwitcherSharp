@@ -68,7 +68,7 @@ public partial class TwitchChannelChatUserMessageUpdateEvent : RefCounted, ITwit
             UserName = data.Get("user_name").AsString(),
             Status = data.Get("status").AsString(),
             MessageId = data.Get("message_id").AsString(),
-            Message = data.Get("message").As<TwitchMessage>(),
+            Message = TwitchMessage.FromObject(data.Get("message").AsGodotObject()),
         };
     }
 
@@ -85,7 +85,7 @@ public partial class TwitchChannelChatUserMessageUpdateEvent : RefCounted, ITwit
         request.Set("user_name", UserName);
         request.Set("status", Status);
         request.Set("message_id", MessageId);
-        request.Set("message", Message);
+        request.Set("message", Message.ToGodotObject());
         return request;
     }
 
@@ -122,7 +122,7 @@ public partial class TwitchChannelChatUserMessageUpdateEvent : RefCounted, ITwit
             var messageClass = script.Get("Message").As<GDScript>();
             var request = messageClass.New().AsGodotObject();
             request.Set("text", Text);
-            request.Set("fragments", Fragments);
+            request.Set("fragments", new Godot.Collections.Array(Fragments.Select(x => x.ToGodotObject()).ToArray()));
             return request;
         }
     
@@ -153,8 +153,8 @@ public partial class TwitchChannelChatUserMessageUpdateEvent : RefCounted, ITwit
                 return new TwitchFragments
                 {
                     Text = data.Get("text").AsString(),
-                    Emote = data.Get("emote").As<TwitchEmote>(),
-                    Cheermote = data.Get("cheermote").As<TwitchCheermote>(),
+                    Emote = TwitchEmote.FromObject(data.Get("emote").AsGodotObject()),
+                    Cheermote = TwitchCheermote.FromObject(data.Get("cheermote").AsGodotObject()),
                 };
             }
         
@@ -164,8 +164,8 @@ public partial class TwitchChannelChatUserMessageUpdateEvent : RefCounted, ITwit
                 var fragmentsClass = script.Get("Fragments").As<GDScript>();
                 var request = fragmentsClass.New().AsGodotObject();
                 request.Set("text", Text);
-                request.Set("emote", Emote);
-                request.Set("cheermote", Cheermote);
+                request.Set("emote", Emote.ToGodotObject());
+                request.Set("cheermote", Cheermote.ToGodotObject());
                 return request;
             }
         

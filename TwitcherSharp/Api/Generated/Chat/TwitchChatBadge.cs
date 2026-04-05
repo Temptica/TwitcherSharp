@@ -28,7 +28,7 @@ public partial class TwitchChatBadge : RefCounted, ITwitcherSharp<TwitchChatBadg
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_chat_badge.gd");
         var request = script.Call("new").AsGodotObject();
         request.Set("set_id", SetId);
-        request.Set("versions", Versions?.Select(x => x.ToGodotObject()).ToArray());
+        if(Versions != null) request.Set("versions", new Godot.Collections.Array<GodotObject>(Versions.Select(x => x.ToGodotObject()).ToArray()));
         return request;
     }
     

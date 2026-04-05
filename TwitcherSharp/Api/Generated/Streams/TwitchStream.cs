@@ -64,8 +64,8 @@ public partial class TwitchStream : RefCounted, ITwitcherSharp<TwitchStream>
         request.Set("started_at", StartedAt);
         request.Set("language", Language);
         request.Set("thumbnail_url", ThumbnailUrl);
-        request.Set("tag_ids", TagIds);
-        request.Set("tags", Tags);
+        request.Set("tag_ids", new Godot.Collections.Array<string>(TagIds));
+        request.Set("tags", new Godot.Collections.Array<string>(Tags));
         request.Set("is_mature", IsMature);
         return request;
     }

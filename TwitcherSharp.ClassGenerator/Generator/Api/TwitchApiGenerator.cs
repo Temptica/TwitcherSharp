@@ -27,11 +27,6 @@ public class TwitchApiGenerator
             var code = ApiCodeHelper.InterfaceCode(genInterface);
             Directory.CreateDirectory($"{apiPath}/{genInterface.NameSpace.Replace('.','/')}");
             File.WriteAllText($"{apiPath}/{genInterface.NameSpace.Replace('.','/')}/{genInterface.InterfaceName}.cs", code);
-
-            foreach (var component in genInterface.ComponentsToGenerate.Where(c => c.GetNameSpace() != "Shared"))
-            {
-                PrepareComponent(component);
-            }
         }
 
         var twitchApiCode = new StringBuilder();

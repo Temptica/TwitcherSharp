@@ -31,8 +31,8 @@ public partial class TwitchGetUsersOpt : RefCounted, ITwitcherSharp<TwitchGetUse
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_users.gd");
         var optClass = script.Get("Opt").AsGodotObject();
         var request = optClass.Call("new").AsGodotObject();
-        if(Id != null) request.Set("id", Id);
-        if(Login != null) request.Set("login", Login);
+        if(Id != null) request.Set("id", new Godot.Collections.Array<string>(Id));
+        if(Login != null) request.Set("login", new Godot.Collections.Array<string>(Login));
         return request;
     }
 

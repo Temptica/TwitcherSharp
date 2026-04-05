@@ -26,10 +26,10 @@ public partial class TwitchGetChannelStreamScheduleResponse : RefCounted, ITwitc
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_channel_stream_schedule.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        request.Set("data", Data);
+        request.Set("data", Data?.ToGodotObject());
         return request;
     }
-        
+    
     /// <summary> 
     /// The broadcaster’s streaming schedule. 
     /// </summary>
@@ -65,11 +65,11 @@ public partial class TwitchGetChannelStreamScheduleResponse : RefCounted, ITwitc
         {
             var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_data.gd");
             var request = script.Call("new").AsGodotObject();
-            request.Set("segments", Segments?.Select(x => x.ToGodotObject()).ToArray());
+            if(Segments != null) request.Set("segments", new Godot.Collections.Array<GodotObject>(Segments.Select(x => x.ToGodotObject()).ToArray()));
             request.Set("broadcaster_id", BroadcasterId);
             request.Set("broadcaster_name", BroadcasterName);
             request.Set("broadcaster_login", BroadcasterLogin);
-            request.Set("vacation", Vacation);
+            request.Set("vacation", Vacation?.ToGodotObject());
             if(Pagination != null) request.Set("pagination", Pagination);
             return request;
         }

@@ -6,9 +6,9 @@ namespace TwitcherSharp.Interfaces;
 /// <summary>
 /// The typed variant of the base interface for all TwitcherSharp singleton classes.
 /// </summary>
-/// <typeparam name="TSelf"></typeparam>
+/// <typeparam name="TSelf">A RefCounted class</typeparam>
 public interface ITwitcherSharpSingleton<out TSelf> : ITwitcherSharpSingleton, ITwitcherSharp<TSelf>
-    where TSelf : ITwitcherSharpSingleton<TSelf>
+    where TSelf : RefCounted, ITwitcherSharpSingleton<TSelf>
 {
     /// <summary>
     /// Returns whether it is linked to a None and the node has not been freed.
@@ -34,13 +34,13 @@ public interface ITwitcherSharpSingleton : ITwitcherSharp
     /// Returns whether this instance is linked to an existing GodotObject.
     /// </summary>
     bool IsLinked { get; }
-    
+
     /// <summary>
     /// Returns the linked GodotObject. If there is no linked object, it will create a new one based on this instance <b>link it</b> and return it.
     /// </summary>
     /// <returns></returns>
     abstract GodotObject ITwitcherSharp.ToGodotObject();
-    
+
     /// <summary>
     /// Removes the singleton instance. This will unlink the GodotObject if it exists.
     /// </summary>

@@ -44,12 +44,9 @@ public static class AssertHelper
                     if ((bool?)val1 == (bool?)val2 || (val1 == null && (bool?)val2 == false)) continue;
                     throw new Exception(
                         $"property {property.Name} values do not match for {twitcherSharpObject.GetType().Name}. Expecting {val1} but got {val2}");
+                case "Nullable`1" when property.PropertyType.GetGenericArguments()[0].Name == nameof(Double):
                 case nameof(Double):
-                    if ((double?)val1 == (double?)val2) continue;
-                    throw new Exception(
-                        $"property {property.Name} values do not match for {twitcherSharpObject.GetType().Name}. Expecting {val1} but got {val2}");
-                case nameof(Single):
-                    if ((float?)val1 == (float?)val2) continue;
+                    if ((val1 == null && (double?)val2 == 0) || (double?)val1 == (double?)val2 ) continue;
                     throw new Exception(
                         $"property {property.Name} values do not match for {twitcherSharpObject.GetType().Name}. Expecting {val1} but got {val2}");
                 case nameof(DateTime):

@@ -26,7 +26,7 @@ public partial class TwitchGetAutoModSettingsResponse : RefCounted, ITwitcherSha
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_auto_mod_settings.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        request.Set("data", Data?.Select(x => x.ToGodotObject()).ToArray());
+        if(Data != null) request.Set("data", new Godot.Collections.Array<GodotObject>(Data.Select(x => x.ToGodotObject()).ToArray()));
         return request;
     }
 

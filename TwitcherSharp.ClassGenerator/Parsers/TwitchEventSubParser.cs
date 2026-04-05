@@ -7,7 +7,7 @@ namespace ClassGenerator.Parsers;
 public class TwitchEventSubParser
 {
     //"https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/";
-    private const string EventSubUrl = "EventSub.html";
+    private const string Path = "EventSub.html";
 
     public List<TwitchEventSubGenComponent> Components { get; } = [];
     public List<TwitchEventSubGenComponent> SubComponents { get; } = [];
@@ -15,15 +15,34 @@ public class TwitchEventSubParser
 
     public async Task ParseEventSub()
     {
-        await using var stream = File.OpenRead(EventSubUrl);
+        await using var stream = Path.StartsWith("https://")
+            ? await new HttpClient().GetStreamAsync(Path)
+            : File.OpenRead(Path);
         var html = await new StreamReader(stream).ReadToEndAsync();
 
         var doc = new HtmlDocument();
         doc.LoadHtml(html);
 
         ParseSubComponents(doc);
+
+        foreach (var component in SubComponents)
+        {
+            foreach (var field in component.Fields.Values.Where(f =>
+                         f.IsTyped && SubComponents.All(c => c != f.TypedComponent)))
+            {
+                var subComponent = SubComponents.First(c => c.ClassName == field.TypedComponent.ClassName);
+
+                component.SubComponents.Remove(field.TypedComponent.ClassName);
+                component.AddSubComponent(subComponent);
+                field.TypedComponent = subComponent;
+                subComponent.IsShared = true;
+            }
+        }
+
         ParseComponents(doc);
         ParseConditions(doc);
+
+
         Console.WriteLine($"{Components.Count} eventsub components parsed");
     }
 
@@ -34,18 +53,34 @@ public class TwitchEventSubParser
         while (lastNode.GetNextElementSibling() != null)
         {
             var h2Node = lastNode.GetNextElementSibling();
-            if (h2Node.Id is "conditions" or "events" or "subscription" or "transport")
+            switch (h2Node.Id)
             {
-                var nextNode = h2Node.GetNextElementSibling();
-                while (nextNode?.Name != "h2")
+                case "conditions" or "events" or "subscription":
                 {
-                    if (nextNode is null) return;
+                    var nextNode = h2Node.GetNextElementSibling();
+                    while (nextNode?.Name != "h2")
+                    {
+                        if (nextNode is null) return;
 
-                    nextNode = nextNode.GetNextElementSibling();
+                        nextNode = nextNode.GetNextElementSibling();
+                    }
+
+                    lastNode = nextNode.PreviousSibling;
+                    continue;
                 }
-
-                lastNode = nextNode.PreviousSibling;
-                continue;
+                case "transport":
+                {
+                    var transport = new TwitchEventSubGenComponent("Transport")
+                    {
+                        Description = h2Node.GetNextElementSibling().InnerText.Trim(),
+                        IsShared = true
+                    };
+                
+                    var transportTable = h2Node.GetNextElementSibling().GetNextElementSibling();
+                    ParseTable(transportTable, transport);
+                    SubComponents.Add(transport);
+                    return;
+                }
             }
 
             var subComponent = new TwitchEventSubGenComponent(h2Node.InnerText.Trim())
@@ -55,7 +90,7 @@ public class TwitchEventSubParser
 
             var p = h2Node.GetNextElementSibling();
             HtmlNode table;
-
+            //TODO : FIX TRANSPORT
             if (p.Name == "p")
             {
                 subComponent.Description = p.InnerText.Trim();

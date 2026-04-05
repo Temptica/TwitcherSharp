@@ -47,7 +47,7 @@ public partial class TwitchGetClipsOpt : RefCounted, ITwitcherSharp<TwitchGetCli
         var request = optClass.Call("new").AsGodotObject();
         if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
         if(GameId != null) request.Set("game_id", GameId);
-        if(Id != null) request.Set("id", Id);
+        if(Id != null) request.Set("id", new Godot.Collections.Array<string>(Id));
         if(StartedAt != null) request.Set("started_at", StartedAt);
         if(EndedAt != null) request.Set("ended_at", EndedAt);
         if(First.HasValue) request.Set("first", First.Value);

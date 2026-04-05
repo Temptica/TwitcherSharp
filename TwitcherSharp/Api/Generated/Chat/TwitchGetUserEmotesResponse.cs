@@ -31,7 +31,7 @@ public partial class TwitchGetUserEmotesResponse : RefCounted, ITwitcherSharp<Tw
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_user_emotes.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        request.Set("data", Data?.Select(x => x.ToGodotObject()).ToArray());
+        if(Data != null) request.Set("data", new Godot.Collections.Array<GodotObject>(Data.Select(x => x.ToGodotObject()).ToArray()));
         request.Set("template", Template);
         if(Pagination != null) request.Set("pagination", Pagination);
         return request;
@@ -109,9 +109,9 @@ public partial class TwitchGetUserEmotesResponse : RefCounted, ITwitcherSharp<Tw
             request.Set("emote_type", EmoteType);
             request.Set("emote_set_id", EmoteSetId);
             request.Set("owner_id", OwnerId);
-            request.Set("format", Format);
-            request.Set("scale", Scale);
-            request.Set("theme_mode", ThemeMode);
+            request.Set("format", new Godot.Collections.Array<string>(Format));
+            request.Set("scale", new Godot.Collections.Array<string>(Scale));
+            request.Set("theme_mode", new Godot.Collections.Array<string>(ThemeMode));
             return request;
         }
     

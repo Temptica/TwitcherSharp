@@ -112,7 +112,7 @@ public abstract partial class TwitchCommandBase : RefCounted, ITwitcherSharp
     /// </summary>
     public double GlobalCooldown { get; set; } = 0;
 
-    protected void ConnectToSignals()
+    protected void ConnectSignals()
     {
         Data.Connect(GodotObject.CommandReceived,
             Callable.FromTwitcherSharp<TwitchCommandInfo>(EmitSignalCommandReceived));
@@ -143,7 +143,7 @@ public abstract partial class TwitchCommandBase : RefCounted, ITwitcherSharp
         GlobalCooldown = Data.Get("global_cooldown").AsInt32();
         AllCommands = Data.Get("all_commands").AsGodotArray<GodotObject>().Select(GetTypedCommand).ToList();
 
-        ConnectToSignals();
+        ConnectSignals();
     }
 
     public TwitchCommandBase GetTypedCommand(GodotObject data)

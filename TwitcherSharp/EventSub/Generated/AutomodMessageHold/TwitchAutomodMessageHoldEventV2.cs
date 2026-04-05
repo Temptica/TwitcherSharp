@@ -82,11 +82,11 @@ public partial class TwitchAutomodMessageHoldEventV2 : RefCounted, ITwitcherShar
             UserLogin = data.Get("user_login").AsString(),
             UserName = data.Get("user_name").AsString(),
             MessageId = data.Get("message_id").AsString(),
-            Message = data.Get("message").As<TwitchMessage>(),
+            Message = TwitchMessage.FromObject(data.Get("message").AsGodotObject()),
             HeldAt = data.Get("held_at").AsString(),
             Reason = data.Get("reason").AsString(),
-            Automod = data.Get("automod").As<TwitchAutomod>(),
-            BlockedTerm = data.Get("blocked_term").As<TwitchBlockedTerm>(),
+            Automod = TwitchAutomod.FromObject(data.Get("automod").AsGodotObject()),
+            BlockedTerm = TwitchBlockedTerm.FromObject(data.Get("blocked_term").AsGodotObject()),
         };
     }
 
@@ -102,11 +102,11 @@ public partial class TwitchAutomodMessageHoldEventV2 : RefCounted, ITwitcherShar
         request.Set("user_login", UserLogin);
         request.Set("user_name", UserName);
         request.Set("message_id", MessageId);
-        request.Set("message", Message);
+        request.Set("message", Message.ToGodotObject());
         request.Set("held_at", HeldAt);
         request.Set("reason", Reason);
-        request.Set("automod", Automod);
-        request.Set("blocked_term", BlockedTerm);
+        request.Set("automod", Automod.ToGodotObject());
+        request.Set("blocked_term", BlockedTerm.ToGodotObject());
         return request;
     }
 
@@ -143,7 +143,7 @@ public partial class TwitchAutomodMessageHoldEventV2 : RefCounted, ITwitcherShar
             var messageClass = script.Get("Message").As<GDScript>();
             var request = messageClass.New().AsGodotObject();
             request.Set("text", Text);
-            request.Set("fragments", Fragments);
+            request.Set("fragments", new Godot.Collections.Array(Fragments.Select(x => x.ToGodotObject()).ToArray()));
             return request;
         }
     
@@ -180,8 +180,8 @@ public partial class TwitchAutomodMessageHoldEventV2 : RefCounted, ITwitcherShar
                 {
                     Type = data.Get("type").AsString(),
                     Text = data.Get("text").AsString(),
-                    Emote = data.Get("emote").As<TwitchEmote>(),
-                    Cheermote = data.Get("cheermote").As<TwitchCheermote>(),
+                    Emote = TwitchEmote.FromObject(data.Get("emote").AsGodotObject()),
+                    Cheermote = TwitchCheermote.FromObject(data.Get("cheermote").AsGodotObject()),
                 };
             }
         
@@ -192,8 +192,8 @@ public partial class TwitchAutomodMessageHoldEventV2 : RefCounted, ITwitcherShar
                 var request = fragmentsClass.New().AsGodotObject();
                 request.Set("type", Type);
                 request.Set("text", Text);
-                request.Set("emote", Emote);
-                request.Set("cheermote", Cheermote);
+                request.Set("emote", Emote.ToGodotObject());
+                request.Set("cheermote", Cheermote.ToGodotObject());
                 return request;
             }
         
@@ -318,7 +318,7 @@ public partial class TwitchAutomodMessageHoldEventV2 : RefCounted, ITwitcherShar
             var request = automodClass.New().AsGodotObject();
             request.Set("category", Category);
             request.Set("level", Level);
-            request.Set("boundaries", Boundaries);
+            request.Set("boundaries", new Godot.Collections.Array(Boundaries.Select(x => x.ToGodotObject()).ToArray()));
             return request;
         }
     
@@ -385,7 +385,7 @@ public partial class TwitchAutomodMessageHoldEventV2 : RefCounted, ITwitcherShar
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_automod_message_hold.gd");
             var blockedTermClass = script.Get("BlockedTerm").As<GDScript>();
             var request = blockedTermClass.New().AsGodotObject();
-            request.Set("terms_found", TermsFound);
+            request.Set("terms_found", new Godot.Collections.Array(TermsFound.Select(x => x.ToGodotObject()).ToArray()));
             return request;
         }
     
@@ -426,7 +426,7 @@ public partial class TwitchAutomodMessageHoldEventV2 : RefCounted, ITwitcherShar
                 return new TwitchTermsFound
                 {
                     TermId = data.Get("term_id").AsString(),
-                    Boundary = data.Get("boundary").As<TwitchBoundary>(),
+                    Boundary = TwitchBoundary.FromObject(data.Get("boundary").AsGodotObject()),
                     OwnerBroadcasterUserId = data.Get("owner_broadcaster_user_id").AsString(),
                     OwnerBroadcasterUserLogin = data.Get("owner_broadcaster_user_login").AsString(),
                     OwnerBroadcasterUserName = data.Get("owner_broadcaster_user_name").AsString(),
@@ -439,7 +439,7 @@ public partial class TwitchAutomodMessageHoldEventV2 : RefCounted, ITwitcherShar
                 var termsFoundClass = script.Get("TermsFound").As<GDScript>();
                 var request = termsFoundClass.New().AsGodotObject();
                 request.Set("term_id", TermId);
-                request.Set("boundary", Boundary);
+                request.Set("boundary", Boundary.ToGodotObject());
                 request.Set("owner_broadcaster_user_id", OwnerBroadcasterUserId);
                 request.Set("owner_broadcaster_user_login", OwnerBroadcasterUserLogin);
                 request.Set("owner_broadcaster_user_name", OwnerBroadcasterUserName);

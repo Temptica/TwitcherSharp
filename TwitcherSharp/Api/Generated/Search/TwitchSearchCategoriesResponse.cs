@@ -29,7 +29,7 @@ public partial class TwitchSearchCategoriesResponse : RefCounted, ITwitcherSharp
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_search_categories.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        request.Set("data", Data?.Select(x => x.ToGodotObject()).ToArray());
+        if(Data != null) request.Set("data", new Godot.Collections.Array<GodotObject>(Data.Select(x => x.ToGodotObject()).ToArray()));
         if(Pagination != null) request.Set("pagination", Pagination);
         return request;
     }
@@ -62,38 +62,6 @@ public partial class TwitchSearchCategoriesResponse : RefCounted, ITwitcherSharp
             var paginationClass = script.Get("Pagination").AsGodotObject();
             var request = paginationClass.Call("new").AsGodotObject();
             if(Cursor != null) request.Set("cursor", Cursor);
-            return request;
-        }
-    
-    }
-    public partial class TwitchCategory : RefCounted, ITwitcherSharp<TwitchCategory>
-    {
-        private GodotObject _data;
-        public string BoxArtUrl { get; set; }
-        public string Name { get; set; }
-        public string Id { get; set; }
-    
-        /// <summary> 
-        /// Transforms the godot data into a TwitchCategory object.
-        /// </summary> 
-        public static TwitchCategory FromObject(GodotObject data)
-        {
-            if(data == null) return null;
-            return new TwitchCategory
-            {
-                BoxArtUrl = data.Get("box_art_url").AsString(),
-                Name = data.Get("name").AsString(),
-                Id = data.Get("id").AsString(),
-            };
-        }
-    
-        public GodotObject ToGodotObject()
-        {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_category.gd");
-            var request = script.Call("new").AsGodotObject();
-            request.Set("box_art_url", BoxArtUrl);
-            request.Set("name", Name);
-            request.Set("id", Id);
             return request;
         }
     

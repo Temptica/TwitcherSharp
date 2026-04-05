@@ -37,7 +37,7 @@ public partial class TwitchDropEntitlementGrantEvent : RefCounted, ITwitcherShar
         var eventClass = script.Get("Event").As<GDScript>();
         var request = eventClass.New().AsGodotObject();
         request.Set("id", Id);
-        request.Set("data", Data);
+        request.Set("data", new Godot.Collections.Array(Data.Select(x => x.ToGodotObject()).ToArray()));
         return request;
     }
 

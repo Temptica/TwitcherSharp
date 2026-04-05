@@ -47,7 +47,7 @@ public partial class TwitchGetVideosOpt : RefCounted, ITwitcherSharp<TwitchGetVi
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_videos.gd");
         var optClass = script.Get("Opt").AsGodotObject();
         var request = optClass.Call("new").AsGodotObject();
-        if(Id != null) request.Set("id", Id);
+        if(Id != null) request.Set("id", new Godot.Collections.Array<string>(Id));
         if(UserId != null) request.Set("user_id", UserId);
         if(GameId != null) request.Set("game_id", GameId);
         if(Language != null) request.Set("language", Language);

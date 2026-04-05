@@ -27,7 +27,7 @@ public partial class TwitchUpdateDropsEntitlementsBody : RefCounted, ITwitcherSh
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_update_drops_entitlements.gd");
         var bodyClass = script.Get("Body").AsGodotObject();
         var request = bodyClass.Call("new").AsGodotObject();
-        if(EntitlementIds != null) request.Set("entitlement_ids", EntitlementIds);
+        request.Set("entitlement_ids", new Godot.Collections.Array<string>(EntitlementIds));
         if(FulfillmentStatus != null) request.Set("fulfillment_status", FulfillmentStatus);
         return request;
     }

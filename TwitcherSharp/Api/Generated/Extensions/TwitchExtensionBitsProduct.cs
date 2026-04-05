@@ -35,7 +35,7 @@ public partial class TwitchExtensionBitsProduct : RefCounted, ITwitcherSharp<Twi
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_extension_bits_product.gd");
         var request = script.Call("new").AsGodotObject();
         request.Set("sku", Sku);
-        request.Set("cost", Cost);
+        request.Set("cost", Cost?.ToGodotObject());
         request.Set("in_development", InDevelopment);
         request.Set("display_name", DisplayName);
         request.Set("expiration", Expiration);

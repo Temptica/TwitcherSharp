@@ -1,7 +1,7 @@
 using Godot;
 using Godot.Collections;
 using TwitcherSharp.Interfaces;
-
+using TwitcherSharp.EventSub.Generated.Shared;
 
 namespace TwitcherSharp.EventSub.Generated.Shared;
 
@@ -33,9 +33,9 @@ public partial class TwitchOutcomes : RefCounted, ITwitcherSharpEventSub<TwitchO
     public int ChannelPoints { get; set; }
 
     /// <summary> 
-    /// An array of users who used the most Channel Points on this outcome.
+    /// An array of up to 10 objects that describe users who participated in a Channel Points Prediction.
     /// </summary>
-    public TwitchTopPredictors[] TopPredictors { get; set; }
+    public TwitchTopPredictors TopPredictors { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchOutcomes object.
@@ -43,7 +43,6 @@ public partial class TwitchOutcomes : RefCounted, ITwitcherSharpEventSub<TwitchO
     public static TwitchOutcomes FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var topPredictorsArray = data.Get("top_predictors").AsGodotArray<GodotObject>();
         return new TwitchOutcomes
         {
             Id = data.Get("id").AsString(),
@@ -51,7 +50,7 @@ public partial class TwitchOutcomes : RefCounted, ITwitcherSharpEventSub<TwitchO
             Color = data.Get("color").AsString(),
             Users = data.Get("users").AsInt32(),
             ChannelPoints = data.Get("channel_points").AsInt32(),
-            TopPredictors = topPredictorsArray.Select(TwitchTopPredictors.FromObject).ToArray(),
+            TopPredictors = TwitchTopPredictors.FromObject(data.Get("top_predictors").AsGodotObject()),
         };
     }
 
@@ -64,31 +63,7 @@ public partial class TwitchOutcomes : RefCounted, ITwitcherSharpEventSub<TwitchO
         request.Set("color", Color);
         request.Set("users", Users);
         request.Set("channel_points", ChannelPoints);
-        request.Set("top_predictors", TopPredictors);
+        request.Set("top_predictors", TopPredictors.ToGodotObject());
         return request;
-    }
-
-
-    public partial class TwitchTopPredictors : RefCounted, ITwitcherSharpEventSub<TwitchTopPredictors>
-    {
-    
-        /// <summary> 
-        /// Transforms the godot data into a TwitchTopPredictors object.
-        /// </summary> 
-        public static TwitchTopPredictors FromObject(GodotObject data)
-        {
-            if(data == null) return null;
-            return new TwitchTopPredictors
-            {
-            };
-        }
-    
-        public GodotObject ToGodotObject()
-        {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_outcomes.gd");
-            var topPredictorsClass = script.Get("TopPredictors").As<GDScript>();
-            var request = topPredictorsClass.New().AsGodotObject();
-            return request;
-        }
     }
 }

@@ -79,7 +79,7 @@ public partial class TwitchChannelPointsCustomRewardRedemptionUpdateEvent : RefC
             UserName = data.Get("user_name").AsString(),
             UserInput = data.Get("user_input").AsString(),
             Status = data.Get("status").AsString(),
-            Reward = data.Get("reward").As<TwitchReward>(),
+            Reward = TwitchReward.FromObject(data.Get("reward").AsGodotObject()),
             RedeemedAt = data.Get("redeemed_at").AsString(),
         };
     }
@@ -98,7 +98,7 @@ public partial class TwitchChannelPointsCustomRewardRedemptionUpdateEvent : RefC
         request.Set("user_name", UserName);
         request.Set("user_input", UserInput);
         request.Set("status", Status);
-        request.Set("reward", Reward);
+        request.Set("reward", Reward.ToGodotObject());
         request.Set("redeemed_at", RedeemedAt);
         return request;
     }

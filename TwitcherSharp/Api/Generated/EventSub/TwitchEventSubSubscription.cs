@@ -3,7 +3,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.EventSub;
 
-public partial class TwitchEventSubSubscription<T> : RefCounted, ITwitcherSharp<TwitchEventSubSubscription<T>> where T : ITwitcherSharpCondition<T>
+public partial class TwitchEventSubSubscription<T> : RefCounted, ITwitcherSharp<TwitchEventSubSubscription<T>> where T : RefCounted, ITwitcherSharpCondition<T>
 {
     private GodotObject _data;
     public string Id { get; set; }
@@ -42,9 +42,9 @@ public partial class TwitchEventSubSubscription<T> : RefCounted, ITwitcherSharp<
         request.Set("status", Status);
         request.Set("type", Type);
         request.Set("version", Version);
-        request.Set("condition", Condition.ToDictionary());
+        request.Set("condition", new Godot.Collections.Dictionary<string,Variant>(Condition.ToDictionary()));
         request.Set("created_at", CreatedAt);
-        request.Set("transport", Transport);
+        request.Set("transport", Transport?.ToGodotObject());
         request.Set("cost", Cost);
         return request;
     }

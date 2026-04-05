@@ -73,8 +73,8 @@ public partial class TwitchCharityCampaignProgressEvent : RefCounted, ITwitcherS
             CharityDescription = data.Get("charity_description").AsString(),
             CharityLogo = data.Get("charity_logo").AsString(),
             CharityWebsite = data.Get("charity_website").AsString(),
-            CurrentAmount = data.Get("current_amount").As<TwitchCurrentAmount>(),
-            TargetAmount = data.Get("target_amount").As<TwitchTargetAmount>(),
+            CurrentAmount = TwitchCurrentAmount.FromObject(data.Get("current_amount").AsGodotObject()),
+            TargetAmount = TwitchTargetAmount.FromObject(data.Get("target_amount").AsGodotObject()),
         };
     }
 
@@ -91,8 +91,8 @@ public partial class TwitchCharityCampaignProgressEvent : RefCounted, ITwitcherS
         request.Set("charity_description", CharityDescription);
         request.Set("charity_logo", CharityLogo);
         request.Set("charity_website", CharityWebsite);
-        request.Set("current_amount", CurrentAmount);
-        request.Set("target_amount", TargetAmount);
+        request.Set("current_amount", CurrentAmount.ToGodotObject());
+        request.Set("target_amount", TargetAmount.ToGodotObject());
         return request;
     }
 

@@ -114,7 +114,7 @@ public partial class TwitchBot : RefCounted, ITwitcherSharpSingleton<TwitchBot>
         
         var script = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_bot.gd");
         var twitchBot = script.New().AsGodotObject();
-        var instance = twitchBot.Get("instance");
+        var instance = twitchBot.Get("_instance");
     
         if (instance.VariantType != Variant.Type.Object)
         {

@@ -66,7 +66,6 @@ public static class EventSubCodeHelper
             if (field != fields[^1]) code.AppendLine();
         }
 
-
         if (UseTwitcherEventSubV2)
         {
             //FROM OBJECT
@@ -91,6 +90,11 @@ public static class EventSubCodeHelper
                     fieldData =
                         $"{field.Name} = {field.Name.ToCamelCase()}Array.Select({field.TypedComponent.ClassName}.FromObject).ToArray(),";
                 }
+                else if (field.IsTyped)
+                {
+                    fieldData =
+                        $"{field.Name} = {field.TypedComponent.ClassName}.FromObject(data.Get(\"{field.Name.ToSnakeCase()}\").AsGodotObject()),";
+                }
                 else fieldData = $"{field.Name} = data.Get(\"{field.Name.ToSnakeCase()}\").{field.GetAsType()},";
 
                 code.AppendIndentedLine(fieldData, 3);
@@ -111,17 +115,18 @@ public static class EventSubCodeHelper
 
             if (component.ClassName.Contains("Image"))
             {
-                path = $"res://addons/twitcher/generated_eventsub/{type.ToSnakeCase().Replace("twitch", "twitch_es").Replace("image", "twitch_image")}.gd";
+                path =
+                    $"res://addons/twitcher/generated_eventsub/{type.ToSnakeCase().Replace("twitch", "twitch_es").Replace("image", "twitch_image")}.gd";
             }
-            
+
             code.AppendIndentedLine($"var script = GD.Load<GDScript>(\"{path}\");", 2);
 
             string typeToUse;
 
             if (component.ClassName.EndsWith("Event")) typeToUse = "Event";
-            else if(component.ClassName.EndsWith("EventV2")) typeToUse = "EventV2";
-            else if(component.ClassName.EndsWith("Condition")) typeToUse = "Condition";
-            else if(component.ClassName.EndsWith("ConditionV2")) typeToUse = "ConditionV2";
+            else if (component.ClassName.EndsWith("EventV2")) typeToUse = "EventV2";
+            else if (component.ClassName.EndsWith("Condition")) typeToUse = "Condition";
+            else if (component.ClassName.EndsWith("ConditionV2")) typeToUse = "ConditionV2";
             else
                 typeToUse = component.IsShared
                     ? component.ClassName.Replace("Twitch", "TwitchES")
@@ -140,10 +145,27 @@ public static class EventSubCodeHelper
 
             foreach (var field in fields)
             {
-                code.AppendIndentedLine(field.Type == "Object"
-                        ? $"request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name}.ToGodotObject());"
-                        : $"request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name});",
-                    2);
+                string fieldCode;
+
+                if (field.IsArray && (field.IsTyped || field.Type == "Object"))
+                {
+                    //new Godot.Collections.Array(Fragments.Select(x => x.ToGodotObject()).ToArray()));
+                    fieldCode =
+                        $"request.Set(\"{field.Name.ToSnakeCase()}\", new Godot.Collections.Array({field.Name}.Select(x => x.ToGodotObject()).ToArray()));";
+                }
+                else if (field.IsArray)
+                {
+                    //new Godot.Collections.Array<string>(ids));
+                    fieldCode =
+                        $"request.Set(\"{field.Name.ToSnakeCase()}\", new Godot.Collections.Array<{field.Type.Remove("[]")}>({field.Name}));";
+                }
+                else if (field.Type == "Object" || field.IsTyped)
+                {
+                    fieldCode = $"request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name}.ToGodotObject());";
+                }
+                else fieldCode = $"request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name});";
+
+                code.AppendIndentedLine(fieldCode, 2);
             }
 
             code.AppendIndentedLine("return request;", 2);
@@ -191,20 +213,17 @@ public static class EventSubCodeHelper
             code.AppendIndentedLine("}", 1);
         }
 
-        var nonSharedSubComponents = component.SubComponents
-            .Where(s => !s.Value.IsShared)
-            .Select(s => s.Value)
+        var nonSharedSubComponents = component.SubComponents.Values
+            .Where(s => !s.IsShared)
             .ToList();
 
-        if (nonSharedSubComponents.Count != 0)
+        foreach (var subComponent in nonSharedSubComponents)
         {
-            foreach (var subComponent in nonSharedSubComponents)
-            {
-                code.AppendLine();
-                code.AppendIndentedLine(GenerateComponent(subComponent, level, type), level + 1);
-                code.AppendIndentedLine("}", level + 1);
-            }
+            code.AppendLine();
+            code.AppendIndentedLine(GenerateComponent(subComponent, level, type), level + 1);
+            code.AppendIndentedLine("}", level + 1);
         }
+
 
         return code.ToString().TrimEnd();
     }

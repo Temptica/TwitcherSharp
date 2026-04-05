@@ -1,10 +1,10 @@
 using Godot;
+using TwitcherSharp.Api.Generated.Bits;
 using TwitcherSharp.Api.Generated.Chat;
 using TwitcherSharp.Api.Generated.Chat.Interfaces;
 using TwitcherSharp.Api.Generated.Users;
 using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
-using TwitchCheermote = TwitcherSharp.Api.Generated.Bits.TwitchGetCheermotesResponse.TwitchCheermote;
 
 namespace TwitcherSharp.Media;
 
@@ -152,8 +152,8 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
                 var godotObject = x.Value.AsGodotObject();
                 ITwitchEmote emote = godotObject.GetClass() switch
                 {
-                    "TwitchGlobalEmote" => TwitchGetGlobalEmotesResponse.TwitchGlobalEmote.FromObject(godotObject),
-                    "TwitchChannelEmote" => TwitchGetChannelEmotesResponse.TwitchChannelEmote.FromObject(godotObject),
+                    "TwitchGlobalEmote" => TwitchGlobalEmote.FromObject(godotObject),
+                    "TwitchChannelEmote" => TwitchChannelEmote.FromObject(godotObject),
                     _ => null
                 };
                 return (x.Key.AsString(), emote);

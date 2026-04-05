@@ -33,7 +33,7 @@ public partial class TwitchGetModeratorsOpt : RefCounted, ITwitcherSharp<TwitchG
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_moderators.gd");
         var optClass = script.Get("Opt").AsGodotObject();
         var request = optClass.Call("new").AsGodotObject();
-        if(UserId != null) request.Set("user_id", UserId);
+        if(UserId != null) request.Set("user_id", new Godot.Collections.Array<string>(UserId));
         if(First != null) request.Set("first", First);
         if(After != null) request.Set("after", After);
         return request;

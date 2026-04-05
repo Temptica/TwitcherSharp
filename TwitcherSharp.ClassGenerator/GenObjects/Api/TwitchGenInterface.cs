@@ -5,17 +5,19 @@ public class TwitchGenInterface
     public string InterfaceName { get; init; }
     public string NameSpace { get; set; } = "Interfaces";
     public List<TwitchGenField> Fields { get; } = [];
-    public List<TwitchGenComponent> SubComponents { get; } = [];
+    public List<TwitchGenComponent> SubComponents { get; set; } = [];
     public List<string> ComponentsToAdd { get; init; }
     public List<TwitchGenComponent> ComponentsToGenerate { get; } = [];
+    public string DependsOnInterface { get; set; }
     
     public bool IsGlobal => NameSpace != "Interfaces";
 
-    public TwitchGenInterface(string interfaceName, List<string> componentsToAdd)
+    public TwitchGenInterface(string interfaceName, List<string> componentsToAdd, string dependsOnInterface = "")
     {
         if (!interfaceName.StartsWith('I')) interfaceName = "I" + interfaceName;
         InterfaceName = interfaceName;
         ComponentsToAdd = componentsToAdd;
+        DependsOnInterface = dependsOnInterface;
     }
 
     public void AddFieldsRange(List<TwitchGenField> fields, List<TwitchGenComponent> subComponentsToGenerate)

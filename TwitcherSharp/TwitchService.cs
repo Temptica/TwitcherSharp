@@ -180,8 +180,8 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
                 var godotObject = x.Value.AsGodotObject();
                 ITwitchEmote emote = godotObject.GetClass() switch
                 {
-                    "TwitchGlobalEmote" => TwitchGetGlobalEmotesResponse.TwitchGlobalEmote.FromObject(godotObject),
-                    "TwitchChannelEmote" => TwitchGetChannelEmotesResponse.TwitchChannelEmote.FromObject(godotObject),
+                    "TwitchGlobalEmote" => TwitchGlobalEmote.FromObject(godotObject),
+                    "TwitchChannelEmote" => TwitchChannelEmote.FromObject(godotObject),
                     _ => null
                 };
                 return (x.Key.AsString(), emote);
@@ -221,8 +221,8 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
         bool channelPointsVotingEnabled = false, int channelPointsPerVote = 1000, string broadcasterId = "")
         => (await _data.CallAsync("poll", title, choices, duration, channelPointsVotingEnabled, channelPointsPerVote, broadcasterId)).AsGodotDictionary();
 
-    public async Task<List<TwitchGetCheermotesResponse.TwitchCheermote>> GetCheermoteData()
-        => await _data.CallListAsync<TwitchGetCheermotesResponse.TwitchCheermote>("get_cheermote_data");
+    public async Task<List<TwitchCheermote>> GetCheermoteData()
+        => await _data.CallListAsync<TwitchCheermote>("get_cheermote_data");
     
     public async Task<Godot.Collections.Dictionary<TwitchCheermoteDefinition, SpriteFrames>> GetCheermotes(
         TwitchCheermoteDefinition definition) =>

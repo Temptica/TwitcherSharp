@@ -25,7 +25,7 @@ public partial class TwitchDeleteVideosResponse : RefCounted, ITwitcherSharp<Twi
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_delete_videos.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        request.Set("data", Data);
+        request.Set("data", new Godot.Collections.Array<string>(Data));
         return request;
     }
 

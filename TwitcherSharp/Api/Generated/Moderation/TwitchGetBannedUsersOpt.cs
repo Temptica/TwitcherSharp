@@ -35,7 +35,7 @@ public partial class TwitchGetBannedUsersOpt : RefCounted, ITwitcherSharp<Twitch
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_banned_users.gd");
         var optClass = script.Get("Opt").AsGodotObject();
         var request = optClass.Call("new").AsGodotObject();
-        if(UserId != null) request.Set("user_id", UserId);
+        if(UserId != null) request.Set("user_id", new Godot.Collections.Array<string>(UserId));
         if(First.HasValue) request.Set("first", First.Value);
         if(After != null) request.Set("after", After);
         if(Before != null) request.Set("before", Before);

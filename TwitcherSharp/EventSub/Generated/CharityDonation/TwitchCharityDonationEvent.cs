@@ -92,7 +92,7 @@ public partial class TwitchCharityDonationEvent : RefCounted, ITwitcherSharpEven
             CharityDescription = data.Get("charity_description").AsString(),
             CharityLogo = data.Get("charity_logo").AsString(),
             CharityWebsite = data.Get("charity_website").AsString(),
-            Amount = data.Get("amount").As<TwitchAmount>(),
+            Amount = TwitchAmount.FromObject(data.Get("amount").AsGodotObject()),
         };
     }
 
@@ -113,7 +113,7 @@ public partial class TwitchCharityDonationEvent : RefCounted, ITwitcherSharpEven
         request.Set("charity_description", CharityDescription);
         request.Set("charity_logo", CharityLogo);
         request.Set("charity_website", CharityWebsite);
-        request.Set("amount", Amount);
+        request.Set("amount", Amount.ToGodotObject());
         return request;
     }
 

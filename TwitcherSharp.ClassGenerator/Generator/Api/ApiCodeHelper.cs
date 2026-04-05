@@ -1,13 +1,14 @@
 using System.Text;
 using ClassGenerator.Extensions;
 using ClassGenerator.GenObjects.Api;
-using ClassGenerator.Parsers;
 
 namespace ClassGenerator.Generator.Api;
 
 public static class ApiCodeHelper
 {
     private static readonly string[] Suffixes = ["Response", "Body", "Opt"];
+
+    #region API
 
     public static string ApiMethod(TwitchGenMethod method)
     {
@@ -21,7 +22,8 @@ public static class ApiCodeHelper
         }
 
         if (method.ContainsBody)
-            methodString.AppendIndentedLine($"/// <param name=\"body\"><see cref=\"{method.BodyType.Replace("<T>","&lt;T&gt;")}\"/></param>", 1);
+            methodString.AppendIndentedLine(
+                $"/// <param name=\"body\"><see cref=\"{method.BodyType.Replace("<T>", "&lt;T&gt;")}\"/></param>", 1);
         if (method.ContainsOptional)
             methodString.AppendIndentedLine(
                 $"/// <param name=\"opt\"><see cref=\"{method.GetOptionalClassName()}\"/></param>", 1);
@@ -31,11 +33,12 @@ public static class ApiCodeHelper
             methodString.AppendIndentedLine(GetMethodParameterSummary(method.RequiredParameters).TrimEnd(), 1);
         }
 
-        methodString.AppendIndentedLine($"/// <returns><see cref=\"{method.ResultType.Replace("<T>","&lt;T&gt;")}\"/></returns>", 1);
+        methodString.AppendIndentedLine(
+            $"/// <returns><see cref=\"{method.ResultType.Replace("<T>", "&lt;T&gt;")}\"/></returns>", 1);
 
         methodString
             .AppendIndentedLine(
-                $"public async Task<{method.ResultType}> {method.Name}{(method.HasGeneric ? $"<T>" : "")}({GetMethodParameter(method)}){(method.HasGeneric ? $" where T : {method.GenericType}" : "")}",
+                $"public async Task<{method.ResultType}> {method.Name}{(method.HasGeneric ? $"<T>" : "")}({GetMethodParameter(method)}){(method.HasGeneric ? $" where T : RefCounted, {method.GenericType}" : "")}",
                 1);
 
 
@@ -114,10 +117,16 @@ public static class ApiCodeHelper
         if (method.ContainsBody) paramsList.Add("body.ToGodotObject()");
         if (method.ContainsOptional) paramsList.Add("opt?.ToGodotObject()");
 
-        paramsList.AddRange(method.RequiredParameters.Select(p => p.Name.ToCamelCase()));
+        paramsList.AddRange(method.RequiredParameters.Select(p => p.Type.Contains("[]")
+                ? $"new Godot.Collections.Array<{p.Type.Remove("[]")}>({p.Name.ToCamelCase()})"
+                : p.Name.ToCamelCase()));
 
         return string.Join(", ", paramsList);
     }
+
+    #endregion
+
+    #region Components
 
     public static string GlobalComponentCode(TwitchGenComponent component, string type = "")
     {
@@ -155,13 +164,12 @@ public static class ApiCodeHelper
             .Replace("{{root}}", component.GetNameSpace()));
         code.AppendLine();
 
-        var componentCode = ComponentCode(component, type);
-        //if componentCode contains "using TwitcherSharp.Extensions;", remove it and put it at the top of this code
-        const string extensionUsing = "using TwitcherSharp.Extensions;\n";
-        if (componentCode.Contains(extensionUsing))
+
+        var componentCode = ComponentCode(component, out var usings, type);
+
+        foreach (var @using in usings.Distinct())
         {
-            componentCode = componentCode.Replace(extensionUsing, "");
-            code.Insert(0, extensionUsing);
+            code.Insert(0, $"using {@using};\n");
         }
 
         code.AppendIndentedLine(componentCode);
@@ -170,8 +178,9 @@ public static class ApiCodeHelper
         return code.ToString();
     }
 
-    private static string ComponentCode(TwitchGenComponent component, string type = "")
+    private static string ComponentCode(TwitchGenComponent component, out List<string> usings, string type = "")
     {
+        usings = [];
         var code = new StringBuilder();
 
         if (!string.IsNullOrWhiteSpace(component.Description))
@@ -187,7 +196,7 @@ public static class ApiCodeHelper
             code.AppendLine(ApiCodeStrings.GenericComponentHeader
                 .Replace("{{className}}", component.ClassName)
                 .Replace("{{interfaces}}", interfacesToImplement)
-                .Replace("{{type}}", component.GenericType));
+                .Replace("{{type}}", $"RefCounted, {component.GenericType}"));
         }
         else
         {
@@ -201,6 +210,24 @@ public static class ApiCodeHelper
 
         foreach (var field in fields)
         {
+            if (field.TypedComponent?.InterfacesToImplement.Count > 0)
+            {
+                foreach (var genInterface in field.TypedComponent.InterfacesToImplement)
+                {
+                    usings.Add("TwitcherSharp.Api.Generated." + genInterface.NameSpace);
+                }
+            }
+
+            if (field.TypedComponent?.InterfacesToImplement.Count > 0 && type == "")
+            {
+                //Only if all subfields match, use interface type
+                var @interface = field.TypedComponent?.InterfacesToImplement[0].InterfaceName;
+                code.AppendIndentedLine(
+                    $"public {@interface}{(field.IsRequired || field.IsNullableTyped ? "" : "?")}{(field.IsArray ? "[]" : "")} {field.Name} {{ get; set; }}",
+                    1);
+                continue;
+            }
+
             if (component.HasGeneric && component.GenericField.Equals(field))
             {
                 if (field.TypedComponent?.HasGeneric == true)
@@ -283,14 +310,23 @@ public static class ApiCodeHelper
             if (field.IsArray && field.IsTyped)
             {
                 code.AppendIndentedLine(
-                    $"request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name}?.Select(x => x.ToGodotObject()).ToArray());",
+                    $"if({field.Name} != null) request.Set(\"{field.Name.ToSnakeCase()}\", new Godot.Collections.Array<GodotObject>({field.Name}.Select(x => x.ToGodotObject()).ToArray()));",
                     2);
                 continue;
             }
-            
+
+            if (field.IsArray)
+            {
+                code.AppendIndentedLine(
+                    $"request.Set(\"{field.Name.ToSnakeCase()}\", new Godot.Collections.Array<{field.CleanedArrayType}>({field.Name}));",
+                    2);
+                continue;
+            }
+
             if (component.HasGeneric && field.Equals(component.GenericField))
             {
-                code.AppendIndentedLine($"request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name}.ToDictionary());",
+                code.AppendIndentedLine(
+                    $"request.Set(\"{field.Name.ToSnakeCase()}\", new Godot.Collections.Dictionary<string,Variant>({field.Name}.ToDictionary()));",
                     2);
                 continue;
             }
@@ -299,9 +335,17 @@ public static class ApiCodeHelper
             {
                 if (field.IsNullableTyped)
                 {
+                    if (field.CleanedType.Contains("[]"))
+                    {
+                        code.AppendIndentedLine(
+                            $"if({field.Name} != null) request.Set(\"{field.Name.ToSnakeCase()}\", new Godot.Collections.Array<{field.CleanedArrayType.Remove("[]")}>({field.Name}));",
+                            2);
+                        continue;
+                    }
+
                     code.AppendIndentedLine($"if({field.Name} != null) " + (
                             field.Type == "Object"
-                                ? $"request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name}.ToGodotObject());"
+                                ? $"request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name}?.ToGodotObject());"
                                 : $"request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name});"),
                         2);
 
@@ -317,8 +361,8 @@ public static class ApiCodeHelper
             }
 
             code.AppendIndentedLine(
-                field.Type == "Object"
-                    ? $"request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name}.ToGodotObject());"
+                field.IsTyped
+                    ? $"request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name}?.ToGodotObject());"
                     : $"request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name});",
                 2);
         }
@@ -328,20 +372,35 @@ public static class ApiCodeHelper
 
         if (component.HasPagination)
         {
-            code.Insert(0, "using TwitcherSharp.Extensions;\n");
+            usings.Add("TwitcherSharp.Extensions");
             code.AppendIndented(ApiCodeStrings.NextPageCode.Replace("{{response}}", component.ClassName +
                 (component.HasGeneric ? "<T>" : "")), 1);
             code.AppendLine();
-            code.AppendIndentedLine(ComponentCode(component.SubComponents.Single(c => c.IsPagination), "Pagination"),
+            code.AppendIndentedLine(
+                ComponentCode(component.SubComponents.Single(c => c.IsPagination), out var subUsings, "Pagination"),
                 1);
+            usings.AddRange(subUsings);
             code.AppendIndentedLine("}", 1);
         }
 
         foreach (var subComponent in component.SubComponents.Where(c => !c.IsGlobal && !c.IsPagination))
         {
-            code.AppendIndentedLine(ComponentCode(subComponent), 1);
+            code.AppendIndentedLine(ComponentCode(subComponent, out var subUsings), 1);
+            usings.AddRange(subUsings);
             code.AppendIndentedLine("}", 1);
         }
+
+        foreach (var twitchGenInterface in component.InterfacesToImplement)
+        {
+            foreach (var subComponent in twitchGenInterface.Fields.Where(f => f.IsTyped).Select(f => f.TypedComponent))
+            {
+                if (component.SubComponents.Any(c => c.Equals(subComponent))) continue;
+                code.AppendIndentedLine(ComponentCode(subComponent, out var subUsings), 1);
+                usings.AddRange(subUsings);
+                code.AppendIndentedLine("}", 1);
+            }
+        }
+
 
         return code.ToString();
     }
@@ -351,24 +410,43 @@ public static class ApiCodeHelper
         var code = new StringBuilder();
         if (genInterface.Fields.Any(f => f.IsTyped))
         {
-            if (genInterface.NameSpace == "Interfaces")
+            var nameSpaces = new HashSet<string> { genInterface.NameSpace };
+            foreach (var typedComponent in genInterface.Fields.Where(f => f.IsTyped)
+                         .Select(f => f.TypedComponent).Distinct())
             {
-                //code.AppendLine("using TwitcherSharp.Api.Generated.Shared;");
-            }
-            else
-            {
-                foreach (var nameSpace in genInterface.Fields.Where(f => f.IsTyped)
-                             .Select(f => f.TypedComponent.GetNameSpace()).Distinct())
+                if (typedComponent.InterfacesToImplement.Count > 0)
                 {
-                    code.AppendLine($"using TwitcherSharp.Api.Generated.{nameSpace};");
+                    foreach (var @interface in typedComponent.InterfacesToImplement.Select(i => i.NameSpace))
+                    {
+                        nameSpaces.Add(@interface);
+                    }
+
+                    continue;
                 }
+
+                nameSpaces.Add(typedComponent.GetNameSpace());
+            }
+
+            foreach (var nameSpace in nameSpaces.Where(n => !n.Equals(genInterface.NameSpace)))
+            {
+                code.AppendLine($"using TwitcherSharp.Api.Generated.{nameSpace};");
             }
         }
 
         code.AppendIndentedLine(ApiCodeStrings.InterfaceBody.Replace("{{nameSpace}}", genInterface.NameSpace)
             .Replace("{{interfaceName}}", genInterface.InterfaceName));
+
         foreach (var field in genInterface.Fields)
         {
+            if (field.TypedComponent?.ParentInterfaces.Count > 0)
+            {
+                var @interface = field.TypedComponent?.InterfacesToImplement[0].InterfaceName;
+                code.AppendIndentedLine(
+                    $"public {@interface}{(field.IsRequired || field.IsNullableTyped ? "" : "?")} {field.Name} {{ get; set; }}",
+                    1);
+                continue;
+            }
+
             code.AppendIndentedLine($"public {field.CleanedType} {field.Name} {{ get; set; }}", 1);
         }
 
@@ -386,4 +464,6 @@ public static class ApiCodeHelper
         return Suffixes.Aggregate(name,
             (current, suffix) => current.EndsWith(suffix) ? current.Replace(suffix, "") : current);
     }
+
+    #endregion
 }

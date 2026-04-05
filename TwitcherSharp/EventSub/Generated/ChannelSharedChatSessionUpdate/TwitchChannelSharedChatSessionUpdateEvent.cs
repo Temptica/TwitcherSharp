@@ -79,7 +79,7 @@ public partial class TwitchChannelSharedChatSessionUpdateEvent : RefCounted, ITw
         request.Set("host_broadcaster_user_id", HostBroadcasterUserId);
         request.Set("host_broadcaster_user_name", HostBroadcasterUserName);
         request.Set("host_broadcaster_user_login", HostBroadcasterUserLogin);
-        request.Set("participants", Participants);
+        request.Set("participants", new Godot.Collections.Array(Participants.Select(x => x.ToGodotObject()).ToArray()));
         return request;
     }
 

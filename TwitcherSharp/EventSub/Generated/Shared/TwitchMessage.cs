@@ -36,7 +36,7 @@ public partial class TwitchMessage : RefCounted, ITwitcherSharpEventSub<TwitchMe
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_message.gd");
         var request = script.New().AsGodotObject();
         request.Set("text", Text);
-        request.Set("emotes", Emotes);
+        request.Set("emotes", new Godot.Collections.Array(Emotes.Select(x => x.ToGodotObject()).ToArray()));
         return request;
     }
 }

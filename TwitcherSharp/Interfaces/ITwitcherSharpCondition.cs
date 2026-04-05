@@ -1,3 +1,4 @@
+using Godot;
 using Godot.Collections;
 
 namespace TwitcherSharp.Interfaces;
@@ -5,9 +6,9 @@ namespace TwitcherSharp.Interfaces;
 /// <summary>
 /// The type variant of the base interface for all TwitcherSharp Conditions.
 /// </summary>
-/// <typeparam name="TSelf"></typeparam>
+/// <typeparam name="TSelf">A RefCounted class</typeparam>
 public interface ITwitcherSharpCondition<out TSelf> : ITwitcherSharpCondition, ITwitcherSharp<TSelf>
-    where TSelf : ITwitcherSharpCondition<TSelf>
+    where TSelf : RefCounted, ITwitcherSharpCondition<TSelf>
 {
     static abstract TSelf FromDictionary(Dictionary data);
 }

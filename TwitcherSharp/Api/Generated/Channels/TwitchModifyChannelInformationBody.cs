@@ -42,8 +42,8 @@ public partial class TwitchModifyChannelInformationBody : RefCounted, ITwitcherS
         if(BroadcasterLanguage != null) request.Set("broadcaster_language", BroadcasterLanguage);
         if(Title != null) request.Set("title", Title);
         if(Delay.HasValue) request.Set("delay", Delay.Value);
-        if(Tags != null) request.Set("tags", Tags);
-        request.Set("content_classification_labels", ContentClassificationLabels?.Select(x => x.ToGodotObject()).ToArray());
+        request.Set("tags", new Godot.Collections.Array<string>(Tags));
+        if(ContentClassificationLabels != null) request.Set("content_classification_labels", new Godot.Collections.Array<GodotObject>(ContentClassificationLabels.Select(x => x.ToGodotObject()).ToArray()));
         if(IsBrandedContent.HasValue) request.Set("is_branded_content", IsBrandedContent.Value);
         return request;
     }

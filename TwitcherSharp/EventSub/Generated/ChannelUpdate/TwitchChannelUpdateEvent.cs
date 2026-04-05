@@ -78,7 +78,7 @@ public partial class TwitchChannelUpdateEvent : RefCounted, ITwitcherSharpEventS
         request.Set("language", Language);
         request.Set("category_id", CategoryId);
         request.Set("category_name", CategoryName);
-        request.Set("content_classification_labels", ContentClassificationLabels);
+        request.Set("content_classification_labels", new Godot.Collections.Array<string>(ContentClassificationLabels));
         return request;
     }
 }

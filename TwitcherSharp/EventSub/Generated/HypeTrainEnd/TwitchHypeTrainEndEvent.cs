@@ -108,9 +108,9 @@ public partial class TwitchHypeTrainEndEvent : RefCounted, ITwitcherSharpEventSu
         request.Set("broadcaster_user_login", BroadcasterUserLogin);
         request.Set("broadcaster_user_name", BroadcasterUserName);
         request.Set("total", Total);
-        request.Set("top_contributions", TopContributions);
+        request.Set("top_contributions", new Godot.Collections.Array(TopContributions.Select(x => x.ToGodotObject()).ToArray()));
         request.Set("level", Level);
-        request.Set("shared_train_participants", SharedTrainParticipants);
+        request.Set("shared_train_participants", new Godot.Collections.Array(SharedTrainParticipants.Select(x => x.ToGodotObject()).ToArray()));
         request.Set("started_at", StartedAt);
         request.Set("cooldown_ends_at", CooldownEndsAt);
         request.Set("ended_at", EndedAt);

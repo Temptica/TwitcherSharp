@@ -4,7 +4,7 @@ using Godot;
    
 namespace TwitcherSharp.Api.Generated.EventSub;
 
-public partial class TwitchGetEventSubSubscriptionsResponse<T> : RefCounted, ITwitcherSharp<TwitchGetEventSubSubscriptionsResponse<T>> where T : ITwitcherSharpCondition<T>
+public partial class TwitchGetEventSubSubscriptionsResponse<T> : RefCounted, ITwitcherSharp<TwitchGetEventSubSubscriptionsResponse<T>> where T : RefCounted, ITwitcherSharpCondition<T>
 {
     private GodotObject _data;
     public TwitchEventSubSubscription<T>[] Data { get; set; }
@@ -35,7 +35,7 @@ public partial class TwitchGetEventSubSubscriptionsResponse<T> : RefCounted, ITw
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_event_sub_subscriptions.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        request.Set("data", Data?.Select(x => x.ToGodotObject()).ToArray());
+        if(Data != null) request.Set("data", new Godot.Collections.Array<GodotObject>(Data.Select(x => x.ToGodotObject()).ToArray()));
         request.Set("total", Total);
         request.Set("total_cost", TotalCost);
         request.Set("max_total_cost", MaxTotalCost);

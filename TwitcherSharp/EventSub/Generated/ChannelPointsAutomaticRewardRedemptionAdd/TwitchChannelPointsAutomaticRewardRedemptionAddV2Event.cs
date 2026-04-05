@@ -72,8 +72,8 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
             UserLogin = data.Get("user_login").AsString(),
             UserName = data.Get("user_name").AsString(),
             Id = data.Get("id").AsString(),
-            Reward = data.Get("reward").As<TwitchReward>(),
-            Message = data.Get("message").As<TwitchMessage>(),
+            Reward = TwitchReward.FromObject(data.Get("reward").AsGodotObject()),
+            Message = TwitchMessage.FromObject(data.Get("message").AsGodotObject()),
             RedeemedAt = data.Get("redeemed_at").AsString(),
         };
     }
@@ -90,8 +90,8 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
         request.Set("user_login", UserLogin);
         request.Set("user_name", UserName);
         request.Set("id", Id);
-        request.Set("reward", Reward);
-        request.Set("message", Message);
+        request.Set("reward", Reward.ToGodotObject());
+        request.Set("message", Message.ToGodotObject());
         request.Set("redeemed_at", RedeemedAt);
         return request;
     }
@@ -124,7 +124,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
             {
                 Type = data.Get("type").AsString(),
                 ChannelPoints = data.Get("channel_points").AsInt32(),
-                Emote = data.Get("emote").As<TwitchEmote>(),
+                Emote = TwitchEmote.FromObject(data.Get("emote").AsGodotObject()),
             };
         }
     
@@ -135,7 +135,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
             var request = rewardClass.New().AsGodotObject();
             request.Set("type", Type);
             request.Set("channel_points", ChannelPoints);
-            request.Set("emote", Emote);
+            request.Set("emote", Emote.ToGodotObject());
             return request;
         }
     
@@ -209,7 +209,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
             var messageClass = script.Get("Message").As<GDScript>();
             var request = messageClass.New().AsGodotObject();
             request.Set("text", Text);
-            request.Set("fragments", Fragments);
+            request.Set("fragments", new Godot.Collections.Array(Fragments.Select(x => x.ToGodotObject()).ToArray()));
             return request;
         }
     
@@ -241,7 +241,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
                 {
                     Text = data.Get("text").AsString(),
                     Type = data.Get("type").AsString(),
-                    Emote = data.Get("emote").As<TwitchEmote>(),
+                    Emote = TwitchEmote.FromObject(data.Get("emote").AsGodotObject()),
                 };
             }
         
@@ -252,7 +252,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
                 var request = fragmentsClass.New().AsGodotObject();
                 request.Set("text", Text);
                 request.Set("type", Type);
-                request.Set("emote", Emote);
+                request.Set("emote", Emote.ToGodotObject());
                 return request;
             }
         

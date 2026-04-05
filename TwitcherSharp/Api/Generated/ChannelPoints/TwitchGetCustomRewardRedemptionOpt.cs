@@ -38,7 +38,7 @@ public partial class TwitchGetCustomRewardRedemptionOpt : RefCounted, ITwitcherS
         var optClass = script.Get("Opt").AsGodotObject();
         var request = optClass.Call("new").AsGodotObject();
         if(Status != null) request.Set("status", Status);
-        if(Id != null) request.Set("id", Id);
+        if(Id != null) request.Set("id", new Godot.Collections.Array<string>(Id));
         if(Sort != null) request.Set("sort", Sort);
         if(After != null) request.Set("after", After);
         if(First.HasValue) request.Set("first", First.Value);

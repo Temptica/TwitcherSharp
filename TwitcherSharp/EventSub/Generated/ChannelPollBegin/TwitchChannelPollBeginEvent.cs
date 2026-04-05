@@ -72,8 +72,8 @@ public partial class TwitchChannelPollBeginEvent : RefCounted, ITwitcherSharpEve
             BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
             Title = data.Get("title").AsString(),
             Choices = choicesArray.Select(TwitchChoices.FromObject).ToArray(),
-            BitsVoting = data.Get("bits_voting").As<TwitchBitsVoting>(),
-            ChannelPointsVoting = data.Get("channel_points_voting").As<TwitchChannelPointsVoting>(),
+            BitsVoting = TwitchBitsVoting.FromObject(data.Get("bits_voting").AsGodotObject()),
+            ChannelPointsVoting = TwitchChannelPointsVoting.FromObject(data.Get("channel_points_voting").AsGodotObject()),
             StartedAt = data.Get("started_at").AsString(),
             EndsAt = data.Get("ends_at").AsString(),
         };
@@ -89,9 +89,9 @@ public partial class TwitchChannelPollBeginEvent : RefCounted, ITwitcherSharpEve
         request.Set("broadcaster_user_login", BroadcasterUserLogin);
         request.Set("broadcaster_user_name", BroadcasterUserName);
         request.Set("title", Title);
-        request.Set("choices", Choices);
-        request.Set("bits_voting", BitsVoting);
-        request.Set("channel_points_voting", ChannelPointsVoting);
+        request.Set("choices", new Godot.Collections.Array(Choices.Select(x => x.ToGodotObject()).ToArray()));
+        request.Set("bits_voting", BitsVoting.ToGodotObject());
+        request.Set("channel_points_voting", ChannelPointsVoting.ToGodotObject());
         request.Set("started_at", StartedAt);
         request.Set("ends_at", EndsAt);
         return request;

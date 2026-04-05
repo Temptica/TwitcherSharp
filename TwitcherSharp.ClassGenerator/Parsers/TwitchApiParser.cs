@@ -18,7 +18,7 @@ public class TwitchApiParser
 
     public async Task ParseApi()
     {
-        await using var stream = Path.StartsWith("https://") || Path.StartsWith("http://")
+        await using var stream = Path.StartsWith("https://")
             ? await new HttpClient().GetStreamAsync(Path)
             : File.OpenRead(Path);
 
@@ -45,6 +45,25 @@ public class TwitchApiParser
             }
 
             var subComponents = genInterface.SubComponents;
+            if (!string.IsNullOrWhiteSpace(genInterface.DependsOnInterface))
+            {
+                subComponents = subComponents.Where(c =>
+                    c.GetParentOrNull().InterfacesToImplement
+                        .Any(pi => pi.InterfaceName == genInterface.DependsOnInterface)).ToList();
+                
+                //remove reference from other classes
+                var componentsToRemove = genInterface.SubComponents
+                    .Where(c => !subComponents.Contains(c))
+                    .ToList();
+                
+                foreach (var componentToRemove in componentsToRemove)
+                {
+                    componentToRemove.InterfacesToImplement.Clear();
+                }
+
+                genInterface.SubComponents = subComponents;
+            }
+
             var firstSub = subComponents[0];
             var intersected = firstSub.IntersectAndRemove(subComponents.Skip(1).ToList());
             genInterface.AddFieldsRange(intersected.fields, intersected.subComponentsToGenerate);
@@ -55,6 +74,7 @@ public class TwitchApiParser
     {
         Interfaces =
         [
+            new TwitchGenInterface("ITwitchImages", ["TwitchImages"], "ITwitchEmote"),
             new TwitchGenInterface("ITwitchEmote", ["TwitchGlobalEmote", "TwitchChannelEmote", "TwitchEmote"]),
         ];
     }
@@ -67,7 +87,13 @@ public class TwitchApiParser
             if (schema.Type != "object") continue;
 
             var @ref = "#/components/schemas/" + name;
-            var component = new TwitchGenComponent(name, @ref, schema.Description);
+            var component = new TwitchGenComponent(name, @ref, schema.Description)
+            {
+                IsGlobal = true
+            };
+
+            if(component.ClassName == "TwitchImage") continue;
+            
             ParseProperties(component, schema);
             Components[name] = component;
         }
@@ -163,9 +189,17 @@ public class TwitchApiParser
         var subComponent = new TwitchGenComponent(className, @ref, description);
         foreach (var genInterface in Interfaces)
         {
-            if (genInterface.ComponentsToAdd.Any(c => c.Contains(subComponent.ClassName)))
+            if (!genInterface.ComponentsToAdd.Any(c => c.Contains(subComponent.ClassName))) continue;
             {
-                genInterface.AddSubComponent(subComponent);
+                if (genInterface.DependsOnInterface == null) genInterface.AddSubComponent(subComponent);
+                else
+                {
+                    var interfaceToDependOn = Interfaces.First(i => i.InterfaceName == genInterface.DependsOnInterface);
+                    if (interfaceToDependOn.ComponentsToAdd.Any(c => c.Contains(parentComponent.ClassName)))
+                    {
+                        genInterface.AddSubComponent(subComponent);
+                    }
+                }
             }
         }
 

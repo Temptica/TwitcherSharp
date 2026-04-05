@@ -16,7 +16,7 @@ public class TwitchEventSubGenComponent(string name)
 
     public bool IsRoot => Parent == null;
 
-    public bool IsShared { get; init; }
+    public bool IsShared { get; set; }
 
     public void AddField(TwitchEventSubGenField field)
     {
