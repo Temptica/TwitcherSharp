@@ -7,6 +7,7 @@ public static class StringExtension
         public string ToPascalCase()
         {
             var result = "";
+            type = type.Replace("-", "_");
 
             for (var i = 0; i < type.Length; i++)
             {
@@ -22,6 +23,7 @@ public static class StringExtension
         public string ToCamelCase()
         {
             var result = "";
+            type = type.Replace("-", "_");
 
             for (var i = 0; i < type.Length; i++)
             {
@@ -37,7 +39,7 @@ public static class StringExtension
         public string ToSnakeCase()
         {
             var result = "";
-            type = type.Replace("VIPs", "_vips");
+            type = type.Replace("VIPs", "_vips").Replace("-", "_");
 
             for (var i = 0; i < type.Length; i++)
             {

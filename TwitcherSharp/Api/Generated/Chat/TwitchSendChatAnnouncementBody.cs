@@ -8,6 +8,7 @@ public partial class TwitchSendChatAnnouncementBody : RefCounted, ITwitcherSharp
     private GodotObject _data;
     public string Message { get; set; }
     public string Color { get; set; }
+    public bool? SourceOnly { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchSendChatAnnouncementBody object.
@@ -19,6 +20,7 @@ public partial class TwitchSendChatAnnouncementBody : RefCounted, ITwitcherSharp
         {
             Message = data.Get("message").AsString(),
             Color = data.Get("color").AsString(),
+            SourceOnly = data.Get("source_only").AsBool(),
         };
     }
 
@@ -29,6 +31,7 @@ public partial class TwitchSendChatAnnouncementBody : RefCounted, ITwitcherSharp
         var request = bodyClass.Call("new").AsGodotObject();
         request.Set("message", Message);
         if(Color != null) request.Set("color", Color);
+        if(SourceOnly.HasValue) request.Set("source_only", SourceOnly.Value);
         return request;
     }
 
