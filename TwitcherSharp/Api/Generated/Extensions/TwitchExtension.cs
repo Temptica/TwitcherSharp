@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Extensions;
@@ -14,7 +15,7 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
     public string EulaTosUrl { get; set; }
     public bool HasChatSupport { get; set; }
     public string IconUrl { get; set; }
-    public TwitchIconUrls IconUrls { get; set; }
+    public TwitchExtensionIconUrls IconUrls { get; set; }
     public string Id { get; set; }
     public string Name { get; set; }
     public string PrivacyPolicyUrl { get; set; }
@@ -46,7 +47,7 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
             EulaTosUrl = data.Get("eula_tos_url").AsString(),
             HasChatSupport = data.Get("has_chat_support").AsBool(),
             IconUrl = data.Get("icon_url").AsString(),
-            IconUrls = data.Get("icon_urls").As<TwitchIconUrls>(),
+            IconUrls = data.Get("icon_urls").As<TwitchExtensionIconUrls>(),
             Id = data.Get("id").AsString(),
             Name = data.Get("name").AsString(),
             PrivacyPolicyUrl = data.Get("privacy_policy_url").AsString(),
@@ -81,7 +82,7 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
         request.Set("name", Name);
         request.Set("privacy_policy_url", PrivacyPolicyUrl);
         request.Set("request_identity_link", RequestIdentityLink);
-        request.Set("screenshot_urls", new Godot.Collections.Array<string>(ScreenshotUrls));
+        if(ScreenshotUrls != null) request.Set("screenshot_urls", new Godot.Collections.Array<string>(ScreenshotUrls));
         request.Set("state", State);
         request.Set("subscriptions_support_level", SubscriptionsSupportLevel);
         request.Set("summary", Summary);
@@ -89,45 +90,9 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
         request.Set("version", Version);
         request.Set("viewer_summary", ViewerSummary);
         request.Set("views", Views?.ToGodotObject());
-        request.Set("allowlisted_config_urls", new Godot.Collections.Array<string>(AllowlistedConfigUrls));
-        request.Set("allowlisted_panel_urls", new Godot.Collections.Array<string>(AllowlistedPanelUrls));
+        if(AllowlistedConfigUrls != null) request.Set("allowlisted_config_urls", new Godot.Collections.Array<string>(AllowlistedConfigUrls));
+        if(AllowlistedPanelUrls != null) request.Set("allowlisted_panel_urls", new Godot.Collections.Array<string>(AllowlistedPanelUrls));
         return request;
-    }
-    
-    /// <summary> 
-    /// A dictionary that contains URLs to different sizes of the default icon. The dictionary’s key identifies the icon’s size (for example, 24x24), and the dictionary’s value contains the URL to the icon. 
-    /// </summary>
-    public partial class TwitchIconUrls : RefCounted, ITwitcherSharp<TwitchIconUrls>
-    {
-        private GodotObject _data;
-        public string _100x100 { get; set; }
-        public string _24x24 { get; set; }
-        public string _300x200 { get; set; }
-    
-        /// <summary> 
-        /// Transforms the godot data into a TwitchIconUrls object.
-        /// </summary> 
-        public static TwitchIconUrls FromObject(GodotObject data)
-        {
-            if(data == null) return null;
-            return new TwitchIconUrls
-            {
-                _100x100 = data.Get("100x_100").AsString(),
-                _24x24 = data.Get("24x_24").AsString(),
-                _300x200 = data.Get("300x_200").AsString(),
-            };
-        }
-    
-        public GodotObject ToGodotObject()
-        {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_icon_urls.gd");
-            var request = script.Call("new").AsGodotObject();
-            if(_100x100 != null) request.Set("100x_100", _100x100);
-            if(_24x24 != null) request.Set("24x_24", _24x24);
-            if(_300x200 != null) request.Set("300x_200", _300x200);
-            return request;
-        }
-    
     }
     
     /// <summary> 
@@ -160,8 +125,9 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_views.gd");
-            var request = script.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_extension.gd");
+            var twitchViewsClass = script.Get("Views").AsGodotObject();
+            var request = twitchViewsClass.Call("new").AsGodotObject();
             request.Set("mobile", Mobile?.ToGodotObject());
             request.Set("panel", Panel?.ToGodotObject());
             request.Set("video_overlay", VideoOverlay?.ToGodotObject());
@@ -192,8 +158,9 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
         
             public GodotObject ToGodotObject()
             {
-                var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_mobile.gd");
-                var request = script.Call("new").AsGodotObject();
+                var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_extension.gd");
+                var twitchMobileClass = script.Get("Mobile").AsGodotObject();
+                var request = twitchMobileClass.Call("new").AsGodotObject();
                 request.Set("viewer_url", ViewerUrl);
                 return request;
             }
@@ -226,8 +193,9 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
         
             public GodotObject ToGodotObject()
             {
-                var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_panel.gd");
-                var request = script.Call("new").AsGodotObject();
+                var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_extension.gd");
+                var twitchPanelClass = script.Get("Panel").AsGodotObject();
+                var request = twitchPanelClass.Call("new").AsGodotObject();
                 request.Set("viewer_url", ViewerUrl);
                 request.Set("height", Height);
                 request.Set("can_link_external_content", CanLinkExternalContent);
@@ -260,8 +228,9 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
         
             public GodotObject ToGodotObject()
             {
-                var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_video_overlay.gd");
-                var request = script.Call("new").AsGodotObject();
+                var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_extension.gd");
+                var twitchVideoOverlayClass = script.Get("VideoOverlay").AsGodotObject();
+                var request = twitchVideoOverlayClass.Call("new").AsGodotObject();
                 request.Set("viewer_url", ViewerUrl);
                 request.Set("can_link_external_content", CanLinkExternalContent);
                 return request;
@@ -303,8 +272,9 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
         
             public GodotObject ToGodotObject()
             {
-                var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_component.gd");
-                var request = script.Call("new").AsGodotObject();
+                var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_extension.gd");
+                var twitchComponentClass = script.Get("Component").AsGodotObject();
+                var request = twitchComponentClass.Call("new").AsGodotObject();
                 request.Set("viewer_url", ViewerUrl);
                 request.Set("aspect_ratio_x", AspectRatioX);
                 request.Set("aspect_ratio_y", AspectRatioY);
@@ -341,8 +311,9 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
         
             public GodotObject ToGodotObject()
             {
-                var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_config.gd");
-                var request = script.Call("new").AsGodotObject();
+                var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_extension.gd");
+                var twitchConfigClass = script.Get("Config").AsGodotObject();
+                var request = twitchConfigClass.Call("new").AsGodotObject();
                 request.Set("viewer_url", ViewerUrl);
                 request.Set("can_link_external_content", CanLinkExternalContent);
                 return request;

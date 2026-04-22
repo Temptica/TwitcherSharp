@@ -2,13 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using Chickensoft.GoDotTest;
 using Chickensoft.Log;
 using Godot;
-using TwitcherSharp.Api.Generated.EventSub;
 using TwitcherSharp.Api.Generated.Users;
 using TwitcherSharp.EventSub;
+using TwitcherSharp.EventSub.Generated.ChannelBitsUse;
+using TwitcherSharp.EventSub.Generated.ChannelChatNotification;
+using TwitcherSharp.EventSub.Generated.Shared;
 using TwitcherSharp.GoDotTests.Helper;
 using TwitcherSharp.Interfaces;
 using TwitcherSharp.Lib.Http;
@@ -28,13 +29,18 @@ public class MappingTestComplex(Node testScene) : TestClass(testScene)
     private const float TestFloat = 3.14f;
 
     public readonly List<string> TypesToSkip =
-        [
-            nameof(RequestData), //Ignoring this for tests 
-            nameof(ResponseData), //Ignoring this for tests 
-            nameof(TwitchPollListener), //Doesn't want to work during test due to authentication stuff
-            nameof(TwitchEventSubDefinition), //Special one tested manually in ManualMappingTest.cs
-            nameof(TwitchGetAuthorizationByUserResponse), // Broken on Twitcher's side. Awaiting Kani's implementation.
-        ];
+    [
+        nameof(RequestData), //Ignoring this for tests 
+        nameof(ResponseData), //Ignoring this for tests
+        nameof(TwitchPollListener), //Doesn't want to work during test due to authentication stuff
+        nameof(TwitchEventSubDefinition), //Special one tested manually in ManualMappingTest.cs
+        nameof(TwitchGetAuthorizationByUserResponse), // Broken on Twitcher's side. Awaiting Kani's implementation.
+        nameof(TwitchChannelChatNotificationCondition), // Broken on Twitcher's side. Awaiting Kani's implementation.
+        nameof(TwitchChannelChatNotificationEvent), // Broken on Twitcher's side. Awaiting Kani's implementation.
+        nameof(TwitchReward), // Broken on Twitcher's side. Awaiting Kani's implementation.
+        nameof(TwitchChannelChatNotificationEvent), // Broken on Twitcher's side. Awaiting Kani's implementation.
+        nameof(TwitchChannelBitsUseEvent), // Broken on Twitcher's side. Awaiting Kani's implementation.
+    ];
 
     [Test]
     public void TestParsing()
@@ -48,6 +54,7 @@ public class MappingTestComplex(Node testScene) : TestClass(testScene)
                         && !t.IsAbstract
                         && t.GetConstructor(Type.EmptyTypes) != null
                         && !TypesToSkip.Contains(t.Name)
+                        && !IsNestedUnderSkippedType(t)
                         && !t.ContainsGenericParameters)
             .Select(t => (ITwitcherSharp)Activator.CreateInstance(t)!)
             .ToList();
@@ -66,6 +73,23 @@ public class MappingTestComplex(Node testScene) : TestClass(testScene)
             TestCounter++;
             _log.Print($"test {TestCounter} successful {twitcherSharpObject.GetType().Name}");
         }
+    }
+
+    private bool IsNestedUnderSkippedType(Type type)
+    {
+        var current = type.DeclaringType;
+
+        while (current != null)
+        {
+            if (TypesToSkip.Contains(current.Name))
+            {
+                return true;
+            }
+
+            current = current.DeclaringType;
+        }
+
+        return false;
     }
 
     private static void SetDefaultTestProperty(PropertyInfo property, ITwitcherSharp twitcherSharpObject)

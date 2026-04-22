@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 using TwitcherSharp.EventSub.Generated.Shared;
 
@@ -63,7 +64,7 @@ public partial class TwitchOutcomes : RefCounted, ITwitcherSharpEventSub<TwitchO
         request.Set("color", Color);
         request.Set("users", Users);
         request.Set("channel_points", ChannelPoints);
-        request.Set("top_predictors", TopPredictors.ToGodotObject());
+        request.Set("top_predictors", TopPredictors?.ToGodotObject());
         return request;
     }
 }

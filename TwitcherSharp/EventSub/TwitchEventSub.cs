@@ -8,7 +8,19 @@ namespace TwitcherSharp.EventSub;
 public partial class TwitchEventSub : RefCounted, ITwitcherSharpSingleton<TwitchEventSub>
 {
     private GodotObject _data;
-    public static TwitchEventSub Instance { get; set; }
+    public static string ScriptPath => "res://addons/twitcher/eventsub/twitch_eventsub.gd";
+
+    public static TwitchEventSub Instance
+    {
+        get => ITwitcherSharpSingleton<TwitchEventSub>.Instance;
+        private set => ITwitcherSharpSingleton<TwitchEventSub>.Instance = value;
+    }
+
+    public static TwitchEventSub GetInstance() => ITwitcherSharpSingleton<TwitchEventSub>.GetInstance();
+
+    public static TwitchEventSub CreateInstance(Action<TwitchEventSub> configure = null) =>
+        ITwitcherSharpSingleton<TwitchEventSub>.CreateInstance(configure);
+
     public bool IsLinked => _data != null;
 
     [Signal]
@@ -96,20 +108,5 @@ public partial class TwitchEventSub : RefCounted, ITwitcherSharpSingleton<Twitch
     public override void _Notification(int what)
     {
         if (what == NotificationPredelete) FreeInstance();
-    }
-
-    public static TwitchEventSub GetOrCreateInstance()
-    {
-        var script = GD.Load<GDScript>("res://addons/twitcher/eventsub/twitch_eventsub.gd");
-        var instance = script.New().AsGodotObject().Get("instance");
-        if (instance.VariantType != Variant.Type.Object) return Create();
-        FromObject(instance.AsGodotObject());
-        return Instance;
-    }
-
-    public static TwitchEventSub Create()
-    {
-        Instance = new TwitchEventSub();
-        return Instance;
     }
 }

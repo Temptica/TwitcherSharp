@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 using TwitcherSharp.EventSub.Generated.Shared;
 
@@ -36,7 +37,7 @@ public partial class TwitchMessage : RefCounted, ITwitcherSharpEventSub<TwitchMe
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_message.gd");
         var request = script.New().AsGodotObject();
         request.Set("text", Text);
-        request.Set("emotes", new Godot.Collections.Array(Emotes.Select(x => x.ToGodotObject()).ToArray()));
+        if(Emotes != null) request.Set("emotes", Emotes?.ToGodotArray());
         return request;
     }
 }

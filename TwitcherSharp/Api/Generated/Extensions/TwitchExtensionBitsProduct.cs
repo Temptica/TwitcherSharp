@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Extensions;
@@ -67,8 +68,9 @@ public partial class TwitchExtensionBitsProduct : RefCounted, ITwitcherSharp<Twi
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_cost.gd");
-            var request = script.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_extension_bits_product.gd");
+            var twitchCostClass = script.Get("Cost").AsGodotObject();
+            var request = twitchCostClass.Call("new").AsGodotObject();
             request.Set("amount", Amount);
             request.Set("type", Type);
             return request;

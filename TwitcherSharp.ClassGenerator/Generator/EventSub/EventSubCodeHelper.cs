@@ -85,6 +85,7 @@ public static class EventSubCodeHelper
             foreach (var field in fields)
             {
                 string fieldData;
+                
                 if (field.IsArray && field.IsTyped)
                 {
                     fieldData =
@@ -149,19 +150,17 @@ public static class EventSubCodeHelper
 
                 if (field.IsArray && (field.IsTyped || field.Type == "Object"))
                 {
-                    //new Godot.Collections.Array(Fragments.Select(x => x.ToGodotObject()).ToArray()));
                     fieldCode =
-                        $"request.Set(\"{field.Name.ToSnakeCase()}\", new Godot.Collections.Array({field.Name}.Select(x => x.ToGodotObject()).ToArray()));";
+                        $"if({field.Name} != null) request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name}?.ToGodotArray());";
                 }
                 else if (field.IsArray)
                 {
-                    //new Godot.Collections.Array<string>(ids));
                     fieldCode =
-                        $"request.Set(\"{field.Name.ToSnakeCase()}\", new Godot.Collections.Array<{field.Type.Remove("[]")}>({field.Name}));";
+                        $"if({field.Name} != null) request.Set(\"{field.Name.ToSnakeCase()}\", new Godot.Collections.Array<{field.Type.Remove("[]")}>({field.Name}));";
                 }
                 else if (field.Type == "Object" || field.IsTyped)
                 {
-                    fieldCode = $"request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name}.ToGodotObject());";
+                    fieldCode = $"request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name}?.ToGodotObject());";
                 }
                 else fieldCode = $"request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name});";
 

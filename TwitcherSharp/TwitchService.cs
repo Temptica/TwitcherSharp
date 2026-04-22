@@ -14,8 +14,19 @@ namespace TwitcherSharp;
 public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchService>
 {
     private GodotObject _data;
-    public bool IsLinked { get; }
-    public static TwitchService Instance { get; set; }
+    public bool IsLinked => _data is not null;
+    public static string ScriptPath => "res://addons/twitcher/twitch_service.gd";
+
+    public static TwitchService Instance
+    {
+        get => ITwitcherSharpSingleton<TwitchService>.Instance;
+        private set => ITwitcherSharpSingleton<TwitchService>.Instance = value;
+    }
+
+    public static TwitchService GetInstance() => ITwitcherSharpSingleton<TwitchService>.GetInstance();
+
+    public static TwitchService CreateInstance(Action<TwitchService> configure = null) =>
+        ITwitcherSharpSingleton<TwitchService>.CreateInstance(configure);
 
     /// <summary>
     /// Call this to setup the complete Twitch integration whenever you need.
@@ -152,9 +163,10 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
     /// Easier way to add a command to the scene tree.
     /// </summary>
     /// <param name="command"></param>
-    public void AddCommand(TwitchCommand command)
+    public TwitchCommand AddCommand(TwitchCommand command)
     {
         ((Node)_data).AddChild((Node)command.ToGodotObject());
+        return command;
     }
 
     public void RemoveCommand(string command)
@@ -219,15 +231,16 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
 
     public async Task<Godot.Collections.Dictionary> Poll(string title, string[] choices, int duration = 60,
         bool channelPointsVotingEnabled = false, int channelPointsPerVote = 1000, string broadcasterId = "")
-        => (await _data.CallAsync("poll", title, choices, duration, channelPointsVotingEnabled, channelPointsPerVote, broadcasterId)).AsGodotDictionary();
+        => (await _data.CallAsync("poll", title, choices, duration, channelPointsVotingEnabled, channelPointsPerVote,
+            broadcasterId)).AsGodotDictionary();
 
     public async Task<List<TwitchCheermote>> GetCheermoteData()
         => await _data.CallListAsync<TwitchCheermote>("get_cheermote_data");
-    
+
     public async Task<Godot.Collections.Dictionary<TwitchCheermoteDefinition, SpriteFrames>> GetCheermotes(
         TwitchCheermoteDefinition definition) =>
         await _data.CallDictionaryKeyAsync<TwitchCheermoteDefinition, SpriteFrames>("get_cheermotes", definition);
-    
+
     public static TwitchService FromObject(GodotObject data)
     {
         if (data is null) return null;
@@ -236,44 +249,24 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
             _data = data,
         };
         Instance = service;
-        data.SetMeta("_twitcher_sharp_instance",Instance);
+        data.SetMeta("_twitcher_sharp_instance", Instance);
         return service;
     }
 
     public GodotObject ToGodotObject()
     {
-        if(_data is not null) return _data;
-        
+        if (_data is not null) return _data;
+
         var script = GD.Load<GDScript>("res://addons/twitcher/twitch_service.gd");
         _data = script.New().AsGodotObject();
-        _data.SetMeta("_twitcher_sharp_instance",this);
-        
+        _data.SetMeta("_twitcher_sharp_instance", this);
+
         return _data;
     }
 
     public void FreeInstance()
     {
-        if(_data is not null && !_data.IsQueuedForDeletion()) _data.RemoveMeta("_twitcher_sharp_instance");
-        Instance = null;   
-    }
-
-    public static TwitchService GetOrCreateInstance()
-    {
-        if (Instance != null) return Instance;
-        
-        var script = GD.Load<GDScript>("res://addons/twitcher/twitch_service.gd");
-        var twitchApi = script.New().AsGodotObject();
-        var instance = twitchApi.Get("instance");
-    
-        if (instance.VariantType != Variant.Type.Object)
-        {
-            var root = (Engine.GetMainLoop() as SceneTree)!.Root;
-            root.AddChild(twitchApi as Node);
-            FromObject(twitchApi);
-            return Instance;
-        }
-        
-        FromObject(instance.AsGodotObject());
-        return Instance;
+        if (_data is not null && !_data.IsQueuedForDeletion()) _data.RemoveMeta("_twitcher_sharp_instance");
+        Instance = null;
     }
 }

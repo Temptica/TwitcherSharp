@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Channels;
@@ -52,8 +53,8 @@ public partial class TwitchChannelInformation : RefCounted, ITwitcherSharp<Twitc
         request.Set("game_id", GameId);
         request.Set("title", Title);
         request.Set("delay", Delay);
-        request.Set("tags", new Godot.Collections.Array<string>(Tags));
-        request.Set("content_classification_labels", new Godot.Collections.Array<string>(ContentClassificationLabels));
+        if(Tags != null) request.Set("tags", new Godot.Collections.Array<string>(Tags));
+        if(ContentClassificationLabels != null) request.Set("content_classification_labels", new Godot.Collections.Array<string>(ContentClassificationLabels));
         request.Set("is_branded_content", IsBrandedContent);
         return request;
     }

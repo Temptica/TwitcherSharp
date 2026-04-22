@@ -18,7 +18,7 @@ public class TwitchGenComponent(string name, string @ref, string description) : 
     public TwitchGenField GenericField { get; set; }
     public string GenericType { get; set; }
     public bool IsPagination => ClassName == "ResponsePagination";
-    public bool HasPagination => Fields.Any(c => c.Name == "Pagination");
+    public bool HasPagination => Fields.Any(c => c.Name == "Pagination" && c.IsTyped);
     public bool IsGlobal { get; set; }
     public bool HasGeneric => GenericType != null;
 
@@ -37,6 +37,7 @@ public class TwitchGenComponent(string name, string @ref, string description) : 
     public bool IsBody => ClassName.EndsWith("Body");
     public bool IsOpt => ClassName.EndsWith("Opt");
     public bool IsResponse => ClassName.EndsWith("Response");
+    public int ParentCount => ParentComponents.Count;
 
     public string GetNameSpace()
     {
@@ -48,8 +49,8 @@ public class TwitchGenComponent(string name, string @ref, string description) : 
         if (ClassName == "ResponsePagination")
             if (ParentComponents.Count == 0)
                 return "";
-        
-        
+
+
         var parentTags = ParentComponents.Select(c => c.GetNameSpace()).ToHashSet();
         foreach (var parentInterface in ParentInterfaces.Select(pi => pi.NameSpace)) parentTags.Add(parentInterface);
         return parentTags.Count > 0 ? parentTags.First() : "Shared";
@@ -65,7 +66,7 @@ public class TwitchGenComponent(string name, string @ref, string description) : 
     {
         SubComponents.Add(component);
         component.ParentComponents.Add(this);
-        
+
         if (component.HasGeneric)
         {
             AddGenericType(component.GenericType, component.ClassName);
@@ -84,7 +85,7 @@ public class TwitchGenComponent(string name, string @ref, string description) : 
 
     public TwitchGenComponent GetParentOrNull()
     {
-        return ParentComponents.Count == 1 ? ParentComponents[0] : null;
+        return ParentComponents?.Count == 1 ? ParentComponents[0] : null;
     }
 
     public void ImplementInterface(TwitchGenInterface twitchGenInterface)
@@ -146,7 +147,7 @@ public class TwitchGenComponent(string name, string @ref, string description) : 
         return ParentInterfaces.Count > 0;
     }
 
-    public void AddGenericType(string genericType, string fieldName )
+    public void AddGenericType(string genericType, string fieldName)
     {
         GenericType = genericType;
         GenericField = Fields.SingleOrDefault(f => f.Name == fieldName);
@@ -155,5 +156,28 @@ public class TwitchGenComponent(string name, string @ref, string description) : 
         {
             parent.AddGenericType(genericType, ClassName);
         }
+    }
+
+    public TwitchGenComponent GetRootParent()
+    {
+        return GetParentOrNull()?.GetRootParent() ?? this;
+    }
+
+    public TwitchGenComponent GetGlobalRootParent()
+    {
+        var parent = GetParentOrNull();
+        if (parent is null) return this;
+        return parent.IsGlobal ? parent : parent.GetGlobalRootParent();
+    }
+
+    public void RemoveComponent(TwitchGenComponent fieldTypedComponent)
+    {
+        SubComponents.Remove(fieldTypedComponent);
+        fieldTypedComponent.RemoveParent(this);
+    }
+
+    private void RemoveParent(TwitchGenComponent twitchGenComponent)
+    {
+        ParentComponents.Remove(twitchGenComponent);
     }
 }

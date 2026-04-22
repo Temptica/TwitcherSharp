@@ -59,7 +59,7 @@ public partial class TwitchEventSubConfig() : RefCounted, ITwitcherSharp<TwitchE
         var script = GD.Load<GDScript>("res://addons/twitcher/eventsub/twitch_eventsub_config.gd");
         var data = script.New().AsGodotObject();
         data.Set("type", (int)Type);
-        data.Set("condition", Condition.Select(x => x?.ToGodotObject()).ToArray());
+        data.Set("condition", new Godot.Collections.Array(Condition.Select(x => x?.ToGodotObject()).ToArray()));
         return data;
     }
 }

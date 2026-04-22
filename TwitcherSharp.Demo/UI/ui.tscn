@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://bkonufrqcm2wm"]
+
+[ext_resource type="PackedScene" uid="uid://bt2th5ipjir1x" path="res://Scenes/WordGames/word_temptation.tscn" id="1_dajm1"]
+[ext_resource type="Script" uid="uid://bn1biqcjiiice" path="res://UI/Ui.cs" id="1_e6gg6"]
+[ext_resource type="PackedScene" uid="uid://7c5ajdsrwf2j" path="res://Scenes/NumbersGame/number_404.tscn" id="2_e6gg6"]
+
+[node name="UI" type="Control" unique_id=954309338]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_e6gg6")
+
+[node name="WordTemptation" parent="." unique_id=247815501 instance=ExtResource("1_dajm1")]
+
+[node name="Numbers404" parent="." unique_id=324071221 instance=ExtResource("2_e6gg6")]
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1362903857]
+custom_minimum_size = Vector2(600, 400)
+layout_mode = 1
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+
+[node name="WordsContainer" type="VBoxContainer" parent="MarginContainer" unique_id=985098223]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MarginContainer2" type="MarginContainer" parent="." unique_id=2024307044]
+custom_minimum_size = Vector2(600, 400)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -600.0
+offset_bottom = 400.0
+grow_horizontal = 0
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+
+[node name="NumbersContainer" type="VBoxContainer" parent="MarginContainer2" unique_id=202027174]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3

@@ -85,7 +85,7 @@ public abstract partial class TwitchCommandBase : RefCounted, ITwitcherSharp
     /// <summary>
     /// Where the command should be accepted
     /// </summary>
-    public WhereFlag Where { get; set; }
+    public WhereFlag Where { get; set; } = WhereFlag.Chat;
 
     /// <summary>
     /// All allowed users empty array means everyone
@@ -164,11 +164,11 @@ public abstract partial class TwitchCommandBase : RefCounted, ITwitcherSharp
         data.Set("description", Description);
         data.Set("permission_level", (int)PermissionLevel);
         data.Set("where", (int)Where);
-        data.Set("allowed_users", AllowedUsers.ToArray());
-        data.Set("listen_to_chatrooms", ListenToChatrooms.ToArray());
+        data.Set("allowed_users", AllowedUsers.ToVariantArray());
+        data.Set("listen_to_chatrooms", ListenToChatrooms.ToVariantArray());
         data.Set("case_insensitive", CaseInsensitive);
         data.Set("user_cooldown", UserCooldown);
         data.Set("global_cooldown", GlobalCooldown);
-        data.Set("all_commands", AllCommands.Select(c => c?.ToGodotObject()).ToArray());
+        data.Set("all_commands", new Godot.Collections.Array(AllCommands.Select(c => c?.ToGodotObject()).ToArray()));
     }
 }

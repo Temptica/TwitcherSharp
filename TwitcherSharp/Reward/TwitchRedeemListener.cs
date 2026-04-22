@@ -85,8 +85,8 @@ public partial class TwitchRedeemListener : RefCounted, ITwitcherSharp<TwitchRed
             EnsureSubscriptionsOnReady = data.Get("ensure_subscriptions_on_ready").AsBool(),
             _data = data,
         };
-        listener.TwitchEventSub ??= TwitchEventSub.GetOrCreateInstance();
-        listener.TwitchApi ??= TwitchApi.GetOrCreateInstance();
+        listener.TwitchEventSub ??= TwitchEventSub.GetInstance();
+        listener.TwitchApi ??= TwitchApi.GetInstance();
 
         listener.ConnectSignals();
 
@@ -97,7 +97,7 @@ public partial class TwitchRedeemListener : RefCounted, ITwitcherSharp<TwitchRed
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/reward/twitch_redeem_listener.gd");
         var instance = script.New().AsGodotObject();
-        instance.Set("rewards_to_listen", RewardsToListen.Select(x => x?.ToGodotObject()).ToArray());
+        instance.Set("rewards_to_listen", RewardsToListen.ToGodotArray());
         instance.Set("twitch_event_sub", TwitchEventSub?.ToGodotObject());
         instance.Set("twitch_api", TwitchApi?.ToGodotObject());
         instance.Set("ensure_subscriptions_on_ready", EnsureSubscriptionsOnReady);

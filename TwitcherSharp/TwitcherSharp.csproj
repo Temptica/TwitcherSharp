@@ -5,17 +5,17 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>disable</Nullable>
         <PackageId>Temptica.TwitcherSharp</PackageId>
-        <Version>2.4.1-alpha.1</Version>
+        <Version>2.4.1-alpha.2</Version>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Godot.SourceGenerators" Version="4.5.1" />
-      <PackageReference Include="GodotSharp" Version="4.5.1" />
-      <PackageReference Include="GodotSharpEditor" Version="4.5.1" />
+        <PackageReference Include="Godot.SourceGenerators" Version="4.5.1"/>
+        <PackageReference Include="GodotSharp" Version="4.5.1"/>
+        <PackageReference Include="GodotSharpEditor" Version="4.5.1"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Api\" />
+        <Folder Include="Api\"/>
+        <None Include="..\README.md" Pack="true" PackagePath="\"/>
     </ItemGroup>
-
 </Project>

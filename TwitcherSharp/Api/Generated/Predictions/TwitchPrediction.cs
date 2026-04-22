@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Predictions;
@@ -53,7 +54,7 @@ public partial class TwitchPrediction : RefCounted, ITwitcherSharp<TwitchPredict
         request.Set("broadcaster_login", BroadcasterLogin);
         request.Set("title", Title);
         request.Set("winning_outcome_id", WinningOutcomeId);
-        if(Outcomes != null) request.Set("outcomes", new Godot.Collections.Array<GodotObject>(Outcomes.Select(x => x.ToGodotObject()).ToArray()));
+        if(Outcomes != null) request.Set("outcomes", Outcomes?.ToGodotArray());
         request.Set("prediction_window", PredictionWindow);
         request.Set("status", Status);
         request.Set("created_at", CreatedAt);

@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.Chat;
@@ -61,7 +62,7 @@ public partial class TwitchCommandInfo : Resource, ITwitcherSharp<TwitchCommandI
 	{
 		var script = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_command_info.gd");
 		var instance = script.New(Command?.ToGodotObject(),ChannelName, Username, OriginalMessage, TextMessage).AsGodotObject();
-		instance.Set("arguments", Arguments?.ToArray());
+		instance.Set("arguments", Arguments?.ToVariantArray());
 		return instance;
 	}
 }

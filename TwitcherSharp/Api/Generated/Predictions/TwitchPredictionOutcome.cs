@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Predictions;
@@ -39,7 +40,7 @@ public partial class TwitchPredictionOutcome : RefCounted, ITwitcherSharp<Twitch
         request.Set("title", Title);
         request.Set("users", Users);
         request.Set("channel_points", ChannelPoints);
-        if(TopPredictors != null) request.Set("top_predictors", new Godot.Collections.Array<GodotObject>(TopPredictors.Select(x => x.ToGodotObject()).ToArray()));
+        if(TopPredictors != null) request.Set("top_predictors", TopPredictors?.ToGodotArray());
         request.Set("color", Color);
         return request;
     }
@@ -74,8 +75,9 @@ public partial class TwitchPredictionOutcome : RefCounted, ITwitcherSharp<Twitch
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_top_predictors.gd");
-            var request = script.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_prediction_outcome.gd");
+            var twitchTopPredictorsClass = script.Get("TopPredictors").AsGodotObject();
+            var request = twitchTopPredictorsClass.Call("new").AsGodotObject();
             request.Set("user_id", UserId);
             request.Set("user_name", UserName);
             request.Set("user_login", UserLogin);

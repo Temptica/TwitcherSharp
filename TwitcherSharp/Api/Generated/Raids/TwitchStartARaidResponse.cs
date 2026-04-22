@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Raids;
@@ -6,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Raids;
 public partial class TwitchStartARaidResponse : RefCounted, ITwitcherSharp<TwitchStartARaidResponse>
 {
     private GodotObject _data;
-    public TwitchData[] Data { get; set; }
+    public TwitchResponseData[] Data { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchStartARaidResponse object.
@@ -17,7 +18,7 @@ public partial class TwitchStartARaidResponse : RefCounted, ITwitcherSharp<Twitc
         var dataArray = data.Get("data").AsGodotArray<GodotObject>();
         return new TwitchStartARaidResponse
         {
-            Data = dataArray.Select(TwitchData.FromObject).ToArray(),
+            Data = dataArray.Select(TwitchResponseData.FromObject).ToArray(),
         };
     }
 
@@ -26,26 +27,26 @@ public partial class TwitchStartARaidResponse : RefCounted, ITwitcherSharp<Twitc
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_start_a_raid.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", new Godot.Collections.Array<GodotObject>(Data.Select(x => x.ToGodotObject()).ToArray()));
+        if(Data != null) request.Set("data", Data?.ToGodotArray());
         return request;
     }
     
     /// <summary> 
     /// A list that contains a single object with information about the pending raid. 
     /// </summary>
-    public partial class TwitchData : RefCounted, ITwitcherSharp<TwitchData>
+    public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
         private GodotObject _data;
         public string CreatedAt { get; set; }
         public bool IsMature { get; set; }
     
         /// <summary> 
-        /// Transforms the godot data into a TwitchData object.
+        /// Transforms the godot data into a TwitchResponseData object.
         /// </summary> 
-        public static TwitchData FromObject(GodotObject data)
+        public static TwitchResponseData FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchData
+            return new TwitchResponseData
             {
                 CreatedAt = data.Get("created_at").AsString(),
                 IsMature = data.Get("is_mature").AsBool(),
@@ -54,8 +55,9 @@ public partial class TwitchStartARaidResponse : RefCounted, ITwitcherSharp<Twitc
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_data.gd");
-            var request = script.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_start_a_raid.gd");
+            var twitchResponseDataClass = script.Get("ResponseData").AsGodotObject();
+            var request = twitchResponseDataClass.Call("new").AsGodotObject();
             request.Set("created_at", CreatedAt);
             request.Set("is_mature", IsMature);
             return request;

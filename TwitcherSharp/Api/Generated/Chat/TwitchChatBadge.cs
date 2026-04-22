@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Chat;
@@ -28,7 +29,7 @@ public partial class TwitchChatBadge : RefCounted, ITwitcherSharp<TwitchChatBadg
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_chat_badge.gd");
         var request = script.Call("new").AsGodotObject();
         request.Set("set_id", SetId);
-        if(Versions != null) request.Set("versions", new Godot.Collections.Array<GodotObject>(Versions.Select(x => x.ToGodotObject()).ToArray()));
+        if(Versions != null) request.Set("versions", Versions?.ToGodotArray());
         return request;
     }
     
@@ -68,8 +69,9 @@ public partial class TwitchChatBadge : RefCounted, ITwitcherSharp<TwitchChatBadg
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_versions.gd");
-            var request = script.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_chat_badge.gd");
+            var twitchVersionsClass = script.Get("Versions").AsGodotObject();
+            var request = twitchVersionsClass.Call("new").AsGodotObject();
             request.Set("id", Id);
             request.Set("image_url_1x", ImageUrl1x);
             request.Set("image_url_2x", ImageUrl2x);

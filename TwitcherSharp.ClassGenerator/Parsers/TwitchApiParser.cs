@@ -31,6 +31,7 @@ public class TwitchApiParser
         CreateInterfaces();
         ParseComponents();
         ParsingPaths();
+        CheckComponents();
         MergeInterfacesSubComponents();
     }
 
@@ -50,12 +51,12 @@ public class TwitchApiParser
                 subComponents = subComponents.Where(c =>
                     c.GetParentOrNull().InterfacesToImplement
                         .Any(pi => pi.InterfaceName == genInterface.DependsOnInterface)).ToList();
-                
+
                 //remove reference from other classes
                 var componentsToRemove = genInterface.SubComponents
                     .Where(c => !subComponents.Contains(c))
                     .ToList();
-                
+
                 foreach (var componentToRemove in componentsToRemove)
                 {
                     componentToRemove.InterfacesToImplement.Clear();
@@ -86,27 +87,34 @@ public class TwitchApiParser
         {
             if (schema.Type != "object") continue;
 
-            var @ref = "#/components/schemas/" + name;
+            var @ref = schema.Reference.Id;
             var component = new TwitchGenComponent(name, @ref, schema.Description)
             {
                 IsGlobal = true
             };
 
-            if(component.ClassName == "TwitchImage") continue;
-            
+            if (component.ClassName == "TwitchImage") continue;
+
             ParseProperties(component, schema);
             Components[name] = component;
         }
-
-        //for each component, check for children, 
-        foreach (var component in Components.Values)
+        
+        var componentsToCheck = Components.Values.ToList();
+        var checkedComponents = new HashSet<string>();
+        while (componentsToCheck.Count > 0)
         {
+            var component = componentsToCheck[0];
+            componentsToCheck.RemoveAt(0);
+            if(!checkedComponents.Add(component.ClassName)) continue;
+            
             foreach (var field in component.GetAllFields())
             {
                 if (!field.IsTyped) continue;
 
-                if (!Components.TryGetValue(field.CleanedArrayType, out var subComponent)) continue;
+                var subComponent = Components.Values.FirstOrDefault(v => v.Ref == field.TypedComponent.Ref && v != field.TypedComponent);
+                if (subComponent == null) continue;
                 component.AddComponent(subComponent);
+                component.RemoveComponent(field.TypedComponent);
             }
         }
     }
@@ -123,7 +131,7 @@ public class TwitchApiParser
                 IsRequired = schema.Required?.Contains(name) ?? false
             };
 
-            if (name.Equals("pagination", StringComparison.InvariantCultureIgnoreCase))
+            if (name.Equals("pagination", StringComparison.InvariantCultureIgnoreCase) && property.Type.ToLowerInvariant() == "object")
             {
                 var pagination = GetPaginationCopy();
                 field.Type = pagination.ClassName;
@@ -134,6 +142,10 @@ public class TwitchApiParser
             }
 
             var className = name.ToPascalCase();
+            if (property.Reference?.Id is not null)
+            {
+                className = "Twitch" + property.Reference.Id;
+            }
 
             //if array of objects => items -> object -> properties
             if (property.Type == "array")
@@ -143,14 +155,33 @@ public class TwitchApiParser
 
                 if (items.Reference != null)
                 {
-                    field.Type = "Twitch" + items.Reference.ReferenceV3.Split("/").Last();
-                    field.TypedComponent = GetComponentByRef(items.Reference.ReferenceV3);
+                    field.Type = "Twitch" + items.Reference.Id;
+
+                    field.TypedComponent = GetComponentByRef(items.Reference.Id);
                     component.AddComponent(field.TypedComponent);
                 }
                 else if (items.Properties.Count > 0)
                 {
-                    var subComponent = AddSubComponent(className, field.Description, component, items);
-                    field.Type = "Twitch" + subComponent.Ref.Split("/").Last();
+                    var compName = "Twitch";
+                    var root = component.GetRootParent();
+
+                    if (root.IsBody)
+                    {
+                        compName += "Body";
+                    }
+                    else if (root.IsOpt)
+                    {
+                        compName += "Opt";
+                    }
+                    else if (root.IsResponse)
+                    {
+                        compName += "Response";
+                    }
+
+                    compName += className;
+
+                    var subComponent = AddSubComponent(compName, field.Description, component, items);
+                    field.Type = compName;
                     field.TypedComponent = subComponent;
                     component.AddComponent(field.TypedComponent);
                 }
@@ -161,8 +192,14 @@ public class TwitchApiParser
             }
             else if (property.Properties.Count > 0)
             {
-                var subComponent = AddSubComponent(className, field.Description, component, property);
-                field.Type = "Twitch" + subComponent.Ref.Split("/").Last();
+                TwitchGenComponent subComponent = null;
+                if (property.Reference?.Id is not null)
+                {
+                    subComponent = GetComponentByRef(property.Reference.Id);
+                }
+                
+                subComponent  ??= AddSubComponent(className, field.Description, component, property);
+                field.Type = className;
                 field.TypedComponent = subComponent;
                 component.AddComponent(field.TypedComponent);
             }
@@ -185,13 +222,13 @@ public class TwitchApiParser
     private TwitchGenComponent AddSubComponent(string className, string description, TwitchGenComponent parentComponent,
         OpenApiSchema schema)
     {
-        var @ref = $"{parentComponent.Ref}/{className}";
+        var @ref = schema.Reference?.Id ?? $"{parentComponent.Ref}/{className}";
         var subComponent = new TwitchGenComponent(className, @ref, description);
         foreach (var genInterface in Interfaces)
         {
             if (!genInterface.ComponentsToAdd.Any(c => c.Contains(subComponent.ClassName))) continue;
             {
-                if (genInterface.DependsOnInterface == null) genInterface.AddSubComponent(subComponent);
+                if (string.IsNullOrEmpty(genInterface.DependsOnInterface)) genInterface.AddSubComponent(subComponent);
                 else
                 {
                     var interfaceToDependOn = Interfaces.First(i => i.InterfaceName == genInterface.DependsOnInterface);
@@ -280,7 +317,7 @@ public class TwitchApiParser
         // Body Type
         if (methodSpec.RequestBody != null)
         {
-            var @ref = methodSpec.RequestBody.Content["application/json"].Schema.Reference.ReferenceV3;
+            var @ref = methodSpec.RequestBody.Content["application/json"].Schema.Reference.Id;
 
             var component = Components.Values.FirstOrDefault(c => c.Ref == @ref);
             if (component != null)
@@ -304,7 +341,7 @@ public class TwitchApiParser
             if (content.ContainsKey("text/calendar")) method.ResultType = "ResponseData";
             else if (content.TryGetValue("application/json", out var responseJson))
             {
-                var result = responseJson.Schema.Reference.ReferenceV3;
+                var result = responseJson.Schema.Reference.Id;
 
                 var component = Components.Values.FirstOrDefault(c => c.Ref == result);
                 if (component != null)
@@ -352,15 +389,15 @@ public class TwitchApiParser
 
     private static string GetParamType(OpenApiSchema schema)
     {
-        if (schema.Reference != null) return "Twitch" + schema.Reference.ReferenceV3.Split('/')[0];
+        if (schema.Reference != null) return "Twitch" + schema.Reference.Id;
 
         var type = schema.Type;
         var format = schema.Format;
 
         type = type switch
         {
-            "object" when schema.Items?.Reference?.ReferenceV3 is not null
-                => "Twitch" + schema.Items.Reference.ReferenceV3.Split('/')[3],
+            "object" when schema.Items?.Reference?.Id is not null
+                => "Twitch" + schema.Items.Reference.Id,
             "string" => "string",
             "integer" => "int",
             "number" when format == "float" => "double",
@@ -372,7 +409,7 @@ public class TwitchApiParser
             "array" when schema.Items.Type == "float" => "double[]",
             "array" when schema.Items.Type == "boolean" => "bool[]",
             "array" when schema.Items?.Reference is not null
-                => $"Twitch{schema.Items.Reference.ReferenceV3.Split('/')[3]}[]",
+                => $"Twitch{schema.Items.Reference.Id}[]",
             "object" when schema.AdditionalProperties != null && schema.AdditionalProperties.Type != "object" =>
                 $"Godot.Collections.Dictionary<string, {schema.AdditionalProperties.Type}>",
             _ => "Variant"
@@ -423,5 +460,41 @@ public class TwitchApiParser
         });
 
         return pagination;
+    }
+
+    private void CheckComponents()
+    {
+        foreach (var component in Components)
+        {
+            CheckComponent(component.Value);
+        }
+    }
+
+    private static void CheckComponent(TwitchGenComponent component)
+    {
+        foreach (var field in component.GetAllFields())
+        {
+            if (field.IsTyped && field.TypedComponent.ParentCount == 1 && !field.TypedComponent.IsGlobal)
+            {
+                //checkName
+                var subComponent = field.TypedComponent;
+                var root = component.GetRootParent();
+                if (root.IsBody && !subComponent.ClassName.StartsWith("TwitchBody"))
+                {
+                    subComponent.ClassName = subComponent.ClassName.Replace("Twitch", "TwitchBody");
+                }
+                else if (root.IsOpt && !subComponent.ClassName.StartsWith("TwitchOpt"))
+                {
+                    subComponent.ClassName = subComponent.ClassName.Replace("Twitch", "TwitchOpt");
+                }
+                else if (root.IsResponse && !subComponent.ClassName.StartsWith("TwitchResponse"))
+                {
+                    subComponent.ClassName = subComponent.ClassName.Replace("Twitch", "TwitchResponse");
+                }
+                field.Type = subComponent.ClassName;
+
+                CheckComponent(subComponent);
+            }
+        }
     }
 }

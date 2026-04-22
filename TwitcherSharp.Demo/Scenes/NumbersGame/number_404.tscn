@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://7c5ajdsrwf2j"]
+
+[ext_resource type="Script" uid="uid://bxhh1aq7ntb15" path="res://Scenes/NumbersGame/Numbers404.cs" id="1_vwfn8"]
+[ext_resource type="Script" uid="uid://bmluckfvgm1c2" path="res://addons/twitcher/chat/twitch_command.gd" id="2_vwfn8"]
+
+[node name="Numbers404" type="Node" unique_id=324071221]
+script = ExtResource("1_vwfn8")
+
+[node name="StartCommand" type="Node" parent="." unique_id=952963780]
+script = ExtResource("2_vwfn8")
+command = "StartNumbers"
+permission_level = 28
+metadata/_custom_type_script = "uid://bmluckfvgm1c2"
+
+[node name="StopCommand" type="Node" parent="." unique_id=325435071]
+script = ExtResource("2_vwfn8")
+command = "Stop"
+permission_level = 28
+metadata/_custom_type_script = "uid://bmluckfvgm1c2"

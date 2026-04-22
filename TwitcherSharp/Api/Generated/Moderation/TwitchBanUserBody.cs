@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
@@ -6,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 public partial class TwitchBanUserBody : RefCounted, ITwitcherSharp<TwitchBanUserBody>
 {
     private GodotObject _data;
-    public TwitchData Data { get; set; }
+    public TwitchBodyData Data { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchBanUserBody object.
@@ -16,7 +17,7 @@ public partial class TwitchBanUserBody : RefCounted, ITwitcherSharp<TwitchBanUse
         if(data == null) return null;
         return new TwitchBanUserBody
         {
-            Data = data.Get("data").As<TwitchData>(),
+            Data = data.Get("data").As<TwitchBodyData>(),
         };
     }
 
@@ -32,7 +33,7 @@ public partial class TwitchBanUserBody : RefCounted, ITwitcherSharp<TwitchBanUse
     /// <summary> 
     /// Identifies the user and type of ban. 
     /// </summary>
-    public partial class TwitchData : RefCounted, ITwitcherSharp<TwitchData>
+    public partial class TwitchBodyData : RefCounted, ITwitcherSharp<TwitchBodyData>
     {
         private GodotObject _data;
         public string UserId { get; set; }
@@ -40,12 +41,12 @@ public partial class TwitchBanUserBody : RefCounted, ITwitcherSharp<TwitchBanUse
         public string Reason { get; set; }
     
         /// <summary> 
-        /// Transforms the godot data into a TwitchData object.
+        /// Transforms the godot data into a TwitchBodyData object.
         /// </summary> 
-        public static TwitchData FromObject(GodotObject data)
+        public static TwitchBodyData FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchData
+            return new TwitchBodyData
             {
                 UserId = data.Get("user_id").AsString(),
                 Duration = data.Get("duration").AsInt32(),
@@ -55,8 +56,9 @@ public partial class TwitchBanUserBody : RefCounted, ITwitcherSharp<TwitchBanUse
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_data.gd");
-            var request = script.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_ban_user.gd");
+            var twitchBodyDataClass = script.Get("BodyData").AsGodotObject();
+            var request = twitchBodyDataClass.Call("new").AsGodotObject();
             request.Set("user_id", UserId);
             if(Duration.HasValue) request.Set("duration", Duration.Value);
             if(Reason != null) request.Set("reason", Reason);

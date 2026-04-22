@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 using TwitcherSharp.EventSub.Generated.Shared;
 
@@ -85,7 +86,7 @@ public partial class TwitchExtensionBitsTransactionCreateEvent : RefCounted, ITw
         request.Set("user_id", UserId);
         request.Set("user_login", UserLogin);
         request.Set("user_name", UserName);
-        request.Set("product", Product.ToGodotObject());
+        request.Set("product", Product?.ToGodotObject());
         return request;
     }
 }

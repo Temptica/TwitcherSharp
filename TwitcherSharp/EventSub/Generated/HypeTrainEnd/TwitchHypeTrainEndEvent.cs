@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
@@ -108,9 +109,9 @@ public partial class TwitchHypeTrainEndEvent : RefCounted, ITwitcherSharpEventSu
         request.Set("broadcaster_user_login", BroadcasterUserLogin);
         request.Set("broadcaster_user_name", BroadcasterUserName);
         request.Set("total", Total);
-        request.Set("top_contributions", new Godot.Collections.Array(TopContributions.Select(x => x.ToGodotObject()).ToArray()));
+        if(TopContributions != null) request.Set("top_contributions", TopContributions?.ToGodotArray());
         request.Set("level", Level);
-        request.Set("shared_train_participants", new Godot.Collections.Array(SharedTrainParticipants.Select(x => x.ToGodotObject()).ToArray()));
+        if(SharedTrainParticipants != null) request.Set("shared_train_participants", SharedTrainParticipants?.ToGodotArray());
         request.Set("started_at", StartedAt);
         request.Set("cooldown_ends_at", CooldownEndsAt);
         request.Set("ended_at", EndedAt);

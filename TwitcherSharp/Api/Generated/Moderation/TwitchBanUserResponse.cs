@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
@@ -6,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 public partial class TwitchBanUserResponse : RefCounted, ITwitcherSharp<TwitchBanUserResponse>
 {
     private GodotObject _data;
-    public TwitchData[] Data { get; set; }
+    public TwitchResponseData[] Data { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchBanUserResponse object.
@@ -17,7 +18,7 @@ public partial class TwitchBanUserResponse : RefCounted, ITwitcherSharp<TwitchBa
         var dataArray = data.Get("data").AsGodotArray<GodotObject>();
         return new TwitchBanUserResponse
         {
-            Data = dataArray.Select(TwitchData.FromObject).ToArray(),
+            Data = dataArray.Select(TwitchResponseData.FromObject).ToArray(),
         };
     }
 
@@ -26,14 +27,14 @@ public partial class TwitchBanUserResponse : RefCounted, ITwitcherSharp<TwitchBa
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_ban_user.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", new Godot.Collections.Array<GodotObject>(Data.Select(x => x.ToGodotObject()).ToArray()));
+        if(Data != null) request.Set("data", Data?.ToGodotArray());
         return request;
     }
     
     /// <summary> 
     /// A list that contains the user you successfully banned or put in a timeout. 
     /// </summary>
-    public partial class TwitchData : RefCounted, ITwitcherSharp<TwitchData>
+    public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
         private GodotObject _data;
         public string BroadcasterId { get; set; }
@@ -43,12 +44,12 @@ public partial class TwitchBanUserResponse : RefCounted, ITwitcherSharp<TwitchBa
         public string EndTime { get; set; }
     
         /// <summary> 
-        /// Transforms the godot data into a TwitchData object.
+        /// Transforms the godot data into a TwitchResponseData object.
         /// </summary> 
-        public static TwitchData FromObject(GodotObject data)
+        public static TwitchResponseData FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchData
+            return new TwitchResponseData
             {
                 BroadcasterId = data.Get("broadcaster_id").AsString(),
                 ModeratorId = data.Get("moderator_id").AsString(),
@@ -60,8 +61,9 @@ public partial class TwitchBanUserResponse : RefCounted, ITwitcherSharp<TwitchBa
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_data.gd");
-            var request = script.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_ban_user.gd");
+            var twitchResponseDataClass = script.Get("ResponseData").AsGodotObject();
+            var request = twitchResponseDataClass.Call("new").AsGodotObject();
             request.Set("broadcaster_id", BroadcasterId);
             request.Set("moderator_id", ModeratorId);
             request.Set("user_id", UserId);

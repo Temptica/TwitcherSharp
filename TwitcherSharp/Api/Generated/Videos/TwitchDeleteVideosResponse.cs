@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Videos;
@@ -25,7 +26,7 @@ public partial class TwitchDeleteVideosResponse : RefCounted, ITwitcherSharp<Twi
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_delete_videos.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        request.Set("data", new Godot.Collections.Array<string>(Data));
+        if(Data != null) request.Set("data", new Godot.Collections.Array<string>(Data));
         return request;
     }
 

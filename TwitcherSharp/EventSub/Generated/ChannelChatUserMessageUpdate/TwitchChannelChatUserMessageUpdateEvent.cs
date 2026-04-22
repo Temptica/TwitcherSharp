@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
@@ -48,7 +49,7 @@ public partial class TwitchChannelChatUserMessageUpdateEvent : RefCounted, ITwit
     public string MessageId { get; set; }
 
     /// <summary> 
-    /// The body of the message.
+    /// 
     /// </summary>
     public TwitchMessage Message { get; set; }
 
@@ -85,7 +86,7 @@ public partial class TwitchChannelChatUserMessageUpdateEvent : RefCounted, ITwit
         request.Set("user_name", UserName);
         request.Set("status", Status);
         request.Set("message_id", MessageId);
-        request.Set("message", Message.ToGodotObject());
+        request.Set("message", Message?.ToGodotObject());
         return request;
     }
 
@@ -122,7 +123,7 @@ public partial class TwitchChannelChatUserMessageUpdateEvent : RefCounted, ITwit
             var messageClass = script.Get("Message").As<GDScript>();
             var request = messageClass.New().AsGodotObject();
             request.Set("text", Text);
-            request.Set("fragments", new Godot.Collections.Array(Fragments.Select(x => x.ToGodotObject()).ToArray()));
+            if(Fragments != null) request.Set("fragments", Fragments?.ToGodotArray());
             return request;
         }
     
@@ -164,8 +165,8 @@ public partial class TwitchChannelChatUserMessageUpdateEvent : RefCounted, ITwit
                 var fragmentsClass = script.Get("Fragments").As<GDScript>();
                 var request = fragmentsClass.New().AsGodotObject();
                 request.Set("text", Text);
-                request.Set("emote", Emote.ToGodotObject());
-                request.Set("cheermote", Cheermote.ToGodotObject());
+                request.Set("emote", Emote?.ToGodotObject());
+                request.Set("cheermote", Cheermote?.ToGodotObject());
                 return request;
             }
         

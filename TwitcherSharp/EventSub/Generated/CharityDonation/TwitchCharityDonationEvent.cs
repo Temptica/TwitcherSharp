@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
@@ -113,7 +114,7 @@ public partial class TwitchCharityDonationEvent : RefCounted, ITwitcherSharpEven
         request.Set("charity_description", CharityDescription);
         request.Set("charity_logo", CharityLogo);
         request.Set("charity_website", CharityWebsite);
-        request.Set("amount", Amount.ToGodotObject());
+        request.Set("amount", Amount?.ToGodotObject());
         return request;
     }
 

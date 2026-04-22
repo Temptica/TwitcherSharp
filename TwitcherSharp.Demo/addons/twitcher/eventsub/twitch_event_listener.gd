@@ -1,0 +1,83 @@
+@tool
+@icon("../assets/event-icon.svg")
+extends Twitcher
+
+## Listens to an event and publishes it as signal.
+## Usage for easy access of events on test and normal eventsub makes it more obvious what a scene
+## is listening before diving in the code.
+
+## [b]Expects that the signal was already configured in the eventsub or manually subscribed[/b]
+class_name TwitchEventListener
+static var _log : TwitchLogger = TwitchLogger.new("TwitchEventListener")
+
+## Eventsub to listen the events. (Can be empty will automatically look for first [TwitchEventsub] in the scene tree)
+@export var eventsub: TwitchEventsub:
+	set = _update_eventsub
+
+## The subscription to listen for (needs to be subscribed by the eventsub node)
+@export var subscription: TwitchEventsubDefinition.Type:
+	set(val):
+		subscription = val
+		subscription_definition = TwitchEventsubDefinition.ALL[subscription]
+		update_configuration_warnings()
+
+var subscription_definition: TwitchEventsubDefinition
+
+
+## Called when the event got received
+signal received(data: Dictionary)
+## Called when the event got received, with the eventsub data parsed into an object
+signal typed_data_received(data: Variant)
+
+func _ready() -> void:
+	if eventsub == null: eventsub = TwitchEventsub.instance
+	_update_eventsub(eventsub)
+
+
+func _enter_tree() -> void:
+	start_listening()
+
+
+func _exit_tree() -> void:
+	stop_listening()
+
+
+func start_listening() -> void:
+	_ensure_subscription_definition()
+	_log.d("start listening %s" % subscription_definition.get_readable_name())
+	if eventsub != null && not eventsub.event_received.is_connected(_on_received):
+		eventsub.event_received.connect(_on_received)
+
+
+func stop_listening() -> void:
+	_ensure_subscription_definition()
+	_log.d("stop listening %s" % subscription_definition.get_readable_name())
+	if eventsub != null && eventsub.event_received.is_connected(_on_received):
+		eventsub.event_received.disconnect(_on_received)
+
+
+func _ensure_subscription_definition() -> void:
+	if subscription_definition == null:
+		subscription_definition = TwitchEventsubDefinition.ALL[subscription]
+
+
+func _update_eventsub(val: TwitchEventsub):
+	stop_listening()
+	eventsub = val
+	update_configuration_warnings()
+	if val == null: return
+	start_listening()
+
+
+func _on_received(event: TwitchEventsub.Event):
+	if event.type == subscription_definition:
+		# Need for backward compatibility
+		received.emit(event.data)
+		typed_data_received.emit(event.typed_data)
+
+
+func _get_configuration_warnings() -> PackedStringArray:
+	var result: PackedStringArray = []
+	if subscription == null:
+		result.append("'Subscription' is missing")
+	return result

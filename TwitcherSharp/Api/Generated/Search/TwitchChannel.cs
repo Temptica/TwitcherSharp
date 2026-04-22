@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Search;
@@ -53,8 +54,8 @@ public partial class TwitchChannel : RefCounted, ITwitcherSharp<TwitchChannel>
         request.Set("game_name", GameName);
         request.Set("id", Id);
         request.Set("is_live", IsLive);
-        request.Set("tag_ids", new Godot.Collections.Array<string>(TagIds));
-        request.Set("tags", new Godot.Collections.Array<string>(Tags));
+        if(TagIds != null) request.Set("tag_ids", new Godot.Collections.Array<string>(TagIds));
+        if(Tags != null) request.Set("tags", new Godot.Collections.Array<string>(Tags));
         request.Set("thumbnail_url", ThumbnailUrl);
         request.Set("title", Title);
         request.Set("started_at", StartedAt);

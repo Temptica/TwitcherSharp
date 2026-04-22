@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
@@ -43,12 +44,12 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddEvent : RefC
     public string Id { get; set; }
 
     /// <summary> 
-    /// An object that contains the reward information.
+    /// 
     /// </summary>
     public TwitchReward Reward { get; set; }
 
     /// <summary> 
-    /// An object that contains the user message and emote information needed to recreate the message.
+    /// 
     /// </summary>
     public TwitchMessage Message { get; set; }
 
@@ -96,8 +97,8 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddEvent : RefC
         request.Set("user_login", UserLogin);
         request.Set("user_name", UserName);
         request.Set("id", Id);
-        request.Set("reward", Reward.ToGodotObject());
-        request.Set("message", Message.ToGodotObject());
+        request.Set("reward", Reward?.ToGodotObject());
+        request.Set("message", Message?.ToGodotObject());
         request.Set("user_input", UserInput);
         request.Set("redeemed_at", RedeemedAt);
         return request;
@@ -142,7 +143,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddEvent : RefC
             var request = rewardClass.New().AsGodotObject();
             request.Set("type", Type);
             request.Set("cost", Cost);
-            request.Set("unlocked_emote", UnlockedEmote.ToGodotObject());
+            request.Set("unlocked_emote", UnlockedEmote?.ToGodotObject());
             return request;
         }
     
@@ -216,7 +217,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddEvent : RefC
             var messageClass = script.Get("Message").As<GDScript>();
             var request = messageClass.New().AsGodotObject();
             request.Set("text", Text);
-            request.Set("emotes", new Godot.Collections.Array(Emotes.Select(x => x.ToGodotObject()).ToArray()));
+            if(Emotes != null) request.Set("emotes", Emotes?.ToGodotArray());
             return request;
         }
     

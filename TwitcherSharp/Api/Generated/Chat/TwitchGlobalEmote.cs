@@ -1,6 +1,7 @@
 using TwitcherSharp.Api.Generated.Chat.Interfaces;
 using TwitcherSharp.Api.Generated.Chat.Interfaces;
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Chat;
@@ -25,7 +26,7 @@ public partial class TwitchGlobalEmote : RefCounted, ITwitcherSharp<TwitchGlobal
         {
             Id = data.Get("id").AsString(),
             Name = data.Get("name").AsString(),
-            Images = data.Get("images").As<TwitchImages>(),
+            Images = data.Get("images").As<TwitchResponseImages>(),
             Format = data.Get("format").AsStringArray(),
             Scale = data.Get("scale").AsStringArray(),
             ThemeMode = data.Get("theme_mode").AsStringArray(),
@@ -39,9 +40,9 @@ public partial class TwitchGlobalEmote : RefCounted, ITwitcherSharp<TwitchGlobal
         request.Set("id", Id);
         request.Set("name", Name);
         request.Set("images", Images?.ToGodotObject());
-        request.Set("format", new Godot.Collections.Array<string>(Format));
-        request.Set("scale", new Godot.Collections.Array<string>(Scale));
-        request.Set("theme_mode", new Godot.Collections.Array<string>(ThemeMode));
+        if(Format != null) request.Set("format", new Godot.Collections.Array<string>(Format));
+        if(Scale != null) request.Set("scale", new Godot.Collections.Array<string>(Scale));
+        if(ThemeMode != null) request.Set("theme_mode", new Godot.Collections.Array<string>(ThemeMode));
         return request;
     }
     
@@ -50,7 +51,7 @@ public partial class TwitchGlobalEmote : RefCounted, ITwitcherSharp<TwitchGlobal
     ///   
     /// **NOTE:** You should use the templated URL in the `template` field to fetch the image instead of using these URLs. 
     /// </summary>
-    public partial class TwitchImages : RefCounted, ITwitcherSharp<TwitchImages>, ITwitchImages
+    public partial class TwitchResponseImages : RefCounted, ITwitcherSharp<TwitchResponseImages>, ITwitchImages
     {
         private GodotObject _data;
         public string Url1x { get; set; }
@@ -58,12 +59,12 @@ public partial class TwitchGlobalEmote : RefCounted, ITwitcherSharp<TwitchGlobal
         public string Url4x { get; set; }
     
         /// <summary> 
-        /// Transforms the godot data into a TwitchImages object.
+        /// Transforms the godot data into a TwitchResponseImages object.
         /// </summary> 
-        public static TwitchImages FromObject(GodotObject data)
+        public static TwitchResponseImages FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchImages
+            return new TwitchResponseImages
             {
                 Url1x = data.Get("url_1x").AsString(),
                 Url2x = data.Get("url_2x").AsString(),
@@ -73,8 +74,9 @@ public partial class TwitchGlobalEmote : RefCounted, ITwitcherSharp<TwitchGlobal
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_images.gd");
-            var request = script.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_response_images.gd");
+            var twitchResponseImagesClass = script.Get("ResponseImages").AsGodotObject();
+            var request = twitchResponseImagesClass.Call("new").AsGodotObject();
             request.Set("url_1x", Url1x);
             request.Set("url_2x", Url2x);
             request.Set("url_4x", Url4x);

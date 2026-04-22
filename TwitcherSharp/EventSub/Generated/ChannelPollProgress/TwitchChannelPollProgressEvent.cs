@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 using TwitcherSharp.EventSub.Generated.Shared;
 
@@ -89,9 +90,9 @@ public partial class TwitchChannelPollProgressEvent : RefCounted, ITwitcherSharp
         request.Set("broadcaster_user_login", BroadcasterUserLogin);
         request.Set("broadcaster_user_name", BroadcasterUserName);
         request.Set("title", Title);
-        request.Set("choices", new Godot.Collections.Array(Choices.Select(x => x.ToGodotObject()).ToArray()));
-        request.Set("bits_voting", BitsVoting.ToGodotObject());
-        request.Set("channel_points_voting", ChannelPointsVoting.ToGodotObject());
+        if(Choices != null) request.Set("choices", Choices?.ToGodotArray());
+        request.Set("bits_voting", BitsVoting?.ToGodotObject());
+        request.Set("channel_points_voting", ChannelPointsVoting?.ToGodotObject());
         request.Set("started_at", StartedAt);
         request.Set("ends_at", EndsAt);
         return request;

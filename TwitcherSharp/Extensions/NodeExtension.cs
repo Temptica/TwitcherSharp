@@ -1,7 +1,5 @@
 using Godot;
-using TwitcherSharp.Chat;
 using TwitcherSharp.Interfaces;
-using TwitcherSharp.Reward;
 
 namespace TwitcherSharp.Extensions;
 
@@ -60,6 +58,9 @@ public static class NodeExtension
             return twitcherObject != null;
         }
 
+        /// <summary>
+        /// Remove the TwitcherSharp object from the node's meta-data.
+        /// </summary>
         public void RemoveTwitcherSharp()
         {
             node.RemoveMeta(MetaKey);
@@ -73,7 +74,7 @@ public static class NodeExtension
         /// <param name="path">The absolute or relative path to the node</param>
         /// <typeparam name="T"> a <see cref="RefCounted"/> <see cref="ITwitcherSharp&lt;T&gt;"/></typeparam>
         /// <returns>Returns the TwitcherSharp object when successful, or null if the node cannot be found or bound</returns>
-        public T GetOrCreateTwitcherNode<T>(NodePath path)
+        public T GetTwitcherNode<T>(NodePath path)
             where T : RefCounted, ITwitcherSharp<T>
         {
             var twitcherNode = node.GetNode(path);
@@ -92,12 +93,6 @@ public static class NodeExtension
             twitcherNode.SetTwitcherSharp(twitcherSharp);
 
             return twitcherSharp;
-        }
-        
-        public T GetTwitcherNode<T>(NodePath path) where T : RefCounted, ITwitcherSharp<T>
-        {
-            var twitcherNode = node.GetNode(path);
-            return twitcherNode?.GetTwitcherSharp<T>();
         }
     }
 }

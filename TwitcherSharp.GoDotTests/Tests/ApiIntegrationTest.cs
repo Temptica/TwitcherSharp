@@ -17,7 +17,7 @@ public class ApiIntegrationTest(Main testScene) : TestClass(testScene)
     [SetupAll]
     public void Setup()
     {
-        _twitchApi = TwitchApi.GetOrCreateInstance();
+        _twitchApi = TwitchApi.CreateInstance();
     }
 
     [Test]
