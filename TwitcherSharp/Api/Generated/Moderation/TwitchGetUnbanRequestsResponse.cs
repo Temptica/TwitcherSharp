@@ -1,5 +1,6 @@
 using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
@@ -7,7 +8,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 public partial class TwitchGetUnbanRequestsResponse : RefCounted, ITwitcherSharp<TwitchGetUnbanRequestsResponse>
 {
     private GodotObject _data;
-    public TwitchData[] Data { get; set; }
+    public TwitchResponseData[] Data { get; set; }
     public ResponsePagination Pagination { get; set; }
 
     /// <summary> 
@@ -19,7 +20,7 @@ public partial class TwitchGetUnbanRequestsResponse : RefCounted, ITwitcherSharp
         var dataArray = data.Get("data").AsGodotArray<GodotObject>();
         return new TwitchGetUnbanRequestsResponse
         {
-            Data = dataArray.Select(TwitchData.FromObject).ToArray(),
+            Data = dataArray.Select(TwitchResponseData.FromObject).ToArray(),
             Pagination = data.Get("pagination").As<ResponsePagination>(),
         };
     }
@@ -29,7 +30,7 @@ public partial class TwitchGetUnbanRequestsResponse : RefCounted, ITwitcherSharp
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_unban_requests.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", new Godot.Collections.Array<GodotObject>(Data.Select(x => x.ToGodotObject()).ToArray()));
+        if(Data != null) request.Set("data", Data?.ToGodotArray());
         if(Pagination != null) request.Set("pagination", Pagination);
         return request;
     }
@@ -58,9 +59,9 @@ public partial class TwitchGetUnbanRequestsResponse : RefCounted, ITwitcherSharp
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/response_pagination.gd");
-            var paginationClass = script.Get("Pagination").AsGodotObject();
-            var request = paginationClass.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_unban_requests.gd");
+            var responsePaginationClass = script.Get("ResponsePagination").AsGodotObject();
+            var request = responsePaginationClass.Call("new").AsGodotObject();
             if(Cursor != null) request.Set("cursor", Cursor);
             return request;
         }
@@ -70,7 +71,7 @@ public partial class TwitchGetUnbanRequestsResponse : RefCounted, ITwitcherSharp
     /// <summary> 
     /// A list that contains information about the channel's unban requests. 
     /// </summary>
-    public partial class TwitchData : RefCounted, ITwitcherSharp<TwitchData>
+    public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
         private GodotObject _data;
         public string Id { get; set; }
@@ -90,12 +91,12 @@ public partial class TwitchGetUnbanRequestsResponse : RefCounted, ITwitcherSharp
         public string ResolutionText { get; set; }
     
         /// <summary> 
-        /// Transforms the godot data into a TwitchData object.
+        /// Transforms the godot data into a TwitchResponseData object.
         /// </summary> 
-        public static TwitchData FromObject(GodotObject data)
+        public static TwitchResponseData FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchData
+            return new TwitchResponseData
             {
                 Id = data.Get("id").AsString(),
                 BroadcasterId = data.Get("broadcaster_id").AsString(),
@@ -117,8 +118,9 @@ public partial class TwitchGetUnbanRequestsResponse : RefCounted, ITwitcherSharp
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_data.gd");
-            var request = script.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_unban_requests.gd");
+            var twitchResponseDataClass = script.Get("ResponseData").AsGodotObject();
+            var request = twitchResponseDataClass.Call("new").AsGodotObject();
             request.Set("id", Id);
             request.Set("broadcaster_id", BroadcasterId);
             request.Set("broadcaster_name", BroadcasterName);

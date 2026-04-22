@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
@@ -43,12 +44,12 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
     public string MessageId { get; set; }
 
     /// <summary> 
-    /// The structured chat message.
+    /// 
     /// </summary>
     public TwitchMessage Message { get; set; }
 
     /// <summary> 
-    /// The type of message. Possible values: &lt;ul&gt;&lt;li&gt;text&lt;/li&gt;&lt;li&gt;channel_points_highlighted&lt;/li&gt;&lt;li&gt;channel_points_sub_only&lt;/li&gt;&lt;li&gt;user_intro&lt;/li&gt;&lt;li&gt;power_ups_message_effect&lt;/li&gt;&lt;li&gt;power_ups_gigantified_emote&lt;/li&gt;&lt;/ul&gt;
+    /// The type of message. Possible values: textchannel_points_highlightedchannel_points_sub_onlyuser_intropower_ups_message_effectpower_ups_gigantified_emote
     /// </summary>
     public string MessageType { get; set; }
 
@@ -152,18 +153,18 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
         request.Set("chatter_user_name", ChatterUserName);
         request.Set("chatter_user_login", ChatterUserLogin);
         request.Set("message_id", MessageId);
-        request.Set("message", Message.ToGodotObject());
+        request.Set("message", Message?.ToGodotObject());
         request.Set("message_type", MessageType);
-        request.Set("badges", new Godot.Collections.Array(Badges.Select(x => x.ToGodotObject()).ToArray()));
-        request.Set("cheer", Cheer.ToGodotObject());
+        if(Badges != null) request.Set("badges", Badges?.ToGodotArray());
+        request.Set("cheer", Cheer?.ToGodotObject());
         request.Set("color", Color);
-        request.Set("reply", Reply.ToGodotObject());
+        request.Set("reply", Reply?.ToGodotObject());
         request.Set("channel_points_custom_reward_id", ChannelPointsCustomRewardId);
         request.Set("source_broadcaster_user_id", SourceBroadcasterUserId);
         request.Set("source_broadcaster_user_name", SourceBroadcasterUserName);
         request.Set("source_broadcaster_user_login", SourceBroadcasterUserLogin);
         request.Set("source_message_id", SourceMessageId);
-        request.Set("source_badges", new Godot.Collections.Array(SourceBadges.Select(x => x.ToGodotObject()).ToArray()));
+        if(SourceBadges != null) request.Set("source_badges", SourceBadges?.ToGodotArray());
         request.Set("is_source_only", IsSourceOnly);
         return request;
     }
@@ -201,7 +202,7 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
             var messageClass = script.Get("Message").As<GDScript>();
             var request = messageClass.New().AsGodotObject();
             request.Set("text", Text);
-            request.Set("fragments", new Godot.Collections.Array(Fragments.Select(x => x.ToGodotObject()).ToArray()));
+            if(Fragments != null) request.Set("fragments", Fragments?.ToGodotArray());
             return request;
         }
     
@@ -256,9 +257,9 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
                 var request = fragmentsClass.New().AsGodotObject();
                 request.Set("type", Type);
                 request.Set("text", Text);
-                request.Set("cheermote", Cheermote.ToGodotObject());
-                request.Set("emote", Emote.ToGodotObject());
-                request.Set("mention", Mention.ToGodotObject());
+                request.Set("cheermote", Cheermote?.ToGodotObject());
+                request.Set("emote", Emote?.ToGodotObject());
+                request.Set("mention", Mention?.ToGodotObject());
                 return request;
             }
         
@@ -351,7 +352,7 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
                     request.Set("id", Id);
                     request.Set("emote_set_id", EmoteSetId);
                     request.Set("owner_id", OwnerId);
-                    request.Set("format", new Godot.Collections.Array<string>(Format));
+                    if(Format != null) request.Set("format", new Godot.Collections.Array<string>(Format));
                     return request;
                 }
             }

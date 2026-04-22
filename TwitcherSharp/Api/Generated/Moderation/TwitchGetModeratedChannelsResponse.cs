@@ -1,5 +1,6 @@
 using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
@@ -7,7 +8,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 public partial class TwitchGetModeratedChannelsResponse : RefCounted, ITwitcherSharp<TwitchGetModeratedChannelsResponse>
 {
     private GodotObject _data;
-    public TwitchData[] Data { get; set; }
+    public TwitchResponseData[] Data { get; set; }
     public ResponsePagination Pagination { get; set; }
 
     /// <summary> 
@@ -19,7 +20,7 @@ public partial class TwitchGetModeratedChannelsResponse : RefCounted, ITwitcherS
         var dataArray = data.Get("data").AsGodotArray<GodotObject>();
         return new TwitchGetModeratedChannelsResponse
         {
-            Data = dataArray.Select(TwitchData.FromObject).ToArray(),
+            Data = dataArray.Select(TwitchResponseData.FromObject).ToArray(),
             Pagination = data.Get("pagination").As<ResponsePagination>(),
         };
     }
@@ -29,7 +30,7 @@ public partial class TwitchGetModeratedChannelsResponse : RefCounted, ITwitcherS
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_moderated_channels.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", new Godot.Collections.Array<GodotObject>(Data.Select(x => x.ToGodotObject()).ToArray()));
+        if(Data != null) request.Set("data", Data?.ToGodotArray());
         if(Pagination != null) request.Set("pagination", Pagination);
         return request;
     }
@@ -58,9 +59,9 @@ public partial class TwitchGetModeratedChannelsResponse : RefCounted, ITwitcherS
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/response_pagination.gd");
-            var paginationClass = script.Get("Pagination").AsGodotObject();
-            var request = paginationClass.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_moderated_channels.gd");
+            var responsePaginationClass = script.Get("ResponsePagination").AsGodotObject();
+            var request = responsePaginationClass.Call("new").AsGodotObject();
             if(Cursor != null) request.Set("cursor", Cursor);
             return request;
         }
@@ -70,7 +71,7 @@ public partial class TwitchGetModeratedChannelsResponse : RefCounted, ITwitcherS
     /// <summary> 
     /// The list of channels that the user has moderator privileges in. 
     /// </summary>
-    public partial class TwitchData : RefCounted, ITwitcherSharp<TwitchData>
+    public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
         private GodotObject _data;
         public string BroadcasterId { get; set; }
@@ -78,12 +79,12 @@ public partial class TwitchGetModeratedChannelsResponse : RefCounted, ITwitcherS
         public string BroadcasterName { get; set; }
     
         /// <summary> 
-        /// Transforms the godot data into a TwitchData object.
+        /// Transforms the godot data into a TwitchResponseData object.
         /// </summary> 
-        public static TwitchData FromObject(GodotObject data)
+        public static TwitchResponseData FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchData
+            return new TwitchResponseData
             {
                 BroadcasterId = data.Get("broadcaster_id").AsString(),
                 BroadcasterLogin = data.Get("broadcaster_login").AsString(),
@@ -93,8 +94,9 @@ public partial class TwitchGetModeratedChannelsResponse : RefCounted, ITwitcherS
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_data.gd");
-            var request = script.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_moderated_channels.gd");
+            var twitchResponseDataClass = script.Get("ResponseData").AsGodotObject();
+            var request = twitchResponseDataClass.Call("new").AsGodotObject();
             request.Set("broadcaster_id", BroadcasterId);
             request.Set("broadcaster_login", BroadcasterLogin);
             request.Set("broadcaster_name", BroadcasterName);

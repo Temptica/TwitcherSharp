@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Polls;
@@ -56,7 +57,7 @@ public partial class TwitchPoll : RefCounted, ITwitcherSharp<TwitchPoll>
         request.Set("broadcaster_name", BroadcasterName);
         request.Set("broadcaster_login", BroadcasterLogin);
         request.Set("title", Title);
-        if(Choices != null) request.Set("choices", new Godot.Collections.Array<GodotObject>(Choices.Select(x => x.ToGodotObject()).ToArray()));
+        if(Choices != null) request.Set("choices", Choices?.ToGodotArray());
         request.Set("bits_voting_enabled", BitsVotingEnabled);
         request.Set("bits_per_vote", BitsPerVote);
         request.Set("channel_points_voting_enabled", ChannelPointsVotingEnabled);
@@ -98,8 +99,9 @@ public partial class TwitchPoll : RefCounted, ITwitcherSharp<TwitchPoll>
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_choices.gd");
-            var request = script.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_poll.gd");
+            var twitchChoicesClass = script.Get("Choices").AsGodotObject();
+            var request = twitchChoicesClass.Call("new").AsGodotObject();
             request.Set("id", Id);
             request.Set("title", Title);
             request.Set("votes", Votes);

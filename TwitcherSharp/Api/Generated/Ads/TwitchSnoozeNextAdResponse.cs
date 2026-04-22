@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Ads;
@@ -6,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Ads;
 public partial class TwitchSnoozeNextAdResponse : RefCounted, ITwitcherSharp<TwitchSnoozeNextAdResponse>
 {
     private GodotObject _data;
-    public TwitchData[] Data { get; set; }
+    public TwitchResponseData[] Data { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchSnoozeNextAdResponse object.
@@ -17,7 +18,7 @@ public partial class TwitchSnoozeNextAdResponse : RefCounted, ITwitcherSharp<Twi
         var dataArray = data.Get("data").AsGodotArray<GodotObject>();
         return new TwitchSnoozeNextAdResponse
         {
-            Data = dataArray.Select(TwitchData.FromObject).ToArray(),
+            Data = dataArray.Select(TwitchResponseData.FromObject).ToArray(),
         };
     }
 
@@ -26,14 +27,14 @@ public partial class TwitchSnoozeNextAdResponse : RefCounted, ITwitcherSharp<Twi
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_snooze_next_ad.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", new Godot.Collections.Array<GodotObject>(Data.Select(x => x.ToGodotObject()).ToArray()));
+        if(Data != null) request.Set("data", Data?.ToGodotArray());
         return request;
     }
     
     /// <summary> 
     /// A list that contains information about the channel’s snoozes and next upcoming ad after successfully snoozing. 
     /// </summary>
-    public partial class TwitchData : RefCounted, ITwitcherSharp<TwitchData>
+    public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
         private GodotObject _data;
         public int SnoozeCount { get; set; }
@@ -41,12 +42,12 @@ public partial class TwitchSnoozeNextAdResponse : RefCounted, ITwitcherSharp<Twi
         public int NextAdAt { get; set; }
     
         /// <summary> 
-        /// Transforms the godot data into a TwitchData object.
+        /// Transforms the godot data into a TwitchResponseData object.
         /// </summary> 
-        public static TwitchData FromObject(GodotObject data)
+        public static TwitchResponseData FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchData
+            return new TwitchResponseData
             {
                 SnoozeCount = data.Get("snooze_count").AsInt32(),
                 SnoozeRefreshAt = data.Get("snooze_refresh_at").AsInt32(),
@@ -56,8 +57,9 @@ public partial class TwitchSnoozeNextAdResponse : RefCounted, ITwitcherSharp<Twi
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_data.gd");
-            var request = script.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_snooze_next_ad.gd");
+            var twitchResponseDataClass = script.Get("ResponseData").AsGodotObject();
+            var request = twitchResponseDataClass.Call("new").AsGodotObject();
             request.Set("snooze_count", SnoozeCount);
             request.Set("snooze_refresh_at", SnoozeRefreshAt);
             request.Set("next_ad_at", NextAdAt);

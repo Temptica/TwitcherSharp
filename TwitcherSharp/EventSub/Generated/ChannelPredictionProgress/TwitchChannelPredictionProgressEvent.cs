@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 using TwitcherSharp.EventSub.Generated.Shared;
 
@@ -77,7 +78,7 @@ public partial class TwitchChannelPredictionProgressEvent : RefCounted, ITwitche
         request.Set("broadcaster_user_login", BroadcasterUserLogin);
         request.Set("broadcaster_user_name", BroadcasterUserName);
         request.Set("title", Title);
-        request.Set("outcomes", new Godot.Collections.Array(Outcomes.Select(x => x.ToGodotObject()).ToArray()));
+        if(Outcomes != null) request.Set("outcomes", Outcomes?.ToGodotArray());
         request.Set("started_at", StartedAt);
         request.Set("locks_at", LocksAt);
         return request;

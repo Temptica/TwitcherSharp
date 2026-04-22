@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 using TwitcherSharp.EventSub.Generated.Shared;
 
@@ -149,11 +150,11 @@ public partial class TwitchChannelPointsCustomRewardRemoveEvent : RefCounted, IT
         request.Set("prompt", Prompt);
         request.Set("is_user_input_required", IsUserInputRequired);
         request.Set("should_redemptions_skip_request_queue", ShouldRedemptionsSkipRequestQueue);
-        request.Set("max_per_stream", MaxPerStream.ToGodotObject());
-        request.Set("max_per_user_per_stream", MaxPerUserPerStream.ToGodotObject());
+        request.Set("max_per_stream", MaxPerStream?.ToGodotObject());
+        request.Set("max_per_user_per_stream", MaxPerUserPerStream?.ToGodotObject());
         request.Set("background_color", BackgroundColor);
-        request.Set("image", Image.ToGodotObject());
-        request.Set("global_cooldown", GlobalCooldown.ToGodotObject());
+        request.Set("image", Image?.ToGodotObject());
+        request.Set("global_cooldown", GlobalCooldown?.ToGodotObject());
         request.Set("cooldown_expires_at", CooldownExpiresAt);
         request.Set("redemptions_redeemed_current_stream", RedemptionsRedeemedCurrentStream);
         return request;

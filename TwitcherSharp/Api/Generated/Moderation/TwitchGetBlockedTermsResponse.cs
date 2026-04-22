@@ -1,5 +1,6 @@
 using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
@@ -29,7 +30,7 @@ public partial class TwitchGetBlockedTermsResponse : RefCounted, ITwitcherSharp<
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_blocked_terms.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", new Godot.Collections.Array<GodotObject>(Data.Select(x => x.ToGodotObject()).ToArray()));
+        if(Data != null) request.Set("data", Data?.ToGodotArray());
         if(Pagination != null) request.Set("pagination", Pagination);
         return request;
     }
@@ -58,9 +59,9 @@ public partial class TwitchGetBlockedTermsResponse : RefCounted, ITwitcherSharp<
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/response_pagination.gd");
-            var paginationClass = script.Get("Pagination").AsGodotObject();
-            var request = paginationClass.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_blocked_terms.gd");
+            var responsePaginationClass = script.Get("ResponsePagination").AsGodotObject();
+            var request = responsePaginationClass.Call("new").AsGodotObject();
             if(Cursor != null) request.Set("cursor", Cursor);
             return request;
         }

@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.GuestStar;
@@ -28,7 +29,7 @@ public partial class TwitchGuestStarSession : RefCounted, ITwitcherSharp<TwitchG
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_guest_star_session.gd");
         var request = script.Call("new").AsGodotObject();
         request.Set("id", Id);
-        if(Guests != null) request.Set("guests", new Godot.Collections.Array<GodotObject>(Guests.Select(x => x.ToGodotObject()).ToArray()));
+        if(Guests != null) request.Set("guests", Guests?.ToGodotArray());
         return request;
     }
 

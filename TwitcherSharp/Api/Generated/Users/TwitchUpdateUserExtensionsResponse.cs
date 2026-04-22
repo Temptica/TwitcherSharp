@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Users;
@@ -6,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Users;
 public partial class TwitchUpdateUserExtensionsResponse : RefCounted, ITwitcherSharp<TwitchUpdateUserExtensionsResponse>
 {
     private GodotObject _data;
-    public TwitchData Data { get; set; }
+    public TwitchResponseData Data { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUpdateUserExtensionsResponse object.
@@ -16,7 +17,7 @@ public partial class TwitchUpdateUserExtensionsResponse : RefCounted, ITwitcherS
         if(data == null) return null;
         return new TwitchUpdateUserExtensionsResponse
         {
-            Data = data.Get("data").As<TwitchData>(),
+            Data = data.Get("data").As<TwitchResponseData>(),
         };
     }
 
@@ -32,7 +33,7 @@ public partial class TwitchUpdateUserExtensionsResponse : RefCounted, ITwitcherS
     /// <summary> 
     /// The extensions that the broadcaster updated. 
     /// </summary>
-    public partial class TwitchData : RefCounted, ITwitcherSharp<TwitchData>
+    public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
         private GodotObject _data;
         public Variant Panel { get; set; }
@@ -40,12 +41,12 @@ public partial class TwitchUpdateUserExtensionsResponse : RefCounted, ITwitcherS
         public Variant Component { get; set; }
     
         /// <summary> 
-        /// Transforms the godot data into a TwitchData object.
+        /// Transforms the godot data into a TwitchResponseData object.
         /// </summary> 
-        public static TwitchData FromObject(GodotObject data)
+        public static TwitchResponseData FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchData
+            return new TwitchResponseData
             {
                 Panel = data.Get("panel").As<Variant>(),
                 Overlay = data.Get("overlay").As<Variant>(),
@@ -55,8 +56,9 @@ public partial class TwitchUpdateUserExtensionsResponse : RefCounted, ITwitcherS
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_data.gd");
-            var request = script.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_update_user_extensions.gd");
+            var twitchResponseDataClass = script.Get("ResponseData").AsGodotObject();
+            var request = twitchResponseDataClass.Call("new").AsGodotObject();
             request.Set("panel", Panel);
             request.Set("overlay", Overlay);
             request.Set("component", Component);

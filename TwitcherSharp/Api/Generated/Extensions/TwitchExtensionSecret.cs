@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Extensions;
@@ -28,7 +29,7 @@ public partial class TwitchExtensionSecret : RefCounted, ITwitcherSharp<TwitchEx
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_extension_secret.gd");
         var request = script.Call("new").AsGodotObject();
         request.Set("format_version", FormatVersion);
-        if(Secrets != null) request.Set("secrets", new Godot.Collections.Array<GodotObject>(Secrets.Select(x => x.ToGodotObject()).ToArray()));
+        if(Secrets != null) request.Set("secrets", Secrets?.ToGodotArray());
         return request;
     }
     
@@ -58,8 +59,9 @@ public partial class TwitchExtensionSecret : RefCounted, ITwitcherSharp<TwitchEx
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_secrets.gd");
-            var request = script.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_extension_secret.gd");
+            var twitchSecretsClass = script.Get("Secrets").AsGodotObject();
+            var request = twitchSecretsClass.Call("new").AsGodotObject();
             request.Set("content", Content);
             request.Set("active_at", ActiveAt);
             request.Set("expires_at", ExpiresAt);

@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Conduits;
@@ -6,8 +7,8 @@ namespace TwitcherSharp.Api.Generated.Conduits;
 public partial class TwitchUpdateConduitShardsResponse : RefCounted, ITwitcherSharp<TwitchUpdateConduitShardsResponse>
 {
     private GodotObject _data;
-    public TwitchData[] Data { get; set; }
-    public TwitchErrors[] Errors { get; set; }
+    public TwitchResponseData[] Data { get; set; }
+    public TwitchResponseErrors[] Errors { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUpdateConduitShardsResponse object.
@@ -19,8 +20,8 @@ public partial class TwitchUpdateConduitShardsResponse : RefCounted, ITwitcherSh
         var errorsArray = data.Get("errors").AsGodotArray<GodotObject>();
         return new TwitchUpdateConduitShardsResponse
         {
-            Data = dataArray.Select(TwitchData.FromObject).ToArray(),
-            Errors = errorsArray.Select(TwitchErrors.FromObject).ToArray(),
+            Data = dataArray.Select(TwitchResponseData.FromObject).ToArray(),
+            Errors = errorsArray.Select(TwitchResponseErrors.FromObject).ToArray(),
         };
     }
 
@@ -29,39 +30,40 @@ public partial class TwitchUpdateConduitShardsResponse : RefCounted, ITwitcherSh
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_update_conduit_shards.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", new Godot.Collections.Array<GodotObject>(Data.Select(x => x.ToGodotObject()).ToArray()));
-        if(Errors != null) request.Set("errors", new Godot.Collections.Array<GodotObject>(Errors.Select(x => x.ToGodotObject()).ToArray()));
+        if(Data != null) request.Set("data", Data?.ToGodotArray());
+        if(Errors != null) request.Set("errors", Errors?.ToGodotArray());
         return request;
     }
     
     /// <summary> 
     /// List of successful shard updates. 
     /// </summary>
-    public partial class TwitchData : RefCounted, ITwitcherSharp<TwitchData>
+    public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
         private GodotObject _data;
         public string Id { get; set; }
         public string Status { get; set; }
-        public TwitchTransport Transport { get; set; }
+        public TwitchResponseTransport Transport { get; set; }
     
         /// <summary> 
-        /// Transforms the godot data into a TwitchData object.
+        /// Transforms the godot data into a TwitchResponseData object.
         /// </summary> 
-        public static TwitchData FromObject(GodotObject data)
+        public static TwitchResponseData FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchData
+            return new TwitchResponseData
             {
                 Id = data.Get("id").AsString(),
                 Status = data.Get("status").AsString(),
-                Transport = data.Get("transport").As<TwitchTransport>(),
+                Transport = data.Get("transport").As<TwitchResponseTransport>(),
             };
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_data.gd");
-            var request = script.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_update_conduit_shards.gd");
+            var twitchResponseDataClass = script.Get("ResponseData").AsGodotObject();
+            var request = twitchResponseDataClass.Call("new").AsGodotObject();
             request.Set("id", Id);
             request.Set("status", Status);
             request.Set("transport", Transport?.ToGodotObject());
@@ -71,7 +73,7 @@ public partial class TwitchUpdateConduitShardsResponse : RefCounted, ITwitcherSh
         /// <summary> 
         /// The transport details used to send the notifications. 
         /// </summary>
-        public partial class TwitchTransport : RefCounted, ITwitcherSharp<TwitchTransport>
+        public partial class TwitchResponseTransport : RefCounted, ITwitcherSharp<TwitchResponseTransport>
         {
             private GodotObject _data;
             public string Method { get; set; }
@@ -81,12 +83,12 @@ public partial class TwitchUpdateConduitShardsResponse : RefCounted, ITwitcherSh
             public string DisconnectedAt { get; set; }
         
             /// <summary> 
-            /// Transforms the godot data into a TwitchTransport object.
+            /// Transforms the godot data into a TwitchResponseTransport object.
             /// </summary> 
-            public static TwitchTransport FromObject(GodotObject data)
+            public static TwitchResponseTransport FromObject(GodotObject data)
             {
                 if(data == null) return null;
-                return new TwitchTransport
+                return new TwitchResponseTransport
                 {
                     Method = data.Get("method").AsString(),
                     Callback = data.Get("callback").AsString(),
@@ -98,8 +100,9 @@ public partial class TwitchUpdateConduitShardsResponse : RefCounted, ITwitcherSh
         
             public GodotObject ToGodotObject()
             {
-                var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_transport.gd");
-                var request = script.Call("new").AsGodotObject();
+                var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_update_conduit_shards.gd");
+                var twitchResponseTransportClass = script.Get("ResponseTransport").AsGodotObject();
+                var request = twitchResponseTransportClass.Call("new").AsGodotObject();
                 request.Set("method", Method);
                 if(Callback != null) request.Set("callback", Callback);
                 if(SessionId != null) request.Set("session_id", SessionId);
@@ -115,7 +118,7 @@ public partial class TwitchUpdateConduitShardsResponse : RefCounted, ITwitcherSh
     /// <summary> 
     /// List of unsuccessful updates. 
     /// </summary>
-    public partial class TwitchErrors : RefCounted, ITwitcherSharp<TwitchErrors>
+    public partial class TwitchResponseErrors : RefCounted, ITwitcherSharp<TwitchResponseErrors>
     {
         private GodotObject _data;
         public string Id { get; set; }
@@ -123,12 +126,12 @@ public partial class TwitchUpdateConduitShardsResponse : RefCounted, ITwitcherSh
         public string Code { get; set; }
     
         /// <summary> 
-        /// Transforms the godot data into a TwitchErrors object.
+        /// Transforms the godot data into a TwitchResponseErrors object.
         /// </summary> 
-        public static TwitchErrors FromObject(GodotObject data)
+        public static TwitchResponseErrors FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchErrors
+            return new TwitchResponseErrors
             {
                 Id = data.Get("id").AsString(),
                 Message = data.Get("message").AsString(),
@@ -138,8 +141,9 @@ public partial class TwitchUpdateConduitShardsResponse : RefCounted, ITwitcherSh
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_errors.gd");
-            var request = script.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_update_conduit_shards.gd");
+            var twitchResponseErrorsClass = script.Get("ResponseErrors").AsGodotObject();
+            var request = twitchResponseErrorsClass.Call("new").AsGodotObject();
             request.Set("id", Id);
             request.Set("message", Message);
             request.Set("code", Code);

@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Chat;
@@ -6,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Chat;
 public partial class TwitchGetSharedChatSessionResponse : RefCounted, ITwitcherSharp<TwitchGetSharedChatSessionResponse>
 {
     private GodotObject _data;
-    public TwitchData[] Data { get; set; }
+    public TwitchResponseData[] Data { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetSharedChatSessionResponse object.
@@ -17,7 +18,7 @@ public partial class TwitchGetSharedChatSessionResponse : RefCounted, ITwitcherS
         var dataArray = data.Get("data").AsGodotArray<GodotObject>();
         return new TwitchGetSharedChatSessionResponse
         {
-            Data = dataArray.Select(TwitchData.FromObject).ToArray(),
+            Data = dataArray.Select(TwitchResponseData.FromObject).ToArray(),
         };
     }
 
@@ -26,30 +27,30 @@ public partial class TwitchGetSharedChatSessionResponse : RefCounted, ITwitcherS
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_shared_chat_session.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", new Godot.Collections.Array<GodotObject>(Data.Select(x => x.ToGodotObject()).ToArray()));
+        if(Data != null) request.Set("data", Data?.ToGodotArray());
         return request;
     }
-    public partial class TwitchData : RefCounted, ITwitcherSharp<TwitchData>
+    public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
         private GodotObject _data;
         public string SessionId { get; set; }
         public string HostBroadcasterId { get; set; }
-        public TwitchParticipants[] Participants { get; set; }
+        public TwitchResponseParticipants[] Participants { get; set; }
         public string CreatedAt { get; set; }
         public string UpdatedAt { get; set; }
     
         /// <summary> 
-        /// Transforms the godot data into a TwitchData object.
+        /// Transforms the godot data into a TwitchResponseData object.
         /// </summary> 
-        public static TwitchData FromObject(GodotObject data)
+        public static TwitchResponseData FromObject(GodotObject data)
         {
             if(data == null) return null;
             var participantsArray = data.Get("participants").AsGodotArray<GodotObject>();
-            return new TwitchData
+            return new TwitchResponseData
             {
                 SessionId = data.Get("session_id").AsString(),
                 HostBroadcasterId = data.Get("host_broadcaster_id").AsString(),
-                Participants = participantsArray.Select(TwitchParticipants.FromObject).ToArray(),
+                Participants = participantsArray.Select(TwitchResponseParticipants.FromObject).ToArray(),
                 CreatedAt = data.Get("created_at").AsString(),
                 UpdatedAt = data.Get("updated_at").AsString(),
             };
@@ -57,11 +58,12 @@ public partial class TwitchGetSharedChatSessionResponse : RefCounted, ITwitcherS
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_data.gd");
-            var request = script.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_shared_chat_session.gd");
+            var twitchResponseDataClass = script.Get("ResponseData").AsGodotObject();
+            var request = twitchResponseDataClass.Call("new").AsGodotObject();
             request.Set("session_id", SessionId);
             request.Set("host_broadcaster_id", HostBroadcasterId);
-            if(Participants != null) request.Set("participants", new Godot.Collections.Array<GodotObject>(Participants.Select(x => x.ToGodotObject()).ToArray()));
+            if(Participants != null) request.Set("participants", Participants?.ToGodotArray());
             request.Set("created_at", CreatedAt);
             request.Set("updated_at", UpdatedAt);
             return request;
@@ -70,18 +72,18 @@ public partial class TwitchGetSharedChatSessionResponse : RefCounted, ITwitcherS
         /// <summary> 
         /// The list of participants in the session. 
         /// </summary>
-        public partial class TwitchParticipants : RefCounted, ITwitcherSharp<TwitchParticipants>
+        public partial class TwitchResponseParticipants : RefCounted, ITwitcherSharp<TwitchResponseParticipants>
         {
             private GodotObject _data;
             public string BroadcasterId { get; set; }
         
             /// <summary> 
-            /// Transforms the godot data into a TwitchParticipants object.
+            /// Transforms the godot data into a TwitchResponseParticipants object.
             /// </summary> 
-            public static TwitchParticipants FromObject(GodotObject data)
+            public static TwitchResponseParticipants FromObject(GodotObject data)
             {
                 if(data == null) return null;
-                return new TwitchParticipants
+                return new TwitchResponseParticipants
                 {
                     BroadcasterId = data.Get("broadcaster_id").AsString(),
                 };
@@ -89,8 +91,9 @@ public partial class TwitchGetSharedChatSessionResponse : RefCounted, ITwitcherS
         
             public GodotObject ToGodotObject()
             {
-                var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_participants.gd");
-                var request = script.Call("new").AsGodotObject();
+                var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_shared_chat_session.gd");
+                var twitchResponseParticipantsClass = script.Get("ResponseParticipants").AsGodotObject();
+                var request = twitchResponseParticipantsClass.Call("new").AsGodotObject();
                 request.Set("broadcaster_id", BroadcasterId);
                 return request;
             }

@@ -1,4 +1,5 @@
 using Godot;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.Chat;
@@ -37,7 +38,7 @@ public partial class TwitchCommandContains : TwitchCommandBase, ITwitcherSharp<T
     public override GodotObject ToGodotObject()
     {
         var data = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_command_contains.gd").New().AsGodotObject();
-        data.Set("contains", Contains?.ToArray());
+        data.Set("contains", Contains?.ToVariantArray());
         data.Set("match_all", MatchAll);
         data.Set("match_word", MatchWord);
         GetBaseProperties(data);

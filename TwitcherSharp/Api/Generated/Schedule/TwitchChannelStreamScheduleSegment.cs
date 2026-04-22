@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Schedule;
@@ -70,8 +71,9 @@ public partial class TwitchChannelStreamScheduleSegment : RefCounted, ITwitcherS
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_category.gd");
-            var request = script.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_channel_stream_schedule_segment.gd");
+            var twitchCategoryClass = script.Get("Category").AsGodotObject();
+            var request = twitchCategoryClass.Call("new").AsGodotObject();
             request.Set("id", Id);
             request.Set("name", Name);
             return request;

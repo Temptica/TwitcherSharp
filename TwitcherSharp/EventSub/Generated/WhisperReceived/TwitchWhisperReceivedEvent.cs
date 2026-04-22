@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
@@ -78,7 +79,7 @@ public partial class TwitchWhisperReceivedEvent : RefCounted, ITwitcherSharpEven
         request.Set("to_user_name", ToUserName);
         request.Set("to_user_login", ToUserLogin);
         request.Set("whisper_id", WhisperId);
-        request.Set("whisper", Whisper.ToGodotObject());
+        request.Set("whisper", Whisper?.ToGodotObject());
         return request;
     }
 

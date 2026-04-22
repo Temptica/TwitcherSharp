@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.GuestStar;
@@ -78,8 +79,9 @@ public partial class TwitchGuest : RefCounted, ITwitcherSharp<TwitchGuest>
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_audio_settings.gd");
-            var request = script.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_guest.gd");
+            var twitchAudioSettingsClass = script.Get("AudioSettings").AsGodotObject();
+            var request = twitchAudioSettingsClass.Call("new").AsGodotObject();
             request.Set("is_host_enabled", IsHostEnabled);
             request.Set("is_guest_enabled", IsGuestEnabled);
             request.Set("is_available", IsAvailable);
@@ -114,8 +116,9 @@ public partial class TwitchGuest : RefCounted, ITwitcherSharp<TwitchGuest>
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_video_settings.gd");
-            var request = script.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_guest.gd");
+            var twitchVideoSettingsClass = script.Get("VideoSettings").AsGodotObject();
+            var request = twitchVideoSettingsClass.Call("new").AsGodotObject();
             request.Set("is_host_enabled", IsHostEnabled);
             request.Set("is_guest_enabled", IsGuestEnabled);
             request.Set("is_available", IsAvailable);

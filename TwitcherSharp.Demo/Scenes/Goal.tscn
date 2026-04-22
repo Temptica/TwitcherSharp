@@ -1,0 +1,123 @@
+[gd_scene format=3 uid="uid://n0xj4qml508a"]
+
+[ext_resource type="Script" uid="uid://b1xefwxv81dre" path="res://Scenes/Goal.cs" id="1_7hjqj"]
+[ext_resource type="PackedScene" uid="uid://cv1vqflj7jcp1" path="res://Scenes/Fireworks/fireworks.tscn" id="2_ugxcw"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ugxcw"]
+top_radius = 0.1
+bottom_radius = 0.1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kmleq"]
+albedo_color = Color(0.6887191, 0.6887192, 0.68871915, 1)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_7hjqj"]
+radius = 0.1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_hlgd5"]
+top_radius = 0.1
+bottom_radius = 0.1
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ugxcw"]
+radius = 0.1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_fn8i1"]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 3.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_kmleq"]
+height = 3.0
+radius = 0.1
+
+[sub_resource type="SphereMesh" id="SphereMesh_klp67"]
+radius = 0.1
+height = 0.2
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_hlgd5"]
+radius = 0.1
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_fn8i1"]
+radius = 0.1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ugxcw"]
+size = Vector3(3, 2, 1)
+
+[node name="Goal" type="Node3D" unique_id=465477544]
+script = ExtResource("1_7hjqj")
+
+[node name="Model" type="Node3D" parent="." unique_id=2083584814]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0053455, 0)
+
+[node name="LeftPole" type="MeshInstance3D" parent="Model" unique_id=755112798]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, -3.0559022e-10, -3.0559022e-10)
+mesh = SubResource("CylinderMesh_ugxcw")
+surface_material_override/0 = SubResource("StandardMaterial3D_kmleq")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Model/LeftPole" unique_id=1734658141]
+collision_layer = 4
+collision_mask = 4294967295
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Model/LeftPole/StaticBody3D" unique_id=1288433624]
+shape = SubResource("CylinderShape3D_7hjqj")
+
+[node name="RightPole" type="MeshInstance3D" parent="Model" unique_id=1464058794]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, -3.0559022e-10, -3.0559022e-10)
+mesh = SubResource("CylinderMesh_hlgd5")
+surface_material_override/0 = SubResource("StandardMaterial3D_kmleq")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Model/RightPole" unique_id=1620816473]
+collision_layer = 4
+collision_mask = 4294967295
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Model/RightPole/StaticBody3D" unique_id=50074263]
+shape = SubResource("CylinderShape3D_ugxcw")
+
+[node name="TopBar" type="MeshInstance3D" parent="Model" unique_id=1024917330]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -3.0559022e-10, 1, -3.0559022e-10)
+mesh = SubResource("CylinderMesh_fn8i1")
+surface_material_override/0 = SubResource("StandardMaterial3D_kmleq")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Model/TopBar" unique_id=514714001]
+collision_layer = 4
+collision_mask = 4294967295
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Model/TopBar/StaticBody3D" unique_id=1551718322]
+shape = SubResource("CylinderShape3D_kmleq")
+
+[node name="LeftJoint" type="MeshInstance3D" parent="Model" unique_id=1096776989]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 1, -3.0559022e-10)
+mesh = SubResource("SphereMesh_klp67")
+surface_material_override/0 = SubResource("StandardMaterial3D_kmleq")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Model/LeftJoint" unique_id=660689429]
+collision_layer = 4
+collision_mask = 4294967295
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Model/LeftJoint/StaticBody3D" unique_id=1425013433]
+shape = SubResource("SphereShape3D_hlgd5")
+
+[node name="RightJoin" type="MeshInstance3D" parent="Model" unique_id=2031816777]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 1, -3.0559022e-10)
+mesh = SubResource("SphereMesh_klp67")
+surface_material_override/0 = SubResource("StandardMaterial3D_kmleq")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Model/RightJoin" unique_id=787690882]
+collision_layer = 4
+collision_mask = 4294967295
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Model/RightJoin/StaticBody3D" unique_id=2080253592]
+shape = SubResource("SphereShape3D_fn8i1")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1900160931]
+collision_layer = 32
+collision_mask = 16
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=102200480]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.0559022e-10, 1, -0.5)
+shape = SubResource("BoxShape3D_ugxcw")
+
+[node name="Fireworks" parent="." unique_id=1093761823 instance=ExtResource("2_ugxcw")]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, -1.4831331, 0.13075924, 0)
+
+[node name="Fireworks2" parent="." unique_id=861997643 instance=ExtResource("2_ugxcw")]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 1.5242801, 0.13075924, 0)

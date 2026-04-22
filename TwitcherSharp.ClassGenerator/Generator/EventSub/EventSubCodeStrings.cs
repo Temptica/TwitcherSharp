@@ -8,6 +8,7 @@ public static class EventSubCodeStrings
     public const string EventSubNameSpaces = """
                                              using Godot;
                                              using Godot.Collections;
+                                             using TwitcherSharp.Extensions;
                                              using TwitcherSharp.Interfaces;
                                              {{SharedNamespace}}
 

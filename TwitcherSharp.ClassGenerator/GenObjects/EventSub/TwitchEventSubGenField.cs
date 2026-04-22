@@ -22,6 +22,7 @@ public class TwitchEventSubGenField(string fieldName, string description, string
             "string[]" => "AsStringArray()",
             "int[]" => "AsInt32Array()",
             "double[]" => "AsFloat64Array()",
+            "Dictionary" => "AsGodotDictionary()",
             _ => $"As<{Type}>()",
         };
     }
@@ -38,6 +39,7 @@ public class TwitchEventSubGenField(string fieldName, string description, string
             "[]string" => "string[]", // cmn....
             "string[]" => "string[]",
             "string" => "string",
+            "dictionary" => "Dictionary",
             "object" when name == "Text" => "string",
             "object" when name == "Prefix" => "string",
             _ => type.ToPascalCase()

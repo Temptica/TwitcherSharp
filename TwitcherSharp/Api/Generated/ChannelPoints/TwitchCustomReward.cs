@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.ChannelPoints;
@@ -111,8 +112,9 @@ public partial class TwitchCustomReward : RefCounted, ITwitcherSharp<TwitchCusto
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_image.gd");
-            var request = script.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_custom_reward.gd");
+            var twitchImageClass = script.Get("Image").AsGodotObject();
+            var request = twitchImageClass.Call("new").AsGodotObject();
             request.Set("url_1x", Url1x);
             request.Set("url_2x", Url2x);
             request.Set("url_4x", Url4x);
@@ -147,8 +149,9 @@ public partial class TwitchCustomReward : RefCounted, ITwitcherSharp<TwitchCusto
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_default_image.gd");
-            var request = script.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_custom_reward.gd");
+            var twitchDefaultImageClass = script.Get("DefaultImage").AsGodotObject();
+            var request = twitchDefaultImageClass.Call("new").AsGodotObject();
             request.Set("url_1x", Url1x);
             request.Set("url_2x", Url2x);
             request.Set("url_4x", Url4x);
@@ -181,8 +184,9 @@ public partial class TwitchCustomReward : RefCounted, ITwitcherSharp<TwitchCusto
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_max_per_stream_setting.gd");
-            var request = script.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_custom_reward.gd");
+            var twitchMaxPerStreamSettingClass = script.Get("MaxPerStreamSetting").AsGodotObject();
+            var request = twitchMaxPerStreamSettingClass.Call("new").AsGodotObject();
             request.Set("is_enabled", IsEnabled);
             request.Set("max_per_stream", MaxPerStream);
             return request;
@@ -214,8 +218,9 @@ public partial class TwitchCustomReward : RefCounted, ITwitcherSharp<TwitchCusto
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_max_per_user_per_stream_setting.gd");
-            var request = script.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_custom_reward.gd");
+            var twitchMaxPerUserPerStreamSettingClass = script.Get("MaxPerUserPerStreamSetting").AsGodotObject();
+            var request = twitchMaxPerUserPerStreamSettingClass.Call("new").AsGodotObject();
             request.Set("is_enabled", IsEnabled);
             request.Set("max_per_user_per_stream", MaxPerUserPerStream);
             return request;
@@ -247,8 +252,9 @@ public partial class TwitchCustomReward : RefCounted, ITwitcherSharp<TwitchCusto
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_global_cooldown_setting.gd");
-            var request = script.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_custom_reward.gd");
+            var twitchGlobalCooldownSettingClass = script.Get("GlobalCooldownSetting").AsGodotObject();
+            var request = twitchGlobalCooldownSettingClass.Call("new").AsGodotObject();
             request.Set("is_enabled", IsEnabled);
             request.Set("global_cooldown_seconds", GlobalCooldownSeconds);
             return request;

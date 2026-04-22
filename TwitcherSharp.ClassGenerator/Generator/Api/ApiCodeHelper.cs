@@ -118,8 +118,8 @@ public static class ApiCodeHelper
         if (method.ContainsOptional) paramsList.Add("opt?.ToGodotObject()");
 
         paramsList.AddRange(method.RequiredParameters.Select(p => p.Type.Contains("[]")
-                ? $"new Godot.Collections.Array<{p.Type.Remove("[]")}>({p.Name.ToCamelCase()})"
-                : p.Name.ToCamelCase()));
+            ? $"new Godot.Collections.Array<{p.Type.Remove("[]")}>({p.Name.ToCamelCase()})"
+            : p.Name.ToCamelCase()));
 
         return string.Join(", ", paramsList);
     }
@@ -294,14 +294,29 @@ public static class ApiCodeHelper
         code.AppendIndentedLine("public GodotObject ToGodotObject()", 1);
         code.AppendIndentedLine("{", 1);
         var path = $"res://addons/twitcher/generated/{GetBaseName(component.ClassName).ToSnakeCase()}.gd";
+
+        if (component.ParentCount > 0 && !component.IsGlobal)
+            path =
+                $"res://addons/twitcher/generated/{GetBaseName(component.GetGlobalRootParent().ClassName).ToSnakeCase()}.gd";
+
         code.AppendIndentedLine($"var script = GD.Load<GDScript>(\"{path}\");", 2);
 
 
         var scriptName = "script";
         if (!string.IsNullOrEmpty(type))
         {
-            code.AppendIndentedLine($"var {type.ToLower()}Class = script.Get(\"{type}\").AsGodotObject();", 2);
-            scriptName = $"{type.ToLower()}Class";
+            code.AppendIndentedLine($"var {type.ToCamelCase()}Class = script.Get(\"{type}\").AsGodotObject();", 2);
+            scriptName = $"{type.ToCamelCase()}Class";
+        }
+        else if (component.ParentCount > 0 && !component.IsGlobal)
+        {
+            var className = component.GetGlobalRootParent().ClassName.Contains("Response")
+                ? component.ClassName.Remove("Twitch")
+                : component.ClassName.Remove("TwitchResponse").Remove("Twitch");
+            code.AppendIndentedLine(
+                $"var {component.ClassName.ToCamelCase()}Class = script.Get(\"{className}\").AsGodotObject();",
+                2);
+            scriptName = $"{component.ClassName.ToCamelCase()}Class";
         }
 
         code.AppendIndentedLine($"var request = {scriptName}.Call(\"new\").AsGodotObject();", 2);
@@ -310,7 +325,7 @@ public static class ApiCodeHelper
             if (field.IsArray && field.IsTyped)
             {
                 code.AppendIndentedLine(
-                    $"if({field.Name} != null) request.Set(\"{field.Name.ToSnakeCase()}\", new Godot.Collections.Array<GodotObject>({field.Name}.Select(x => x.ToGodotObject()).ToArray()));",
+                    $"if({field.Name} != null) request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name}?.ToGodotArray());",
                     2);
                 continue;
             }
@@ -318,7 +333,7 @@ public static class ApiCodeHelper
             if (field.IsArray)
             {
                 code.AppendIndentedLine(
-                    $"request.Set(\"{field.Name.ToSnakeCase()}\", new Godot.Collections.Array<{field.CleanedArrayType}>({field.Name}));",
+                    $"if({field.Name} != null) request.Set(\"{field.Name.ToSnakeCase()}\", new Godot.Collections.Array<{field.CleanedArrayType}>({field.Name}));",
                     2);
                 continue;
             }
@@ -326,7 +341,7 @@ public static class ApiCodeHelper
             if (component.HasGeneric && field.Equals(component.GenericField))
             {
                 code.AppendIndentedLine(
-                    $"request.Set(\"{field.Name.ToSnakeCase()}\", new Godot.Collections.Dictionary<string,Variant>({field.Name}.ToDictionary()));",
+                    $"if({field.Name} != null) request.Set(\"{field.Name.ToSnakeCase()}\", new Godot.Collections.Dictionary<string,Variant>({field.Name}.ToDictionary()));",
                     2);
                 continue;
             }
@@ -377,7 +392,8 @@ public static class ApiCodeHelper
                 (component.HasGeneric ? "<T>" : "")), 1);
             code.AppendLine();
             code.AppendIndentedLine(
-                ComponentCode(component.SubComponents.Single(c => c.IsPagination), out var subUsings, "Pagination"),
+                ComponentCode(component.SubComponents.Single(c => c.IsPagination), out var subUsings,
+                    "ResponsePagination"),
                 1);
             usings.AddRange(subUsings);
             code.AppendIndentedLine("}", 1);
@@ -395,12 +411,14 @@ public static class ApiCodeHelper
             foreach (var subComponent in twitchGenInterface.Fields.Where(f => f.IsTyped).Select(f => f.TypedComponent))
             {
                 if (component.SubComponents.Any(c => c.Equals(subComponent))) continue;
+
                 code.AppendIndentedLine(ComponentCode(subComponent, out var subUsings), 1);
                 usings.AddRange(subUsings);
+
+
                 code.AppendIndentedLine("}", 1);
             }
         }
-
 
         return code.ToString();
     }

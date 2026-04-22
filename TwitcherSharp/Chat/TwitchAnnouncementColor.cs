@@ -27,9 +27,7 @@ public partial class TwitchAnnouncementColor : RefCounted, ITwitcherSharp<Twitch
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_announcement_colour.gd");
-        var data = script.New().AsGodotObject();
-        data.Set("value", Value);
-        return data;
+        var script = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_announcement_color.gd");
+        return script.New(Value).AsGodotObject();
     }
 }

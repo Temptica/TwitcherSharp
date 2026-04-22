@@ -31,7 +31,7 @@ public partial class Main : Node3D
     public override void _Ready()
     {
         TokenHandler ??= GetChild(0).GetChild(0).GetChild(2).GetChild(1);
-        TwitchService.GetOrCreateInstance();
+        TwitchService.CreateInstance();
         GoTest.TimeoutMilliseconds = -1;
        _ = StartTest();
     }

@@ -18,7 +18,19 @@ public partial class TwitchBot : RefCounted, ITwitcherSharpSingleton<TwitchBot>
 {
     private GodotObject _data;
     public bool IsLinked => _data is not null && !_data.IsQueuedForDeletion();
-    public static TwitchBot Instance { get; private set; }
+
+    public static string ScriptPath => "res://addons/twitcher/chat/twitch_bot.gd";
+
+    public static TwitchBot Instance
+    {
+        get => ITwitcherSharpSingleton<TwitchBot>.Instance;
+        private set => ITwitcherSharpSingleton<TwitchBot>.Instance = value;
+    }
+
+    public static TwitchBot GetInstance() => ITwitcherSharpSingleton<TwitchBot>.GetInstance();
+
+    public static TwitchBot CreateInstance(Action<TwitchBot> configure = null) =>
+        ITwitcherSharpSingleton<TwitchBot>.CreateInstance(configure);
 
     public TwitchUser Sender
     {
@@ -60,12 +72,13 @@ public partial class TwitchBot : RefCounted, ITwitcherSharpSingleton<TwitchBot>
 
         if (Instance.IsLinked)
         {
-            await Instance._data.CallAsync("send_message", message, replyParentMessageId, forSourceOnly, broadcaster?.ToGodotObject());
+            await Instance._data.CallAsync("send_message", message, replyParentMessageId, forSourceOnly,
+                broadcaster?.ToGodotObject());
             return;
         }
-            
+
         if (TwitchApi.Instance == null) throw new NullReferenceException("TwitchApi is not initialized.");
-        
+
         var cmb = new TwitchSendChatMessageBody
         {
             BroadcasterId = Instance.Receiver.Id,
@@ -74,7 +87,7 @@ public partial class TwitchBot : RefCounted, ITwitcherSharpSingleton<TwitchBot>
             ForSourceOnly = forSourceOnly,
             Message = message,
         };
-        
+
         await TwitchApi.Instance.SendChatMessage(cmb);
     }
 
@@ -86,13 +99,57 @@ public partial class TwitchBot : RefCounted, ITwitcherSharpSingleton<TwitchBot>
     /// <param name="forSourceOnly">see https://dev.twitch.tv/docs/api/reference/#send-chat-message</param>
     /// <param name="broadcaster">The stream (as <see cref="TwitchUser"/>) the message will be sent to. By default, uses the Receiver</param>
     /// <exception cref="NullReferenceException"></exception>
-    public static async Task SendLongMessage(string message, string replyParentMessageId = "", bool forSourceOnly = true,
+    public static async Task SendLongMessage(string message, string replyParentMessageId = "",
+        bool forSourceOnly = true,
         TwitchUser broadcaster = null)
     {
         foreach (var chunk in message.Chunk(500))
         {
             await SendMessage(chunk.ToString(), replyParentMessageId, forSourceOnly, broadcaster);
         }
+    }
+
+    // message: String, color: TwitchAnnouncementColor = TwitchAnnouncementColor.PRIMARY, for_source_only = true, broadcaster: TwitchUser = null
+    public static async Task Announcement(string message, TwitchAnnouncementColor color = null, bool forSourceOnly = true, TwitchUser broadcaster = null)
+    {
+        color ??= TwitchAnnouncementColor.Primary;
+
+        if (Instance == null)
+            throw new NullReferenceException("TwitchBot is not initialized.");
+
+        if (Instance.IsLinked)
+        {
+            await Instance._data.CallAsync("send_announcement", message, color.ToGodotObject(),
+                forSourceOnly,
+                broadcaster?.ToGodotObject());
+            return;
+        }
+
+        if (TwitchApi.Instance == null) throw new NullReferenceException("TwitchApi is not initialized.");
+
+        var cmb = new TwitchSendChatAnnouncementBody()
+        {
+            Message = message,
+            Color = color.Value
+        };
+
+        await TwitchApi.Instance.SendChatAnnouncement(cmb, broadcaster?.Id, Instance.Sender?.Id);
+    }
+
+    public static async Task Shoutout(TwitchUser fromUser, TwitchUser targetUser)
+    {
+        if (Instance == null)
+            throw new NullReferenceException("TwitchBot is not initialized.");
+
+        if (Instance.IsLinked)
+        {
+            await Instance._data.CallAsync("send_Shoutout", fromUser.ToGodotObject(), targetUser.ToGodotObject());
+            return;
+        }
+
+        if (TwitchApi.Instance == null) throw new NullReferenceException("TwitchApi is not initialized.");
+
+        await TwitchApi.Instance.SendAShoutout(fromUser.Id, targetUser.Id, Instance.Sender?.Id);
     }
 
     public static TwitchBot FromObject(GodotObject data)
@@ -105,26 +162,6 @@ public partial class TwitchBot : RefCounted, ITwitcherSharpSingleton<TwitchBot>
         Instance = new TwitchBot();
         Instance._data = data;
         Instance.SetMeta("_twitcher_sharp_instance", Instance);
-        return Instance;
-    }
-
-    public static TwitchBot GetOrCreateInstance()
-    {
-        if (Instance != null) return Instance;
-        
-        var script = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_bot.gd");
-        var twitchBot = script.New().AsGodotObject();
-        var instance = twitchBot.Get("_instance");
-    
-        if (instance.VariantType != Variant.Type.Object)
-        {
-            var root = (Engine.GetMainLoop() as SceneTree)!.Root;
-            root.AddChild(twitchBot as Node);
-            FromObject(twitchBot);
-            return Instance;
-        }
-        
-        FromObject(instance.AsGodotObject());
         return Instance;
     }
 
@@ -143,10 +180,10 @@ public partial class TwitchBot : RefCounted, ITwitcherSharpSingleton<TwitchBot>
         instance.SetMeta("_twitcher_sharp_instance", this);
         return instance;
     }
-    
+
     public void FreeInstance()
     {
-        if(_data is not null && !_data.IsQueuedForDeletion()) _data.RemoveMeta("_twitcher_sharp_instance");
+        if (_data is not null && !_data.IsQueuedForDeletion()) _data.RemoveMeta("_twitcher_sharp_instance");
         Instance = null;
     }
 

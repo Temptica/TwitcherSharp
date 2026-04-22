@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 using TwitcherSharp.EventSub.Generated.Shared;
 
@@ -96,7 +97,7 @@ public partial class TwitchChannelSubscriptionMessageEvent : RefCounted, ITwitch
         request.Set("broadcaster_user_login", BroadcasterUserLogin);
         request.Set("broadcaster_user_name", BroadcasterUserName);
         request.Set("tier", Tier);
-        request.Set("message", Message.ToGodotObject());
+        request.Set("message", Message?.ToGodotObject());
         request.Set("cumulative_months", CumulativeMonths);
         request.Set("streak_months", StreakMonths);
         request.Set("duration_months", DurationMonths);

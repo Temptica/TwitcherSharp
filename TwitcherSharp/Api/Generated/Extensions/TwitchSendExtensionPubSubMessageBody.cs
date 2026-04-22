@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Extensions;
@@ -31,7 +32,7 @@ public partial class TwitchSendExtensionPubSubMessageBody : RefCounted, ITwitche
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_send_extension_pub_sub_message.gd");
         var bodyClass = script.Get("Body").AsGodotObject();
         var request = bodyClass.Call("new").AsGodotObject();
-        request.Set("target", new Godot.Collections.Array<string>(Target));
+        if(Target != null) request.Set("target", new Godot.Collections.Array<string>(Target));
         request.Set("broadcaster_id", BroadcasterId);
         if(IsGlobalBroadcast.HasValue) request.Set("is_global_broadcast", IsGlobalBroadcast.Value);
         request.Set("message", Message);

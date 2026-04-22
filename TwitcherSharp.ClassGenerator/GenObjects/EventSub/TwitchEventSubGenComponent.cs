@@ -49,5 +49,5 @@ public class TwitchEventSubGenComponent(string name)
 
     private static string SanitizeName(string name) =>
         name.StartsWith("Twitch") ? name : $"Twitch{name.ToPascalCase()}";
-    
+
 }
