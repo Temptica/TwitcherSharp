@@ -24,6 +24,7 @@
 [ext_resource type="Script" uid="uid://bf0wi70haua35" path="res://addons/twitcher/lib/oOuch/oauth.gd" id="14_4n42c"]
 [ext_resource type="Script" uid="uid://blnbogtrshw4r" path="res://addons/twitcher/auth/twitch_token_handler.gd" id="15_c5snn"]
 [ext_resource type="Script" uid="uid://dcq1bvfrqimqq" path="res://addons/twitcher/chat/twitch_chat.gd" id="18_c4ay3"]
+[ext_resource type="Script" uid="uid://d1i52g8uvrer0" path="res://Scenes/GenericCommands.cs" id="19_aht7i"]
 [ext_resource type="PackedScene" uid="uid://bkonufrqcm2wm" path="res://UI/ui.tscn" id="27_5jffn"]
 
 [sub_resource type="Resource" id="Resource_50glp"]
@@ -74,7 +75,7 @@ created_at = "2020-06-12T11:47:24Z"
 [sub_resource type="Resource" id="Resource_ss7yp"]
 script = ExtResource("12_c4ay3")
 
-[sub_resource type="Resource" id="Resource_c4ay3"]
+[sub_resource type="Resource" id="Resource_kpo4j"]
 script = ExtResource("11_aht7i")
 token_url = "https://id.twitch.tv/oauth2/token"
 authorization_url = "https://id.twitch.tv/oauth2/authorize"
@@ -182,23 +183,23 @@ metadata/_custom_type_script = "uid://bf3mvh373suhc"
 [node name="BotApi" type="Node" parent="Twitcher/TwitchBot" unique_id=536885245]
 script = ExtResource("10_c4ay3")
 token = SubResource("Resource_xvtyr")
-oauth_setting = SubResource("Resource_c4ay3")
+oauth_setting = SubResource("Resource_kpo4j")
 
 [node name="BotAuth" type="Node" parent="Twitcher/TwitchBot" unique_id=2047592989]
 script = ExtResource("12_5jffn")
-oauth_setting = SubResource("Resource_c4ay3")
+oauth_setting = SubResource("Resource_kpo4j")
 token = SubResource("Resource_xvtyr")
 scopes = ExtResource("13_kpo4j")
 
 [node name="OAuth" type="Node" parent="Twitcher/TwitchBot/BotAuth" unique_id=1775236126 node_paths=PackedStringArray("token_handler")]
 script = ExtResource("14_4n42c")
-oauth_setting = SubResource("Resource_c4ay3")
+oauth_setting = SubResource("Resource_kpo4j")
 scopes = ExtResource("13_kpo4j")
 token_handler = NodePath("../TokenHandler")
 
 [node name="TokenHandler" type="Node" parent="Twitcher/TwitchBot/BotAuth" unique_id=1613340214]
 script = ExtResource("15_c5snn")
-oauth_setting = SubResource("Resource_c4ay3")
+oauth_setting = SubResource("Resource_kpo4j")
 token = SubResource("Resource_xvtyr")
 
 [node name="TwitchChat" type="Node" parent="Twitcher" unique_id=1477573617 node_paths=PackedStringArray("media_loader", "eventsub", "api")]
@@ -209,6 +210,27 @@ media_loader = NodePath("../TwitchService/MediaLoader")
 eventsub = NodePath("../TwitchService/EventSub")
 api = NodePath("../TwitchService/API")
 metadata/_custom_type_script = "uid://dcq1bvfrqimqq"
+
+[node name="GenericCommands" type="Node" parent="Twitcher" unique_id=882002742]
+script = ExtResource("19_aht7i")
+
+[node name="TwitcherCommand" type="Node" parent="Twitcher/GenericCommands" unique_id=1982159474]
+script = ExtResource("4_v1gob")
+command = "Twitcher"
+description = "Get the twitcher link"
+metadata/_custom_type_script = "uid://bmluckfvgm1c2"
+
+[node name="TwitcherSharpCommand" type="Node" parent="Twitcher/GenericCommands" unique_id=114474404]
+script = ExtResource("4_v1gob")
+command = "TwitcherSharp"
+description = "get the twitcher sharp link"
+metadata/_custom_type_script = "uid://bmluckfvgm1c2"
+
+[node name="DiscordCommand" type="Node" parent="Twitcher/GenericCommands" unique_id=426222750]
+script = ExtResource("4_v1gob")
+command = "Discord"
+description = "Get the discord link"
+metadata/_custom_type_script = "uid://bmluckfvgm1c2"
 
 [node name="Enviroment" type="Node3D" parent="." unique_id=1003289439]
 script = ExtResource("6_50glp")

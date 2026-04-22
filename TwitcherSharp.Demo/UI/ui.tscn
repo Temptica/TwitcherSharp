@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://bt2th5ipjir1x" path="res://Scenes/WordGames/word_temptation.tscn" id="1_dajm1"]
 [ext_resource type="Script" uid="uid://bn1biqcjiiice" path="res://UI/Ui.cs" id="1_e6gg6"]
 [ext_resource type="PackedScene" uid="uid://7c5ajdsrwf2j" path="res://Scenes/NumbersGame/number_404.tscn" id="2_e6gg6"]
+[ext_resource type="Texture2D" uid="uid://cqm6pfaonref5" path="res://Images/ChatQR.png" id="4_hat8c"]
 
 [node name="UI" type="Control" unique_id=954309338]
 layout_mode = 3
@@ -48,3 +49,23 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1904353429]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 550.0
+offset_right = 155.0
+offset_bottom = 1214.0
+texture = ExtResource("4_hat8c")
+expand_mode = 4
+stretch_mode = 5
+
+[node name="TextureRect2" type="TextureRect" parent="." unique_id=1845128057]
+layout_mode = 0
+offset_left = 1925.0
+offset_top = 596.0
+offset_right = 2075.0
+offset_bottom = 1146.0
+texture = ExtResource("4_hat8c")
+expand_mode = 4
+stretch_mode = 5
