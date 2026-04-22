@@ -5,7 +5,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>disable</Nullable>
         <PackageId>Temptica.TwitcherSharp</PackageId>
-        <Version>2.4.1-alpha.1</Version>
+        <Version>2.4.1-alpha.2</Version>
     </PropertyGroup>
 
     <ItemGroup>
