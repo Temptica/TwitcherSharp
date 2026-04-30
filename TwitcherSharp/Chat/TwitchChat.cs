@@ -20,14 +20,13 @@ public partial class TwitchChat : RefCounted, ITwitcherSharpSingleton<TwitchChat
         get => ITwitcherSharpSingleton<TwitchChat>.Instance;
         private set => ITwitcherSharpSingleton<TwitchChat>.Instance = value;
     }
-    public static TwitchChat GetInstance() => ITwitcherSharpSingleton<TwitchChat>.GetInstance();
     public static TwitchChat CreateInstance(Action<TwitchChat> configure = null) =>
         ITwitcherSharpSingleton<TwitchChat>.CreateInstance(configure);
     
     /// <summary>
     /// Twitch API (Will automatically look for first TwitchApi (twitcher) in the scene tree. Else will create a new one and add it to the root)
     /// </summary>
-    public static TwitchApi Api { get; set; } = TwitchApi.GetInstance()??TwitchApi.CreateInstance();
+    public static TwitchApi Api { get; set; } = TwitchApi.Instance??TwitchApi.CreateInstance();
 
     public TwitchUser BroadcasterUser
     {
@@ -52,7 +51,7 @@ public partial class TwitchChat : RefCounted, ITwitcherSharpSingleton<TwitchChat
     /// <summary>
     /// Media loader it uses for emotes and badges. (Will automatically look for first TwitchMediaLoader (twitcher) in the scene tree)
     /// </summary>
-    public TwitchMediaLoader MediaLoader { get; set; } = TwitchMediaLoader.GetInstance();
+    public TwitchMediaLoader MediaLoader { get; set; } = TwitchMediaLoader.Instance;
 
     /// <summary>
     /// Should it subscribe on ready

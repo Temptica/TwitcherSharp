@@ -16,28 +16,26 @@ public interface ITwitcherSharpSingleton<out TSelf> : ITwitcherSharpSingleton, I
     static abstract string ScriptPath { get; }
 
     /// <summary>
-    /// Returns the C# instance. Preferably use GetInstance(), especially if the node exists in the tree, and GetInstance hasn't been called before.
-    /// </summary>
-    public static TSelf Instance { get; set; }
-
-    /// <summary>
     /// Get the current Instance. Else it will try to find an existing GDScript instance.
     /// <p>This object will also be added to the metaData of the linked node. When that node is removed from the scene, it will also remove this refCounted object</p>
     /// </summary>
     /// <returns>The Instance when found, else returns null</returns>
-    static TSelf GetInstance()
-    {
-        if (Instance is not null)
-            return Instance;
+    public static TSelf Instance {
+        get
+        {
+            if (field is not null)
+                return field;
 
-        var script = GD.Load<GDScript>(TSelf.ScriptPath);
-        var gdObject = script.New().AsGodotObject();
+            var script = GD.Load<GDScript>(TSelf.ScriptPath);
+            var gdObject = script.New().AsGodotObject();
 
-        var instance = gdObject.Get("instance");
+            var instance = gdObject.Get("instance");
         
-        Instance = instance.VariantType != Variant.Type.Object ? null : TSelf.FromObject(instance.AsGodotObject());
+            field = instance.VariantType != Variant.Type.Object ? null : TSelf.FromObject(instance.AsGodotObject());
         
-        return Instance;
+            return field;
+        } 
+        set;
     }
 
     /// <summary>

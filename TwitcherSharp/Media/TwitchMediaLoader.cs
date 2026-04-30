@@ -19,9 +19,6 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
         get => ITwitcherSharpSingleton<TwitchMediaLoader>.Instance;
         private set => ITwitcherSharpSingleton<TwitchMediaLoader>.Instance = value;
     }
-
-    public static TwitchMediaLoader GetInstance() => ITwitcherSharpSingleton<TwitchMediaLoader>.GetInstance();
-
     public static TwitchMediaLoader CreateInstance(Action<TwitchMediaLoader> configure = null) =>
         ITwitcherSharpSingleton<TwitchMediaLoader>.CreateInstance(configure);
 
