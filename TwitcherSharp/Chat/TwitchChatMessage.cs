@@ -1,5 +1,4 @@
 using Godot;
-using Godot.Collections;
 using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
@@ -311,7 +310,7 @@ public partial class Reply : RefCounted, ITwitcherSharp<Reply>
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_chat_message.gd");
-        var instance = script.Get("Cheer").AsGodotObject().Call("new").AsGodotObject();
+        var instance = script.Get("Reply").AsGodotObject().Call("new").AsGodotObject();
         instance.Set("parent_message_id", ParentMessageId);
         instance.Set("parent_message_body", ParentMessageBody);
         instance.Set("parent_user_id", ParentUserId);
