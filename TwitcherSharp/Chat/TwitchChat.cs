@@ -123,10 +123,10 @@ public partial class TwitchChat : RefCounted, ITwitcherSharpSingleton<TwitchChat
 
         var script = GD.Load<GDScript>(ScriptPath);
         var instance = script.New().AsGodotObject();
+        instance.Set("broadcaster_user", BroadcasterUser?.ToGodotObject());
+        instance.Set("sender_user", SenderUser?.ToGodotObject());
+        instance.SetMeta("_twitcher_sharp_instance", this);
         _data = instance;
-        _data.SetMeta("_twitcher_sharp_instance", this);
-        _data.Set("broadcaster_user", BroadcasterUser?.ToGodotObject());
-        _data.Set("sender_user", SenderUser?.ToGodotObject());
         ConnectSignals();
         return instance;
     }
