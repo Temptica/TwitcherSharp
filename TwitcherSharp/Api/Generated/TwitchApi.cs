@@ -51,7 +51,6 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
         private set => ITwitcherSharpSingleton<TwitchApi>.Instance = value;
     }
     
-    public static TwitchApi GetInstance() => ITwitcherSharpSingleton<TwitchApi>.GetInstance();
     public static TwitchApi CreateInstance(Action<TwitchApi> configure = null) =>
         ITwitcherSharpSingleton<TwitchApi>.CreateInstance(configure);
     

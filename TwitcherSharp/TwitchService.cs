@@ -23,8 +23,6 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
         private set => ITwitcherSharpSingleton<TwitchService>.Instance = value;
     }
 
-    public static TwitchService GetInstance() => ITwitcherSharpSingleton<TwitchService>.GetInstance();
-
     public static TwitchService CreateInstance(Action<TwitchService> configure = null) =>
         ITwitcherSharpSingleton<TwitchService>.CreateInstance(configure);
 

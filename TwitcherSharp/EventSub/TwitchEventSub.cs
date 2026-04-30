@@ -16,8 +16,6 @@ public partial class TwitchEventSub : RefCounted, ITwitcherSharpSingleton<Twitch
         private set => ITwitcherSharpSingleton<TwitchEventSub>.Instance = value;
     }
 
-    public static TwitchEventSub GetInstance() => ITwitcherSharpSingleton<TwitchEventSub>.GetInstance();
-
     public static TwitchEventSub CreateInstance(Action<TwitchEventSub> configure = null) =>
         ITwitcherSharpSingleton<TwitchEventSub>.CreateInstance(configure);
 

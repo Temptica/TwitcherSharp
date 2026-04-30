@@ -85,8 +85,8 @@ public partial class TwitchRedeemListener : RefCounted, ITwitcherSharp<TwitchRed
             EnsureSubscriptionsOnReady = data.Get("ensure_subscriptions_on_ready").AsBool(),
             _data = data,
         };
-        listener.TwitchEventSub ??= TwitchEventSub.GetInstance();
-        listener.TwitchApi ??= TwitchApi.GetInstance();
+        listener.TwitchEventSub ??= TwitchEventSub.Instance;
+        listener.TwitchApi ??= TwitchApi.Instance;
 
         listener.ConnectSignals();
 

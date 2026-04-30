@@ -106,8 +106,8 @@ public partial class TwitchPollListener : RefCounted, ITwitcherSharp<TwitchPollL
             Broadcaster = TwitchUser.FromObject(data.Get("broadcaster").As<GodotObject>()),
         };
         
-        pollListener.TwitchEventSub ??= TwitchEventSub.GetInstance() ?? TwitchEventSub.CreateInstance();
-        pollListener.TwitchApi ??= TwitchApi.GetInstance();
+        pollListener.TwitchEventSub ??= TwitchEventSub.Instance ?? TwitchEventSub.CreateInstance();
+        pollListener.TwitchApi ??= TwitchApi.Instance;
         pollListener.Broadcaster ??= TwitchApi.Instance.GetUsers().GetAwaiter().GetResult().Data[0];
         
         pollListener.ConnectSignals();

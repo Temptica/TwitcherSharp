@@ -27,8 +27,6 @@ public partial class TwitchBot : RefCounted, ITwitcherSharpSingleton<TwitchBot>
         private set => ITwitcherSharpSingleton<TwitchBot>.Instance = value;
     }
 
-    public static TwitchBot GetInstance() => ITwitcherSharpSingleton<TwitchBot>.GetInstance();
-
     public static TwitchBot CreateInstance(Action<TwitchBot> configure = null) =>
         ITwitcherSharpSingleton<TwitchBot>.CreateInstance(configure);
 
