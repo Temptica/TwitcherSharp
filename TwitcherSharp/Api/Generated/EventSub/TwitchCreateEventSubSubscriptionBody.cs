@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.EventSub;
@@ -9,7 +10,7 @@ public partial class TwitchCreateEventSubSubscriptionBody<T> : RefCounted, ITwit
     public string Type { get; set; }
     public string Version { get; set; }
     public ITwitcherSharpCondition<T> Condition { get; set; }
-    public TwitchTransport Transport { get; set; }
+    public TwitchBodyTransport Transport { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCreateEventSubSubscriptionBody object.
@@ -22,7 +23,7 @@ public partial class TwitchCreateEventSubSubscriptionBody<T> : RefCounted, ITwit
             Type = data.Get("type").AsString(),
             Version = data.Get("version").AsString(),
             Condition = T.FromDictionary(data.Get("condition").AsGodotDictionary()),
-            Transport = data.Get("transport").As<TwitchTransport>(),
+            Transport = data.Get("transport").As<TwitchBodyTransport>(),
         };
     }
 
@@ -33,7 +34,7 @@ public partial class TwitchCreateEventSubSubscriptionBody<T> : RefCounted, ITwit
         var request = bodyClass.Call("new").AsGodotObject();
         request.Set("type", Type);
         request.Set("version", Version);
-        request.Set("condition", new Godot.Collections.Dictionary<string,Variant>(Condition.ToDictionary()));
+        if(Condition != null) request.Set("condition", new Godot.Collections.Dictionary<string,Variant>(Condition.ToDictionary()));
         request.Set("transport", Transport?.ToGodotObject());
         return request;
     }
@@ -41,7 +42,7 @@ public partial class TwitchCreateEventSubSubscriptionBody<T> : RefCounted, ITwit
     /// <summary> 
     /// The transport details that you want Twitch to use when sending you notifications. 
     /// </summary>
-    public partial class TwitchTransport : RefCounted, ITwitcherSharp<TwitchTransport>
+    public partial class TwitchBodyTransport : RefCounted, ITwitcherSharp<TwitchBodyTransport>
     {
         private GodotObject _data;
         public string Method { get; set; }
@@ -51,12 +52,12 @@ public partial class TwitchCreateEventSubSubscriptionBody<T> : RefCounted, ITwit
         public string ConduitId { get; set; }
     
         /// <summary> 
-        /// Transforms the godot data into a TwitchTransport object.
+        /// Transforms the godot data into a TwitchBodyTransport object.
         /// </summary> 
-        public static TwitchTransport FromObject(GodotObject data)
+        public static TwitchBodyTransport FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchTransport
+            return new TwitchBodyTransport
             {
                 Method = data.Get("method").AsString(),
                 Callback = data.Get("callback").AsString(),
@@ -68,8 +69,9 @@ public partial class TwitchCreateEventSubSubscriptionBody<T> : RefCounted, ITwit
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_transport.gd");
-            var request = script.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_create_event_sub_subscription.gd");
+            var twitchBodyTransportClass = script.Get("BodyTransport").AsGodotObject();
+            var request = twitchBodyTransportClass.Call("new").AsGodotObject();
             request.Set("method", Method);
             if(Callback != null) request.Set("callback", Callback);
             if(Secret != null) request.Set("secret", Secret);

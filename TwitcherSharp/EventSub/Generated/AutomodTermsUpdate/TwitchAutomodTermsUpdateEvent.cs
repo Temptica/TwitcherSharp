@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
@@ -85,7 +86,7 @@ public partial class TwitchAutomodTermsUpdateEvent : RefCounted, ITwitcherSharpE
         request.Set("moderator_user_name", ModeratorUserName);
         request.Set("action", Action);
         request.Set("from_automod", FromAutomod);
-        request.Set("terms", new Godot.Collections.Array<string>(Terms));
+        if(Terms != null) request.Set("terms", new Godot.Collections.Array<string>(Terms));
         return request;
     }
 }

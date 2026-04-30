@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.EventSub;
@@ -42,7 +43,7 @@ public partial class TwitchEventSubSubscription<T> : RefCounted, ITwitcherSharp<
         request.Set("status", Status);
         request.Set("type", Type);
         request.Set("version", Version);
-        request.Set("condition", new Godot.Collections.Dictionary<string,Variant>(Condition.ToDictionary()));
+        if(Condition != null) request.Set("condition", new Godot.Collections.Dictionary<string,Variant>(Condition.ToDictionary()));
         request.Set("created_at", CreatedAt);
         request.Set("transport", Transport?.ToGodotObject());
         request.Set("cost", Cost);
@@ -79,8 +80,9 @@ public partial class TwitchEventSubSubscription<T> : RefCounted, ITwitcherSharp<
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_transport.gd");
-            var request = script.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_event_sub_subscription.gd");
+            var twitchTransportClass = script.Get("Transport").AsGodotObject();
+            var request = twitchTransportClass.Call("new").AsGodotObject();
             request.Set("method", Method);
             if(Callback != null) request.Set("callback", Callback);
             if(SessionId != null) request.Set("session_id", SessionId);

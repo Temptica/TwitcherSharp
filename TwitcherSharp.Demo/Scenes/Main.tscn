@@ -1,0 +1,408 @@
+[gd_scene format=4 uid="uid://tbc0w285ybq0"]
+
+[ext_resource type="PackedScene" uid="uid://djt5lvmwxbq4a" path="res://addons/twitcher/twitch_service.tscn" id="1_idj7w"]
+[ext_resource type="Script" uid="uid://cone8ibw2n7ga" path="res://Scenes/Main.cs" id="1_rgh2o"]
+[ext_resource type="Resource" uid="uid://cof8kl0mla4ly" path="res://Twitcher/Tokens.tres" id="3_3tgeq"]
+[ext_resource type="Script" uid="uid://q5jkthr28lhp" path="res://Scenes/CharactersManager.cs" id="3_pbw6q"]
+[ext_resource type="Script" uid="uid://cjug64e3433g0" path="res://addons/twitcher/eventsub/twitch_eventsub_config.gd" id="3_v1gob"]
+[ext_resource type="Script" uid="uid://cnmohrdxqihr0" path="res://addons/twitcher/generated/twitch_user.gd" id="4_jw32o"]
+[ext_resource type="Script" uid="uid://bmluckfvgm1c2" path="res://addons/twitcher/chat/twitch_command.gd" id="4_v1gob"]
+[ext_resource type="Script" uid="uid://ch0rxi1ogjx3q" path="res://addons/twitcher/chat/twitch_command_help.gd" id="5_jw32o"]
+[ext_resource type="Script" uid="uid://dagu87e5uu6i8" path="res://Scenes/Map.cs" id="6_50glp"]
+[ext_resource type="Script" uid="uid://bf3mvh373suhc" path="res://addons/twitcher/chat/twitch_bot.gd" id="6_fq0cl"]
+[ext_resource type="Resource" uid="uid://ry64ckbckh6m" path="res://addons/twitcher/twitch_oauth_setting.tres" id="7_hwpts"]
+[ext_resource type="Script" uid="uid://tfmalijs6t6" path="res://Scenes/PhysicItemsManager.cs" id="7_vy5pj"]
+[ext_resource type="PackedScene" uid="uid://n0xj4qml508a" path="res://Scenes/Goal.tscn" id="8_4kpch"]
+[ext_resource type="Resource" uid="uid://c4scwuk8q0r40" path="res://addons/twitcher/lib/oOuch/default_key_provider.tres" id="8_jyqft"]
+[ext_resource type="Script" uid="uid://b52xp7c23ucfk" path="res://addons/twitcher/lib/oOuch/oauth_token.gd" id="9_3tgeq"]
+[ext_resource type="Script" uid="uid://bol5ltrjr6ux8" path="res://addons/twitcher/eventsub/twitch_event_listener.gd" id="10_bmxlf"]
+[ext_resource type="Script" uid="uid://cw30cwveway65" path="res://addons/twitcher/generated/twitch_api.gd" id="10_c4ay3"]
+[ext_resource type="Script" uid="uid://00xbijwpi8xa" path="res://addons/twitcher/lib/oOuch/oauth_setting.gd" id="11_aht7i"]
+[ext_resource type="Script" uid="uid://iv0mgv0lu8b0" path="res://addons/twitcher/auth/twitch_auth.gd" id="12_5jffn"]
+[ext_resource type="Script" uid="uid://dcrliedgr6eol" path="res://addons/twitcher/lib/oOuch/crypto_key_provider.gd" id="12_c4ay3"]
+[ext_resource type="Resource" uid="uid://b8735fmqjt8up" path="res://addons/twitcher/chat/twitch_bot_scopes.tres" id="13_kpo4j"]
+[ext_resource type="Script" uid="uid://bf0wi70haua35" path="res://addons/twitcher/lib/oOuch/oauth.gd" id="14_4n42c"]
+[ext_resource type="Script" uid="uid://blnbogtrshw4r" path="res://addons/twitcher/auth/twitch_token_handler.gd" id="15_c5snn"]
+[ext_resource type="Script" uid="uid://dcq1bvfrqimqq" path="res://addons/twitcher/chat/twitch_chat.gd" id="18_c4ay3"]
+[ext_resource type="Script" uid="uid://d1i52g8uvrer0" path="res://Scenes/GenericCommands.cs" id="19_aht7i"]
+[ext_resource type="PackedScene" uid="uid://bkonufrqcm2wm" path="res://UI/ui.tscn" id="27_5jffn"]
+
+[sub_resource type="Resource" id="Resource_50glp"]
+script = ExtResource("4_jw32o")
+id = "542726050"
+login = "temptic404"
+display_name = "Temptic404"
+broadcaster_type = "affiliate"
+description = "A kind otter from another dimension."
+profile_image_url = "https://static-cdn.jtvnw.net/jtv_user_pictures/711a47f8-2f8c-4b77-a3fd-96b6108b076b-profile_image-300x300.png"
+offline_image_url = "https://static-cdn.jtvnw.net/jtv_user_pictures/fdfc8ab8-8a5d-436c-bbd7-d4053198ba52-channel_offline_image-1920x1080.jpeg"
+created_at = "2020-06-12T11:47:24Z"
+
+[sub_resource type="Resource" id="Resource_vy5pj"]
+script = ExtResource("3_v1gob")
+type = 9
+condition = {
+&"broadcaster_user_id": "542726050",
+&"user_id": "542726050"
+}
+metadata/_custom_type_script = "uid://cjug64e3433g0"
+metadata/broadcaster_user_id_user = SubResource("Resource_50glp")
+metadata/user_id_user = SubResource("Resource_50glp")
+
+[sub_resource type="Resource" id="Resource_xvtyr"]
+script = ExtResource("9_3tgeq")
+
+[sub_resource type="Resource" id="Resource_u7mjy"]
+script = ExtResource("4_jw32o")
+id = "714505079"
+login = "temptic_bot"
+display_name = "temptic_bot"
+description = "We don't know much about them, but we're sure temptic_bot is a great bot."
+profile_image_url = "https://static-cdn.jtvnw.net/user-default-pictures-uv/294c98b5-e34d-42cd-a8f0-140b72fba9b0-profile_image-300x300.png"
+created_at = "2021-08-05T10:28:18Z"
+
+[sub_resource type="Resource" id="Resource_4yxf6"]
+script = ExtResource("4_jw32o")
+id = "542726050"
+login = "temptic404"
+display_name = "Temptic404"
+broadcaster_type = "affiliate"
+description = "A kind otter from another dimension."
+profile_image_url = "https://static-cdn.jtvnw.net/jtv_user_pictures/711a47f8-2f8c-4b77-a3fd-96b6108b076b-profile_image-300x300.png"
+offline_image_url = "https://static-cdn.jtvnw.net/jtv_user_pictures/fdfc8ab8-8a5d-436c-bbd7-d4053198ba52-channel_offline_image-1920x1080.jpeg"
+created_at = "2020-06-12T11:47:24Z"
+
+[sub_resource type="Resource" id="Resource_ss7yp"]
+script = ExtResource("12_c4ay3")
+
+[sub_resource type="Resource" id="Resource_kpo4j"]
+script = ExtResource("11_aht7i")
+token_url = "https://id.twitch.tv/oauth2/token"
+authorization_url = "https://id.twitch.tv/oauth2/authorize"
+device_authorization_url = "https://id.twitch.tv/oauth2/device"
+client_id = "teyb9j15742aubkd697irj10fonguv"
+client_secret = "Kwxc8H19GsbYLs0mp8N0GxI8giDE04ctW4bASbPYO/M="
+authorization_flow = 3
+_encryption_key_provider = SubResource("Resource_ss7yp")
+
+[sub_resource type="Resource" id="Resource_5jffn"]
+script = ExtResource("4_jw32o")
+id = "542726050"
+login = "temptic404"
+display_name = "Temptic404"
+broadcaster_type = "affiliate"
+description = "A kind otter from another dimension."
+profile_image_url = "https://static-cdn.jtvnw.net/jtv_user_pictures/711a47f8-2f8c-4b77-a3fd-96b6108b076b-profile_image-300x300.png"
+offline_image_url = "https://static-cdn.jtvnw.net/jtv_user_pictures/fdfc8ab8-8a5d-436c-bbd7-d4053198ba52-channel_offline_image-1920x1080.jpeg"
+created_at = "2020-06-12T11:47:24Z"
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_jw32o"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jw32o"]
+albedo_color = Color(0.14206585, 0.024186533, 9.024516e-09, 1)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_50glp"]
+_surfaces = [{
+"aabb": AABB(-15, -0.125, -15, 30, 0.25, 30),
+"attribute_data": PackedByteArray("AACAPwAAAAAAAIA/AAAAP6uqKj8AAAA/q6qqPgAAAD+rqqo+AACAPwAAAAAAAIA/q6oqPwAAAD8AAIA/AAAAP6uqKj8AAIA/AAAAAAAAAD+rqqo+AAAAPwAAAAAAAIA/q6oqPwAAAD+rqio/AACAP6uqqj4AAIA/AAAAAAAAAACrqqo+AAAAAAAAAAAAAAA/AACAPwAAAD8AAIA/AACAP6uqKj8AAIA/q6oqPwAAAACrqio/AAAAP6uqqj4AAAA/q6qqPgAAAACrqqo+AAAAPwAAAAAAAAA/q6oqPwAAAAAAAIA/AAAAAKuqKj8AAAA/q6qqPgAAAD+rqio/AAAAP6uqqj4AAIA/q6qqPgAAAACrqio/AAAAAKuqqj4AAAA/"),
+"format": 34359738391,
+"material": SubResource("StandardMaterial3D_jw32o"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 36,
+"vertex_data": PackedByteArray("AABwwQAAAD4AAHDBAABwwQAAAL4AAHDBAABwQQAAAL4AAHDBAABwwQAAAD4AAHBBAABwwQAAAL4AAHBBAABwwQAAAL4AAHDBAABwwQAAAL4AAHBBAABwQQAAAL4AAHBBAABwwQAAAL4AAHDBAABwwQAAAD4AAHDBAABwwQAAAD4AAHBBAABwwQAAAL4AAHDBAABwwQAAAD4AAHBBAABwwQAAAD4AAHDBAABwQQAAAD4AAHDBAABwwQAAAD4AAHBBAABwQQAAAD4AAHBBAABwwQAAAL4AAHBBAABwQQAAAL4AAHBBAABwQQAAAL4AAHDBAABwwQAAAL4AAHDBAABwQQAAAD4AAHDBAABwQQAAAL4AAHDBAABwQQAAAL4AAHBBAABwQQAAAD4AAHBBAABwQQAAAL4AAHBBAABwwQAAAL4AAHBBAABwQQAAAD4AAHDBAABwwQAAAD4AAHDBAABwQQAAAL4AAHDBAABwQQAAAD4AAHBBAABwwQAAAD4AAHBBAABwQQAAAD4AAHDBAABwQQAAAD4AAHBBAABwQQAAAD4AAHDBAABwQQAAAL4AAHBB/////wAA/7//////AAD/v/////8AAP+/AAD/f/9//78AAP9//3//vwAA/3//f/+//38AAP///7//fwAA////v/9/AAD///+/AAD/f/9//78AAP9//3//vwAA/3//f/+//3///wAA/7//f///AAD/v/9///8AAP+//3//f////7//f/9/////v/9//3////+//38AAP///7//fwAA////v/9/AAD///+/////f/////////9//////////3///////3//f////7//f/9/////v/9//3////+//////wAA/7//////AAD/v/////8AAP+//3///wAA/7//f///AAD/v/9///8AAP+/////f/////////9//////////3//////")
+}]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_vy5pj"]
+data = PackedVector3Array(-15, 0.125, -15, -15, -0.125, -15, 15, -0.125, -15, -15, 0.125, 15, -15, -0.125, 15, -15, -0.125, -15, -15, -0.125, 15, 15, -0.125, 15, -15, -0.125, -15, -15, 0.125, -15, -15, 0.125, 15, -15, -0.125, -15, -15, 0.125, 15, -15, 0.125, -15, 15, 0.125, -15, -15, 0.125, 15, 15, 0.125, 15, -15, -0.125, 15, 15, -0.125, 15, 15, -0.125, -15, -15, -0.125, -15, 15, 0.125, -15, 15, -0.125, -15, 15, -0.125, 15, 15, 0.125, 15, 15, -0.125, 15, -15, -0.125, 15, 15, 0.125, -15, -15, 0.125, -15, 15, -0.125, -15, 15, 0.125, 15, -15, 0.125, 15, 15, 0.125, -15, 15, 0.125, 15, 15, 0.125, -15, 15, -0.125, 15)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_idj7w"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kln2b"]
+size = Vector3(1.5, 10, 33)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_50glp"]
+bounce = 0.82
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_vy5pj"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bmxlf"]
+albedo_color = Color(0.59553075, 0.5955307, 0.5955307, 1)
+metallic = 1.0
+roughness = 0.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_4kpch"]
+material = SubResource("StandardMaterial3D_bmxlf")
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_4kpch"]
+bounce = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_grg3l"]
+albedo_color = Color(0.53979135, 0, 0.0064822496, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_4kpch"]
+material = SubResource("StandardMaterial3D_grg3l")
+size = Vector3(1, 1, 0.75)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_4kpch"]
+points = PackedVector3Array(-0.4974519, -0.4974519, -0.375, 0.014738394, 0.4705232, 0.3508392, 0.4705232, -0.44104642, 0.3508392, -0.5, -0.5, 0.37294248, 0.4974519, -0.4974519, -0.375, -0.014738394, 0.4705232, -0.35480744, 0.5, -0.5, 0.37294248, 0.014651676, 0.47069666, -0.3549375, -0.014738394, 0.4705232, 0.3508392, 0.4705232, -0.44104642, -0.35480744, -0.4705232, -0.44104642, -0.35480744)
+
+[node name="Main" type="Node3D" unique_id=1533050743]
+script = ExtResource("1_rgh2o")
+
+[node name="Twitcher" type="Node" parent="." unique_id=1123975909]
+
+[node name="TwitchService" parent="Twitcher" unique_id=1988848951 instance=ExtResource("1_idj7w")]
+scopes = ExtResource("3_3tgeq")
+
+[node name="EventSub" parent="Twitcher/TwitchService" index="0" unique_id=1294051238]
+_subscriptions = Array[ExtResource("3_v1gob")]([SubResource("Resource_vy5pj")])
+
+[node name="Auth" parent="Twitcher/TwitchService" index="2" unique_id=168038552]
+scopes = ExtResource("3_3tgeq")
+
+[node name="OAuth" parent="Twitcher/TwitchService/Auth" index="0" unique_id=1192646844]
+scopes = ExtResource("3_3tgeq")
+
+[node name="TwitchCommandHelp" type="Node" parent="Twitcher" unique_id=698473109]
+script = ExtResource("5_jw32o")
+sender_user = SubResource("Resource_50glp")
+aliases = Array[String](["commands"])
+command = "help"
+description = "Find the commands for the TwitcherSharp Godot demo"
+metadata/_custom_type_script = "uid://ch0rxi1ogjx3q"
+
+[node name="TwitchBot" type="Node" parent="Twitcher" unique_id=1733534831]
+script = ExtResource("6_fq0cl")
+oauth_setting = ExtResource("7_hwpts")
+bot_token = SubResource("Resource_xvtyr")
+sender = SubResource("Resource_u7mjy")
+receiver = SubResource("Resource_4yxf6")
+metadata/_custom_type_script = "uid://bf3mvh373suhc"
+
+[node name="BotApi" type="Node" parent="Twitcher/TwitchBot" unique_id=536885245]
+script = ExtResource("10_c4ay3")
+token = SubResource("Resource_xvtyr")
+oauth_setting = SubResource("Resource_kpo4j")
+
+[node name="BotAuth" type="Node" parent="Twitcher/TwitchBot" unique_id=2047592989]
+script = ExtResource("12_5jffn")
+oauth_setting = SubResource("Resource_kpo4j")
+token = SubResource("Resource_xvtyr")
+scopes = ExtResource("13_kpo4j")
+
+[node name="OAuth" type="Node" parent="Twitcher/TwitchBot/BotAuth" unique_id=1775236126 node_paths=PackedStringArray("token_handler")]
+script = ExtResource("14_4n42c")
+oauth_setting = SubResource("Resource_kpo4j")
+scopes = ExtResource("13_kpo4j")
+token_handler = NodePath("../TokenHandler")
+
+[node name="TokenHandler" type="Node" parent="Twitcher/TwitchBot/BotAuth" unique_id=1613340214]
+script = ExtResource("15_c5snn")
+oauth_setting = SubResource("Resource_kpo4j")
+token = SubResource("Resource_xvtyr")
+
+[node name="TwitchChat" type="Node" parent="Twitcher" unique_id=1477573617 node_paths=PackedStringArray("media_loader", "eventsub", "api")]
+script = ExtResource("18_c4ay3")
+broadcaster_user = SubResource("Resource_5jffn")
+sender_user = SubResource("Resource_5jffn")
+media_loader = NodePath("../TwitchService/MediaLoader")
+eventsub = NodePath("../TwitchService/EventSub")
+api = NodePath("../TwitchService/API")
+metadata/_custom_type_script = "uid://dcq1bvfrqimqq"
+
+[node name="GenericCommands" type="Node" parent="Twitcher" unique_id=882002742]
+script = ExtResource("19_aht7i")
+
+[node name="TwitcherCommand" type="Node" parent="Twitcher/GenericCommands" unique_id=1982159474]
+script = ExtResource("4_v1gob")
+command = "Twitcher"
+description = "Get the twitcher link"
+metadata/_custom_type_script = "uid://bmluckfvgm1c2"
+
+[node name="TwitcherSharpCommand" type="Node" parent="Twitcher/GenericCommands" unique_id=114474404]
+script = ExtResource("4_v1gob")
+command = "TwitcherSharp"
+description = "get the twitcher sharp link"
+metadata/_custom_type_script = "uid://bmluckfvgm1c2"
+
+[node name="DiscordCommand" type="Node" parent="Twitcher/GenericCommands" unique_id=426222750]
+script = ExtResource("4_v1gob")
+command = "Discord"
+description = "Get the discord link"
+metadata/_custom_type_script = "uid://bmluckfvgm1c2"
+
+[node name="Enviroment" type="Node3D" parent="." unique_id=1003289439]
+script = ExtResource("6_50glp")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="Enviroment" unique_id=1346845497]
+navigation_mesh = SubResource("NavigationMesh_jw32o")
+
+[node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="Enviroment/NavigationRegion3D" unique_id=299468930]
+mesh = SubResource("ArrayMesh_50glp")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Enviroment/NavigationRegion3D/CSGBakedMeshInstance3D" unique_id=895657411]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CSGBakedCollisionShape3D" type="CollisionShape3D" parent="Enviroment/NavigationRegion3D/CSGBakedMeshInstance3D/StaticBody3D" unique_id=775865150]
+shape = SubResource("ConcavePolygonShape3D_vy5pj")
+
+[node name="LeftWall" type="StaticBody3D" parent="Enviroment" unique_id=431784208]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.75, -3.0559022e-10, -3.0559022e-10)
+collision_layer = 4
+collision_mask = 0
+physics_material_override = SubResource("PhysicsMaterial_idj7w")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Enviroment/LeftWall" unique_id=1854722379]
+shape = SubResource("BoxShape3D_kln2b")
+
+[node name="RightWall" type="StaticBody3D" parent="Enviroment" unique_id=835107635]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.75, -3.0559022e-10, -3.0559022e-10)
+collision_layer = 4
+collision_mask = 0
+physics_material_override = SubResource("PhysicsMaterial_idj7w")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Enviroment/RightWall" unique_id=2000054863]
+shape = SubResource("BoxShape3D_kln2b")
+
+[node name="LeftWall2" type="StaticBody3D" parent="Enviroment" unique_id=159197490]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -3.0559022e-10, -3.0559022e-10, -15.75)
+collision_layer = 4
+collision_mask = 0
+physics_material_override = SubResource("PhysicsMaterial_idj7w")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Enviroment/LeftWall2" unique_id=791051258]
+shape = SubResource("BoxShape3D_kln2b")
+
+[node name="RightWall2" type="StaticBody3D" parent="Enviroment" unique_id=236623178]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -3.0559022e-10, -3.0559022e-10, 15.75)
+collision_layer = 4
+collision_mask = 0
+physics_material_override = SubResource("PhysicsMaterial_idj7w")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Enviroment/RightWall2" unique_id=1015570912]
+shape = SubResource("BoxShape3D_kln2b")
+
+[node name="PhysicItemsManager" type="Node3D" parent="Enviroment" unique_id=570666420]
+script = ExtResource("7_vy5pj")
+
+[node name="GrayBall" type="RigidBody3D" parent="Enviroment/PhysicItemsManager" unique_id=1408802521]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1595926, 0.04800749)
+collision_layer = 24
+collision_mask = 31
+mass = 10.0
+physics_material_override = SubResource("PhysicsMaterial_50glp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Enviroment/PhysicItemsManager/GrayBall" unique_id=613181877]
+shape = SubResource("SphereShape3D_vy5pj")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Enviroment/PhysicItemsManager/GrayBall/CollisionShape3D" unique_id=16436051]
+layers = 2
+mesh = SubResource("SphereMesh_4kpch")
+
+[node name="ReflectionProbe" type="ReflectionProbe" parent="Enviroment/PhysicItemsManager/GrayBall/CollisionShape3D" unique_id=716885464]
+layers = 2
+update_mode = 1
+size = Vector3(10, 10, 10)
+cull_mask = 1048569
+reflection_mask = 2
+
+[node name="RedCone" type="RigidBody3D" parent="Enviroment/PhysicItemsManager" unique_id=919218614]
+transform = Transform3D(0.61199135, 0, -0.79086447, 0, 1, 0, 0.79086447, 0, 0.61199135, 0.7322011, 0.6989715, 7.125127)
+collision_layer = 8
+collision_mask = 31
+physics_material_override = SubResource("PhysicsMaterial_4kpch")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Enviroment/PhysicItemsManager/RedCone" unique_id=148478148]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.66816807, 0)
+mesh = SubResource("PrismMesh_4kpch")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Enviroment/PhysicItemsManager/RedCone" unique_id=1076989970]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.66816807, 0)
+shape = SubResource("ConvexPolygonShape3D_4kpch")
+
+[node name="Goal" parent="Enviroment" unique_id=465477544 instance=ExtResource("8_4kpch")]
+transform = Transform3D(1.1924881e-08, 0, -1, 0, 1, 0, 1, 0, 1.1924881e-08, 14.8, -3.0559022e-10, -3.0559022e-10)
+
+[node name="CharactersManager" type="Node3D" parent="." unique_id=279014072]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.0472136, 0)
+script = ExtResource("3_pbw6q")
+
+[node name="TwitchCommands" type="Node" parent="CharactersManager" unique_id=257102107]
+
+[node name="JoinCommand" type="Node" parent="CharactersManager/TwitchCommands" unique_id=1205684552]
+script = ExtResource("4_v1gob")
+aliases = Array[String](["j"])
+args_max = 0
+command = "join"
+description = "Join the demo-world"
+metadata/_custom_type_script = "uid://bmluckfvgm1c2"
+
+[node name="ColorCommand" type="Node" parent="CharactersManager/TwitchCommands" unique_id=2131078483]
+script = ExtResource("4_v1gob")
+aliases = Array[String](["colour", "c"])
+args_min = 1
+args_max = 1
+command = "color"
+description = "Set the color of your character with an HTML code like FFFFFF"
+metadata/_custom_type_script = "uid://bmluckfvgm1c2"
+
+[node name="LeaveCommand" type="Node" parent="CharactersManager/TwitchCommands" unique_id=623759929]
+script = ExtResource("4_v1gob")
+aliases = Array[String](["l"])
+args_max = 0
+command = "leave"
+description = "Leave the demo-world"
+metadata/_custom_type_script = "uid://bmluckfvgm1c2"
+
+[node name="JumpCommand" type="Node" parent="CharactersManager/TwitchCommands" unique_id=981729827]
+script = ExtResource("4_v1gob")
+aliases = Array[String](["j"])
+args_max = 0
+command = "jump"
+description = "Jump up high!"
+metadata/_custom_type_script = "uid://bmluckfvgm1c2"
+
+[node name="ExplodeCommand" type="Node" parent="CharactersManager/TwitchCommands" unique_id=1637930195]
+script = ExtResource("4_v1gob")
+aliases = Array[String](["x"])
+args_max = 1
+command = "explode"
+description = "Explode a character of your likings"
+global_cooldown = 9.99999999999997
+metadata/_custom_type_script = "uid://bmluckfvgm1c2"
+
+[node name="MoveCommand" type="Node" parent="CharactersManager/TwitchCommands" unique_id=33541001]
+script = ExtResource("4_v1gob")
+aliases = Array[String](["m", "mt"])
+args_min = 2
+args_max = 2
+command = "move"
+description = "Move your character on the 30 x 30 grid. expects an X and Y position"
+metadata/_custom_type_script = "uid://bmluckfvgm1c2"
+
+[node name="DanceCommand" type="Node" parent="CharactersManager/TwitchCommands" unique_id=696746147]
+script = ExtResource("4_v1gob")
+command = "Dance"
+description = "Make your character dance!"
+permission_level = 31
+user_cooldown = 29.99999999999991
+metadata/_custom_type_script = "uid://bmluckfvgm1c2"
+
+[node name="EventSub" type="Node" parent="CharactersManager" unique_id=798653664]
+
+[node name="FollowListener" type="Node" parent="CharactersManager/EventSub" unique_id=161388206 node_paths=PackedStringArray("eventsub")]
+script = ExtResource("10_bmxlf")
+eventsub = NodePath("../../../Twitcher/TwitchService/EventSub")
+metadata/_custom_type_script = "uid://bol5ltrjr6ux8"
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1700933968]
+transform = Transform3D(-4.37114e-08, 0.86602545, -0.5, 0, 0.49999997, 0.86602557, 1.0000002, 3.7855173e-08, -2.1855694e-08, -13.82446, 14.48284, -3.0559022e-10)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1788572279]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -3.0559022e-10, 12.36192, -3.0559022e-10)
+
+[node name="UI" parent="." unique_id=954309338 instance=ExtResource("27_5jffn")]
+
+[editable path="Twitcher/TwitchService"]

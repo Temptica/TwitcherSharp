@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Charity;
@@ -11,7 +12,7 @@ public partial class TwitchCharityCampaignDonation : RefCounted, ITwitcherSharp<
     public string UserId { get; set; }
     public string UserLogin { get; set; }
     public string UserName { get; set; }
-    public TwitchAmount Amount { get; set; }
+    public TwitchResponseAmount Amount { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCharityCampaignDonation object.
@@ -26,7 +27,7 @@ public partial class TwitchCharityCampaignDonation : RefCounted, ITwitcherSharp<
             UserId = data.Get("user_id").AsString(),
             UserLogin = data.Get("user_login").AsString(),
             UserName = data.Get("user_name").AsString(),
-            Amount = data.Get("amount").As<TwitchAmount>(),
+            Amount = data.Get("amount").As<TwitchResponseAmount>(),
         };
     }
 
@@ -46,7 +47,7 @@ public partial class TwitchCharityCampaignDonation : RefCounted, ITwitcherSharp<
     /// <summary> 
     /// An object that contains the amount of money that the user donated. 
     /// </summary>
-    public partial class TwitchAmount : RefCounted, ITwitcherSharp<TwitchAmount>
+    public partial class TwitchResponseAmount : RefCounted, ITwitcherSharp<TwitchResponseAmount>
     {
         private GodotObject _data;
         public int Value { get; set; }
@@ -54,12 +55,12 @@ public partial class TwitchCharityCampaignDonation : RefCounted, ITwitcherSharp<
         public string Currency { get; set; }
     
         /// <summary> 
-        /// Transforms the godot data into a TwitchAmount object.
+        /// Transforms the godot data into a TwitchResponseAmount object.
         /// </summary> 
-        public static TwitchAmount FromObject(GodotObject data)
+        public static TwitchResponseAmount FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchAmount
+            return new TwitchResponseAmount
             {
                 Value = data.Get("value").AsInt32(),
                 DecimalPlaces = data.Get("decimal_places").AsInt32(),
@@ -69,8 +70,9 @@ public partial class TwitchCharityCampaignDonation : RefCounted, ITwitcherSharp<
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_amount.gd");
-            var request = script.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_charity_campaign_donation.gd");
+            var twitchResponseAmountClass = script.Get("Amount").AsGodotObject();
+            var request = twitchResponseAmountClass.Call("new").AsGodotObject();
             request.Set("value", Value);
             request.Set("decimal_places", DecimalPlaces);
             request.Set("currency", Currency);

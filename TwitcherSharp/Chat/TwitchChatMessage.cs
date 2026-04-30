@@ -1,5 +1,5 @@
 using Godot;
-using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.Chat;
@@ -77,8 +77,8 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
         instance.Set("source_broadcaster_user_name", SourceBroadcasterUserName);
         instance.Set("source_broadcaster_user_login", SourceBroadcasterUserLogin);
         instance.Set("source_message_id", SourceMessageId);
-        instance.Set("badges", Badges.Select(b => b?.ToGodotObject()).ToArray());
-        instance.Set("source_badges", SourceBadges.Select(b => b?.ToGodotObject()).ToArray());
+        instance.Set("badges", Badges.ToGodotArray());
+        instance.Set("source_badges", SourceBadges.ToGodotArray());
         return instance;
     }
 
@@ -107,7 +107,7 @@ public partial class Message : RefCounted, ITwitcherSharp<Message>
         var script = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_chat_message.gd");
         var message = script.Get("Message").AsGodotObject().Call("new").AsGodotObject();
         message.Set("text", Text);
-        message.Set("fragments", Fragments.Select(f => f?.ToGodotObject()).ToArray());
+        message.Set("fragments", Fragments.ToGodotArray());
         return message;
     }
 }
@@ -229,7 +229,7 @@ public partial class Emote : RefCounted, ITwitcherSharp<Emote>
         instance.Set("id", Id);
         instance.Set("emote_set_id", EmoteSetId);
         instance.Set("owner_id", OwnerId);
-        instance.Set("format", Format.Select(f => f == EmoteFormat.Static ? "static" : "animated").ToArray());
+        instance.Set("format", Format.Select(f => f == EmoteFormat.Static ? "static" : "animated").ToVariantArray());
         return instance;   
     }
 }
@@ -310,7 +310,7 @@ public partial class Reply : RefCounted, ITwitcherSharp<Reply>
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_chat_message.gd");
-        var instance = script.Get("Cheer").AsGodotObject().Call("new").AsGodotObject();
+        var instance = script.Get("Reply").AsGodotObject().Call("new").AsGodotObject();
         instance.Set("parent_message_id", ParentMessageId);
         instance.Set("parent_message_body", ParentMessageBody);
         instance.Set("parent_user_id", ParentUserId);

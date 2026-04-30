@@ -1,6 +1,7 @@
 using TwitcherSharp.Api.Generated.Chat.Interfaces;
 using TwitcherSharp.Api.Generated.Chat.Interfaces;
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Chat;
@@ -30,7 +31,7 @@ public partial class TwitchGetEmoteSetsResponse : RefCounted, ITwitcherSharp<Twi
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_emote_sets.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", new Godot.Collections.Array<GodotObject>(Data.Select(x => x.ToGodotObject()).ToArray()));
+        if(Data != null) request.Set("data", Data?.ToGodotArray());
         request.Set("template", Template);
         return request;
     }

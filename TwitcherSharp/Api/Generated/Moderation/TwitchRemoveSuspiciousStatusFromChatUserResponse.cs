@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
@@ -6,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 public partial class TwitchRemoveSuspiciousStatusFromChatUserResponse : RefCounted, ITwitcherSharp<TwitchRemoveSuspiciousStatusFromChatUserResponse>
 {
     private GodotObject _data;
-    public TwitchData[] Data { get; set; }
+    public TwitchResponseData[] Data { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchRemoveSuspiciousStatusFromChatUserResponse object.
@@ -17,7 +18,7 @@ public partial class TwitchRemoveSuspiciousStatusFromChatUserResponse : RefCount
         var dataArray = data.Get("data").AsGodotArray<GodotObject>();
         return new TwitchRemoveSuspiciousStatusFromChatUserResponse
         {
-            Data = dataArray.Select(TwitchData.FromObject).ToArray(),
+            Data = dataArray.Select(TwitchResponseData.FromObject).ToArray(),
         };
     }
 
@@ -26,14 +27,14 @@ public partial class TwitchRemoveSuspiciousStatusFromChatUserResponse : RefCount
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_remove_suspicious_status_from_chat_user.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", new Godot.Collections.Array<GodotObject>(Data.Select(x => x.ToGodotObject()).ToArray()));
+        if(Data != null) request.Set("data", Data?.ToGodotArray());
         return request;
     }
     
     /// <summary> 
     /// An array with one object containing information about the suspicious user action. 
     /// </summary>
-    public partial class TwitchData : RefCounted, ITwitcherSharp<TwitchData>
+    public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
         private GodotObject _data;
         public string UserId { get; set; }
@@ -44,12 +45,12 @@ public partial class TwitchRemoveSuspiciousStatusFromChatUserResponse : RefCount
         public string[] Types { get; set; }
     
         /// <summary> 
-        /// Transforms the godot data into a TwitchData object.
+        /// Transforms the godot data into a TwitchResponseData object.
         /// </summary> 
-        public static TwitchData FromObject(GodotObject data)
+        public static TwitchResponseData FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchData
+            return new TwitchResponseData
             {
                 UserId = data.Get("user_id").AsString(),
                 BroadcasterId = data.Get("broadcaster_id").AsString(),
@@ -62,14 +63,15 @@ public partial class TwitchRemoveSuspiciousStatusFromChatUserResponse : RefCount
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_data.gd");
-            var request = script.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_remove_suspicious_status_from_chat_user.gd");
+            var twitchResponseDataClass = script.Get("ResponseData").AsGodotObject();
+            var request = twitchResponseDataClass.Call("new").AsGodotObject();
             request.Set("user_id", UserId);
             request.Set("broadcaster_id", BroadcasterId);
             request.Set("moderator_id", ModeratorId);
             request.Set("updated_at", UpdatedAt);
             request.Set("status", Status);
-            request.Set("types", new Godot.Collections.Array<string>(Types));
+            if(Types != null) request.Set("types", new Godot.Collections.Array<string>(Types));
             return request;
         }
     

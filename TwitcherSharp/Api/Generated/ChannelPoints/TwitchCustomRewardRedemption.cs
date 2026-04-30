@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.ChannelPoints;
@@ -86,8 +87,9 @@ public partial class TwitchCustomRewardRedemption : RefCounted, ITwitcherSharp<T
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_reward.gd");
-            var request = script.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_custom_reward_redemption.gd");
+            var twitchRewardClass = script.Get("Reward").AsGodotObject();
+            var request = twitchRewardClass.Call("new").AsGodotObject();
             request.Set("id", Id);
             request.Set("title", Title);
             request.Set("prompt", Prompt);

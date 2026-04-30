@@ -12,7 +12,15 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
 {
     private GodotObject _data;
     public bool IsLinked => _data is not null;
-    public static TwitchMediaLoader Instance { get; private set; }
+    public static string ScriptPath => "res://addons/twitcher/media/twitch_media_loader.gd";
+
+    public static TwitchMediaLoader Instance
+    {
+        get => ITwitcherSharpSingleton<TwitchMediaLoader>.Instance;
+        private set => ITwitcherSharpSingleton<TwitchMediaLoader>.Instance = value;
+    }
+    public static TwitchMediaLoader CreateInstance(Action<TwitchMediaLoader> configure = null) =>
+        ITwitcherSharpSingleton<TwitchMediaLoader>.CreateInstance(configure);
 
     [Signal]
     public delegate void EmojiLoadedEventHandler();
@@ -177,18 +185,18 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
 
     public partial class CheerResult(
         TwitchCheermote cheermote,
-        TwitchCheermote.TwitchTiers tier,
+        TwitchCheermote.TwitchResponseTiers tier,
         SpriteFrames spriteFrames) : RefCounted, ITwitcherSharp<CheerResult>
     {
         public TwitchCheermote Cheermote { get; set; } = cheermote;
-        public TwitchCheermote.TwitchTiers Tier { get; set; } = tier;
+        public TwitchCheermote.TwitchResponseTiers Tier { get; set; } = tier;
         public SpriteFrames SpriteFrames { get; set; } = spriteFrames;
 
         public static CheerResult FromObject(GodotObject data)
         {
             return new CheerResult(
                 TwitchCheermote.FromObject(data.Get("cheermote").AsGodotObject()),
-                TwitchCheermote.TwitchTiers.FromObject(data.Get("tier").AsGodotObject()),
+                TwitchCheermote.TwitchResponseTiers.FromObject(data.Get("tier").AsGodotObject()),
                 data.Get("sprite_frames").As<SpriteFrames>());
         }
 
@@ -224,17 +232,17 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
     /// <param name="number"></param>
     /// <param name="cheerData"></param>
     /// <returns></returns>
-    public TwitchCheermote.TwitchTiers FindCheerTier(int number, TwitchCheermote cheerData)
-        => _data.Call("find_cheer_tier", number, cheerData.ToGodotObject()).As<TwitchCheermote.TwitchTiers>();
+    public TwitchCheermote.TwitchResponseTiers FindCheerTier(int number, TwitchCheermote cheerData)
+        => _data.Call("find_cheer_tier", number, cheerData.ToGodotObject()).As<TwitchCheermote.TwitchResponseTiers>();
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="cheermoteDefinition"></param>
-    /// <returns><see cref="SpriteFrames"/> mapped by <see cref="TwitchCheermote.TwitchTiers"/> for a <see cref="TwitchCheermote"/></returns>
-    public async Task<Godot.Collections.Dictionary<TwitchCheermote.TwitchTiers, SpriteFrames>> GetCheermotes(
+    /// <returns><see cref="SpriteFrames"/> mapped by <see cref="TwitchCheermote.TwitchResponseTiers"/> for a <see cref="TwitchCheermote"/></returns>
+    public async Task<Godot.Collections.Dictionary<TwitchCheermote.TwitchResponseTiers, SpriteFrames>> GetCheermotes(
         TwitchCheermoteDefinition cheermoteDefinition)
-        => await _data.CallDictionaryKeyAsync<TwitchCheermote.TwitchTiers, SpriteFrames>("get_cheermotes",
+        => await _data.CallDictionaryKeyAsync<TwitchCheermote.TwitchResponseTiers, SpriteFrames>("get_cheermotes",
             cheermoteDefinition.ToGodotObject());
 
     #endregion
@@ -269,7 +277,7 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
             _data = data, //must be last to avoid setting itself (performance boost)
         };
         data.SetMeta("_twitcher_sharp_instance", mediaLoader);
-        
+
 
         Instance = mediaLoader;
 
@@ -280,7 +288,7 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
     {
         if (_data is not null) return _data;
 
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_media_loader.gd");
+        var script = GD.Load<GDScript>(ScriptPath);
         _data = script.New().AsGodotObject();
         _data.Set("image_transformer", ImageTransformer?.ToGodotObject());
         _data.Set("fallback_texture", FallbackTexture);
@@ -299,25 +307,5 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
         if (_data is null) return;
         _data.SetMeta("_twitcher_sharp_instance", Instance);
         _data = null;
-    }
-    
-    public static TwitchMediaLoader GetOrCreateInstance()
-    {
-        if (Instance != null) return Instance;
-        
-        var script = GD.Load<GDScript>("res://addons/twitcher/media/twitch_media_loader.gd");
-        var twitchMediaLoader = script.New().AsGodotObject();
-        var instance = twitchMediaLoader.Get("instance");
-    
-        if (instance.VariantType != Variant.Type.Object)
-        {
-            var root = (Engine.GetMainLoop() as SceneTree)!.Root;
-            root.AddChild(twitchMediaLoader as Node);
-            FromObject(twitchMediaLoader);
-            return Instance;
-        }
-        
-        FromObject(instance.AsGodotObject());
-        return Instance;
     }
 }

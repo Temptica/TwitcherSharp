@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://bt2th5ipjir1x"]
+
+[ext_resource type="Script" uid="uid://d11ewel3gshrf" path="res://Scenes/WordGames/WordTemptation.cs" id="1_7vk8y"]
+[ext_resource type="Script" uid="uid://bmluckfvgm1c2" path="res://addons/twitcher/chat/twitch_command.gd" id="2_2ps18"]
+
+[node name="WordTemptation" type="Node" unique_id=247815501]
+script = ExtResource("1_7vk8y")
+
+[node name="StartCommand" type="Node" parent="." unique_id=1183874192]
+script = ExtResource("2_2ps18")
+command = "StartWords"
+permission_level = 28
+metadata/_custom_type_script = "uid://bmluckfvgm1c2"
+
+[node name="StopCommand" type="Node" parent="." unique_id=458978192]
+script = ExtResource("2_2ps18")
+command = "Stop"
+permission_level = 28
+metadata/_custom_type_script = "uid://bmluckfvgm1c2"
+
+[node name="ScoreCommand" type="Node" parent="." unique_id=573558585]
+script = ExtResource("2_2ps18")
+command = "Score"
+description = "Get your last game's score"
+metadata/_custom_type_script = "uid://bmluckfvgm1c2"
+
+[node name="ScoresCommand" type="Node" parent="." unique_id=1111949746]
+script = ExtResource("2_2ps18")
+command = "Scores"
+description = "Get the last game's leaderboard"
+metadata/_custom_type_script = "uid://bmluckfvgm1c2"
+
+[node name="HowToCommand" type="Node" parent="." unique_id=1566618480]
+script = ExtResource("2_2ps18")
+command = "HowToWords"
+description = "Explains how to play"
+metadata/_custom_type_script = "uid://bmluckfvgm1c2"

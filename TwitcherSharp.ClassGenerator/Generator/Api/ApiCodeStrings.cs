@@ -20,45 +20,34 @@ public static class ApiCodeStrings
                                           {
                                               private GodotObject _data;
                                               
-                                              public static TwitchApi Instance { get; private set; }
-
                                               public bool IsLinked => _data is not null && !_data.IsQueuedForDeletion();
+                                              public static string ScriptPath => "res://addons/twitcher/generated/twitch_api.gd";
+                                              
+                                              public static TwitchApi Instance
+                                              {
+                                                  get => ITwitcherSharpSingleton<TwitchApi>.Instance;
+                                                  private set => ITwitcherSharpSingleton<TwitchApi>.Instance = value;
+                                              }
+                                              
+                                              public static TwitchApi CreateInstance(Action<TwitchApi> configure = null) =>
+                                                  ITwitcherSharpSingleton<TwitchApi>.CreateInstance(configure);
                                               
                                               [Signal]
                                               public delegate void UnauthenticatedEventHandler();
-
+                                              
                                               [Signal]
                                               public delegate void UnauthorizedEventHandler();
-
-                                              public async Task<ResponseData> Request(string path, int method, string body = "", string contentType = "", int errorCount = 0)
+                                              
+                                              public async Task<ResponseData> Request(string path, int method, string body = "", string contentType = "",
+                                                  int errorCount = 0)
                                               {
                                                   return await _data.CallAsync<ResponseData>("request", this, path, method, body, contentType, errorCount);
                                               }
-
+                                              
                                               private void ConnectSignals()
                                               {
                                                   _data.Connect("unauthenticated", Callable.From(EmitSignalUnauthenticated));
                                                   _data.Connect("unauthorized", Callable.From(EmitSignalUnauthorized));
-                                              }
-                                              
-                                              public static TwitchApi GetOrCreateInstance()
-                                              {
-                                                  if (Instance != null) return Instance;
-                                                  
-                                                  var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_api.gd");
-                                                  var twitchApi = script.New().AsGodotObject();
-                                                  var instance = twitchApi.Get("instance");
-                                              
-                                                  if (instance.VariantType != Variant.Type.Object)
-                                                  {
-                                                      var root = (Engine.GetMainLoop() as SceneTree)!.Root;
-                                                      root.AddChild(twitchApi as Node);
-                                                      FromObject(twitchApi);
-                                                      return Instance;
-                                                  }
-                                                  
-                                                  FromObject(instance.AsGodotObject());
-                                                  return Instance;
                                               }
                                               
                                               public static TwitchApi FromObject(GodotObject data)
@@ -68,26 +57,27 @@ public static class ApiCodeStrings
                                                   {
                                                       _data = data,
                                                   };
+                                                  
                                                   Instance = twitchApi;
-                                                  data.SetMeta("_twitcher_sharp_instance",Instance);
+                                                  data.SetMeta("_twitcher_sharp_instance", Instance);
                                                   twitchApi.ConnectSignals();
                                                   return twitchApi;
-                                              } 
+                                              }
                                               
                                               public GodotObject ToGodotObject()
                                               {
-                                                  if(_data is not null) return _data;
-                                                  
+                                                  if (_data is not null) return _data;
+                                              
                                                   var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_api.gd");
                                                   _data = script.New().AsGodotObject();
-                                                  _data.SetMeta("_twitcher_sharp_instance",this);
-                                                  
+                                                  _data.SetMeta("_twitcher_sharp_instance", this);
+                                              
                                                   return _data;
                                               }
                                               
                                               public void FreeInstance()
                                               {
-                                                  if(_data is not null && !_data.IsQueuedForDeletion()) _data.RemoveMeta("_twitcher_sharp_instance");
+                                                  if (_data is not null && !_data.IsQueuedForDeletion()) _data.RemoveMeta("_twitcher_sharp_instance");
                                                   Instance = null;
                                               }
                                               
@@ -102,6 +92,7 @@ public static class ApiCodeStrings
     /// </summary>
     public const string ComponentUsings = """
                                           using TwitcherSharp.Interfaces;
+                                          using TwitcherSharp.Extensions;
                                           using Godot;
                                              
                                           namespace TwitcherSharp.Api.Generated.{{root}};

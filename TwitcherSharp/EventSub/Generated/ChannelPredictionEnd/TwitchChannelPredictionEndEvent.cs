@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 using TwitcherSharp.EventSub.Generated.Shared;
 
@@ -90,7 +91,7 @@ public partial class TwitchChannelPredictionEndEvent : RefCounted, ITwitcherShar
         request.Set("broadcaster_user_name", BroadcasterUserName);
         request.Set("title", Title);
         request.Set("winning_outcome_id", WinningOutcomeId);
-        request.Set("outcomes", new Godot.Collections.Array(Outcomes.Select(x => x.ToGodotObject()).ToArray()));
+        if(Outcomes != null) request.Set("outcomes", Outcomes?.ToGodotArray());
         request.Set("status", Status);
         request.Set("started_at", StartedAt);
         request.Set("ended_at", EndedAt);

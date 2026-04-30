@@ -1,5 +1,6 @@
 using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Chat;
@@ -7,7 +8,7 @@ namespace TwitcherSharp.Api.Generated.Chat;
 public partial class TwitchGetUserEmotesResponse : RefCounted, ITwitcherSharp<TwitchGetUserEmotesResponse>
 {
     private GodotObject _data;
-    public TwitchData[] Data { get; set; }
+    public TwitchResponseData[] Data { get; set; }
     public string Template { get; set; }
     public ResponsePagination Pagination { get; set; }
 
@@ -20,7 +21,7 @@ public partial class TwitchGetUserEmotesResponse : RefCounted, ITwitcherSharp<Tw
         var dataArray = data.Get("data").AsGodotArray<GodotObject>();
         return new TwitchGetUserEmotesResponse
         {
-            Data = dataArray.Select(TwitchData.FromObject).ToArray(),
+            Data = dataArray.Select(TwitchResponseData.FromObject).ToArray(),
             Template = data.Get("template").AsString(),
             Pagination = data.Get("pagination").As<ResponsePagination>(),
         };
@@ -31,7 +32,7 @@ public partial class TwitchGetUserEmotesResponse : RefCounted, ITwitcherSharp<Tw
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_user_emotes.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", new Godot.Collections.Array<GodotObject>(Data.Select(x => x.ToGodotObject()).ToArray()));
+        if(Data != null) request.Set("data", Data?.ToGodotArray());
         request.Set("template", Template);
         if(Pagination != null) request.Set("pagination", Pagination);
         return request;
@@ -61,15 +62,15 @@ public partial class TwitchGetUserEmotesResponse : RefCounted, ITwitcherSharp<Tw
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/response_pagination.gd");
-            var paginationClass = script.Get("Pagination").AsGodotObject();
-            var request = paginationClass.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_user_emotes.gd");
+            var responsePaginationClass = script.Get("ResponsePagination").AsGodotObject();
+            var request = responsePaginationClass.Call("new").AsGodotObject();
             if(Cursor != null) request.Set("cursor", Cursor);
             return request;
         }
     
     }
-    public partial class TwitchData : RefCounted, ITwitcherSharp<TwitchData>
+    public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
         private GodotObject _data;
         public string Id { get; set; }
@@ -82,12 +83,12 @@ public partial class TwitchGetUserEmotesResponse : RefCounted, ITwitcherSharp<Tw
         public string[] ThemeMode { get; set; }
     
         /// <summary> 
-        /// Transforms the godot data into a TwitchData object.
+        /// Transforms the godot data into a TwitchResponseData object.
         /// </summary> 
-        public static TwitchData FromObject(GodotObject data)
+        public static TwitchResponseData FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchData
+            return new TwitchResponseData
             {
                 Id = data.Get("id").AsString(),
                 Name = data.Get("name").AsString(),
@@ -102,16 +103,17 @@ public partial class TwitchGetUserEmotesResponse : RefCounted, ITwitcherSharp<Tw
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_data.gd");
-            var request = script.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_user_emotes.gd");
+            var twitchResponseDataClass = script.Get("ResponseData").AsGodotObject();
+            var request = twitchResponseDataClass.Call("new").AsGodotObject();
             request.Set("id", Id);
             request.Set("name", Name);
             request.Set("emote_type", EmoteType);
             request.Set("emote_set_id", EmoteSetId);
             request.Set("owner_id", OwnerId);
-            request.Set("format", new Godot.Collections.Array<string>(Format));
-            request.Set("scale", new Godot.Collections.Array<string>(Scale));
-            request.Set("theme_mode", new Godot.Collections.Array<string>(ThemeMode));
+            if(Format != null) request.Set("format", new Godot.Collections.Array<string>(Format));
+            if(Scale != null) request.Set("scale", new Godot.Collections.Array<string>(Scale));
+            if(ThemeMode != null) request.Set("theme_mode", new Godot.Collections.Array<string>(ThemeMode));
             return request;
         }
     

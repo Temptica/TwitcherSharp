@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 using TwitcherSharp.EventSub.Generated.Shared;
 
@@ -133,13 +134,13 @@ public partial class TwitchHypeTrainProgressEvent : RefCounted, ITwitcherSharpEv
         request.Set("total", Total);
         request.Set("progress", Progress);
         request.Set("goal", Goal);
-        request.Set("top_contributions", TopContributions.ToGodotObject());
+        request.Set("top_contributions", TopContributions?.ToGodotObject());
         request.Set("user_id", UserId);
         request.Set("user_login", UserLogin);
         request.Set("user_name", UserName);
         request.Set("type", Type);
         request.Set("level", Level);
-        request.Set("shared_train_participants", new Godot.Collections.Array(SharedTrainParticipants.Select(x => x.ToGodotObject()).ToArray()));
+        if(SharedTrainParticipants != null) request.Set("shared_train_participants", SharedTrainParticipants?.ToGodotArray());
         request.Set("started_at", StartedAt);
         request.Set("expires_at", ExpiresAt);
         request.Set("is_shared_train", IsSharedTrain);

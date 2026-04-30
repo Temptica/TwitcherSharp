@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 using TwitcherSharp.EventSub.Generated.Shared;
 
@@ -98,7 +99,7 @@ public partial class TwitchChannelPointsCustomRewardRedemptionAddEvent : RefCoun
         request.Set("user_name", UserName);
         request.Set("user_input", UserInput);
         request.Set("status", Status);
-        request.Set("reward", Reward.ToGodotObject());
+        request.Set("reward", Reward?.ToGodotObject());
         request.Set("redeemed_at", RedeemedAt);
         return request;
     }

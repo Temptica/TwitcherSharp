@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
@@ -37,7 +38,7 @@ public partial class TwitchDropEntitlementGrantEvent : RefCounted, ITwitcherShar
         var eventClass = script.Get("Event").As<GDScript>();
         var request = eventClass.New().AsGodotObject();
         request.Set("id", Id);
-        request.Set("data", new Godot.Collections.Array(Data.Select(x => x.ToGodotObject()).ToArray()));
+        if(Data != null) request.Set("data", Data?.ToGodotArray());
         return request;
     }
 

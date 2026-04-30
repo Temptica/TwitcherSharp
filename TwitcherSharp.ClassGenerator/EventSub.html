@@ -19,12 +19,14 @@
 <meta property="og:site_name" content="Twitch Developers">
 <meta property="og:image" content="https://dev.twitch.tv/marketing-assets/images/TwitchDev.png">
 <meta property="og:type" content="article">
-<meta property="article:published_time" content="2026-02-04T20:31:52-08:00">
+<meta property="article:published_time" content="2026-04-02T17:12:11-07:00">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@TwitchDev">
 <script type="application/ld+json">
-{"description":"EventSub Reference","url":"https://dev.twitch.tv/eventsub/eventsub-reference/","@type":"BlogPosting","headline":"EventSub Reference","dateModified":"2026-02-04T20:31:52-08:00","datePublished":"2026-02-04T20:31:52-08:00","image":"https://dev.twitch.tv/marketing-assets/images/TwitchDev.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://dev.twitch.tv/eventsub/eventsub-reference/"},"@context":"http://schema.org"}</script>
+{"description":"EventSub Reference","url":"https://dev.twitch.tv/eventsub/eventsub-reference/","@type":"BlogPosting","headline":"EventSub Reference","dateModified":"2026-04-02T17:12:11-07:00","datePublished":"2026-04-02T17:12:11-07:00","image":"https://dev.twitch.tv/marketing-assets/images/TwitchDev.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://dev.twitch.tv/eventsub/eventsub-reference/"},"@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
+
+
 
 
 
@@ -3404,7 +3406,7 @@
     <tr>
       <td><code class="highlighter-rouge">type</code></td>
       <td>string</td>
-      <td>Possible values are: <ul><li>cheer</li><li>power_up</li></ul></td>
+      <td>Possible values are: <ul><li>cheer</li><li>power_up</li><li>custom_power_up</li></ul></td>
     </tr>
     <tr>
       <td><code class="highlighter-rouge">message</code></td>
@@ -3479,7 +3481,7 @@
     <tr>
       <td><code class="highlighter-rouge">power_up</code></td>
       <td>object</td>
-      <td>Optional. Data about Power-up.</td>
+      <td>Optional. Data about a default (i.e. built-in) Power-up.</td>
     </tr>
     <tr>
       <td>   <code class="highlighter-rouge">type</code></td>
@@ -3505,6 +3507,21 @@
       <td>   <code class="highlighter-rouge">message_effect_id</code></td>
       <td>string</td>
       <td>Optional. The ID of the message effect.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">custom_power_up</code></td>
+      <td>object</td>
+      <td>Optional. Data about a custom Power-up.</td>
+    </tr>
+    <tr>
+      <td>   <code class="highlighter-rouge">title</code></td>
+      <td>string</td>
+      <td>The title of the custom Power-up.</td>
+    </tr>
+    <tr>
+      <td>   <code class="highlighter-rouge">reward_id</code></td>
+      <td>string</td>
+      <td>The ID of the custom Power-up.</td>
     </tr>
   </tbody>
 </table>
@@ -3721,7 +3738,7 @@
     <tr>
       <td><code class="highlighter-rouge">message_type</code></td>
       <td>string</td>
-      <td>The type of message. Possible values: &lt;ul&gt;&lt;li&gt;text&lt;/li&gt;&lt;li&gt;channel_points_highlighted&lt;/li&gt;&lt;li&gt;channel_points_sub_only&lt;/li&gt;&lt;li&gt;user_intro&lt;/li&gt;&lt;li&gt;power_ups_message_effect&lt;/li&gt;&lt;li&gt;power_ups_gigantified_emote&lt;/li&gt;&lt;/ul&gt;</td>
+      <td>The type of message. Possible values: <ul><li>text</li><li>channel_points_highlighted</li><li>channel_points_sub_only</li><li>user_intro</li><li>power_ups_message_effect</li><li>power_ups_gigantified_emote</li></ul></td>
     </tr>
     <tr>
       <td><code class="highlighter-rouge">badges</code></td>
@@ -4083,7 +4100,7 @@
     <tr>
       <td><code class="highlighter-rouge">notice_type</code></td>
       <td>string</td>
-      <td>The type of notice. Possible values are: <ul><li>sub</li><li>resub</li><li>sub_gift</li><li>community_sub_gift</li><li>gift_paid_upgrade</li><li>prime_paid_upgrade</li><li>raid</li><li>unraid</li><li>pay_it_forward</li><li>announcement</li><li>bits_badge_tier</li><li>charity_donation</li><li>shared_chat_sub</li><li>shared_chat_resub</li><li>shared_chat_sub_gift</li><li>shared_chat_community_sub_gift</li><li>shared_chat_gift_paid_upgrade</li><li>shared_chat_prime_paid_upgrade</li><li>shared_chat_raid</li><li>shared_chat_pay_it_forward</li><li>shared_chat_announcement</li></ul></td>
+      <td>The type of notice. Possible values are: <ul><li>sub</li><li>resub</li><li>sub_gift</li><li>community_sub_gift</li><li>gift_paid_upgrade</li><li>prime_paid_upgrade</li><li>raid</li><li>unraid</li><li>pay_it_forward</li><li>announcement</li><li>bits_badge_tier</li><li>charity_donation</li><li>watch_streak</li><li>shared_chat_sub</li><li>shared_chat_resub</li><li>shared_chat_sub_gift</li><li>shared_chat_community_sub_gift</li><li>shared_chat_gift_paid_upgrade</li><li>shared_chat_prime_paid_upgrade</li><li>shared_chat_raid</li><li>shared_chat_pay_it_forward</li><li>shared_chat_announcement</li></ul></td>
     </tr>
     <tr>
       <td><code class="highlighter-rouge">sub</code></td>
@@ -4218,7 +4235,7 @@
     <tr>
       <td>   <code class="highlighter-rouge">sub_tier</code></td>
       <td>string</td>
-      <td>The type of subscription plan being used. Possible values are: &lt;ul&gt;&lt;li&gt;1000 - First level of paid or Prime subscription.&lt;/li&gt;&lt;li&gt;2000 - Second level of paid subscription.&lt;/li&gt;&lt;li&gt;3000 - Third level of paid subscription.&lt;/li&gt;&lt;/ul&gt;</td>
+      <td>The type of subscription plan being used. Possible values are: <ul><li>1000 - First level of paid or Prime subscription.</li><li>2000 - Second level of paid subscription.</li><li>3000 - Third level of paid subscription.</li></ul></td>
     </tr>
     <tr>
       <td>   <code class="highlighter-rouge">cumulative_total</code></td>
@@ -4318,7 +4335,7 @@
     <tr>
       <td><code class="highlighter-rouge">announcement</code></td>
       <td>object</td>
-      <td>Information about the announcement event. Null if <code>notice_type</code> is not {::nomarkdown}<code>announcement</code></td>
+      <td>Information about the announcement event. Null if <code>notice_type</code> is not <code>announcement</code></td>
     </tr>
     <tr>
       <td>   <code class="highlighter-rouge">color</code></td>
@@ -4366,6 +4383,21 @@
       <td>The <a href="https://www.iso.org/iso-4217-currency-codes.html">ISO-4217</a> three-letter currency code that identifies the type of currency in value.</td>
     </tr>
     <tr>
+      <td><code class="highlighter-rouge">watch_streak</code></td>
+      <td>object</td>
+      <td>Information about the Watch Streak event. Null if <code>notice_type</code> is not <code>watch_streak</code>.</td>
+    </tr>
+    <tr>
+      <td>   <code class="highlighter-rouge">streak_count</code></td>
+      <td>int</td>
+      <td>The number of consecutive broadcasts for which the user has been watching.</td>
+    </tr>
+    <tr>
+      <td>   <code class="highlighter-rouge">channel_points_awarded</code></td>
+      <td>int</td>
+      <td>The number of channel points awarded for the Watch Streak milestone.</td>
+    </tr>
+    <tr>
       <td><code class="highlighter-rouge">source_broadcaster_user_id</code></td>
       <td>string</td>
       <td><strong>Optional</strong>. The broadcaster user ID of the channel the message was sent from. Is null when the message notification happens in the same channel as the broadcaster. Is not null when in a shared chat session, and the action happens in the channel of a participant other than the broadcaster.</td>
@@ -4404,6 +4436,11 @@
       <td>   <code class="highlighter-rouge">info</code></td>
       <td>string</td>
       <td>Contains metadata related to the chat badges in the badges tag. Currently, this tag contains metadata only for subscriber badges, to indicate the number of months the user has been a subscriber.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">is_source_only</code></td>
+      <td>bool</td>
+      <td><strong>Optional</strong>. Whether the notification is only sent to the source channel. Is <code class="highlighter-rouge">null</code> if the notification is not in a shared chat session.</td>
     </tr>
     <tr>
       <td><code class="highlighter-rouge">shared_chat_sub</code></td>

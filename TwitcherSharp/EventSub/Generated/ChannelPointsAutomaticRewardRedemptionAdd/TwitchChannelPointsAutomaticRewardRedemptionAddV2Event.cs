@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
@@ -43,12 +44,12 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
     public string Id { get; set; }
 
     /// <summary> 
-    /// An object that contains the reward information.
+    /// 
     /// </summary>
     public TwitchReward Reward { get; set; }
 
     /// <summary> 
-    /// Optional. An object that contains the user message and emote information needed to recreate the message.
+    /// 
     /// </summary>
     public TwitchMessage Message { get; set; }
 
@@ -90,8 +91,8 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
         request.Set("user_login", UserLogin);
         request.Set("user_name", UserName);
         request.Set("id", Id);
-        request.Set("reward", Reward.ToGodotObject());
-        request.Set("message", Message.ToGodotObject());
+        request.Set("reward", Reward?.ToGodotObject());
+        request.Set("message", Message?.ToGodotObject());
         request.Set("redeemed_at", RedeemedAt);
         return request;
     }
@@ -135,7 +136,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
             var request = rewardClass.New().AsGodotObject();
             request.Set("type", Type);
             request.Set("channel_points", ChannelPoints);
-            request.Set("emote", Emote.ToGodotObject());
+            request.Set("emote", Emote?.ToGodotObject());
             return request;
         }
     
@@ -209,7 +210,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
             var messageClass = script.Get("Message").As<GDScript>();
             var request = messageClass.New().AsGodotObject();
             request.Set("text", Text);
-            request.Set("fragments", new Godot.Collections.Array(Fragments.Select(x => x.ToGodotObject()).ToArray()));
+            if(Fragments != null) request.Set("fragments", Fragments?.ToGodotArray());
             return request;
         }
     
@@ -252,7 +253,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
                 var request = fragmentsClass.New().AsGodotObject();
                 request.Set("text", Text);
                 request.Set("type", Type);
-                request.Set("emote", Emote.ToGodotObject());
+                request.Set("emote", Emote?.ToGodotObject());
                 return request;
             }
         

@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
@@ -58,7 +59,7 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
     public string BanEvasionEvaluation { get; set; }
 
     /// <summary> 
-    /// The structured chat message.
+    /// 
     /// </summary>
     public TwitchMessage Message { get; set; }
 
@@ -96,10 +97,10 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
         request.Set("user_name", UserName);
         request.Set("user_login", UserLogin);
         request.Set("low_trust_status", LowTrustStatus);
-        request.Set("shared_ban_channel_ids", new Godot.Collections.Array<string>(SharedBanChannelIds));
+        if(SharedBanChannelIds != null) request.Set("shared_ban_channel_ids", new Godot.Collections.Array<string>(SharedBanChannelIds));
         request.Set("types", Types);
         request.Set("ban_evasion_evaluation", BanEvasionEvaluation);
-        request.Set("message", Message.ToGodotObject());
+        request.Set("message", Message?.ToGodotObject());
         return request;
     }
 
@@ -143,7 +144,7 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
             var request = messageClass.New().AsGodotObject();
             request.Set("message_id", MessageId);
             request.Set("text", Text);
-            request.Set("fragments", new Godot.Collections.Array(Fragments.Select(x => x.ToGodotObject()).ToArray()));
+            if(Fragments != null) request.Set("fragments", Fragments?.ToGodotArray());
             return request;
         }
     
@@ -192,8 +193,8 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
                 var request = fragmentsClass.New().AsGodotObject();
                 request.Set("type", Type);
                 request.Set("text", Text);
-                request.Set("cheermote", Cheermote.ToGodotObject());
-                request.Set("emote", Emote.ToGodotObject());
+                request.Set("cheermote", Cheermote?.ToGodotObject());
+                request.Set("emote", Emote?.ToGodotObject());
                 return request;
             }
         

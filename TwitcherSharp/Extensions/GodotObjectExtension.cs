@@ -200,7 +200,8 @@ public static class GodotObjectExtension
         /// <param name="args">parameters for the method to call</param>
         /// <typeparam name="T">An implementation of <see cref="ITwitcherSharp{T}"/></typeparam>
         /// <returns>Returns a <see cref="List{T}"/> with the result data</returns>
-        public List<T> CallList<[MustBeVariant] T>(string method, params Variant[] args) where T : RefCounted, ITwitcherSharp<T>
+        public List<T> CallList<[MustBeVariant] T>(string method, params Variant[] args)
+            where T : RefCounted, ITwitcherSharp<T>
         {
             var result = obj.Call(method, args);
             return result.AsGodotArray<GodotObject>()
@@ -215,7 +216,8 @@ public static class GodotObjectExtension
         /// <param name="args">parameters for the method to call</param>
         /// <typeparam name="T">An implementation of <see cref="ITwitcherSharp{T}"/></typeparam>
         /// <returns>Returns a <see cref="List{T}"/> with the result data</returns>
-        public async Task<List<T>> CallListAsync<T>(string method, params Variant[] args) where T : RefCounted, ITwitcherSharp<T>
+        public async Task<List<T>> CallListAsync<T>(string method, params Variant[] args)
+            where T : RefCounted, ITwitcherSharp<T>
         {
             var result = await obj.CallAsync(method, args);
             return result.AsGodotArray<GodotObject>()

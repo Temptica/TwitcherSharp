@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
@@ -6,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 public partial class TwitchCheckAutoModStatusBody : RefCounted, ITwitcherSharp<TwitchCheckAutoModStatusBody>
 {
     private GodotObject _data;
-    public TwitchData[] Data { get; set; }
+    public TwitchBodyData[] Data { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCheckAutoModStatusBody object.
@@ -17,7 +18,7 @@ public partial class TwitchCheckAutoModStatusBody : RefCounted, ITwitcherSharp<T
         var dataArray = data.Get("data").AsGodotArray<GodotObject>();
         return new TwitchCheckAutoModStatusBody
         {
-            Data = dataArray.Select(TwitchData.FromObject).ToArray(),
+            Data = dataArray.Select(TwitchBodyData.FromObject).ToArray(),
         };
     }
 
@@ -26,26 +27,26 @@ public partial class TwitchCheckAutoModStatusBody : RefCounted, ITwitcherSharp<T
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_check_auto_mod_status.gd");
         var bodyClass = script.Get("Body").AsGodotObject();
         var request = bodyClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", new Godot.Collections.Array<GodotObject>(Data.Select(x => x.ToGodotObject()).ToArray()));
+        if(Data != null) request.Set("data", Data?.ToGodotArray());
         return request;
     }
     
     /// <summary> 
     /// The list of messages to check. The list must contain at least one message and may contain up to a maximum of 100 messages. 
     /// </summary>
-    public partial class TwitchData : RefCounted, ITwitcherSharp<TwitchData>
+    public partial class TwitchBodyData : RefCounted, ITwitcherSharp<TwitchBodyData>
     {
         private GodotObject _data;
         public string MsgId { get; set; }
         public string MsgText { get; set; }
     
         /// <summary> 
-        /// Transforms the godot data into a TwitchData object.
+        /// Transforms the godot data into a TwitchBodyData object.
         /// </summary> 
-        public static TwitchData FromObject(GodotObject data)
+        public static TwitchBodyData FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchData
+            return new TwitchBodyData
             {
                 MsgId = data.Get("msg_id").AsString(),
                 MsgText = data.Get("msg_text").AsString(),
@@ -54,8 +55,9 @@ public partial class TwitchCheckAutoModStatusBody : RefCounted, ITwitcherSharp<T
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_data.gd");
-            var request = script.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_check_auto_mod_status.gd");
+            var twitchBodyDataClass = script.Get("BodyData").AsGodotObject();
+            var request = twitchBodyDataClass.Call("new").AsGodotObject();
             request.Set("msg_id", MsgId);
             request.Set("msg_text", MsgText);
             return request;

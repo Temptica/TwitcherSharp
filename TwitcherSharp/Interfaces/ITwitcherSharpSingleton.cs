@@ -8,20 +8,54 @@ namespace TwitcherSharp.Interfaces;
 /// </summary>
 /// <typeparam name="TSelf">A RefCounted class</typeparam>
 public interface ITwitcherSharpSingleton<out TSelf> : ITwitcherSharpSingleton, ITwitcherSharp<TSelf>
-    where TSelf : RefCounted, ITwitcherSharpSingleton<TSelf>
+    where TSelf : RefCounted, ITwitcherSharpSingleton<TSelf>, new()
 {
     /// <summary>
-    /// Returns whether it is linked to a None and the node has not been freed.
+    /// Script path of the Twitcher node.
     /// </summary>
-    public static abstract TSelf Instance { get; }
+    static abstract string ScriptPath { get; }
 
     /// <summary>
-    /// Get the current Instance. Else it will try to find an existing GDScript instance of this type and bind to this one.
-    /// <p>If none can be found, it will instead create a new Node and add it to the root of the SceneTree.</p>
+    /// Get the current Instance. Else it will try to find an existing GDScript instance.
     /// <p>This object will also be added to the metaData of the linked node. When that node is removed from the scene, it will also remove this refCounted object</p>
     /// </summary>
-    /// <returns>The created instance</returns>
-    public static abstract TSelf GetOrCreateInstance();
+    /// <returns>The Instance when found, else returns null</returns>
+    public static TSelf Instance {
+        get
+        {
+            if (field is not null)
+                return field;
+
+            var script = GD.Load<GDScript>(TSelf.ScriptPath);
+            var gdObject = script.New().AsGodotObject();
+
+            var instance = gdObject.Get("instance");
+        
+            field = instance.VariantType != Variant.Type.Object ? null : TSelf.FromObject(instance.AsGodotObject());
+        
+            return field;
+        } 
+        set;
+    }
+
+    /// <summary>
+    /// Create a new instance of the TwitcherSharp singleton. This will also add a new Twitcher (gdscript) to the root of the scene.
+    /// </summary>
+    /// <param name="configure">optional configuration for the new instance</param>
+    /// <returns>The newly created instance</returns>
+    // public static abstract TSelf CreateInstance(Action<TSelf> configure = null);
+    public static TSelf CreateInstance(Action<TSelf> configure = null)
+    {
+        Instance = new TSelf();
+        configure?.Invoke(Instance);
+
+        var gdNode = Instance.ToGodotObject();
+
+        var root = (Engine.GetMainLoop() as SceneTree)!.Root;
+        root.AddChild(gdNode as Node);
+
+        return Instance;
+    }
 }
 
 /// <summary>

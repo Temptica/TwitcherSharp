@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Users;
@@ -36,7 +37,7 @@ public partial class TwitchUserExtension : RefCounted, ITwitcherSharp<TwitchUser
         request.Set("version", Version);
         request.Set("name", Name);
         request.Set("can_activate", CanActivate);
-        request.Set("type", new Godot.Collections.Array<string>(Type));
+        if(Type != null) request.Set("type", new Godot.Collections.Array<string>(Type));
         return request;
     }
 

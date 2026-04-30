@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
@@ -58,7 +59,7 @@ public partial class TwitchAutomodMessageUpdateEvent : RefCounted, ITwitcherShar
     public string MessageId { get; set; }
 
     /// <summary> 
-    /// The body of the message.
+    /// 
     /// </summary>
     public TwitchMessage Message { get; set; }
 
@@ -123,7 +124,7 @@ public partial class TwitchAutomodMessageUpdateEvent : RefCounted, ITwitcherShar
         request.Set("moderator_user_name", ModeratorUserName);
         request.Set("moderator_user_login", ModeratorUserLogin);
         request.Set("message_id", MessageId);
-        request.Set("message", Message.ToGodotObject());
+        request.Set("message", Message?.ToGodotObject());
         request.Set("category", Category);
         request.Set("level", Level);
         request.Set("status", Status);
@@ -164,7 +165,7 @@ public partial class TwitchAutomodMessageUpdateEvent : RefCounted, ITwitcherShar
             var messageClass = script.Get("Message").As<GDScript>();
             var request = messageClass.New().AsGodotObject();
             request.Set("text", Text);
-            request.Set("fragments", new Godot.Collections.Array(Fragments.Select(x => x.ToGodotObject()).ToArray()));
+            if(Fragments != null) request.Set("fragments", Fragments?.ToGodotArray());
             return request;
         }
     
@@ -206,8 +207,8 @@ public partial class TwitchAutomodMessageUpdateEvent : RefCounted, ITwitcherShar
                 var fragmentsClass = script.Get("Fragments").As<GDScript>();
                 var request = fragmentsClass.New().AsGodotObject();
                 request.Set("text", Text);
-                request.Set("emote", Emote.ToGodotObject());
-                request.Set("cheermote", Cheermote.ToGodotObject());
+                request.Set("emote", Emote?.ToGodotObject());
+                request.Set("cheermote", Cheermote?.ToGodotObject());
                 return request;
             }
         

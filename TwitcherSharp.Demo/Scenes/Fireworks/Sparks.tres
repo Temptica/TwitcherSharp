@@ -1,0 +1,20 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://dwg8hicqf5isp"]
+
+[sub_resource type="Gradient" id="Gradient_dvsfd"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_throj"]
+gradient = SubResource("Gradient_dvsfd")
+use_hdr = true
+fill_from = Vector2(0.498576, 0)
+fill_to = Vector2(0.535613, 0.564103)
+
+[resource]
+transparency = 1
+blend_mode = 1
+cull_mode = 2
+shading_mode = 0
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+albedo_texture = SubResource("GradientTexture2D_throj")
+albedo_texture_force_srgb = true
+use_particle_trails = true
