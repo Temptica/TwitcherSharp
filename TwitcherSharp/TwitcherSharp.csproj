@@ -4,8 +4,20 @@
         <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>disable</Nullable>
+        
         <PackageId>Temptica.TwitcherSharp</PackageId>
-        <Version>2.4.1-alpha.4</Version>
+        <Authors>Temptica</Authors>
+        <Description>A C# wrapper for Twitcher, the twitch integration plugin for the Godot game engine</Description>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageProjectUrl>https://https://github.com/Temptica</PackageProjectUrl>
+        <RepositoryUrl>https://https://github.com/Temptica</RepositoryUrl>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+
+        <!-- Source Link — lets consumers step into your source while debugging -->
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     </PropertyGroup>
 
     <ItemGroup>
