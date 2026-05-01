@@ -15,7 +15,7 @@ public partial class TwitchTokenHandler : RefCounted, ITwitcherSharp<TwitchToken
     /// </summary>
     /// <param name="token"></param>
     /// <returns></returns>
-    public async Task<ResponseData> ValidateToken(string token) => await _data.CallAsync<ResponseData>(Methods.ValidateToken, token);
+    public async Task<ResponseData> ValidateToken() => await _data.CallAsync<ResponseData>(Methods.ValidateToken);
 
     /*func validate_token(token: String) -> BufferedHTTPClient.ResponseData:*/
     /*revoke_token() -> void:*/
