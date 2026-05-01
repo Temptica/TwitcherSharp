@@ -20,7 +20,7 @@ public partial class TwitchAuth : RefCounted, ITwitcherSharp<TwitchAuth>
 	
 	public bool IsAuthenticated() => _data.Get("is_authenticated").AsBool();
 	
-	public bool Authorize() => _data.CallAsync("authorize").Result.AsBool();
+	public bool Authorize(bool force = false) => _data.CallAsync("authorize",force).Result.AsBool();
 	
 	public void DoUnSetup() => _data.Call("do_unsetup");
 	

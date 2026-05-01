@@ -123,7 +123,7 @@ public abstract partial class TwitchCommandBase : RefCounted, ITwitcherSharp
         Data.Connect(GodotObject.Cooldown, Callable.FromTwitcherSharp<TwitchCommandInfo>(EmitSignalCooldown));
     }
 
-    public bool GetUserCooldown(string fromUsername) => Data.Call("get_user_cooldown", fromUsername).AsBool();
+    public float GetUserCooldown(string fromUsername) => Data.Call("get_user_cooldown", fromUsername).AsSingle();
     public bool IsOnCooldown(string fromUsername) => Data.Call("is_on_cooldown", fromUsername).AsBool();
     public double GetGlobalCooldown() => Data.Call("get_globalcooldown").AsDouble();
     public bool IsOnGlobalCooldown() => Data.Call("is_on_globalcooldown").AsBool();
