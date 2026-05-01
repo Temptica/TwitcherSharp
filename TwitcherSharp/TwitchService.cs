@@ -8,6 +8,7 @@ using TwitcherSharp.EventSub;
 using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 using TwitcherSharp.Media;
+using TwitcherSharp.Reward;
 
 namespace TwitcherSharp;
 
@@ -100,9 +101,9 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
         return await _data.CallListAsync<TwitchEventSubConfig>("get_subscriptions");
     }
 
-    public void Chat(string message, TwitchUser broadcaster = null, TwitchUser sender = null)
+    public void Chat(string message, string replyParentMessageId = "", TwitchUser broadcaster = null, TwitchUser sender = null)
     {
-        _data.Call("chat", message, broadcaster?.ToGodotObject(), sender?.ToGodotObject());
+        _data.Call("chat", message, replyParentMessageId, broadcaster?.ToGodotObject(), sender?.ToGodotObject());
     }
 
     /// <summary>
@@ -113,7 +114,7 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
     /// <param name="moderator">The moderator that sends it</param>
     public void Shoutout(TwitchUser user, TwitchUser broadcaster = null, TwitchUser moderator = null)
     {
-        _data.Call("shoutout", user.ToGodotObject(), broadcaster?.ToGodotObject(), moderator?.ToGodotObject());
+        _data.Call("send_shoutout", user.ToGodotObject(), broadcaster?.ToGodotObject(), moderator?.ToGodotObject());
     }
 
     /// <summary>
@@ -127,7 +128,7 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
         TwitchUser moderator = null)
     {
         color ??= TwitchAnnouncementColor.Primary;
-        _data.Call("announcement", message, color.ToGodotObject(), broadcaster?.ToGodotObject(),
+        _data.Call("send_announcement", message, color.ToGodotObject(), broadcaster?.ToGodotObject(),
             moderator?.ToGodotObject());
     }
 
@@ -174,13 +175,36 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
     /// Whispers to another user.
     /// </summary>
     /// <param name="message"></param>
-    /// <param name="username"></param>
-    public void Whisper(string message, string username)
+    /// <param name="userId"></param>
+    public void Whisper(string message, string userId)
     {
-        _data.Call("whisper", message, username);
+        _data.Call("whisper", message, userId);
     }
 
+    /// <summary>
+    /// Tries to create or update an existing reward.
+    /// </summary>
+    /// <param name="twitchReward"> The reward to save</param>
+    /// <returns></returns>
+    public TwitchRewardService.SaveError SaveReward(TwitchReward twitchReward)
+    {
+        _data ??= ToGodotObject();
 
+        return _data.Call("save_reward", twitchReward).As<TwitchRewardService.SaveError>();
+    }
+
+    /// <summary>
+    /// Deletes a reward on Twitch side. Will also remove the ID when succesfully.
+    /// </summary>
+    /// <param name="twitchReward"> The reward to delete</param>
+    /// <returns></returns>
+    public TwitchRewardService.DeleteError DeleteReward(TwitchReward twitchReward)
+    {
+        _data ??= ToGodotObject();
+
+        return _data.Call("delete_reward", twitchReward).As<TwitchRewardService.DeleteError>();
+    }
+    
     public async Task<Dictionary<string, ITwitchEmote>> GetEmotesData(string channelId = "global")
     {
         var result = await _data.CallAsync("get_emotes_data");
