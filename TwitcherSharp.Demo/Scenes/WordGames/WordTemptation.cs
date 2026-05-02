@@ -37,7 +37,7 @@ public partial class WordTemptation : Node
 
         await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 
-        TwitchChat.GetInstance().MessageReceived += OnMessageReceived;
+        TwitchChat.Instance.MessageReceived += OnMessageReceived;
         this.GetTwitcherNode<TwitchCommand>("StartCommand").CommandReceived += async (_, _, _) => await Start();
         this.GetTwitcherNode<TwitchCommand>("StopCommand").CommandReceived += async (_, _, _) => await Stop();
         this.GetTwitcherNode<TwitchCommand>("ScoreCommand").CommandReceived +=

@@ -43,7 +43,7 @@ public partial class Numbers404 : Node
 
         await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 
-        TwitchChat.GetInstance().MessageReceived += async message => await OnMessageReceived(message);
+        TwitchChat.Instance.MessageReceived += async message => await OnMessageReceived(message);
         this.GetTwitcherNode<TwitchCommand>("StartCommand").CommandReceived += async (_, _, _) => await Start();
         this.GetTwitcherNode<TwitchCommand>("StopCommand").CommandReceived += async (_, _, _) => await Stop();
     }
