@@ -13,15 +13,5 @@ public partial class Main : Node3D
     public override async void _Ready()
     {
         await TwitchService.Instance.Setup();
-        GD.Print("test");
-        var user = await TwitchService.Instance.GetCurrentUser();
-        var test = await TwitchService.Instance.SubscribeEvent(TwitchEventSubDefinition.ChannelChatMessage,
-            new TwitchChannelChatMessageCondition()
-            {
-                BroadcasterUserId = user.Id,
-                UserId = user.Id,
-            });
-        GD.Print("test2");
-        GD.Print(test);
     }
 }

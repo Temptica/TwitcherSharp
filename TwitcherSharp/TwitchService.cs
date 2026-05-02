@@ -77,10 +77,10 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
     /// <param name="definition">The definition of the event subscription</param>
     /// <param name="condition">The condition (parameters) for the event subscription</param>
     /// <returns></returns>
-    public async Task<TwitchEventSubConfig> SubscribeEvent(TwitchEventSubDefinition definition,
+    public TwitchEventSubConfig SubscribeEvent(TwitchEventSubDefinition definition,
         ITwitcherSharpCondition condition)
     {
-        return await _data.CallAsync<TwitchEventSubConfig>("subscribe_event", definition.ToGodotObject(),
+        return _data.Call<TwitchEventSubConfig>("subscribe_event", definition.ToGodotObject(),
             condition.ToDictionary());
     }
 
@@ -101,7 +101,8 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
         return await _data.CallListAsync<TwitchEventSubConfig>("get_subscriptions");
     }
 
-    public void Chat(string message, string replyParentMessageId = "", TwitchUser broadcaster = null, TwitchUser sender = null)
+    public void Chat(string message, string replyParentMessageId = "", TwitchUser broadcaster = null,
+        TwitchUser sender = null)
     {
         _data.Call("chat", message, replyParentMessageId, broadcaster?.ToGodotObject(), sender?.ToGodotObject());
     }
@@ -204,7 +205,7 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
 
         return _data.Call("delete_reward", twitchReward).As<TwitchRewardService.DeleteError>();
     }
-    
+
     public async Task<Dictionary<string, ITwitchEmote>> GetEmotesData(string channelId = "global")
     {
         var result = await _data.CallAsync("get_emotes_data");
