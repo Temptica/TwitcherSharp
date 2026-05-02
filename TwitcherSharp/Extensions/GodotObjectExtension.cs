@@ -80,17 +80,33 @@ public static class GodotObjectExtension
                 Callable.From<string, GodotObject, string[], float>((_, _, _, _) => action.Invoke()));
         }
 
+        public T Call<T>(string method, params Variant[] args) where T : RefCounted, ITwitcherSharp<T>
+        {
+            return T.FromObject(obj.Call(method, args).AsGodotObject());
+        }
+        
         public async Task<T> CallAsync<T>(string method, params Variant[] args) where T : RefCounted, ITwitcherSharp<T>
         {
-            var task = obj.Call(method, args);
-            var result = await obj.ToSignal(task.AsGodotObject(), "completed");
-            return T.FromObject(result[0].AsGodotObject());
+            var task = obj.Call(method, args).AsGodotObject();
+            
+            if(task.HasSignal("completed"))
+            {
+                var result = await obj.ToSignal(task, "completed");
+                return T.FromObject(result[0].AsGodotObject());
+            }
+
+            return T.FromObject(task);
+
         }
 
         public async Task<Variant> CallAsync(string methode, params Variant[] args)
         {
             var task = obj.Call(methode, args);
-            return (await obj.ToSignal(task.AsGodotObject(), "completed"))[0];
+            if(task.AsGodotObject().HasSignal("completed"))
+            {
+                return (await obj.ToSignal(task.AsGodotObject(), "completed"))[0];
+            }
+            return task;
         }
 
         /// <summary>
