@@ -15,7 +15,7 @@ public partial class Main : Node3D
         await TwitchService.Instance.Setup();
         GD.Print("test");
         var user = await TwitchService.Instance.GetCurrentUser();
-        var test = await TwitchService.Instance.SubscribeEvent(TwitchEventSubDefinition.ChannelChatMessage,
+        var test = TwitchService.Instance.SubscribeEvent(TwitchEventSubDefinition.ChannelChatMessage,
             new TwitchChannelChatMessageCondition()
             {
                 BroadcasterUserId = user.Id,
