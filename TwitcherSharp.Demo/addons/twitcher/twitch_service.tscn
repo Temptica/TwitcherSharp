@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://djt5lvmwxbq4a"]
 
 [ext_resource type="Script" uid="uid://i8st3lv0lidh" path="res://addons/twitcher/twitch_service.gd" id="1_6jm7q"]
-[ext_resource type="Script" uid="uid://cw30cwveway65" path="res://addons/twitcher/generated/twitch_api.gd" id="1_yq54x"]
+[ext_resource type="Script" uid="uid://rdoftxfcjn86" path="res://addons/twitcher/generated/twitch_api.gd" id="1_yq54x"]
 [ext_resource type="Resource" uid="uid://ry64ckbckh6m" path="res://addons/twitcher/twitch_oauth_setting.tres" id="2_v2pwk"]
 [ext_resource type="Resource" uid="uid://fcmfkstye4bq" path="res://addons/twitcher/auth/preset_overlay_scopes.tres" id="3_n5rs1"]
 [ext_resource type="Script" uid="uid://blmhj3j00yk45" path="res://addons/twitcher/eventsub/twitch_eventsub.gd" id="3_x3t7l"]
