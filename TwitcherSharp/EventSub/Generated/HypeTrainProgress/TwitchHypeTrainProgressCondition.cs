@@ -6,14 +6,14 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.HypeTrainProgress;
 
-public partial class TwitchHypeTrainProgressCondition : RefCounted, ITwitcherSharpCondition<TwitchHypeTrainProgressCondition>
+public partial class TwitchHypeTrainProgressCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchHypeTrainProgressCondition>
 {
     public string Name => nameof(TwitchHypeTrainProgressCondition);
 
     /// <summary> 
     /// The ID of the broadcaster that you want to get Hype Train progress notifications for.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchHypeTrainProgressCondition object.
@@ -21,10 +21,7 @@ public partial class TwitchHypeTrainProgressCondition : RefCounted, ITwitcherSha
     public static TwitchHypeTrainProgressCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchHypeTrainProgressCondition
-        {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-        };
+        return new TwitchHypeTrainProgressCondition(data.Get("broadcaster_user_id").AsString());
     }
 
     public GodotObject ToGodotObject()
@@ -38,9 +35,8 @@ public partial class TwitchHypeTrainProgressCondition : RefCounted, ITwitcherSha
 
     public static TwitchHypeTrainProgressCondition FromDictionary(Dictionary data)
     {
-        return new TwitchHypeTrainProgressCondition
+        return new TwitchHypeTrainProgressCondition(data["broadcaster_user_id"].AsString())
         {
-            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
         };
     }
 

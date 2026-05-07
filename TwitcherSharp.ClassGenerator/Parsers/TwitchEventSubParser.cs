@@ -239,6 +239,7 @@ public class TwitchEventSubParser
 
             var fieldName = row.SelectSingleNode("td[1]/code").InnerText.Trim();
             var type = row.SelectSingleNode("td[2]").InnerText.Trim();
+            var required = isCondition && row.SelectSingleNode("td[3]").InnerText.Trim().Equals("Yes", StringComparison.CurrentCultureIgnoreCase);
             var description = row.SelectSingleNode(isCondition ? "td[4]" : "td[3]").InnerText.Trim();
 
             if (type.EndsWith("[]") || type == "array" || type == "Array"
@@ -306,7 +307,7 @@ public class TwitchEventSubParser
                 var subComponent = SubComponents.FirstOrDefault(c => c.ClassName == "Twitch" + type.ToPascalCase());
                 if (subComponent is null)
                 {
-                    var field = new TwitchEventSubGenField(fieldName, description, type);
+                    var field = new TwitchEventSubGenField(fieldName, description, type, required);
                     currentParent.AddField(field);
                 }
                 else

@@ -6,19 +6,19 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelUnbanRequestCreate;
 
-public partial class TwitchChannelUnbanRequestCreateCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelUnbanRequestCreateCondition>
+public partial class TwitchChannelUnbanRequestCreateCondition(string moderatorUserId, string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelUnbanRequestCreateCondition>
 {
     public string Name => nameof(TwitchChannelUnbanRequestCreateCondition);
 
     /// <summary> 
     /// The ID of the user that has permission to moderate the broadcaster’s channel and has granted your app permission to subscribe to this subscription type.
     /// </summary>
-    public string ModeratorUserId { get; set; }
+    public string ModeratorUserId { get; set; } = moderatorUserId;
 
     /// <summary> 
     /// The ID of the broadcaster you want to get chat unban request notifications for. Maximum: 1.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelUnbanRequestCreateCondition object.
@@ -26,11 +26,7 @@ public partial class TwitchChannelUnbanRequestCreateCondition : RefCounted, ITwi
     public static TwitchChannelUnbanRequestCreateCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelUnbanRequestCreateCondition
-        {
-            ModeratorUserId = data.Get("moderator_user_id").AsString(),
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-        };
+        return new TwitchChannelUnbanRequestCreateCondition(data.Get("moderator_user_id").AsString(), data.Get("broadcaster_user_id").AsString());
     }
 
     public GodotObject ToGodotObject()
@@ -45,10 +41,8 @@ public partial class TwitchChannelUnbanRequestCreateCondition : RefCounted, ITwi
 
     public static TwitchChannelUnbanRequestCreateCondition FromDictionary(Dictionary data)
     {
-        return new TwitchChannelUnbanRequestCreateCondition
+        return new TwitchChannelUnbanRequestCreateCondition(data["moderator_user_id"].AsString(), data["broadcaster_user_id"].AsString())
         {
-            ModeratorUserId = data["moderator_user_id"].AsString(),
-            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
         };
     }
 

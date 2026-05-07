@@ -6,14 +6,14 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelVIPAdd;
 
-public partial class TwitchChannelVIPAddCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelVIPAddCondition>
+public partial class TwitchChannelVIPAddCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelVIPAddCondition>
 {
     public string Name => nameof(TwitchChannelVIPAddCondition);
 
     /// <summary> 
     /// The User ID of the broadcaster (channel) Maximum: 1
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelVIPAddCondition object.
@@ -21,10 +21,7 @@ public partial class TwitchChannelVIPAddCondition : RefCounted, ITwitcherSharpCo
     public static TwitchChannelVIPAddCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelVIPAddCondition
-        {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-        };
+        return new TwitchChannelVIPAddCondition(data.Get("broadcaster_user_id").AsString());
     }
 
     public GodotObject ToGodotObject()
@@ -38,9 +35,8 @@ public partial class TwitchChannelVIPAddCondition : RefCounted, ITwitcherSharpCo
 
     public static TwitchChannelVIPAddCondition FromDictionary(Dictionary data)
     {
-        return new TwitchChannelVIPAddCondition
+        return new TwitchChannelVIPAddCondition(data["broadcaster_user_id"].AsString())
         {
-            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
         };
     }
 

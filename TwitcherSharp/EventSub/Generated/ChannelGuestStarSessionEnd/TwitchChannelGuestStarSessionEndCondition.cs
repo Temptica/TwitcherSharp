@@ -6,19 +6,19 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelGuestStarSessionEnd;
 
-public partial class TwitchChannelGuestStarSessionEndCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelGuestStarSessionEndCondition>
+public partial class TwitchChannelGuestStarSessionEndCondition(string broadcasterUserId, string moderatorUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelGuestStarSessionEndCondition>
 {
     public string Name => nameof(TwitchChannelGuestStarSessionEndCondition);
 
     /// <summary> 
     /// The broadcaster user ID of the channel hosting the Guest Star Session
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
     /// The user ID of the moderator or broadcaster of the specified channel.
     /// </summary>
-    public string ModeratorUserId { get; set; }
+    public string ModeratorUserId { get; set; } = moderatorUserId;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelGuestStarSessionEndCondition object.
@@ -26,11 +26,7 @@ public partial class TwitchChannelGuestStarSessionEndCondition : RefCounted, ITw
     public static TwitchChannelGuestStarSessionEndCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelGuestStarSessionEndCondition
-        {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-            ModeratorUserId = data.Get("moderator_user_id").AsString(),
-        };
+        return new TwitchChannelGuestStarSessionEndCondition(data.Get("broadcaster_user_id").AsString(), data.Get("moderator_user_id").AsString());
     }
 
     public GodotObject ToGodotObject()
@@ -45,10 +41,8 @@ public partial class TwitchChannelGuestStarSessionEndCondition : RefCounted, ITw
 
     public static TwitchChannelGuestStarSessionEndCondition FromDictionary(Dictionary data)
     {
-        return new TwitchChannelGuestStarSessionEndCondition
+        return new TwitchChannelGuestStarSessionEndCondition(data["broadcaster_user_id"].AsString(), data["moderator_user_id"].AsString())
         {
-            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
-            ModeratorUserId = data["moderator_user_id"].AsString(),
         };
     }
 

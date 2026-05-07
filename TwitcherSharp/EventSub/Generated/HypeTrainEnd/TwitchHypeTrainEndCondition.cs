@@ -6,14 +6,14 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.HypeTrainEnd;
 
-public partial class TwitchHypeTrainEndCondition : RefCounted, ITwitcherSharpCondition<TwitchHypeTrainEndCondition>
+public partial class TwitchHypeTrainEndCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchHypeTrainEndCondition>
 {
     public string Name => nameof(TwitchHypeTrainEndCondition);
 
     /// <summary> 
     /// The ID of the broadcaster that you want to get Hype Train end notifications for.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchHypeTrainEndCondition object.
@@ -21,10 +21,7 @@ public partial class TwitchHypeTrainEndCondition : RefCounted, ITwitcherSharpCon
     public static TwitchHypeTrainEndCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchHypeTrainEndCondition
-        {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-        };
+        return new TwitchHypeTrainEndCondition(data.Get("broadcaster_user_id").AsString());
     }
 
     public GodotObject ToGodotObject()
@@ -38,9 +35,8 @@ public partial class TwitchHypeTrainEndCondition : RefCounted, ITwitcherSharpCon
 
     public static TwitchHypeTrainEndCondition FromDictionary(Dictionary data)
     {
-        return new TwitchHypeTrainEndCondition
+        return new TwitchHypeTrainEndCondition(data["broadcaster_user_id"].AsString())
         {
-            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
         };
     }
 

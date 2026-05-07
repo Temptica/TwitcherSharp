@@ -6,14 +6,14 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.StreamOnline;
 
-public partial class TwitchStreamOnlineCondition : RefCounted, ITwitcherSharpCondition<TwitchStreamOnlineCondition>
+public partial class TwitchStreamOnlineCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchStreamOnlineCondition>
 {
     public string Name => nameof(TwitchStreamOnlineCondition);
 
     /// <summary> 
     /// The broadcaster user ID you want to get stream online notifications for.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchStreamOnlineCondition object.
@@ -21,10 +21,7 @@ public partial class TwitchStreamOnlineCondition : RefCounted, ITwitcherSharpCon
     public static TwitchStreamOnlineCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchStreamOnlineCondition
-        {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-        };
+        return new TwitchStreamOnlineCondition(data.Get("broadcaster_user_id").AsString());
     }
 
     public GodotObject ToGodotObject()
@@ -38,9 +35,8 @@ public partial class TwitchStreamOnlineCondition : RefCounted, ITwitcherSharpCon
 
     public static TwitchStreamOnlineCondition FromDictionary(Dictionary data)
     {
-        return new TwitchStreamOnlineCondition
+        return new TwitchStreamOnlineCondition(data["broadcaster_user_id"].AsString())
         {
-            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
         };
     }
 

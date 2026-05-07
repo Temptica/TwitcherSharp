@@ -6,14 +6,14 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelPollBegin;
 
-public partial class TwitchChannelPollBeginCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelPollBeginCondition>
+public partial class TwitchChannelPollBeginCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelPollBeginCondition>
 {
     public string Name => nameof(TwitchChannelPollBeginCondition);
 
     /// <summary> 
     /// The broadcaster user ID of the channel for which “poll begin” notifications will be received.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelPollBeginCondition object.
@@ -21,10 +21,7 @@ public partial class TwitchChannelPollBeginCondition : RefCounted, ITwitcherShar
     public static TwitchChannelPollBeginCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelPollBeginCondition
-        {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-        };
+        return new TwitchChannelPollBeginCondition(data.Get("broadcaster_user_id").AsString());
     }
 
     public GodotObject ToGodotObject()
@@ -38,9 +35,8 @@ public partial class TwitchChannelPollBeginCondition : RefCounted, ITwitcherShar
 
     public static TwitchChannelPollBeginCondition FromDictionary(Dictionary data)
     {
-        return new TwitchChannelPollBeginCondition
+        return new TwitchChannelPollBeginCondition(data["broadcaster_user_id"].AsString())
         {
-            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
         };
     }
 

@@ -6,19 +6,19 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelChatSettingsUpdate;
 
-public partial class TwitchChannelChatSettingsUpdateCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelChatSettingsUpdateCondition>
+public partial class TwitchChannelChatSettingsUpdateCondition(string broadcasterUserId, string userId) : RefCounted, ITwitcherSharpCondition<TwitchChannelChatSettingsUpdateCondition>
 {
     public string Name => nameof(TwitchChannelChatSettingsUpdateCondition);
 
     /// <summary> 
     /// User ID of the channel to receive chat settings update events for.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
     /// The user ID to read chat as.
     /// </summary>
-    public string UserId { get; set; }
+    public string UserId { get; set; } = userId;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelChatSettingsUpdateCondition object.
@@ -26,11 +26,7 @@ public partial class TwitchChannelChatSettingsUpdateCondition : RefCounted, ITwi
     public static TwitchChannelChatSettingsUpdateCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelChatSettingsUpdateCondition
-        {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-            UserId = data.Get("user_id").AsString(),
-        };
+        return new TwitchChannelChatSettingsUpdateCondition(data.Get("broadcaster_user_id").AsString(), data.Get("user_id").AsString());
     }
 
     public GodotObject ToGodotObject()
@@ -45,10 +41,8 @@ public partial class TwitchChannelChatSettingsUpdateCondition : RefCounted, ITwi
 
     public static TwitchChannelChatSettingsUpdateCondition FromDictionary(Dictionary data)
     {
-        return new TwitchChannelChatSettingsUpdateCondition
+        return new TwitchChannelChatSettingsUpdateCondition(data["broadcaster_user_id"].AsString(), data["user_id"].AsString())
         {
-            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
-            UserId = data["user_id"].AsString(),
         };
     }
 

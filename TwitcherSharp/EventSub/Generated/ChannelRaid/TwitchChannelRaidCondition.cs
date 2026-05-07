@@ -6,7 +6,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelRaid;
 
-public partial class TwitchChannelRaidCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelRaidCondition>
+public partial class TwitchChannelRaidCondition() : RefCounted, ITwitcherSharpCondition<TwitchChannelRaidCondition>
 {
     public string Name => nameof(TwitchChannelRaidCondition);
 

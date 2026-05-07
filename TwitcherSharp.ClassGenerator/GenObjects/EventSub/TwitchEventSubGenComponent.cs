@@ -17,6 +17,12 @@ public class TwitchEventSubGenComponent(string name)
     public bool IsRoot => Parent == null;
 
     public bool IsShared { get; set; }
+    public bool HasRequiredFields => Fields.Any(f => f.Value.IsRequired);
+
+    public List<TwitchEventSubGenField> GetRequiredFields() => Fields
+        .Where(f => f.Value.IsRequired)
+        .Select(f => f.Value)
+        .ToList();
 
     public void AddField(TwitchEventSubGenField field)
     {
@@ -49,5 +55,4 @@ public class TwitchEventSubGenComponent(string name)
 
     private static string SanitizeName(string name) =>
         name.StartsWith("Twitch") ? name : $"Twitch{name.ToPascalCase()}";
-
 }

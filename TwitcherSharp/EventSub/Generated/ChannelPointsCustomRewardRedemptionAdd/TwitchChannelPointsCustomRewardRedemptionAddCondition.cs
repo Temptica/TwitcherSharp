@@ -6,14 +6,14 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelPointsCustomRewardRedemptionAdd;
 
-public partial class TwitchChannelPointsCustomRewardRedemptionAddCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelPointsCustomRewardRedemptionAddCondition>
+public partial class TwitchChannelPointsCustomRewardRedemptionAddCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelPointsCustomRewardRedemptionAddCondition>
 {
     public string Name => nameof(TwitchChannelPointsCustomRewardRedemptionAddCondition);
 
     /// <summary> 
     /// The broadcaster user ID for the channel you want to receive channel points custom reward redemption add notifications for.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
     /// Optional. Specify a reward id to only receive notifications for a specific reward.
@@ -26,9 +26,8 @@ public partial class TwitchChannelPointsCustomRewardRedemptionAddCondition : Ref
     public static TwitchChannelPointsCustomRewardRedemptionAddCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelPointsCustomRewardRedemptionAddCondition
+        return new TwitchChannelPointsCustomRewardRedemptionAddCondition(data.Get("broadcaster_user_id").AsString())
         {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
             RewardId = data.Get("reward_id").AsString(),
         };
     }
@@ -45,9 +44,8 @@ public partial class TwitchChannelPointsCustomRewardRedemptionAddCondition : Ref
 
     public static TwitchChannelPointsCustomRewardRedemptionAddCondition FromDictionary(Dictionary data)
     {
-        return new TwitchChannelPointsCustomRewardRedemptionAddCondition
+        return new TwitchChannelPointsCustomRewardRedemptionAddCondition(data["broadcaster_user_id"].AsString())
         {
-            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
             RewardId = data["reward_id"].AsString(),
         };
     }
