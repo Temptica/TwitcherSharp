@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.AutomodTermsUpdate;
 
 public partial class TwitchAutomodTermsUpdateEvent : RefCounted, ITwitcherSharpEventSub<TwitchAutomodTermsUpdateEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The ID of the broadcaster specified in the request.
     /// </summary>
@@ -59,7 +61,7 @@ public partial class TwitchAutomodTermsUpdateEvent : RefCounted, ITwitcherSharpE
     public static TwitchAutomodTermsUpdateEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchAutomodTermsUpdateEvent
+        var instance = new TwitchAutomodTermsUpdateEvent
         {
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
             BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
@@ -71,6 +73,9 @@ public partial class TwitchAutomodTermsUpdateEvent : RefCounted, ITwitcherSharpE
             FromAutomod = data.Get("from_automod").AsBool(),
             Terms = data.Get("terms").AsStringArray(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

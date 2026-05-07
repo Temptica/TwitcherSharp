@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Chat;
 public partial class TwitchSendChatMessageResponse : RefCounted, ITwitcherSharp<TwitchSendChatMessageResponse>
 {
     private GodotObject _data;
-    public TwitchResponseData[] Data { get; set; }
+    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchSendChatMessageResponse object.
@@ -15,11 +15,10 @@ public partial class TwitchSendChatMessageResponse : RefCounted, ITwitcherSharp<
     public static TwitchSendChatMessageResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchSendChatMessageResponse
-        {
-            Data = dataArray.Select(TwitchResponseData.FromObject).ToArray(),
-        };
+        var instance = new TwitchSendChatMessageResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -35,7 +34,7 @@ public partial class TwitchSendChatMessageResponse : RefCounted, ITwitcherSharp<
         private GodotObject _data;
         public string MessageId { get; set; }
         public bool IsSent { get; set; }
-        public TwitchResponseDropReason DropReason { get; set; }
+        public TwitchResponseDropReason DropReason { get => field ??= _data?.Get<TwitchResponseDropReason>("drop_reason"); set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseData object.
@@ -43,12 +42,14 @@ public partial class TwitchSendChatMessageResponse : RefCounted, ITwitcherSharp<
         public static TwitchResponseData FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchResponseData
+            var instance = new TwitchResponseData
             {
                 MessageId = data.Get("message_id").AsString(),
                 IsSent = data.Get("is_sent").AsBool(),
-                DropReason = data.Get("drop_reason").As<TwitchResponseDropReason>(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -77,11 +78,14 @@ public partial class TwitchSendChatMessageResponse : RefCounted, ITwitcherSharp<
             public static TwitchResponseDropReason FromObject(GodotObject data)
             {
                 if(data == null) return null;
-                return new TwitchResponseDropReason
+                var instance = new TwitchResponseDropReason
                 {
                     Code = data.Get("code").AsString(),
                     Message = data.Get("message").AsString(),
                 };
+                
+                instance._data = data;
+                return instance;
             }
         
             public GodotObject ToGodotObject()

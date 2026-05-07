@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelModerate;
 
 public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEventSub<TwitchChannelModerateEventV2>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The ID of the broadcaster.
     /// </summary>
@@ -61,107 +63,107 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
     /// <summary> 
     /// Optional. Metadata associated with the followers command.
     /// </summary>
-    public TwitchFollowersV2 FollowersV2 { get; set; }
+    public TwitchFollowersV2 FollowersV2 { get => field ??= _data?.Get<TwitchFollowersV2>("followers_v_2"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with the slow command.
     /// </summary>
-    public TwitchSlowV2 SlowV2 { get; set; }
+    public TwitchSlowV2 SlowV2 { get => field ??= _data?.Get<TwitchSlowV2>("slow_v_2"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with the vip command.
     /// </summary>
-    public TwitchVipV2 VipV2 { get; set; }
+    public TwitchVipV2 VipV2 { get => field ??= _data?.Get<TwitchVipV2>("vip_v_2"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with the unvip command.
     /// </summary>
-    public TwitchUnvipV2 UnvipV2 { get; set; }
+    public TwitchUnvipV2 UnvipV2 { get => field ??= _data?.Get<TwitchUnvipV2>("unvip_v_2"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with the mod command.
     /// </summary>
-    public TwitchModV2 ModV2 { get; set; }
+    public TwitchModV2 ModV2 { get => field ??= _data?.Get<TwitchModV2>("mod_v_2"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with the unmod command.
     /// </summary>
-    public TwitchUnmodV2 UnmodV2 { get; set; }
+    public TwitchUnmodV2 UnmodV2 { get => field ??= _data?.Get<TwitchUnmodV2>("unmod_v_2"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with the ban command.
     /// </summary>
-    public TwitchBanV2 BanV2 { get; set; }
+    public TwitchBanV2 BanV2 { get => field ??= _data?.Get<TwitchBanV2>("ban_v_2"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with the unban command.
     /// </summary>
-    public TwitchUnbanV2 UnbanV2 { get; set; }
+    public TwitchUnbanV2 UnbanV2 { get => field ??= _data?.Get<TwitchUnbanV2>("unban_v_2"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with the timeout command.
     /// </summary>
-    public TwitchTimeoutV2 TimeoutV2 { get; set; }
+    public TwitchTimeoutV2 TimeoutV2 { get => field ??= _data?.Get<TwitchTimeoutV2>("timeout_v_2"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with the untimeout command.
     /// </summary>
-    public TwitchUntimeoutV2 UntimeoutV2 { get; set; }
+    public TwitchUntimeoutV2 UntimeoutV2 { get => field ??= _data?.Get<TwitchUntimeoutV2>("untimeout_v_2"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with the raid command.
     /// </summary>
-    public TwitchRaidV2 RaidV2 { get; set; }
+    public TwitchRaidV2 RaidV2 { get => field ??= _data?.Get<TwitchRaidV2>("raid_v_2"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with the unraid command.
     /// </summary>
-    public TwitchUnraidV2 UnraidV2 { get; set; }
+    public TwitchUnraidV2 UnraidV2 { get => field ??= _data?.Get<TwitchUnraidV2>("unraid_v_2"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with the delete command.
     /// </summary>
-    public TwitchDeleteV2 DeleteV2 { get; set; }
+    public TwitchDeleteV2 DeleteV2 { get => field ??= _data?.Get<TwitchDeleteV2>("delete_v_2"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with the automod terms changes.
     /// </summary>
-    public TwitchAutomodTermsV2 AutomodTermsV2 { get; set; }
+    public TwitchAutomodTermsV2 AutomodTermsV2 { get => field ??= _data?.Get<TwitchAutomodTermsV2>("automod_terms_v_2"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with an unban request.
     /// </summary>
-    public TwitchUnbanRequestV2 UnbanRequestV2 { get; set; }
+    public TwitchUnbanRequestV2 UnbanRequestV2 { get => field ??= _data?.Get<TwitchUnbanRequestV2>("unban_request_v_2"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with the warn command.
     /// </summary>
-    public TwitchWarnV2 WarnV2 { get; set; }
+    public TwitchWarnV2 WarnV2 { get => field ??= _data?.Get<TwitchWarnV2>("warn_v_2"); set; }
 
     /// <summary> 
     /// Optional. Information about the shared_chat_ban event. Is null if action is not shared_chat_ban. This field has the same information as the ban field but for a action that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
-    public TwitchBanV2 SharedChatBan { get; set; }
+    public TwitchBanV2 SharedChatBan { get => field ??= _data?.Get<TwitchBanV2>("shared_chat_ban"); set; }
 
     /// <summary> 
     /// Optional. Information about the shared_chat_unban event. Is null if action is not shared_chat_unban. This field has the same information as the unban field but for a action that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
-    public TwitchUnbanV2 SharedChatUnban { get; set; }
+    public TwitchUnbanV2 SharedChatUnban { get => field ??= _data?.Get<TwitchUnbanV2>("shared_chat_unban"); set; }
 
     /// <summary> 
     /// Optional. Information about the shared_chat_timeout event. Is null if action is not shared_chat_timeout. This field has the same information as the timeout field but for a action that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
-    public TwitchTimeoutV2 SharedChatTimeout { get; set; }
+    public TwitchTimeoutV2 SharedChatTimeout { get => field ??= _data?.Get<TwitchTimeoutV2>("shared_chat_timeout"); set; }
 
     /// <summary> 
     /// Optional. Information about the shared_chat_untimeout event. Is null if action is not shared_chat_untimeout. This field has the same information as the untimeout field but for a action that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
-    public TwitchUntimeoutV2 SharedChatUntimeout { get; set; }
+    public TwitchUntimeoutV2 SharedChatUntimeout { get => field ??= _data?.Get<TwitchUntimeoutV2>("shared_chat_untimeout"); set; }
 
     /// <summary> 
     /// Optional. Information about the shared_chat_delete event. Is null if action is not shared_chat_delete. This field has the same information as the delete field but for a action that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
-    public TwitchDeleteV2 SharedChatDelete { get; set; }
+    public TwitchDeleteV2 SharedChatDelete { get => field ??= _data?.Get<TwitchDeleteV2>("shared_chat_delete"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelModerateEventV2 object.
@@ -169,7 +171,7 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
     public static TwitchChannelModerateEventV2 FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelModerateEventV2
+        var instance = new TwitchChannelModerateEventV2
         {
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
             BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
@@ -203,6 +205,9 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
             SharedChatUntimeout = TwitchUntimeoutV2.FromObject(data.Get("shared_chat_untimeout").AsGodotObject()),
             SharedChatDelete = TwitchDeleteV2.FromObject(data.Get("shared_chat_delete").AsGodotObject()),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -247,6 +252,8 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
 
     public partial class TwitchFollowersV2 : RefCounted, ITwitcherSharpEventSub<TwitchFollowersV2>
     {
+        private GodotObject _data;
+        
         /// <summary> 
         /// The length of time, in minutes, that the followers must have followed the broadcaster to participate in the chat room.
         /// </summary>
@@ -258,10 +265,13 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
         public static TwitchFollowersV2 FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchFollowersV2
+            var instance = new TwitchFollowersV2
             {
                 FollowDurationMinutes = data.Get("follow_duration_minutes").AsInt32(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -276,6 +286,8 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
 
     public partial class TwitchSlowV2 : RefCounted, ITwitcherSharpEventSub<TwitchSlowV2>
     {
+        private GodotObject _data;
+        
         /// <summary> 
         /// The amount of time, in seconds, that users need to wait between sending messages.
         /// </summary>
@@ -287,10 +299,13 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
         public static TwitchSlowV2 FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchSlowV2
+            var instance = new TwitchSlowV2
             {
                 WaitTimeSeconds = data.Get("wait_time_seconds").AsInt32(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -305,6 +320,8 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
 
     public partial class TwitchVipV2 : RefCounted, ITwitcherSharpEventSub<TwitchVipV2>
     {
+        private GodotObject _data;
+        
         /// <summary> 
         /// The ID of the user gaining VIP status.
         /// </summary>
@@ -326,12 +343,15 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
         public static TwitchVipV2 FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchVipV2
+            var instance = new TwitchVipV2
             {
                 UserId = data.Get("user_id").AsString(),
                 UserLogin = data.Get("user_login").AsString(),
                 UserName = data.Get("user_name").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -348,6 +368,8 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
 
     public partial class TwitchUnvipV2 : RefCounted, ITwitcherSharpEventSub<TwitchUnvipV2>
     {
+        private GodotObject _data;
+        
         /// <summary> 
         /// The ID of the user losing VIP status.
         /// </summary>
@@ -369,12 +391,15 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
         public static TwitchUnvipV2 FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchUnvipV2
+            var instance = new TwitchUnvipV2
             {
                 UserId = data.Get("user_id").AsString(),
                 UserLogin = data.Get("user_login").AsString(),
                 UserName = data.Get("user_name").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -391,6 +416,8 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
 
     public partial class TwitchModV2 : RefCounted, ITwitcherSharpEventSub<TwitchModV2>
     {
+        private GodotObject _data;
+        
         /// <summary> 
         /// The ID of the user gaining mod status.
         /// </summary>
@@ -412,12 +439,15 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
         public static TwitchModV2 FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchModV2
+            var instance = new TwitchModV2
             {
                 UserId = data.Get("user_id").AsString(),
                 UserLogin = data.Get("user_login").AsString(),
                 UserName = data.Get("user_name").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -434,6 +464,8 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
 
     public partial class TwitchUnmodV2 : RefCounted, ITwitcherSharpEventSub<TwitchUnmodV2>
     {
+        private GodotObject _data;
+        
         /// <summary> 
         /// The ID of the user losing mod status.
         /// </summary>
@@ -455,12 +487,15 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
         public static TwitchUnmodV2 FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchUnmodV2
+            var instance = new TwitchUnmodV2
             {
                 UserId = data.Get("user_id").AsString(),
                 UserLogin = data.Get("user_login").AsString(),
                 UserName = data.Get("user_name").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -477,6 +512,8 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
 
     public partial class TwitchBanV2 : RefCounted, ITwitcherSharpEventSub<TwitchBanV2>
     {
+        private GodotObject _data;
+        
         /// <summary> 
         /// The ID of the user being banned.
         /// </summary>
@@ -503,13 +540,16 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
         public static TwitchBanV2 FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchBanV2
+            var instance = new TwitchBanV2
             {
                 UserId = data.Get("user_id").AsString(),
                 UserLogin = data.Get("user_login").AsString(),
                 UserName = data.Get("user_name").AsString(),
                 Reason = data.Get("reason").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -527,6 +567,8 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
 
     public partial class TwitchUnbanV2 : RefCounted, ITwitcherSharpEventSub<TwitchUnbanV2>
     {
+        private GodotObject _data;
+        
         /// <summary> 
         /// The ID of the user being unbanned.
         /// </summary>
@@ -548,12 +590,15 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
         public static TwitchUnbanV2 FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchUnbanV2
+            var instance = new TwitchUnbanV2
             {
                 UserId = data.Get("user_id").AsString(),
                 UserLogin = data.Get("user_login").AsString(),
                 UserName = data.Get("user_name").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -570,6 +615,8 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
 
     public partial class TwitchTimeoutV2 : RefCounted, ITwitcherSharpEventSub<TwitchTimeoutV2>
     {
+        private GodotObject _data;
+        
         /// <summary> 
         /// The ID of the user being timed out.
         /// </summary>
@@ -601,7 +648,7 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
         public static TwitchTimeoutV2 FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchTimeoutV2
+            var instance = new TwitchTimeoutV2
             {
                 UserId = data.Get("user_id").AsString(),
                 UserLogin = data.Get("user_login").AsString(),
@@ -609,6 +656,9 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
                 Reason = data.Get("reason").AsString(),
                 ExpiresAt = data.Get("expires_at").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -627,6 +677,8 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
 
     public partial class TwitchUntimeoutV2 : RefCounted, ITwitcherSharpEventSub<TwitchUntimeoutV2>
     {
+        private GodotObject _data;
+        
         /// <summary> 
         /// The ID of the user being untimed out.
         /// </summary>
@@ -648,12 +700,15 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
         public static TwitchUntimeoutV2 FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchUntimeoutV2
+            var instance = new TwitchUntimeoutV2
             {
                 UserId = data.Get("user_id").AsString(),
                 UserLogin = data.Get("user_login").AsString(),
                 UserName = data.Get("user_name").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -670,6 +725,8 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
 
     public partial class TwitchRaidV2 : RefCounted, ITwitcherSharpEventSub<TwitchRaidV2>
     {
+        private GodotObject _data;
+        
         /// <summary> 
         /// The ID of the user being raided.
         /// </summary>
@@ -696,13 +753,16 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
         public static TwitchRaidV2 FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchRaidV2
+            var instance = new TwitchRaidV2
             {
                 UserId = data.Get("user_id").AsString(),
                 UserLogin = data.Get("user_login").AsString(),
                 UserName = data.Get("user_name").AsString(),
                 ViewerCount = data.Get("viewer_count").AsInt32(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -720,6 +780,8 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
 
     public partial class TwitchUnraidV2 : RefCounted, ITwitcherSharpEventSub<TwitchUnraidV2>
     {
+        private GodotObject _data;
+        
         /// <summary> 
         /// The ID of the user no longer being raided.
         /// </summary>
@@ -741,12 +803,15 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
         public static TwitchUnraidV2 FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchUnraidV2
+            var instance = new TwitchUnraidV2
             {
                 UserId = data.Get("user_id").AsString(),
                 UserLogin = data.Get("user_login").AsString(),
                 UserName = data.Get("user_name").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -763,6 +828,8 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
 
     public partial class TwitchDeleteV2 : RefCounted, ITwitcherSharpEventSub<TwitchDeleteV2>
     {
+        private GodotObject _data;
+        
         /// <summary> 
         /// The ID of the user whose message is being deleted.
         /// </summary>
@@ -794,7 +861,7 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
         public static TwitchDeleteV2 FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchDeleteV2
+            var instance = new TwitchDeleteV2
             {
                 UserId = data.Get("user_id").AsString(),
                 UserLogin = data.Get("user_login").AsString(),
@@ -802,6 +869,9 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
                 MessageId = data.Get("message_id").AsString(),
                 MessageBody = data.Get("message_body").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -820,6 +890,8 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
 
     public partial class TwitchAutomodTermsV2 : RefCounted, ITwitcherSharpEventSub<TwitchAutomodTermsV2>
     {
+        private GodotObject _data;
+        
         /// <summary> 
         /// Either “add” or “remove”.
         /// </summary>
@@ -846,13 +918,16 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
         public static TwitchAutomodTermsV2 FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchAutomodTermsV2
+            var instance = new TwitchAutomodTermsV2
             {
                 Action = data.Get("action").AsString(),
                 List = data.Get("list").AsString(),
                 Terms = data.Get("terms").AsStringArray(),
                 FromAutomod = data.Get("from_automod").AsBool(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -870,6 +945,8 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
 
     public partial class TwitchUnbanRequestV2 : RefCounted, ITwitcherSharpEventSub<TwitchUnbanRequestV2>
     {
+        private GodotObject _data;
+        
         /// <summary> 
         /// Whether or not the unban request was approved or denied.
         /// </summary>
@@ -901,7 +978,7 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
         public static TwitchUnbanRequestV2 FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchUnbanRequestV2
+            var instance = new TwitchUnbanRequestV2
             {
                 IsApproved = data.Get("is_approved").AsBool(),
                 UserId = data.Get("user_id").AsString(),
@@ -909,6 +986,9 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
                 UserName = data.Get("user_name").AsString(),
                 ModeratorMessage = data.Get("moderator_message").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -927,6 +1007,8 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
 
     public partial class TwitchWarnV2 : RefCounted, ITwitcherSharpEventSub<TwitchWarnV2>
     {
+        private GodotObject _data;
+        
         /// <summary> 
         /// The ID of the user being warned.
         /// </summary>
@@ -958,7 +1040,7 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
         public static TwitchWarnV2 FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchWarnV2
+            var instance = new TwitchWarnV2
             {
                 UserId = data.Get("user_id").AsString(),
                 UserLogin = data.Get("user_login").AsString(),
@@ -966,6 +1048,9 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
                 Reason = data.Get("reason").AsString(),
                 ChatRulesCited = data.Get("chat_rules_cited").AsStringArray(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

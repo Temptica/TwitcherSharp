@@ -8,8 +8,8 @@ namespace TwitcherSharp.Api.Generated.Channels;
 public partial class TwitchGetChannelFollowersResponse : RefCounted, ITwitcherSharp<TwitchGetChannelFollowersResponse>
 {
     private GodotObject _data;
-    public TwitchResponseData[] Data { get; set; }
-    public ResponsePagination Pagination { get; set; }
+    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
+    public ResponsePagination Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
     public int Total { get; set; }
 
     /// <summary> 
@@ -18,13 +18,13 @@ public partial class TwitchGetChannelFollowersResponse : RefCounted, ITwitcherSh
     public static TwitchGetChannelFollowersResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchGetChannelFollowersResponse
+        var instance = new TwitchGetChannelFollowersResponse
         {
-            Data = dataArray.Select(TwitchResponseData.FromObject).ToArray(),
-            Pagination = data.Get("pagination").As<ResponsePagination>(),
             Total = data.Get("total").AsInt32(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -54,10 +54,13 @@ public partial class TwitchGetChannelFollowersResponse : RefCounted, ITwitcherSh
         public static ResponsePagination FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new ResponsePagination
+            var instance = new ResponsePagination
             {
                 Cursor = data.Get("cursor").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -88,13 +91,16 @@ public partial class TwitchGetChannelFollowersResponse : RefCounted, ITwitcherSh
         public static TwitchResponseData FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchResponseData
+            var instance = new TwitchResponseData
             {
                 FollowedAt = data.Get("followed_at").AsString(),
                 UserId = data.Get("user_id").AsString(),
                 UserLogin = data.Get("user_login").AsString(),
                 UserName = data.Get("user_name").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

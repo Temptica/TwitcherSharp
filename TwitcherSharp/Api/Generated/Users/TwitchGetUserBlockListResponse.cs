@@ -8,8 +8,8 @@ namespace TwitcherSharp.Api.Generated.Users;
 public partial class TwitchGetUserBlockListResponse : RefCounted, ITwitcherSharp<TwitchGetUserBlockListResponse>
 {
     private GodotObject _data;
-    public TwitchUserBlockList[] Data { get; set; }
-    public ResponsePagination Pagination { get; set; }
+    public TwitchUserBlockList[] Data { get => field ??= _data?.GetArray<TwitchUserBlockList>("data"); set; }
+    public ResponsePagination Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetUserBlockListResponse object.
@@ -17,12 +17,10 @@ public partial class TwitchGetUserBlockListResponse : RefCounted, ITwitcherSharp
     public static TwitchGetUserBlockListResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchGetUserBlockListResponse
-        {
-            Data = dataArray.Select(TwitchUserBlockList.FromObject).ToArray(),
-            Pagination = data.Get("pagination").As<ResponsePagination>(),
-        };
+        var instance = new TwitchGetUserBlockListResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -51,10 +49,13 @@ public partial class TwitchGetUserBlockListResponse : RefCounted, ITwitcherSharp
         public static ResponsePagination FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new ResponsePagination
+            var instance = new ResponsePagination
             {
                 Cursor = data.Get("cursor").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

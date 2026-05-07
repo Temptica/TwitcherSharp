@@ -11,7 +11,7 @@ public partial class TwitchPredictionOutcome : RefCounted, ITwitcherSharp<Twitch
     public string Title { get; set; }
     public int Users { get; set; }
     public int ChannelPoints { get; set; }
-    public TwitchTopPredictors[] TopPredictors { get; set; }
+    public TwitchTopPredictors[] TopPredictors { get => field ??= _data?.GetArray<TwitchTopPredictors>("top_predictors"); set; }
     public string Color { get; set; }
 
     /// <summary> 
@@ -20,16 +20,17 @@ public partial class TwitchPredictionOutcome : RefCounted, ITwitcherSharp<Twitch
     public static TwitchPredictionOutcome FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var topPredictorsArray = data.Get("top_predictors").AsGodotArray<GodotObject>();
-        return new TwitchPredictionOutcome
+        var instance = new TwitchPredictionOutcome
         {
             Id = data.Get("id").AsString(),
             Title = data.Get("title").AsString(),
             Users = data.Get("users").AsInt32(),
             ChannelPoints = data.Get("channel_points").AsInt32(),
-            TopPredictors = topPredictorsArray.Select(TwitchTopPredictors.FromObject).ToArray(),
             Color = data.Get("color").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -63,7 +64,7 @@ public partial class TwitchPredictionOutcome : RefCounted, ITwitcherSharp<Twitch
         public static TwitchTopPredictors FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchTopPredictors
+            var instance = new TwitchTopPredictors
             {
                 UserId = data.Get("user_id").AsString(),
                 UserName = data.Get("user_name").AsString(),
@@ -71,6 +72,9 @@ public partial class TwitchPredictionOutcome : RefCounted, ITwitcherSharp<Twitch
                 ChannelPointsUsed = data.Get("channel_points_used").AsInt32(),
                 ChannelPointsWon = data.Get("channel_points_won").AsInt32(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

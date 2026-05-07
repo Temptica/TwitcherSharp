@@ -8,8 +8,8 @@ namespace TwitcherSharp.Api.Generated.Polls;
 public partial class TwitchGetPollsResponse : RefCounted, ITwitcherSharp<TwitchGetPollsResponse>
 {
     private GodotObject _data;
-    public TwitchPoll[] Data { get; set; }
-    public ResponsePagination Pagination { get; set; }
+    public TwitchPoll[] Data { get => field ??= _data?.GetArray<TwitchPoll>("data"); set; }
+    public ResponsePagination Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetPollsResponse object.
@@ -17,12 +17,10 @@ public partial class TwitchGetPollsResponse : RefCounted, ITwitcherSharp<TwitchG
     public static TwitchGetPollsResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchGetPollsResponse
-        {
-            Data = dataArray.Select(TwitchPoll.FromObject).ToArray(),
-            Pagination = data.Get("pagination").As<ResponsePagination>(),
-        };
+        var instance = new TwitchGetPollsResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -51,10 +49,13 @@ public partial class TwitchGetPollsResponse : RefCounted, ITwitcherSharp<TwitchG
         public static ResponsePagination FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new ResponsePagination
+            var instance = new ResponsePagination
             {
                 Cursor = data.Get("cursor").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

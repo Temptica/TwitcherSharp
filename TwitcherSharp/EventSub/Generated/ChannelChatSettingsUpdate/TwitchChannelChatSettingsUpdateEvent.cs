@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelChatSettingsUpdate;
 
 public partial class TwitchChannelChatSettingsUpdateEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelChatSettingsUpdateEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The ID of the broadcaster specified in the request.
     /// </summary>
@@ -64,7 +66,7 @@ public partial class TwitchChannelChatSettingsUpdateEvent : RefCounted, ITwitche
     public static TwitchChannelChatSettingsUpdateEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelChatSettingsUpdateEvent
+        var instance = new TwitchChannelChatSettingsUpdateEvent
         {
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
             BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
@@ -77,6 +79,9 @@ public partial class TwitchChannelChatSettingsUpdateEvent : RefCounted, ITwitche
             SubscriberMode = data.Get("subscriber_mode").AsBool(),
             UniqueChatMode = data.Get("unique_chat_mode").AsBool(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

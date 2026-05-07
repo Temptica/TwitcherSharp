@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelChatSettingsUpdate;
 
 public partial class TwitchChannelChatSettingsUpdateCondition(string broadcasterUserId, string userId) : RefCounted, ITwitcherSharpCondition<TwitchChannelChatSettingsUpdateCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchChannelChatSettingsUpdateCondition);
 
     /// <summary> 
@@ -26,7 +28,10 @@ public partial class TwitchChannelChatSettingsUpdateCondition(string broadcaster
     public static TwitchChannelChatSettingsUpdateCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelChatSettingsUpdateCondition(data.Get("broadcaster_user_id").AsString(), data.Get("user_id").AsString());
+        var instance = new TwitchChannelChatSettingsUpdateCondition(data.Get("broadcaster_user_id").AsString(), data.Get("user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

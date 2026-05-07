@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 public partial class TwitchAddBlockedTermResponse : RefCounted, ITwitcherSharp<TwitchAddBlockedTermResponse>
 {
     private GodotObject _data;
-    public TwitchBlockedTerm[] Data { get; set; }
+    public TwitchBlockedTerm[] Data { get => field ??= _data?.GetArray<TwitchBlockedTerm>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchAddBlockedTermResponse object.
@@ -15,11 +15,10 @@ public partial class TwitchAddBlockedTermResponse : RefCounted, ITwitcherSharp<T
     public static TwitchAddBlockedTermResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchAddBlockedTermResponse
-        {
-            Data = dataArray.Select(TwitchBlockedTerm.FromObject).ToArray(),
-        };
+        var instance = new TwitchAddBlockedTermResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

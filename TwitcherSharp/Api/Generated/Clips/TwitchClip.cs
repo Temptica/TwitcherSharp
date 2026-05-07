@@ -31,7 +31,7 @@ public partial class TwitchClip : RefCounted, ITwitcherSharp<TwitchClip>
     public static TwitchClip FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchClip
+        var instance = new TwitchClip
         {
             Id = data.Get("id").AsString(),
             Url = data.Get("url").AsString(),
@@ -51,6 +51,9 @@ public partial class TwitchClip : RefCounted, ITwitcherSharp<TwitchClip>
             VodOffset = data.Get("vod_offset").AsInt32(),
             IsFeatured = data.Get("is_featured").AsBool(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

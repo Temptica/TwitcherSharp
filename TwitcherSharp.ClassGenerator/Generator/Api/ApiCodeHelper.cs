@@ -222,26 +222,39 @@ public static class ApiCodeHelper
             {
                 //Only if all subfields match, use interface type
                 var @interface = field.TypedComponent?.InterfacesToImplement[0].InterfaceName;
+                // get => field ??= _data?.GetArray<TwitchResponseData>("data");
                 code.AppendIndentedLine(
-                    $"public {@interface}{(field.IsRequired || field.IsNullableTyped ? "" : "?")}{(field.IsArray ? "[]" : "")} {field.Name} {{ get; set; }}",
+                    $"public {@interface}{(field.IsRequired || field.IsNullableTyped ? "" : "?")}{(field.IsArray ? "[]" : "")} {field.Name} {{ get => field ??= _data?.{(field.IsArray ? $"GetArray<{field.Type}>" : $"Get<{field.Type}>")}(\"{field.Name.ToSnakeCase()}\"); set; }}",
                     1);
                 continue;
             }
 
             if (component.HasGeneric && component.GenericField.Equals(field))
             {
-                if (field.TypedComponent?.HasGeneric == true)
+                var fieldType = field.TypedComponent?.HasGeneric == true
+                    ? field.CleanedType
+                    : component.GenericType;
+
+                if (field.Equals(component.GenericField))
                 {
                     code.AppendIndentedLine(
-                        $"public {field.CleanedType}{(field.IsRequired || field.IsNullableTyped ? "" : "?")} {field.Name} {{ get; set; }}",
+                        $"public {fieldType}{(field.IsRequired || field.IsNullableTyped ? "" : "?")} {field.Name} {{ get => field ??= {(field.IsArray ? $"_data?.GetArray<{fieldType.Remove("[]")}>(\"data\")" : "T.FromDictionary(_data?.Get(\"{field.Name.ToSnakeCase()}\").AsGodotDictionary())")}; set; }}",
                         1);
                     continue;
                 }
 
                 code.AppendIndentedLine(
-                    $"public {component.GenericType}{(field.IsRequired || field.IsNullableTyped ? "" : "?")} {field.Name} {{ get; set; }}",
+                    $"public {fieldType}{(field.IsRequired || field.IsNullableTyped ? "" : "?")} {field.Name} {{ get => field ??= _data?.{(field.IsArray ? $"GetArray<{fieldType}>" : $"Get<{fieldType}>")}(\"{field.Name.ToSnakeCase()}\"); set; }}",
                     1);
 
+                continue;
+            }
+
+            if (field.IsTyped)
+            {
+                code.AppendIndentedLine(
+                    $"public {field.CleanedType}{(field.IsRequired || field.IsNullableTyped ? "" : "?")} {field.Name} {{ get => field ??= _data?.{(field.IsArray ? $"GetArray<{field.Type}>" : $"Get<{field.Type}>")}(\"{field.Name.ToSnakeCase()}\"); set; }}",
+                    1);
                 continue;
             }
 
@@ -258,35 +271,27 @@ public static class ApiCodeHelper
                 : ApiCodeStrings.ComponentFromBody)
             .Replace("{{className}}", component.ClassName), 1);
 
-        foreach (var typedArrayField in fields.Where(f => f.IsArray && f.IsTyped))
+        var nonTypedFields = fields.Where(f => !f.IsTyped && !f.Equals(component.GenericField)).ToList();
+
+        code.AppendIndentedLine(
+            $"var instance = new {component.ClassName}{(component.HasGeneric ? "<T>" : "")}{(nonTypedFields.Count == 0 ? "();" : "")}",
+            2);
+
+        if (nonTypedFields.Count > 0)
         {
-            code.AppendIndentedLine(
-                $"var {typedArrayField.Name.ToCamelCase()}Array = data.Get(\"{typedArrayField.Name.ToSnakeCase()}\").AsGodotArray<GodotObject>();",
-                2);
-        }
+            code.AppendIndentedLine("{", 2);
 
-        code.AppendIndentedLine($"return new {component.ClassName}{(component.HasGeneric ? "<T>" : "")}", 2);
-        code.AppendIndentedLine("{", 2);
-
-        foreach (var field in fields)
-        {
-            string fieldData;
-            if (field.IsArray && field.IsTyped)
+            foreach (var field in nonTypedFields)
             {
-                fieldData =
-                    $"{field.Name} = {field.Name.ToCamelCase()}Array.Select({field.CleanedArrayType}.FromObject).ToArray(),";
+                code.AppendIndentedLine($"{field.Name} = data.Get(\"{field.Name.ToSnakeCase()}\").{field.GetAsType()},",
+                    3);
             }
-            else if (field.Equals(component.GenericField))
-            {
-                fieldData =
-                    $"{field.Name} = T.FromDictionary(data.Get(\"{field.Name.ToSnakeCase()}\").AsGodotDictionary()),";
-            }
-            else fieldData = $"{field.Name} = data.Get(\"{field.Name.ToSnakeCase()}\").{field.GetAsType()},";
 
-            code.AppendIndentedLine(fieldData, 3);
+            code.AppendIndentedLine("};", 2);
         }
+        
+        code.AppendIndentedLine("\ninstance._data = data;\nreturn instance;", 2);
 
-        code.AppendIndentedLine("};", 2);
         code.AppendIndentedLine("}", 1);
         code.Append(Environment.NewLine);
 

@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Predictions;
 public partial class TwitchEndPredictionResponse : RefCounted, ITwitcherSharp<TwitchEndPredictionResponse>
 {
     private GodotObject _data;
-    public TwitchPrediction[] Data { get; set; }
+    public TwitchPrediction[] Data { get => field ??= _data?.GetArray<TwitchPrediction>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchEndPredictionResponse object.
@@ -15,11 +15,10 @@ public partial class TwitchEndPredictionResponse : RefCounted, ITwitcherSharp<Tw
     public static TwitchEndPredictionResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchEndPredictionResponse
-        {
-            Data = dataArray.Select(TwitchPrediction.FromObject).ToArray(),
-        };
+        var instance = new TwitchEndPredictionResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

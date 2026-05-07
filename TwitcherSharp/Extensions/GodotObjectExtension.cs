@@ -84,28 +84,28 @@ public static class GodotObjectExtension
         {
             return T.FromObject(obj.Call(method, args).AsGodotObject());
         }
-        
+
         public async Task<T> CallAsync<T>(string method, params Variant[] args) where T : RefCounted, ITwitcherSharp<T>
         {
             var task = obj.Call(method, args).AsGodotObject();
-            
-            if(task.HasSignal("completed"))
+
+            if (task.HasSignal("completed"))
             {
                 var result = await obj.ToSignal(task, "completed");
                 return T.FromObject(result[0].AsGodotObject());
             }
 
             return T.FromObject(task);
-
         }
 
         public async Task<Variant> CallAsync(string methode, params Variant[] args)
         {
             var task = obj.Call(methode, args);
-            if(task.AsGodotObject().HasSignal("completed"))
+            if (task.AsGodotObject().HasSignal("completed"))
             {
                 return (await obj.ToSignal(task.AsGodotObject(), "completed"))[0];
             }
+
             return task;
         }
 
@@ -239,6 +239,21 @@ public static class GodotObjectExtension
             return result.AsGodotArray<GodotObject>()
                 .Select(T.FromObject)
                 .ToList();
+        }
+
+        internal List<T> GetList<T>(string propertyName) where T : RefCounted, ITwitcherSharp<T>
+        {
+            return obj?.Get(propertyName).AsGodotObjectArray<GodotObject>().Select(T.FromObject).ToList();
+        }
+
+        internal T[] GetArray<T>(string propertyName) where T : RefCounted, ITwitcherSharp<T>
+        {
+            return obj?.Get(propertyName).AsGodotObjectArray<GodotObject>().Select(T.FromObject).ToArray();
+        }
+
+        internal T Get<T>(string propertyName) where T : RefCounted, ITwitcherSharp<T>
+        {
+            return T.FromObject(obj?.Get(propertyName).AsGodotObject());
         }
     }
 }

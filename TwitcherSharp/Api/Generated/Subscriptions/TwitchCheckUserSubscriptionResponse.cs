@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Subscriptions;
 public partial class TwitchCheckUserSubscriptionResponse : RefCounted, ITwitcherSharp<TwitchCheckUserSubscriptionResponse>
 {
     private GodotObject _data;
-    public TwitchUserSubscription[] Data { get; set; }
+    public TwitchUserSubscription[] Data { get => field ??= _data?.GetArray<TwitchUserSubscription>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCheckUserSubscriptionResponse object.
@@ -15,11 +15,10 @@ public partial class TwitchCheckUserSubscriptionResponse : RefCounted, ITwitcher
     public static TwitchCheckUserSubscriptionResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchCheckUserSubscriptionResponse
-        {
-            Data = dataArray.Select(TwitchUserSubscription.FromObject).ToArray(),
-        };
+        var instance = new TwitchCheckUserSubscriptionResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

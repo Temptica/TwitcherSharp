@@ -22,13 +22,16 @@ public partial class TwitchGetBroadcasterSubscriptionsOpt : RefCounted, ITwitche
     public static TwitchGetBroadcasterSubscriptionsOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGetBroadcasterSubscriptionsOpt
+        var instance = new TwitchGetBroadcasterSubscriptionsOpt
         {
             UserId = data.Get("user_id").AsStringArray(),
             First = data.Get("first").AsString(),
             After = data.Get("after").AsString(),
             Before = data.Get("before").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

@@ -21,7 +21,7 @@ public partial class TwitchGuestStarInvite : RefCounted, ITwitcherSharp<TwitchGu
     public static TwitchGuestStarInvite FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGuestStarInvite
+        var instance = new TwitchGuestStarInvite
         {
             UserId = data.Get("user_id").AsString(),
             InvitedAt = data.Get("invited_at").AsString(),
@@ -31,6 +31,9 @@ public partial class TwitchGuestStarInvite : RefCounted, ITwitcherSharp<TwitchGu
             IsVideoAvailable = data.Get("is_video_available").AsBool(),
             IsAudioAvailable = data.Get("is_audio_available").AsBool(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

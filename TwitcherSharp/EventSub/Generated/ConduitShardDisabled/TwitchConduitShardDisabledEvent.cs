@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ConduitShardDisabled;
 
 public partial class TwitchConduitShardDisabledEvent : RefCounted, ITwitcherSharpEventSub<TwitchConduitShardDisabledEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The ID of the conduit.
     /// </summary>
@@ -26,7 +28,7 @@ public partial class TwitchConduitShardDisabledEvent : RefCounted, ITwitcherShar
     /// <summary> 
     /// Defines the transport details that you want Twitch to use when sending you event notifications.
     /// </summary>
-    public TwitchTransport Transport { get; set; }
+    public TwitchTransport Transport { get => field ??= _data?.Get<TwitchTransport>("transport"); set; }
 
     /// <summary> 
     /// websocket or webhook
@@ -59,7 +61,7 @@ public partial class TwitchConduitShardDisabledEvent : RefCounted, ITwitcherShar
     public static TwitchConduitShardDisabledEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchConduitShardDisabledEvent
+        var instance = new TwitchConduitShardDisabledEvent
         {
             ConduitId = data.Get("conduit_id").AsString(),
             ShardId = data.Get("shard_id").AsString(),
@@ -71,6 +73,9 @@ public partial class TwitchConduitShardDisabledEvent : RefCounted, ITwitcherShar
             ConnectedAt = data.Get("connected_at").AsString(),
             DisconnectedAt = data.Get("disconnected_at").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

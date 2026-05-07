@@ -9,7 +9,7 @@ public partial class TwitchCreatePollBody : RefCounted, ITwitcherSharp<TwitchCre
     private GodotObject _data;
     public string BroadcasterId { get; set; }
     public string Title { get; set; }
-    public TwitchBodyChoices[] Choices { get; set; }
+    public TwitchBodyChoices[] Choices { get => field ??= _data?.GetArray<TwitchBodyChoices>("choices"); set; }
     public int Duration { get; set; }
     public bool? ChannelPointsVotingEnabled { get; set; }
     public int? ChannelPointsPerVote { get; set; }
@@ -20,16 +20,17 @@ public partial class TwitchCreatePollBody : RefCounted, ITwitcherSharp<TwitchCre
     public static TwitchCreatePollBody FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var choicesArray = data.Get("choices").AsGodotArray<GodotObject>();
-        return new TwitchCreatePollBody
+        var instance = new TwitchCreatePollBody
         {
             BroadcasterId = data.Get("broadcaster_id").AsString(),
             Title = data.Get("title").AsString(),
-            Choices = choicesArray.Select(TwitchBodyChoices.FromObject).ToArray(),
             Duration = data.Get("duration").AsInt32(),
             ChannelPointsVotingEnabled = data.Get("channel_points_voting_enabled").AsBool(),
             ChannelPointsPerVote = data.Get("channel_points_per_vote").AsInt32(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -60,10 +61,13 @@ public partial class TwitchCreatePollBody : RefCounted, ITwitcherSharp<TwitchCre
         public static TwitchBodyChoices FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchBodyChoices
+            var instance = new TwitchBodyChoices
             {
                 Title = data.Get("title").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

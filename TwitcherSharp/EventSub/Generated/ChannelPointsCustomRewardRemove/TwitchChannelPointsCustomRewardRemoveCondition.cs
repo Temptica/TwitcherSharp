@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelPointsCustomRewardRemove;
 
 public partial class TwitchChannelPointsCustomRewardRemoveCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelPointsCustomRewardRemoveCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchChannelPointsCustomRewardRemoveCondition);
 
     /// <summary> 
@@ -26,10 +28,13 @@ public partial class TwitchChannelPointsCustomRewardRemoveCondition(string broad
     public static TwitchChannelPointsCustomRewardRemoveCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelPointsCustomRewardRemoveCondition(data.Get("broadcaster_user_id").AsString())
+        var instance = new TwitchChannelPointsCustomRewardRemoveCondition(data.Get("broadcaster_user_id").AsString())
         {
             RewardId = data.Get("reward_id").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

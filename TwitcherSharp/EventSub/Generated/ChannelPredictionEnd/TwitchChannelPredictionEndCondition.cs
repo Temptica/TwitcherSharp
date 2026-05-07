@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelPredictionEnd;
 
 public partial class TwitchChannelPredictionEndCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelPredictionEndCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchChannelPredictionEndCondition);
 
     /// <summary> 
@@ -21,7 +23,10 @@ public partial class TwitchChannelPredictionEndCondition(string broadcasterUserI
     public static TwitchChannelPredictionEndCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelPredictionEndCondition(data.Get("broadcaster_user_id").AsString());
+        var instance = new TwitchChannelPredictionEndCondition(data.Get("broadcaster_user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

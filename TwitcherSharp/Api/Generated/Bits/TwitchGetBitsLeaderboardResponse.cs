@@ -7,8 +7,8 @@ namespace TwitcherSharp.Api.Generated.Bits;
 public partial class TwitchGetBitsLeaderboardResponse : RefCounted, ITwitcherSharp<TwitchGetBitsLeaderboardResponse>
 {
     private GodotObject _data;
-    public TwitchBitsLeaderboard[] Data { get; set; }
-    public TwitchResponseDateRange DateRange { get; set; }
+    public TwitchBitsLeaderboard[] Data { get => field ??= _data?.GetArray<TwitchBitsLeaderboard>("data"); set; }
+    public TwitchResponseDateRange DateRange { get => field ??= _data?.Get<TwitchResponseDateRange>("date_range"); set; }
     public int Total { get; set; }
 
     /// <summary> 
@@ -17,13 +17,13 @@ public partial class TwitchGetBitsLeaderboardResponse : RefCounted, ITwitcherSha
     public static TwitchGetBitsLeaderboardResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchGetBitsLeaderboardResponse
+        var instance = new TwitchGetBitsLeaderboardResponse
         {
-            Data = dataArray.Select(TwitchBitsLeaderboard.FromObject).ToArray(),
-            DateRange = data.Get("date_range").As<TwitchResponseDateRange>(),
             Total = data.Get("total").AsInt32(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -52,11 +52,14 @@ public partial class TwitchGetBitsLeaderboardResponse : RefCounted, ITwitcherSha
         public static TwitchResponseDateRange FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchResponseDateRange
+            var instance = new TwitchResponseDateRange
             {
                 StartedAt = data.Get("started_at").AsString(),
                 EndedAt = data.Get("ended_at").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.Shared;
 
 public partial class TwitchEmotes : RefCounted, ITwitcherSharpEventSub<TwitchEmotes>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The index of where the Emote starts in the text.
     /// </summary>
@@ -29,12 +31,15 @@ public partial class TwitchEmotes : RefCounted, ITwitcherSharpEventSub<TwitchEmo
     public static TwitchEmotes FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchEmotes
+        var instance = new TwitchEmotes
         {
             Begin = data.Get("begin").AsInt32(),
             End = data.Get("end").AsInt32(),
             Id = data.Get("id").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

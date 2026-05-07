@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Clips;
 public partial class TwitchCreateClipFromVODResponse : RefCounted, ITwitcherSharp<TwitchCreateClipFromVODResponse>
 {
     private GodotObject _data;
-    public TwitchResponseData[] Data { get; set; }
+    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCreateClipFromVODResponse object.
@@ -15,11 +15,10 @@ public partial class TwitchCreateClipFromVODResponse : RefCounted, ITwitcherShar
     public static TwitchCreateClipFromVODResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchCreateClipFromVODResponse
-        {
-            Data = dataArray.Select(TwitchResponseData.FromObject).ToArray(),
-        };
+        var instance = new TwitchCreateClipFromVODResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -46,11 +45,14 @@ public partial class TwitchCreateClipFromVODResponse : RefCounted, ITwitcherShar
         public static TwitchResponseData FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchResponseData
+            var instance = new TwitchResponseData
             {
                 Id = data.Get("id").AsString(),
                 EditUrl = data.Get("edit_url").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

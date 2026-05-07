@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelGuestStarSessionEnd;
 
 public partial class TwitchChannelGuestStarSessionEndEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelGuestStarSessionEndEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The non-host broadcaster user ID.
     /// </summary>
@@ -59,7 +61,7 @@ public partial class TwitchChannelGuestStarSessionEndEvent : RefCounted, ITwitch
     public static TwitchChannelGuestStarSessionEndEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelGuestStarSessionEndEvent
+        var instance = new TwitchChannelGuestStarSessionEndEvent
         {
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
             BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
@@ -71,6 +73,9 @@ public partial class TwitchChannelGuestStarSessionEndEvent : RefCounted, ITwitch
             HostUserName = data.Get("host_user_name").AsString(),
             HostUserLogin = data.Get("host_user_login").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

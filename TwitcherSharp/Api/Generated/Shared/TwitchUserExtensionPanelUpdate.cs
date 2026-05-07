@@ -17,12 +17,15 @@ public partial class TwitchUserExtensionPanelUpdate : RefCounted, ITwitcherSharp
     public static TwitchUserExtensionPanelUpdate FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchUserExtensionPanelUpdate
+        var instance = new TwitchUserExtensionPanelUpdate
         {
             Active = data.Get("active").AsBool(),
             Id = data.Get("id").AsString(),
             Version = data.Get("version").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

@@ -25,7 +25,7 @@ public partial class TwitchAutoModSettings : RefCounted, ITwitcherSharp<TwitchAu
     public static TwitchAutoModSettings FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchAutoModSettings
+        var instance = new TwitchAutoModSettings
         {
             BroadcasterId = data.Get("broadcaster_id").AsString(),
             ModeratorId = data.Get("moderator_id").AsString(),
@@ -39,6 +39,9 @@ public partial class TwitchAutoModSettings : RefCounted, ITwitcherSharp<TwitchAu
             RaceEthnicityOrReligion = data.Get("race_ethnicity_or_religion").AsInt32(),
             SexBasedTerms = data.Get("sex_based_terms").AsInt32(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

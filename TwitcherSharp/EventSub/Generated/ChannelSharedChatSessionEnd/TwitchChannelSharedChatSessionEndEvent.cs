@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelSharedChatSessionEnd;
 
 public partial class TwitchChannelSharedChatSessionEndEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelSharedChatSessionEndEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The unique identifier for the shared chat session.
     /// </summary>
@@ -49,7 +51,7 @@ public partial class TwitchChannelSharedChatSessionEndEvent : RefCounted, ITwitc
     public static TwitchChannelSharedChatSessionEndEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelSharedChatSessionEndEvent
+        var instance = new TwitchChannelSharedChatSessionEndEvent
         {
             SessionId = data.Get("session_id").AsString(),
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
@@ -59,6 +61,9 @@ public partial class TwitchChannelSharedChatSessionEndEvent : RefCounted, ITwitc
             HostBroadcasterUserName = data.Get("host_broadcaster_user_name").AsString(),
             HostBroadcasterUserLogin = data.Get("host_broadcaster_user_login").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

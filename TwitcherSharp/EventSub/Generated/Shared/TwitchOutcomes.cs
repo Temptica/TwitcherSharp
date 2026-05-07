@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.Shared;
 
 public partial class TwitchOutcomes : RefCounted, ITwitcherSharpEventSub<TwitchOutcomes>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The outcome ID.
     /// </summary>
@@ -36,7 +38,7 @@ public partial class TwitchOutcomes : RefCounted, ITwitcherSharpEventSub<TwitchO
     /// <summary> 
     /// An array of up to 10 objects that describe users who participated in a Channel Points Prediction.
     /// </summary>
-    public TwitchTopPredictors TopPredictors { get; set; }
+    public TwitchTopPredictors TopPredictors { get => field ??= _data?.Get<TwitchTopPredictors>("top_predictors"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchOutcomes object.
@@ -44,7 +46,7 @@ public partial class TwitchOutcomes : RefCounted, ITwitcherSharpEventSub<TwitchO
     public static TwitchOutcomes FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchOutcomes
+        var instance = new TwitchOutcomes
         {
             Id = data.Get("id").AsString(),
             Title = data.Get("title").AsString(),
@@ -53,6 +55,9 @@ public partial class TwitchOutcomes : RefCounted, ITwitcherSharpEventSub<TwitchO
             ChannelPoints = data.Get("channel_points").AsInt32(),
             TopPredictors = TwitchTopPredictors.FromObject(data.Get("top_predictors").AsGodotObject()),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

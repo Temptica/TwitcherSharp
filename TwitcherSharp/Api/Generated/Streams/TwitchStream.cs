@@ -29,7 +29,7 @@ public partial class TwitchStream : RefCounted, ITwitcherSharp<TwitchStream>
     public static TwitchStream FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchStream
+        var instance = new TwitchStream
         {
             Id = data.Get("id").AsString(),
             UserId = data.Get("user_id").AsString(),
@@ -47,6 +47,9 @@ public partial class TwitchStream : RefCounted, ITwitcherSharp<TwitchStream>
             Tags = data.Get("tags").AsStringArray(),
             IsMature = data.Get("is_mature").AsBool(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

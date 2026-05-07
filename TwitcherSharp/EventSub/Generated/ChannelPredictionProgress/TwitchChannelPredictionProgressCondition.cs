@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelPredictionProgress;
 
 public partial class TwitchChannelPredictionProgressCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelPredictionProgressCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchChannelPredictionProgressCondition);
 
     /// <summary> 
@@ -21,7 +23,10 @@ public partial class TwitchChannelPredictionProgressCondition(string broadcaster
     public static TwitchChannelPredictionProgressCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelPredictionProgressCondition(data.Get("broadcaster_user_id").AsString());
+        var instance = new TwitchChannelPredictionProgressCondition(data.Get("broadcaster_user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

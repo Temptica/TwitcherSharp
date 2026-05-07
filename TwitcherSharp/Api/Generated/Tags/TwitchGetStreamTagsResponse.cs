@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Tags;
 public partial class TwitchGetStreamTagsResponse : RefCounted, ITwitcherSharp<TwitchGetStreamTagsResponse>
 {
     private GodotObject _data;
-    public TwitchStreamTag[] Data { get; set; }
+    public TwitchStreamTag[] Data { get => field ??= _data?.GetArray<TwitchStreamTag>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetStreamTagsResponse object.
@@ -15,11 +15,10 @@ public partial class TwitchGetStreamTagsResponse : RefCounted, ITwitcherSharp<Tw
     public static TwitchGetStreamTagsResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchGetStreamTagsResponse
-        {
-            Data = dataArray.Select(TwitchStreamTag.FromObject).ToArray(),
-        };
+        var instance = new TwitchGetStreamTagsResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

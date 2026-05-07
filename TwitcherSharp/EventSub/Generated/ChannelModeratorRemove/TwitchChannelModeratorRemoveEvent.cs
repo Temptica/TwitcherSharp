@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelModeratorRemove;
 
 public partial class TwitchChannelModeratorRemoveEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelModeratorRemoveEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The requested broadcaster ID.
     /// </summary>
@@ -44,7 +46,7 @@ public partial class TwitchChannelModeratorRemoveEvent : RefCounted, ITwitcherSh
     public static TwitchChannelModeratorRemoveEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelModeratorRemoveEvent
+        var instance = new TwitchChannelModeratorRemoveEvent
         {
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
             BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
@@ -53,6 +55,9 @@ public partial class TwitchChannelModeratorRemoveEvent : RefCounted, ITwitcherSh
             UserLogin = data.Get("user_login").AsString(),
             UserName = data.Get("user_name").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

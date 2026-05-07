@@ -17,12 +17,15 @@ public partial class TwitchChatter : RefCounted, ITwitcherSharp<TwitchChatter>
     public static TwitchChatter FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChatter
+        var instance = new TwitchChatter
         {
             UserId = data.Get("user_id").AsString(),
             UserLogin = data.Get("user_login").AsString(),
             UserName = data.Get("user_name").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

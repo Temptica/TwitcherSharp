@@ -8,7 +8,7 @@ public partial class TwitchGuestStarSession : RefCounted, ITwitcherSharp<TwitchG
 {
     private GodotObject _data;
     public string Id { get; set; }
-    public TwitchGuest[] Guests { get; set; }
+    public TwitchGuest[] Guests { get => field ??= _data?.GetArray<TwitchGuest>("guests"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGuestStarSession object.
@@ -16,12 +16,13 @@ public partial class TwitchGuestStarSession : RefCounted, ITwitcherSharp<TwitchG
     public static TwitchGuestStarSession FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var guestsArray = data.Get("guests").AsGodotArray<GodotObject>();
-        return new TwitchGuestStarSession
+        var instance = new TwitchGuestStarSession
         {
             Id = data.Get("id").AsString(),
-            Guests = guestsArray.Select(TwitchGuest.FromObject).ToArray(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

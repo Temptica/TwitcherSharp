@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Users;
 public partial class TwitchGetAuthorizationByUserResponse : RefCounted, ITwitcherSharp<TwitchGetAuthorizationByUserResponse>
 {
     private GodotObject _data;
-    public TwitchResponseData[] Data { get; set; }
+    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetAuthorizationByUserResponse object.
@@ -15,11 +15,10 @@ public partial class TwitchGetAuthorizationByUserResponse : RefCounted, ITwitche
     public static TwitchGetAuthorizationByUserResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchGetAuthorizationByUserResponse
-        {
-            Data = dataArray.Select(TwitchResponseData.FromObject).ToArray(),
-        };
+        var instance = new TwitchGetAuthorizationByUserResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -48,13 +47,16 @@ public partial class TwitchGetAuthorizationByUserResponse : RefCounted, ITwitche
         public static TwitchResponseData FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchResponseData
+            var instance = new TwitchResponseData
             {
                 UserId = data.Get("user_id").AsString(),
                 UserName = data.Get("user_name").AsString(),
                 UserLogin = data.Get("user_login").AsString(),
                 Scopes = data.Get("scopes").AsStringArray(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

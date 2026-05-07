@@ -23,7 +23,7 @@ public partial class TwitchCreatorGoal : RefCounted, ITwitcherSharp<TwitchCreato
     public static TwitchCreatorGoal FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchCreatorGoal
+        var instance = new TwitchCreatorGoal
         {
             Id = data.Get("id").AsString(),
             BroadcasterId = data.Get("broadcaster_id").AsString(),
@@ -35,6 +35,9 @@ public partial class TwitchCreatorGoal : RefCounted, ITwitcherSharp<TwitchCreato
             TargetAmount = data.Get("target_amount").AsInt32(),
             CreatedAt = data.Get("created_at").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

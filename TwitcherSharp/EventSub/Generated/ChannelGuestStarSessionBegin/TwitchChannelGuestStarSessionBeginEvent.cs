@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelGuestStarSessionBegin;
 
 public partial class TwitchChannelGuestStarSessionBeginEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelGuestStarSessionBeginEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The broadcaster user ID.
     /// </summary>
@@ -39,7 +41,7 @@ public partial class TwitchChannelGuestStarSessionBeginEvent : RefCounted, ITwit
     public static TwitchChannelGuestStarSessionBeginEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelGuestStarSessionBeginEvent
+        var instance = new TwitchChannelGuestStarSessionBeginEvent
         {
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
             BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
@@ -47,6 +49,9 @@ public partial class TwitchChannelGuestStarSessionBeginEvent : RefCounted, ITwit
             SessionId = data.Get("session_id").AsString(),
             StartedAt = data.Get("started_at").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

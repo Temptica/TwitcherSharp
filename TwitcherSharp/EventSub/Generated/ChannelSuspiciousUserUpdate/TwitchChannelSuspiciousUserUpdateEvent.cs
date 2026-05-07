@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelSuspiciousUserUpdate;
 
 public partial class TwitchChannelSuspiciousUserUpdateEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelSuspiciousUserUpdateEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The ID of the channel where the treatment for a suspicious user was updated.
     /// </summary>
@@ -64,7 +66,7 @@ public partial class TwitchChannelSuspiciousUserUpdateEvent : RefCounted, ITwitc
     public static TwitchChannelSuspiciousUserUpdateEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelSuspiciousUserUpdateEvent
+        var instance = new TwitchChannelSuspiciousUserUpdateEvent
         {
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
             BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
@@ -77,6 +79,9 @@ public partial class TwitchChannelSuspiciousUserUpdateEvent : RefCounted, ITwitc
             UserLogin = data.Get("user_login").AsString(),
             LowTrustStatus = data.Get("low_trust_status").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Extensions;
 public partial class TwitchUpdateExtensionBitsProductResponse : RefCounted, ITwitcherSharp<TwitchUpdateExtensionBitsProductResponse>
 {
     private GodotObject _data;
-    public TwitchExtensionBitsProduct[] Data { get; set; }
+    public TwitchExtensionBitsProduct[] Data { get => field ??= _data?.GetArray<TwitchExtensionBitsProduct>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUpdateExtensionBitsProductResponse object.
@@ -15,11 +15,10 @@ public partial class TwitchUpdateExtensionBitsProductResponse : RefCounted, ITwi
     public static TwitchUpdateExtensionBitsProductResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchUpdateExtensionBitsProductResponse
-        {
-            Data = dataArray.Select(TwitchExtensionBitsProduct.FromObject).ToArray(),
-        };
+        var instance = new TwitchUpdateExtensionBitsProductResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

@@ -16,11 +16,14 @@ public partial class TwitchUpdateDropsEntitlementsBody : RefCounted, ITwitcherSh
     public static TwitchUpdateDropsEntitlementsBody FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchUpdateDropsEntitlementsBody
+        var instance = new TwitchUpdateDropsEntitlementsBody
         {
             EntitlementIds = data.Get("entitlement_ids").AsStringArray(),
             FulfillmentStatus = data.Get("fulfillment_status").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

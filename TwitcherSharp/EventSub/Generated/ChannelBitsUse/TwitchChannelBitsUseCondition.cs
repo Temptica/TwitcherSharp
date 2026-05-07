@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelBitsUse;
 
 public partial class TwitchChannelBitsUseCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelBitsUseCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchChannelBitsUseCondition);
 
     /// <summary> 
@@ -21,7 +23,10 @@ public partial class TwitchChannelBitsUseCondition(string broadcasterUserId) : R
     public static TwitchChannelBitsUseCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelBitsUseCondition(data.Get("broadcaster_user_id").AsString());
+        var instance = new TwitchChannelBitsUseCondition(data.Get("broadcaster_user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

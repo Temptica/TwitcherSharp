@@ -19,7 +19,7 @@ public partial class TwitchGetChannelGuestStarSettingsResponse : RefCounted, ITw
     public static TwitchGetChannelGuestStarSettingsResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGetChannelGuestStarSettingsResponse
+        var instance = new TwitchGetChannelGuestStarSettingsResponse
         {
             IsModeratorSendLiveEnabled = data.Get("is_moderator_send_live_enabled").AsBool(),
             SlotCount = data.Get("slot_count").AsInt32(),
@@ -27,6 +27,9 @@ public partial class TwitchGetChannelGuestStarSettingsResponse : RefCounted, ITw
             GroupLayout = data.Get("group_layout").AsString(),
             BrowserSourceToken = data.Get("browser_source_token").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelBitsUse;
 
 public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelBitsUseEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The User ID of the channel where the Bits were redeemed.
     /// </summary>
@@ -51,17 +53,17 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
     /// <summary> 
     /// 
     /// </summary>
-    public TwitchMessage Message { get; set; }
+    public TwitchMessage Message { get => field ??= _data?.Get<TwitchMessage>("message"); set; }
 
     /// <summary> 
     /// Optional. Data about a default (i.e. built-in) Power-up.
     /// </summary>
-    public TwitchPowerUp PowerUp { get; set; }
+    public TwitchPowerUp PowerUp { get => field ??= _data?.Get<TwitchPowerUp>("power_up"); set; }
 
     /// <summary> 
     /// Optional. Data about a custom Power-up.
     /// </summary>
-    public TwitchCustomPowerUp CustomPowerUp { get; set; }
+    public TwitchCustomPowerUp CustomPowerUp { get => field ??= _data?.Get<TwitchCustomPowerUp>("custom_power_up"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelBitsUseEvent object.
@@ -69,7 +71,7 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
     public static TwitchChannelBitsUseEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelBitsUseEvent
+        var instance = new TwitchChannelBitsUseEvent
         {
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
             BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
@@ -83,6 +85,9 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
             PowerUp = TwitchPowerUp.FromObject(data.Get("power_up").AsGodotObject()),
             CustomPowerUp = TwitchCustomPowerUp.FromObject(data.Get("custom_power_up").AsGodotObject()),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -107,6 +112,8 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
 
     public partial class TwitchMessage : RefCounted, ITwitcherSharpEventSub<TwitchMessage>
     {
+        private GodotObject _data;
+        
         /// <summary> 
         /// The chat message in plain text.
         /// </summary>
@@ -115,7 +122,7 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
         /// <summary> 
         /// The ordered list of chat message fragments.
         /// </summary>
-        public TwitchFragments[] Fragments { get; set; }
+        public TwitchFragments[] Fragments { get => field ??= _data?.GetArray<TwitchFragments>("fragments"); set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchMessage object.
@@ -124,11 +131,14 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
         {
             if(data == null) return null;
             var fragmentsArray = data.Get("fragments").AsGodotArray<GodotObject>();
-            return new TwitchMessage
+            var instance = new TwitchMessage
             {
                 Text = data.Get("text").AsString(),
                 Fragments = fragmentsArray.Select(TwitchFragments.FromObject).ToArray(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -144,6 +154,8 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
     
         public partial class TwitchFragments : RefCounted, ITwitcherSharpEventSub<TwitchFragments>
         {
+            private GodotObject _data;
+            
             /// <summary> 
             /// The message text in fragment.
             /// </summary>
@@ -157,12 +169,12 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
             /// <summary> 
             /// Optional. The metadata pertaining to the emote.
             /// </summary>
-            public TwitchEmote Emote { get; set; }
+            public TwitchEmote Emote { get => field ??= _data?.Get<TwitchEmote>("emote"); set; }
         
             /// <summary> 
             /// Optional. The metadata pertaining to the cheermote.
             /// </summary>
-            public TwitchCheermote Cheermote { get; set; }
+            public TwitchCheermote Cheermote { get => field ??= _data?.Get<TwitchCheermote>("cheermote"); set; }
         
             /// <summary> 
             /// Transforms the godot data into a TwitchFragments object.
@@ -170,13 +182,16 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
             public static TwitchFragments FromObject(GodotObject data)
             {
                 if(data == null) return null;
-                return new TwitchFragments
+                var instance = new TwitchFragments
                 {
                     Text = data.Get("text").AsString(),
                     Type = data.Get("type").AsString(),
                     Emote = TwitchEmote.FromObject(data.Get("emote").AsGodotObject()),
                     Cheermote = TwitchCheermote.FromObject(data.Get("cheermote").AsGodotObject()),
                 };
+                
+                instance._data = data;
+                return instance;
             }
         
             public GodotObject ToGodotObject()
@@ -194,6 +209,8 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
         
             public partial class TwitchEmote : RefCounted, ITwitcherSharpEventSub<TwitchEmote>
             {
+                private GodotObject _data;
+                
                 /// <summary> 
                 /// The ID that uniquely identifies this emote.
                 /// </summary>
@@ -220,13 +237,16 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
                 public static TwitchEmote FromObject(GodotObject data)
                 {
                     if(data == null) return null;
-                    return new TwitchEmote
+                    var instance = new TwitchEmote
                     {
                         Id = data.Get("id").AsString(),
                         EmoteSetId = data.Get("emote_set_id").AsString(),
                         OwnerId = data.Get("owner_id").AsString(),
                         Format = data.Get("format").AsStringArray(),
                     };
+                    
+                    instance._data = data;
+                    return instance;
                 }
             
                 public GodotObject ToGodotObject()
@@ -244,6 +264,8 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
         
             public partial class TwitchCheermote : RefCounted, ITwitcherSharpEventSub<TwitchCheermote>
             {
+                private GodotObject _data;
+                
                 /// <summary> 
                 /// The name portion of the Cheermote string that you use in chat to cheer Bits. The full Cheermote string is the concatenation of {prefix} + {number of Bits}. For example, if the prefix is “Cheer” and you want to cheer 100 Bits, the full Cheermote string is Cheer100. When the Cheermote string is entered in chat, Twitch converts it to the image associated with the Bits tier that was cheered.
                 /// </summary>
@@ -265,12 +287,15 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
                 public static TwitchCheermote FromObject(GodotObject data)
                 {
                     if(data == null) return null;
-                    return new TwitchCheermote
+                    var instance = new TwitchCheermote
                     {
                         Prefix = data.Get("prefix").AsString(),
                         Bits = data.Get("bits").AsInt32(),
                         Tier = data.Get("tier").AsInt32(),
                     };
+                    
+                    instance._data = data;
+                    return instance;
                 }
             
                 public GodotObject ToGodotObject()
@@ -289,6 +314,8 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
 
     public partial class TwitchPowerUp : RefCounted, ITwitcherSharpEventSub<TwitchPowerUp>
     {
+        private GodotObject _data;
+        
         /// <summary> 
         /// Possible values: message_effectcelebrationgigantify_an_emote
         /// </summary>
@@ -297,7 +324,7 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
         /// <summary> 
         /// Optional. Emote associated with the reward.
         /// </summary>
-        public TwitchEmote Emote { get; set; }
+        public TwitchEmote Emote { get => field ??= _data?.Get<TwitchEmote>("emote"); set; }
     
         /// <summary> 
         /// Optional. The ID of the message effect.
@@ -310,12 +337,15 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
         public static TwitchPowerUp FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchPowerUp
+            var instance = new TwitchPowerUp
             {
                 Type = data.Get("type").AsString(),
                 Emote = TwitchEmote.FromObject(data.Get("emote").AsGodotObject()),
                 MessageEffectId = data.Get("message_effect_id").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -332,6 +362,8 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
     
         public partial class TwitchEmote : RefCounted, ITwitcherSharpEventSub<TwitchEmote>
         {
+            private GodotObject _data;
+            
             /// <summary> 
             /// The ID that uniquely identifies this emote.
             /// </summary>
@@ -348,11 +380,14 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
             public static TwitchEmote FromObject(GodotObject data)
             {
                 if(data == null) return null;
-                return new TwitchEmote
+                var instance = new TwitchEmote
                 {
                     Id = data.Get("id").AsString(),
                     Name = data.Get("name").AsString(),
                 };
+                
+                instance._data = data;
+                return instance;
             }
         
             public GodotObject ToGodotObject()
@@ -369,6 +404,8 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
 
     public partial class TwitchCustomPowerUp : RefCounted, ITwitcherSharpEventSub<TwitchCustomPowerUp>
     {
+        private GodotObject _data;
+        
         /// <summary> 
         /// The title of the custom Power-up.
         /// </summary>
@@ -385,11 +422,14 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
         public static TwitchCustomPowerUp FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchCustomPowerUp
+            var instance = new TwitchCustomPowerUp
             {
                 Title = data.Get("title").AsString(),
                 RewardId = data.Get("reward_id").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

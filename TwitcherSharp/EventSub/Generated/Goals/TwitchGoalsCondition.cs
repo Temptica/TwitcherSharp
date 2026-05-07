@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.Goals;
 
 public partial class TwitchGoalsCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchGoalsCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchGoalsCondition);
 
     /// <summary> 
@@ -21,7 +23,10 @@ public partial class TwitchGoalsCondition(string broadcasterUserId) : RefCounted
     public static TwitchGoalsCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGoalsCondition(data.Get("broadcaster_user_id").AsString());
+        var instance = new TwitchGoalsCondition(data.Get("broadcaster_user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

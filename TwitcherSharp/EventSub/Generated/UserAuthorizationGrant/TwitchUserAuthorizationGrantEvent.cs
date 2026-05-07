@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.UserAuthorizationGrant;
 
 public partial class TwitchUserAuthorizationGrantEvent : RefCounted, ITwitcherSharpEventSub<TwitchUserAuthorizationGrantEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The client_id of the application that was granted user access.
     /// </summary>
@@ -34,13 +36,16 @@ public partial class TwitchUserAuthorizationGrantEvent : RefCounted, ITwitcherSh
     public static TwitchUserAuthorizationGrantEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchUserAuthorizationGrantEvent
+        var instance = new TwitchUserAuthorizationGrantEvent
         {
             ClientId = data.Get("client_id").AsString(),
             UserId = data.Get("user_id").AsString(),
             UserLogin = data.Get("user_login").AsString(),
             UserName = data.Get("user_name").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

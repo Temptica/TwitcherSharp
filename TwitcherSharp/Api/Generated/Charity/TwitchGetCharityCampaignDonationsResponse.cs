@@ -8,8 +8,8 @@ namespace TwitcherSharp.Api.Generated.Charity;
 public partial class TwitchGetCharityCampaignDonationsResponse : RefCounted, ITwitcherSharp<TwitchGetCharityCampaignDonationsResponse>
 {
     private GodotObject _data;
-    public TwitchCharityCampaignDonation[] Data { get; set; }
-    public ResponsePagination Pagination { get; set; }
+    public TwitchCharityCampaignDonation[] Data { get => field ??= _data?.GetArray<TwitchCharityCampaignDonation>("data"); set; }
+    public ResponsePagination Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetCharityCampaignDonationsResponse object.
@@ -17,12 +17,10 @@ public partial class TwitchGetCharityCampaignDonationsResponse : RefCounted, ITw
     public static TwitchGetCharityCampaignDonationsResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchGetCharityCampaignDonationsResponse
-        {
-            Data = dataArray.Select(TwitchCharityCampaignDonation.FromObject).ToArray(),
-            Pagination = data.Get("pagination").As<ResponsePagination>(),
-        };
+        var instance = new TwitchGetCharityCampaignDonationsResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -51,10 +49,13 @@ public partial class TwitchGetCharityCampaignDonationsResponse : RefCounted, ITw
         public static ResponsePagination FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new ResponsePagination
+            var instance = new ResponsePagination
             {
                 Cursor = data.Get("cursor").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

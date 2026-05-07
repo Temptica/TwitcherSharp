@@ -19,7 +19,7 @@ public partial class TwitchSetExtensionConfigurationSegmentBody : RefCounted, IT
     public static TwitchSetExtensionConfigurationSegmentBody FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchSetExtensionConfigurationSegmentBody
+        var instance = new TwitchSetExtensionConfigurationSegmentBody
         {
             ExtensionId = data.Get("extension_id").AsString(),
             Segment = data.Get("segment").AsString(),
@@ -27,6 +27,9 @@ public partial class TwitchSetExtensionConfigurationSegmentBody : RefCounted, IT
             Content = data.Get("content").AsString(),
             Version = data.Get("version").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

@@ -17,12 +17,15 @@ public partial class TwitchSetExtensionRequiredConfigurationBody : RefCounted, I
     public static TwitchSetExtensionRequiredConfigurationBody FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchSetExtensionRequiredConfigurationBody
+        var instance = new TwitchSetExtensionRequiredConfigurationBody
         {
             ExtensionId = data.Get("extension_id").AsString(),
             ExtensionVersion = data.Get("extension_version").AsString(),
             RequiredConfiguration = data.Get("required_configuration").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

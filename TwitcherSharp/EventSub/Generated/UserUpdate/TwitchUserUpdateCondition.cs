@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.UserUpdate;
 
 public partial class TwitchUserUpdateCondition(string userId) : RefCounted, ITwitcherSharpCondition<TwitchUserUpdateCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchUserUpdateCondition);
 
     /// <summary> 
@@ -21,7 +23,10 @@ public partial class TwitchUserUpdateCondition(string userId) : RefCounted, ITwi
     public static TwitchUserUpdateCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchUserUpdateCondition(data.Get("user_id").AsString());
+        var instance = new TwitchUserUpdateCondition(data.Get("user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelPointsCustomRewardRedemptionUp
 
 public partial class TwitchChannelPointsCustomRewardRedemptionUpdateCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelPointsCustomRewardRedemptionUpdateCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchChannelPointsCustomRewardRedemptionUpdateCondition);
 
     /// <summary> 
@@ -26,10 +28,13 @@ public partial class TwitchChannelPointsCustomRewardRedemptionUpdateCondition(st
     public static TwitchChannelPointsCustomRewardRedemptionUpdateCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelPointsCustomRewardRedemptionUpdateCondition(data.Get("broadcaster_user_id").AsString())
+        var instance = new TwitchChannelPointsCustomRewardRedemptionUpdateCondition(data.Get("broadcaster_user_id").AsString())
         {
             RewardId = data.Get("reward_id").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

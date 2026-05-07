@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelPollProgress;
 
 public partial class TwitchChannelPollProgressEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelPollProgressEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// ID of the poll.
     /// </summary>
@@ -36,17 +38,17 @@ public partial class TwitchChannelPollProgressEvent : RefCounted, ITwitcherSharp
     /// <summary> 
     /// An array of choices for the poll. Includes vote counts.
     /// </summary>
-    public TwitchChoices[] Choices { get; set; }
+    public TwitchChoices[] Choices { get => field ??= _data?.GetArray<TwitchChoices>("choices"); set; }
 
     /// <summary> 
     /// NOTE: Bits voting is not supported.
     /// </summary>
-    public TwitchBitsVoting BitsVoting { get; set; }
+    public TwitchBitsVoting BitsVoting { get => field ??= _data?.Get<TwitchBitsVoting>("bits_voting"); set; }
 
     /// <summary> 
     /// 
     /// </summary>
-    public TwitchChannelPointsVoting ChannelPointsVoting { get; set; }
+    public TwitchChannelPointsVoting ChannelPointsVoting { get => field ??= _data?.Get<TwitchChannelPointsVoting>("channel_points_voting"); set; }
 
     /// <summary> 
     /// The time the poll started.
@@ -65,7 +67,7 @@ public partial class TwitchChannelPollProgressEvent : RefCounted, ITwitcherSharp
     {
         if(data == null) return null;
         var choicesArray = data.Get("choices").AsGodotArray<GodotObject>();
-        return new TwitchChannelPollProgressEvent
+        var instance = new TwitchChannelPollProgressEvent
         {
             Id = data.Get("id").AsString(),
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
@@ -78,6 +80,9 @@ public partial class TwitchChannelPollProgressEvent : RefCounted, ITwitcherSharp
             StartedAt = data.Get("started_at").AsString(),
             EndsAt = data.Get("ends_at").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

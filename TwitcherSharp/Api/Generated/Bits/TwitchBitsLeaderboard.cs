@@ -19,7 +19,7 @@ public partial class TwitchBitsLeaderboard : RefCounted, ITwitcherSharp<TwitchBi
     public static TwitchBitsLeaderboard FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchBitsLeaderboard
+        var instance = new TwitchBitsLeaderboard
         {
             UserId = data.Get("user_id").AsString(),
             UserLogin = data.Get("user_login").AsString(),
@@ -27,6 +27,9 @@ public partial class TwitchBitsLeaderboard : RefCounted, ITwitcherSharp<TwitchBi
             Rank = data.Get("rank").AsInt32(),
             Score = data.Get("score").AsInt32(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

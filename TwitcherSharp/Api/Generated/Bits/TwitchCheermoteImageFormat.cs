@@ -19,7 +19,7 @@ public partial class TwitchCheermoteImageFormat : RefCounted, ITwitcherSharp<Twi
     public static TwitchCheermoteImageFormat FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchCheermoteImageFormat
+        var instance = new TwitchCheermoteImageFormat
         {
             _1 = data.Get("1").AsString(),
             _2 = data.Get("2").AsString(),
@@ -27,6 +27,9 @@ public partial class TwitchCheermoteImageFormat : RefCounted, ITwitcherSharp<Twi
             _4 = data.Get("4").AsString(),
             _1_5 = data.Get("1_5").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

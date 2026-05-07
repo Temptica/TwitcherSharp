@@ -25,7 +25,7 @@ public partial class TwitchChannelInformation : RefCounted, ITwitcherSharp<Twitc
     public static TwitchChannelInformation FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelInformation
+        var instance = new TwitchChannelInformation
         {
             BroadcasterId = data.Get("broadcaster_id").AsString(),
             BroadcasterLogin = data.Get("broadcaster_login").AsString(),
@@ -39,6 +39,9 @@ public partial class TwitchChannelInformation : RefCounted, ITwitcherSharp<Twitc
             ContentClassificationLabels = data.Get("content_classification_labels").AsStringArray(),
             IsBrandedContent = data.Get("is_branded_content").AsBool(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

@@ -19,10 +19,13 @@ public partial class TwitchGetUserActiveExtensionsOpt : RefCounted, ITwitcherSha
     public static TwitchGetUserActiveExtensionsOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGetUserActiveExtensionsOpt
+        var instance = new TwitchGetUserActiveExtensionsOpt
         {
             UserId = data.Get("user_id").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

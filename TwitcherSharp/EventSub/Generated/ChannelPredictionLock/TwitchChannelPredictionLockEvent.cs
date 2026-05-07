@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelPredictionLock;
 
 public partial class TwitchChannelPredictionLockEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelPredictionLockEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// Channel Points Prediction ID.
     /// </summary>
@@ -36,7 +38,7 @@ public partial class TwitchChannelPredictionLockEvent : RefCounted, ITwitcherSha
     /// <summary> 
     /// An array of outcomes for the Channel Points Prediction. Includes top_predictors.
     /// </summary>
-    public TwitchOutcomes[] Outcomes { get; set; }
+    public TwitchOutcomes[] Outcomes { get => field ??= _data?.GetArray<TwitchOutcomes>("outcomes"); set; }
 
     /// <summary> 
     /// The time the Channel Points Prediction started.
@@ -55,7 +57,7 @@ public partial class TwitchChannelPredictionLockEvent : RefCounted, ITwitcherSha
     {
         if(data == null) return null;
         var outcomesArray = data.Get("outcomes").AsGodotArray<GodotObject>();
-        return new TwitchChannelPredictionLockEvent
+        var instance = new TwitchChannelPredictionLockEvent
         {
             Id = data.Get("id").AsString(),
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
@@ -66,6 +68,9 @@ public partial class TwitchChannelPredictionLockEvent : RefCounted, ITwitcherSha
             StartedAt = data.Get("started_at").AsString(),
             LockedAt = data.Get("locked_at").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

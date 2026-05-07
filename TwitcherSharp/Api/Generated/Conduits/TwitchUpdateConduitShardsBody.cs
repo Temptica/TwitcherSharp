@@ -8,7 +8,7 @@ public partial class TwitchUpdateConduitShardsBody : RefCounted, ITwitcherSharp<
 {
     private GodotObject _data;
     public string ConduitId { get; set; }
-    public TwitchBodyShards[] Shards { get; set; }
+    public TwitchBodyShards[] Shards { get => field ??= _data?.GetArray<TwitchBodyShards>("shards"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUpdateConduitShardsBody object.
@@ -16,12 +16,13 @@ public partial class TwitchUpdateConduitShardsBody : RefCounted, ITwitcherSharp<
     public static TwitchUpdateConduitShardsBody FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var shardsArray = data.Get("shards").AsGodotArray<GodotObject>();
-        return new TwitchUpdateConduitShardsBody
+        var instance = new TwitchUpdateConduitShardsBody
         {
             ConduitId = data.Get("conduit_id").AsString(),
-            Shards = shardsArray.Select(TwitchBodyShards.FromObject).ToArray(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -41,7 +42,7 @@ public partial class TwitchUpdateConduitShardsBody : RefCounted, ITwitcherSharp<
     {
         private GodotObject _data;
         public string Id { get; set; }
-        public TwitchBodyTransport Transport { get; set; }
+        public TwitchBodyTransport Transport { get => field ??= _data?.Get<TwitchBodyTransport>("transport"); set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchBodyShards object.
@@ -49,11 +50,13 @@ public partial class TwitchUpdateConduitShardsBody : RefCounted, ITwitcherSharp<
         public static TwitchBodyShards FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchBodyShards
+            var instance = new TwitchBodyShards
             {
                 Id = data.Get("id").AsString(),
-                Transport = data.Get("transport").As<TwitchBodyTransport>(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -83,13 +86,16 @@ public partial class TwitchUpdateConduitShardsBody : RefCounted, ITwitcherSharp<
             public static TwitchBodyTransport FromObject(GodotObject data)
             {
                 if(data == null) return null;
-                return new TwitchBodyTransport
+                var instance = new TwitchBodyTransport
                 {
                     Method = data.Get("method").AsString(),
                     Callback = data.Get("callback").AsString(),
                     Secret = data.Get("secret").AsString(),
                     SessionId = data.Get("session_id").AsString(),
                 };
+                
+                instance._data = data;
+                return instance;
             }
         
             public GodotObject ToGodotObject()

@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Chat;
 public partial class TwitchGetSharedChatSessionResponse : RefCounted, ITwitcherSharp<TwitchGetSharedChatSessionResponse>
 {
     private GodotObject _data;
-    public TwitchResponseData[] Data { get; set; }
+    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetSharedChatSessionResponse object.
@@ -15,11 +15,10 @@ public partial class TwitchGetSharedChatSessionResponse : RefCounted, ITwitcherS
     public static TwitchGetSharedChatSessionResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchGetSharedChatSessionResponse
-        {
-            Data = dataArray.Select(TwitchResponseData.FromObject).ToArray(),
-        };
+        var instance = new TwitchGetSharedChatSessionResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -35,7 +34,7 @@ public partial class TwitchGetSharedChatSessionResponse : RefCounted, ITwitcherS
         private GodotObject _data;
         public string SessionId { get; set; }
         public string HostBroadcasterId { get; set; }
-        public TwitchResponseParticipants[] Participants { get; set; }
+        public TwitchResponseParticipants[] Participants { get => field ??= _data?.GetArray<TwitchResponseParticipants>("participants"); set; }
         public string CreatedAt { get; set; }
         public string UpdatedAt { get; set; }
     
@@ -45,15 +44,16 @@ public partial class TwitchGetSharedChatSessionResponse : RefCounted, ITwitcherS
         public static TwitchResponseData FromObject(GodotObject data)
         {
             if(data == null) return null;
-            var participantsArray = data.Get("participants").AsGodotArray<GodotObject>();
-            return new TwitchResponseData
+            var instance = new TwitchResponseData
             {
                 SessionId = data.Get("session_id").AsString(),
                 HostBroadcasterId = data.Get("host_broadcaster_id").AsString(),
-                Participants = participantsArray.Select(TwitchResponseParticipants.FromObject).ToArray(),
                 CreatedAt = data.Get("created_at").AsString(),
                 UpdatedAt = data.Get("updated_at").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -83,10 +83,13 @@ public partial class TwitchGetSharedChatSessionResponse : RefCounted, ITwitcherS
             public static TwitchResponseParticipants FromObject(GodotObject data)
             {
                 if(data == null) return null;
-                return new TwitchResponseParticipants
+                var instance = new TwitchResponseParticipants
                 {
                     BroadcasterId = data.Get("broadcaster_id").AsString(),
                 };
+                
+                instance._data = data;
+                return instance;
             }
         
             public GodotObject ToGodotObject()

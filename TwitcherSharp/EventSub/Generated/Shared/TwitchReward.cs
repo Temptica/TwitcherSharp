@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.Shared;
 
 public partial class TwitchReward : RefCounted, ITwitcherSharpEventSub<TwitchReward>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The reward identifier.
     /// </summary>
@@ -34,13 +36,16 @@ public partial class TwitchReward : RefCounted, ITwitcherSharpEventSub<TwitchRew
     public static TwitchReward FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchReward
+        var instance = new TwitchReward
         {
             Id = data.Get("id").AsString(),
             Title = data.Get("title").AsString(),
             Cost = data.Get("cost").AsInt32(),
             Prompt = data.Get("prompt").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

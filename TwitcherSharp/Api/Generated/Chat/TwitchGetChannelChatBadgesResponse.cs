@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Chat;
 public partial class TwitchGetChannelChatBadgesResponse : RefCounted, ITwitcherSharp<TwitchGetChannelChatBadgesResponse>
 {
     private GodotObject _data;
-    public TwitchChatBadge[] Data { get; set; }
+    public TwitchChatBadge[] Data { get => field ??= _data?.GetArray<TwitchChatBadge>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetChannelChatBadgesResponse object.
@@ -15,11 +15,10 @@ public partial class TwitchGetChannelChatBadgesResponse : RefCounted, ITwitcherS
     public static TwitchGetChannelChatBadgesResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchGetChannelChatBadgesResponse
-        {
-            Data = dataArray.Select(TwitchChatBadge.FromObject).ToArray(),
-        };
+        var instance = new TwitchGetChannelChatBadgesResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

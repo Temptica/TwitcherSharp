@@ -8,8 +8,8 @@ namespace TwitcherSharp.Api.Generated.Subscriptions;
 public partial class TwitchGetBroadcasterSubscriptionsResponse : RefCounted, ITwitcherSharp<TwitchGetBroadcasterSubscriptionsResponse>
 {
     private GodotObject _data;
-    public TwitchBroadcasterSubscription[] Data { get; set; }
-    public ResponsePagination Pagination { get; set; }
+    public TwitchBroadcasterSubscription[] Data { get => field ??= _data?.GetArray<TwitchBroadcasterSubscription>("data"); set; }
+    public ResponsePagination Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
     public int Points { get; set; }
     public int Total { get; set; }
 
@@ -19,14 +19,14 @@ public partial class TwitchGetBroadcasterSubscriptionsResponse : RefCounted, ITw
     public static TwitchGetBroadcasterSubscriptionsResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchGetBroadcasterSubscriptionsResponse
+        var instance = new TwitchGetBroadcasterSubscriptionsResponse
         {
-            Data = dataArray.Select(TwitchBroadcasterSubscription.FromObject).ToArray(),
-            Pagination = data.Get("pagination").As<ResponsePagination>(),
             Points = data.Get("points").AsInt32(),
             Total = data.Get("total").AsInt32(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -57,10 +57,13 @@ public partial class TwitchGetBroadcasterSubscriptionsResponse : RefCounted, ITw
         public static ResponsePagination FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new ResponsePagination
+            var instance = new ResponsePagination
             {
                 Cursor = data.Get("cursor").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

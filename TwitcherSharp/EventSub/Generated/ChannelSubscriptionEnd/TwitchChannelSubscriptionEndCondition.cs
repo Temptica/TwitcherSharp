@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelSubscriptionEnd;
 
 public partial class TwitchChannelSubscriptionEndCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelSubscriptionEndCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchChannelSubscriptionEndCondition);
 
     /// <summary> 
@@ -21,7 +23,10 @@ public partial class TwitchChannelSubscriptionEndCondition(string broadcasterUse
     public static TwitchChannelSubscriptionEndCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelSubscriptionEndCondition(data.Get("broadcaster_user_id").AsString());
+        var instance = new TwitchChannelSubscriptionEndCondition(data.Get("broadcaster_user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelPointsCustomRewardRemove;
 
 public partial class TwitchChannelPointsCustomRewardRemoveEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelPointsCustomRewardRemoveEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The reward identifier.
     /// </summary>
@@ -71,12 +73,12 @@ public partial class TwitchChannelPointsCustomRewardRemoveEvent : RefCounted, IT
     /// <summary> 
     /// 
     /// </summary>
-    public TwitchMaxPerStream MaxPerStream { get; set; }
+    public TwitchMaxPerStream MaxPerStream { get => field ??= _data?.Get<TwitchMaxPerStream>("max_per_stream"); set; }
 
     /// <summary> 
     /// 
     /// </summary>
-    public TwitchMaxPerUserPerStream MaxPerUserPerStream { get; set; }
+    public TwitchMaxPerUserPerStream MaxPerUserPerStream { get => field ??= _data?.Get<TwitchMaxPerUserPerStream>("max_per_user_per_stream"); set; }
 
     /// <summary> 
     /// Custom background color for the reward. Format: Hex with # prefix. Example: #FA1ED2.
@@ -86,12 +88,12 @@ public partial class TwitchChannelPointsCustomRewardRemoveEvent : RefCounted, IT
     /// <summary> 
     /// 
     /// </summary>
-    public TwitchImage Image { get; set; }
+    public TwitchImage Image { get => field ??= _data?.Get<TwitchImage>("image"); set; }
 
     /// <summary> 
     /// 
     /// </summary>
-    public TwitchGlobalCooldown GlobalCooldown { get; set; }
+    public TwitchGlobalCooldown GlobalCooldown { get => field ??= _data?.Get<TwitchGlobalCooldown>("global_cooldown"); set; }
 
     /// <summary> 
     /// Timestamp of the cooldown expiration. null if the reward isn’t on cooldown.
@@ -109,7 +111,7 @@ public partial class TwitchChannelPointsCustomRewardRemoveEvent : RefCounted, IT
     public static TwitchChannelPointsCustomRewardRemoveEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelPointsCustomRewardRemoveEvent
+        var instance = new TwitchChannelPointsCustomRewardRemoveEvent
         {
             Id = data.Get("id").AsString(),
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
@@ -131,6 +133,9 @@ public partial class TwitchChannelPointsCustomRewardRemoveEvent : RefCounted, IT
             CooldownExpiresAt = data.Get("cooldown_expires_at").AsString(),
             RedemptionsRedeemedCurrentStream = data.Get("redemptions_redeemed_current_stream").AsInt32(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

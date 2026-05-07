@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelPollBegin;
 
 public partial class TwitchChannelPollBeginCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelPollBeginCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchChannelPollBeginCondition);
 
     /// <summary> 
@@ -21,7 +23,10 @@ public partial class TwitchChannelPollBeginCondition(string broadcasterUserId) :
     public static TwitchChannelPollBeginCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelPollBeginCondition(data.Get("broadcaster_user_id").AsString());
+        var instance = new TwitchChannelPollBeginCondition(data.Get("broadcaster_user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

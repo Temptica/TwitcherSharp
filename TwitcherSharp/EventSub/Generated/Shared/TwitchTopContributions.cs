@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.Shared;
 
 public partial class TwitchTopContributions : RefCounted, ITwitcherSharpEventSub<TwitchTopContributions>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The ID of the user that made the contribution.
     /// </summary>
@@ -39,7 +41,7 @@ public partial class TwitchTopContributions : RefCounted, ITwitcherSharpEventSub
     public static TwitchTopContributions FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchTopContributions
+        var instance = new TwitchTopContributions
         {
             UserId = data.Get("user_id").AsString(),
             UserLogin = data.Get("user_login").AsString(),
@@ -47,6 +49,9 @@ public partial class TwitchTopContributions : RefCounted, ITwitcherSharpEventSub
             Type = data.Get("type").AsString(),
             Total = data.Get("total").AsInt32(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

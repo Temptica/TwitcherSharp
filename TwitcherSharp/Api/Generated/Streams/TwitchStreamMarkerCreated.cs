@@ -18,13 +18,16 @@ public partial class TwitchStreamMarkerCreated : RefCounted, ITwitcherSharp<Twit
     public static TwitchStreamMarkerCreated FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchStreamMarkerCreated
+        var instance = new TwitchStreamMarkerCreated
         {
             Id = data.Get("id").AsString(),
             CreatedAt = data.Get("created_at").AsString(),
             PositionSeconds = data.Get("position_seconds").AsInt32(),
             Description = data.Get("description").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

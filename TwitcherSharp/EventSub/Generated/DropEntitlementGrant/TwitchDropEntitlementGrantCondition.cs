@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.DropEntitlementGrant;
 
 public partial class TwitchDropEntitlementGrantCondition(string organizationId) : RefCounted, ITwitcherSharpCondition<TwitchDropEntitlementGrantCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchDropEntitlementGrantCondition);
 
     /// <summary> 
@@ -31,11 +33,14 @@ public partial class TwitchDropEntitlementGrantCondition(string organizationId) 
     public static TwitchDropEntitlementGrantCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchDropEntitlementGrantCondition(data.Get("organization_id").AsString())
+        var instance = new TwitchDropEntitlementGrantCondition(data.Get("organization_id").AsString())
         {
             CategoryId = data.Get("category_id").AsString(),
             CampaignId = data.Get("campaign_id").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

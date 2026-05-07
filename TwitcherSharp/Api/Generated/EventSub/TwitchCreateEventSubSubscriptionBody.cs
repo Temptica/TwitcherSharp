@@ -9,8 +9,8 @@ public partial class TwitchCreateEventSubSubscriptionBody<T> : RefCounted, ITwit
     private GodotObject _data;
     public string Type { get; set; }
     public string Version { get; set; }
-    public ITwitcherSharpCondition<T> Condition { get; set; }
-    public TwitchBodyTransport Transport { get; set; }
+    public ITwitcherSharpCondition<T> Condition { get => field ??= T.FromDictionary(_data?.Get("{field.Name.ToSnakeCase()}").AsGodotDictionary()); set; }
+    public TwitchBodyTransport Transport { get => field ??= _data?.Get<TwitchBodyTransport>("transport"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCreateEventSubSubscriptionBody object.
@@ -18,13 +18,14 @@ public partial class TwitchCreateEventSubSubscriptionBody<T> : RefCounted, ITwit
     public static TwitchCreateEventSubSubscriptionBody<T> FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchCreateEventSubSubscriptionBody<T>
+        var instance = new TwitchCreateEventSubSubscriptionBody<T>
         {
             Type = data.Get("type").AsString(),
             Version = data.Get("version").AsString(),
-            Condition = T.FromDictionary(data.Get("condition").AsGodotDictionary()),
-            Transport = data.Get("transport").As<TwitchBodyTransport>(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -57,7 +58,7 @@ public partial class TwitchCreateEventSubSubscriptionBody<T> : RefCounted, ITwit
         public static TwitchBodyTransport FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchBodyTransport
+            var instance = new TwitchBodyTransport
             {
                 Method = data.Get("method").AsString(),
                 Callback = data.Get("callback").AsString(),
@@ -65,6 +66,9 @@ public partial class TwitchCreateEventSubSubscriptionBody<T> : RefCounted, ITwit
                 SessionId = data.Get("session_id").AsString(),
                 ConduitId = data.Get("conduit_id").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

@@ -11,7 +11,7 @@ public partial class TwitchEmote : RefCounted, ITwitcherSharp<TwitchEmote>, ITwi
     private GodotObject _data;
     public string Id { get; set; }
     public string Name { get; set; }
-    public ITwitchImages Images { get; set; }
+    public ITwitchImages Images { get => field ??= _data?.Get<TwitchResponseImages>("images"); set; }
     public string EmoteType { get; set; }
     public string EmoteSetId { get; set; }
     public string OwnerId { get; set; }
@@ -25,11 +25,10 @@ public partial class TwitchEmote : RefCounted, ITwitcherSharp<TwitchEmote>, ITwi
     public static TwitchEmote FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchEmote
+        var instance = new TwitchEmote
         {
             Id = data.Get("id").AsString(),
             Name = data.Get("name").AsString(),
-            Images = data.Get("images").As<TwitchResponseImages>(),
             EmoteType = data.Get("emote_type").AsString(),
             EmoteSetId = data.Get("emote_set_id").AsString(),
             OwnerId = data.Get("owner_id").AsString(),
@@ -37,6 +36,9 @@ public partial class TwitchEmote : RefCounted, ITwitcherSharp<TwitchEmote>, ITwi
             Scale = data.Get("scale").AsStringArray(),
             ThemeMode = data.Get("theme_mode").AsStringArray(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -73,12 +75,15 @@ public partial class TwitchEmote : RefCounted, ITwitcherSharp<TwitchEmote>, ITwi
         public static TwitchResponseImages FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchResponseImages
+            var instance = new TwitchResponseImages
             {
                 Url1x = data.Get("url_1x").AsString(),
                 Url2x = data.Get("url_2x").AsString(),
                 Url4x = data.Get("url_4x").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

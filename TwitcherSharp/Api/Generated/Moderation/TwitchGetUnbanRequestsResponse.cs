@@ -8,8 +8,8 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 public partial class TwitchGetUnbanRequestsResponse : RefCounted, ITwitcherSharp<TwitchGetUnbanRequestsResponse>
 {
     private GodotObject _data;
-    public TwitchResponseData[] Data { get; set; }
-    public ResponsePagination Pagination { get; set; }
+    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
+    public ResponsePagination Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetUnbanRequestsResponse object.
@@ -17,12 +17,10 @@ public partial class TwitchGetUnbanRequestsResponse : RefCounted, ITwitcherSharp
     public static TwitchGetUnbanRequestsResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchGetUnbanRequestsResponse
-        {
-            Data = dataArray.Select(TwitchResponseData.FromObject).ToArray(),
-            Pagination = data.Get("pagination").As<ResponsePagination>(),
-        };
+        var instance = new TwitchGetUnbanRequestsResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -51,10 +49,13 @@ public partial class TwitchGetUnbanRequestsResponse : RefCounted, ITwitcherSharp
         public static ResponsePagination FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new ResponsePagination
+            var instance = new ResponsePagination
             {
                 Cursor = data.Get("cursor").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -96,7 +97,7 @@ public partial class TwitchGetUnbanRequestsResponse : RefCounted, ITwitcherSharp
         public static TwitchResponseData FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchResponseData
+            var instance = new TwitchResponseData
             {
                 Id = data.Get("id").AsString(),
                 BroadcasterId = data.Get("broadcaster_id").AsString(),
@@ -114,6 +115,9 @@ public partial class TwitchGetUnbanRequestsResponse : RefCounted, ITwitcherSharp
                 ResolvedAt = data.Get("resolved_at").AsString(),
                 ResolutionText = data.Get("resolution_text").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

@@ -23,7 +23,7 @@ public partial class TwitchGetEventsubSubscriptionsOpt : RefCounted, ITwitcherSh
     public static TwitchGetEventsubSubscriptionsOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGetEventsubSubscriptionsOpt
+        var instance = new TwitchGetEventsubSubscriptionsOpt
         {
             Status = data.Get("status").AsString(),
             Type = data.Get("type").AsString(),
@@ -31,6 +31,9 @@ public partial class TwitchGetEventsubSubscriptionsOpt : RefCounted, ITwitcherSh
             SubscriptionId = data.Get("subscription_id").AsString(),
             After = data.Get("after").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

@@ -18,13 +18,16 @@ public partial class TwitchSendExtensionPubSubMessageBody : RefCounted, ITwitche
     public static TwitchSendExtensionPubSubMessageBody FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchSendExtensionPubSubMessageBody
+        var instance = new TwitchSendExtensionPubSubMessageBody
         {
             Target = data.Get("target").AsStringArray(),
             BroadcasterId = data.Get("broadcaster_id").AsString(),
             IsGlobalBroadcast = data.Get("is_global_broadcast").AsBool(),
             Message = data.Get("message").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

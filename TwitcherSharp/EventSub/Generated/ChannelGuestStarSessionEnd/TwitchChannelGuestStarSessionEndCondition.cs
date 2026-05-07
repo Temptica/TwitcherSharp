@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelGuestStarSessionEnd;
 
 public partial class TwitchChannelGuestStarSessionEndCondition(string broadcasterUserId, string moderatorUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelGuestStarSessionEndCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchChannelGuestStarSessionEndCondition);
 
     /// <summary> 
@@ -26,7 +28,10 @@ public partial class TwitchChannelGuestStarSessionEndCondition(string broadcaste
     public static TwitchChannelGuestStarSessionEndCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelGuestStarSessionEndCondition(data.Get("broadcaster_user_id").AsString(), data.Get("moderator_user_id").AsString());
+        var instance = new TwitchChannelGuestStarSessionEndCondition(data.Get("broadcaster_user_id").AsString(), data.Get("moderator_user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

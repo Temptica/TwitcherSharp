@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelModerate;
 
 public partial class TwitchChannelModerateCondition(string broadcasterUserId, string moderatorUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelModerateCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchChannelModerateCondition);
 
     /// <summary> 
@@ -26,7 +28,10 @@ public partial class TwitchChannelModerateCondition(string broadcasterUserId, st
     public static TwitchChannelModerateCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelModerateCondition(data.Get("broadcaster_user_id").AsString(), data.Get("moderator_user_id").AsString());
+        var instance = new TwitchChannelModerateCondition(data.Get("broadcaster_user_id").AsString(), data.Get("moderator_user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.CCLs;
 public partial class TwitchGetContentClassificationLabelsResponse : RefCounted, ITwitcherSharp<TwitchGetContentClassificationLabelsResponse>
 {
     private GodotObject _data;
-    public TwitchContentClassificationLabel[] Data { get; set; }
+    public TwitchContentClassificationLabel[] Data { get => field ??= _data?.GetArray<TwitchContentClassificationLabel>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetContentClassificationLabelsResponse object.
@@ -15,11 +15,10 @@ public partial class TwitchGetContentClassificationLabelsResponse : RefCounted, 
     public static TwitchGetContentClassificationLabelsResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchGetContentClassificationLabelsResponse
-        {
-            Data = dataArray.Select(TwitchContentClassificationLabel.FromObject).ToArray(),
-        };
+        var instance = new TwitchGetContentClassificationLabelsResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

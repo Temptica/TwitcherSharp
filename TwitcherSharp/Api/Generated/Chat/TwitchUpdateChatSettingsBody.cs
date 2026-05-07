@@ -23,7 +23,7 @@ public partial class TwitchUpdateChatSettingsBody : RefCounted, ITwitcherSharp<T
     public static TwitchUpdateChatSettingsBody FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchUpdateChatSettingsBody
+        var instance = new TwitchUpdateChatSettingsBody
         {
             EmoteMode = data.Get("emote_mode").AsBool(),
             FollowerMode = data.Get("follower_mode").AsBool(),
@@ -35,6 +35,9 @@ public partial class TwitchUpdateChatSettingsBody : RefCounted, ITwitcherSharp<T
             SubscriberMode = data.Get("subscriber_mode").AsBool(),
             UniqueChatMode = data.Get("unique_chat_mode").AsBool(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

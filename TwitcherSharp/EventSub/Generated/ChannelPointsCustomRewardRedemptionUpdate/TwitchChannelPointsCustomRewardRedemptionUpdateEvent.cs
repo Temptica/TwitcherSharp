@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelPointsCustomRewardRedemptionUp
 
 public partial class TwitchChannelPointsCustomRewardRedemptionUpdateEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelPointsCustomRewardRedemptionUpdateEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The redemption identifier.
     /// </summary>
@@ -56,7 +58,7 @@ public partial class TwitchChannelPointsCustomRewardRedemptionUpdateEvent : RefC
     /// <summary> 
     /// 
     /// </summary>
-    public TwitchReward Reward { get; set; }
+    public TwitchReward Reward { get => field ??= _data?.Get<TwitchReward>("reward"); set; }
 
     /// <summary> 
     /// RFC3339 timestamp of when the reward was redeemed.
@@ -69,7 +71,7 @@ public partial class TwitchChannelPointsCustomRewardRedemptionUpdateEvent : RefC
     public static TwitchChannelPointsCustomRewardRedemptionUpdateEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelPointsCustomRewardRedemptionUpdateEvent
+        var instance = new TwitchChannelPointsCustomRewardRedemptionUpdateEvent
         {
             Id = data.Get("id").AsString(),
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
@@ -83,6 +85,9 @@ public partial class TwitchChannelPointsCustomRewardRedemptionUpdateEvent : RefC
             Reward = TwitchReward.FromObject(data.Get("reward").AsGodotObject()),
             RedeemedAt = data.Get("redeemed_at").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

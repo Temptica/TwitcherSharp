@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelRaid;
 
 public partial class TwitchChannelRaidCondition() : RefCounted, ITwitcherSharpCondition<TwitchChannelRaidCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchChannelRaidCondition);
 
     /// <summary> 
@@ -26,11 +28,14 @@ public partial class TwitchChannelRaidCondition() : RefCounted, ITwitcherSharpCo
     public static TwitchChannelRaidCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelRaidCondition
+        var instance = new TwitchChannelRaidCondition
         {
             FromBroadcasterUserId = data.Get("from_broadcaster_user_id").AsString(),
             ToBroadcasterUserId = data.Get("to_broadcaster_user_id").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

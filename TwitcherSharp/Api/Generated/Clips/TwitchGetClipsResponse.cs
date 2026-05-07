@@ -8,8 +8,8 @@ namespace TwitcherSharp.Api.Generated.Clips;
 public partial class TwitchGetClipsResponse : RefCounted, ITwitcherSharp<TwitchGetClipsResponse>
 {
     private GodotObject _data;
-    public TwitchClip[] Data { get; set; }
-    public ResponsePagination Pagination { get; set; }
+    public TwitchClip[] Data { get => field ??= _data?.GetArray<TwitchClip>("data"); set; }
+    public ResponsePagination Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetClipsResponse object.
@@ -17,12 +17,10 @@ public partial class TwitchGetClipsResponse : RefCounted, ITwitcherSharp<TwitchG
     public static TwitchGetClipsResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchGetClipsResponse
-        {
-            Data = dataArray.Select(TwitchClip.FromObject).ToArray(),
-            Pagination = data.Get("pagination").As<ResponsePagination>(),
-        };
+        var instance = new TwitchGetClipsResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -51,10 +49,13 @@ public partial class TwitchGetClipsResponse : RefCounted, ITwitcherSharp<TwitchG
         public static ResponsePagination FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new ResponsePagination
+            var instance = new ResponsePagination
             {
                 Cursor = data.Get("cursor").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

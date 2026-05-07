@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.Shared;
 
 public partial class TwitchTopPredictors : RefCounted, ITwitcherSharpEventSub<TwitchTopPredictors>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The ID of the user.
     /// </summary>
@@ -39,7 +41,7 @@ public partial class TwitchTopPredictors : RefCounted, ITwitcherSharpEventSub<Tw
     public static TwitchTopPredictors FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchTopPredictors
+        var instance = new TwitchTopPredictors
         {
             UserId = data.Get("user_id").AsString(),
             UserLogin = data.Get("user_login").AsString(),
@@ -47,6 +49,9 @@ public partial class TwitchTopPredictors : RefCounted, ITwitcherSharpEventSub<Tw
             ChannelPointsWon = data.Get("channel_points_won").AsInt32(),
             ChannelPointsUsed = data.Get("channel_points_used").AsInt32(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

@@ -19,10 +19,13 @@ public partial class TwitchGetExtensionConfigurationSegmentOpt : RefCounted, ITw
     public static TwitchGetExtensionConfigurationSegmentOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGetExtensionConfigurationSegmentOpt
+        var instance = new TwitchGetExtensionConfigurationSegmentOpt
         {
             BroadcasterId = data.Get("broadcaster_id").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

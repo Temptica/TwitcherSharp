@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Chat;
 public partial class TwitchUpdateChatSettingsResponse : RefCounted, ITwitcherSharp<TwitchUpdateChatSettingsResponse>
 {
     private GodotObject _data;
-    public TwitchChatSettingsUpdated[] Data { get; set; }
+    public TwitchChatSettingsUpdated[] Data { get => field ??= _data?.GetArray<TwitchChatSettingsUpdated>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUpdateChatSettingsResponse object.
@@ -15,11 +15,10 @@ public partial class TwitchUpdateChatSettingsResponse : RefCounted, ITwitcherSha
     public static TwitchUpdateChatSettingsResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchUpdateChatSettingsResponse
-        {
-            Data = dataArray.Select(TwitchChatSettingsUpdated.FromObject).ToArray(),
-        };
+        var instance = new TwitchUpdateChatSettingsResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 public partial class TwitchCheckAutoModStatusResponse : RefCounted, ITwitcherSharp<TwitchCheckAutoModStatusResponse>
 {
     private GodotObject _data;
-    public TwitchAutoModStatus[] Data { get; set; }
+    public TwitchAutoModStatus[] Data { get => field ??= _data?.GetArray<TwitchAutoModStatus>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCheckAutoModStatusResponse object.
@@ -15,11 +15,10 @@ public partial class TwitchCheckAutoModStatusResponse : RefCounted, ITwitcherSha
     public static TwitchCheckAutoModStatusResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchCheckAutoModStatusResponse
-        {
-            Data = dataArray.Select(TwitchAutoModStatus.FromObject).ToArray(),
-        };
+        var instance = new TwitchCheckAutoModStatusResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

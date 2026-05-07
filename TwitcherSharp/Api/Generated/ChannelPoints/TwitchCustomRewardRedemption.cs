@@ -14,7 +14,7 @@ public partial class TwitchCustomRewardRedemption : RefCounted, ITwitcherSharp<T
     public string UserId { get; set; }
     public string UserName { get; set; }
     public string UserLogin { get; set; }
-    public TwitchReward Reward { get; set; }
+    public TwitchReward Reward { get => field ??= _data?.Get<TwitchReward>("reward"); set; }
     public string UserInput { get; set; }
     public string Status { get; set; }
     public string RedeemedAt { get; set; }
@@ -25,7 +25,7 @@ public partial class TwitchCustomRewardRedemption : RefCounted, ITwitcherSharp<T
     public static TwitchCustomRewardRedemption FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchCustomRewardRedemption
+        var instance = new TwitchCustomRewardRedemption
         {
             BroadcasterId = data.Get("broadcaster_id").AsString(),
             BroadcasterLogin = data.Get("broadcaster_login").AsString(),
@@ -34,11 +34,13 @@ public partial class TwitchCustomRewardRedemption : RefCounted, ITwitcherSharp<T
             UserId = data.Get("user_id").AsString(),
             UserName = data.Get("user_name").AsString(),
             UserLogin = data.Get("user_login").AsString(),
-            Reward = data.Get("reward").As<TwitchReward>(),
             UserInput = data.Get("user_input").AsString(),
             Status = data.Get("status").AsString(),
             RedeemedAt = data.Get("redeemed_at").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -76,13 +78,16 @@ public partial class TwitchCustomRewardRedemption : RefCounted, ITwitcherSharp<T
         public static TwitchReward FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchReward
+            var instance = new TwitchReward
             {
                 Id = data.Get("id").AsString(),
                 Title = data.Get("title").AsString(),
                 Prompt = data.Get("prompt").AsString(),
                 Cost = data.Get("cost").AsInt32(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelSuspiciousUserMessage;
 
 public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelSuspiciousUserMessageEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The ID of the channel where the treatment for a suspicious user was updated.
     /// </summary>
@@ -61,7 +63,7 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
     /// <summary> 
     /// 
     /// </summary>
-    public TwitchMessage Message { get; set; }
+    public TwitchMessage Message { get => field ??= _data?.Get<TwitchMessage>("message"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelSuspiciousUserMessageEvent object.
@@ -69,7 +71,7 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
     public static TwitchChannelSuspiciousUserMessageEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelSuspiciousUserMessageEvent
+        var instance = new TwitchChannelSuspiciousUserMessageEvent
         {
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
             BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
@@ -83,6 +85,9 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
             BanEvasionEvaluation = data.Get("ban_evasion_evaluation").AsString(),
             Message = TwitchMessage.FromObject(data.Get("message").AsGodotObject()),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -107,6 +112,8 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
 
     public partial class TwitchMessage : RefCounted, ITwitcherSharpEventSub<TwitchMessage>
     {
+        private GodotObject _data;
+        
         /// <summary> 
         /// The UUID that identifies the message.
         /// </summary>
@@ -120,7 +127,7 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
         /// <summary> 
         /// Ordered list of chat message fragments.
         /// </summary>
-        public TwitchFragments[] Fragments { get; set; }
+        public TwitchFragments[] Fragments { get => field ??= _data?.GetArray<TwitchFragments>("fragments"); set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchMessage object.
@@ -129,12 +136,15 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
         {
             if(data == null) return null;
             var fragmentsArray = data.Get("fragments").AsGodotArray<GodotObject>();
-            return new TwitchMessage
+            var instance = new TwitchMessage
             {
                 MessageId = data.Get("message_id").AsString(),
                 Text = data.Get("text").AsString(),
                 Fragments = fragmentsArray.Select(TwitchFragments.FromObject).ToArray(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -151,6 +161,8 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
     
         public partial class TwitchFragments : RefCounted, ITwitcherSharpEventSub<TwitchFragments>
         {
+            private GodotObject _data;
+            
             /// <summary> 
             /// The type of message fragment. Possible values: -text -cheermote -emote
             /// </summary>
@@ -164,12 +176,12 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
             /// <summary> 
             /// Optional. Metadata pertaining to the cheermote.
             /// </summary>
-            public TwitchCheermote Cheermote { get; set; }
+            public TwitchCheermote Cheermote { get => field ??= _data?.Get<TwitchCheermote>("cheermote"); set; }
         
             /// <summary> 
             /// Optional. Metadata pertaining to the emote.
             /// </summary>
-            public TwitchEmote Emote { get; set; }
+            public TwitchEmote Emote { get => field ??= _data?.Get<TwitchEmote>("emote"); set; }
         
             /// <summary> 
             /// Transforms the godot data into a TwitchFragments object.
@@ -177,13 +189,16 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
             public static TwitchFragments FromObject(GodotObject data)
             {
                 if(data == null) return null;
-                return new TwitchFragments
+                var instance = new TwitchFragments
                 {
                     Type = data.Get("type").AsString(),
                     Text = data.Get("text").AsString(),
                     Cheermote = TwitchCheermote.FromObject(data.Get("cheermote").AsGodotObject()),
                     Emote = TwitchEmote.FromObject(data.Get("emote").AsGodotObject()),
                 };
+                
+                instance._data = data;
+                return instance;
             }
         
             public GodotObject ToGodotObject()
@@ -201,6 +216,8 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
         
             public partial class TwitchCheermote : RefCounted, ITwitcherSharpEventSub<TwitchCheermote>
             {
+                private GodotObject _data;
+                
                 /// <summary> 
                 /// The name portion of the Cheermote string that you use in chat to cheer Bits. The full Cheermote string is the concatenation of {prefix} + {number of Bits}.   For example, if the prefix is “Cheer” and you want to cheer 100 Bits, the full Cheermote string is Cheer100. When the Cheermote string is entered in chat, Twitch converts it to the image associated with the Bits tier that was cheered.
                 /// </summary>
@@ -222,12 +239,15 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
                 public static TwitchCheermote FromObject(GodotObject data)
                 {
                     if(data == null) return null;
-                    return new TwitchCheermote
+                    var instance = new TwitchCheermote
                     {
                         Prefix = data.Get("prefix").AsString(),
                         Bits = data.Get("bits").AsString(),
                         Tier = data.Get("tier").AsString(),
                     };
+                    
+                    instance._data = data;
+                    return instance;
                 }
             
                 public GodotObject ToGodotObject()
@@ -244,6 +264,8 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
         
             public partial class TwitchEmote : RefCounted, ITwitcherSharpEventSub<TwitchEmote>
             {
+                private GodotObject _data;
+                
                 /// <summary> 
                 /// An ID that uniquely identifies this emote.
                 /// </summary>
@@ -260,11 +282,14 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
                 public static TwitchEmote FromObject(GodotObject data)
                 {
                     if(data == null) return null;
-                    return new TwitchEmote
+                    var instance = new TwitchEmote
                     {
                         Id = data.Get("id").AsString(),
                         EmoteSetId = data.Get("emote_set_id").AsString(),
                     };
+                    
+                    instance._data = data;
+                    return instance;
                 }
             
                 public GodotObject ToGodotObject()

@@ -8,7 +8,7 @@ public partial class TwitchUpdateExtensionBitsProductBody : RefCounted, ITwitche
 {
     private GodotObject _data;
     public string Sku { get; set; }
-    public TwitchBodyCost Cost { get; set; }
+    public TwitchBodyCost Cost { get => field ??= _data?.Get<TwitchBodyCost>("cost"); set; }
     public string DisplayName { get; set; }
     public bool? InDevelopment { get; set; }
     public string Expiration { get; set; }
@@ -20,15 +20,17 @@ public partial class TwitchUpdateExtensionBitsProductBody : RefCounted, ITwitche
     public static TwitchUpdateExtensionBitsProductBody FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchUpdateExtensionBitsProductBody
+        var instance = new TwitchUpdateExtensionBitsProductBody
         {
             Sku = data.Get("sku").AsString(),
-            Cost = data.Get("cost").As<TwitchBodyCost>(),
             DisplayName = data.Get("display_name").AsString(),
             InDevelopment = data.Get("in_development").AsBool(),
             Expiration = data.Get("expiration").AsString(),
             IsBroadcast = data.Get("is_broadcast").AsBool(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -60,11 +62,14 @@ public partial class TwitchUpdateExtensionBitsProductBody : RefCounted, ITwitche
         public static TwitchBodyCost FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchBodyCost
+            var instance = new TwitchBodyCost
             {
                 Amount = data.Get("amount").AsInt32(),
                 Type = data.Get("type").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

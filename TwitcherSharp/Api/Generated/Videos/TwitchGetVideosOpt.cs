@@ -28,7 +28,7 @@ public partial class TwitchGetVideosOpt : RefCounted, ITwitcherSharp<TwitchGetVi
     public static TwitchGetVideosOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGetVideosOpt
+        var instance = new TwitchGetVideosOpt
         {
             Id = data.Get("id").AsStringArray(),
             UserId = data.Get("user_id").AsString(),
@@ -41,6 +41,9 @@ public partial class TwitchGetVideosOpt : RefCounted, ITwitcherSharp<TwitchGetVi
             After = data.Get("after").AsString(),
             Before = data.Get("before").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

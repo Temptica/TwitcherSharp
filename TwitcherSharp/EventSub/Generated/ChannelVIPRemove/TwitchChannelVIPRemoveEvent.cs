@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelVIPRemove;
 
 public partial class TwitchChannelVIPRemoveEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelVIPRemoveEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The ID of the user who was removed as a VIP.
     /// </summary>
@@ -44,7 +46,7 @@ public partial class TwitchChannelVIPRemoveEvent : RefCounted, ITwitcherSharpEve
     public static TwitchChannelVIPRemoveEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelVIPRemoveEvent
+        var instance = new TwitchChannelVIPRemoveEvent
         {
             UserId = data.Get("user_id").AsString(),
             UserLogin = data.Get("user_login").AsString(),
@@ -53,6 +55,9 @@ public partial class TwitchChannelVIPRemoveEvent : RefCounted, ITwitcherSharpEve
             BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
             BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

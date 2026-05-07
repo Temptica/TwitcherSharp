@@ -23,7 +23,7 @@ public partial class TwitchGetCustomRewardRedemptionOpt : RefCounted, ITwitcherS
     public static TwitchGetCustomRewardRedemptionOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGetCustomRewardRedemptionOpt
+        var instance = new TwitchGetCustomRewardRedemptionOpt
         {
             Status = data.Get("status").AsString(),
             Id = data.Get("id").AsStringArray(),
@@ -31,6 +31,9 @@ public partial class TwitchGetCustomRewardRedemptionOpt : RefCounted, ITwitcherS
             After = data.Get("after").AsString(),
             First = data.Get("first").AsInt32(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

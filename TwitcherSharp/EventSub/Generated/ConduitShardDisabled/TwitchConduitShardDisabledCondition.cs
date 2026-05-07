@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ConduitShardDisabled;
 
 public partial class TwitchConduitShardDisabledCondition(string clientId) : RefCounted, ITwitcherSharpCondition<TwitchConduitShardDisabledCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchConduitShardDisabledCondition);
 
     /// <summary> 
@@ -26,10 +28,13 @@ public partial class TwitchConduitShardDisabledCondition(string clientId) : RefC
     public static TwitchConduitShardDisabledCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchConduitShardDisabledCondition(data.Get("client_id").AsString())
+        var instance = new TwitchConduitShardDisabledCondition(data.Get("client_id").AsString())
         {
             ConduitId = data.Get("conduit_id").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

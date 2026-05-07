@@ -20,11 +20,14 @@ public partial class TwitchGetUserEmotesOpt : RefCounted, ITwitcherSharp<TwitchG
     public static TwitchGetUserEmotesOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGetUserEmotesOpt
+        var instance = new TwitchGetUserEmotesOpt
         {
             After = data.Get("after").AsString(),
             BroadcasterId = data.Get("broadcaster_id").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

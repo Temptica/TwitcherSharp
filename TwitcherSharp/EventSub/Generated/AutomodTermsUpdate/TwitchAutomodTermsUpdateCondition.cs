@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.AutomodTermsUpdate;
 
 public partial class TwitchAutomodTermsUpdateCondition(string broadcasterUserId, string moderatorUserId) : RefCounted, ITwitcherSharpCondition<TwitchAutomodTermsUpdateCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchAutomodTermsUpdateCondition);
 
     /// <summary> 
@@ -26,7 +28,10 @@ public partial class TwitchAutomodTermsUpdateCondition(string broadcasterUserId,
     public static TwitchAutomodTermsUpdateCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchAutomodTermsUpdateCondition(data.Get("broadcaster_user_id").AsString(), data.Get("moderator_user_id").AsString());
+        var instance = new TwitchAutomodTermsUpdateCondition(data.Get("broadcaster_user_id").AsString(), data.Get("moderator_user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

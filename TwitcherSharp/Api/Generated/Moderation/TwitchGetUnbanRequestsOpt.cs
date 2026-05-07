@@ -21,12 +21,15 @@ public partial class TwitchGetUnbanRequestsOpt : RefCounted, ITwitcherSharp<Twit
     public static TwitchGetUnbanRequestsOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGetUnbanRequestsOpt
+        var instance = new TwitchGetUnbanRequestsOpt
         {
             UserId = data.Get("user_id").AsString(),
             After = data.Get("after").AsString(),
             First = data.Get("first").AsInt32(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

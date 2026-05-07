@@ -52,6 +52,8 @@ public static class EventSubCodeHelper
         code.AppendLine(header.Replace("{{ClassName}}", component.ClassName));
 
         code.AppendLine("{");
+        code.AppendIndentedLine("private GodotObject _data;\n", 1);
+
         if (isCondition)
         {
             code.AppendIndentedLine($"public string Name => nameof({component.ClassName});", level + 1);
@@ -68,7 +70,13 @@ public static class EventSubCodeHelper
             var fieldType = field.Type;
             if (field.IsArray && !fieldType.Contains("[]")) fieldType += "[]";
 
-            if (field.IsRequired)
+            if ((field.IsArray &&field.TypedComponent != null) || field.IsTyped)
+            {
+                code.AppendIndentedLine(
+                    $"public {fieldType} {field.Name} {{ get => field ??= _data?.Get{(field.IsArray ? "Array" : "")}<{field.Type.Remove("[]")}>(\"{field.Name.ToSnakeCase()}\"); set; }}{(field.IsRequired ? $"= {field.Name.ToCamelCase()};" : "")}",
+                    1);
+            }
+            else if (field.IsRequired)
                 code.AppendIndentedLine(
                     $"public {fieldType} {field.Name} {{ get; set; }} = {field.Name.ToCamelCase()};", 1);
             else code.AppendIndentedLine($"public {fieldType} {field.Name} {{ get; set; }}", 1);
@@ -96,12 +104,12 @@ public static class EventSubCodeHelper
                 var requiredFields = string.Join(", ",
                     component.GetRequiredFields().Select(field =>
                         $"""data.Get("{field.Name.ToSnakeCase()}").{field.GetAsType()}"""));
-                
-                var requiredCode = $"return new {component.ClassName}({requiredFields})";
-                if (component.Fields.Count(f => !f.Value.IsRequired) == 0) requiredCode += ";";
+
+                var requiredCode = $"var instance = new {component.ClassName}({requiredFields})";
+                if (component.Fields.All(f => f.Value.IsRequired)) requiredCode += ";";
                 code.AppendIndentedLine(requiredCode, 2);
             }
-            else code.AppendIndentedLine($"return new {component.ClassName}", 2);
+            else code.AppendIndentedLine($"var instance = new {component.ClassName}", 2);
 
             var nonRequiredFields = fields.Where(f => !isCondition || !f.IsRequired).ToList();
 
@@ -130,6 +138,8 @@ public static class EventSubCodeHelper
 
                 code.AppendIndentedLine("};", 2);
             }
+
+            code.AppendIndentedLine("\ninstance._data = data;\nreturn instance;", 2);
 
             code.AppendIndentedLine("}", 1);
             code.Append(Environment.NewLine);
@@ -212,7 +222,7 @@ public static class EventSubCodeHelper
                 var requiredFields = string.Join(", ",
                     component.GetRequiredFields().Select(f => $"""data["{f.Name.ToSnakeCase()}"].{f.GetAsType()}"""));
                 fromDictionaryCode = fromDictionaryCode.Replace("{{RequiredProperties}}", $"({requiredFields})");
-                
+
                 // var requiredCode = $"return new {component.ClassName}({requiredFields})";
                 // if (component.Fields.Count(f => !f.Value.IsRequired) == 0) requiredCode += ";";
                 // code.AppendIndentedLine(requiredCode, 2);
@@ -224,8 +234,7 @@ public static class EventSubCodeHelper
 
             code.AppendIndentedLine(fromDictionaryCode, 1);
 
-            
-            
+
             foreach (var field in component.Fields.Values.Where(f => !f.IsRequired))
             {
                 var fieldCode = field switch
@@ -262,14 +271,12 @@ public static class EventSubCodeHelper
         var nonSharedSubComponents = component.SubComponents.Values
             .Where(s => !s.IsShared)
             .ToList();
-
         foreach (var subComponent in nonSharedSubComponents)
         {
             code.AppendLine();
             code.AppendIndentedLine(GenerateComponent(subComponent, level, type), level + 1);
             code.AppendIndentedLine("}", level + 1);
         }
-
 
         return code.ToString().TrimEnd();
     }

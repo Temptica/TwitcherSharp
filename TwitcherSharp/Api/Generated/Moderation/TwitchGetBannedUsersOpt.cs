@@ -22,13 +22,16 @@ public partial class TwitchGetBannedUsersOpt : RefCounted, ITwitcherSharp<Twitch
     public static TwitchGetBannedUsersOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGetBannedUsersOpt
+        var instance = new TwitchGetBannedUsersOpt
         {
             UserId = data.Get("user_id").AsStringArray(),
             First = data.Get("first").AsInt32(),
             After = data.Get("after").AsString(),
             Before = data.Get("before").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

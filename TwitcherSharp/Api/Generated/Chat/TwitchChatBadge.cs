@@ -8,7 +8,7 @@ public partial class TwitchChatBadge : RefCounted, ITwitcherSharp<TwitchChatBadg
 {
     private GodotObject _data;
     public string SetId { get; set; }
-    public TwitchVersions[] Versions { get; set; }
+    public TwitchVersions[] Versions { get => field ??= _data?.GetArray<TwitchVersions>("versions"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChatBadge object.
@@ -16,12 +16,13 @@ public partial class TwitchChatBadge : RefCounted, ITwitcherSharp<TwitchChatBadg
     public static TwitchChatBadge FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var versionsArray = data.Get("versions").AsGodotArray<GodotObject>();
-        return new TwitchChatBadge
+        var instance = new TwitchChatBadge
         {
             SetId = data.Get("set_id").AsString(),
-            Versions = versionsArray.Select(TwitchVersions.FromObject).ToArray(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -54,7 +55,7 @@ public partial class TwitchChatBadge : RefCounted, ITwitcherSharp<TwitchChatBadg
         public static TwitchVersions FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchVersions
+            var instance = new TwitchVersions
             {
                 Id = data.Get("id").AsString(),
                 ImageUrl1x = data.Get("image_url_1x").AsString(),
@@ -65,6 +66,9 @@ public partial class TwitchChatBadge : RefCounted, ITwitcherSharp<TwitchChatBadg
                 ClickAction = data.Get("click_action").AsString(),
                 ClickUrl = data.Get("click_url").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

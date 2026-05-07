@@ -16,11 +16,14 @@ public partial class TwitchCreateStreamMarkerBody : RefCounted, ITwitcherSharp<T
     public static TwitchCreateStreamMarkerBody FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchCreateStreamMarkerBody
+        var instance = new TwitchCreateStreamMarkerBody
         {
             UserId = data.Get("user_id").AsString(),
             Description = data.Get("description").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
