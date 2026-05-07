@@ -44,6 +44,11 @@ public static class EventSubCodeHelper
         var code = new StringBuilder();
 
         var header = isCondition ? EventSubCodeStrings.ConditionSubHeader : EventSubCodeStrings.EventSubHeader;
+        if (isCondition)
+            header = header.Replace("{{requiredFields}}",
+                string.Join(", ", component.Fields
+                    .Where(f => f.Value.IsRequired)
+                    .Select(f => $"{f.Value.Type} {f.Key.ToCamelCase()}")));
         code.AppendLine(header.Replace("{{ClassName}}", component.ClassName));
 
         code.AppendLine("{");
@@ -62,10 +67,17 @@ public static class EventSubCodeHelper
 
             var fieldType = field.Type;
             if (field.IsArray && !fieldType.Contains("[]")) fieldType += "[]";
-            code.AppendIndentedLine($"public {fieldType} {field.Name} {{ get; set; }}", 1);
+
+            if (field.IsRequired)
+                code.AppendIndentedLine(
+                    $"public {fieldType} {field.Name} {{ get; set; }} = {field.Name.ToCamelCase()};", 1);
+            else code.AppendIndentedLine($"public {fieldType} {field.Name} {{ get; set; }}", 1);
+
             if (field != fields[^1]) code.AppendLine();
         }
 
+        //Only disable this for twitcher V2.4.0 and below.
+        //Although the plugin doesn't really support those versions, it's there if you need it, at your own 'risk'.
         if (UseTwitcherEventSubV2)
         {
             //FROM OBJECT
@@ -79,29 +91,46 @@ public static class EventSubCodeHelper
                     2);
             }
 
-            code.AppendIndentedLine($"return new {component.ClassName}", 2);
-            code.AppendIndentedLine("{", 2);
-
-            foreach (var field in fields)
+            if (isCondition && component.HasRequiredFields)
             {
-                string fieldData;
+                var requiredFields = string.Join(", ",
+                    component.GetRequiredFields().Select(field =>
+                        $"""data.Get("{field.Name.ToSnakeCase()}").{field.GetAsType()}"""));
                 
-                if (field.IsArray && field.IsTyped)
-                {
-                    fieldData =
-                        $"{field.Name} = {field.Name.ToCamelCase()}Array.Select({field.TypedComponent.ClassName}.FromObject).ToArray(),";
-                }
-                else if (field.IsTyped)
-                {
-                    fieldData =
-                        $"{field.Name} = {field.TypedComponent.ClassName}.FromObject(data.Get(\"{field.Name.ToSnakeCase()}\").AsGodotObject()),";
-                }
-                else fieldData = $"{field.Name} = data.Get(\"{field.Name.ToSnakeCase()}\").{field.GetAsType()},";
+                var requiredCode = $"return new {component.ClassName}({requiredFields})";
+                if (component.Fields.Count(f => !f.Value.IsRequired) == 0) requiredCode += ";";
+                code.AppendIndentedLine(requiredCode, 2);
+            }
+            else code.AppendIndentedLine($"return new {component.ClassName}", 2);
 
-                code.AppendIndentedLine(fieldData, 3);
+            var nonRequiredFields = fields.Where(f => !isCondition || !f.IsRequired).ToList();
+
+            if (nonRequiredFields.Count > 0)
+            {
+                code.AppendIndentedLine("{", 2);
+
+                foreach (var field in nonRequiredFields)
+                {
+                    string fieldData;
+
+                    if (field.IsArray && field.IsTyped)
+                    {
+                        fieldData =
+                            $"{field.Name} = {field.Name.ToCamelCase()}Array.Select({field.TypedComponent.ClassName}.FromObject).ToArray(),";
+                    }
+                    else if (field.IsTyped)
+                    {
+                        fieldData =
+                            $"{field.Name} = {field.TypedComponent.ClassName}.FromObject(data.Get(\"{field.Name.ToSnakeCase()}\").AsGodotObject()),";
+                    }
+                    else fieldData = $"{field.Name} = data.Get(\"{field.Name.ToSnakeCase()}\").{field.GetAsType()},";
+
+                    code.AppendIndentedLine(fieldData, 3);
+                }
+
+                code.AppendIndentedLine("};", 2);
             }
 
-            code.AppendIndentedLine("};", 2);
             code.AppendIndentedLine("}", 1);
             code.Append(Environment.NewLine);
 
@@ -176,10 +205,28 @@ public static class EventSubCodeHelper
         if (isCondition)
         {
             //FROM DICTIONARY
-            code.AppendIndentedLine(EventSubCodeStrings.FromDictionary.Replace("{{ClassName}}", component.ClassName),
-                1);
 
-            foreach (var field in component.Fields.Values)
+            var fromDictionaryCode = EventSubCodeStrings.FromDictionary.Replace("{{ClassName}}", component.ClassName);
+            if (component.HasRequiredFields)
+            {
+                var requiredFields = string.Join(", ",
+                    component.GetRequiredFields().Select(f => $"""data["{f.Name.ToSnakeCase()}"].{f.GetAsType()}"""));
+                fromDictionaryCode = fromDictionaryCode.Replace("{{RequiredProperties}}", $"({requiredFields})");
+                
+                // var requiredCode = $"return new {component.ClassName}({requiredFields})";
+                // if (component.Fields.Count(f => !f.Value.IsRequired) == 0) requiredCode += ";";
+                // code.AppendIndentedLine(requiredCode, 2);
+            }
+            else
+            {
+                fromDictionaryCode = fromDictionaryCode.Remove("{{RequiredProperties}}");
+            }
+
+            code.AppendIndentedLine(fromDictionaryCode, 1);
+
+            
+            
+            foreach (var field in component.Fields.Values.Where(f => !f.IsRequired))
             {
                 var fieldCode = field switch
                 {

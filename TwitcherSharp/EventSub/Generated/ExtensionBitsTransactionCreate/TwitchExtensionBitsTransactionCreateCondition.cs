@@ -6,14 +6,14 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ExtensionBitsTransactionCreate;
 
-public partial class TwitchExtensionBitsTransactionCreateCondition : RefCounted, ITwitcherSharpCondition<TwitchExtensionBitsTransactionCreateCondition>
+public partial class TwitchExtensionBitsTransactionCreateCondition(string extensionClientId) : RefCounted, ITwitcherSharpCondition<TwitchExtensionBitsTransactionCreateCondition>
 {
     public string Name => nameof(TwitchExtensionBitsTransactionCreateCondition);
 
     /// <summary> 
     /// The client ID of the extension.
     /// </summary>
-    public string ExtensionClientId { get; set; }
+    public string ExtensionClientId { get; set; } = extensionClientId;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchExtensionBitsTransactionCreateCondition object.
@@ -21,10 +21,7 @@ public partial class TwitchExtensionBitsTransactionCreateCondition : RefCounted,
     public static TwitchExtensionBitsTransactionCreateCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchExtensionBitsTransactionCreateCondition
-        {
-            ExtensionClientId = data.Get("extension_client_id").AsString(),
-        };
+        return new TwitchExtensionBitsTransactionCreateCondition(data.Get("extension_client_id").AsString());
     }
 
     public GodotObject ToGodotObject()
@@ -38,9 +35,8 @@ public partial class TwitchExtensionBitsTransactionCreateCondition : RefCounted,
 
     public static TwitchExtensionBitsTransactionCreateCondition FromDictionary(Dictionary data)
     {
-        return new TwitchExtensionBitsTransactionCreateCondition
+        return new TwitchExtensionBitsTransactionCreateCondition(data["extension_client_id"].AsString())
         {
-            ExtensionClientId = data["extension_client_id"].AsString(),
         };
     }
 

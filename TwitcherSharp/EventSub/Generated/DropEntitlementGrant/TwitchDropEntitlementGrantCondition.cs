@@ -6,14 +6,14 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.DropEntitlementGrant;
 
-public partial class TwitchDropEntitlementGrantCondition : RefCounted, ITwitcherSharpCondition<TwitchDropEntitlementGrantCondition>
+public partial class TwitchDropEntitlementGrantCondition(string organizationId) : RefCounted, ITwitcherSharpCondition<TwitchDropEntitlementGrantCondition>
 {
     public string Name => nameof(TwitchDropEntitlementGrantCondition);
 
     /// <summary> 
     /// The organization ID of the organization that owns the game on the developer portal.
     /// </summary>
-    public string OrganizationId { get; set; }
+    public string OrganizationId { get; set; } = organizationId;
 
     /// <summary> 
     /// The category (or game) ID of the game for which entitlement notifications will be received.
@@ -31,9 +31,8 @@ public partial class TwitchDropEntitlementGrantCondition : RefCounted, ITwitcher
     public static TwitchDropEntitlementGrantCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchDropEntitlementGrantCondition
+        return new TwitchDropEntitlementGrantCondition(data.Get("organization_id").AsString())
         {
-            OrganizationId = data.Get("organization_id").AsString(),
             CategoryId = data.Get("category_id").AsString(),
             CampaignId = data.Get("campaign_id").AsString(),
         };
@@ -52,9 +51,8 @@ public partial class TwitchDropEntitlementGrantCondition : RefCounted, ITwitcher
 
     public static TwitchDropEntitlementGrantCondition FromDictionary(Dictionary data)
     {
-        return new TwitchDropEntitlementGrantCondition
+        return new TwitchDropEntitlementGrantCondition(data["organization_id"].AsString())
         {
-            OrganizationId = data["organization_id"].AsString(),
             CategoryId = data["category_id"].AsString(),
             CampaignId = data["campaign_id"].AsString(),
         };

@@ -6,14 +6,14 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelModeratorRemove;
 
-public partial class TwitchChannelModeratorRemoveCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelModeratorRemoveCondition>
+public partial class TwitchChannelModeratorRemoveCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelModeratorRemoveCondition>
 {
     public string Name => nameof(TwitchChannelModeratorRemoveCondition);
 
     /// <summary> 
     /// The broadcaster user ID for the channel you want to get moderator removal notifications for.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelModeratorRemoveCondition object.
@@ -21,10 +21,7 @@ public partial class TwitchChannelModeratorRemoveCondition : RefCounted, ITwitch
     public static TwitchChannelModeratorRemoveCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelModeratorRemoveCondition
-        {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-        };
+        return new TwitchChannelModeratorRemoveCondition(data.Get("broadcaster_user_id").AsString());
     }
 
     public GodotObject ToGodotObject()
@@ -38,9 +35,8 @@ public partial class TwitchChannelModeratorRemoveCondition : RefCounted, ITwitch
 
     public static TwitchChannelModeratorRemoveCondition FromDictionary(Dictionary data)
     {
-        return new TwitchChannelModeratorRemoveCondition
+        return new TwitchChannelModeratorRemoveCondition(data["broadcaster_user_id"].AsString())
         {
-            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
         };
     }
 

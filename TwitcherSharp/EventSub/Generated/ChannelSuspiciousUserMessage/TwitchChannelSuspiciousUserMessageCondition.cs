@@ -6,19 +6,19 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelSuspiciousUserMessage;
 
-public partial class TwitchChannelSuspiciousUserMessageCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelSuspiciousUserMessageCondition>
+public partial class TwitchChannelSuspiciousUserMessageCondition(string moderatorUserId, string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelSuspiciousUserMessageCondition>
 {
     public string Name => nameof(TwitchChannelSuspiciousUserMessageCondition);
 
     /// <summary> 
     /// The ID of a user that has permission to moderate the broadcaster’s channel and has granted your app permission to subscribe to this subscription type.
     /// </summary>
-    public string ModeratorUserId { get; set; }
+    public string ModeratorUserId { get; set; } = moderatorUserId;
 
     /// <summary> 
     /// User ID of the channel to receive chat message events for.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelSuspiciousUserMessageCondition object.
@@ -26,11 +26,7 @@ public partial class TwitchChannelSuspiciousUserMessageCondition : RefCounted, I
     public static TwitchChannelSuspiciousUserMessageCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelSuspiciousUserMessageCondition
-        {
-            ModeratorUserId = data.Get("moderator_user_id").AsString(),
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-        };
+        return new TwitchChannelSuspiciousUserMessageCondition(data.Get("moderator_user_id").AsString(), data.Get("broadcaster_user_id").AsString());
     }
 
     public GodotObject ToGodotObject()
@@ -45,10 +41,8 @@ public partial class TwitchChannelSuspiciousUserMessageCondition : RefCounted, I
 
     public static TwitchChannelSuspiciousUserMessageCondition FromDictionary(Dictionary data)
     {
-        return new TwitchChannelSuspiciousUserMessageCondition
+        return new TwitchChannelSuspiciousUserMessageCondition(data["moderator_user_id"].AsString(), data["broadcaster_user_id"].AsString())
         {
-            ModeratorUserId = data["moderator_user_id"].AsString(),
-            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
         };
     }
 

@@ -6,19 +6,19 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelWarningSend;
 
-public partial class TwitchChannelWarningSendCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelWarningSendCondition>
+public partial class TwitchChannelWarningSendCondition(string broadcasterUserId, string moderatorUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelWarningSendCondition>
 {
     public string Name => nameof(TwitchChannelWarningSendCondition);
 
     /// <summary> 
     /// The User ID of the broadcaster.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
     /// The User ID of the moderator.
     /// </summary>
-    public string ModeratorUserId { get; set; }
+    public string ModeratorUserId { get; set; } = moderatorUserId;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelWarningSendCondition object.
@@ -26,11 +26,7 @@ public partial class TwitchChannelWarningSendCondition : RefCounted, ITwitcherSh
     public static TwitchChannelWarningSendCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelWarningSendCondition
-        {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-            ModeratorUserId = data.Get("moderator_user_id").AsString(),
-        };
+        return new TwitchChannelWarningSendCondition(data.Get("broadcaster_user_id").AsString(), data.Get("moderator_user_id").AsString());
     }
 
     public GodotObject ToGodotObject()
@@ -45,10 +41,8 @@ public partial class TwitchChannelWarningSendCondition : RefCounted, ITwitcherSh
 
     public static TwitchChannelWarningSendCondition FromDictionary(Dictionary data)
     {
-        return new TwitchChannelWarningSendCondition
+        return new TwitchChannelWarningSendCondition(data["broadcaster_user_id"].AsString(), data["moderator_user_id"].AsString())
         {
-            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
-            ModeratorUserId = data["moderator_user_id"].AsString(),
         };
     }
 

@@ -6,14 +6,14 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelPointsCustomRewardRemove;
 
-public partial class TwitchChannelPointsCustomRewardRemoveCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelPointsCustomRewardRemoveCondition>
+public partial class TwitchChannelPointsCustomRewardRemoveCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelPointsCustomRewardRemoveCondition>
 {
     public string Name => nameof(TwitchChannelPointsCustomRewardRemoveCondition);
 
     /// <summary> 
     /// The broadcaster user ID for the channel you want to receive channel points custom reward remove notifications for.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
     /// Optional. Specify a reward id to only receive notifications for a specific reward.
@@ -26,9 +26,8 @@ public partial class TwitchChannelPointsCustomRewardRemoveCondition : RefCounted
     public static TwitchChannelPointsCustomRewardRemoveCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelPointsCustomRewardRemoveCondition
+        return new TwitchChannelPointsCustomRewardRemoveCondition(data.Get("broadcaster_user_id").AsString())
         {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
             RewardId = data.Get("reward_id").AsString(),
         };
     }
@@ -45,9 +44,8 @@ public partial class TwitchChannelPointsCustomRewardRemoveCondition : RefCounted
 
     public static TwitchChannelPointsCustomRewardRemoveCondition FromDictionary(Dictionary data)
     {
-        return new TwitchChannelPointsCustomRewardRemoveCondition
+        return new TwitchChannelPointsCustomRewardRemoveCondition(data["broadcaster_user_id"].AsString())
         {
-            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
             RewardId = data["reward_id"].AsString(),
         };
     }

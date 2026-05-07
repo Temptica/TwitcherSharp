@@ -6,14 +6,14 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelPredictionLock;
 
-public partial class TwitchChannelPredictionLockCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelPredictionLockCondition>
+public partial class TwitchChannelPredictionLockCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelPredictionLockCondition>
 {
     public string Name => nameof(TwitchChannelPredictionLockCondition);
 
     /// <summary> 
     /// The broadcaster user ID of the channel for which “prediction lock” notifications will be received.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelPredictionLockCondition object.
@@ -21,10 +21,7 @@ public partial class TwitchChannelPredictionLockCondition : RefCounted, ITwitche
     public static TwitchChannelPredictionLockCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelPredictionLockCondition
-        {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-        };
+        return new TwitchChannelPredictionLockCondition(data.Get("broadcaster_user_id").AsString());
     }
 
     public GodotObject ToGodotObject()
@@ -38,9 +35,8 @@ public partial class TwitchChannelPredictionLockCondition : RefCounted, ITwitche
 
     public static TwitchChannelPredictionLockCondition FromDictionary(Dictionary data)
     {
-        return new TwitchChannelPredictionLockCondition
+        return new TwitchChannelPredictionLockCondition(data["broadcaster_user_id"].AsString())
         {
-            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
         };
     }
 

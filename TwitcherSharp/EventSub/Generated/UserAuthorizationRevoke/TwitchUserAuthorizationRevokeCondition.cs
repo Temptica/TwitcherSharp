@@ -6,14 +6,14 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.UserAuthorizationRevoke;
 
-public partial class TwitchUserAuthorizationRevokeCondition : RefCounted, ITwitcherSharpCondition<TwitchUserAuthorizationRevokeCondition>
+public partial class TwitchUserAuthorizationRevokeCondition(string clientId) : RefCounted, ITwitcherSharpCondition<TwitchUserAuthorizationRevokeCondition>
 {
     public string Name => nameof(TwitchUserAuthorizationRevokeCondition);
 
     /// <summary> 
     /// Your application’s client id. The provided client_id must match the client id in the application access token.
     /// </summary>
-    public string ClientId { get; set; }
+    public string ClientId { get; set; } = clientId;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUserAuthorizationRevokeCondition object.
@@ -21,10 +21,7 @@ public partial class TwitchUserAuthorizationRevokeCondition : RefCounted, ITwitc
     public static TwitchUserAuthorizationRevokeCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchUserAuthorizationRevokeCondition
-        {
-            ClientId = data.Get("client_id").AsString(),
-        };
+        return new TwitchUserAuthorizationRevokeCondition(data.Get("client_id").AsString());
     }
 
     public GodotObject ToGodotObject()
@@ -38,9 +35,8 @@ public partial class TwitchUserAuthorizationRevokeCondition : RefCounted, ITwitc
 
     public static TwitchUserAuthorizationRevokeCondition FromDictionary(Dictionary data)
     {
-        return new TwitchUserAuthorizationRevokeCondition
+        return new TwitchUserAuthorizationRevokeCondition(data["client_id"].AsString())
         {
-            ClientId = data["client_id"].AsString(),
         };
     }
 

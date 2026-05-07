@@ -6,14 +6,14 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.Goals;
 
-public partial class TwitchGoalsCondition : RefCounted, ITwitcherSharpCondition<TwitchGoalsCondition>
+public partial class TwitchGoalsCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchGoalsCondition>
 {
     public string Name => nameof(TwitchGoalsCondition);
 
     /// <summary> 
     /// The ID of the broadcaster to get notified about. The ID must match the user_id in the OAuth access token.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGoalsCondition object.
@@ -21,10 +21,7 @@ public partial class TwitchGoalsCondition : RefCounted, ITwitcherSharpCondition<
     public static TwitchGoalsCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGoalsCondition
-        {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-        };
+        return new TwitchGoalsCondition(data.Get("broadcaster_user_id").AsString());
     }
 
     public GodotObject ToGodotObject()
@@ -38,9 +35,8 @@ public partial class TwitchGoalsCondition : RefCounted, ITwitcherSharpCondition<
 
     public static TwitchGoalsCondition FromDictionary(Dictionary data)
     {
-        return new TwitchGoalsCondition
+        return new TwitchGoalsCondition(data["broadcaster_user_id"].AsString())
         {
-            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
         };
     }
 

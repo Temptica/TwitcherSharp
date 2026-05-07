@@ -6,14 +6,14 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelVIPRemove;
 
-public partial class TwitchChannelVIPRemoveCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelVIPRemoveCondition>
+public partial class TwitchChannelVIPRemoveCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelVIPRemoveCondition>
 {
     public string Name => nameof(TwitchChannelVIPRemoveCondition);
 
     /// <summary> 
     /// The User ID of the broadcaster (channel) Maximum: 1
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelVIPRemoveCondition object.
@@ -21,10 +21,7 @@ public partial class TwitchChannelVIPRemoveCondition : RefCounted, ITwitcherShar
     public static TwitchChannelVIPRemoveCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelVIPRemoveCondition
-        {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-        };
+        return new TwitchChannelVIPRemoveCondition(data.Get("broadcaster_user_id").AsString());
     }
 
     public GodotObject ToGodotObject()
@@ -38,9 +35,8 @@ public partial class TwitchChannelVIPRemoveCondition : RefCounted, ITwitcherShar
 
     public static TwitchChannelVIPRemoveCondition FromDictionary(Dictionary data)
     {
-        return new TwitchChannelVIPRemoveCondition
+        return new TwitchChannelVIPRemoveCondition(data["broadcaster_user_id"].AsString())
         {
-            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
         };
     }
 

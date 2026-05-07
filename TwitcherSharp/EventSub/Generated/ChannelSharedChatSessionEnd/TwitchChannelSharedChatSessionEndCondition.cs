@@ -6,14 +6,14 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelSharedChatSessionEnd;
 
-public partial class TwitchChannelSharedChatSessionEndCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelSharedChatSessionEndCondition>
+public partial class TwitchChannelSharedChatSessionEndCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelSharedChatSessionEndCondition>
 {
     public string Name => nameof(TwitchChannelSharedChatSessionEndCondition);
 
     /// <summary> 
     /// The User ID of the channel to receive shared chat session end events for.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelSharedChatSessionEndCondition object.
@@ -21,10 +21,7 @@ public partial class TwitchChannelSharedChatSessionEndCondition : RefCounted, IT
     public static TwitchChannelSharedChatSessionEndCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelSharedChatSessionEndCondition
-        {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-        };
+        return new TwitchChannelSharedChatSessionEndCondition(data.Get("broadcaster_user_id").AsString());
     }
 
     public GodotObject ToGodotObject()
@@ -38,9 +35,8 @@ public partial class TwitchChannelSharedChatSessionEndCondition : RefCounted, IT
 
     public static TwitchChannelSharedChatSessionEndCondition FromDictionary(Dictionary data)
     {
-        return new TwitchChannelSharedChatSessionEndCondition
+        return new TwitchChannelSharedChatSessionEndCondition(data["broadcaster_user_id"].AsString())
         {
-            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
         };
     }
 

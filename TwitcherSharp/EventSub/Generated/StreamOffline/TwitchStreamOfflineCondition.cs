@@ -6,14 +6,14 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.StreamOffline;
 
-public partial class TwitchStreamOfflineCondition : RefCounted, ITwitcherSharpCondition<TwitchStreamOfflineCondition>
+public partial class TwitchStreamOfflineCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchStreamOfflineCondition>
 {
     public string Name => nameof(TwitchStreamOfflineCondition);
 
     /// <summary> 
     /// The broadcaster user ID you want to get stream offline notifications for.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchStreamOfflineCondition object.
@@ -21,10 +21,7 @@ public partial class TwitchStreamOfflineCondition : RefCounted, ITwitcherSharpCo
     public static TwitchStreamOfflineCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchStreamOfflineCondition
-        {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-        };
+        return new TwitchStreamOfflineCondition(data.Get("broadcaster_user_id").AsString());
     }
 
     public GodotObject ToGodotObject()
@@ -38,9 +35,8 @@ public partial class TwitchStreamOfflineCondition : RefCounted, ITwitcherSharpCo
 
     public static TwitchStreamOfflineCondition FromDictionary(Dictionary data)
     {
-        return new TwitchStreamOfflineCondition
+        return new TwitchStreamOfflineCondition(data["broadcaster_user_id"].AsString())
         {
-            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
         };
     }
 

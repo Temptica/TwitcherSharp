@@ -6,19 +6,19 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelChatClear;
 
-public partial class TwitchChannelChatClearCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelChatClearCondition>
+public partial class TwitchChannelChatClearCondition(string broadcasterUserId, string userId) : RefCounted, ITwitcherSharpCondition<TwitchChannelChatClearCondition>
 {
     public string Name => nameof(TwitchChannelChatClearCondition);
 
     /// <summary> 
     /// User ID of the channel to receive chat clear events for.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
     /// The user ID to read chat as.
     /// </summary>
-    public string UserId { get; set; }
+    public string UserId { get; set; } = userId;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelChatClearCondition object.
@@ -26,11 +26,7 @@ public partial class TwitchChannelChatClearCondition : RefCounted, ITwitcherShar
     public static TwitchChannelChatClearCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelChatClearCondition
-        {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-            UserId = data.Get("user_id").AsString(),
-        };
+        return new TwitchChannelChatClearCondition(data.Get("broadcaster_user_id").AsString(), data.Get("user_id").AsString());
     }
 
     public GodotObject ToGodotObject()
@@ -45,10 +41,8 @@ public partial class TwitchChannelChatClearCondition : RefCounted, ITwitcherShar
 
     public static TwitchChannelChatClearCondition FromDictionary(Dictionary data)
     {
-        return new TwitchChannelChatClearCondition
+        return new TwitchChannelChatClearCondition(data["broadcaster_user_id"].AsString(), data["user_id"].AsString())
         {
-            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
-            UserId = data["user_id"].AsString(),
         };
     }
 
