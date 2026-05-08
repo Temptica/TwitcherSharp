@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ExtensionBitsTransactionCreate;
 
 public partial class TwitchExtensionBitsTransactionCreateEvent : RefCounted, ITwitcherSharpEventSub<TwitchExtensionBitsTransactionCreateEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// Client ID of the extension.
     /// </summary>
@@ -51,7 +53,7 @@ public partial class TwitchExtensionBitsTransactionCreateEvent : RefCounted, ITw
     /// <summary> 
     /// Additional information about a product acquired via a Twitch Extension Bits transaction.
     /// </summary>
-    public TwitchProduct Product { get; set; }
+    public TwitchProduct Product { get => field ??= _data?.Get<TwitchProduct>("product"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchExtensionBitsTransactionCreateEvent object.
@@ -59,7 +61,7 @@ public partial class TwitchExtensionBitsTransactionCreateEvent : RefCounted, ITw
     public static TwitchExtensionBitsTransactionCreateEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchExtensionBitsTransactionCreateEvent
+        var instance = new TwitchExtensionBitsTransactionCreateEvent
         {
             ExtensionClientId = data.Get("extension_client_id").AsString(),
             Id = data.Get("id").AsString(),
@@ -69,8 +71,10 @@ public partial class TwitchExtensionBitsTransactionCreateEvent : RefCounted, ITw
             UserId = data.Get("user_id").AsString(),
             UserLogin = data.Get("user_login").AsString(),
             UserName = data.Get("user_name").AsString(),
-            Product = TwitchProduct.FromObject(data.Get("product").AsGodotObject()),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

@@ -10,17 +10,23 @@ public partial class TwitchAutoMessage : RefCounted, ITwitcherSharp<TwitchAutoMe
     private GodotObject _data;
     public bool UseBot { get; set; }
     public bool Announcement { get; set; }
-    public TwitchAnnouncementColor AnnouncementColor { get; set; }
+
+    public TwitchAnnouncementColor AnnouncementColor
+    {
+        get => field ??= _data?.Get<TwitchAnnouncementColor>("announcement_color") ;
+        set;
+    }
+
     public string Message { get; set; }
     public bool SourceOnly { get; set; } = true;
     public int Weight { get; set; } = 1;
 
-    public TwitchUser Broadcaster { get; set; }
-    public TwitchUser Sender { get; set; }
-    
+    public TwitchUser Broadcaster { get => field ??= _data?.Get<TwitchUser>("broadcaster"); set; }
+    public TwitchUser Sender { get => field ??= _data?.Get<TwitchUser>("sender"); set; }
+
     public static TwitchAutoMessage FromObject(GodotObject data)
     {
-        return new TwitchAutoMessage()
+        return new TwitchAutoMessage
         {
             _data = data,
             UseBot = data.Get("use_bot").AsBool(),
@@ -46,7 +52,7 @@ public partial class TwitchAutoMessage : RefCounted, ITwitcherSharp<TwitchAutoMe
         instances.Set("weight", Weight);
         instances.Set("user", Broadcaster?.ToGodotObject());
         instances.Set("sender", Sender?.ToGodotObject());
-        
+
         return instances;
     }
 

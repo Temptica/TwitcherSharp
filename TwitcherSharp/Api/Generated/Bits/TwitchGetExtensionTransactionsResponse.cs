@@ -8,8 +8,8 @@ namespace TwitcherSharp.Api.Generated.Bits;
 public partial class TwitchGetExtensionTransactionsResponse : RefCounted, ITwitcherSharp<TwitchGetExtensionTransactionsResponse>
 {
     private GodotObject _data;
-    public TwitchExtensionTransaction[] Data { get; set; }
-    public ResponsePagination Pagination { get; set; }
+    public TwitchExtensionTransaction[] Data { get => field ??= _data?.GetArray<TwitchExtensionTransaction>("data"); set; }
+    public ResponsePagination Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetExtensionTransactionsResponse object.
@@ -17,12 +17,10 @@ public partial class TwitchGetExtensionTransactionsResponse : RefCounted, ITwitc
     public static TwitchGetExtensionTransactionsResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchGetExtensionTransactionsResponse
-        {
-            Data = dataArray.Select(TwitchExtensionTransaction.FromObject).ToArray(),
-            Pagination = data.Get("pagination").As<ResponsePagination>(),
-        };
+        var instance = new TwitchGetExtensionTransactionsResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -51,10 +49,13 @@ public partial class TwitchGetExtensionTransactionsResponse : RefCounted, ITwitc
         public static ResponsePagination FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new ResponsePagination
+            var instance = new ResponsePagination
             {
                 Cursor = data.Get("cursor").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

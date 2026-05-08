@@ -15,10 +15,13 @@ public partial class TwitchDeleteVideosResponse : RefCounted, ITwitcherSharp<Twi
     public static TwitchDeleteVideosResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchDeleteVideosResponse
+        var instance = new TwitchDeleteVideosResponse
         {
             Data = data.Get("data").AsStringArray(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

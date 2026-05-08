@@ -21,7 +21,7 @@ public partial class TwitchDropsEntitlement : RefCounted, ITwitcherSharp<TwitchD
     public static TwitchDropsEntitlement FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchDropsEntitlement
+        var instance = new TwitchDropsEntitlement
         {
             Id = data.Get("id").AsString(),
             BenefitId = data.Get("benefit_id").AsString(),
@@ -31,6 +31,9 @@ public partial class TwitchDropsEntitlement : RefCounted, ITwitcherSharp<TwitchD
             FulfillmentStatus = data.Get("fulfillment_status").AsString(),
             LastUpdated = data.Get("last_updated").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

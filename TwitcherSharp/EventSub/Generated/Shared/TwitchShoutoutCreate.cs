@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.Shared;
 
 public partial class TwitchShoutoutCreate : RefCounted, ITwitcherSharpEventSub<TwitchShoutoutCreate>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// An ID that identifies the broadcaster that sent the Shoutout.
     /// </summary>
@@ -79,7 +81,7 @@ public partial class TwitchShoutoutCreate : RefCounted, ITwitcherSharpEventSub<T
     public static TwitchShoutoutCreate FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchShoutoutCreate
+        var instance = new TwitchShoutoutCreate
         {
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
             BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
@@ -95,6 +97,9 @@ public partial class TwitchShoutoutCreate : RefCounted, ITwitcherSharpEventSub<T
             CooldownEndsAt = data.Get("cooldown_ends_at").AsString(),
             TargetCooldownEndsAt = data.Get("target_cooldown_ends_at").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

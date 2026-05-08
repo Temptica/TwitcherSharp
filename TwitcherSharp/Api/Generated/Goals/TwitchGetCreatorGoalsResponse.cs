@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Goals;
 public partial class TwitchGetCreatorGoalsResponse : RefCounted, ITwitcherSharp<TwitchGetCreatorGoalsResponse>
 {
     private GodotObject _data;
-    public TwitchCreatorGoal[] Data { get; set; }
+    public TwitchCreatorGoal[] Data { get => field ??= _data?.GetArray<TwitchCreatorGoal>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetCreatorGoalsResponse object.
@@ -15,11 +15,10 @@ public partial class TwitchGetCreatorGoalsResponse : RefCounted, ITwitcherSharp<
     public static TwitchGetCreatorGoalsResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchGetCreatorGoalsResponse
-        {
-            Data = dataArray.Select(TwitchCreatorGoal.FromObject).ToArray(),
-        };
+        var instance = new TwitchGetCreatorGoalsResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

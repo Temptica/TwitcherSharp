@@ -8,8 +8,8 @@ namespace TwitcherSharp.Api.Generated.Search;
 public partial class TwitchSearchChannelsResponse : RefCounted, ITwitcherSharp<TwitchSearchChannelsResponse>
 {
     private GodotObject _data;
-    public TwitchChannel[] Data { get; set; }
-    public ResponsePagination Pagination { get; set; }
+    public TwitchChannel[] Data { get => field ??= _data?.GetArray<TwitchChannel>("data"); set; }
+    public ResponsePagination Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchSearchChannelsResponse object.
@@ -17,12 +17,10 @@ public partial class TwitchSearchChannelsResponse : RefCounted, ITwitcherSharp<T
     public static TwitchSearchChannelsResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchSearchChannelsResponse
-        {
-            Data = dataArray.Select(TwitchChannel.FromObject).ToArray(),
-            Pagination = data.Get("pagination").As<ResponsePagination>(),
-        };
+        var instance = new TwitchSearchChannelsResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -51,10 +49,13 @@ public partial class TwitchSearchChannelsResponse : RefCounted, ITwitcherSharp<T
         public static ResponsePagination FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new ResponsePagination
+            var instance = new ResponsePagination
             {
                 Cursor = data.Get("cursor").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

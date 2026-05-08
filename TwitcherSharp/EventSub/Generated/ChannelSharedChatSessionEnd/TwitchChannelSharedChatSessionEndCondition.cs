@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelSharedChatSessionEnd;
 
 public partial class TwitchChannelSharedChatSessionEndCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelSharedChatSessionEndCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchChannelSharedChatSessionEndCondition);
 
     /// <summary> 
@@ -21,7 +23,10 @@ public partial class TwitchChannelSharedChatSessionEndCondition(string broadcast
     public static TwitchChannelSharedChatSessionEndCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelSharedChatSessionEndCondition(data.Get("broadcaster_user_id").AsString());
+        var instance = new TwitchChannelSharedChatSessionEndCondition(data.Get("broadcaster_user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

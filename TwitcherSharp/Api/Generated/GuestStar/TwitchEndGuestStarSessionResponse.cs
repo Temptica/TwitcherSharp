@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.GuestStar;
 public partial class TwitchEndGuestStarSessionResponse : RefCounted, ITwitcherSharp<TwitchEndGuestStarSessionResponse>
 {
     private GodotObject _data;
-    public TwitchGuestStarSession[] Data { get; set; }
+    public TwitchGuestStarSession[] Data { get => field ??= _data?.GetArray<TwitchGuestStarSession>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchEndGuestStarSessionResponse object.
@@ -15,11 +15,10 @@ public partial class TwitchEndGuestStarSessionResponse : RefCounted, ITwitcherSh
     public static TwitchEndGuestStarSessionResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchEndGuestStarSessionResponse
-        {
-            Data = dataArray.Select(TwitchGuestStarSession.FromObject).ToArray(),
-        };
+        var instance = new TwitchEndGuestStarSessionResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

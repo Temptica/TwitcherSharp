@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.Shared;
 
 public partial class TwitchImage : RefCounted, ITwitcherSharpEventSub<TwitchImage>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// URL for the image at 1x size.
     /// </summary>
@@ -29,12 +31,15 @@ public partial class TwitchImage : RefCounted, ITwitcherSharpEventSub<TwitchImag
     public static TwitchImage FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchImage
+        var instance = new TwitchImage
         {
             Url1x = data.Get("url_1x").AsString(),
             Url2x = data.Get("url_2x").AsString(),
             Url4x = data.Get("url_4x").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

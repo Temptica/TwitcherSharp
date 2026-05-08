@@ -7,8 +7,8 @@ namespace TwitcherSharp.Api.Generated.Conduits;
 public partial class TwitchUpdateConduitShardsResponse : RefCounted, ITwitcherSharp<TwitchUpdateConduitShardsResponse>
 {
     private GodotObject _data;
-    public TwitchResponseData[] Data { get; set; }
-    public TwitchResponseErrors[] Errors { get; set; }
+    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
+    public TwitchResponseErrors[] Errors { get => field ??= _data?.GetArray<TwitchResponseErrors>("errors"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUpdateConduitShardsResponse object.
@@ -16,13 +16,10 @@ public partial class TwitchUpdateConduitShardsResponse : RefCounted, ITwitcherSh
     public static TwitchUpdateConduitShardsResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        var errorsArray = data.Get("errors").AsGodotArray<GodotObject>();
-        return new TwitchUpdateConduitShardsResponse
-        {
-            Data = dataArray.Select(TwitchResponseData.FromObject).ToArray(),
-            Errors = errorsArray.Select(TwitchResponseErrors.FromObject).ToArray(),
-        };
+        var instance = new TwitchUpdateConduitShardsResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -43,7 +40,7 @@ public partial class TwitchUpdateConduitShardsResponse : RefCounted, ITwitcherSh
         private GodotObject _data;
         public string Id { get; set; }
         public string Status { get; set; }
-        public TwitchResponseTransport Transport { get; set; }
+        public TwitchResponseTransport Transport { get => field ??= _data?.Get<TwitchResponseTransport>("transport"); set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseData object.
@@ -51,12 +48,14 @@ public partial class TwitchUpdateConduitShardsResponse : RefCounted, ITwitcherSh
         public static TwitchResponseData FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchResponseData
+            var instance = new TwitchResponseData
             {
                 Id = data.Get("id").AsString(),
                 Status = data.Get("status").AsString(),
-                Transport = data.Get("transport").As<TwitchResponseTransport>(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -88,7 +87,7 @@ public partial class TwitchUpdateConduitShardsResponse : RefCounted, ITwitcherSh
             public static TwitchResponseTransport FromObject(GodotObject data)
             {
                 if(data == null) return null;
-                return new TwitchResponseTransport
+                var instance = new TwitchResponseTransport
                 {
                     Method = data.Get("method").AsString(),
                     Callback = data.Get("callback").AsString(),
@@ -96,6 +95,9 @@ public partial class TwitchUpdateConduitShardsResponse : RefCounted, ITwitcherSh
                     ConnectedAt = data.Get("connected_at").AsString(),
                     DisconnectedAt = data.Get("disconnected_at").AsString(),
                 };
+                
+                instance._data = data;
+                return instance;
             }
         
             public GodotObject ToGodotObject()
@@ -131,12 +133,15 @@ public partial class TwitchUpdateConduitShardsResponse : RefCounted, ITwitcherSh
         public static TwitchResponseErrors FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchResponseErrors
+            var instance = new TwitchResponseErrors
             {
                 Id = data.Get("id").AsString(),
                 Message = data.Get("message").AsString(),
                 Code = data.Get("code").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

@@ -11,7 +11,7 @@ public partial class TwitchGlobalEmote : RefCounted, ITwitcherSharp<TwitchGlobal
     private GodotObject _data;
     public string Id { get; set; }
     public string Name { get; set; }
-    public ITwitchImages Images { get; set; }
+    public ITwitchImages Images { get => field ??= _data?.Get<TwitchResponseImages>("images"); set; }
     public string[] Format { get; set; }
     public string[] Scale { get; set; }
     public string[] ThemeMode { get; set; }
@@ -22,15 +22,17 @@ public partial class TwitchGlobalEmote : RefCounted, ITwitcherSharp<TwitchGlobal
     public static TwitchGlobalEmote FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGlobalEmote
+        var instance = new TwitchGlobalEmote
         {
             Id = data.Get("id").AsString(),
             Name = data.Get("name").AsString(),
-            Images = data.Get("images").As<TwitchResponseImages>(),
             Format = data.Get("format").AsStringArray(),
             Scale = data.Get("scale").AsStringArray(),
             ThemeMode = data.Get("theme_mode").AsStringArray(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -64,12 +66,15 @@ public partial class TwitchGlobalEmote : RefCounted, ITwitcherSharp<TwitchGlobal
         public static TwitchResponseImages FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchResponseImages
+            var instance = new TwitchResponseImages
             {
                 Url1x = data.Get("url_1x").AsString(),
                 Url2x = data.Get("url_2x").AsString(),
                 Url4x = data.Get("url_4x").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Teams;
 public partial class TwitchGetChannelTeamsResponse : RefCounted, ITwitcherSharp<TwitchGetChannelTeamsResponse>
 {
     private GodotObject _data;
-    public TwitchChannelTeam[] Data { get; set; }
+    public TwitchChannelTeam[] Data { get => field ??= _data?.GetArray<TwitchChannelTeam>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetChannelTeamsResponse object.
@@ -15,11 +15,10 @@ public partial class TwitchGetChannelTeamsResponse : RefCounted, ITwitcherSharp<
     public static TwitchGetChannelTeamsResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchGetChannelTeamsResponse
-        {
-            Data = dataArray.Select(TwitchChannelTeam.FromObject).ToArray(),
-        };
+        var instance = new TwitchGetChannelTeamsResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

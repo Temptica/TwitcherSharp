@@ -20,11 +20,14 @@ public partial class TwitchGetUserBlockListOpt : RefCounted, ITwitcherSharp<Twit
     public static TwitchGetUserBlockListOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGetUserBlockListOpt
+        var instance = new TwitchGetUserBlockListOpt
         {
             First = data.Get("first").AsInt32(),
             After = data.Get("after").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.HypeTrainEnd;
 
 public partial class TwitchHypeTrainEndCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchHypeTrainEndCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchHypeTrainEndCondition);
 
     /// <summary> 
@@ -21,7 +23,10 @@ public partial class TwitchHypeTrainEndCondition(string broadcasterUserId) : Ref
     public static TwitchHypeTrainEndCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchHypeTrainEndCondition(data.Get("broadcaster_user_id").AsString());
+        var instance = new TwitchHypeTrainEndCondition(data.Get("broadcaster_user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

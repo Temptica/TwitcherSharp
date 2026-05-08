@@ -17,12 +17,15 @@ public partial class TwitchSendChatAnnouncementBody : RefCounted, ITwitcherSharp
     public static TwitchSendChatAnnouncementBody FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchSendChatAnnouncementBody
+        var instance = new TwitchSendChatAnnouncementBody
         {
             Message = data.Get("message").AsString(),
             Color = data.Get("color").AsString(),
             SourceOnly = data.Get("source_only").AsBool(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

@@ -13,7 +13,7 @@ public partial class TwitchPrediction : RefCounted, ITwitcherSharp<TwitchPredict
     public string BroadcasterLogin { get; set; }
     public string Title { get; set; }
     public string WinningOutcomeId { get; set; }
-    public TwitchPredictionOutcome[] Outcomes { get; set; }
+    public TwitchPredictionOutcome[] Outcomes { get => field ??= _data?.GetArray<TwitchPredictionOutcome>("outcomes"); set; }
     public int PredictionWindow { get; set; }
     public string Status { get; set; }
     public string CreatedAt { get; set; }
@@ -26,8 +26,7 @@ public partial class TwitchPrediction : RefCounted, ITwitcherSharp<TwitchPredict
     public static TwitchPrediction FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var outcomesArray = data.Get("outcomes").AsGodotArray<GodotObject>();
-        return new TwitchPrediction
+        var instance = new TwitchPrediction
         {
             Id = data.Get("id").AsString(),
             BroadcasterId = data.Get("broadcaster_id").AsString(),
@@ -35,13 +34,15 @@ public partial class TwitchPrediction : RefCounted, ITwitcherSharp<TwitchPredict
             BroadcasterLogin = data.Get("broadcaster_login").AsString(),
             Title = data.Get("title").AsString(),
             WinningOutcomeId = data.Get("winning_outcome_id").AsString(),
-            Outcomes = outcomesArray.Select(TwitchPredictionOutcome.FromObject).ToArray(),
             PredictionWindow = data.Get("prediction_window").AsInt32(),
             Status = data.Get("status").AsString(),
             CreatedAt = data.Get("created_at").AsString(),
             EndedAt = data.Get("ended_at").AsString(),
             LockedAt = data.Get("locked_at").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

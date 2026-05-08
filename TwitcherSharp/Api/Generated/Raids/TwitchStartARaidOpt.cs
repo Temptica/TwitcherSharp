@@ -20,11 +20,14 @@ public partial class TwitchStartARaidOpt : RefCounted, ITwitcherSharp<TwitchStar
     public static TwitchStartARaidOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchStartARaidOpt
+        var instance = new TwitchStartARaidOpt
         {
             FromBroadcasterId = data.Get("from_broadcaster_id").AsString(),
             ToBroadcasterId = data.Get("to_broadcaster_id").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

@@ -11,9 +11,9 @@ public partial class TwitchEventSubSubscription<T> : RefCounted, ITwitcherSharp<
     public string Status { get; set; }
     public string Type { get; set; }
     public string Version { get; set; }
-    public ITwitcherSharpCondition<T> Condition { get; set; }
+    public ITwitcherSharpCondition<T> Condition { get => field ??= T.FromDictionary(_data?.Get("{field.Name.ToSnakeCase()}").AsGodotDictionary()); set; }
     public string CreatedAt { get; set; }
-    public TwitchTransport Transport { get; set; }
+    public TwitchTransport Transport { get => field ??= _data?.Get<TwitchTransport>("transport"); set; }
     public int Cost { get; set; }
 
     /// <summary> 
@@ -22,17 +22,18 @@ public partial class TwitchEventSubSubscription<T> : RefCounted, ITwitcherSharp<
     public static TwitchEventSubSubscription<T> FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchEventSubSubscription<T>
+        var instance = new TwitchEventSubSubscription<T>
         {
             Id = data.Get("id").AsString(),
             Status = data.Get("status").AsString(),
             Type = data.Get("type").AsString(),
             Version = data.Get("version").AsString(),
-            Condition = T.FromDictionary(data.Get("condition").AsGodotDictionary()),
             CreatedAt = data.Get("created_at").AsString(),
-            Transport = data.Get("transport").As<TwitchTransport>(),
             Cost = data.Get("cost").AsInt32(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -68,7 +69,7 @@ public partial class TwitchEventSubSubscription<T> : RefCounted, ITwitcherSharp<
         public static TwitchTransport FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchTransport
+            var instance = new TwitchTransport
             {
                 Method = data.Get("method").AsString(),
                 Callback = data.Get("callback").AsString(),
@@ -76,6 +77,9 @@ public partial class TwitchEventSubSubscription<T> : RefCounted, ITwitcherSharp<
                 ConnectedAt = data.Get("connected_at").AsString(),
                 DisconnectedAt = data.Get("disconnected_at").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

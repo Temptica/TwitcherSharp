@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelVIPAdd;
 
 public partial class TwitchChannelVIPAddCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelVIPAddCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchChannelVIPAddCondition);
 
     /// <summary> 
@@ -21,7 +23,10 @@ public partial class TwitchChannelVIPAddCondition(string broadcasterUserId) : Re
     public static TwitchChannelVIPAddCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelVIPAddCondition(data.Get("broadcaster_user_id").AsString());
+        var instance = new TwitchChannelVIPAddCondition(data.Get("broadcaster_user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

@@ -25,7 +25,8 @@ public partial class TwitchScopes(StringName val, string description, string cat
 
     public GodotObject ToGodotObject()
     {
-        throw new NotImplementedException();
+        var script = GD.Load<GDScript>("res://addons/twitcher/auth/twitch_scopes.gdscript");
+        return script.Get("Definition").As<GDScript>().New(Value, Description, Category).AsGodotObject();
     }
 
 

@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelPollEnd;
 
 public partial class TwitchChannelPollEndCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelPollEndCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchChannelPollEndCondition);
 
     /// <summary> 
@@ -21,7 +23,10 @@ public partial class TwitchChannelPollEndCondition(string broadcasterUserId) : R
     public static TwitchChannelPollEndCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelPollEndCondition(data.Get("broadcaster_user_id").AsString());
+        var instance = new TwitchChannelPollEndCondition(data.Get("broadcaster_user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

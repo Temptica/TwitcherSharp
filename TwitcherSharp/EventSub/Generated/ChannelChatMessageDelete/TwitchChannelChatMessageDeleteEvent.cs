@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelChatMessageDelete;
 
 public partial class TwitchChannelChatMessageDeleteEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelChatMessageDeleteEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The broadcaster user ID.
     /// </summary>
@@ -49,7 +51,7 @@ public partial class TwitchChannelChatMessageDeleteEvent : RefCounted, ITwitcher
     public static TwitchChannelChatMessageDeleteEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelChatMessageDeleteEvent
+        var instance = new TwitchChannelChatMessageDeleteEvent
         {
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
             BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
@@ -59,6 +61,9 @@ public partial class TwitchChannelChatMessageDeleteEvent : RefCounted, ITwitcher
             TargetUserLogin = data.Get("target_user_login").AsString(),
             MessageId = data.Get("message_id").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

@@ -15,8 +15,8 @@ public partial class TwitchCharityCampaign : RefCounted, ITwitcherSharp<TwitchCh
     public string CharityDescription { get; set; }
     public string CharityLogo { get; set; }
     public string CharityWebsite { get; set; }
-    public TwitchResponseCurrentAmount CurrentAmount { get; set; }
-    public TwitchResponseTargetAmount TargetAmount { get; set; }
+    public TwitchResponseCurrentAmount CurrentAmount { get => field ??= _data?.Get<TwitchResponseCurrentAmount>("current_amount"); set; }
+    public TwitchResponseTargetAmount TargetAmount { get => field ??= _data?.Get<TwitchResponseTargetAmount>("target_amount"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCharityCampaign object.
@@ -24,7 +24,7 @@ public partial class TwitchCharityCampaign : RefCounted, ITwitcherSharp<TwitchCh
     public static TwitchCharityCampaign FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchCharityCampaign
+        var instance = new TwitchCharityCampaign
         {
             Id = data.Get("id").AsString(),
             BroadcasterId = data.Get("broadcaster_id").AsString(),
@@ -34,9 +34,10 @@ public partial class TwitchCharityCampaign : RefCounted, ITwitcherSharp<TwitchCh
             CharityDescription = data.Get("charity_description").AsString(),
             CharityLogo = data.Get("charity_logo").AsString(),
             CharityWebsite = data.Get("charity_website").AsString(),
-            CurrentAmount = data.Get("current_amount").As<TwitchResponseCurrentAmount>(),
-            TargetAmount = data.Get("target_amount").As<TwitchResponseTargetAmount>(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -72,12 +73,15 @@ public partial class TwitchCharityCampaign : RefCounted, ITwitcherSharp<TwitchCh
         public static TwitchResponseCurrentAmount FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchResponseCurrentAmount
+            var instance = new TwitchResponseCurrentAmount
             {
                 Value = data.Get("value").AsInt32(),
                 DecimalPlaces = data.Get("decimal_places").AsInt32(),
                 Currency = data.Get("currency").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -109,12 +113,15 @@ public partial class TwitchCharityCampaign : RefCounted, ITwitcherSharp<TwitchCh
         public static TwitchResponseTargetAmount FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchResponseTargetAmount
+            var instance = new TwitchResponseTargetAmount
             {
                 Value = data.Get("value").AsInt32(),
                 DecimalPlaces = data.Get("decimal_places").AsInt32(),
                 Currency = data.Get("currency").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

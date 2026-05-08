@@ -17,12 +17,15 @@ public partial class TwitchEndPollBody : RefCounted, ITwitcherSharp<TwitchEndPol
     public static TwitchEndPollBody FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchEndPollBody
+        var instance = new TwitchEndPollBody
         {
             BroadcasterId = data.Get("broadcaster_id").AsString(),
             Id = data.Get("id").AsString(),
             Status = data.Get("status").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

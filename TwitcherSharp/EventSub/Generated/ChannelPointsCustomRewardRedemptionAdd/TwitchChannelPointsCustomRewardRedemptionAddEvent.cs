@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelPointsCustomRewardRedemptionAd
 
 public partial class TwitchChannelPointsCustomRewardRedemptionAddEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelPointsCustomRewardRedemptionAddEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The redemption identifier.
     /// </summary>
@@ -56,7 +58,7 @@ public partial class TwitchChannelPointsCustomRewardRedemptionAddEvent : RefCoun
     /// <summary> 
     /// 
     /// </summary>
-    public TwitchReward Reward { get; set; }
+    public TwitchReward Reward { get => field ??= _data?.Get<TwitchReward>("reward"); set; }
 
     /// <summary> 
     /// RFC3339 timestamp of when the reward was redeemed.
@@ -69,7 +71,7 @@ public partial class TwitchChannelPointsCustomRewardRedemptionAddEvent : RefCoun
     public static TwitchChannelPointsCustomRewardRedemptionAddEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelPointsCustomRewardRedemptionAddEvent
+        var instance = new TwitchChannelPointsCustomRewardRedemptionAddEvent
         {
             Id = data.Get("id").AsString(),
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
@@ -80,9 +82,11 @@ public partial class TwitchChannelPointsCustomRewardRedemptionAddEvent : RefCoun
             UserName = data.Get("user_name").AsString(),
             UserInput = data.Get("user_input").AsString(),
             Status = data.Get("status").AsString(),
-            Reward = TwitchReward.FromObject(data.Get("reward").AsGodotObject()),
             RedeemedAt = data.Get("redeemed_at").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

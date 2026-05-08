@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelCheer;
 
 public partial class TwitchChannelCheerEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelCheerEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// Whether the user cheered anonymously or not.
     /// </summary>
@@ -59,7 +61,7 @@ public partial class TwitchChannelCheerEvent : RefCounted, ITwitcherSharpEventSu
     public static TwitchChannelCheerEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelCheerEvent
+        var instance = new TwitchChannelCheerEvent
         {
             IsAnonymous = data.Get("is_anonymous").AsBool(),
             UserId = data.Get("user_id").AsString(),
@@ -71,6 +73,9 @@ public partial class TwitchChannelCheerEvent : RefCounted, ITwitcherSharpEventSu
             Message = data.Get("message").AsString(),
             Bits = data.Get("bits").AsInt32(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

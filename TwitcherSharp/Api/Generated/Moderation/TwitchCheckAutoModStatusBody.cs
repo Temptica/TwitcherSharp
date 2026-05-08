@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 public partial class TwitchCheckAutoModStatusBody : RefCounted, ITwitcherSharp<TwitchCheckAutoModStatusBody>
 {
     private GodotObject _data;
-    public TwitchBodyData[] Data { get; set; }
+    public TwitchBodyData[] Data { get => field ??= _data?.GetArray<TwitchBodyData>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCheckAutoModStatusBody object.
@@ -15,11 +15,10 @@ public partial class TwitchCheckAutoModStatusBody : RefCounted, ITwitcherSharp<T
     public static TwitchCheckAutoModStatusBody FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchCheckAutoModStatusBody
-        {
-            Data = dataArray.Select(TwitchBodyData.FromObject).ToArray(),
-        };
+        var instance = new TwitchCheckAutoModStatusBody();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -46,11 +45,14 @@ public partial class TwitchCheckAutoModStatusBody : RefCounted, ITwitcherSharp<T
         public static TwitchBodyData FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchBodyData
+            var instance = new TwitchBodyData
             {
                 MsgId = data.Get("msg_id").AsString(),
                 MsgText = data.Get("msg_text").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelSuspiciousUserUpdate;
 
 public partial class TwitchChannelSuspiciousUserUpdateCondition(string moderatorUserId, string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelSuspiciousUserUpdateCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchChannelSuspiciousUserUpdateCondition);
 
     /// <summary> 
@@ -26,7 +28,10 @@ public partial class TwitchChannelSuspiciousUserUpdateCondition(string moderator
     public static TwitchChannelSuspiciousUserUpdateCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelSuspiciousUserUpdateCondition(data.Get("moderator_user_id").AsString(), data.Get("broadcaster_user_id").AsString());
+        var instance = new TwitchChannelSuspiciousUserUpdateCondition(data.Get("moderator_user_id").AsString(), data.Get("broadcaster_user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

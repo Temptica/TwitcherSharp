@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelAdBreakBegin;
 
 public partial class TwitchChannelAdBreakBeginCondition(string broadcasterId) : RefCounted, ITwitcherSharpCondition<TwitchChannelAdBreakBeginCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchChannelAdBreakBeginCondition);
 
     /// <summary> 
@@ -21,7 +23,10 @@ public partial class TwitchChannelAdBreakBeginCondition(string broadcasterId) : 
     public static TwitchChannelAdBreakBeginCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelAdBreakBeginCondition(data.Get("broadcaster_id").AsString());
+        var instance = new TwitchChannelAdBreakBeginCondition(data.Get("broadcaster_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

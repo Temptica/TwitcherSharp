@@ -26,7 +26,7 @@ public partial class TwitchBroadcasterSubscription : RefCounted, ITwitcherSharp<
     public static TwitchBroadcasterSubscription FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchBroadcasterSubscription
+        var instance = new TwitchBroadcasterSubscription
         {
             BroadcasterId = data.Get("broadcaster_id").AsString(),
             BroadcasterLogin = data.Get("broadcaster_login").AsString(),
@@ -41,6 +41,9 @@ public partial class TwitchBroadcasterSubscription : RefCounted, ITwitcherSharp<
             UserName = data.Get("user_name").AsString(),
             UserLogin = data.Get("user_login").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

@@ -8,8 +8,8 @@ namespace TwitcherSharp.Api.Generated.Tags;
 public partial class TwitchGetAllStreamTagsResponse : RefCounted, ITwitcherSharp<TwitchGetAllStreamTagsResponse>
 {
     private GodotObject _data;
-    public TwitchStreamTag[] Data { get; set; }
-    public ResponsePagination Pagination { get; set; }
+    public TwitchStreamTag[] Data { get => field ??= _data?.GetArray<TwitchStreamTag>("data"); set; }
+    public ResponsePagination Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetAllStreamTagsResponse object.
@@ -17,12 +17,10 @@ public partial class TwitchGetAllStreamTagsResponse : RefCounted, ITwitcherSharp
     public static TwitchGetAllStreamTagsResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchGetAllStreamTagsResponse
-        {
-            Data = dataArray.Select(TwitchStreamTag.FromObject).ToArray(),
-            Pagination = data.Get("pagination").As<ResponsePagination>(),
-        };
+        var instance = new TwitchGetAllStreamTagsResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -51,10 +49,13 @@ public partial class TwitchGetAllStreamTagsResponse : RefCounted, ITwitcherSharp
         public static ResponsePagination FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new ResponsePagination
+            var instance = new ResponsePagination
             {
                 Cursor = data.Get("cursor").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

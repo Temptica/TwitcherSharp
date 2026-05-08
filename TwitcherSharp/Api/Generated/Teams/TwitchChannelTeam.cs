@@ -26,7 +26,7 @@ public partial class TwitchChannelTeam : RefCounted, ITwitcherSharp<TwitchChanne
     public static TwitchChannelTeam FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelTeam
+        var instance = new TwitchChannelTeam
         {
             BroadcasterId = data.Get("broadcaster_id").AsString(),
             BroadcasterLogin = data.Get("broadcaster_login").AsString(),
@@ -41,6 +41,9 @@ public partial class TwitchChannelTeam : RefCounted, ITwitcherSharp<TwitchChanne
             TeamDisplayName = data.Get("team_display_name").AsString(),
             Id = data.Get("id").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

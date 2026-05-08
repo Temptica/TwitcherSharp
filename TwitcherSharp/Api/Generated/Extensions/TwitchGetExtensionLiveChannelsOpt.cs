@@ -20,11 +20,14 @@ public partial class TwitchGetExtensionLiveChannelsOpt : RefCounted, ITwitcherSh
     public static TwitchGetExtensionLiveChannelsOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGetExtensionLiveChannelsOpt
+        var instance = new TwitchGetExtensionLiveChannelsOpt
         {
             First = data.Get("first").AsInt32(),
             After = data.Get("after").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

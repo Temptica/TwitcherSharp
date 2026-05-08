@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelChatNotification;
 
 public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelChatNotificationEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The broadcaster user ID.
     /// </summary>
@@ -46,7 +48,7 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
     /// <summary> 
     /// The color of the user’s name in the chat room.
     /// </summary>
-    public TwitchBadges[] Badges { get; set; }
+    public TwitchBadges[] Badges { get => field ??= _data?.GetArray<TwitchBadges>("badges"); set; }
 
     /// <summary> 
     /// The message Twitch shows in the chat room for this notice.
@@ -61,7 +63,7 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
     /// <summary> 
     /// 
     /// </summary>
-    public TwitchMessage Message { get; set; }
+    public TwitchMessage Message { get => field ??= _data?.Get<TwitchMessage>("message"); set; }
 
     /// <summary> 
     /// The type of notice. Possible values are: subresubsub_giftcommunity_sub_giftgift_paid_upgradeprime_paid_upgraderaidunraidpay_it_forwardannouncementbits_badge_tiercharity_donationwatch_streakshared_chat_subshared_chat_resubshared_chat_sub_giftshared_chat_community_sub_giftshared_chat_gift_paid_upgradeshared_chat_prime_paid_upgradeshared_chat_raidshared_chat_pay_it_forwardshared_chat_announcement
@@ -71,42 +73,42 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
     /// <summary> 
     /// Information about the sub event. Null if notice_type is not sub.
     /// </summary>
-    public TwitchSub Sub { get; set; }
+    public TwitchSub Sub { get => field ??= _data?.Get<TwitchSub>("sub"); set; }
 
     /// <summary> 
     /// Information about the resub event. Null if notice_type is not resub.
     /// </summary>
-    public TwitchResub Resub { get; set; }
+    public TwitchResub Resub { get => field ??= _data?.Get<TwitchResub>("resub"); set; }
 
     /// <summary> 
     /// Information about the gift sub event. Null if notice_type is not sub_gift.
     /// </summary>
-    public TwitchSubGift SubGift { get; set; }
+    public TwitchSubGift SubGift { get => field ??= _data?.Get<TwitchSubGift>("sub_gift"); set; }
 
     /// <summary> 
     /// Information about the community gift sub event. Null if notice_type is not community_sub_gift.
     /// </summary>
-    public TwitchCommunitySubGift CommunitySubGift { get; set; }
+    public TwitchCommunitySubGift CommunitySubGift { get => field ??= _data?.Get<TwitchCommunitySubGift>("community_sub_gift"); set; }
 
     /// <summary> 
     /// Information about the community gift paid upgrade event. Null if notice_type is not gift_paid_upgrade.
     /// </summary>
-    public TwitchGiftPaidUpgrade GiftPaidUpgrade { get; set; }
+    public TwitchGiftPaidUpgrade GiftPaidUpgrade { get => field ??= _data?.Get<TwitchGiftPaidUpgrade>("gift_paid_upgrade"); set; }
 
     /// <summary> 
     /// Information about the Prime gift paid upgrade event. Null if notice_type is not prime_paid_upgrade
     /// </summary>
-    public TwitchPrimePaidUpgrade PrimePaidUpgrade { get; set; }
+    public TwitchPrimePaidUpgrade PrimePaidUpgrade { get => field ??= _data?.Get<TwitchPrimePaidUpgrade>("prime_paid_upgrade"); set; }
 
     /// <summary> 
     /// Information about the pay it forward event. Null if notice_type is not pay_it_forward
     /// </summary>
-    public TwitchPayItForward PayItForward { get; set; }
+    public TwitchPayItForward PayItForward { get => field ??= _data?.Get<TwitchPayItForward>("pay_it_forward"); set; }
 
     /// <summary> 
     /// Information about the raid event. Null if notice_type is not raid
     /// </summary>
-    public TwitchRaid Raid { get; set; }
+    public TwitchRaid Raid { get => field ??= _data?.Get<TwitchRaid>("raid"); set; }
 
     /// <summary> 
     /// Returns an empty payload if  notice_type is not unraid, otherwise returns null.
@@ -116,12 +118,12 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
     /// <summary> 
     /// Information about the announcement event. Null if notice_type is not announcement
     /// </summary>
-    public TwitchAnnouncement Announcement { get; set; }
+    public TwitchAnnouncement Announcement { get => field ??= _data?.Get<TwitchAnnouncement>("announcement"); set; }
 
     /// <summary> 
     /// Information about the Bits badge tier event. Null if notice_type is not bits_badge_tier
     /// </summary>
-    public TwitchBitsBadgeTier BitsBadgeTier { get; set; }
+    public TwitchBitsBadgeTier BitsBadgeTier { get => field ??= _data?.Get<TwitchBitsBadgeTier>("bits_badge_tier"); set; }
 
     /// <summary> 
     /// Information about the announcement event. Null if notice_type is not charity_donation
@@ -136,12 +138,12 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
     /// <summary> 
     /// An object that contains the amount of money that the user paid.
     /// </summary>
-    public TwitchAmount Amount { get; set; }
+    public TwitchAmount Amount { get => field ??= _data?.Get<TwitchAmount>("amount"); set; }
 
     /// <summary> 
     /// Information about the Watch Streak event. Null if notice_type is not watch_streak.
     /// </summary>
-    public TwitchWatchStreak WatchStreak { get; set; }
+    public TwitchWatchStreak WatchStreak { get => field ??= _data?.Get<TwitchWatchStreak>("watch_streak"); set; }
 
     /// <summary> 
     /// Optional. The broadcaster user ID of the channel the message was sent from. Is null when the message notification happens in the same channel as the broadcaster. Is not null when in a shared chat session, and the action happens in the channel of a participant other than the broadcaster.
@@ -166,7 +168,7 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
     /// <summary> 
     /// Optional. The list of chat badges for the chatter in the channel the message was sent from. Is null when the message happens in the same channel as the broadcaster. Is not null when in a shared chat session, and the action happens in the channel of a participant other than the broadcaster.
     /// </summary>
-    public TwitchSourceBadges[] SourceBadges { get; set; }
+    public TwitchSourceBadges[] SourceBadges { get => field ??= _data?.GetArray<TwitchSourceBadges>("source_badges"); set; }
 
     /// <summary> 
     /// Optional. Whether the notification is only sent to the source channel. Is null if the notification is not in a shared chat session.
@@ -176,47 +178,47 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
     /// <summary> 
     /// Optional. Information about the shared_chat_sub event. Is null if notice_type is not shared_chat_sub. This field has the same information as the sub field but for a notice that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
-    public TwitchSub SharedChatSub { get; set; }
+    public TwitchSub SharedChatSub { get => field ??= _data?.Get<TwitchSub>("shared_chat_sub"); set; }
 
     /// <summary> 
     /// Optional. Information about the shared_chat_resub event. Is null if notice_type is not shared_chat_resub. This field has the same information as the resub field but for a notice that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
-    public TwitchResub SharedChatResub { get; set; }
+    public TwitchResub SharedChatResub { get => field ??= _data?.Get<TwitchResub>("shared_chat_resub"); set; }
 
     /// <summary> 
     /// Optional. Information about the shared_chat_sub_gift event. Is null if notice_type is not shared_chat_sub_gift. This field has the same information as the chat_sub_gift field but for a notice that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
-    public TwitchSubGift SharedChatSubGift { get; set; }
+    public TwitchSubGift SharedChatSubGift { get => field ??= _data?.Get<TwitchSubGift>("shared_chat_sub_gift"); set; }
 
     /// <summary> 
     /// Optional. Information about the shared_chat_community_sub_gift event. Is null if notice_type is not shared_chat_community_sub_gift. This field has the same information as the community_sub_gift field but for a notice that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
-    public TwitchCommunitySubGift SharedChatCommunitySubGift { get; set; }
+    public TwitchCommunitySubGift SharedChatCommunitySubGift { get => field ??= _data?.Get<TwitchCommunitySubGift>("shared_chat_community_sub_gift"); set; }
 
     /// <summary> 
     /// Optional. Information about the shared_chat_gift_paid_upgrade event. Is null if notice_type is not shared_chat_gift_paid_upgrade. This field has the same information as the gift_paid_upgrade field but for a notice that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
-    public TwitchGiftPaidUpgrade SharedChatGiftPaidUpgrade { get; set; }
+    public TwitchGiftPaidUpgrade SharedChatGiftPaidUpgrade { get => field ??= _data?.Get<TwitchGiftPaidUpgrade>("shared_chat_gift_paid_upgrade"); set; }
 
     /// <summary> 
     /// Optional. Information about the shared_chat_chat_prime_paid_upgrade event. Is null if notice_type is not shared_chat_prime_paid_upgrade. This field has the same information as the prime_paid_upgrade field but for a notice that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
-    public TwitchPrimePaidUpgrade SharedChatPrimePaidUpgrade { get; set; }
+    public TwitchPrimePaidUpgrade SharedChatPrimePaidUpgrade { get => field ??= _data?.Get<TwitchPrimePaidUpgrade>("shared_chat_prime_paid_upgrade"); set; }
 
     /// <summary> 
     /// Optional. Information about the shared_chat_pay_it_forward event. Is null if notice_type is not shared_chat_pay_it_forward. This field has the same information as the pay_it_forward field but for a notice that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
-    public TwitchPayItForward SharedChatPayItForward { get; set; }
+    public TwitchPayItForward SharedChatPayItForward { get => field ??= _data?.Get<TwitchPayItForward>("shared_chat_pay_it_forward"); set; }
 
     /// <summary> 
     /// Optional. Information about the shared_chat_raid event. Is null if notice_type is not shared_chat_raid. This field has the same information as the raid field but for a notice that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
-    public TwitchRaid SharedChatRaid { get; set; }
+    public TwitchRaid SharedChatRaid { get => field ??= _data?.Get<TwitchRaid>("shared_chat_raid"); set; }
 
     /// <summary> 
     /// Optional. Information about the shared_chat_announcement event. Is null if notice_type is not shared_chat_announcement. This field has the same information as the announcement field but for a notice that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
-    public TwitchAnnouncement SharedChatAnnouncement { get; set; }
+    public TwitchAnnouncement SharedChatAnnouncement { get => field ??= _data?.Get<TwitchAnnouncement>("shared_chat_announcement"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelChatNotificationEvent object.
@@ -224,9 +226,7 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
     public static TwitchChannelChatNotificationEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var badgesArray = data.Get("badges").AsGodotArray<GodotObject>();
-        var sourceBadgesArray = data.Get("source_badges").AsGodotArray<GodotObject>();
-        return new TwitchChannelChatNotificationEvent
+        var instance = new TwitchChannelChatNotificationEvent
         {
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
             BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
@@ -235,42 +235,21 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
             ChatterUserName = data.Get("chatter_user_name").AsString(),
             ChatterIsAnonymous = data.Get("chatter_is_anonymous").AsBool(),
             Color = data.Get("color").AsString(),
-            Badges = badgesArray.Select(TwitchBadges.FromObject).ToArray(),
             SystemMessage = data.Get("system_message").AsString(),
             MessageId = data.Get("message_id").AsString(),
-            Message = TwitchMessage.FromObject(data.Get("message").AsGodotObject()),
             NoticeType = data.Get("notice_type").AsString(),
-            Sub = TwitchSub.FromObject(data.Get("sub").AsGodotObject()),
-            Resub = TwitchResub.FromObject(data.Get("resub").AsGodotObject()),
-            SubGift = TwitchSubGift.FromObject(data.Get("sub_gift").AsGodotObject()),
-            CommunitySubGift = TwitchCommunitySubGift.FromObject(data.Get("community_sub_gift").AsGodotObject()),
-            GiftPaidUpgrade = TwitchGiftPaidUpgrade.FromObject(data.Get("gift_paid_upgrade").AsGodotObject()),
-            PrimePaidUpgrade = TwitchPrimePaidUpgrade.FromObject(data.Get("prime_paid_upgrade").AsGodotObject()),
-            PayItForward = TwitchPayItForward.FromObject(data.Get("pay_it_forward").AsGodotObject()),
-            Raid = TwitchRaid.FromObject(data.Get("raid").AsGodotObject()),
             Unraid = data.Get("unraid").AsGodotDictionary(),
-            Announcement = TwitchAnnouncement.FromObject(data.Get("announcement").AsGodotObject()),
-            BitsBadgeTier = TwitchBitsBadgeTier.FromObject(data.Get("bits_badge_tier").AsGodotObject()),
             CharityDonation = data.Get("charity_donation").AsString(),
             CharityName = data.Get("charity_name").AsString(),
-            Amount = TwitchAmount.FromObject(data.Get("amount").AsGodotObject()),
-            WatchStreak = TwitchWatchStreak.FromObject(data.Get("watch_streak").AsGodotObject()),
             SourceBroadcasterUserId = data.Get("source_broadcaster_user_id").AsString(),
             SourceBroadcasterUserName = data.Get("source_broadcaster_user_name").AsString(),
             SourceBroadcasterUserLogin = data.Get("source_broadcaster_user_login").AsString(),
             SourceMessageId = data.Get("source_message_id").AsString(),
-            SourceBadges = sourceBadgesArray.Select(TwitchSourceBadges.FromObject).ToArray(),
             IsSourceOnly = data.Get("is_source_only").AsBool(),
-            SharedChatSub = TwitchSub.FromObject(data.Get("shared_chat_sub").AsGodotObject()),
-            SharedChatResub = TwitchResub.FromObject(data.Get("shared_chat_resub").AsGodotObject()),
-            SharedChatSubGift = TwitchSubGift.FromObject(data.Get("shared_chat_sub_gift").AsGodotObject()),
-            SharedChatCommunitySubGift = TwitchCommunitySubGift.FromObject(data.Get("shared_chat_community_sub_gift").AsGodotObject()),
-            SharedChatGiftPaidUpgrade = TwitchGiftPaidUpgrade.FromObject(data.Get("shared_chat_gift_paid_upgrade").AsGodotObject()),
-            SharedChatPrimePaidUpgrade = TwitchPrimePaidUpgrade.FromObject(data.Get("shared_chat_prime_paid_upgrade").AsGodotObject()),
-            SharedChatPayItForward = TwitchPayItForward.FromObject(data.Get("shared_chat_pay_it_forward").AsGodotObject()),
-            SharedChatRaid = TwitchRaid.FromObject(data.Get("shared_chat_raid").AsGodotObject()),
-            SharedChatAnnouncement = TwitchAnnouncement.FromObject(data.Get("shared_chat_announcement").AsGodotObject()),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -326,6 +305,8 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
 
     public partial class TwitchBadges : RefCounted, ITwitcherSharpEventSub<TwitchBadges>
     {
+        private GodotObject _data;
+        
         /// <summary> 
         /// An ID that identifies this set of chat badges. For example, Bits or Subscriber.
         /// </summary>
@@ -347,12 +328,15 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         public static TwitchBadges FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchBadges
+            var instance = new TwitchBadges
             {
                 SetId = data.Get("set_id").AsString(),
                 Id = data.Get("id").AsString(),
                 Info = data.Get("info").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -369,6 +353,8 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
 
     public partial class TwitchMessage : RefCounted, ITwitcherSharpEventSub<TwitchMessage>
     {
+        private GodotObject _data;
+        
         /// <summary> 
         /// The chat message in plain text.
         /// </summary>
@@ -377,7 +363,7 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         /// <summary> 
         /// Ordered list of chat message fragments.
         /// </summary>
-        public TwitchFragments[] Fragments { get; set; }
+        public TwitchFragments[] Fragments { get => field ??= _data?.GetArray<TwitchFragments>("fragments"); set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchMessage object.
@@ -385,12 +371,13 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         public static TwitchMessage FromObject(GodotObject data)
         {
             if(data == null) return null;
-            var fragmentsArray = data.Get("fragments").AsGodotArray<GodotObject>();
-            return new TwitchMessage
+            var instance = new TwitchMessage
             {
                 Text = data.Get("text").AsGodotDictionary(),
-                Fragments = fragmentsArray.Select(TwitchFragments.FromObject).ToArray(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -406,6 +393,8 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
     
         public partial class TwitchFragments : RefCounted, ITwitcherSharpEventSub<TwitchFragments>
         {
+            private GodotObject _data;
+            
             /// <summary> 
             /// The type of message fragment. Possible values: textcheermoteemotemention
             /// </summary>
@@ -419,17 +408,17 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
             /// <summary> 
             /// Optional. Metadata pertaining to the cheermote.
             /// </summary>
-            public TwitchCheermote Cheermote { get; set; }
+            public TwitchCheermote Cheermote { get => field ??= _data?.Get<TwitchCheermote>("cheermote"); set; }
         
             /// <summary> 
             /// Optional. Metadata pertaining to the emote.
             /// </summary>
-            public TwitchEmote Emote { get; set; }
+            public TwitchEmote Emote { get => field ??= _data?.Get<TwitchEmote>("emote"); set; }
         
             /// <summary> 
             /// Optional.  Metadata pertaining to the mention.
             /// </summary>
-            public TwitchMention Mention { get; set; }
+            public TwitchMention Mention { get => field ??= _data?.Get<TwitchMention>("mention"); set; }
         
             /// <summary> 
             /// Transforms the godot data into a TwitchFragments object.
@@ -437,14 +426,14 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
             public static TwitchFragments FromObject(GodotObject data)
             {
                 if(data == null) return null;
-                return new TwitchFragments
+                var instance = new TwitchFragments
                 {
                     Type = data.Get("type").AsString(),
                     Text = data.Get("text").AsString(),
-                    Cheermote = TwitchCheermote.FromObject(data.Get("cheermote").AsGodotObject()),
-                    Emote = TwitchEmote.FromObject(data.Get("emote").AsGodotObject()),
-                    Mention = TwitchMention.FromObject(data.Get("mention").AsGodotObject()),
                 };
+                
+                instance._data = data;
+                return instance;
             }
         
             public GodotObject ToGodotObject()
@@ -463,6 +452,8 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         
             public partial class TwitchCheermote : RefCounted, ITwitcherSharpEventSub<TwitchCheermote>
             {
+                private GodotObject _data;
+                
                 /// <summary> 
                 /// The name portion of the Cheermote string that you use in chat to cheer Bits. The full Cheermote string is the concatenation of {prefix} + {number of Bits}. For example, if the prefix is “Cheer” and you want to cheer 100 Bits, the full Cheermote string is Cheer100. When the Cheermote string is entered in chat, Twitch converts it to the image associated with the Bits tier that was cheered.
                 /// </summary>
@@ -484,12 +475,15 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
                 public static TwitchCheermote FromObject(GodotObject data)
                 {
                     if(data == null) return null;
-                    return new TwitchCheermote
+                    var instance = new TwitchCheermote
                     {
                         Prefix = data.Get("prefix").AsGodotDictionary(),
                         Bits = data.Get("bits").AsInt32(),
                         Tier = data.Get("tier").AsInt32(),
                     };
+                    
+                    instance._data = data;
+                    return instance;
                 }
             
                 public GodotObject ToGodotObject()
@@ -506,6 +500,8 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         
             public partial class TwitchEmote : RefCounted, ITwitcherSharpEventSub<TwitchEmote>
             {
+                private GodotObject _data;
+                
                 /// <summary> 
                 /// An ID that uniquely identifies this emote.
                 /// </summary>
@@ -532,13 +528,15 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
                 public static TwitchEmote FromObject(GodotObject data)
                 {
                     if(data == null) return null;
-                    return new TwitchEmote
+                    var instance = new TwitchEmote
                     {
                         Id = data.Get("id").AsString(),
                         EmoteSetId = data.Get("emote_set_id").AsString(),
                         OwnerId = data.Get("owner_id").AsString(),
-                        Format = data.Get("format").AsStringArray(),
                     };
+                    
+                    instance._data = data;
+                    return instance;
                 }
             
                 public GodotObject ToGodotObject()
@@ -556,6 +554,8 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         
             public partial class TwitchMention : RefCounted, ITwitcherSharpEventSub<TwitchMention>
             {
+                private GodotObject _data;
+                
                 /// <summary> 
                 /// The user ID of the mentioned user.
                 /// </summary>
@@ -577,12 +577,15 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
                 public static TwitchMention FromObject(GodotObject data)
                 {
                     if(data == null) return null;
-                    return new TwitchMention
+                    var instance = new TwitchMention
                     {
                         UserId = data.Get("user_id").AsString(),
                         UserName = data.Get("user_name").AsString(),
                         UserLogin = data.Get("user_login").AsString(),
                     };
+                    
+                    instance._data = data;
+                    return instance;
                 }
             
                 public GodotObject ToGodotObject()
@@ -601,6 +604,8 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
 
     public partial class TwitchSub : RefCounted, ITwitcherSharpEventSub<TwitchSub>
     {
+        private GodotObject _data;
+        
         /// <summary> 
         /// The type of subscription plan being used. Possible values are: 1000 - First level of paid or Prime subscription.2000 - Second level of paid subscription.3000 - Third level of paid subscription.
         /// </summary>
@@ -622,12 +627,15 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         public static TwitchSub FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchSub
+            var instance = new TwitchSub
             {
                 SubTier = data.Get("sub_tier").AsString(),
                 IsPrime = data.Get("is_prime").AsBool(),
                 DurationMonths = data.Get("duration_months").AsInt32(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -644,6 +652,8 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
 
     public partial class TwitchResub : RefCounted, ITwitcherSharpEventSub<TwitchResub>
     {
+        private GodotObject _data;
+        
         /// <summary> 
         /// The total number of months the user has subscribed.
         /// </summary>
@@ -700,7 +710,7 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         public static TwitchResub FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchResub
+            var instance = new TwitchResub
             {
                 CumulativeMonths = data.Get("cumulative_months").AsInt32(),
                 DurationMonths = data.Get("duration_months").AsInt32(),
@@ -713,6 +723,9 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
                 GifterUserName = data.Get("gifter_user_name").AsString(),
                 GifterUserLogin = data.Get("gifter_user_login").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -736,6 +749,8 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
 
     public partial class TwitchSubGift : RefCounted, ITwitcherSharpEventSub<TwitchSubGift>
     {
+        private GodotObject _data;
+        
         /// <summary> 
         /// The number of months the subscription is for.
         /// </summary>
@@ -777,7 +792,7 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         public static TwitchSubGift FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchSubGift
+            var instance = new TwitchSubGift
             {
                 DurationMonths = data.Get("duration_months").AsInt32(),
                 CumulativeTotal = data.Get("cumulative_total").AsInt32(),
@@ -787,6 +802,9 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
                 SubTier = data.Get("sub_tier").AsString(),
                 CommunityGiftId = data.Get("community_gift_id").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -807,6 +825,8 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
 
     public partial class TwitchCommunitySubGift : RefCounted, ITwitcherSharpEventSub<TwitchCommunitySubGift>
     {
+        private GodotObject _data;
+        
         /// <summary> 
         /// The ID of the associated community gift.
         /// </summary>
@@ -833,13 +853,16 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         public static TwitchCommunitySubGift FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchCommunitySubGift
+            var instance = new TwitchCommunitySubGift
             {
                 Id = data.Get("id").AsString(),
                 Total = data.Get("total").AsInt32(),
                 SubTier = data.Get("sub_tier").AsString(),
                 CumulativeTotal = data.Get("cumulative_total").AsInt32(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -857,6 +880,8 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
 
     public partial class TwitchGiftPaidUpgrade : RefCounted, ITwitcherSharpEventSub<TwitchGiftPaidUpgrade>
     {
+        private GodotObject _data;
+        
         /// <summary> 
         /// Whether the gift was given anonymously.
         /// </summary>
@@ -878,12 +903,15 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         public static TwitchGiftPaidUpgrade FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchGiftPaidUpgrade
+            var instance = new TwitchGiftPaidUpgrade
             {
                 GifterIsAnonymous = data.Get("gifter_is_anonymous").AsBool(),
                 GifterUserId = data.Get("gifter_user_id").AsString(),
                 GifterUserName = data.Get("gifter_user_name").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -900,6 +928,8 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
 
     public partial class TwitchPrimePaidUpgrade : RefCounted, ITwitcherSharpEventSub<TwitchPrimePaidUpgrade>
     {
+        private GodotObject _data;
+        
         /// <summary> 
         /// The type of subscription plan being used. Possible values are: 1000 - First level of paid or Prime subscription.2000 - Second level of paid subscription.3000 - Third level of paid subscription.
         /// </summary>
@@ -911,10 +941,13 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         public static TwitchPrimePaidUpgrade FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchPrimePaidUpgrade
+            var instance = new TwitchPrimePaidUpgrade
             {
                 SubTier = data.Get("sub_tier").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -929,6 +962,8 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
 
     public partial class TwitchPayItForward : RefCounted, ITwitcherSharpEventSub<TwitchPayItForward>
     {
+        private GodotObject _data;
+        
         /// <summary> 
         /// Whether the gift was given anonymously.
         /// </summary>
@@ -955,13 +990,16 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         public static TwitchPayItForward FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchPayItForward
+            var instance = new TwitchPayItForward
             {
                 GifterIsAnonymous = data.Get("gifter_is_anonymous").AsBool(),
                 GifterUserId = data.Get("gifter_user_id").AsString(),
                 GifterUserName = data.Get("gifter_user_name").AsString(),
                 GifterUserLogin = data.Get("gifter_user_login").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -979,6 +1017,8 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
 
     public partial class TwitchRaid : RefCounted, ITwitcherSharpEventSub<TwitchRaid>
     {
+        private GodotObject _data;
+        
         /// <summary> 
         /// The user ID of the broadcaster raiding this channel.
         /// </summary>
@@ -1010,7 +1050,7 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         public static TwitchRaid FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchRaid
+            var instance = new TwitchRaid
             {
                 UserId = data.Get("user_id").AsString(),
                 UserName = data.Get("user_name").AsString(),
@@ -1018,6 +1058,9 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
                 ViewerCount = data.Get("viewer_count").AsInt32(),
                 ProfileImageUrl = data.Get("profile_image_url").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -1036,6 +1079,8 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
 
     public partial class TwitchAnnouncement : RefCounted, ITwitcherSharpEventSub<TwitchAnnouncement>
     {
+        private GodotObject _data;
+        
         /// <summary> 
         /// Color of the announcement.
         /// </summary>
@@ -1047,10 +1092,13 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         public static TwitchAnnouncement FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchAnnouncement
+            var instance = new TwitchAnnouncement
             {
                 Color = data.Get("color").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -1065,6 +1113,8 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
 
     public partial class TwitchBitsBadgeTier : RefCounted, ITwitcherSharpEventSub<TwitchBitsBadgeTier>
     {
+        private GodotObject _data;
+        
         /// <summary> 
         /// The tier of the Bits badge the user just earned. For example, 100, 1000, or 10000.
         /// </summary>
@@ -1076,10 +1126,13 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         public static TwitchBitsBadgeTier FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchBitsBadgeTier
+            var instance = new TwitchBitsBadgeTier
             {
                 Tier = data.Get("tier").AsInt32(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -1094,6 +1147,8 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
 
     public partial class TwitchAmount : RefCounted, ITwitcherSharpEventSub<TwitchAmount>
     {
+        private GodotObject _data;
+        
         /// <summary> 
         /// The monetary amount. The amount is specified in the currency’s minor unit. For example, the minor units for USD is cents, so if the amount is $5.50 USD, value is set to 550.
         /// </summary>
@@ -1115,12 +1170,15 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         public static TwitchAmount FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchAmount
+            var instance = new TwitchAmount
             {
                 Value = data.Get("value").AsInt32(),
                 DecimalPlace = data.Get("decimal_place").AsInt32(),
                 Currency = data.Get("currency").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -1137,6 +1195,8 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
 
     public partial class TwitchWatchStreak : RefCounted, ITwitcherSharpEventSub<TwitchWatchStreak>
     {
+        private GodotObject _data;
+        
         /// <summary> 
         /// The number of consecutive broadcasts for which the user has been watching.
         /// </summary>
@@ -1153,11 +1213,14 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         public static TwitchWatchStreak FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchWatchStreak
+            var instance = new TwitchWatchStreak
             {
                 StreakCount = data.Get("streak_count").AsInt32(),
                 ChannelPointsAwarded = data.Get("channel_points_awarded").AsInt32(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -1173,6 +1236,8 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
 
     public partial class TwitchSourceBadges : RefCounted, ITwitcherSharpEventSub<TwitchSourceBadges>
     {
+        private GodotObject _data;
+        
         /// <summary> 
         /// The ID that identifies this set of chat badges. For example, Bits or Subscriber.
         /// </summary>
@@ -1194,12 +1259,15 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         public static TwitchSourceBadges FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchSourceBadges
+            var instance = new TwitchSourceBadges
             {
                 SetId = data.Get("set_id").AsString(),
                 Id = data.Get("id").AsString(),
                 Info = data.Get("info").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

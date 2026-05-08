@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelPollEnd;
 
 public partial class TwitchChannelPollEndEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelPollEndEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// ID of the poll.
     /// </summary>
@@ -36,17 +38,17 @@ public partial class TwitchChannelPollEndEvent : RefCounted, ITwitcherSharpEvent
     /// <summary> 
     /// An array of choices for the poll. Includes vote counts.
     /// </summary>
-    public TwitchChoices[] Choices { get; set; }
+    public TwitchChoices[] Choices { get => field ??= _data?.GetArray<TwitchChoices>("choices"); set; }
 
     /// <summary> 
     /// NOTE: Bits voting is not supported.
     /// </summary>
-    public TwitchBitsVoting BitsVoting { get; set; }
+    public TwitchBitsVoting BitsVoting { get => field ??= _data?.Get<TwitchBitsVoting>("bits_voting"); set; }
 
     /// <summary> 
     /// 
     /// </summary>
-    public TwitchChannelPointsVoting ChannelPointsVoting { get; set; }
+    public TwitchChannelPointsVoting ChannelPointsVoting { get => field ??= _data?.Get<TwitchChannelPointsVoting>("channel_points_voting"); set; }
 
     /// <summary> 
     /// The status of the poll. Valid values are completed, archived, and terminated.
@@ -69,21 +71,20 @@ public partial class TwitchChannelPollEndEvent : RefCounted, ITwitcherSharpEvent
     public static TwitchChannelPollEndEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var choicesArray = data.Get("choices").AsGodotArray<GodotObject>();
-        return new TwitchChannelPollEndEvent
+        var instance = new TwitchChannelPollEndEvent
         {
             Id = data.Get("id").AsString(),
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
             BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
             BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
             Title = data.Get("title").AsString(),
-            Choices = choicesArray.Select(TwitchChoices.FromObject).ToArray(),
-            BitsVoting = TwitchBitsVoting.FromObject(data.Get("bits_voting").AsGodotObject()),
-            ChannelPointsVoting = TwitchChannelPointsVoting.FromObject(data.Get("channel_points_voting").AsGodotObject()),
             Status = data.Get("status").AsString(),
             StartedAt = data.Get("started_at").AsString(),
             EndedAt = data.Get("ended_at").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Teams;
 public partial class TwitchTeam : RefCounted, ITwitcherSharp<TwitchTeam>
 {
     private GodotObject _data;
-    public TwitchResponseUsers[] Users { get; set; }
+    public TwitchResponseUsers[] Users { get => field ??= _data?.GetArray<TwitchResponseUsers>("users"); set; }
     public string BackgroundImageUrl { get; set; }
     public string Banner { get; set; }
     public string CreatedAt { get; set; }
@@ -24,10 +24,8 @@ public partial class TwitchTeam : RefCounted, ITwitcherSharp<TwitchTeam>
     public static TwitchTeam FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var usersArray = data.Get("users").AsGodotArray<GodotObject>();
-        return new TwitchTeam
+        var instance = new TwitchTeam
         {
-            Users = usersArray.Select(TwitchResponseUsers.FromObject).ToArray(),
             BackgroundImageUrl = data.Get("background_image_url").AsString(),
             Banner = data.Get("banner").AsString(),
             CreatedAt = data.Get("created_at").AsString(),
@@ -38,6 +36,9 @@ public partial class TwitchTeam : RefCounted, ITwitcherSharp<TwitchTeam>
             TeamDisplayName = data.Get("team_display_name").AsString(),
             Id = data.Get("id").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -73,12 +74,15 @@ public partial class TwitchTeam : RefCounted, ITwitcherSharp<TwitchTeam>
         public static TwitchResponseUsers FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchResponseUsers
+            var instance = new TwitchResponseUsers
             {
                 UserId = data.Get("user_id").AsString(),
                 UserLogin = data.Get("user_login").AsString(),
                 UserName = data.Get("user_name").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

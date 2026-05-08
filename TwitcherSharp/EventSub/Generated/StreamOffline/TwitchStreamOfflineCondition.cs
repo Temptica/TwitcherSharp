@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.StreamOffline;
 
 public partial class TwitchStreamOfflineCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchStreamOfflineCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchStreamOfflineCondition);
 
     /// <summary> 
@@ -21,7 +23,10 @@ public partial class TwitchStreamOfflineCondition(string broadcasterUserId) : Re
     public static TwitchStreamOfflineCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchStreamOfflineCondition(data.Get("broadcaster_user_id").AsString());
+        var instance = new TwitchStreamOfflineCondition(data.Get("broadcaster_user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

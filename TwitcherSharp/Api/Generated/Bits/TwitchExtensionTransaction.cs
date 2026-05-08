@@ -16,7 +16,7 @@ public partial class TwitchExtensionTransaction : RefCounted, ITwitcherSharp<Twi
     public string UserLogin { get; set; }
     public string UserName { get; set; }
     public string ProductType { get; set; }
-    public TwitchResponseProductData ProductData { get; set; }
+    public TwitchResponseProductData ProductData { get => field ??= _data?.Get<TwitchResponseProductData>("product_data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchExtensionTransaction object.
@@ -24,7 +24,7 @@ public partial class TwitchExtensionTransaction : RefCounted, ITwitcherSharp<Twi
     public static TwitchExtensionTransaction FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchExtensionTransaction
+        var instance = new TwitchExtensionTransaction
         {
             Id = data.Get("id").AsString(),
             Timestamp = data.Get("timestamp").AsString(),
@@ -35,8 +35,10 @@ public partial class TwitchExtensionTransaction : RefCounted, ITwitcherSharp<Twi
             UserLogin = data.Get("user_login").AsString(),
             UserName = data.Get("user_name").AsString(),
             ProductType = data.Get("product_type").AsString(),
-            ProductData = data.Get("product_data").As<TwitchResponseProductData>(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -64,7 +66,7 @@ public partial class TwitchExtensionTransaction : RefCounted, ITwitcherSharp<Twi
         private GodotObject _data;
         public string Sku { get; set; }
         public string Domain { get; set; }
-        public TwitchResponseCost Cost { get; set; }
+        public TwitchResponseCost Cost { get => field ??= _data?.Get<TwitchResponseCost>("cost"); set; }
         public bool InDevelopment { get; set; }
         public string DisplayName { get; set; }
         public string Expiration { get; set; }
@@ -76,16 +78,18 @@ public partial class TwitchExtensionTransaction : RefCounted, ITwitcherSharp<Twi
         public static TwitchResponseProductData FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchResponseProductData
+            var instance = new TwitchResponseProductData
             {
                 Sku = data.Get("sku").AsString(),
                 Domain = data.Get("domain").AsString(),
-                Cost = data.Get("cost").As<TwitchResponseCost>(),
                 InDevelopment = data.Get("in_development").AsBool(),
                 DisplayName = data.Get("display_name").AsString(),
                 Expiration = data.Get("expiration").AsString(),
                 Broadcast = data.Get("broadcast").AsBool(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -118,11 +122,14 @@ public partial class TwitchExtensionTransaction : RefCounted, ITwitcherSharp<Twi
             public static TwitchResponseCost FromObject(GodotObject data)
             {
                 if(data == null) return null;
-                return new TwitchResponseCost
+                var instance = new TwitchResponseCost
                 {
                     Amount = data.Get("amount").AsInt32(),
                     Type = data.Get("type").AsString(),
                 };
+                
+                instance._data = data;
+                return instance;
             }
         
             public GodotObject ToGodotObject()

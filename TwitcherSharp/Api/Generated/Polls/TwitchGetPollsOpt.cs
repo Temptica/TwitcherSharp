@@ -21,12 +21,15 @@ public partial class TwitchGetPollsOpt : RefCounted, ITwitcherSharp<TwitchGetPol
     public static TwitchGetPollsOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGetPollsOpt
+        var instance = new TwitchGetPollsOpt
         {
             Id = data.Get("id").AsStringArray(),
             First = data.Get("first").AsString(),
             After = data.Get("after").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 public partial class TwitchResolveUnbanRequestsResponse : RefCounted, ITwitcherSharp<TwitchResolveUnbanRequestsResponse>
 {
     private GodotObject _data;
-    public TwitchResponseData[] Data { get; set; }
+    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchResolveUnbanRequestsResponse object.
@@ -15,11 +15,10 @@ public partial class TwitchResolveUnbanRequestsResponse : RefCounted, ITwitcherS
     public static TwitchResolveUnbanRequestsResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchResolveUnbanRequestsResponse
-        {
-            Data = dataArray.Select(TwitchResponseData.FromObject).ToArray(),
-        };
+        var instance = new TwitchResolveUnbanRequestsResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -55,7 +54,7 @@ public partial class TwitchResolveUnbanRequestsResponse : RefCounted, ITwitcherS
         public static TwitchResponseData FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchResponseData
+            var instance = new TwitchResponseData
             {
                 Id = data.Get("id").AsString(),
                 BroadcasterId = data.Get("broadcaster_id").AsString(),
@@ -73,6 +72,9 @@ public partial class TwitchResolveUnbanRequestsResponse : RefCounted, ITwitcherS
                 ResolvedAt = data.Get("resolved_at").AsString(),
                 ResolutionText = data.Get("resolution_text").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

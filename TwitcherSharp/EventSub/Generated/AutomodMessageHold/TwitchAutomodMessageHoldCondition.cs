@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.AutomodMessageHold;
 
 public partial class TwitchAutomodMessageHoldCondition(string broadcasterUserId, string moderatorUserId) : RefCounted, ITwitcherSharpCondition<TwitchAutomodMessageHoldCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchAutomodMessageHoldCondition);
 
     /// <summary> 
@@ -26,7 +28,10 @@ public partial class TwitchAutomodMessageHoldCondition(string broadcasterUserId,
     public static TwitchAutomodMessageHoldCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchAutomodMessageHoldCondition(data.Get("broadcaster_user_id").AsString(), data.Get("moderator_user_id").AsString());
+        var instance = new TwitchAutomodMessageHoldCondition(data.Get("broadcaster_user_id").AsString(), data.Get("moderator_user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

@@ -8,8 +8,8 @@ namespace TwitcherSharp.Api.Generated.Analytics;
 public partial class TwitchGetGameAnalyticsResponse : RefCounted, ITwitcherSharp<TwitchGetGameAnalyticsResponse>
 {
     private GodotObject _data;
-    public TwitchGameAnalytics[] Data { get; set; }
-    public ResponsePagination Pagination { get; set; }
+    public TwitchGameAnalytics[] Data { get => field ??= _data?.GetArray<TwitchGameAnalytics>("data"); set; }
+    public ResponsePagination Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetGameAnalyticsResponse object.
@@ -17,12 +17,10 @@ public partial class TwitchGetGameAnalyticsResponse : RefCounted, ITwitcherSharp
     public static TwitchGetGameAnalyticsResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchGetGameAnalyticsResponse
-        {
-            Data = dataArray.Select(TwitchGameAnalytics.FromObject).ToArray(),
-            Pagination = data.Get("pagination").As<ResponsePagination>(),
-        };
+        var instance = new TwitchGetGameAnalyticsResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -51,10 +49,13 @@ public partial class TwitchGetGameAnalyticsResponse : RefCounted, ITwitcherSharp
         public static ResponsePagination FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new ResponsePagination
+            var instance = new ResponsePagination
             {
                 Cursor = data.Get("cursor").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

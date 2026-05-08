@@ -22,13 +22,16 @@ public partial class TwitchUpdateChannelStreamScheduleOpt : RefCounted, ITwitche
     public static TwitchUpdateChannelStreamScheduleOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchUpdateChannelStreamScheduleOpt
+        var instance = new TwitchUpdateChannelStreamScheduleOpt
         {
             IsVacationEnabled = data.Get("is_vacation_enabled").AsBool(),
             VacationStartTime = data.Get("vacation_start_time").AsString(),
             VacationEndTime = data.Get("vacation_end_time").AsString(),
             Timezone = data.Get("timezone").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

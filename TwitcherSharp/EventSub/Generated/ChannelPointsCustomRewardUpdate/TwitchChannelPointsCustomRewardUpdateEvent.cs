@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelPointsCustomRewardUpdate;
 
 public partial class TwitchChannelPointsCustomRewardUpdateEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelPointsCustomRewardUpdateEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The reward identifier.
     /// </summary>
@@ -71,12 +73,12 @@ public partial class TwitchChannelPointsCustomRewardUpdateEvent : RefCounted, IT
     /// <summary> 
     /// 
     /// </summary>
-    public TwitchMaxPerStream MaxPerStream { get; set; }
+    public TwitchMaxPerStream MaxPerStream { get => field ??= _data?.Get<TwitchMaxPerStream>("max_per_stream"); set; }
 
     /// <summary> 
     /// 
     /// </summary>
-    public TwitchMaxPerUserPerStream MaxPerUserPerStream { get; set; }
+    public TwitchMaxPerUserPerStream MaxPerUserPerStream { get => field ??= _data?.Get<TwitchMaxPerUserPerStream>("max_per_user_per_stream"); set; }
 
     /// <summary> 
     /// Custom background color for the reward. Format: Hex with # prefix. Example: #FA1ED2.
@@ -86,12 +88,12 @@ public partial class TwitchChannelPointsCustomRewardUpdateEvent : RefCounted, IT
     /// <summary> 
     /// 
     /// </summary>
-    public TwitchImage Image { get; set; }
+    public TwitchImage Image { get => field ??= _data?.Get<TwitchImage>("image"); set; }
 
     /// <summary> 
     /// 
     /// </summary>
-    public TwitchGlobalCooldown GlobalCooldown { get; set; }
+    public TwitchGlobalCooldown GlobalCooldown { get => field ??= _data?.Get<TwitchGlobalCooldown>("global_cooldown"); set; }
 
     /// <summary> 
     /// Timestamp of the cooldown expiration. null if the reward isn’t on cooldown.
@@ -109,7 +111,7 @@ public partial class TwitchChannelPointsCustomRewardUpdateEvent : RefCounted, IT
     public static TwitchChannelPointsCustomRewardUpdateEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelPointsCustomRewardUpdateEvent
+        var instance = new TwitchChannelPointsCustomRewardUpdateEvent
         {
             Id = data.Get("id").AsString(),
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
@@ -123,14 +125,13 @@ public partial class TwitchChannelPointsCustomRewardUpdateEvent : RefCounted, IT
             Prompt = data.Get("prompt").AsString(),
             IsUserInputRequired = data.Get("is_user_input_required").AsBool(),
             ShouldRedemptionsSkipRequestQueue = data.Get("should_redemptions_skip_request_queue").AsBool(),
-            MaxPerStream = TwitchMaxPerStream.FromObject(data.Get("max_per_stream").AsGodotObject()),
-            MaxPerUserPerStream = TwitchMaxPerUserPerStream.FromObject(data.Get("max_per_user_per_stream").AsGodotObject()),
             BackgroundColor = data.Get("background_color").AsString(),
-            Image = TwitchImage.FromObject(data.Get("image").AsGodotObject()),
-            GlobalCooldown = TwitchGlobalCooldown.FromObject(data.Get("global_cooldown").AsGodotObject()),
             CooldownExpiresAt = data.Get("cooldown_expires_at").AsString(),
             RedemptionsRedeemedCurrentStream = data.Get("redemptions_redeemed_current_stream").AsInt32(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

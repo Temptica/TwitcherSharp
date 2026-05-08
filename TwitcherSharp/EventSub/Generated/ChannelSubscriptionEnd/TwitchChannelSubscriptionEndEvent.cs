@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelSubscriptionEnd;
 
 public partial class TwitchChannelSubscriptionEndEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelSubscriptionEndEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The user ID for the user whose subscription ended.
     /// </summary>
@@ -54,7 +56,7 @@ public partial class TwitchChannelSubscriptionEndEvent : RefCounted, ITwitcherSh
     public static TwitchChannelSubscriptionEndEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelSubscriptionEndEvent
+        var instance = new TwitchChannelSubscriptionEndEvent
         {
             UserId = data.Get("user_id").AsString(),
             UserLogin = data.Get("user_login").AsString(),
@@ -65,6 +67,9 @@ public partial class TwitchChannelSubscriptionEndEvent : RefCounted, ITwitcherSh
             Tier = data.Get("tier").AsString(),
             IsGift = data.Get("is_gift").AsBool(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

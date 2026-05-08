@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelPredictionBegin;
 
 public partial class TwitchChannelPredictionBeginEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelPredictionBeginEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// Channel Points Prediction ID.
     /// </summary>
@@ -36,7 +38,7 @@ public partial class TwitchChannelPredictionBeginEvent : RefCounted, ITwitcherSh
     /// <summary> 
     /// An array of outcomes for the Channel Points Prediction.
     /// </summary>
-    public TwitchOutcomes[] Outcomes { get; set; }
+    public TwitchOutcomes[] Outcomes { get => field ??= _data?.GetArray<TwitchOutcomes>("outcomes"); set; }
 
     /// <summary> 
     /// The time the Channel Points Prediction started.
@@ -54,18 +56,19 @@ public partial class TwitchChannelPredictionBeginEvent : RefCounted, ITwitcherSh
     public static TwitchChannelPredictionBeginEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var outcomesArray = data.Get("outcomes").AsGodotArray<GodotObject>();
-        return new TwitchChannelPredictionBeginEvent
+        var instance = new TwitchChannelPredictionBeginEvent
         {
             Id = data.Get("id").AsString(),
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
             BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
             BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
             Title = data.Get("title").AsString(),
-            Outcomes = outcomesArray.Select(TwitchOutcomes.FromObject).ToArray(),
             StartedAt = data.Get("started_at").AsString(),
             LocksAt = data.Get("locks_at").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

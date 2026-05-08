@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Channels;
 public partial class TwitchGetChannelInformationResponse : RefCounted, ITwitcherSharp<TwitchGetChannelInformationResponse>
 {
     private GodotObject _data;
-    public TwitchChannelInformation[] Data { get; set; }
+    public TwitchChannelInformation[] Data { get => field ??= _data?.GetArray<TwitchChannelInformation>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetChannelInformationResponse object.
@@ -15,11 +15,10 @@ public partial class TwitchGetChannelInformationResponse : RefCounted, ITwitcher
     public static TwitchGetChannelInformationResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchGetChannelInformationResponse
-        {
-            Data = dataArray.Select(TwitchChannelInformation.FromObject).ToArray(),
-        };
+        var instance = new TwitchGetChannelInformationResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

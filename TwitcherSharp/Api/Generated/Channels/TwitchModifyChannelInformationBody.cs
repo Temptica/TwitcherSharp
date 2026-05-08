@@ -12,7 +12,7 @@ public partial class TwitchModifyChannelInformationBody : RefCounted, ITwitcherS
     public string Title { get; set; }
     public int? Delay { get; set; }
     public string[] Tags { get; set; }
-    public TwitchBodyContentClassificationLabels[] ContentClassificationLabels { get; set; }
+    public TwitchBodyContentClassificationLabels[] ContentClassificationLabels { get => field ??= _data?.GetArray<TwitchBodyContentClassificationLabels>("content_classification_labels"); set; }
     public bool? IsBrandedContent { get; set; }
 
     /// <summary> 
@@ -21,17 +21,18 @@ public partial class TwitchModifyChannelInformationBody : RefCounted, ITwitcherS
     public static TwitchModifyChannelInformationBody FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var contentClassificationLabelsArray = data.Get("content_classification_labels").AsGodotArray<GodotObject>();
-        return new TwitchModifyChannelInformationBody
+        var instance = new TwitchModifyChannelInformationBody
         {
             GameId = data.Get("game_id").AsString(),
             BroadcasterLanguage = data.Get("broadcaster_language").AsString(),
             Title = data.Get("title").AsString(),
             Delay = data.Get("delay").AsInt32(),
             Tags = data.Get("tags").AsStringArray(),
-            ContentClassificationLabels = contentClassificationLabelsArray.Select(TwitchBodyContentClassificationLabels.FromObject).ToArray(),
             IsBrandedContent = data.Get("is_branded_content").AsBool(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -64,11 +65,14 @@ public partial class TwitchModifyChannelInformationBody : RefCounted, ITwitcherS
         public static TwitchBodyContentClassificationLabels FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchBodyContentClassificationLabels
+            var instance = new TwitchBodyContentClassificationLabels
             {
                 Id = data.Get("id").AsString(),
                 IsEnabled = data.Get("is_enabled").AsBool(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

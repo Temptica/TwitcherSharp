@@ -20,11 +20,14 @@ public partial class TwitchSearchCategoriesOpt : RefCounted, ITwitcherSharp<Twit
     public static TwitchSearchCategoriesOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchSearchCategoriesOpt
+        var instance = new TwitchSearchCategoriesOpt
         {
             First = data.Get("first").AsInt32(),
             After = data.Get("after").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.StreamOnline;
 
 public partial class TwitchStreamOnlineCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchStreamOnlineCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchStreamOnlineCondition);
 
     /// <summary> 
@@ -21,7 +23,10 @@ public partial class TwitchStreamOnlineCondition(string broadcasterUserId) : Ref
     public static TwitchStreamOnlineCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchStreamOnlineCondition(data.Get("broadcaster_user_id").AsString());
+        var instance = new TwitchStreamOnlineCondition(data.Get("broadcaster_user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

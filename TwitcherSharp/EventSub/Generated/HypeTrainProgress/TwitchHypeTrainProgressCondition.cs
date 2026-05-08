@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.HypeTrainProgress;
 
 public partial class TwitchHypeTrainProgressCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchHypeTrainProgressCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchHypeTrainProgressCondition);
 
     /// <summary> 
@@ -21,7 +23,10 @@ public partial class TwitchHypeTrainProgressCondition(string broadcasterUserId) 
     public static TwitchHypeTrainProgressCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchHypeTrainProgressCondition(data.Get("broadcaster_user_id").AsString());
+        var instance = new TwitchHypeTrainProgressCondition(data.Get("broadcaster_user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

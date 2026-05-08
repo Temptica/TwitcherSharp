@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelPredictionBegin;
 
 public partial class TwitchChannelPredictionBeginCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelPredictionBeginCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchChannelPredictionBeginCondition);
 
     /// <summary> 
@@ -21,7 +23,10 @@ public partial class TwitchChannelPredictionBeginCondition(string broadcasterUse
     public static TwitchChannelPredictionBeginCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelPredictionBeginCondition(data.Get("broadcaster_user_id").AsString());
+        var instance = new TwitchChannelPredictionBeginCondition(data.Get("broadcaster_user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

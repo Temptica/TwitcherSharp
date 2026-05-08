@@ -19,7 +19,7 @@ public partial class TwitchSendChatMessageBody : RefCounted, ITwitcherSharp<Twit
     public static TwitchSendChatMessageBody FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchSendChatMessageBody
+        var instance = new TwitchSendChatMessageBody
         {
             BroadcasterId = data.Get("broadcaster_id").AsString(),
             SenderId = data.Get("sender_id").AsString(),
@@ -27,6 +27,9 @@ public partial class TwitchSendChatMessageBody : RefCounted, ITwitcherSharp<Twit
             ReplyParentMessageId = data.Get("reply_parent_message_id").AsString(),
             ForSourceOnly = data.Get("for_source_only").AsBool(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

@@ -23,7 +23,7 @@ public partial class TwitchGetChannelStreamScheduleOpt : RefCounted, ITwitcherSh
     public static TwitchGetChannelStreamScheduleOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGetChannelStreamScheduleOpt
+        var instance = new TwitchGetChannelStreamScheduleOpt
         {
             Id = data.Get("id").AsStringArray(),
             StartTime = data.Get("start_time").AsString(),
@@ -31,6 +31,9 @@ public partial class TwitchGetChannelStreamScheduleOpt : RefCounted, ITwitcherSh
             First = data.Get("first").AsInt32(),
             After = data.Get("after").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

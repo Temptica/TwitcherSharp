@@ -17,12 +17,15 @@ public partial class TwitchChannelEditor : RefCounted, ITwitcherSharp<TwitchChan
     public static TwitchChannelEditor FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelEditor
+        var instance = new TwitchChannelEditor
         {
             UserId = data.Get("user_id").AsString(),
             UserName = data.Get("user_name").AsString(),
             CreatedAt = data.Get("created_at").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

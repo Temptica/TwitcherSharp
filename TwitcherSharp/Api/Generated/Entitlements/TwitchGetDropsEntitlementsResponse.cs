@@ -8,8 +8,8 @@ namespace TwitcherSharp.Api.Generated.Entitlements;
 public partial class TwitchGetDropsEntitlementsResponse : RefCounted, ITwitcherSharp<TwitchGetDropsEntitlementsResponse>
 {
     private GodotObject _data;
-    public TwitchDropsEntitlement[] Data { get; set; }
-    public ResponsePagination Pagination { get; set; }
+    public TwitchDropsEntitlement[] Data { get => field ??= _data?.GetArray<TwitchDropsEntitlement>("data"); set; }
+    public ResponsePagination Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetDropsEntitlementsResponse object.
@@ -17,12 +17,10 @@ public partial class TwitchGetDropsEntitlementsResponse : RefCounted, ITwitcherS
     public static TwitchGetDropsEntitlementsResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchGetDropsEntitlementsResponse
-        {
-            Data = dataArray.Select(TwitchDropsEntitlement.FromObject).ToArray(),
-            Pagination = data.Get("pagination").As<ResponsePagination>(),
-        };
+        var instance = new TwitchGetDropsEntitlementsResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -51,10 +49,13 @@ public partial class TwitchGetDropsEntitlementsResponse : RefCounted, ITwitcherS
         public static ResponsePagination FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new ResponsePagination
+            var instance = new ResponsePagination
             {
                 Cursor = data.Get("cursor").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.EventSub;
 public partial class TwitchCreateEventSubSubscriptionResponse<T> : RefCounted, ITwitcherSharp<TwitchCreateEventSubSubscriptionResponse<T>> where T : RefCounted, ITwitcherSharpCondition<T>
 {
     private GodotObject _data;
-    public TwitchEventSubSubscription<T>[] Data { get; set; }
+    public TwitchEventSubSubscription<T>[] Data { get => field ??= _data?.GetArray<TwitchEventSubSubscription<T>>("data"); set; }
     public int Total { get; set; }
     public int TotalCost { get; set; }
     public int MaxTotalCost { get; set; }
@@ -18,14 +18,15 @@ public partial class TwitchCreateEventSubSubscriptionResponse<T> : RefCounted, I
     public static TwitchCreateEventSubSubscriptionResponse<T> FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchCreateEventSubSubscriptionResponse<T>
+        var instance = new TwitchCreateEventSubSubscriptionResponse<T>
         {
-            Data = dataArray.Select(TwitchEventSubSubscription<T>.FromObject).ToArray(),
             Total = data.Get("total").AsInt32(),
             TotalCost = data.Get("total_cost").AsInt32(),
             MaxTotalCost = data.Get("max_total_cost").AsInt32(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

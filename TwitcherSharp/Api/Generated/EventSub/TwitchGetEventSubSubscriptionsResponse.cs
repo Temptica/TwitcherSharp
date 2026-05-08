@@ -8,11 +8,11 @@ namespace TwitcherSharp.Api.Generated.EventSub;
 public partial class TwitchGetEventSubSubscriptionsResponse<T> : RefCounted, ITwitcherSharp<TwitchGetEventSubSubscriptionsResponse<T>> where T : RefCounted, ITwitcherSharpCondition<T>
 {
     private GodotObject _data;
-    public TwitchEventSubSubscription<T>[] Data { get; set; }
+    public TwitchEventSubSubscription<T>[] Data { get => field ??= _data?.GetArray<TwitchEventSubSubscription<T>>("data"); set; }
     public int Total { get; set; }
     public int TotalCost { get; set; }
     public int MaxTotalCost { get; set; }
-    public ResponsePagination Pagination { get; set; }
+    public ResponsePagination Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetEventSubSubscriptionsResponse object.
@@ -20,15 +20,15 @@ public partial class TwitchGetEventSubSubscriptionsResponse<T> : RefCounted, ITw
     public static TwitchGetEventSubSubscriptionsResponse<T> FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchGetEventSubSubscriptionsResponse<T>
+        var instance = new TwitchGetEventSubSubscriptionsResponse<T>
         {
-            Data = dataArray.Select(TwitchEventSubSubscription<T>.FromObject).ToArray(),
             Total = data.Get("total").AsInt32(),
             TotalCost = data.Get("total_cost").AsInt32(),
             MaxTotalCost = data.Get("max_total_cost").AsInt32(),
-            Pagination = data.Get("pagination").As<ResponsePagination>(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -60,10 +60,13 @@ public partial class TwitchGetEventSubSubscriptionsResponse<T> : RefCounted, ITw
         public static ResponsePagination FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new ResponsePagination
+            var instance = new ResponsePagination
             {
                 Cursor = data.Get("cursor").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

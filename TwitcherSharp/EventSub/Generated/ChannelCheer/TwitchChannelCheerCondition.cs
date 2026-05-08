@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelCheer;
 
 public partial class TwitchChannelCheerCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelCheerCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchChannelCheerCondition);
 
     /// <summary> 
@@ -21,7 +23,10 @@ public partial class TwitchChannelCheerCondition(string broadcasterUserId) : Ref
     public static TwitchChannelCheerCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelCheerCondition(data.Get("broadcaster_user_id").AsString());
+        var instance = new TwitchChannelCheerCondition(data.Get("broadcaster_user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

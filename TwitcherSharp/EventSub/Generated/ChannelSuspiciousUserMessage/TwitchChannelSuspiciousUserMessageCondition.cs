@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelSuspiciousUserMessage;
 
 public partial class TwitchChannelSuspiciousUserMessageCondition(string moderatorUserId, string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelSuspiciousUserMessageCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchChannelSuspiciousUserMessageCondition);
 
     /// <summary> 
@@ -26,7 +28,10 @@ public partial class TwitchChannelSuspiciousUserMessageCondition(string moderato
     public static TwitchChannelSuspiciousUserMessageCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelSuspiciousUserMessageCondition(data.Get("moderator_user_id").AsString(), data.Get("broadcaster_user_id").AsString());
+        var instance = new TwitchChannelSuspiciousUserMessageCondition(data.Get("moderator_user_id").AsString(), data.Get("broadcaster_user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

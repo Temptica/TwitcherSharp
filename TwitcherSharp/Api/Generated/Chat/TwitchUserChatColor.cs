@@ -18,13 +18,16 @@ public partial class TwitchUserChatColor : RefCounted, ITwitcherSharp<TwitchUser
     public static TwitchUserChatColor FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchUserChatColor
+        var instance = new TwitchUserChatColor
         {
             UserId = data.Get("user_id").AsString(),
             UserLogin = data.Get("user_login").AsString(),
             UserName = data.Get("user_name").AsString(),
             Color = data.Get("color").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

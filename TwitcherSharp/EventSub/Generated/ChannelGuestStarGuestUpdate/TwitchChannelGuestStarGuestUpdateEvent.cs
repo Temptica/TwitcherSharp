@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelGuestStarGuestUpdate;
 
 public partial class TwitchChannelGuestStarGuestUpdateEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelGuestStarGuestUpdateEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The non-host broadcaster user ID.
     /// </summary>
@@ -104,7 +106,7 @@ public partial class TwitchChannelGuestStarGuestUpdateEvent : RefCounted, ITwitc
     public static TwitchChannelGuestStarGuestUpdateEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelGuestStarGuestUpdateEvent
+        var instance = new TwitchChannelGuestStarGuestUpdateEvent
         {
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
             BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
@@ -125,6 +127,9 @@ public partial class TwitchChannelGuestStarGuestUpdateEvent : RefCounted, ITwitc
             HostAudioEnabled = data.Get("host_audio_enabled").AsBool(),
             HostVolume = data.Get("host_volume").AsInt32(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

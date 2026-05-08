@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.CharityCampaignStop;
 
 public partial class TwitchCharityCampaignStopEvent : RefCounted, ITwitcherSharpEventSub<TwitchCharityCampaignStopEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// An ID that identifies the charity campaign.
     /// </summary>
@@ -51,12 +53,12 @@ public partial class TwitchCharityCampaignStopEvent : RefCounted, ITwitcherSharp
     /// <summary> 
     /// An object that contains the final amount of donations that the campaign received.
     /// </summary>
-    public TwitchCurrentAmount CurrentAmount { get; set; }
+    public TwitchCurrentAmount CurrentAmount { get => field ??= _data?.Get<TwitchCurrentAmount>("current_amount"); set; }
 
     /// <summary> 
     /// An object that contains the campaign’s target fundraising goal.
     /// </summary>
-    public TwitchTargetAmount TargetAmount { get; set; }
+    public TwitchTargetAmount TargetAmount { get => field ??= _data?.Get<TwitchTargetAmount>("target_amount"); set; }
 
     /// <summary> 
     /// The UTC timestamp (in RFC3339 format) of when the broadcaster stopped the campaign.
@@ -69,7 +71,7 @@ public partial class TwitchCharityCampaignStopEvent : RefCounted, ITwitcherSharp
     public static TwitchCharityCampaignStopEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchCharityCampaignStopEvent
+        var instance = new TwitchCharityCampaignStopEvent
         {
             Id = data.Get("id").AsString(),
             BroadcasterId = data.Get("broadcaster_id").AsString(),
@@ -79,10 +81,11 @@ public partial class TwitchCharityCampaignStopEvent : RefCounted, ITwitcherSharp
             CharityDescription = data.Get("charity_description").AsString(),
             CharityLogo = data.Get("charity_logo").AsString(),
             CharityWebsite = data.Get("charity_website").AsString(),
-            CurrentAmount = TwitchCurrentAmount.FromObject(data.Get("current_amount").AsGodotObject()),
-            TargetAmount = TwitchTargetAmount.FromObject(data.Get("target_amount").AsGodotObject()),
             StoppedAt = data.Get("stopped_at").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -107,6 +110,8 @@ public partial class TwitchCharityCampaignStopEvent : RefCounted, ITwitcherSharp
 
     public partial class TwitchCurrentAmount : RefCounted, ITwitcherSharpEventSub<TwitchCurrentAmount>
     {
+        private GodotObject _data;
+        
         /// <summary> 
         /// The monetary amount. The amount is specified in the currency’s minor unit. For example, the minor units for USD is cents, so if the amount is $5.50 USD, value is set to 550.
         /// </summary>
@@ -128,12 +133,15 @@ public partial class TwitchCharityCampaignStopEvent : RefCounted, ITwitcherSharp
         public static TwitchCurrentAmount FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchCurrentAmount
+            var instance = new TwitchCurrentAmount
             {
                 Value = data.Get("value").AsInt32(),
                 DecimalPlaces = data.Get("decimal_places").AsInt32(),
                 Currency = data.Get("currency").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -150,6 +158,8 @@ public partial class TwitchCharityCampaignStopEvent : RefCounted, ITwitcherSharp
 
     public partial class TwitchTargetAmount : RefCounted, ITwitcherSharpEventSub<TwitchTargetAmount>
     {
+        private GodotObject _data;
+        
         /// <summary> 
         /// The monetary amount. The amount is specified in the currency’s minor unit. For example, the minor units for USD is cents, so if the amount is $5.50 USD, value is set to 550.
         /// </summary>
@@ -171,12 +181,15 @@ public partial class TwitchCharityCampaignStopEvent : RefCounted, ITwitcherSharp
         public static TwitchTargetAmount FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchTargetAmount
+            var instance = new TwitchTargetAmount
             {
                 Value = data.Get("value").AsInt32(),
                 DecimalPlaces = data.Get("decimal_places").AsInt32(),
                 Currency = data.Get("currency").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

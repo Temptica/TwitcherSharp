@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Polls;
 public partial class TwitchCreatePollResponse : RefCounted, ITwitcherSharp<TwitchCreatePollResponse>
 {
     private GodotObject _data;
-    public TwitchPoll[] Data { get; set; }
+    public TwitchPoll[] Data { get => field ??= _data?.GetArray<TwitchPoll>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCreatePollResponse object.
@@ -15,11 +15,10 @@ public partial class TwitchCreatePollResponse : RefCounted, ITwitcherSharp<Twitc
     public static TwitchCreatePollResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchCreatePollResponse
-        {
-            Data = dataArray.Select(TwitchPoll.FromObject).ToArray(),
-        };
+        var instance = new TwitchCreatePollResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

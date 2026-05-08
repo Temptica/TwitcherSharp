@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelWarningSend;
 
 public partial class TwitchChannelWarningSendCondition(string broadcasterUserId, string moderatorUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelWarningSendCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchChannelWarningSendCondition);
 
     /// <summary> 
@@ -26,7 +28,10 @@ public partial class TwitchChannelWarningSendCondition(string broadcasterUserId,
     public static TwitchChannelWarningSendCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelWarningSendCondition(data.Get("broadcaster_user_id").AsString(), data.Get("moderator_user_id").AsString());
+        var instance = new TwitchChannelWarningSendCondition(data.Get("broadcaster_user_id").AsString(), data.Get("moderator_user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

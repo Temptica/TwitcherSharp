@@ -8,8 +8,8 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 public partial class TwitchGetModeratorsResponse : RefCounted, ITwitcherSharp<TwitchGetModeratorsResponse>
 {
     private GodotObject _data;
-    public TwitchUserModerator[] Data { get; set; }
-    public ResponsePagination Pagination { get; set; }
+    public TwitchUserModerator[] Data { get => field ??= _data?.GetArray<TwitchUserModerator>("data"); set; }
+    public ResponsePagination Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetModeratorsResponse object.
@@ -17,12 +17,10 @@ public partial class TwitchGetModeratorsResponse : RefCounted, ITwitcherSharp<Tw
     public static TwitchGetModeratorsResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchGetModeratorsResponse
-        {
-            Data = dataArray.Select(TwitchUserModerator.FromObject).ToArray(),
-            Pagination = data.Get("pagination").As<ResponsePagination>(),
-        };
+        var instance = new TwitchGetModeratorsResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -51,10 +49,13 @@ public partial class TwitchGetModeratorsResponse : RefCounted, ITwitcherSharp<Tw
         public static ResponsePagination FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new ResponsePagination
+            var instance = new ResponsePagination
             {
                 Cursor = data.Get("cursor").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

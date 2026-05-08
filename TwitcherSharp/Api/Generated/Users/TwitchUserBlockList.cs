@@ -17,12 +17,15 @@ public partial class TwitchUserBlockList : RefCounted, ITwitcherSharp<TwitchUser
     public static TwitchUserBlockList FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchUserBlockList
+        var instance = new TwitchUserBlockList
         {
             UserId = data.Get("user_id").AsString(),
             UserLogin = data.Get("user_login").AsString(),
             DisplayName = data.Get("display_name").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

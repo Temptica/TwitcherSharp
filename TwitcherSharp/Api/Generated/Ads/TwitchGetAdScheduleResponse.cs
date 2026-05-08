@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Ads;
 public partial class TwitchGetAdScheduleResponse : RefCounted, ITwitcherSharp<TwitchGetAdScheduleResponse>
 {
     private GodotObject _data;
-    public TwitchResponseData[] Data { get; set; }
+    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetAdScheduleResponse object.
@@ -15,11 +15,10 @@ public partial class TwitchGetAdScheduleResponse : RefCounted, ITwitcherSharp<Tw
     public static TwitchGetAdScheduleResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchGetAdScheduleResponse
-        {
-            Data = dataArray.Select(TwitchResponseData.FromObject).ToArray(),
-        };
+        var instance = new TwitchGetAdScheduleResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -50,7 +49,7 @@ public partial class TwitchGetAdScheduleResponse : RefCounted, ITwitcherSharp<Tw
         public static TwitchResponseData FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchResponseData
+            var instance = new TwitchResponseData
             {
                 SnoozeCount = data.Get("snooze_count").AsInt32(),
                 SnoozeRefreshAt = data.Get("snooze_refresh_at").As<float>(),
@@ -59,6 +58,9 @@ public partial class TwitchGetAdScheduleResponse : RefCounted, ITwitcherSharp<Tw
                 LastAdAt = data.Get("last_ad_at").As<float>(),
                 PrerollFreeTime = data.Get("preroll_free_time").AsInt32(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

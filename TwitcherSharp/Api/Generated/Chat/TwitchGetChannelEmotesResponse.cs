@@ -9,7 +9,7 @@ namespace TwitcherSharp.Api.Generated.Chat;
 public partial class TwitchGetChannelEmotesResponse : RefCounted, ITwitcherSharp<TwitchGetChannelEmotesResponse>
 {
     private GodotObject _data;
-    public TwitchChannelEmote[] Data { get; set; }
+    public TwitchChannelEmote[] Data { get => field ??= _data?.GetArray<TwitchChannelEmote>("data"); set; }
     public string Template { get; set; }
 
     /// <summary> 
@@ -18,12 +18,13 @@ public partial class TwitchGetChannelEmotesResponse : RefCounted, ITwitcherSharp
     public static TwitchGetChannelEmotesResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchGetChannelEmotesResponse
+        var instance = new TwitchGetChannelEmotesResponse
         {
-            Data = dataArray.Select(TwitchChannelEmote.FromObject).ToArray(),
             Template = data.Get("template").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

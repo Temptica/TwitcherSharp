@@ -8,8 +8,8 @@ namespace TwitcherSharp.Api.Generated.Conduits;
 public partial class TwitchGetConduitShardsResponse : RefCounted, ITwitcherSharp<TwitchGetConduitShardsResponse>
 {
     private GodotObject _data;
-    public TwitchResponseData[] Data { get; set; }
-    public ResponsePagination Pagination { get; set; }
+    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
+    public ResponsePagination Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetConduitShardsResponse object.
@@ -17,12 +17,10 @@ public partial class TwitchGetConduitShardsResponse : RefCounted, ITwitcherSharp
     public static TwitchGetConduitShardsResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchGetConduitShardsResponse
-        {
-            Data = dataArray.Select(TwitchResponseData.FromObject).ToArray(),
-            Pagination = data.Get("pagination").As<ResponsePagination>(),
-        };
+        var instance = new TwitchGetConduitShardsResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -51,10 +49,13 @@ public partial class TwitchGetConduitShardsResponse : RefCounted, ITwitcherSharp
         public static ResponsePagination FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new ResponsePagination
+            var instance = new ResponsePagination
             {
                 Cursor = data.Get("cursor").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -76,7 +77,7 @@ public partial class TwitchGetConduitShardsResponse : RefCounted, ITwitcherSharp
         private GodotObject _data;
         public string Id { get; set; }
         public string Status { get; set; }
-        public TwitchResponseTransport Transport { get; set; }
+        public TwitchResponseTransport Transport { get => field ??= _data?.Get<TwitchResponseTransport>("transport"); set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseData object.
@@ -84,12 +85,14 @@ public partial class TwitchGetConduitShardsResponse : RefCounted, ITwitcherSharp
         public static TwitchResponseData FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchResponseData
+            var instance = new TwitchResponseData
             {
                 Id = data.Get("id").AsString(),
                 Status = data.Get("status").AsString(),
-                Transport = data.Get("transport").As<TwitchResponseTransport>(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -121,7 +124,7 @@ public partial class TwitchGetConduitShardsResponse : RefCounted, ITwitcherSharp
             public static TwitchResponseTransport FromObject(GodotObject data)
             {
                 if(data == null) return null;
-                return new TwitchResponseTransport
+                var instance = new TwitchResponseTransport
                 {
                     Method = data.Get("method").AsString(),
                     Callback = data.Get("callback").AsString(),
@@ -129,6 +132,9 @@ public partial class TwitchGetConduitShardsResponse : RefCounted, ITwitcherSharp
                     ConnectedAt = data.Get("connected_at").AsString(),
                     DisconnectedAt = data.Get("disconnected_at").AsString(),
                 };
+                
+                instance._data = data;
+                return instance;
             }
         
             public GodotObject ToGodotObject()

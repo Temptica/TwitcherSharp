@@ -21,12 +21,15 @@ public partial class TwitchExtensionIconUrls : RefCounted, ITwitcherSharp<Twitch
     public static TwitchExtensionIconUrls FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchExtensionIconUrls
+        var instance = new TwitchExtensionIconUrls
         {
             _100x100 = data.Get("100x_100").AsString(),
             _24x24 = data.Get("24x_24").AsString(),
             _300x200 = data.Get("300x_200").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

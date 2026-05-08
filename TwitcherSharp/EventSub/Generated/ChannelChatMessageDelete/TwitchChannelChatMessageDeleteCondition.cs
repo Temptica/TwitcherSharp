@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelChatMessageDelete;
 
 public partial class TwitchChannelChatMessageDeleteCondition(string broadcasterUserId, string userId) : RefCounted, ITwitcherSharpCondition<TwitchChannelChatMessageDeleteCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchChannelChatMessageDeleteCondition);
 
     /// <summary> 
@@ -26,7 +28,10 @@ public partial class TwitchChannelChatMessageDeleteCondition(string broadcasterU
     public static TwitchChannelChatMessageDeleteCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelChatMessageDeleteCondition(data.Get("broadcaster_user_id").AsString(), data.Get("user_id").AsString());
+        var instance = new TwitchChannelChatMessageDeleteCondition(data.Get("broadcaster_user_id").AsString(), data.Get("user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

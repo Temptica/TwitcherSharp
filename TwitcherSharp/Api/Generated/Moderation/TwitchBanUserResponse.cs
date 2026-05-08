@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 public partial class TwitchBanUserResponse : RefCounted, ITwitcherSharp<TwitchBanUserResponse>
 {
     private GodotObject _data;
-    public TwitchResponseData[] Data { get; set; }
+    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchBanUserResponse object.
@@ -15,11 +15,10 @@ public partial class TwitchBanUserResponse : RefCounted, ITwitcherSharp<TwitchBa
     public static TwitchBanUserResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchBanUserResponse
-        {
-            Data = dataArray.Select(TwitchResponseData.FromObject).ToArray(),
-        };
+        var instance = new TwitchBanUserResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -49,7 +48,7 @@ public partial class TwitchBanUserResponse : RefCounted, ITwitcherSharp<TwitchBa
         public static TwitchResponseData FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchResponseData
+            var instance = new TwitchResponseData
             {
                 BroadcasterId = data.Get("broadcaster_id").AsString(),
                 ModeratorId = data.Get("moderator_id").AsString(),
@@ -57,6 +56,9 @@ public partial class TwitchBanUserResponse : RefCounted, ITwitcherSharp<TwitchBa
                 CreatedAt = data.Get("created_at").AsString(),
                 EndTime = data.Get("end_time").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

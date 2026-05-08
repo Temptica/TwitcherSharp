@@ -22,13 +22,16 @@ public partial class TwitchGetBitsLeaderboardOpt : RefCounted, ITwitcherSharp<Tw
     public static TwitchGetBitsLeaderboardOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGetBitsLeaderboardOpt
+        var instance = new TwitchGetBitsLeaderboardOpt
         {
             Count = data.Get("count").AsInt32(),
             Period = data.Get("period").AsString(),
             StartedAt = data.Get("started_at").AsString(),
             UserId = data.Get("user_id").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

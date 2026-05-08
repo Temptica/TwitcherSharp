@@ -20,11 +20,14 @@ public partial class TwitchGetFollowedStreamsOpt : RefCounted, ITwitcherSharp<Tw
     public static TwitchGetFollowedStreamsOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGetFollowedStreamsOpt
+        var instance = new TwitchGetFollowedStreamsOpt
         {
             First = data.Get("first").AsInt32(),
             After = data.Get("after").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

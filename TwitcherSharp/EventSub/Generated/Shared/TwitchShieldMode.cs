@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.Shared;
 
 public partial class TwitchShieldMode : RefCounted, ITwitcherSharpEventSub<TwitchShieldMode>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// An ID that identifies the broadcaster whose Shield Mode status was updated.
     /// </summary>
@@ -54,7 +56,7 @@ public partial class TwitchShieldMode : RefCounted, ITwitcherSharpEventSub<Twitc
     public static TwitchShieldMode FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchShieldMode
+        var instance = new TwitchShieldMode
         {
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
             BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
@@ -65,6 +67,9 @@ public partial class TwitchShieldMode : RefCounted, ITwitcherSharpEventSub<Twitc
             StartedAt = data.Get("started_at").AsString(),
             EndedAt = data.Get("ended_at").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

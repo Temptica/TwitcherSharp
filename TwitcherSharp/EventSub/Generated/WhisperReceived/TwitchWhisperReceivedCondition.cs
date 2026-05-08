@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.WhisperReceived;
 
 public partial class TwitchWhisperReceivedCondition(string userId) : RefCounted, ITwitcherSharpCondition<TwitchWhisperReceivedCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchWhisperReceivedCondition);
 
     /// <summary> 
@@ -21,7 +23,10 @@ public partial class TwitchWhisperReceivedCondition(string userId) : RefCounted,
     public static TwitchWhisperReceivedCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchWhisperReceivedCondition(data.Get("user_id").AsString());
+        var instance = new TwitchWhisperReceivedCondition(data.Get("user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

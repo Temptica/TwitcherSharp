@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Users;
 public partial class TwitchUpdateUserExtensionsBody : RefCounted, ITwitcherSharp<TwitchUpdateUserExtensionsBody>
 {
     private GodotObject _data;
-    public TwitchBodyData Data { get; set; }
+    public TwitchBodyData Data { get => field ??= _data?.Get<TwitchBodyData>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUpdateUserExtensionsBody object.
@@ -15,10 +15,10 @@ public partial class TwitchUpdateUserExtensionsBody : RefCounted, ITwitcherSharp
     public static TwitchUpdateUserExtensionsBody FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchUpdateUserExtensionsBody
-        {
-            Data = data.Get("data").As<TwitchBodyData>(),
-        };
+        var instance = new TwitchUpdateUserExtensionsBody();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -50,12 +50,15 @@ public partial class TwitchUpdateUserExtensionsBody : RefCounted, ITwitcherSharp
         public static TwitchBodyData FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchBodyData
+            var instance = new TwitchBodyData
             {
                 Panel = data.Get("panel").As<Variant>(),
                 Overlay = data.Get("overlay").As<Variant>(),
                 Component = data.Get("component").As<Variant>(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

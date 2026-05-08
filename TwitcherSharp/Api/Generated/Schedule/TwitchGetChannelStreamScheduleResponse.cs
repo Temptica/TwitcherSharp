@@ -8,7 +8,7 @@ namespace TwitcherSharp.Api.Generated.Schedule;
 public partial class TwitchGetChannelStreamScheduleResponse : RefCounted, ITwitcherSharp<TwitchGetChannelStreamScheduleResponse>
 {
     private GodotObject _data;
-    public TwitchResponseData Data { get; set; }
+    public TwitchResponseData Data { get => field ??= _data?.Get<TwitchResponseData>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetChannelStreamScheduleResponse object.
@@ -16,10 +16,10 @@ public partial class TwitchGetChannelStreamScheduleResponse : RefCounted, ITwitc
     public static TwitchGetChannelStreamScheduleResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGetChannelStreamScheduleResponse
-        {
-            Data = data.Get("data").As<TwitchResponseData>(),
-        };
+        var instance = new TwitchGetChannelStreamScheduleResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -37,12 +37,12 @@ public partial class TwitchGetChannelStreamScheduleResponse : RefCounted, ITwitc
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
         private GodotObject _data;
-        public TwitchChannelStreamScheduleSegment[] Segments { get; set; }
+        public TwitchChannelStreamScheduleSegment[] Segments { get => field ??= _data?.GetArray<TwitchChannelStreamScheduleSegment>("segments"); set; }
         public string BroadcasterId { get; set; }
         public string BroadcasterName { get; set; }
         public string BroadcasterLogin { get; set; }
-        public TwitchResponseVacation Vacation { get; set; }
-        public ResponsePagination Pagination { get; set; }
+        public TwitchResponseVacation Vacation { get => field ??= _data?.Get<TwitchResponseVacation>("vacation"); set; }
+        public ResponsePagination Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseData object.
@@ -50,16 +50,15 @@ public partial class TwitchGetChannelStreamScheduleResponse : RefCounted, ITwitc
         public static TwitchResponseData FromObject(GodotObject data)
         {
             if(data == null) return null;
-            var segmentsArray = data.Get("segments").AsGodotArray<GodotObject>();
-            return new TwitchResponseData
+            var instance = new TwitchResponseData
             {
-                Segments = segmentsArray.Select(TwitchChannelStreamScheduleSegment.FromObject).ToArray(),
                 BroadcasterId = data.Get("broadcaster_id").AsString(),
                 BroadcasterName = data.Get("broadcaster_name").AsString(),
                 BroadcasterLogin = data.Get("broadcaster_login").AsString(),
-                Vacation = data.Get("vacation").As<TwitchResponseVacation>(),
-                Pagination = data.Get("pagination").As<ResponsePagination>(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
@@ -92,10 +91,13 @@ public partial class TwitchGetChannelStreamScheduleResponse : RefCounted, ITwitc
             public static ResponsePagination FromObject(GodotObject data)
             {
                 if(data == null) return null;
-                return new ResponsePagination
+                var instance = new ResponsePagination
                 {
                     Cursor = data.Get("cursor").AsString(),
                 };
+                
+                instance._data = data;
+                return instance;
             }
         
             public GodotObject ToGodotObject()
@@ -124,11 +126,14 @@ public partial class TwitchGetChannelStreamScheduleResponse : RefCounted, ITwitc
             public static TwitchResponseVacation FromObject(GodotObject data)
             {
                 if(data == null) return null;
-                return new TwitchResponseVacation
+                var instance = new TwitchResponseVacation
                 {
                     StartTime = data.Get("start_time").AsString(),
                     EndTime = data.Get("end_time").AsString(),
                 };
+                
+                instance._data = data;
+                return instance;
             }
         
             public GodotObject ToGodotObject()

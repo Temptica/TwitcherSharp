@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 public partial class TwitchRemoveSuspiciousStatusFromChatUserResponse : RefCounted, ITwitcherSharp<TwitchRemoveSuspiciousStatusFromChatUserResponse>
 {
     private GodotObject _data;
-    public TwitchResponseData[] Data { get; set; }
+    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchRemoveSuspiciousStatusFromChatUserResponse object.
@@ -15,11 +15,10 @@ public partial class TwitchRemoveSuspiciousStatusFromChatUserResponse : RefCount
     public static TwitchRemoveSuspiciousStatusFromChatUserResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchRemoveSuspiciousStatusFromChatUserResponse
-        {
-            Data = dataArray.Select(TwitchResponseData.FromObject).ToArray(),
-        };
+        var instance = new TwitchRemoveSuspiciousStatusFromChatUserResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -50,7 +49,7 @@ public partial class TwitchRemoveSuspiciousStatusFromChatUserResponse : RefCount
         public static TwitchResponseData FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchResponseData
+            var instance = new TwitchResponseData
             {
                 UserId = data.Get("user_id").AsString(),
                 BroadcasterId = data.Get("broadcaster_id").AsString(),
@@ -59,6 +58,9 @@ public partial class TwitchRemoveSuspiciousStatusFromChatUserResponse : RefCount
                 Status = data.Get("status").AsString(),
                 Types = data.Get("types").AsStringArray(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

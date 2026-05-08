@@ -20,11 +20,14 @@ public partial class TwitchGetTeamsOpt : RefCounted, ITwitcherSharp<TwitchGetTea
     public static TwitchGetTeamsOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGetTeamsOpt
+        var instance = new TwitchGetTeamsOpt
         {
             Name = data.Get("name").AsString(),
             Id = data.Get("id").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

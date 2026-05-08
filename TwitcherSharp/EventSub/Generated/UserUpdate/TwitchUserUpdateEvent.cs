@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.UserUpdate;
 
 public partial class TwitchUserUpdateEvent : RefCounted, ITwitcherSharpEventSub<TwitchUserUpdateEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The user’s user id.
     /// </summary>
@@ -44,7 +46,7 @@ public partial class TwitchUserUpdateEvent : RefCounted, ITwitcherSharpEventSub<
     public static TwitchUserUpdateEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchUserUpdateEvent
+        var instance = new TwitchUserUpdateEvent
         {
             UserId = data.Get("user_id").AsString(),
             UserLogin = data.Get("user_login").AsString(),
@@ -53,6 +55,9 @@ public partial class TwitchUserUpdateEvent : RefCounted, ITwitcherSharpEventSub<
             EmailVerified = data.Get("email_verified").AsBool(),
             Description = data.Get("description").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

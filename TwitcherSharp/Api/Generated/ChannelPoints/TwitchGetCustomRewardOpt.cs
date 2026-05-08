@@ -20,11 +20,14 @@ public partial class TwitchGetCustomRewardOpt : RefCounted, ITwitcherSharp<Twitc
     public static TwitchGetCustomRewardOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGetCustomRewardOpt
+        var instance = new TwitchGetCustomRewardOpt
         {
             Id = data.Get("id").AsStringArray(),
             OnlyManageableRewards = data.Get("only_manageable_rewards").AsBool(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

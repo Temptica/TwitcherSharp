@@ -8,7 +8,7 @@ public partial class TwitchCheermote : RefCounted, ITwitcherSharp<TwitchCheermot
 {
     private GodotObject _data;
     public string Prefix { get; set; }
-    public TwitchResponseTiers[] Tiers { get; set; }
+    public TwitchResponseTiers[] Tiers { get => field ??= _data?.GetArray<TwitchResponseTiers>("tiers"); set; }
     public string Type { get; set; }
     public int Order { get; set; }
     public string LastUpdated { get; set; }
@@ -20,16 +20,17 @@ public partial class TwitchCheermote : RefCounted, ITwitcherSharp<TwitchCheermot
     public static TwitchCheermote FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var tiersArray = data.Get("tiers").AsGodotArray<GodotObject>();
-        return new TwitchCheermote
+        var instance = new TwitchCheermote
         {
             Prefix = data.Get("prefix").AsString(),
-            Tiers = tiersArray.Select(TwitchResponseTiers.FromObject).ToArray(),
             Type = data.Get("type").AsString(),
             Order = data.Get("order").AsInt32(),
             LastUpdated = data.Get("last_updated").AsString(),
             IsCharitable = data.Get("is_charitable").AsBool(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -54,7 +55,7 @@ public partial class TwitchCheermote : RefCounted, ITwitcherSharp<TwitchCheermot
         public int MinBits { get; set; }
         public string Id { get; set; }
         public string Color { get; set; }
-        public TwitchCheermoteImages Images { get; set; }
+        public TwitchCheermoteImages Images { get => field ??= _data?.Get<TwitchCheermoteImages>("images"); set; }
         public bool CanCheer { get; set; }
         public bool ShowInBitsCard { get; set; }
     
@@ -64,15 +65,17 @@ public partial class TwitchCheermote : RefCounted, ITwitcherSharp<TwitchCheermot
         public static TwitchResponseTiers FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchResponseTiers
+            var instance = new TwitchResponseTiers
             {
                 MinBits = data.Get("min_bits").AsInt32(),
                 Id = data.Get("id").AsString(),
                 Color = data.Get("color").AsString(),
-                Images = data.Get("images").As<TwitchCheermoteImages>(),
                 CanCheer = data.Get("can_cheer").AsBool(),
                 ShowInBitsCard = data.Get("show_in_bits_card").AsBool(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

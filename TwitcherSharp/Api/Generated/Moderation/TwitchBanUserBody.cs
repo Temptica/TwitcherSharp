@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 public partial class TwitchBanUserBody : RefCounted, ITwitcherSharp<TwitchBanUserBody>
 {
     private GodotObject _data;
-    public TwitchBodyData Data { get; set; }
+    public TwitchBodyData Data { get => field ??= _data?.Get<TwitchBodyData>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchBanUserBody object.
@@ -15,10 +15,10 @@ public partial class TwitchBanUserBody : RefCounted, ITwitcherSharp<TwitchBanUse
     public static TwitchBanUserBody FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchBanUserBody
-        {
-            Data = data.Get("data").As<TwitchBodyData>(),
-        };
+        var instance = new TwitchBanUserBody();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -46,12 +46,15 @@ public partial class TwitchBanUserBody : RefCounted, ITwitcherSharp<TwitchBanUse
         public static TwitchBodyData FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchBodyData
+            var instance = new TwitchBodyData
             {
                 UserId = data.Get("user_id").AsString(),
                 Duration = data.Get("duration").AsInt32(),
                 Reason = data.Get("reason").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

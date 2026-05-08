@@ -17,12 +17,15 @@ public partial class TwitchUserExtensionOverlayUpdate : RefCounted, ITwitcherSha
     public static TwitchUserExtensionOverlayUpdate FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchUserExtensionOverlayUpdate
+        var instance = new TwitchUserExtensionOverlayUpdate
         {
             Active = data.Get("active").AsBool(),
             Id = data.Get("id").AsString(),
             Version = data.Get("version").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelSubscriptionGift;
 
 public partial class TwitchChannelSubscriptionGiftEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelSubscriptionGiftEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The user ID of the user who sent the subscription gift. Set to null if it was an anonymous subscription gift.
     /// </summary>
@@ -64,7 +66,7 @@ public partial class TwitchChannelSubscriptionGiftEvent : RefCounted, ITwitcherS
     public static TwitchChannelSubscriptionGiftEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelSubscriptionGiftEvent
+        var instance = new TwitchChannelSubscriptionGiftEvent
         {
             UserId = data.Get("user_id").AsString(),
             UserLogin = data.Get("user_login").AsString(),
@@ -77,6 +79,9 @@ public partial class TwitchChannelSubscriptionGiftEvent : RefCounted, ITwitcherS
             CumulativeTotal = data.Get("cumulative_total").AsInt32(),
             IsAnonymous = data.Get("is_anonymous").AsBool(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

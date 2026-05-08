@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.WhisperReceived;
 
 public partial class TwitchWhisperReceivedEvent : RefCounted, ITwitcherSharpEventSub<TwitchWhisperReceivedEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The ID of the user sending the message.
     /// </summary>
@@ -46,7 +48,7 @@ public partial class TwitchWhisperReceivedEvent : RefCounted, ITwitcherSharpEven
     /// <summary> 
     /// Object containing whisper information.
     /// </summary>
-    public TwitchWhisper Whisper { get; set; }
+    public TwitchWhisper Whisper { get => field ??= _data?.Get<TwitchWhisper>("whisper"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchWhisperReceivedEvent object.
@@ -54,7 +56,7 @@ public partial class TwitchWhisperReceivedEvent : RefCounted, ITwitcherSharpEven
     public static TwitchWhisperReceivedEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchWhisperReceivedEvent
+        var instance = new TwitchWhisperReceivedEvent
         {
             FromUserId = data.Get("from_user_id").AsString(),
             FromUserName = data.Get("from_user_name").AsString(),
@@ -63,8 +65,10 @@ public partial class TwitchWhisperReceivedEvent : RefCounted, ITwitcherSharpEven
             ToUserName = data.Get("to_user_name").AsString(),
             ToUserLogin = data.Get("to_user_login").AsString(),
             WhisperId = data.Get("whisper_id").AsString(),
-            Whisper = TwitchWhisper.FromObject(data.Get("whisper").AsGodotObject()),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -86,6 +90,8 @@ public partial class TwitchWhisperReceivedEvent : RefCounted, ITwitcherSharpEven
 
     public partial class TwitchWhisper : RefCounted, ITwitcherSharpEventSub<TwitchWhisper>
     {
+        private GodotObject _data;
+        
         /// <summary> 
         /// The body of the whisper message.
         /// </summary>
@@ -97,10 +103,13 @@ public partial class TwitchWhisperReceivedEvent : RefCounted, ITwitcherSharpEven
         public static TwitchWhisper FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchWhisper
+            var instance = new TwitchWhisper
             {
                 Text = data.Get("text").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

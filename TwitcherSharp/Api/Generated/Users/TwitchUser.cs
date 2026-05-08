@@ -25,7 +25,7 @@ public partial class TwitchUser : RefCounted, ITwitcherSharp<TwitchUser>
     public static TwitchUser FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchUser
+        var instance = new TwitchUser
         {
             Id = data.Get("id").AsString(),
             Login = data.Get("login").AsString(),
@@ -39,6 +39,9 @@ public partial class TwitchUser : RefCounted, ITwitcherSharp<TwitchUser>
             Email = data.Get("email").AsString(),
             CreatedAt = data.Get("created_at").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

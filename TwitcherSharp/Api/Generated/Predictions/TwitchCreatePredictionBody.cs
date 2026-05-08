@@ -9,7 +9,7 @@ public partial class TwitchCreatePredictionBody : RefCounted, ITwitcherSharp<Twi
     private GodotObject _data;
     public string BroadcasterId { get; set; }
     public string Title { get; set; }
-    public TwitchBodyOutcomes[] Outcomes { get; set; }
+    public TwitchBodyOutcomes[] Outcomes { get => field ??= _data?.GetArray<TwitchBodyOutcomes>("outcomes"); set; }
     public int PredictionWindow { get; set; }
 
     /// <summary> 
@@ -18,14 +18,15 @@ public partial class TwitchCreatePredictionBody : RefCounted, ITwitcherSharp<Twi
     public static TwitchCreatePredictionBody FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var outcomesArray = data.Get("outcomes").AsGodotArray<GodotObject>();
-        return new TwitchCreatePredictionBody
+        var instance = new TwitchCreatePredictionBody
         {
             BroadcasterId = data.Get("broadcaster_id").AsString(),
             Title = data.Get("title").AsString(),
-            Outcomes = outcomesArray.Select(TwitchBodyOutcomes.FromObject).ToArray(),
             PredictionWindow = data.Get("prediction_window").AsInt32(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -54,10 +55,13 @@ public partial class TwitchCreatePredictionBody : RefCounted, ITwitcherSharp<Twi
         public static TwitchBodyOutcomes FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchBodyOutcomes
+            var instance = new TwitchBodyOutcomes
             {
                 Title = data.Get("title").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

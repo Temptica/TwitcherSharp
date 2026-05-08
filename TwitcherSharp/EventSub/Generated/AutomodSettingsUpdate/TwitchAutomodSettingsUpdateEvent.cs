@@ -8,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.AutomodSettingsUpdate;
 
 public partial class TwitchAutomodSettingsUpdateEvent : RefCounted, ITwitcherSharpEventSub<TwitchAutomodSettingsUpdateEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The ID of the broadcaster specified in the request.
     /// </summary>
@@ -89,7 +91,7 @@ public partial class TwitchAutomodSettingsUpdateEvent : RefCounted, ITwitcherSha
     public static TwitchAutomodSettingsUpdateEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchAutomodSettingsUpdateEvent
+        var instance = new TwitchAutomodSettingsUpdateEvent
         {
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
             BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
@@ -107,6 +109,9 @@ public partial class TwitchAutomodSettingsUpdateEvent : RefCounted, ITwitcherSha
             SexBasedTerms = data.Get("sex_based_terms").AsInt32(),
             Swearing = data.Get("swearing").AsInt32(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
