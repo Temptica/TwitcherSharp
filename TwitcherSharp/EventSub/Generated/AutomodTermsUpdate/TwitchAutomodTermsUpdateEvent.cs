@@ -71,7 +71,6 @@ public partial class TwitchAutomodTermsUpdateEvent : RefCounted, ITwitcherSharpE
             ModeratorUserName = data.Get("moderator_user_name").AsString(),
             Action = data.Get("action").AsString(),
             FromAutomod = data.Get("from_automod").AsBool(),
-            Terms = data.Get("terms").AsStringArray(),
         };
         
         instance._data = data;

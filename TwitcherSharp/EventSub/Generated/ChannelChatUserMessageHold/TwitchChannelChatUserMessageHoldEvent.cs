@@ -65,7 +65,6 @@ public partial class TwitchChannelChatUserMessageHoldEvent : RefCounted, ITwitch
             UserLogin = data.Get("user_login").AsString(),
             UserName = data.Get("user_name").AsString(),
             MessageId = data.Get("message_id").AsString(),
-            Message = TwitchMessage.FromObject(data.Get("message").AsGodotObject()),
         };
         
         instance._data = data;
@@ -109,11 +108,9 @@ public partial class TwitchChannelChatUserMessageHoldEvent : RefCounted, ITwitch
         public static TwitchMessage FromObject(GodotObject data)
         {
             if(data == null) return null;
-            var fragmentsArray = data.Get("fragments").AsGodotArray<GodotObject>();
             var instance = new TwitchMessage
             {
                 Text = data.Get("text").AsString(),
-                Fragments = fragmentsArray.Select(TwitchFragments.FromObject).ToArray(),
             };
             
             instance._data = data;
@@ -159,8 +156,6 @@ public partial class TwitchChannelChatUserMessageHoldEvent : RefCounted, ITwitch
                 var instance = new TwitchFragments
                 {
                     Text = data.Get("text").AsString(),
-                    Emote = TwitchEmote.FromObject(data.Get("emote").AsGodotObject()),
-                    Cheermote = TwitchCheermote.FromObject(data.Get("cheermote").AsGodotObject()),
                 };
                 
                 instance._data = data;

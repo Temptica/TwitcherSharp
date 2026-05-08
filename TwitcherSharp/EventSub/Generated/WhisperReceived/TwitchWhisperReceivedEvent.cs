@@ -65,7 +65,6 @@ public partial class TwitchWhisperReceivedEvent : RefCounted, ITwitcherSharpEven
             ToUserName = data.Get("to_user_name").AsString(),
             ToUserLogin = data.Get("to_user_login").AsString(),
             WhisperId = data.Get("whisper_id").AsString(),
-            Whisper = TwitchWhisper.FromObject(data.Get("whisper").AsGodotObject()),
         };
         
         instance._data = data;

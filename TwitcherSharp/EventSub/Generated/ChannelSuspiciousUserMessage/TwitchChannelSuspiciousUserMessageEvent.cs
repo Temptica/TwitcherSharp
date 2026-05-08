@@ -80,10 +80,8 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
             UserName = data.Get("user_name").AsString(),
             UserLogin = data.Get("user_login").AsString(),
             LowTrustStatus = data.Get("low_trust_status").AsString(),
-            SharedBanChannelIds = data.Get("shared_ban_channel_ids").AsStringArray(),
             Types = data.Get("types").AsStringArray(),
             BanEvasionEvaluation = data.Get("ban_evasion_evaluation").AsString(),
-            Message = TwitchMessage.FromObject(data.Get("message").AsGodotObject()),
         };
         
         instance._data = data;
@@ -135,12 +133,10 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
         public static TwitchMessage FromObject(GodotObject data)
         {
             if(data == null) return null;
-            var fragmentsArray = data.Get("fragments").AsGodotArray<GodotObject>();
             var instance = new TwitchMessage
             {
                 MessageId = data.Get("message_id").AsString(),
                 Text = data.Get("text").AsString(),
-                Fragments = fragmentsArray.Select(TwitchFragments.FromObject).ToArray(),
             };
             
             instance._data = data;
@@ -193,8 +189,6 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
                 {
                     Type = data.Get("type").AsString(),
                     Text = data.Get("text").AsString(),
-                    Cheermote = TwitchCheermote.FromObject(data.Get("cheermote").AsGodotObject()),
-                    Emote = TwitchEmote.FromObject(data.Get("emote").AsGodotObject()),
                 };
                 
                 instance._data = data;

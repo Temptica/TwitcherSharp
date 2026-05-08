@@ -26,11 +26,9 @@ public partial class TwitchDropEntitlementGrantEvent : RefCounted, ITwitcherShar
     public static TwitchDropEntitlementGrantEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
         var instance = new TwitchDropEntitlementGrantEvent
         {
             Id = data.Get("id").AsString(),
-            Data = dataArray.Select(TwitchData.FromObject).ToArray(),
         };
         
         instance._data = data;

@@ -81,8 +81,6 @@ public partial class TwitchCharityCampaignStopEvent : RefCounted, ITwitcherSharp
             CharityDescription = data.Get("charity_description").AsString(),
             CharityLogo = data.Get("charity_logo").AsString(),
             CharityWebsite = data.Get("charity_website").AsString(),
-            CurrentAmount = TwitchCurrentAmount.FromObject(data.Get("current_amount").AsGodotObject()),
-            TargetAmount = TwitchTargetAmount.FromObject(data.Get("target_amount").AsGodotObject()),
             StoppedAt = data.Get("stopped_at").AsString(),
         };
         

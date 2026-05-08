@@ -26,11 +26,9 @@ public partial class TwitchMessage : RefCounted, ITwitcherSharpEventSub<TwitchMe
     public static TwitchMessage FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var emotesArray = data.Get("emotes").AsGodotArray<GodotObject>();
         var instance = new TwitchMessage
         {
             Text = data.Get("text").AsString(),
-            Emotes = emotesArray.Select(TwitchEmotes.FromObject).ToArray(),
         };
         
         instance._data = data;

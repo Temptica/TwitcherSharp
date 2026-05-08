@@ -80,7 +80,6 @@ public partial class TwitchAutomodMessageHoldEvent : RefCounted, ITwitcherSharpE
             UserLogin = data.Get("user_login").AsString(),
             UserName = data.Get("user_name").AsString(),
             MessageId = data.Get("message_id").AsString(),
-            Message = TwitchMessage.FromObject(data.Get("message").AsGodotObject()),
             Category = data.Get("category").AsString(),
             Level = data.Get("level").AsInt32(),
             HeldAt = data.Get("held_at").AsString(),
@@ -130,11 +129,9 @@ public partial class TwitchAutomodMessageHoldEvent : RefCounted, ITwitcherSharpE
         public static TwitchMessage FromObject(GodotObject data)
         {
             if(data == null) return null;
-            var fragmentsArray = data.Get("fragments").AsGodotArray<GodotObject>();
             var instance = new TwitchMessage
             {
                 Text = data.Get("text").AsString(),
-                Fragments = fragmentsArray.Select(TwitchFragments.FromObject).ToArray(),
             };
             
             instance._data = data;
@@ -180,8 +177,6 @@ public partial class TwitchAutomodMessageHoldEvent : RefCounted, ITwitcherSharpE
                 var instance = new TwitchFragments
                 {
                     Text = data.Get("text").AsString(),
-                    Emote = TwitchEmote.FromObject(data.Get("emote").AsGodotObject()),
-                    Cheermote = TwitchCheermote.FromObject(data.Get("cheermote").AsGodotObject()),
                 };
                 
                 instance._data = data;

@@ -81,8 +81,6 @@ public partial class TwitchHypeTrainEndEvent : RefCounted, ITwitcherSharpEventSu
     public static TwitchHypeTrainEndEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var topContributionsArray = data.Get("top_contributions").AsGodotArray<GodotObject>();
-        var sharedTrainParticipantsArray = data.Get("shared_train_participants").AsGodotArray<GodotObject>();
         var instance = new TwitchHypeTrainEndEvent
         {
             Id = data.Get("id").AsString(),
@@ -90,9 +88,7 @@ public partial class TwitchHypeTrainEndEvent : RefCounted, ITwitcherSharpEventSu
             BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
             BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
             Total = data.Get("total").AsInt32(),
-            TopContributions = topContributionsArray.Select(TwitchTopContributions.FromObject).ToArray(),
             Level = data.Get("level").AsInt32(),
-            SharedTrainParticipants = sharedTrainParticipantsArray.Select(TwitchSharedTrainParticipants.FromObject).ToArray(),
             StartedAt = data.Get("started_at").AsString(),
             CooldownEndsAt = data.Get("cooldown_ends_at").AsString(),
             EndedAt = data.Get("ended_at").AsString(),

@@ -76,8 +76,6 @@ public partial class TwitchCharityCampaignProgressEvent : RefCounted, ITwitcherS
             CharityDescription = data.Get("charity_description").AsString(),
             CharityLogo = data.Get("charity_logo").AsString(),
             CharityWebsite = data.Get("charity_website").AsString(),
-            CurrentAmount = TwitchCurrentAmount.FromObject(data.Get("current_amount").AsGodotObject()),
-            TargetAmount = TwitchTargetAmount.FromObject(data.Get("target_amount").AsGodotObject()),
         };
         
         instance._data = data;

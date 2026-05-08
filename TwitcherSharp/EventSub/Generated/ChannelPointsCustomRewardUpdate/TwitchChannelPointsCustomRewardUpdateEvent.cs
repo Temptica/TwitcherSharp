@@ -125,11 +125,7 @@ public partial class TwitchChannelPointsCustomRewardUpdateEvent : RefCounted, IT
             Prompt = data.Get("prompt").AsString(),
             IsUserInputRequired = data.Get("is_user_input_required").AsBool(),
             ShouldRedemptionsSkipRequestQueue = data.Get("should_redemptions_skip_request_queue").AsBool(),
-            MaxPerStream = TwitchMaxPerStream.FromObject(data.Get("max_per_stream").AsGodotObject()),
-            MaxPerUserPerStream = TwitchMaxPerUserPerStream.FromObject(data.Get("max_per_user_per_stream").AsGodotObject()),
             BackgroundColor = data.Get("background_color").AsString(),
-            Image = TwitchImage.FromObject(data.Get("image").AsGodotObject()),
-            GlobalCooldown = TwitchGlobalCooldown.FromObject(data.Get("global_cooldown").AsGodotObject()),
             CooldownExpiresAt = data.Get("cooldown_expires_at").AsString(),
             RedemptionsRedeemedCurrentStream = data.Get("redemptions_redeemed_current_stream").AsInt32(),
         };

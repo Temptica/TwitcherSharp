@@ -111,7 +111,6 @@ public partial class TwitchHypeTrainBeginEvent : RefCounted, ITwitcherSharpEvent
     public static TwitchHypeTrainBeginEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var sharedTrainParticipantsArray = data.Get("shared_train_participants").AsGodotArray<GodotObject>();
         var instance = new TwitchHypeTrainBeginEvent
         {
             Id = data.Get("id").AsString(),
@@ -121,7 +120,6 @@ public partial class TwitchHypeTrainBeginEvent : RefCounted, ITwitcherSharpEvent
             Total = data.Get("total").AsInt32(),
             Progress = data.Get("progress").AsInt32(),
             Goal = data.Get("goal").AsInt32(),
-            TopContributions = TwitchTopContributions.FromObject(data.Get("top_contributions").AsGodotObject()),
             UserId = data.Get("user_id").AsString(),
             UserLogin = data.Get("user_login").AsString(),
             UserName = data.Get("user_name").AsString(),
@@ -129,7 +127,6 @@ public partial class TwitchHypeTrainBeginEvent : RefCounted, ITwitcherSharpEvent
             Level = data.Get("level").AsInt32(),
             AllTimeHighLevel = data.Get("all_time_high_level").AsInt32(),
             AllTimeHighTotal = data.Get("all_time_high_total").AsInt32(),
-            SharedTrainParticipants = sharedTrainParticipantsArray.Select(TwitchSharedTrainParticipants.FromObject).ToArray(),
             StartedAt = data.Get("started_at").AsString(),
             ExpiresAt = data.Get("expires_at").AsString(),
             IsSharedTrain = data.Get("is_shared_train").AsBool(),

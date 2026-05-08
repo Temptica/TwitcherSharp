@@ -226,8 +226,6 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
     public static TwitchChannelChatNotificationEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var badgesArray = data.Get("badges").AsGodotArray<GodotObject>();
-        var sourceBadgesArray = data.Get("source_badges").AsGodotArray<GodotObject>();
         var instance = new TwitchChannelChatNotificationEvent
         {
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
@@ -237,41 +235,17 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
             ChatterUserName = data.Get("chatter_user_name").AsString(),
             ChatterIsAnonymous = data.Get("chatter_is_anonymous").AsBool(),
             Color = data.Get("color").AsString(),
-            Badges = badgesArray.Select(TwitchBadges.FromObject).ToArray(),
             SystemMessage = data.Get("system_message").AsString(),
             MessageId = data.Get("message_id").AsString(),
-            Message = TwitchMessage.FromObject(data.Get("message").AsGodotObject()),
             NoticeType = data.Get("notice_type").AsString(),
-            Sub = TwitchSub.FromObject(data.Get("sub").AsGodotObject()),
-            Resub = TwitchResub.FromObject(data.Get("resub").AsGodotObject()),
-            SubGift = TwitchSubGift.FromObject(data.Get("sub_gift").AsGodotObject()),
-            CommunitySubGift = TwitchCommunitySubGift.FromObject(data.Get("community_sub_gift").AsGodotObject()),
-            GiftPaidUpgrade = TwitchGiftPaidUpgrade.FromObject(data.Get("gift_paid_upgrade").AsGodotObject()),
-            PrimePaidUpgrade = TwitchPrimePaidUpgrade.FromObject(data.Get("prime_paid_upgrade").AsGodotObject()),
-            PayItForward = TwitchPayItForward.FromObject(data.Get("pay_it_forward").AsGodotObject()),
-            Raid = TwitchRaid.FromObject(data.Get("raid").AsGodotObject()),
             Unraid = data.Get("unraid").AsGodotDictionary(),
-            Announcement = TwitchAnnouncement.FromObject(data.Get("announcement").AsGodotObject()),
-            BitsBadgeTier = TwitchBitsBadgeTier.FromObject(data.Get("bits_badge_tier").AsGodotObject()),
             CharityDonation = data.Get("charity_donation").AsString(),
             CharityName = data.Get("charity_name").AsString(),
-            Amount = TwitchAmount.FromObject(data.Get("amount").AsGodotObject()),
-            WatchStreak = TwitchWatchStreak.FromObject(data.Get("watch_streak").AsGodotObject()),
             SourceBroadcasterUserId = data.Get("source_broadcaster_user_id").AsString(),
             SourceBroadcasterUserName = data.Get("source_broadcaster_user_name").AsString(),
             SourceBroadcasterUserLogin = data.Get("source_broadcaster_user_login").AsString(),
             SourceMessageId = data.Get("source_message_id").AsString(),
-            SourceBadges = sourceBadgesArray.Select(TwitchSourceBadges.FromObject).ToArray(),
             IsSourceOnly = data.Get("is_source_only").AsBool(),
-            SharedChatSub = TwitchSub.FromObject(data.Get("shared_chat_sub").AsGodotObject()),
-            SharedChatResub = TwitchResub.FromObject(data.Get("shared_chat_resub").AsGodotObject()),
-            SharedChatSubGift = TwitchSubGift.FromObject(data.Get("shared_chat_sub_gift").AsGodotObject()),
-            SharedChatCommunitySubGift = TwitchCommunitySubGift.FromObject(data.Get("shared_chat_community_sub_gift").AsGodotObject()),
-            SharedChatGiftPaidUpgrade = TwitchGiftPaidUpgrade.FromObject(data.Get("shared_chat_gift_paid_upgrade").AsGodotObject()),
-            SharedChatPrimePaidUpgrade = TwitchPrimePaidUpgrade.FromObject(data.Get("shared_chat_prime_paid_upgrade").AsGodotObject()),
-            SharedChatPayItForward = TwitchPayItForward.FromObject(data.Get("shared_chat_pay_it_forward").AsGodotObject()),
-            SharedChatRaid = TwitchRaid.FromObject(data.Get("shared_chat_raid").AsGodotObject()),
-            SharedChatAnnouncement = TwitchAnnouncement.FromObject(data.Get("shared_chat_announcement").AsGodotObject()),
         };
         
         instance._data = data;
@@ -397,11 +371,9 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         public static TwitchMessage FromObject(GodotObject data)
         {
             if(data == null) return null;
-            var fragmentsArray = data.Get("fragments").AsGodotArray<GodotObject>();
             var instance = new TwitchMessage
             {
                 Text = data.Get("text").AsGodotDictionary(),
-                Fragments = fragmentsArray.Select(TwitchFragments.FromObject).ToArray(),
             };
             
             instance._data = data;
@@ -458,9 +430,6 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
                 {
                     Type = data.Get("type").AsString(),
                     Text = data.Get("text").AsString(),
-                    Cheermote = TwitchCheermote.FromObject(data.Get("cheermote").AsGodotObject()),
-                    Emote = TwitchEmote.FromObject(data.Get("emote").AsGodotObject()),
-                    Mention = TwitchMention.FromObject(data.Get("mention").AsGodotObject()),
                 };
                 
                 instance._data = data;
@@ -564,7 +533,6 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
                         Id = data.Get("id").AsString(),
                         EmoteSetId = data.Get("emote_set_id").AsString(),
                         OwnerId = data.Get("owner_id").AsString(),
-                        Format = data.Get("format").AsStringArray(),
                     };
                     
                     instance._data = data;

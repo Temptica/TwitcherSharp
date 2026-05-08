@@ -56,7 +56,6 @@ public partial class TwitchChannelPredictionBeginEvent : RefCounted, ITwitcherSh
     public static TwitchChannelPredictionBeginEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var outcomesArray = data.Get("outcomes").AsGodotArray<GodotObject>();
         var instance = new TwitchChannelPredictionBeginEvent
         {
             Id = data.Get("id").AsString(),
@@ -64,7 +63,6 @@ public partial class TwitchChannelPredictionBeginEvent : RefCounted, ITwitcherSh
             BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
             BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
             Title = data.Get("title").AsString(),
-            Outcomes = outcomesArray.Select(TwitchOutcomes.FromObject).ToArray(),
             StartedAt = data.Get("started_at").AsString(),
             LocksAt = data.Get("locks_at").AsString(),
         };

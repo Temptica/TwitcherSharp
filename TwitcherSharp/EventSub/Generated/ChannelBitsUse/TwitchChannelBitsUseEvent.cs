@@ -81,9 +81,6 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
             UserName = data.Get("user_name").AsString(),
             Bits = data.Get("bits").AsInt32(),
             Type = data.Get("type").AsString(),
-            Message = TwitchMessage.FromObject(data.Get("message").AsGodotObject()),
-            PowerUp = TwitchPowerUp.FromObject(data.Get("power_up").AsGodotObject()),
-            CustomPowerUp = TwitchCustomPowerUp.FromObject(data.Get("custom_power_up").AsGodotObject()),
         };
         
         instance._data = data;
@@ -130,11 +127,9 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
         public static TwitchMessage FromObject(GodotObject data)
         {
             if(data == null) return null;
-            var fragmentsArray = data.Get("fragments").AsGodotArray<GodotObject>();
             var instance = new TwitchMessage
             {
                 Text = data.Get("text").AsString(),
-                Fragments = fragmentsArray.Select(TwitchFragments.FromObject).ToArray(),
             };
             
             instance._data = data;
@@ -186,8 +181,6 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
                 {
                     Text = data.Get("text").AsString(),
                     Type = data.Get("type").AsString(),
-                    Emote = TwitchEmote.FromObject(data.Get("emote").AsGodotObject()),
-                    Cheermote = TwitchCheermote.FromObject(data.Get("cheermote").AsGodotObject()),
                 };
                 
                 instance._data = data;
@@ -242,7 +235,6 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
                         Id = data.Get("id").AsString(),
                         EmoteSetId = data.Get("emote_set_id").AsString(),
                         OwnerId = data.Get("owner_id").AsString(),
-                        Format = data.Get("format").AsStringArray(),
                     };
                     
                     instance._data = data;
@@ -340,7 +332,6 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
             var instance = new TwitchPowerUp
             {
                 Type = data.Get("type").AsString(),
-                Emote = TwitchEmote.FromObject(data.Get("emote").AsGodotObject()),
                 MessageEffectId = data.Get("message_effect_id").AsString(),
             };
             

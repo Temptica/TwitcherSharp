@@ -80,8 +80,6 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddEvent : RefC
             UserLogin = data.Get("user_login").AsString(),
             UserName = data.Get("user_name").AsString(),
             Id = data.Get("id").AsString(),
-            Reward = TwitchReward.FromObject(data.Get("reward").AsGodotObject()),
-            Message = TwitchMessage.FromObject(data.Get("message").AsGodotObject()),
             UserInput = data.Get("user_input").AsString(),
             RedeemedAt = data.Get("redeemed_at").AsString(),
         };
@@ -139,7 +137,6 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddEvent : RefC
             {
                 Type = data.Get("type").AsString(),
                 Cost = data.Get("cost").AsInt32(),
-                UnlockedEmote = TwitchUnlockedEmote.FromObject(data.Get("unlocked_emote").AsGodotObject()),
             };
             
             instance._data = data;
@@ -220,11 +217,9 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddEvent : RefC
         public static TwitchMessage FromObject(GodotObject data)
         {
             if(data == null) return null;
-            var emotesArray = data.Get("emotes").AsGodotArray<GodotObject>();
             var instance = new TwitchMessage
             {
                 Text = data.Get("text").AsString(),
-                Emotes = emotesArray.Select(TwitchEmotes.FromObject).ToArray(),
             };
             
             instance._data = data;

@@ -82,7 +82,6 @@ public partial class TwitchChannelPointsCustomRewardRedemptionAddEvent : RefCoun
             UserName = data.Get("user_name").AsString(),
             UserInput = data.Get("user_input").AsString(),
             Status = data.Get("status").AsString(),
-            Reward = TwitchReward.FromObject(data.Get("reward").AsGodotObject()),
             RedeemedAt = data.Get("redeemed_at").AsString(),
         };
         

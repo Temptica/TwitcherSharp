@@ -70,7 +70,7 @@ public static class EventSubCodeHelper
             var fieldType = field.Type;
             if (field.IsArray && !fieldType.Contains("[]")) fieldType += "[]";
 
-            if ((field.IsArray &&field.TypedComponent != null) || field.IsTyped)
+            if ((field.IsArray && field.TypedComponent != null) || field.IsTyped)
             {
                 code.AppendIndentedLine(
                     $"public {fieldType} {field.Name} {{ get => field ??= _data?.Get{(field.IsArray ? "Array" : "")}<{field.Type.Remove("[]")}>(\"{field.Name.ToSnakeCase()}\"); set; }}{(field.IsRequired ? $"= {field.Name.ToCamelCase()};" : "")}",
@@ -92,13 +92,6 @@ public static class EventSubCodeHelper
             code.AppendLine();
             code.AppendLine(EventSubCodeStrings.ComponentFromBody.Replace("{{className}}", component.ClassName));
 
-            foreach (var typedArrayField in fields.Where(f => f.IsArray && f.IsTyped))
-            {
-                code.AppendIndentedLine(
-                    $"var {typedArrayField.Name.ToCamelCase()}Array = data.Get(\"{typedArrayField.Name.ToSnakeCase()}\").AsGodotArray<GodotObject>();",
-                    2);
-            }
-
             if (isCondition && component.HasRequiredFields)
             {
                 var requiredFields = string.Join(", ",
@@ -119,21 +112,9 @@ public static class EventSubCodeHelper
 
                 foreach (var field in nonRequiredFields)
                 {
-                    string fieldData;
-
-                    if (field.IsArray && field.IsTyped)
-                    {
-                        fieldData =
-                            $"{field.Name} = {field.Name.ToCamelCase()}Array.Select({field.TypedComponent.ClassName}.FromObject).ToArray(),";
-                    }
-                    else if (field.IsTyped)
-                    {
-                        fieldData =
-                            $"{field.Name} = {field.TypedComponent.ClassName}.FromObject(data.Get(\"{field.Name.ToSnakeCase()}\").AsGodotObject()),";
-                    }
-                    else fieldData = $"{field.Name} = data.Get(\"{field.Name.ToSnakeCase()}\").{field.GetAsType()},";
-
-                    code.AppendIndentedLine(fieldData, 3);
+                    if (!field.IsArray && !field.IsTyped)
+                        code.AppendIndentedLine(
+                            $"{field.Name} = data.Get(\"{field.Name.ToSnakeCase()}\").{field.GetAsType()},", 3);
                 }
 
                 code.AppendIndentedLine("};", 2);

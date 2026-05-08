@@ -65,7 +65,6 @@ public partial class TwitchChannelUpdateEvent : RefCounted, ITwitcherSharpEventS
             Language = data.Get("language").AsString(),
             CategoryId = data.Get("category_id").AsString(),
             CategoryName = data.Get("category_name").AsString(),
-            ContentClassificationLabels = data.Get("content_classification_labels").AsStringArray(),
         };
         
         instance._data = data;

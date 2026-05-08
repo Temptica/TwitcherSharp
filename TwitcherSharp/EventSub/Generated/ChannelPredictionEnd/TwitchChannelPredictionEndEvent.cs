@@ -66,7 +66,6 @@ public partial class TwitchChannelPredictionEndEvent : RefCounted, ITwitcherShar
     public static TwitchChannelPredictionEndEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var outcomesArray = data.Get("outcomes").AsGodotArray<GodotObject>();
         var instance = new TwitchChannelPredictionEndEvent
         {
             Id = data.Get("id").AsString(),
@@ -75,7 +74,6 @@ public partial class TwitchChannelPredictionEndEvent : RefCounted, ITwitcherShar
             BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
             Title = data.Get("title").AsString(),
             WinningOutcomeId = data.Get("winning_outcome_id").AsString(),
-            Outcomes = outcomesArray.Select(TwitchOutcomes.FromObject).ToArray(),
             Status = data.Get("status").AsString(),
             StartedAt = data.Get("started_at").AsString(),
             EndedAt = data.Get("ended_at").AsString(),

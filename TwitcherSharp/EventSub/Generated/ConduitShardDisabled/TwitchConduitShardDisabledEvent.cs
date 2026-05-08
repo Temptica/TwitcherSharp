@@ -66,7 +66,6 @@ public partial class TwitchConduitShardDisabledEvent : RefCounted, ITwitcherShar
             ConduitId = data.Get("conduit_id").AsString(),
             ShardId = data.Get("shard_id").AsString(),
             Status = data.Get("status").AsString(),
-            Transport = TwitchTransport.FromObject(data.Get("transport").AsGodotObject()),
             Method = data.Get("method").AsString(),
             Callback = data.Get("callback").AsString(),
             SessionId = data.Get("session_id").AsString(),

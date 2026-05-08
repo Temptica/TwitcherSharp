@@ -183,27 +183,6 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
             ModeratorUserLogin = data.Get("moderator_user_login").AsString(),
             ModeratorUserName = data.Get("moderator_user_name").AsString(),
             Action = data.Get("action").AsString(),
-            FollowersV2 = TwitchFollowersV2.FromObject(data.Get("followers_v_2").AsGodotObject()),
-            SlowV2 = TwitchSlowV2.FromObject(data.Get("slow_v_2").AsGodotObject()),
-            VipV2 = TwitchVipV2.FromObject(data.Get("vip_v_2").AsGodotObject()),
-            UnvipV2 = TwitchUnvipV2.FromObject(data.Get("unvip_v_2").AsGodotObject()),
-            ModV2 = TwitchModV2.FromObject(data.Get("mod_v_2").AsGodotObject()),
-            UnmodV2 = TwitchUnmodV2.FromObject(data.Get("unmod_v_2").AsGodotObject()),
-            BanV2 = TwitchBanV2.FromObject(data.Get("ban_v_2").AsGodotObject()),
-            UnbanV2 = TwitchUnbanV2.FromObject(data.Get("unban_v_2").AsGodotObject()),
-            TimeoutV2 = TwitchTimeoutV2.FromObject(data.Get("timeout_v_2").AsGodotObject()),
-            UntimeoutV2 = TwitchUntimeoutV2.FromObject(data.Get("untimeout_v_2").AsGodotObject()),
-            RaidV2 = TwitchRaidV2.FromObject(data.Get("raid_v_2").AsGodotObject()),
-            UnraidV2 = TwitchUnraidV2.FromObject(data.Get("unraid_v_2").AsGodotObject()),
-            DeleteV2 = TwitchDeleteV2.FromObject(data.Get("delete_v_2").AsGodotObject()),
-            AutomodTermsV2 = TwitchAutomodTermsV2.FromObject(data.Get("automod_terms_v_2").AsGodotObject()),
-            UnbanRequestV2 = TwitchUnbanRequestV2.FromObject(data.Get("unban_request_v_2").AsGodotObject()),
-            WarnV2 = TwitchWarnV2.FromObject(data.Get("warn_v_2").AsGodotObject()),
-            SharedChatBan = TwitchBanV2.FromObject(data.Get("shared_chat_ban").AsGodotObject()),
-            SharedChatUnban = TwitchUnbanV2.FromObject(data.Get("shared_chat_unban").AsGodotObject()),
-            SharedChatTimeout = TwitchTimeoutV2.FromObject(data.Get("shared_chat_timeout").AsGodotObject()),
-            SharedChatUntimeout = TwitchUntimeoutV2.FromObject(data.Get("shared_chat_untimeout").AsGodotObject()),
-            SharedChatDelete = TwitchDeleteV2.FromObject(data.Get("shared_chat_delete").AsGodotObject()),
         };
         
         instance._data = data;
@@ -922,7 +901,6 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
             {
                 Action = data.Get("action").AsString(),
                 List = data.Get("list").AsString(),
-                Terms = data.Get("terms").AsStringArray(),
                 FromAutomod = data.Get("from_automod").AsBool(),
             };
             

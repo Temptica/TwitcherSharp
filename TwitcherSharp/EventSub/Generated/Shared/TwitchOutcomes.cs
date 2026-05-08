@@ -53,7 +53,6 @@ public partial class TwitchOutcomes : RefCounted, ITwitcherSharpEventSub<TwitchO
             Color = data.Get("color").AsString(),
             Users = data.Get("users").AsInt32(),
             ChannelPoints = data.Get("channel_points").AsInt32(),
-            TopPredictors = TwitchTopPredictors.FromObject(data.Get("top_predictors").AsGodotObject()),
         };
         
         instance._data = data;

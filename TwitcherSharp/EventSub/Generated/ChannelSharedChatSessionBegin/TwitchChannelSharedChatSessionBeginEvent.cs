@@ -56,7 +56,6 @@ public partial class TwitchChannelSharedChatSessionBeginEvent : RefCounted, ITwi
     public static TwitchChannelSharedChatSessionBeginEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var participantsArray = data.Get("participants").AsGodotArray<GodotObject>();
         var instance = new TwitchChannelSharedChatSessionBeginEvent
         {
             SessionId = data.Get("session_id").AsString(),
@@ -66,7 +65,6 @@ public partial class TwitchChannelSharedChatSessionBeginEvent : RefCounted, ITwi
             HostBroadcasterUserId = data.Get("host_broadcaster_user_id").AsString(),
             HostBroadcasterUserName = data.Get("host_broadcaster_user_name").AsString(),
             HostBroadcasterUserLogin = data.Get("host_broadcaster_user_login").AsString(),
-            Participants = participantsArray.Select(TwitchParticipants.FromObject).ToArray(),
         };
         
         instance._data = data;

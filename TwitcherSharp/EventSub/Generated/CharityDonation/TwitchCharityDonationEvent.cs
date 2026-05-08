@@ -95,7 +95,6 @@ public partial class TwitchCharityDonationEvent : RefCounted, ITwitcherSharpEven
             CharityDescription = data.Get("charity_description").AsString(),
             CharityLogo = data.Get("charity_logo").AsString(),
             CharityWebsite = data.Get("charity_website").AsString(),
-            Amount = TwitchAmount.FromObject(data.Get("amount").AsGodotObject()),
         };
         
         instance._data = data;

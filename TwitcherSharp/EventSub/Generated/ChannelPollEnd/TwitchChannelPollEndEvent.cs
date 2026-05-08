@@ -71,7 +71,6 @@ public partial class TwitchChannelPollEndEvent : RefCounted, ITwitcherSharpEvent
     public static TwitchChannelPollEndEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var choicesArray = data.Get("choices").AsGodotArray<GodotObject>();
         var instance = new TwitchChannelPollEndEvent
         {
             Id = data.Get("id").AsString(),
@@ -79,9 +78,6 @@ public partial class TwitchChannelPollEndEvent : RefCounted, ITwitcherSharpEvent
             BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
             BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
             Title = data.Get("title").AsString(),
-            Choices = choicesArray.Select(TwitchChoices.FromObject).ToArray(),
-            BitsVoting = TwitchBitsVoting.FromObject(data.Get("bits_voting").AsGodotObject()),
-            ChannelPointsVoting = TwitchChannelPointsVoting.FromObject(data.Get("channel_points_voting").AsGodotObject()),
             Status = data.Get("status").AsString(),
             StartedAt = data.Get("started_at").AsString(),
             EndedAt = data.Get("ended_at").AsString(),

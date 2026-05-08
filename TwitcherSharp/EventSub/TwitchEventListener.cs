@@ -1,4 +1,5 @@
 using Godot;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub;
@@ -9,7 +10,7 @@ public partial class TwitchEventListener<T> : RefCounted, ITwitcherSharp<TwitchE
     private GodotObject _data;
     private readonly List<Action<T>> _receivedEvents = [];
     
-    public TwitchEventSubDefinition SubscriptionDefinition { get; set; }
+    public TwitchEventSubDefinition SubscriptionDefinition { get => field ??= _data?.Get<TwitchEventSubDefinition>("subscription_definition"); set; }
 
     /// <summary>
     /// Triggers whenever the Event has been recieved

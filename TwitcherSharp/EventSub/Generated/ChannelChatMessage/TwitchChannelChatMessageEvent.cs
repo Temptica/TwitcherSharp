@@ -116,8 +116,6 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
     public static TwitchChannelChatMessageEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var badgesArray = data.Get("badges").AsGodotArray<GodotObject>();
-        var sourceBadgesArray = data.Get("source_badges").AsGodotArray<GodotObject>();
         var instance = new TwitchChannelChatMessageEvent
         {
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
@@ -127,18 +125,13 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
             ChatterUserName = data.Get("chatter_user_name").AsString(),
             ChatterUserLogin = data.Get("chatter_user_login").AsString(),
             MessageId = data.Get("message_id").AsString(),
-            Message = TwitchMessage.FromObject(data.Get("message").AsGodotObject()),
             MessageType = data.Get("message_type").AsString(),
-            Badges = badgesArray.Select(TwitchBadges.FromObject).ToArray(),
-            Cheer = TwitchCheer.FromObject(data.Get("cheer").AsGodotObject()),
             Color = data.Get("color").AsString(),
-            Reply = TwitchReply.FromObject(data.Get("reply").AsGodotObject()),
             ChannelPointsCustomRewardId = data.Get("channel_points_custom_reward_id").AsString(),
             SourceBroadcasterUserId = data.Get("source_broadcaster_user_id").AsString(),
             SourceBroadcasterUserName = data.Get("source_broadcaster_user_name").AsString(),
             SourceBroadcasterUserLogin = data.Get("source_broadcaster_user_login").AsString(),
             SourceMessageId = data.Get("source_message_id").AsString(),
-            SourceBadges = sourceBadgesArray.Select(TwitchSourceBadges.FromObject).ToArray(),
             IsSourceOnly = data.Get("is_source_only").AsBool(),
         };
         
@@ -195,11 +188,9 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
         public static TwitchMessage FromObject(GodotObject data)
         {
             if(data == null) return null;
-            var fragmentsArray = data.Get("fragments").AsGodotArray<GodotObject>();
             var instance = new TwitchMessage
             {
                 Text = data.Get("text").AsString(),
-                Fragments = fragmentsArray.Select(TwitchFragments.FromObject).ToArray(),
             };
             
             instance._data = data;
@@ -256,9 +247,6 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
                 {
                     Type = data.Get("type").AsString(),
                     Text = data.Get("text").AsString(),
-                    Cheermote = TwitchCheermote.FromObject(data.Get("cheermote").AsGodotObject()),
-                    Emote = TwitchEmote.FromObject(data.Get("emote").AsGodotObject()),
-                    Mention = TwitchMention.FromObject(data.Get("mention").AsGodotObject()),
                 };
                 
                 instance._data = data;
@@ -362,7 +350,6 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
                         Id = data.Get("id").AsString(),
                         EmoteSetId = data.Get("emote_set_id").AsString(),
                         OwnerId = data.Get("owner_id").AsString(),
-                        Format = data.Get("format").AsStringArray(),
                     };
                     
                     instance._data = data;

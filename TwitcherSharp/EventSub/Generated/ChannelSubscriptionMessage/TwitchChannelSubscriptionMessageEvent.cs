@@ -80,7 +80,6 @@ public partial class TwitchChannelSubscriptionMessageEvent : RefCounted, ITwitch
             BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
             BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
             Tier = data.Get("tier").AsString(),
-            Message = TwitchMessage.FromObject(data.Get("message").AsGodotObject()),
             CumulativeMonths = data.Get("cumulative_months").AsInt32(),
             StreakMonths = data.Get("streak_months").AsInt32(),
             DurationMonths = data.Get("duration_months").AsInt32(),

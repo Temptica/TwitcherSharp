@@ -71,7 +71,6 @@ public partial class TwitchExtensionBitsTransactionCreateEvent : RefCounted, ITw
             UserId = data.Get("user_id").AsString(),
             UserLogin = data.Get("user_login").AsString(),
             UserName = data.Get("user_name").AsString(),
-            Product = TwitchProduct.FromObject(data.Get("product").AsGodotObject()),
         };
         
         instance._data = data;

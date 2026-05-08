@@ -85,11 +85,8 @@ public partial class TwitchAutomodMessageHoldEventV2 : RefCounted, ITwitcherShar
             UserLogin = data.Get("user_login").AsString(),
             UserName = data.Get("user_name").AsString(),
             MessageId = data.Get("message_id").AsString(),
-            Message = TwitchMessage.FromObject(data.Get("message").AsGodotObject()),
             HeldAt = data.Get("held_at").AsString(),
             Reason = data.Get("reason").AsString(),
-            AutomodV2 = TwitchAutomodV2.FromObject(data.Get("automod_v_2").AsGodotObject()),
-            BlockedTermV2 = TwitchBlockedTermV2.FromObject(data.Get("blocked_term_v_2").AsGodotObject()),
         };
         
         instance._data = data;
@@ -137,11 +134,9 @@ public partial class TwitchAutomodMessageHoldEventV2 : RefCounted, ITwitcherShar
         public static TwitchMessage FromObject(GodotObject data)
         {
             if(data == null) return null;
-            var fragmentsArray = data.Get("fragments").AsGodotArray<GodotObject>();
             var instance = new TwitchMessage
             {
                 Text = data.Get("text").AsString(),
-                Fragments = fragmentsArray.Select(TwitchFragments.FromObject).ToArray(),
             };
             
             instance._data = data;
@@ -193,8 +188,6 @@ public partial class TwitchAutomodMessageHoldEventV2 : RefCounted, ITwitcherShar
                 {
                     Type = data.Get("type").AsString(),
                     Text = data.Get("text").AsString(),
-                    Emote = TwitchEmote.FromObject(data.Get("emote").AsGodotObject()),
-                    Cheermote = TwitchCheermote.FromObject(data.Get("cheermote").AsGodotObject()),
                 };
                 
                 instance._data = data;
@@ -330,12 +323,10 @@ public partial class TwitchAutomodMessageHoldEventV2 : RefCounted, ITwitcherShar
         public static TwitchAutomodV2 FromObject(GodotObject data)
         {
             if(data == null) return null;
-            var boundariesArray = data.Get("boundaries").AsGodotArray<GodotObject>();
             var instance = new TwitchAutomodV2
             {
                 Category = data.Get("category").AsString(),
                 Level = data.Get("level").AsInt32(),
-                Boundaries = boundariesArray.Select(TwitchBoundariesV2.FromObject).ToArray(),
             };
             
             instance._data = data;
@@ -411,10 +402,8 @@ public partial class TwitchAutomodMessageHoldEventV2 : RefCounted, ITwitcherShar
         public static TwitchBlockedTermV2 FromObject(GodotObject data)
         {
             if(data == null) return null;
-            var termsFoundArray = data.Get("terms_found").AsGodotArray<GodotObject>();
             var instance = new TwitchBlockedTermV2
             {
-                TermsFound = termsFoundArray.Select(TwitchTermsFoundV2.FromObject).ToArray(),
             };
             
             instance._data = data;
@@ -469,7 +458,6 @@ public partial class TwitchAutomodMessageHoldEventV2 : RefCounted, ITwitcherShar
                 var instance = new TwitchTermsFoundV2
                 {
                     TermId = data.Get("term_id").AsString(),
-                    BoundaryV2 = TwitchBoundaryV2.FromObject(data.Get("boundary_v_2").AsGodotObject()),
                     OwnerBroadcasterUserId = data.Get("owner_broadcaster_user_id").AsString(),
                     OwnerBroadcasterUserLogin = data.Get("owner_broadcaster_user_login").AsString(),
                     OwnerBroadcasterUserName = data.Get("owner_broadcaster_user_name").AsString(),
