@@ -23,22 +23,22 @@ public class ManualMappingTest(Node testScene) : TestClass(testScene)
             ChatterUserLogin = "def",
             ChatterUserName = "Def",
             MessageId = "456",
-            Content = new Message
+            Content = new TwitchChatMessage.Message
             {
                 Fragments = [],
                 Text = "Test Message"
             },
-            ChatMessageType = MessageType.Text,
+            ChatMessageType = TwitchChatMessage.MessageType.Text,
             Badges =
             [
-                new Badge
+                new TwitchChatMessage.Badge
                 {
                     SetId = "1.0",
                     Id = "123321",
                     Info = "Test Badge"
                 }
             ],
-            CheerMetadata = new Cheer
+            CheerMetadata = new TwitchChatMessage.Cheer
             {
                 Bits = 500
             },
