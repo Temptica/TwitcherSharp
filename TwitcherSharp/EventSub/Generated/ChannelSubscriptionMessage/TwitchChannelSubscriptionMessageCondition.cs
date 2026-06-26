@@ -1,18 +1,21 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
 namespace TwitcherSharp.EventSub.Generated.ChannelSubscriptionMessage;
 
-public partial class TwitchChannelSubscriptionMessageCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelSubscriptionMessageCondition>
+public partial class TwitchChannelSubscriptionMessageCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelSubscriptionMessageCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchChannelSubscriptionMessageCondition);
 
     /// <summary> 
     /// The broadcaster user ID for the channel you want to get resubscription chat message notifications for.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelSubscriptionMessageCondition object.
@@ -20,10 +23,10 @@ public partial class TwitchChannelSubscriptionMessageCondition : RefCounted, ITw
     public static TwitchChannelSubscriptionMessageCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelSubscriptionMessageCondition
-        {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-        };
+        var instance = new TwitchChannelSubscriptionMessageCondition(data.Get("broadcaster_user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -37,9 +40,8 @@ public partial class TwitchChannelSubscriptionMessageCondition : RefCounted, ITw
 
     public static TwitchChannelSubscriptionMessageCondition FromDictionary(Dictionary data)
     {
-        return new TwitchChannelSubscriptionMessageCondition
+        return new TwitchChannelSubscriptionMessageCondition(data["broadcaster_user_id"].AsString())
         {
-            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
         };
     }
 

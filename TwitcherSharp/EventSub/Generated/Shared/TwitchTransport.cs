@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
@@ -7,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.Shared;
 
 public partial class TwitchTransport : RefCounted, ITwitcherSharpEventSub<TwitchTransport>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// yes
     /// </summary>
@@ -43,7 +46,7 @@ public partial class TwitchTransport : RefCounted, ITwitcherSharpEventSub<Twitch
     public static TwitchTransport FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchTransport
+        var instance = new TwitchTransport
         {
             Method = data.Get("method").AsString(),
             Callback = data.Get("callback").AsString(),
@@ -52,6 +55,9 @@ public partial class TwitchTransport : RefCounted, ITwitcherSharpEventSub<Twitch
             ConnectedAt = data.Get("connected_at").AsString(),
             DisconnectedAt = data.Get("disconnected_at").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

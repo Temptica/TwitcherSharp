@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
@@ -7,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelModeratorAdd;
 
 public partial class TwitchChannelModeratorAddEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelModeratorAddEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The requested broadcaster ID.
     /// </summary>
@@ -43,7 +46,7 @@ public partial class TwitchChannelModeratorAddEvent : RefCounted, ITwitcherSharp
     public static TwitchChannelModeratorAddEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelModeratorAddEvent
+        var instance = new TwitchChannelModeratorAddEvent
         {
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
             BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
@@ -52,6 +55,9 @@ public partial class TwitchChannelModeratorAddEvent : RefCounted, ITwitcherSharp
             UserLogin = data.Get("user_login").AsString(),
             UserName = data.Get("user_name").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.GuestStar;
@@ -7,7 +8,7 @@ public partial class TwitchGuestStarSession : RefCounted, ITwitcherSharp<TwitchG
 {
     private GodotObject _data;
     public string Id { get; set; }
-    public TwitchGuest[] Guests { get; set; }
+    public TwitchGuest[] Guests { get => field ??= _data?.GetArray<TwitchGuest>("guests"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGuestStarSession object.
@@ -15,12 +16,13 @@ public partial class TwitchGuestStarSession : RefCounted, ITwitcherSharp<TwitchG
     public static TwitchGuestStarSession FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var guestsArray = data.Get("guests").AsGodotArray<GodotObject>();
-        return new TwitchGuestStarSession
+        var instance = new TwitchGuestStarSession
         {
             Id = data.Get("id").AsString(),
-            Guests = guestsArray.Select(TwitchGuest.FromObject).ToArray(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -28,7 +30,7 @@ public partial class TwitchGuestStarSession : RefCounted, ITwitcherSharp<TwitchG
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_guest_star_session.gd");
         var request = script.Call("new").AsGodotObject();
         request.Set("id", Id);
-        if(Guests != null) request.Set("guests", new Godot.Collections.Array<GodotObject>(Guests.Select(x => x.ToGodotObject()).ToArray()));
+        if(Guests != null) request.Set("guests", Guests?.ToGodotArray());
         return request;
     }
 

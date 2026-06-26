@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Analytics;
@@ -23,7 +24,7 @@ public partial class TwitchGetGameAnalyticsOpt : RefCounted, ITwitcherSharp<Twit
     public static TwitchGetGameAnalyticsOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGetGameAnalyticsOpt
+        var instance = new TwitchGetGameAnalyticsOpt
         {
             GameId = data.Get("game_id").AsString(),
             Type = data.Get("type").AsString(),
@@ -32,6 +33,9 @@ public partial class TwitchGetGameAnalyticsOpt : RefCounted, ITwitcherSharp<Twit
             First = data.Get("first").AsInt32(),
             After = data.Get("after").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

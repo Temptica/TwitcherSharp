@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
@@ -15,11 +16,14 @@ public partial class TwitchAutoModStatus : RefCounted, ITwitcherSharp<TwitchAuto
     public static TwitchAutoModStatus FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchAutoModStatus
+        var instance = new TwitchAutoModStatus
         {
             MsgId = data.Get("msg_id").AsString(),
             IsPermitted = data.Get("is_permitted").AsBool(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

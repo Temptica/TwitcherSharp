@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Conduits;
@@ -14,10 +15,13 @@ public partial class TwitchCreateConduitsBody : RefCounted, ITwitcherSharp<Twitc
     public static TwitchCreateConduitsBody FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchCreateConduitsBody
+        var instance = new TwitchCreateConduitsBody
         {
             ShardCount = data.Get("shard_count").AsInt32(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

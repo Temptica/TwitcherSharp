@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.ChannelPoints;
@@ -14,10 +15,13 @@ public partial class TwitchUpdateRedemptionStatusBody : RefCounted, ITwitcherSha
     public static TwitchUpdateRedemptionStatusBody FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchUpdateRedemptionStatusBody
+        var instance = new TwitchUpdateRedemptionStatusBody
         {
             Status = data.Get("status").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

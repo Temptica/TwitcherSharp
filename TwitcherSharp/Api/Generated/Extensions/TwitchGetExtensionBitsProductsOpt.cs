@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Extensions;
@@ -18,10 +19,13 @@ public partial class TwitchGetExtensionBitsProductsOpt : RefCounted, ITwitcherSh
     public static TwitchGetExtensionBitsProductsOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGetExtensionBitsProductsOpt
+        var instance = new TwitchGetExtensionBitsProductsOpt
         {
             ShouldIncludeAll = data.Get("should_include_all").AsBool(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

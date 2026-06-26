@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Chat;
@@ -6,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Chat;
 public partial class TwitchGetGlobalChatBadgesResponse : RefCounted, ITwitcherSharp<TwitchGetGlobalChatBadgesResponse>
 {
     private GodotObject _data;
-    public TwitchChatBadge[] Data { get; set; }
+    public TwitchChatBadge[] Data { get => field ??= _data?.GetArray<TwitchChatBadge>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetGlobalChatBadgesResponse object.
@@ -14,11 +15,10 @@ public partial class TwitchGetGlobalChatBadgesResponse : RefCounted, ITwitcherSh
     public static TwitchGetGlobalChatBadgesResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchGetGlobalChatBadgesResponse
-        {
-            Data = dataArray.Select(TwitchChatBadge.FromObject).ToArray(),
-        };
+        var instance = new TwitchGetGlobalChatBadgesResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -26,7 +26,7 @@ public partial class TwitchGetGlobalChatBadgesResponse : RefCounted, ITwitcherSh
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_global_chat_badges.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", new Godot.Collections.Array<GodotObject>(Data.Select(x => x.ToGodotObject()).ToArray()));
+        if(Data != null) request.Set("data", Data?.ToGodotArray());
         return request;
     }
 

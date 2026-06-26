@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Predictions;
@@ -6,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Predictions;
 public partial class TwitchCreatePredictionResponse : RefCounted, ITwitcherSharp<TwitchCreatePredictionResponse>
 {
     private GodotObject _data;
-    public TwitchPrediction[] Data { get; set; }
+    public TwitchPrediction[] Data { get => field ??= _data?.GetArray<TwitchPrediction>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCreatePredictionResponse object.
@@ -14,11 +15,10 @@ public partial class TwitchCreatePredictionResponse : RefCounted, ITwitcherSharp
     public static TwitchCreatePredictionResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchCreatePredictionResponse
-        {
-            Data = dataArray.Select(TwitchPrediction.FromObject).ToArray(),
-        };
+        var instance = new TwitchCreatePredictionResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -26,7 +26,7 @@ public partial class TwitchCreatePredictionResponse : RefCounted, ITwitcherSharp
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_create_prediction.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", new Godot.Collections.Array<GodotObject>(Data.Select(x => x.ToGodotObject()).ToArray()));
+        if(Data != null) request.Set("data", Data?.ToGodotArray());
         return request;
     }
 

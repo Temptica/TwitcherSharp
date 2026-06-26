@@ -1,18 +1,21 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
 namespace TwitcherSharp.EventSub.Generated.ConduitShardDisabled;
 
-public partial class TwitchConduitShardDisabledCondition : RefCounted, ITwitcherSharpCondition<TwitchConduitShardDisabledCondition>
+public partial class TwitchConduitShardDisabledCondition(string clientId) : RefCounted, ITwitcherSharpCondition<TwitchConduitShardDisabledCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchConduitShardDisabledCondition);
 
     /// <summary> 
     /// Your application’s client id. The provided client_id must match the client ID in the application access token.
     /// </summary>
-    public string ClientId { get; set; }
+    public string ClientId { get; set; } = clientId;
 
     /// <summary> 
     /// The conduit ID to receive events for. If omitted, events for all of this client’s conduits are sent.
@@ -25,11 +28,13 @@ public partial class TwitchConduitShardDisabledCondition : RefCounted, ITwitcher
     public static TwitchConduitShardDisabledCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchConduitShardDisabledCondition
+        var instance = new TwitchConduitShardDisabledCondition(data.Get("client_id").AsString())
         {
-            ClientId = data.Get("client_id").AsString(),
             ConduitId = data.Get("conduit_id").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -44,9 +49,8 @@ public partial class TwitchConduitShardDisabledCondition : RefCounted, ITwitcher
 
     public static TwitchConduitShardDisabledCondition FromDictionary(Dictionary data)
     {
-        return new TwitchConduitShardDisabledCondition
+        return new TwitchConduitShardDisabledCondition(data["client_id"].AsString())
         {
-            ClientId = data["client_id"].AsString(),
             ConduitId = data["conduit_id"].AsString(),
         };
     }

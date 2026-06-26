@@ -1,23 +1,26 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
 namespace TwitcherSharp.EventSub.Generated.ChannelChatNotification;
 
-public partial class TwitchChannelChatNotificationCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelChatNotificationCondition>
+public partial class TwitchChannelChatNotificationCondition(string broadcasterUserId, string userId) : RefCounted, ITwitcherSharpCondition<TwitchChannelChatNotificationCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchChannelChatNotificationCondition);
 
     /// <summary> 
     /// User ID of the channel to receive chat notification events for.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
     /// The user ID to read chat as.
     /// </summary>
-    public string UserId { get; set; }
+    public string UserId { get; set; } = userId;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelChatNotificationCondition object.
@@ -25,11 +28,10 @@ public partial class TwitchChannelChatNotificationCondition : RefCounted, ITwitc
     public static TwitchChannelChatNotificationCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelChatNotificationCondition
-        {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-            UserId = data.Get("user_id").AsString(),
-        };
+        var instance = new TwitchChannelChatNotificationCondition(data.Get("broadcaster_user_id").AsString(), data.Get("user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -44,10 +46,8 @@ public partial class TwitchChannelChatNotificationCondition : RefCounted, ITwitc
 
     public static TwitchChannelChatNotificationCondition FromDictionary(Dictionary data)
     {
-        return new TwitchChannelChatNotificationCondition
+        return new TwitchChannelChatNotificationCondition(data["broadcaster_user_id"].AsString(), data["user_id"].AsString())
         {
-            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
-            UserId = data["user_id"].AsString(),
         };
     }
 

@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.CCLs;
@@ -18,10 +19,13 @@ public partial class TwitchGetContentClassificationLabelsOpt : RefCounted, ITwit
     public static TwitchGetContentClassificationLabelsOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGetContentClassificationLabelsOpt
+        var instance = new TwitchGetContentClassificationLabelsOpt
         {
             Locale = data.Get("locale").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

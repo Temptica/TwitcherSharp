@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
@@ -7,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelAdBreakBegin;
 
 public partial class TwitchChannelAdBreakBeginEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelAdBreakBeginEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// Length in seconds of the mid-roll ad break requested
     /// </summary>
@@ -58,7 +61,7 @@ public partial class TwitchChannelAdBreakBeginEvent : RefCounted, ITwitcherSharp
     public static TwitchChannelAdBreakBeginEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelAdBreakBeginEvent
+        var instance = new TwitchChannelAdBreakBeginEvent
         {
             DurationSeconds = data.Get("duration_seconds").AsInt32(),
             StartedAt = data.Get("started_at").AsString(),
@@ -70,6 +73,9 @@ public partial class TwitchChannelAdBreakBeginEvent : RefCounted, ITwitcherSharp
             RequesterUserLogin = data.Get("requester_user_login").AsString(),
             RequesterUserName = data.Get("requester_user_name").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Entitlements;
@@ -6,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Entitlements;
 public partial class TwitchUpdateDropsEntitlementsResponse : RefCounted, ITwitcherSharp<TwitchUpdateDropsEntitlementsResponse>
 {
     private GodotObject _data;
-    public TwitchDropsEntitlementUpdated[] Data { get; set; }
+    public TwitchDropsEntitlementUpdated[] Data { get => field ??= _data?.GetArray<TwitchDropsEntitlementUpdated>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUpdateDropsEntitlementsResponse object.
@@ -14,11 +15,10 @@ public partial class TwitchUpdateDropsEntitlementsResponse : RefCounted, ITwitch
     public static TwitchUpdateDropsEntitlementsResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchUpdateDropsEntitlementsResponse
-        {
-            Data = dataArray.Select(TwitchDropsEntitlementUpdated.FromObject).ToArray(),
-        };
+        var instance = new TwitchUpdateDropsEntitlementsResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -26,7 +26,7 @@ public partial class TwitchUpdateDropsEntitlementsResponse : RefCounted, ITwitch
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_update_drops_entitlements.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", new Godot.Collections.Array<GodotObject>(Data.Select(x => x.ToGodotObject()).ToArray()));
+        if(Data != null) request.Set("data", Data?.ToGodotArray());
         return request;
     }
 

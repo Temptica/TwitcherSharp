@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
@@ -7,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelChatClearUserMessages;
 
 public partial class TwitchChannelChatClearUserMessagesEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelChatClearUserMessagesEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The broadcaster user ID.
     /// </summary>
@@ -43,7 +46,7 @@ public partial class TwitchChannelChatClearUserMessagesEvent : RefCounted, ITwit
     public static TwitchChannelChatClearUserMessagesEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelChatClearUserMessagesEvent
+        var instance = new TwitchChannelChatClearUserMessagesEvent
         {
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
             BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
@@ -52,6 +55,9 @@ public partial class TwitchChannelChatClearUserMessagesEvent : RefCounted, ITwit
             TargetUserName = data.Get("target_user_name").AsString(),
             TargetUserLogin = data.Get("target_user_login").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

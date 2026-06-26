@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Extensions;
@@ -7,7 +8,7 @@ public partial class TwitchExtensionBitsProduct : RefCounted, ITwitcherSharp<Twi
 {
     private GodotObject _data;
     public string Sku { get; set; }
-    public TwitchCost Cost { get; set; }
+    public TwitchCost Cost { get => field ??= _data?.Get<TwitchCost>("cost"); set; }
     public bool InDevelopment { get; set; }
     public string DisplayName { get; set; }
     public string Expiration { get; set; }
@@ -19,15 +20,17 @@ public partial class TwitchExtensionBitsProduct : RefCounted, ITwitcherSharp<Twi
     public static TwitchExtensionBitsProduct FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchExtensionBitsProduct
+        var instance = new TwitchExtensionBitsProduct
         {
             Sku = data.Get("sku").AsString(),
-            Cost = data.Get("cost").As<TwitchCost>(),
             InDevelopment = data.Get("in_development").AsBool(),
             DisplayName = data.Get("display_name").AsString(),
             Expiration = data.Get("expiration").AsString(),
             IsBroadcast = data.Get("is_broadcast").AsBool(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -58,17 +61,21 @@ public partial class TwitchExtensionBitsProduct : RefCounted, ITwitcherSharp<Twi
         public static TwitchCost FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchCost
+            var instance = new TwitchCost
             {
                 Amount = data.Get("amount").AsInt32(),
                 Type = data.Get("type").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_cost.gd");
-            var request = script.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_extension_bits_product.gd");
+            var twitchCostClass = script.Get("Cost").AsGodotObject();
+            var request = twitchCostClass.Call("new").AsGodotObject();
             request.Set("amount", Amount);
             request.Set("type", Type);
             return request;

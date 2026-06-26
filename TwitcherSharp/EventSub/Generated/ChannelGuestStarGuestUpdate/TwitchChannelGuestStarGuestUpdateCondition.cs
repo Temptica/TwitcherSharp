@@ -1,23 +1,26 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
 namespace TwitcherSharp.EventSub.Generated.ChannelGuestStarGuestUpdate;
 
-public partial class TwitchChannelGuestStarGuestUpdateCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelGuestStarGuestUpdateCondition>
+public partial class TwitchChannelGuestStarGuestUpdateCondition(string broadcasterUserId, string moderatorUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelGuestStarGuestUpdateCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchChannelGuestStarGuestUpdateCondition);
 
     /// <summary> 
     /// The broadcaster user ID of the channel hosting the Guest Star Session
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
     /// The user ID of the moderator or broadcaster of the specified channel.
     /// </summary>
-    public string ModeratorUserId { get; set; }
+    public string ModeratorUserId { get; set; } = moderatorUserId;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelGuestStarGuestUpdateCondition object.
@@ -25,11 +28,10 @@ public partial class TwitchChannelGuestStarGuestUpdateCondition : RefCounted, IT
     public static TwitchChannelGuestStarGuestUpdateCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelGuestStarGuestUpdateCondition
-        {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-            ModeratorUserId = data.Get("moderator_user_id").AsString(),
-        };
+        var instance = new TwitchChannelGuestStarGuestUpdateCondition(data.Get("broadcaster_user_id").AsString(), data.Get("moderator_user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -44,10 +46,8 @@ public partial class TwitchChannelGuestStarGuestUpdateCondition : RefCounted, IT
 
     public static TwitchChannelGuestStarGuestUpdateCondition FromDictionary(Dictionary data)
     {
-        return new TwitchChannelGuestStarGuestUpdateCondition
+        return new TwitchChannelGuestStarGuestUpdateCondition(data["broadcaster_user_id"].AsString(), data["moderator_user_id"].AsString())
         {
-            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
-            ModeratorUserId = data["moderator_user_id"].AsString(),
         };
     }
 

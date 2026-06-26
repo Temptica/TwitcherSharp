@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Games;
@@ -17,13 +18,16 @@ public partial class TwitchGame : RefCounted, ITwitcherSharp<TwitchGame>
     public static TwitchGame FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGame
+        var instance = new TwitchGame
         {
             Id = data.Get("id").AsString(),
             Name = data.Get("name").AsString(),
             BoxArtUrl = data.Get("box_art_url").AsString(),
             IgdbId = data.Get("igdb_id").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

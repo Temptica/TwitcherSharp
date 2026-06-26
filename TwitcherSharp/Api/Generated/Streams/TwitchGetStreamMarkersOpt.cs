@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Streams;
@@ -22,7 +23,7 @@ public partial class TwitchGetStreamMarkersOpt : RefCounted, ITwitcherSharp<Twit
     public static TwitchGetStreamMarkersOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGetStreamMarkersOpt
+        var instance = new TwitchGetStreamMarkersOpt
         {
             UserId = data.Get("user_id").AsString(),
             VideoId = data.Get("video_id").AsString(),
@@ -30,6 +31,9 @@ public partial class TwitchGetStreamMarkersOpt : RefCounted, ITwitcherSharp<Twit
             Before = data.Get("before").AsString(),
             After = data.Get("after").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

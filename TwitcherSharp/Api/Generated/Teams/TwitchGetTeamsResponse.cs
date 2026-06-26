@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Teams;
@@ -6,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Teams;
 public partial class TwitchGetTeamsResponse : RefCounted, ITwitcherSharp<TwitchGetTeamsResponse>
 {
     private GodotObject _data;
-    public TwitchTeam[] Data { get; set; }
+    public TwitchTeam[] Data { get => field ??= _data?.GetArray<TwitchTeam>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetTeamsResponse object.
@@ -14,11 +15,10 @@ public partial class TwitchGetTeamsResponse : RefCounted, ITwitcherSharp<TwitchG
     public static TwitchGetTeamsResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchGetTeamsResponse
-        {
-            Data = dataArray.Select(TwitchTeam.FromObject).ToArray(),
-        };
+        var instance = new TwitchGetTeamsResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -26,7 +26,7 @@ public partial class TwitchGetTeamsResponse : RefCounted, ITwitcherSharp<TwitchG
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_teams.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", new Godot.Collections.Array<GodotObject>(Data.Select(x => x.ToGodotObject()).ToArray()));
+        if(Data != null) request.Set("data", Data?.ToGodotArray());
         return request;
     }
 

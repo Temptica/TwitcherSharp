@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.GuestStar;
@@ -18,10 +19,13 @@ public partial class TwitchDeleteGuestStarSlotOpt : RefCounted, ITwitcherSharp<T
     public static TwitchDeleteGuestStarSlotOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchDeleteGuestStarSlotOpt
+        var instance = new TwitchDeleteGuestStarSlotOpt
         {
             ShouldReinviteGuest = data.Get("should_reinvite_guest").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

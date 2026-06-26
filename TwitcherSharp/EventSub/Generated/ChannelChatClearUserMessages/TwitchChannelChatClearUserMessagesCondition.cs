@@ -1,23 +1,26 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
 namespace TwitcherSharp.EventSub.Generated.ChannelChatClearUserMessages;
 
-public partial class TwitchChannelChatClearUserMessagesCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelChatClearUserMessagesCondition>
+public partial class TwitchChannelChatClearUserMessagesCondition(string broadcasterUserId, string userId) : RefCounted, ITwitcherSharpCondition<TwitchChannelChatClearUserMessagesCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchChannelChatClearUserMessagesCondition);
 
     /// <summary> 
     /// User ID of the channel to receive chat clear user messages events for.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
     /// The user ID to read chat as.
     /// </summary>
-    public string UserId { get; set; }
+    public string UserId { get; set; } = userId;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelChatClearUserMessagesCondition object.
@@ -25,11 +28,10 @@ public partial class TwitchChannelChatClearUserMessagesCondition : RefCounted, I
     public static TwitchChannelChatClearUserMessagesCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelChatClearUserMessagesCondition
-        {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-            UserId = data.Get("user_id").AsString(),
-        };
+        var instance = new TwitchChannelChatClearUserMessagesCondition(data.Get("broadcaster_user_id").AsString(), data.Get("user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -44,10 +46,8 @@ public partial class TwitchChannelChatClearUserMessagesCondition : RefCounted, I
 
     public static TwitchChannelChatClearUserMessagesCondition FromDictionary(Dictionary data)
     {
-        return new TwitchChannelChatClearUserMessagesCondition
+        return new TwitchChannelChatClearUserMessagesCondition(data["broadcaster_user_id"].AsString(), data["user_id"].AsString())
         {
-            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
-            UserId = data["user_id"].AsString(),
         };
     }
 

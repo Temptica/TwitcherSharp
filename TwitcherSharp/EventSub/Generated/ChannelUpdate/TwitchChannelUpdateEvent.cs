@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
@@ -7,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelUpdate;
 
 public partial class TwitchChannelUpdateEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelUpdateEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The broadcaster’s user ID.
     /// </summary>
@@ -53,7 +56,7 @@ public partial class TwitchChannelUpdateEvent : RefCounted, ITwitcherSharpEventS
     public static TwitchChannelUpdateEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelUpdateEvent
+        var instance = new TwitchChannelUpdateEvent
         {
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
             BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
@@ -62,8 +65,10 @@ public partial class TwitchChannelUpdateEvent : RefCounted, ITwitcherSharpEventS
             Language = data.Get("language").AsString(),
             CategoryId = data.Get("category_id").AsString(),
             CategoryName = data.Get("category_name").AsString(),
-            ContentClassificationLabels = data.Get("content_classification_labels").AsStringArray(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -78,7 +83,7 @@ public partial class TwitchChannelUpdateEvent : RefCounted, ITwitcherSharpEventS
         request.Set("language", Language);
         request.Set("category_id", CategoryId);
         request.Set("category_name", CategoryName);
-        request.Set("content_classification_labels", new Godot.Collections.Array<string>(ContentClassificationLabels));
+        if(ContentClassificationLabels != null) request.Set("content_classification_labels", new Godot.Collections.Array<string>(ContentClassificationLabels));
         return request;
     }
 }

@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.GuestStar;
@@ -18,10 +19,13 @@ public partial class TwitchUpdateGuestStarSlotOpt : RefCounted, ITwitcherSharp<T
     public static TwitchUpdateGuestStarSlotOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchUpdateGuestStarSlotOpt
+        var instance = new TwitchUpdateGuestStarSlotOpt
         {
             DestinationSlotId = data.Get("destination_slot_id").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

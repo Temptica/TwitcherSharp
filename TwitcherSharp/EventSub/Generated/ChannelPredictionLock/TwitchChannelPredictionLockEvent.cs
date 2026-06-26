@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 using TwitcherSharp.EventSub.Generated.Shared;
 
@@ -7,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelPredictionLock;
 
 public partial class TwitchChannelPredictionLockEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelPredictionLockEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// Channel Points Prediction ID.
     /// </summary>
@@ -35,7 +38,7 @@ public partial class TwitchChannelPredictionLockEvent : RefCounted, ITwitcherSha
     /// <summary> 
     /// An array of outcomes for the Channel Points Prediction. Includes top_predictors.
     /// </summary>
-    public TwitchOutcomes[] Outcomes { get; set; }
+    public TwitchOutcomes[] Outcomes { get => field ??= _data?.GetArray<TwitchOutcomes>("outcomes"); set; }
 
     /// <summary> 
     /// The time the Channel Points Prediction started.
@@ -53,18 +56,19 @@ public partial class TwitchChannelPredictionLockEvent : RefCounted, ITwitcherSha
     public static TwitchChannelPredictionLockEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var outcomesArray = data.Get("outcomes").AsGodotArray<GodotObject>();
-        return new TwitchChannelPredictionLockEvent
+        var instance = new TwitchChannelPredictionLockEvent
         {
             Id = data.Get("id").AsString(),
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
             BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
             BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
             Title = data.Get("title").AsString(),
-            Outcomes = outcomesArray.Select(TwitchOutcomes.FromObject).ToArray(),
             StartedAt = data.Get("started_at").AsString(),
             LockedAt = data.Get("locked_at").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -77,7 +81,7 @@ public partial class TwitchChannelPredictionLockEvent : RefCounted, ITwitcherSha
         request.Set("broadcaster_user_login", BroadcasterUserLogin);
         request.Set("broadcaster_user_name", BroadcasterUserName);
         request.Set("title", Title);
-        request.Set("outcomes", new Godot.Collections.Array(Outcomes.Select(x => x.ToGodotObject()).ToArray()));
+        if(Outcomes != null) request.Set("outcomes", Outcomes?.ToGodotArray());
         request.Set("started_at", StartedAt);
         request.Set("locked_at", LockedAt);
         return request;

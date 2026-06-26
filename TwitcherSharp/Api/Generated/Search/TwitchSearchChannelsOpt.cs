@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Search;
@@ -20,12 +21,15 @@ public partial class TwitchSearchChannelsOpt : RefCounted, ITwitcherSharp<Twitch
     public static TwitchSearchChannelsOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchSearchChannelsOpt
+        var instance = new TwitchSearchChannelsOpt
         {
             LiveOnly = data.Get("live_only").AsBool(),
             First = data.Get("first").AsInt32(),
             After = data.Get("after").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

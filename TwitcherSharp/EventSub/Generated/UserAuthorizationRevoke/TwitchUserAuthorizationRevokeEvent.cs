@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
@@ -7,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.UserAuthorizationRevoke;
 
 public partial class TwitchUserAuthorizationRevokeEvent : RefCounted, ITwitcherSharpEventSub<TwitchUserAuthorizationRevokeEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The client_id of the application with revoked user access.
     /// </summary>
@@ -33,13 +36,16 @@ public partial class TwitchUserAuthorizationRevokeEvent : RefCounted, ITwitcherS
     public static TwitchUserAuthorizationRevokeEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchUserAuthorizationRevokeEvent
+        var instance = new TwitchUserAuthorizationRevokeEvent
         {
             ClientId = data.Get("client_id").AsString(),
             UserId = data.Get("user_id").AsString(),
             UserLogin = data.Get("user_login").AsString(),
             UserName = data.Get("user_name").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

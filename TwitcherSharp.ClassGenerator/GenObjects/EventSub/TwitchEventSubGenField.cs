@@ -2,13 +2,14 @@ using ClassGenerator.Extensions;
 
 namespace ClassGenerator.GenObjects.EventSub;
 
-public class TwitchEventSubGenField(string fieldName, string description, string type)
+public class TwitchEventSubGenField(string fieldName, string description, string type, bool required = false)
 {
     public string Name { get; } = fieldName.ToPascalCase();
     public string Description { get; } = description;
     public string Type { get; set; } = SanitizeType(type, fieldName);
     public bool IsArray { get; set; }
     public bool IsTyped => Type.Contains("Twitch");
+    public bool IsRequired { get; set; } = required;
     public TwitchEventSubGenComponent TypedComponent { get; set; }
 
     public string GetAsType()
@@ -22,6 +23,7 @@ public class TwitchEventSubGenField(string fieldName, string description, string
             "string[]" => "AsStringArray()",
             "int[]" => "AsInt32Array()",
             "double[]" => "AsFloat64Array()",
+            "Dictionary" => "AsGodotDictionary()",
             _ => $"As<{Type}>()",
         };
     }
@@ -38,6 +40,7 @@ public class TwitchEventSubGenField(string fieldName, string description, string
             "[]string" => "string[]", // cmn....
             "string[]" => "string[]",
             "string" => "string",
+            "dictionary" => "Dictionary",
             "object" when name == "Text" => "string",
             "object" when name == "Prefix" => "string",
             _ => type.ToPascalCase()

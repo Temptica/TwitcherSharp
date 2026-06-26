@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Bits;
@@ -20,12 +21,15 @@ public partial class TwitchGetExtensionTransactionsOpt : RefCounted, ITwitcherSh
     public static TwitchGetExtensionTransactionsOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGetExtensionTransactionsOpt
+        var instance = new TwitchGetExtensionTransactionsOpt
         {
             Id = data.Get("id").AsStringArray(),
             First = data.Get("first").AsInt32(),
             After = data.Get("after").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

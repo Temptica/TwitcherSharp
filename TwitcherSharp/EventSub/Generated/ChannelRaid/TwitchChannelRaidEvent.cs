@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
@@ -7,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelRaid;
 
 public partial class TwitchChannelRaidEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelRaidEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The broadcaster ID that created the raid.
     /// </summary>
@@ -48,7 +51,7 @@ public partial class TwitchChannelRaidEvent : RefCounted, ITwitcherSharpEventSub
     public static TwitchChannelRaidEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelRaidEvent
+        var instance = new TwitchChannelRaidEvent
         {
             FromBroadcasterUserId = data.Get("from_broadcaster_user_id").AsString(),
             FromBroadcasterUserLogin = data.Get("from_broadcaster_user_login").AsString(),
@@ -58,6 +61,9 @@ public partial class TwitchChannelRaidEvent : RefCounted, ITwitcherSharpEventSub
             ToBroadcasterUserName = data.Get("to_broadcaster_user_name").AsString(),
             Viewers = data.Get("viewers").AsInt32(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

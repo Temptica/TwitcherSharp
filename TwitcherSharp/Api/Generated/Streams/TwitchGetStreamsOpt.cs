@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Streams;
@@ -25,7 +26,7 @@ public partial class TwitchGetStreamsOpt : RefCounted, ITwitcherSharp<TwitchGetS
     public static TwitchGetStreamsOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGetStreamsOpt
+        var instance = new TwitchGetStreamsOpt
         {
             UserId = data.Get("user_id").AsStringArray(),
             UserLogin = data.Get("user_login").AsStringArray(),
@@ -36,6 +37,9 @@ public partial class TwitchGetStreamsOpt : RefCounted, ITwitcherSharp<TwitchGetS
             Before = data.Get("before").AsString(),
             After = data.Get("after").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

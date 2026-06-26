@@ -1,18 +1,21 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
 namespace TwitcherSharp.EventSub.Generated.ChannelSubscriptionEnd;
 
-public partial class TwitchChannelSubscriptionEndCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelSubscriptionEndCondition>
+public partial class TwitchChannelSubscriptionEndCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelSubscriptionEndCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchChannelSubscriptionEndCondition);
 
     /// <summary> 
     /// The broadcaster user ID for the channel you want to get subscription end notifications for.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelSubscriptionEndCondition object.
@@ -20,10 +23,10 @@ public partial class TwitchChannelSubscriptionEndCondition : RefCounted, ITwitch
     public static TwitchChannelSubscriptionEndCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelSubscriptionEndCondition
-        {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-        };
+        var instance = new TwitchChannelSubscriptionEndCondition(data.Get("broadcaster_user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -37,9 +40,8 @@ public partial class TwitchChannelSubscriptionEndCondition : RefCounted, ITwitch
 
     public static TwitchChannelSubscriptionEndCondition FromDictionary(Dictionary data)
     {
-        return new TwitchChannelSubscriptionEndCondition
+        return new TwitchChannelSubscriptionEndCondition(data["broadcaster_user_id"].AsString())
         {
-            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
         };
     }
 

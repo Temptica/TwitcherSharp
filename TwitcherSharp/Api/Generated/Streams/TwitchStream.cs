@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Streams;
@@ -28,7 +29,7 @@ public partial class TwitchStream : RefCounted, ITwitcherSharp<TwitchStream>
     public static TwitchStream FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchStream
+        var instance = new TwitchStream
         {
             Id = data.Get("id").AsString(),
             UserId = data.Get("user_id").AsString(),
@@ -46,6 +47,9 @@ public partial class TwitchStream : RefCounted, ITwitcherSharp<TwitchStream>
             Tags = data.Get("tags").AsStringArray(),
             IsMature = data.Get("is_mature").AsBool(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -64,8 +68,8 @@ public partial class TwitchStream : RefCounted, ITwitcherSharp<TwitchStream>
         request.Set("started_at", StartedAt);
         request.Set("language", Language);
         request.Set("thumbnail_url", ThumbnailUrl);
-        request.Set("tag_ids", new Godot.Collections.Array<string>(TagIds));
-        request.Set("tags", new Godot.Collections.Array<string>(Tags));
+        if(TagIds != null) request.Set("tag_ids", new Godot.Collections.Array<string>(TagIds));
+        if(Tags != null) request.Set("tags", new Godot.Collections.Array<string>(Tags));
         request.Set("is_mature", IsMature);
         return request;
     }

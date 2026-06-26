@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
@@ -16,12 +17,15 @@ public partial class TwitchManageHeldAutoModMessagesBody : RefCounted, ITwitcher
     public static TwitchManageHeldAutoModMessagesBody FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchManageHeldAutoModMessagesBody
+        var instance = new TwitchManageHeldAutoModMessagesBody
         {
             UserId = data.Get("user_id").AsString(),
             MsgId = data.Get("msg_id").AsString(),
             Action = data.Get("action").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

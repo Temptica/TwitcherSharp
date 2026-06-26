@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Chat;
@@ -6,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Chat;
 public partial class TwitchGetChatSettingsResponse : RefCounted, ITwitcherSharp<TwitchGetChatSettingsResponse>
 {
     private GodotObject _data;
-    public TwitchChatSettings[] Data { get; set; }
+    public TwitchChatSettings[] Data { get => field ??= _data?.GetArray<TwitchChatSettings>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetChatSettingsResponse object.
@@ -14,11 +15,10 @@ public partial class TwitchGetChatSettingsResponse : RefCounted, ITwitcherSharp<
     public static TwitchGetChatSettingsResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchGetChatSettingsResponse
-        {
-            Data = dataArray.Select(TwitchChatSettings.FromObject).ToArray(),
-        };
+        var instance = new TwitchGetChatSettingsResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -26,7 +26,7 @@ public partial class TwitchGetChatSettingsResponse : RefCounted, ITwitcherSharp<
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_chat_settings.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", new Godot.Collections.Array<GodotObject>(Data.Select(x => x.ToGodotObject()).ToArray()));
+        if(Data != null) request.Set("data", Data?.ToGodotArray());
         return request;
     }
 

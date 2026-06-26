@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
@@ -7,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.StreamOnline;
 
 public partial class TwitchStreamOnlineEvent : RefCounted, ITwitcherSharpEventSub<TwitchStreamOnlineEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The id of the stream.
     /// </summary>
@@ -43,7 +46,7 @@ public partial class TwitchStreamOnlineEvent : RefCounted, ITwitcherSharpEventSu
     public static TwitchStreamOnlineEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchStreamOnlineEvent
+        var instance = new TwitchStreamOnlineEvent
         {
             Id = data.Get("id").AsString(),
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
@@ -52,6 +55,9 @@ public partial class TwitchStreamOnlineEvent : RefCounted, ITwitcherSharpEventSu
             Type = data.Get("type").AsString(),
             StartedAt = data.Get("started_at").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

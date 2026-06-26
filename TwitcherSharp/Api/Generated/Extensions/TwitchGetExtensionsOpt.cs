@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Extensions;
@@ -18,10 +19,13 @@ public partial class TwitchGetExtensionsOpt : RefCounted, ITwitcherSharp<TwitchG
     public static TwitchGetExtensionsOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGetExtensionsOpt
+        var instance = new TwitchGetExtensionsOpt
         {
             ExtensionVersion = data.Get("extension_version").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

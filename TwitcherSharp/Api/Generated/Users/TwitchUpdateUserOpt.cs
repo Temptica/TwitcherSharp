@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Users;
@@ -18,10 +19,13 @@ public partial class TwitchUpdateUserOpt : RefCounted, ITwitcherSharp<TwitchUpda
     public static TwitchUpdateUserOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchUpdateUserOpt
+        var instance = new TwitchUpdateUserOpt
         {
             Description = data.Get("description").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

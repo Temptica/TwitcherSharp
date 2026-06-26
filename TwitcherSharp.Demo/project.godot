@@ -1,0 +1,59 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="TwitcherSharp.Demo"
+run/main_scene="uid://tbc0w285ybq0"
+config/features=PackedStringArray("4.6", "C#", "Forward Plus")
+config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+
+[dotnet]
+
+project/assembly_name="TwitcherSharp.Demo"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/twitcher/plugin.cfg")
+
+[layer_names]
+
+3d_render/layer_2="ShineyBallLayer"
+3d_render/layer_3="BallReflection"
+3d_physics/layer_1="Character"
+3d_physics/layer_2="Floor"
+3d_physics/layer_3="Walls"
+3d_physics/layer_4="PhysicItems"
+3d_physics/layer_5="Ball"
+3d_physics/layer_6="Goal"
+
+[physics]
+
+3d/physics_engine="Jolt Physics"
+
+[rendering]
+
+rendering_device/driver.windows="d3d12"
+
+[twitcher]
+
+editor/game_oauth_token="res://addons/twitcher/default_oauth_token.tres"
+editor/game_oauth_setting="res://addons/twitcher/twitch_oauth_setting.tres"
+editor/project_preset=&"Overlay"
+logs/TwitchAPI="info"
+logs/TwitchEventsub="info"
+editor/show_setup_on_startup=false

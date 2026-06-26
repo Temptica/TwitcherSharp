@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Chat;
@@ -18,10 +19,13 @@ public partial class TwitchGetChatSettingsOpt : RefCounted, ITwitcherSharp<Twitc
     public static TwitchGetChatSettingsOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGetChatSettingsOpt
+        var instance = new TwitchGetChatSettingsOpt
         {
             ModeratorId = data.Get("moderator_id").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

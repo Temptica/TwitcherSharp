@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
@@ -7,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelBan;
 
 public partial class TwitchChannelBanEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelBanEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The user ID for the user who was banned on the specified channel.
     /// </summary>
@@ -78,7 +81,7 @@ public partial class TwitchChannelBanEvent : RefCounted, ITwitcherSharpEventSub<
     public static TwitchChannelBanEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelBanEvent
+        var instance = new TwitchChannelBanEvent
         {
             UserId = data.Get("user_id").AsString(),
             UserLogin = data.Get("user_login").AsString(),
@@ -94,6 +97,9 @@ public partial class TwitchChannelBanEvent : RefCounted, ITwitcherSharpEventSub<
             EndsAt = data.Get("ends_at").AsString(),
             IsPermanent = data.Get("is_permanent").AsBool(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Subscriptions;
@@ -21,7 +22,7 @@ public partial class TwitchUserSubscription : RefCounted, ITwitcherSharp<TwitchU
     public static TwitchUserSubscription FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchUserSubscription
+        var instance = new TwitchUserSubscription
         {
             BroadcasterId = data.Get("broadcaster_id").AsString(),
             BroadcasterLogin = data.Get("broadcaster_login").AsString(),
@@ -32,6 +33,9 @@ public partial class TwitchUserSubscription : RefCounted, ITwitcherSharp<TwitchU
             IsGift = data.Get("is_gift").AsBool(),
             Tier = data.Get("tier").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

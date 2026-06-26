@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Tags;
@@ -20,12 +21,15 @@ public partial class TwitchGetAllStreamTagsOpt : RefCounted, ITwitcherSharp<Twit
     public static TwitchGetAllStreamTagsOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGetAllStreamTagsOpt
+        var instance = new TwitchGetAllStreamTagsOpt
         {
             TagId = data.Get("tag_id").AsStringArray(),
             First = data.Get("first").AsInt32(),
             After = data.Get("after").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

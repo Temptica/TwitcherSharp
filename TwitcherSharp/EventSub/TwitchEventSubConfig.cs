@@ -6,11 +6,17 @@ namespace TwitcherSharp.EventSub;
 public partial class TwitchEventSubConfig() : RefCounted, ITwitcherSharp<TwitchEventSubConfig>
 {
     private GodotObject _data;
-
+    
+    private TwitchEventSubDefinitionType _type;
     public TwitchEventSubDefinitionType Type
     {
-        get;
-        set => field = UpdateType(value);
+        get => _type;
+        set
+        {
+            if(_type == value) return;
+            
+            UpdateType(value);
+        }
     }
 
     public List<ITwitcherSharpCondition> Condition { get; set; } = [];
@@ -40,7 +46,7 @@ public partial class TwitchEventSubConfig() : RefCounted, ITwitcherSharp<TwitchE
 
         var definition = TwitchEventSubDefinition.All.First(x => x.Type == type);
         Condition = Condition.Where(x => definition.Conditions.Contains(x.Name)).ToList();
-        Type = type;
+        _type = type;
         EmitSignalTypeChanged(type);
         return Type;
     }
@@ -59,7 +65,7 @@ public partial class TwitchEventSubConfig() : RefCounted, ITwitcherSharp<TwitchE
         var script = GD.Load<GDScript>("res://addons/twitcher/eventsub/twitch_eventsub_config.gd");
         var data = script.New().AsGodotObject();
         data.Set("type", (int)Type);
-        data.Set("condition", Condition.Select(x => x?.ToGodotObject()).ToArray());
+        data.Set("condition", new Godot.Collections.Array(Condition.Select(x => x?.ToGodotObject()).ToArray()));
         return data;
     }
 }

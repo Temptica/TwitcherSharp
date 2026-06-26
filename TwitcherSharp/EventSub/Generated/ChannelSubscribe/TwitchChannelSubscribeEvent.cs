@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
@@ -7,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelSubscribe;
 
 public partial class TwitchChannelSubscribeEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelSubscribeEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The user ID for the user who subscribed to the specified channel.
     /// </summary>
@@ -53,7 +56,7 @@ public partial class TwitchChannelSubscribeEvent : RefCounted, ITwitcherSharpEve
     public static TwitchChannelSubscribeEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelSubscribeEvent
+        var instance = new TwitchChannelSubscribeEvent
         {
             UserId = data.Get("user_id").AsString(),
             UserLogin = data.Get("user_login").AsString(),
@@ -64,6 +67,9 @@ public partial class TwitchChannelSubscribeEvent : RefCounted, ITwitcherSharpEve
             Tier = data.Get("tier").AsString(),
             IsGift = data.Get("is_gift").AsBool(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

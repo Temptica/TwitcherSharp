@@ -75,7 +75,7 @@ public class TwitchEventSubParser
                         Description = h2Node.GetNextElementSibling().InnerText.Trim(),
                         IsShared = true
                     };
-                
+
                     var transportTable = h2Node.GetNextElementSibling().GetNextElementSibling();
                     ParseTable(transportTable, transport);
                     SubComponents.Add(transport);
@@ -90,7 +90,7 @@ public class TwitchEventSubParser
 
             var p = h2Node.GetNextElementSibling();
             HtmlNode table;
-            //TODO : FIX TRANSPORT
+
             if (p.Name == "p")
             {
                 subComponent.Description = p.InnerText.Trim();
@@ -198,6 +198,16 @@ public class TwitchEventSubParser
             // so parent goes one up and whitespaces go one up
             if (whiteSpaces > 0) whiteSpaces /= 3;
 
+            if (whiteSpaces == parentWhiteSpaces && currentParent.Fields.Count == 0)
+            {
+                //Stupid twitch, make dictionary instead...
+                var dictionaryFieldName = currentParent.ClassName.Remove("Twitch");
+                currentParent.Parent.Fields.Remove(dictionaryFieldName);
+                currentParent.Parent.AddField(new TwitchEventSubGenField(dictionaryFieldName, currentParent.Description, "Dictionary"));
+                currentParent.Parent.SubComponents.Remove(currentParent.ClassName);
+                
+            }
+            
             if (whiteSpaces <= parentWhiteSpaces)
             {
                 var parent = currentParent;
@@ -211,9 +221,25 @@ public class TwitchEventSubParser
                 currentParent = parent;
                 parentWhiteSpaces = whiteSpaces - 1;
             }
+            else if (currentParent.IsShared && currentParent.Parent != null)
+            {
+                //This is an issue, must be a new component instead
+                var component = new TwitchEventSubGenComponent(currentParent.ClassName)
+                {
+                    Description = currentParent.Description
+                };
+                var parent = currentParent.Parent;
+                currentParent.Parent = null;
+                parent.AddSubComponent(component);
+                
+                currentParent = component;
+            }
+
+            var isParentV2 = currentParent.ClassName.EndsWith("V2");
 
             var fieldName = row.SelectSingleNode("td[1]/code").InnerText.Trim();
             var type = row.SelectSingleNode("td[2]").InnerText.Trim();
+            var required = isCondition && row.SelectSingleNode("td[3]").InnerText.Trim().Equals("Yes", StringComparison.CurrentCultureIgnoreCase);
             var description = row.SelectSingleNode(isCondition ? "td[4]" : "td[3]").InnerText.Trim();
 
             if (type.EndsWith("[]") || type == "array" || type == "Array"
@@ -237,7 +263,7 @@ public class TwitchEventSubParser
 
                 var typedComponent =
                     SubComponents.FirstOrDefault(c => c.ClassName == "Twitch" + type.ToPascalCase())
-                    ?? new TwitchEventSubGenComponent(fieldName)
+                    ?? new TwitchEventSubGenComponent(fieldName+ (isParentV2 ? "V2" : ""))
                     {
                         Description = description
                     };
@@ -250,8 +276,8 @@ public class TwitchEventSubParser
             }
             else if (type.Contains("Object", StringComparison.InvariantCultureIgnoreCase))
             {
-                var subComponent = SubComponents.FirstOrDefault(c => c.ClassName == "Twitch" + type.ToPascalCase())
-                                   ?? new TwitchEventSubGenComponent(fieldName)
+                var subComponent = SubComponents.FirstOrDefault(c => c.ClassName == "Twitch" + fieldName.ToPascalCase())
+                                   ?? new TwitchEventSubGenComponent(fieldName + (isParentV2 ? "V2" : ""))
                                    {
                                        Description = description
                                    };
@@ -261,7 +287,7 @@ public class TwitchEventSubParser
                 {
                     var nonSharedField = fieldName[12..];
                     var sharedComponent =
-                        eventSubComponent.SubComponents.First(c => c.Key == "Twitch" + nonSharedField.ToPascalCase());
+                        eventSubComponent.SubComponents.First(c => c.Key == "Twitch" + nonSharedField.ToPascalCase() + (isParentV2 ? "V2" : ""));
                     eventSubComponent.AddField(new TwitchEventSubGenField(fieldName, description, sharedComponent.Key)
                     {
                         TypedComponent = sharedComponent.Value
@@ -281,7 +307,7 @@ public class TwitchEventSubParser
                 var subComponent = SubComponents.FirstOrDefault(c => c.ClassName == "Twitch" + type.ToPascalCase());
                 if (subComponent is null)
                 {
-                    var field = new TwitchEventSubGenField(fieldName, description, type);
+                    var field = new TwitchEventSubGenField(fieldName, description, type, required);
                     currentParent.AddField(field);
                 }
                 else

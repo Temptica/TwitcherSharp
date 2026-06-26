@@ -107,6 +107,7 @@ public partial class TwitchRewardService(TwitchApi api, TwitchMediaLoader twitch
 
         return _data.Call("delete_reward", twitchReward).As<DeleteError>();
     }
+    
     /// <summary>
     /// Creates a new instance of the class from a GodotObject instance.
     /// <br/>

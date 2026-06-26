@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Bits;
@@ -18,10 +19,13 @@ public partial class TwitchGetCheermotesOpt : RefCounted, ITwitcherSharp<TwitchG
     public static TwitchGetCheermotesOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGetCheermotesOpt
+        var instance = new TwitchGetCheermotesOpt
         {
             BroadcasterId = data.Get("broadcaster_id").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

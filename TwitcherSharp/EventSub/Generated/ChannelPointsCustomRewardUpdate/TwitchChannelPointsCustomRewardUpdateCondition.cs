@@ -1,18 +1,21 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
 namespace TwitcherSharp.EventSub.Generated.ChannelPointsCustomRewardUpdate;
 
-public partial class TwitchChannelPointsCustomRewardUpdateCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelPointsCustomRewardUpdateCondition>
+public partial class TwitchChannelPointsCustomRewardUpdateCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelPointsCustomRewardUpdateCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchChannelPointsCustomRewardUpdateCondition);
 
     /// <summary> 
     /// The broadcaster user ID for the channel you want to receive channel points custom reward update notifications for.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
     /// Optional. Specify a reward id to only receive notifications for a specific reward.
@@ -25,11 +28,13 @@ public partial class TwitchChannelPointsCustomRewardUpdateCondition : RefCounted
     public static TwitchChannelPointsCustomRewardUpdateCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelPointsCustomRewardUpdateCondition
+        var instance = new TwitchChannelPointsCustomRewardUpdateCondition(data.Get("broadcaster_user_id").AsString())
         {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
             RewardId = data.Get("reward_id").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -44,9 +49,8 @@ public partial class TwitchChannelPointsCustomRewardUpdateCondition : RefCounted
 
     public static TwitchChannelPointsCustomRewardUpdateCondition FromDictionary(Dictionary data)
     {
-        return new TwitchChannelPointsCustomRewardUpdateCondition
+        return new TwitchChannelPointsCustomRewardUpdateCondition(data["broadcaster_user_id"].AsString())
         {
-            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
             RewardId = data["reward_id"].AsString(),
         };
     }

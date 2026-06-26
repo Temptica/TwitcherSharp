@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
@@ -7,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelFollow;
 
 public partial class TwitchChannelFollowEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelFollowEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The user ID for the user now following the specified channel.
     /// </summary>
@@ -48,7 +51,7 @@ public partial class TwitchChannelFollowEvent : RefCounted, ITwitcherSharpEventS
     public static TwitchChannelFollowEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelFollowEvent
+        var instance = new TwitchChannelFollowEvent
         {
             UserId = data.Get("user_id").AsString(),
             UserLogin = data.Get("user_login").AsString(),
@@ -58,6 +61,9 @@ public partial class TwitchChannelFollowEvent : RefCounted, ITwitcherSharpEventS
             BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
             FollowedAt = data.Get("followed_at").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

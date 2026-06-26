@@ -1,18 +1,21 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
 namespace TwitcherSharp.EventSub.Generated.UserAuthorizationGrant;
 
-public partial class TwitchUserAuthorizationGrantCondition : RefCounted, ITwitcherSharpCondition<TwitchUserAuthorizationGrantCondition>
+public partial class TwitchUserAuthorizationGrantCondition(string clientId) : RefCounted, ITwitcherSharpCondition<TwitchUserAuthorizationGrantCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchUserAuthorizationGrantCondition);
 
     /// <summary> 
     /// Your application’s client id. The provided client_id must match the client id in the application access token.
     /// </summary>
-    public string ClientId { get; set; }
+    public string ClientId { get; set; } = clientId;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUserAuthorizationGrantCondition object.
@@ -20,10 +23,10 @@ public partial class TwitchUserAuthorizationGrantCondition : RefCounted, ITwitch
     public static TwitchUserAuthorizationGrantCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchUserAuthorizationGrantCondition
-        {
-            ClientId = data.Get("client_id").AsString(),
-        };
+        var instance = new TwitchUserAuthorizationGrantCondition(data.Get("client_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -37,9 +40,8 @@ public partial class TwitchUserAuthorizationGrantCondition : RefCounted, ITwitch
 
     public static TwitchUserAuthorizationGrantCondition FromDictionary(Dictionary data)
     {
-        return new TwitchUserAuthorizationGrantCondition
+        return new TwitchUserAuthorizationGrantCondition(data["client_id"].AsString())
         {
-            ClientId = data["client_id"].AsString(),
         };
     }
 

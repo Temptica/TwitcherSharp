@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Polls;
@@ -6,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Polls;
 public partial class TwitchCreatePollResponse : RefCounted, ITwitcherSharp<TwitchCreatePollResponse>
 {
     private GodotObject _data;
-    public TwitchPoll[] Data { get; set; }
+    public TwitchPoll[] Data { get => field ??= _data?.GetArray<TwitchPoll>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCreatePollResponse object.
@@ -14,11 +15,10 @@ public partial class TwitchCreatePollResponse : RefCounted, ITwitcherSharp<Twitc
     public static TwitchCreatePollResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchCreatePollResponse
-        {
-            Data = dataArray.Select(TwitchPoll.FromObject).ToArray(),
-        };
+        var instance = new TwitchCreatePollResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -26,7 +26,7 @@ public partial class TwitchCreatePollResponse : RefCounted, ITwitcherSharp<Twitc
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_create_poll.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", new Godot.Collections.Array<GodotObject>(Data.Select(x => x.ToGodotObject()).ToArray()));
+        if(Data != null) request.Set("data", Data?.ToGodotArray());
         return request;
     }
 

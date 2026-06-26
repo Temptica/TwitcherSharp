@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.ChannelPoints;
@@ -6,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.ChannelPoints;
 public partial class TwitchUpdateRedemptionStatusResponse : RefCounted, ITwitcherSharp<TwitchUpdateRedemptionStatusResponse>
 {
     private GodotObject _data;
-    public TwitchCustomRewardRedemption[] Data { get; set; }
+    public TwitchCustomRewardRedemption[] Data { get => field ??= _data?.GetArray<TwitchCustomRewardRedemption>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUpdateRedemptionStatusResponse object.
@@ -14,11 +15,10 @@ public partial class TwitchUpdateRedemptionStatusResponse : RefCounted, ITwitche
     public static TwitchUpdateRedemptionStatusResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchUpdateRedemptionStatusResponse
-        {
-            Data = dataArray.Select(TwitchCustomRewardRedemption.FromObject).ToArray(),
-        };
+        var instance = new TwitchUpdateRedemptionStatusResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -26,7 +26,7 @@ public partial class TwitchUpdateRedemptionStatusResponse : RefCounted, ITwitche
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_update_redemption_status.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", new Godot.Collections.Array<GodotObject>(Data.Select(x => x.ToGodotObject()).ToArray()));
+        if(Data != null) request.Set("data", Data?.ToGodotArray());
         return request;
     }
 

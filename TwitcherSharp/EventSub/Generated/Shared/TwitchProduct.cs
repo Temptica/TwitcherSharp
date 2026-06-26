@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
@@ -7,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.Shared;
 
 public partial class TwitchProduct : RefCounted, ITwitcherSharpEventSub<TwitchProduct>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// Product name.
     /// </summary>
@@ -33,13 +36,16 @@ public partial class TwitchProduct : RefCounted, ITwitcherSharpEventSub<TwitchPr
     public static TwitchProduct FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchProduct
+        var instance = new TwitchProduct
         {
             Name = data.Get("name").AsString(),
             Bits = data.Get("bits").AsInt32(),
             Sku = data.Get("sku").AsString(),
             InDevelopment = data.Get("in_development").AsBool(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

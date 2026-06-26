@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
@@ -7,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.Shared;
 
 public partial class TwitchShoutoutReceived : RefCounted, ITwitcherSharpEventSub<TwitchShoutoutReceived>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// An ID that identifies the broadcaster that received the Shoutout.
     /// </summary>
@@ -53,7 +56,7 @@ public partial class TwitchShoutoutReceived : RefCounted, ITwitcherSharpEventSub
     public static TwitchShoutoutReceived FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchShoutoutReceived
+        var instance = new TwitchShoutoutReceived
         {
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
             BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
@@ -64,6 +67,9 @@ public partial class TwitchShoutoutReceived : RefCounted, ITwitcherSharpEventSub
             ViewerCount = data.Get("viewer_count").AsInt32(),
             StartedAt = data.Get("started_at").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

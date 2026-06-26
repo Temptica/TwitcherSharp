@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
@@ -7,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelWarningSend;
 
 public partial class TwitchChannelWarningSendEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelWarningSendEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The user ID of the broadcaster.
     /// </summary>
@@ -68,7 +71,7 @@ public partial class TwitchChannelWarningSendEvent : RefCounted, ITwitcherSharpE
     public static TwitchChannelWarningSendEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelWarningSendEvent
+        var instance = new TwitchChannelWarningSendEvent
         {
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
             BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
@@ -82,6 +85,9 @@ public partial class TwitchChannelWarningSendEvent : RefCounted, ITwitcherSharpE
             Reason = data.Get("reason").AsString(),
             ChatRulesCited = data.Get("chat_rules_cited").AsStringArray(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

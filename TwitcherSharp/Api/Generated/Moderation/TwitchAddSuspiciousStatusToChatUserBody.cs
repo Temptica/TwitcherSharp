@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
@@ -15,11 +16,14 @@ public partial class TwitchAddSuspiciousStatusToChatUserBody : RefCounted, ITwit
     public static TwitchAddSuspiciousStatusToChatUserBody FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchAddSuspiciousStatusToChatUserBody
+        var instance = new TwitchAddSuspiciousStatusToChatUserBody
         {
             UserId = data.Get("user_id").AsString(),
             Status = data.Get("status").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

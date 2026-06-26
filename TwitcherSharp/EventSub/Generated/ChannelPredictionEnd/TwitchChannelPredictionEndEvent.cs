@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 using TwitcherSharp.EventSub.Generated.Shared;
 
@@ -7,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelPredictionEnd;
 
 public partial class TwitchChannelPredictionEndEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelPredictionEndEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// Channel Points Prediction ID.
     /// </summary>
@@ -40,7 +43,7 @@ public partial class TwitchChannelPredictionEndEvent : RefCounted, ITwitcherShar
     /// <summary> 
     /// An array of outcomes for the Channel Points Prediction. Includes top_predictors.
     /// </summary>
-    public TwitchOutcomes[] Outcomes { get; set; }
+    public TwitchOutcomes[] Outcomes { get => field ??= _data?.GetArray<TwitchOutcomes>("outcomes"); set; }
 
     /// <summary> 
     /// The status of the Channel Points Prediction. Valid values are resolved and canceled.
@@ -63,8 +66,7 @@ public partial class TwitchChannelPredictionEndEvent : RefCounted, ITwitcherShar
     public static TwitchChannelPredictionEndEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var outcomesArray = data.Get("outcomes").AsGodotArray<GodotObject>();
-        return new TwitchChannelPredictionEndEvent
+        var instance = new TwitchChannelPredictionEndEvent
         {
             Id = data.Get("id").AsString(),
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
@@ -72,11 +74,13 @@ public partial class TwitchChannelPredictionEndEvent : RefCounted, ITwitcherShar
             BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
             Title = data.Get("title").AsString(),
             WinningOutcomeId = data.Get("winning_outcome_id").AsString(),
-            Outcomes = outcomesArray.Select(TwitchOutcomes.FromObject).ToArray(),
             Status = data.Get("status").AsString(),
             StartedAt = data.Get("started_at").AsString(),
             EndedAt = data.Get("ended_at").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -90,7 +94,7 @@ public partial class TwitchChannelPredictionEndEvent : RefCounted, ITwitcherShar
         request.Set("broadcaster_user_name", BroadcasterUserName);
         request.Set("title", Title);
         request.Set("winning_outcome_id", WinningOutcomeId);
-        request.Set("outcomes", new Godot.Collections.Array(Outcomes.Select(x => x.ToGodotObject()).ToArray()));
+        if(Outcomes != null) request.Set("outcomes", Outcomes?.ToGodotArray());
         request.Set("status", Status);
         request.Set("started_at", StartedAt);
         request.Set("ended_at", EndedAt);

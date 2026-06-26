@@ -1,18 +1,21 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
 namespace TwitcherSharp.EventSub.Generated.ChannelSubscriptionGift;
 
-public partial class TwitchChannelSubscriptionGiftCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelSubscriptionGiftCondition>
+public partial class TwitchChannelSubscriptionGiftCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelSubscriptionGiftCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchChannelSubscriptionGiftCondition);
 
     /// <summary> 
     /// The broadcaster user ID for the channel you want to get subscription gift notifications for.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelSubscriptionGiftCondition object.
@@ -20,10 +23,10 @@ public partial class TwitchChannelSubscriptionGiftCondition : RefCounted, ITwitc
     public static TwitchChannelSubscriptionGiftCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelSubscriptionGiftCondition
-        {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-        };
+        var instance = new TwitchChannelSubscriptionGiftCondition(data.Get("broadcaster_user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -37,9 +40,8 @@ public partial class TwitchChannelSubscriptionGiftCondition : RefCounted, ITwitc
 
     public static TwitchChannelSubscriptionGiftCondition FromDictionary(Dictionary data)
     {
-        return new TwitchChannelSubscriptionGiftCondition
+        return new TwitchChannelSubscriptionGiftCondition(data["broadcaster_user_id"].AsString())
         {
-            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
         };
     }
 

@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Shared;
@@ -17,13 +18,16 @@ public partial class TwitchUserExtensionOverlay : RefCounted, ITwitcherSharp<Twi
     public static TwitchUserExtensionOverlay FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchUserExtensionOverlay
+        var instance = new TwitchUserExtensionOverlay
         {
             Active = data.Get("active").AsBool(),
             Id = data.Get("id").AsString(),
             Version = data.Get("version").AsString(),
             Name = data.Get("name").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

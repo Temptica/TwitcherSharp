@@ -8,6 +8,7 @@ public static class EventSubCodeStrings
     public const string EventSubNameSpaces = """
                                              using Godot;
                                              using Godot.Collections;
+                                             using TwitcherSharp.Extensions;
                                              using TwitcherSharp.Interfaces;
                                              {{SharedNamespace}}
 
@@ -24,7 +25,7 @@ public static class EventSubCodeStrings
     /// Param: {{ClassName}}
     /// </summary>
     public const string ConditionSubHeader =
-        "public partial class {{ClassName}} : RefCounted, ITwitcherSharpCondition<{{ClassName}}>";
+        "public partial class {{ClassName}}({{requiredFields}}) : RefCounted, ITwitcherSharpCondition<{{ClassName}}>";
 
     public const string FieldDescription = """
                                            /// <summary> 
@@ -44,9 +45,10 @@ public static class EventSubCodeStrings
     public const string FromDictionary = """
                                          public static {{ClassName}} FromDictionary(Dictionary data)
                                          {
-                                             return new {{ClassName}}
+                                             return new {{ClassName}}{{RequiredProperties}}
                                              {
                                          """;
+    
     public const string ToDictionary = """
                                          public Dictionary ToDictionary()
                                          {

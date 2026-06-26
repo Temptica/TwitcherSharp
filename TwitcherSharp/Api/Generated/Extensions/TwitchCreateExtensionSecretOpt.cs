@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Extensions;
@@ -18,10 +19,13 @@ public partial class TwitchCreateExtensionSecretOpt : RefCounted, ITwitcherSharp
     public static TwitchCreateExtensionSecretOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchCreateExtensionSecretOpt
+        var instance = new TwitchCreateExtensionSecretOpt
         {
             Delay = data.Get("delay").AsInt32(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

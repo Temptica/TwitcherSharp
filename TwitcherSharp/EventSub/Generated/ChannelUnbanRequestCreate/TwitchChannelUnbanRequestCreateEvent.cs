@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
@@ -7,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelUnbanRequestCreate;
 
 public partial class TwitchChannelUnbanRequestCreateEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelUnbanRequestCreateEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The ID of the unban request.
     /// </summary>
@@ -58,7 +61,7 @@ public partial class TwitchChannelUnbanRequestCreateEvent : RefCounted, ITwitche
     public static TwitchChannelUnbanRequestCreateEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelUnbanRequestCreateEvent
+        var instance = new TwitchChannelUnbanRequestCreateEvent
         {
             Id = data.Get("id").AsString(),
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
@@ -70,6 +73,9 @@ public partial class TwitchChannelUnbanRequestCreateEvent : RefCounted, ITwitche
             Text = data.Get("text").AsString(),
             CreatedAt = data.Get("created_at").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

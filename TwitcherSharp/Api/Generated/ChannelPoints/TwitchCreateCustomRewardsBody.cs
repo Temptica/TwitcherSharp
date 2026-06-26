@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.ChannelPoints;
@@ -26,7 +27,7 @@ public partial class TwitchCreateCustomRewardsBody : RefCounted, ITwitcherSharp<
     public static TwitchCreateCustomRewardsBody FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchCreateCustomRewardsBody
+        var instance = new TwitchCreateCustomRewardsBody
         {
             Title = data.Get("title").AsString(),
             Cost = data.Get("cost").AsInt32(),
@@ -42,6 +43,9 @@ public partial class TwitchCreateCustomRewardsBody : RefCounted, ITwitcherSharp<
             GlobalCooldownSeconds = data.Get("global_cooldown_seconds").AsInt32(),
             ShouldRedemptionsSkipRequestQueue = data.Get("should_redemptions_skip_request_queue").AsBool(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

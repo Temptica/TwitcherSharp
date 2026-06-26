@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.CCLs;
@@ -16,12 +17,15 @@ public partial class TwitchContentClassificationLabel : RefCounted, ITwitcherSha
     public static TwitchContentClassificationLabel FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchContentClassificationLabel
+        var instance = new TwitchContentClassificationLabel
         {
             Id = data.Get("id").AsString(),
             Description = data.Get("description").AsString(),
             Name = data.Get("name").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

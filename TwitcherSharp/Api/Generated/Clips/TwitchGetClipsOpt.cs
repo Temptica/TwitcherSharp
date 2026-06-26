@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Clips;
@@ -26,7 +27,7 @@ public partial class TwitchGetClipsOpt : RefCounted, ITwitcherSharp<TwitchGetCli
     public static TwitchGetClipsOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGetClipsOpt
+        var instance = new TwitchGetClipsOpt
         {
             BroadcasterId = data.Get("broadcaster_id").AsString(),
             GameId = data.Get("game_id").AsString(),
@@ -38,6 +39,9 @@ public partial class TwitchGetClipsOpt : RefCounted, ITwitcherSharp<TwitchGetCli
             After = data.Get("after").AsString(),
             IsFeatured = data.Get("is_featured").AsBool(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

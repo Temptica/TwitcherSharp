@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Games;
@@ -20,12 +21,15 @@ public partial class TwitchGetGamesOpt : RefCounted, ITwitcherSharp<TwitchGetGam
     public static TwitchGetGamesOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGetGamesOpt
+        var instance = new TwitchGetGamesOpt
         {
             Id = data.Get("id").AsStringArray(),
             Name = data.Get("name").AsStringArray(),
             IgdbId = data.Get("igdb_id").AsStringArray(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

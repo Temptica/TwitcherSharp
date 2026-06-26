@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Videos;
@@ -22,7 +23,7 @@ public partial class TwitchVideo : RefCounted, ITwitcherSharp<TwitchVideo>
     public string Language { get; set; }
     public string Type { get; set; }
     public string Duration { get; set; }
-    public TwitchMutedSegments[] MutedSegments { get; set; }
+    public TwitchResponseMutedSegments[] MutedSegments { get => field ??= _data?.GetArray<TwitchResponseMutedSegments>("muted_segments"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchVideo object.
@@ -30,8 +31,7 @@ public partial class TwitchVideo : RefCounted, ITwitcherSharp<TwitchVideo>
     public static TwitchVideo FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var mutedSegmentsArray = data.Get("muted_segments").AsGodotArray<GodotObject>();
-        return new TwitchVideo
+        var instance = new TwitchVideo
         {
             Id = data.Get("id").AsString(),
             StreamId = data.Get("stream_id").AsString(),
@@ -49,8 +49,10 @@ public partial class TwitchVideo : RefCounted, ITwitcherSharp<TwitchVideo>
             Language = data.Get("language").AsString(),
             Type = data.Get("type").AsString(),
             Duration = data.Get("duration").AsString(),
-            MutedSegments = mutedSegmentsArray.Select(TwitchMutedSegments.FromObject).ToArray(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -73,36 +75,40 @@ public partial class TwitchVideo : RefCounted, ITwitcherSharp<TwitchVideo>
         request.Set("language", Language);
         request.Set("type", Type);
         request.Set("duration", Duration);
-        if(MutedSegments != null) request.Set("muted_segments", new Godot.Collections.Array<GodotObject>(MutedSegments.Select(x => x.ToGodotObject()).ToArray()));
+        if(MutedSegments != null) request.Set("muted_segments", MutedSegments?.ToGodotArray());
         return request;
     }
     
     /// <summary> 
     /// The segments that Twitch Audio Recognition muted; otherwise, **null**. 
     /// </summary>
-    public partial class TwitchMutedSegments : RefCounted, ITwitcherSharp<TwitchMutedSegments>
+    public partial class TwitchResponseMutedSegments : RefCounted, ITwitcherSharp<TwitchResponseMutedSegments>
     {
         private GodotObject _data;
         public int Duration { get; set; }
         public int Offset { get; set; }
     
         /// <summary> 
-        /// Transforms the godot data into a TwitchMutedSegments object.
+        /// Transforms the godot data into a TwitchResponseMutedSegments object.
         /// </summary> 
-        public static TwitchMutedSegments FromObject(GodotObject data)
+        public static TwitchResponseMutedSegments FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchMutedSegments
+            var instance = new TwitchResponseMutedSegments
             {
                 Duration = data.Get("duration").AsInt32(),
                 Offset = data.Get("offset").AsInt32(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_muted_segments.gd");
-            var request = script.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_video.gd");
+            var twitchResponseMutedSegmentsClass = script.Get("MutedSegments").AsGodotObject();
+            var request = twitchResponseMutedSegmentsClass.Call("new").AsGodotObject();
             request.Set("duration", Duration);
             request.Set("offset", Offset);
             return request;

@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
@@ -16,12 +17,15 @@ public partial class TwitchUserModerator : RefCounted, ITwitcherSharp<TwitchUser
     public static TwitchUserModerator FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchUserModerator
+        var instance = new TwitchUserModerator
         {
             UserId = data.Get("user_id").AsString(),
             UserLogin = data.Get("user_login").AsString(),
             UserName = data.Get("user_name").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Users;
@@ -18,7 +19,7 @@ public partial class TwitchUserExtension : RefCounted, ITwitcherSharp<TwitchUser
     public static TwitchUserExtension FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchUserExtension
+        var instance = new TwitchUserExtension
         {
             Id = data.Get("id").AsString(),
             Version = data.Get("version").AsString(),
@@ -26,6 +27,9 @@ public partial class TwitchUserExtension : RefCounted, ITwitcherSharp<TwitchUser
             CanActivate = data.Get("can_activate").AsBool(),
             Type = data.Get("type").AsStringArray(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -36,7 +40,7 @@ public partial class TwitchUserExtension : RefCounted, ITwitcherSharp<TwitchUser
         request.Set("version", Version);
         request.Set("name", Name);
         request.Set("can_activate", CanActivate);
-        request.Set("type", new Godot.Collections.Array<string>(Type));
+        if(Type != null) request.Set("type", new Godot.Collections.Array<string>(Type));
         return request;
     }
 

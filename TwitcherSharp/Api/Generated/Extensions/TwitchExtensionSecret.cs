@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Extensions;
@@ -7,7 +8,7 @@ public partial class TwitchExtensionSecret : RefCounted, ITwitcherSharp<TwitchEx
 {
     private GodotObject _data;
     public int FormatVersion { get; set; }
-    public TwitchSecrets[] Secrets { get; set; }
+    public TwitchSecrets[] Secrets { get => field ??= _data?.GetArray<TwitchSecrets>("secrets"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchExtensionSecret object.
@@ -15,12 +16,13 @@ public partial class TwitchExtensionSecret : RefCounted, ITwitcherSharp<TwitchEx
     public static TwitchExtensionSecret FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var secretsArray = data.Get("secrets").AsGodotArray<GodotObject>();
-        return new TwitchExtensionSecret
+        var instance = new TwitchExtensionSecret
         {
             FormatVersion = data.Get("format_version").AsInt32(),
-            Secrets = secretsArray.Select(TwitchSecrets.FromObject).ToArray(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -28,7 +30,7 @@ public partial class TwitchExtensionSecret : RefCounted, ITwitcherSharp<TwitchEx
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_extension_secret.gd");
         var request = script.Call("new").AsGodotObject();
         request.Set("format_version", FormatVersion);
-        if(Secrets != null) request.Set("secrets", new Godot.Collections.Array<GodotObject>(Secrets.Select(x => x.ToGodotObject()).ToArray()));
+        if(Secrets != null) request.Set("secrets", Secrets?.ToGodotArray());
         return request;
     }
     
@@ -48,18 +50,22 @@ public partial class TwitchExtensionSecret : RefCounted, ITwitcherSharp<TwitchEx
         public static TwitchSecrets FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchSecrets
+            var instance = new TwitchSecrets
             {
                 Content = data.Get("content").AsString(),
                 ActiveAt = data.Get("active_at").AsString(),
                 ExpiresAt = data.Get("expires_at").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_secrets.gd");
-            var request = script.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_extension_secret.gd");
+            var twitchSecretsClass = script.Get("Secrets").AsGodotObject();
+            var request = twitchSecretsClass.Call("new").AsGodotObject();
             request.Set("content", Content);
             request.Set("active_at", ActiveAt);
             request.Set("expires_at", ExpiresAt);

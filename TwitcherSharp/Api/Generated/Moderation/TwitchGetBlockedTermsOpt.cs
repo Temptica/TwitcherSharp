@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
@@ -19,11 +20,14 @@ public partial class TwitchGetBlockedTermsOpt : RefCounted, ITwitcherSharp<Twitc
     public static TwitchGetBlockedTermsOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGetBlockedTermsOpt
+        var instance = new TwitchGetBlockedTermsOpt
         {
             First = data.Get("first").AsInt32(),
             After = data.Get("after").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

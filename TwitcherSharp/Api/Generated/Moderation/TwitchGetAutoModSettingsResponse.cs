@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
@@ -6,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 public partial class TwitchGetAutoModSettingsResponse : RefCounted, ITwitcherSharp<TwitchGetAutoModSettingsResponse>
 {
     private GodotObject _data;
-    public TwitchAutoModSettings[] Data { get; set; }
+    public TwitchAutoModSettings[] Data { get => field ??= _data?.GetArray<TwitchAutoModSettings>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetAutoModSettingsResponse object.
@@ -14,11 +15,10 @@ public partial class TwitchGetAutoModSettingsResponse : RefCounted, ITwitcherSha
     public static TwitchGetAutoModSettingsResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchGetAutoModSettingsResponse
-        {
-            Data = dataArray.Select(TwitchAutoModSettings.FromObject).ToArray(),
-        };
+        var instance = new TwitchGetAutoModSettingsResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -26,7 +26,7 @@ public partial class TwitchGetAutoModSettingsResponse : RefCounted, ITwitcherSha
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_auto_mod_settings.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", new Godot.Collections.Array<GodotObject>(Data.Select(x => x.ToGodotObject()).ToArray()));
+        if(Data != null) request.Set("data", Data?.ToGodotArray());
         return request;
     }
 

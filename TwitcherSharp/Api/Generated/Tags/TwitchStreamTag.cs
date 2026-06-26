@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Tags;
@@ -17,13 +18,16 @@ public partial class TwitchStreamTag : RefCounted, ITwitcherSharp<TwitchStreamTa
     public static TwitchStreamTag FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchStreamTag
+        var instance = new TwitchStreamTag
         {
             TagId = data.Get("tag_id").AsString(),
             IsAuto = data.Get("is_auto").AsBool(),
             LocalizationNames = data.Get("localization_names").AsGodotDictionary<string, string>(),
             LocalizationDescriptions = data.Get("localization_descriptions").AsGodotDictionary<string, string>(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

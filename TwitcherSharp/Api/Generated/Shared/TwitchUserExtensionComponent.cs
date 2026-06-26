@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Shared;
@@ -19,7 +20,7 @@ public partial class TwitchUserExtensionComponent : RefCounted, ITwitcherSharp<T
     public static TwitchUserExtensionComponent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchUserExtensionComponent
+        var instance = new TwitchUserExtensionComponent
         {
             Active = data.Get("active").AsBool(),
             Id = data.Get("id").AsString(),
@@ -28,6 +29,9 @@ public partial class TwitchUserExtensionComponent : RefCounted, ITwitcherSharp<T
             X = data.Get("x").AsInt32(),
             Y = data.Get("y").AsInt32(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

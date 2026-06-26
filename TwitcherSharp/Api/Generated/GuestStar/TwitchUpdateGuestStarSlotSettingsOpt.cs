@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.GuestStar;
@@ -21,13 +22,16 @@ public partial class TwitchUpdateGuestStarSlotSettingsOpt : RefCounted, ITwitche
     public static TwitchUpdateGuestStarSlotSettingsOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchUpdateGuestStarSlotSettingsOpt
+        var instance = new TwitchUpdateGuestStarSlotSettingsOpt
         {
             IsAudioEnabled = data.Get("is_audio_enabled").AsBool(),
             IsVideoEnabled = data.Get("is_video_enabled").AsBool(),
             IsLive = data.Get("is_live").AsBool(),
             Volume = data.Get("volume").AsInt32(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

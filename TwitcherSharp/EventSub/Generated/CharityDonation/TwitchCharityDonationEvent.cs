@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
@@ -7,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.CharityDonation;
 
 public partial class TwitchCharityDonationEvent : RefCounted, ITwitcherSharpEventSub<TwitchCharityDonationEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// An ID that identifies the donation. The ID is unique across campaigns.
     /// </summary>
@@ -70,7 +73,7 @@ public partial class TwitchCharityDonationEvent : RefCounted, ITwitcherSharpEven
     /// <summary> 
     /// An object that contains the amount of money that the user donated.
     /// </summary>
-    public TwitchAmount Amount { get; set; }
+    public TwitchAmount Amount { get => field ??= _data?.Get<TwitchAmount>("amount"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCharityDonationEvent object.
@@ -78,7 +81,7 @@ public partial class TwitchCharityDonationEvent : RefCounted, ITwitcherSharpEven
     public static TwitchCharityDonationEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchCharityDonationEvent
+        var instance = new TwitchCharityDonationEvent
         {
             Id = data.Get("id").AsString(),
             CampaignId = data.Get("campaign_id").AsString(),
@@ -92,8 +95,10 @@ public partial class TwitchCharityDonationEvent : RefCounted, ITwitcherSharpEven
             CharityDescription = data.Get("charity_description").AsString(),
             CharityLogo = data.Get("charity_logo").AsString(),
             CharityWebsite = data.Get("charity_website").AsString(),
-            Amount = TwitchAmount.FromObject(data.Get("amount").AsGodotObject()),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -113,13 +118,15 @@ public partial class TwitchCharityDonationEvent : RefCounted, ITwitcherSharpEven
         request.Set("charity_description", CharityDescription);
         request.Set("charity_logo", CharityLogo);
         request.Set("charity_website", CharityWebsite);
-        request.Set("amount", Amount.ToGodotObject());
+        request.Set("amount", Amount?.ToGodotObject());
         return request;
     }
 
 
     public partial class TwitchAmount : RefCounted, ITwitcherSharpEventSub<TwitchAmount>
     {
+        private GodotObject _data;
+        
         /// <summary> 
         /// The monetary amount. The amount is specified in the currency’s minor unit. For example, the minor units for USD is cents, so if the amount is $5.50 USD, value is set to 550.
         /// </summary>
@@ -141,12 +148,15 @@ public partial class TwitchCharityDonationEvent : RefCounted, ITwitcherSharpEven
         public static TwitchAmount FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchAmount
+            var instance = new TwitchAmount
             {
                 Value = data.Get("value").AsInt32(),
                 DecimalPlaces = data.Get("decimal_places").AsInt32(),
                 Currency = data.Get("currency").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

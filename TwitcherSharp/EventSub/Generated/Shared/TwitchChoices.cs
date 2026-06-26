@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
@@ -7,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.Shared;
 
 public partial class TwitchChoices : RefCounted, ITwitcherSharpEventSub<TwitchChoices>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// ID for the choice.
     /// </summary>
@@ -38,7 +41,7 @@ public partial class TwitchChoices : RefCounted, ITwitcherSharpEventSub<TwitchCh
     public static TwitchChoices FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChoices
+        var instance = new TwitchChoices
         {
             Id = data.Get("id").AsString(),
             Title = data.Get("title").AsString(),
@@ -46,6 +49,9 @@ public partial class TwitchChoices : RefCounted, ITwitcherSharpEventSub<TwitchCh
             ChannelPointsVotes = data.Get("channel_points_votes").AsInt32(),
             Votes = data.Get("votes").AsInt32(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

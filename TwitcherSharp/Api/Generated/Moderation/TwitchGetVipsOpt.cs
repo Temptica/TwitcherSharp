@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
@@ -20,12 +21,15 @@ public partial class TwitchGetVipsOpt : RefCounted, ITwitcherSharp<TwitchGetVips
     public static TwitchGetVipsOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGetVipsOpt
+        var instance = new TwitchGetVipsOpt
         {
             UserId = data.Get("user_id").AsStringArray(),
             First = data.Get("first").AsInt32(),
             After = data.Get("after").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

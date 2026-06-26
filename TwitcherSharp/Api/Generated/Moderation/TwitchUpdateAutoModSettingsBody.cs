@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
@@ -22,7 +23,7 @@ public partial class TwitchUpdateAutoModSettingsBody : RefCounted, ITwitcherShar
     public static TwitchUpdateAutoModSettingsBody FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchUpdateAutoModSettingsBody
+        var instance = new TwitchUpdateAutoModSettingsBody
         {
             Aggression = data.Get("aggression").AsInt32(),
             Bullying = data.Get("bullying").AsInt32(),
@@ -34,6 +35,9 @@ public partial class TwitchUpdateAutoModSettingsBody : RefCounted, ITwitcherShar
             SexualitySexOrGender = data.Get("sexuality_sex_or_gender").AsInt32(),
             Swearing = data.Get("swearing").AsInt32(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

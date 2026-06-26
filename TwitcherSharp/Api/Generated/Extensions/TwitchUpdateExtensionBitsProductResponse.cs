@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Extensions;
@@ -6,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Extensions;
 public partial class TwitchUpdateExtensionBitsProductResponse : RefCounted, ITwitcherSharp<TwitchUpdateExtensionBitsProductResponse>
 {
     private GodotObject _data;
-    public TwitchExtensionBitsProduct[] Data { get; set; }
+    public TwitchExtensionBitsProduct[] Data { get => field ??= _data?.GetArray<TwitchExtensionBitsProduct>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUpdateExtensionBitsProductResponse object.
@@ -14,11 +15,10 @@ public partial class TwitchUpdateExtensionBitsProductResponse : RefCounted, ITwi
     public static TwitchUpdateExtensionBitsProductResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchUpdateExtensionBitsProductResponse
-        {
-            Data = dataArray.Select(TwitchExtensionBitsProduct.FromObject).ToArray(),
-        };
+        var instance = new TwitchUpdateExtensionBitsProductResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -26,7 +26,7 @@ public partial class TwitchUpdateExtensionBitsProductResponse : RefCounted, ITwi
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_update_extension_bits_product.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", new Godot.Collections.Array<GodotObject>(Data.Select(x => x.ToGodotObject()).ToArray()));
+        if(Data != null) request.Set("data", Data?.ToGodotArray());
         return request;
     }
 

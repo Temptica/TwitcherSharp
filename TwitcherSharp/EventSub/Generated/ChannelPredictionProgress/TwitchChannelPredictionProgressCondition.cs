@@ -1,18 +1,21 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
 namespace TwitcherSharp.EventSub.Generated.ChannelPredictionProgress;
 
-public partial class TwitchChannelPredictionProgressCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelPredictionProgressCondition>
+public partial class TwitchChannelPredictionProgressCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelPredictionProgressCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchChannelPredictionProgressCondition);
 
     /// <summary> 
     /// The broadcaster user ID of the channel for which “prediction progress” notifications will be received.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelPredictionProgressCondition object.
@@ -20,10 +23,10 @@ public partial class TwitchChannelPredictionProgressCondition : RefCounted, ITwi
     public static TwitchChannelPredictionProgressCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelPredictionProgressCondition
-        {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-        };
+        var instance = new TwitchChannelPredictionProgressCondition(data.Get("broadcaster_user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -37,9 +40,8 @@ public partial class TwitchChannelPredictionProgressCondition : RefCounted, ITwi
 
     public static TwitchChannelPredictionProgressCondition FromDictionary(Dictionary data)
     {
-        return new TwitchChannelPredictionProgressCondition
+        return new TwitchChannelPredictionProgressCondition(data["broadcaster_user_id"].AsString())
         {
-            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
         };
     }
 

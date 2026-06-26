@@ -1,18 +1,21 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
 namespace TwitcherSharp.EventSub.Generated.ChannelPredictionBegin;
 
-public partial class TwitchChannelPredictionBeginCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelPredictionBeginCondition>
+public partial class TwitchChannelPredictionBeginCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelPredictionBeginCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchChannelPredictionBeginCondition);
 
     /// <summary> 
     /// The broadcaster user ID of the channel for which “prediction begin” notifications will be received.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelPredictionBeginCondition object.
@@ -20,10 +23,10 @@ public partial class TwitchChannelPredictionBeginCondition : RefCounted, ITwitch
     public static TwitchChannelPredictionBeginCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelPredictionBeginCondition
-        {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-        };
+        var instance = new TwitchChannelPredictionBeginCondition(data.Get("broadcaster_user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -37,9 +40,8 @@ public partial class TwitchChannelPredictionBeginCondition : RefCounted, ITwitch
 
     public static TwitchChannelPredictionBeginCondition FromDictionary(Dictionary data)
     {
-        return new TwitchChannelPredictionBeginCondition
+        return new TwitchChannelPredictionBeginCondition(data["broadcaster_user_id"].AsString())
         {
-            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
         };
     }
 

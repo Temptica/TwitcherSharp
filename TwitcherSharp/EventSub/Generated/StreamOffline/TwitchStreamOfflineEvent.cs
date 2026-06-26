@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
@@ -7,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.StreamOffline;
 
 public partial class TwitchStreamOfflineEvent : RefCounted, ITwitcherSharpEventSub<TwitchStreamOfflineEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The broadcaster’s user id.
     /// </summary>
@@ -28,12 +31,15 @@ public partial class TwitchStreamOfflineEvent : RefCounted, ITwitcherSharpEventS
     public static TwitchStreamOfflineEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchStreamOfflineEvent
+        var instance = new TwitchStreamOfflineEvent
         {
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
             BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
             BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

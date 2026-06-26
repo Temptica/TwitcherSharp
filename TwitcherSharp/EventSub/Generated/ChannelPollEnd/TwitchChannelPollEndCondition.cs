@@ -1,18 +1,21 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
 namespace TwitcherSharp.EventSub.Generated.ChannelPollEnd;
 
-public partial class TwitchChannelPollEndCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelPollEndCondition>
+public partial class TwitchChannelPollEndCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelPollEndCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchChannelPollEndCondition);
 
     /// <summary> 
     /// The broadcaster user ID of the channel for which “poll end” notifications will be received.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelPollEndCondition object.
@@ -20,10 +23,10 @@ public partial class TwitchChannelPollEndCondition : RefCounted, ITwitcherSharpC
     public static TwitchChannelPollEndCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelPollEndCondition
-        {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-        };
+        var instance = new TwitchChannelPollEndCondition(data.Get("broadcaster_user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -37,9 +40,8 @@ public partial class TwitchChannelPollEndCondition : RefCounted, ITwitcherSharpC
 
     public static TwitchChannelPollEndCondition FromDictionary(Dictionary data)
     {
-        return new TwitchChannelPollEndCondition
+        return new TwitchChannelPollEndCondition(data["broadcaster_user_id"].AsString())
         {
-            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
         };
     }
 

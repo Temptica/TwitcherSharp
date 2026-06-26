@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Ads;
@@ -15,11 +16,14 @@ public partial class TwitchStartCommercialBody : RefCounted, ITwitcherSharp<Twit
     public static TwitchStartCommercialBody FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchStartCommercialBody
+        var instance = new TwitchStartCommercialBody
         {
             BroadcasterId = data.Get("broadcaster_id").AsString(),
             Length = data.Get("length").AsInt32(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

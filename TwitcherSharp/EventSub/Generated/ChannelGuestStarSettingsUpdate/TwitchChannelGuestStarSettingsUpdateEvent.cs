@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
@@ -7,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelGuestStarSettingsUpdate;
 
 public partial class TwitchChannelGuestStarSettingsUpdateEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelGuestStarSettingsUpdateEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// User ID of the host channel.
     /// </summary>
@@ -48,7 +51,7 @@ public partial class TwitchChannelGuestStarSettingsUpdateEvent : RefCounted, ITw
     public static TwitchChannelGuestStarSettingsUpdateEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelGuestStarSettingsUpdateEvent
+        var instance = new TwitchChannelGuestStarSettingsUpdateEvent
         {
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
             BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
@@ -58,6 +61,9 @@ public partial class TwitchChannelGuestStarSettingsUpdateEvent : RefCounted, ITw
             IsBrowserSourceAudioEnabled = data.Get("is_browser_source_audio_enabled").AsBool(),
             GroupLayout = data.Get("group_layout").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Analytics;
@@ -23,7 +24,7 @@ public partial class TwitchGetExtensionAnalyticsOpt : RefCounted, ITwitcherSharp
     public static TwitchGetExtensionAnalyticsOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGetExtensionAnalyticsOpt
+        var instance = new TwitchGetExtensionAnalyticsOpt
         {
             ExtensionId = data.Get("extension_id").AsString(),
             Type = data.Get("type").AsString(),
@@ -32,6 +33,9 @@ public partial class TwitchGetExtensionAnalyticsOpt : RefCounted, ITwitcherSharp
             First = data.Get("first").AsInt32(),
             After = data.Get("after").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

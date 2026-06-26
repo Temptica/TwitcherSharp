@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.ChannelPoints;
@@ -27,7 +28,7 @@ public partial class TwitchUpdateCustomRewardBody : RefCounted, ITwitcherSharp<T
     public static TwitchUpdateCustomRewardBody FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchUpdateCustomRewardBody
+        var instance = new TwitchUpdateCustomRewardBody
         {
             Title = data.Get("title").AsString(),
             Prompt = data.Get("prompt").AsString(),
@@ -44,6 +45,9 @@ public partial class TwitchUpdateCustomRewardBody : RefCounted, ITwitcherSharp<T
             IsPaused = data.Get("is_paused").AsBool(),
             ShouldRedemptionsSkipRequestQueue = data.Get("should_redemptions_skip_request_queue").AsBool(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

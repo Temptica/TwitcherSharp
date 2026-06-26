@@ -1,23 +1,26 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
 namespace TwitcherSharp.EventSub.Generated.ChannelFollow;
 
-public partial class TwitchChannelFollowCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelFollowCondition>
+public partial class TwitchChannelFollowCondition(string broadcasterUserId, string moderatorUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelFollowCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchChannelFollowCondition);
 
     /// <summary> 
     /// The broadcaster user ID for the channel you want to get follow notifications for.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
     /// The ID of the moderator of the channel you want to get follow notifications for. If you have authorization from the broadcaster rather than a moderator, specify the broadcaster’s user ID here.
     /// </summary>
-    public string ModeratorUserId { get; set; }
+    public string ModeratorUserId { get; set; } = moderatorUserId;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelFollowCondition object.
@@ -25,11 +28,10 @@ public partial class TwitchChannelFollowCondition : RefCounted, ITwitcherSharpCo
     public static TwitchChannelFollowCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelFollowCondition
-        {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-            ModeratorUserId = data.Get("moderator_user_id").AsString(),
-        };
+        var instance = new TwitchChannelFollowCondition(data.Get("broadcaster_user_id").AsString(), data.Get("moderator_user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -44,10 +46,8 @@ public partial class TwitchChannelFollowCondition : RefCounted, ITwitcherSharpCo
 
     public static TwitchChannelFollowCondition FromDictionary(Dictionary data)
     {
-        return new TwitchChannelFollowCondition
+        return new TwitchChannelFollowCondition(data["broadcaster_user_id"].AsString(), data["moderator_user_id"].AsString())
         {
-            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
-            ModeratorUserId = data["moderator_user_id"].AsString(),
         };
     }
 

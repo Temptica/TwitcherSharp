@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Channels;
@@ -6,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Channels;
 public partial class TwitchGetChannelEditorsResponse : RefCounted, ITwitcherSharp<TwitchGetChannelEditorsResponse>
 {
     private GodotObject _data;
-    public TwitchChannelEditor[] Data { get; set; }
+    public TwitchChannelEditor[] Data { get => field ??= _data?.GetArray<TwitchChannelEditor>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetChannelEditorsResponse object.
@@ -14,11 +15,10 @@ public partial class TwitchGetChannelEditorsResponse : RefCounted, ITwitcherShar
     public static TwitchGetChannelEditorsResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchGetChannelEditorsResponse
-        {
-            Data = dataArray.Select(TwitchChannelEditor.FromObject).ToArray(),
-        };
+        var instance = new TwitchGetChannelEditorsResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -26,7 +26,7 @@ public partial class TwitchGetChannelEditorsResponse : RefCounted, ITwitcherShar
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_channel_editors.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", new Godot.Collections.Array<GodotObject>(Data.Select(x => x.ToGodotObject()).ToArray()));
+        if(Data != null) request.Set("data", Data?.ToGodotArray());
         return request;
     }
 

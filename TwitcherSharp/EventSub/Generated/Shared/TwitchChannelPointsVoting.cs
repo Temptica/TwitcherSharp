@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
@@ -7,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.Shared;
 
 public partial class TwitchChannelPointsVoting : RefCounted, ITwitcherSharpEventSub<TwitchChannelPointsVoting>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// Indicates if Channel Points can be used for voting.
     /// </summary>
@@ -23,11 +26,14 @@ public partial class TwitchChannelPointsVoting : RefCounted, ITwitcherSharpEvent
     public static TwitchChannelPointsVoting FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelPointsVoting
+        var instance = new TwitchChannelPointsVoting
         {
             IsEnabled = data.Get("is_enabled").AsBool(),
             AmountPerVote = data.Get("amount_per_vote").AsInt32(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

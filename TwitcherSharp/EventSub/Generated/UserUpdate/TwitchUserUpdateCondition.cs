@@ -1,18 +1,21 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
 namespace TwitcherSharp.EventSub.Generated.UserUpdate;
 
-public partial class TwitchUserUpdateCondition : RefCounted, ITwitcherSharpCondition<TwitchUserUpdateCondition>
+public partial class TwitchUserUpdateCondition(string userId) : RefCounted, ITwitcherSharpCondition<TwitchUserUpdateCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchUserUpdateCondition);
 
     /// <summary> 
     /// The user ID for the user you want update notifications for.
     /// </summary>
-    public string UserId { get; set; }
+    public string UserId { get; set; } = userId;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUserUpdateCondition object.
@@ -20,10 +23,10 @@ public partial class TwitchUserUpdateCondition : RefCounted, ITwitcherSharpCondi
     public static TwitchUserUpdateCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchUserUpdateCondition
-        {
-            UserId = data.Get("user_id").AsString(),
-        };
+        var instance = new TwitchUserUpdateCondition(data.Get("user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -37,9 +40,8 @@ public partial class TwitchUserUpdateCondition : RefCounted, ITwitcherSharpCondi
 
     public static TwitchUserUpdateCondition FromDictionary(Dictionary data)
     {
-        return new TwitchUserUpdateCondition
+        return new TwitchUserUpdateCondition(data["user_id"].AsString())
         {
-            UserId = data["user_id"].AsString(),
         };
     }
 

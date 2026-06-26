@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://b4n67bt8ni6ge"]
+
+[ext_resource type="Script" uid="uid://bp1fga8addrlc" path="res://addons/twitcher/editor/inspector/twitch_token_revoke_popup.gd" id="1_4n8su"]
+[ext_resource type="Script" uid="uid://blnbogtrshw4r" path="res://addons/twitcher/auth/twitch_token_handler.gd" id="2_iycl8"]
+
+[node name="TokenRevokePopup" type="Window" unique_id=308270508]
+oversampling_override = 1.0
+title = "Revoke Token"
+position = Vector2i(0, 36)
+size = Vector2i(600, 300)
+script = ExtResource("1_4n8su")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=92324889]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1031285038]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer" unique_id=823462024]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+text = "You can decide to revoke the token locally or actually invalidate it on Twitch side too. To revoke it on Twitch the client id must be known: "
+autowrap_mode = 3
+
+[node name="Inspector" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1657419883]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Inspector" unique_id=1215693955]
+layout_mode = 2
+text = "OAuth Setting:"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1019757313]
+layout_mode = 2
+size_flags_vertical = 10
+
+[node name="Cancel" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1627741264]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Cancel"
+
+[node name="RevokeTwitch" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=48862874]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Revoke on Twitch"
+
+[node name="RevokeLocally" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1703955115]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Revoke Locally"
+
+[node name="TwitchTokenHandler" type="Node" parent="." unique_id=420007888]
+unique_name_in_owner = true
+script = ExtResource("2_iycl8")
+metadata/_custom_type_script = "uid://blnbogtrshw4r"

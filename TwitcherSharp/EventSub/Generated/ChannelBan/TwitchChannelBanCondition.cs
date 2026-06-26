@@ -1,18 +1,21 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
 namespace TwitcherSharp.EventSub.Generated.ChannelBan;
 
-public partial class TwitchChannelBanCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelBanCondition>
+public partial class TwitchChannelBanCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelBanCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchChannelBanCondition);
 
     /// <summary> 
     /// The broadcaster user ID for the channel you want to get ban notifications for.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelBanCondition object.
@@ -20,10 +23,10 @@ public partial class TwitchChannelBanCondition : RefCounted, ITwitcherSharpCondi
     public static TwitchChannelBanCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelBanCondition
-        {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-        };
+        var instance = new TwitchChannelBanCondition(data.Get("broadcaster_user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -37,9 +40,8 @@ public partial class TwitchChannelBanCondition : RefCounted, ITwitcherSharpCondi
 
     public static TwitchChannelBanCondition FromDictionary(Dictionary data)
     {
-        return new TwitchChannelBanCondition
+        return new TwitchChannelBanCondition(data["broadcaster_user_id"].AsString())
         {
-            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
         };
     }
 

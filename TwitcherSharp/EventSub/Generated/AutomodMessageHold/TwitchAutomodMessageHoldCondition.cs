@@ -1,23 +1,26 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
 namespace TwitcherSharp.EventSub.Generated.AutomodMessageHold;
 
-public partial class TwitchAutomodMessageHoldCondition : RefCounted, ITwitcherSharpCondition<TwitchAutomodMessageHoldCondition>
+public partial class TwitchAutomodMessageHoldCondition(string broadcasterUserId, string moderatorUserId) : RefCounted, ITwitcherSharpCondition<TwitchAutomodMessageHoldCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchAutomodMessageHoldCondition);
 
     /// <summary> 
     /// User ID of the broadcaster (channel).
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
     /// User ID of the moderator.
     /// </summary>
-    public string ModeratorUserId { get; set; }
+    public string ModeratorUserId { get; set; } = moderatorUserId;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchAutomodMessageHoldCondition object.
@@ -25,11 +28,10 @@ public partial class TwitchAutomodMessageHoldCondition : RefCounted, ITwitcherSh
     public static TwitchAutomodMessageHoldCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchAutomodMessageHoldCondition
-        {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-            ModeratorUserId = data.Get("moderator_user_id").AsString(),
-        };
+        var instance = new TwitchAutomodMessageHoldCondition(data.Get("broadcaster_user_id").AsString(), data.Get("moderator_user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -44,10 +46,8 @@ public partial class TwitchAutomodMessageHoldCondition : RefCounted, ITwitcherSh
 
     public static TwitchAutomodMessageHoldCondition FromDictionary(Dictionary data)
     {
-        return new TwitchAutomodMessageHoldCondition
+        return new TwitchAutomodMessageHoldCondition(data["broadcaster_user_id"].AsString(), data["moderator_user_id"].AsString())
         {
-            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
-            ModeratorUserId = data["moderator_user_id"].AsString(),
         };
     }
 

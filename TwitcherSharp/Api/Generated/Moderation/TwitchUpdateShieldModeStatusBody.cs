@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
@@ -14,10 +15,13 @@ public partial class TwitchUpdateShieldModeStatusBody : RefCounted, ITwitcherSha
     public static TwitchUpdateShieldModeStatusBody FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchUpdateShieldModeStatusBody
+        var instance = new TwitchUpdateShieldModeStatusBody
         {
             IsActive = data.Get("is_active").AsBool(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

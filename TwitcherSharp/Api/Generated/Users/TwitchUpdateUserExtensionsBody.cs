@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Users;
@@ -6,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Users;
 public partial class TwitchUpdateUserExtensionsBody : RefCounted, ITwitcherSharp<TwitchUpdateUserExtensionsBody>
 {
     private GodotObject _data;
-    public TwitchData Data { get; set; }
+    public TwitchBodyData Data { get => field ??= _data?.Get<TwitchBodyData>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUpdateUserExtensionsBody object.
@@ -14,10 +15,10 @@ public partial class TwitchUpdateUserExtensionsBody : RefCounted, ITwitcherSharp
     public static TwitchUpdateUserExtensionsBody FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchUpdateUserExtensionsBody
-        {
-            Data = data.Get("data").As<TwitchData>(),
-        };
+        var instance = new TwitchUpdateUserExtensionsBody();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -36,7 +37,7 @@ public partial class TwitchUpdateUserExtensionsBody : RefCounted, ITwitcherSharp
     ///   
     /// For component extensions, the key’s value includes the above fields plus the `x` and `y` fields, which identify the coordinate where the extension is placed. 
     /// </summary>
-    public partial class TwitchData : RefCounted, ITwitcherSharp<TwitchData>
+    public partial class TwitchBodyData : RefCounted, ITwitcherSharp<TwitchBodyData>
     {
         private GodotObject _data;
         public Variant? Panel { get; set; }
@@ -44,23 +45,27 @@ public partial class TwitchUpdateUserExtensionsBody : RefCounted, ITwitcherSharp
         public Variant? Component { get; set; }
     
         /// <summary> 
-        /// Transforms the godot data into a TwitchData object.
+        /// Transforms the godot data into a TwitchBodyData object.
         /// </summary> 
-        public static TwitchData FromObject(GodotObject data)
+        public static TwitchBodyData FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchData
+            var instance = new TwitchBodyData
             {
                 Panel = data.Get("panel").As<Variant>(),
                 Overlay = data.Get("overlay").As<Variant>(),
                 Component = data.Get("component").As<Variant>(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_data.gd");
-            var request = script.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_update_user_extensions.gd");
+            var twitchBodyDataClass = script.Get("BodyData").AsGodotObject();
+            var request = twitchBodyDataClass.Call("new").AsGodotObject();
             if(Panel.HasValue) request.Set("panel", Panel.Value);
             if(Overlay.HasValue) request.Set("overlay", Overlay.Value);
             if(Component.HasValue) request.Set("component", Component.Value);

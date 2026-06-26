@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
@@ -22,7 +23,7 @@ public partial class TwitchBannedUser : RefCounted, ITwitcherSharp<TwitchBannedU
     public static TwitchBannedUser FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchBannedUser
+        var instance = new TwitchBannedUser
         {
             UserId = data.Get("user_id").AsString(),
             UserLogin = data.Get("user_login").AsString(),
@@ -34,6 +35,9 @@ public partial class TwitchBannedUser : RefCounted, ITwitcherSharp<TwitchBannedU
             ModeratorLogin = data.Get("moderator_login").AsString(),
             ModeratorName = data.Get("moderator_name").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

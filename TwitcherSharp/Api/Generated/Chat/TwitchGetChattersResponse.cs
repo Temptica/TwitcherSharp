@@ -1,5 +1,6 @@
 using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Chat;
@@ -7,8 +8,8 @@ namespace TwitcherSharp.Api.Generated.Chat;
 public partial class TwitchGetChattersResponse : RefCounted, ITwitcherSharp<TwitchGetChattersResponse>
 {
     private GodotObject _data;
-    public TwitchChatter[] Data { get; set; }
-    public ResponsePagination Pagination { get; set; }
+    public TwitchChatter[] Data { get => field ??= _data?.GetArray<TwitchChatter>("data"); set; }
+    public ResponsePagination Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
     public int Total { get; set; }
 
     /// <summary> 
@@ -17,13 +18,13 @@ public partial class TwitchGetChattersResponse : RefCounted, ITwitcherSharp<Twit
     public static TwitchGetChattersResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchGetChattersResponse
+        var instance = new TwitchGetChattersResponse
         {
-            Data = dataArray.Select(TwitchChatter.FromObject).ToArray(),
-            Pagination = data.Get("pagination").As<ResponsePagination>(),
             Total = data.Get("total").AsInt32(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -31,7 +32,7 @@ public partial class TwitchGetChattersResponse : RefCounted, ITwitcherSharp<Twit
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_chatters.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", new Godot.Collections.Array<GodotObject>(Data.Select(x => x.ToGodotObject()).ToArray()));
+        if(Data != null) request.Set("data", Data?.ToGodotArray());
         if(Pagination != null) request.Set("pagination", Pagination);
         request.Set("total", Total);
         return request;
@@ -53,17 +54,20 @@ public partial class TwitchGetChattersResponse : RefCounted, ITwitcherSharp<Twit
         public static ResponsePagination FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new ResponsePagination
+            var instance = new ResponsePagination
             {
                 Cursor = data.Get("cursor").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/response_pagination.gd");
-            var paginationClass = script.Get("Pagination").AsGodotObject();
-            var request = paginationClass.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_chatters.gd");
+            var responsePaginationClass = script.Get("ResponsePagination").AsGodotObject();
+            var request = responsePaginationClass.Call("new").AsGodotObject();
             if(Cursor != null) request.Set("cursor", Cursor);
             return request;
         }

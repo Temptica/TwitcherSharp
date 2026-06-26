@@ -1,23 +1,26 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
 namespace TwitcherSharp.EventSub.Generated.ChannelModerate;
 
-public partial class TwitchChannelModerateCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelModerateCondition>
+public partial class TwitchChannelModerateCondition(string broadcasterUserId, string moderatorUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelModerateCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchChannelModerateCondition);
 
     /// <summary> 
     /// The user ID of the broadcaster.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
     /// The user ID of the moderator.
     /// </summary>
-    public string ModeratorUserId { get; set; }
+    public string ModeratorUserId { get; set; } = moderatorUserId;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelModerateCondition object.
@@ -25,11 +28,10 @@ public partial class TwitchChannelModerateCondition : RefCounted, ITwitcherSharp
     public static TwitchChannelModerateCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelModerateCondition
-        {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-            ModeratorUserId = data.Get("moderator_user_id").AsString(),
-        };
+        var instance = new TwitchChannelModerateCondition(data.Get("broadcaster_user_id").AsString(), data.Get("moderator_user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -44,10 +46,8 @@ public partial class TwitchChannelModerateCondition : RefCounted, ITwitcherSharp
 
     public static TwitchChannelModerateCondition FromDictionary(Dictionary data)
     {
-        return new TwitchChannelModerateCondition
+        return new TwitchChannelModerateCondition(data["broadcaster_user_id"].AsString(), data["moderator_user_id"].AsString())
         {
-            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
-            ModeratorUserId = data["moderator_user_id"].AsString(),
         };
     }
 

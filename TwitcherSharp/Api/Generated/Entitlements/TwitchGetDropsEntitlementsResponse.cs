@@ -1,5 +1,6 @@
 using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Entitlements;
@@ -7,8 +8,8 @@ namespace TwitcherSharp.Api.Generated.Entitlements;
 public partial class TwitchGetDropsEntitlementsResponse : RefCounted, ITwitcherSharp<TwitchGetDropsEntitlementsResponse>
 {
     private GodotObject _data;
-    public TwitchDropsEntitlement[] Data { get; set; }
-    public ResponsePagination Pagination { get; set; }
+    public TwitchDropsEntitlement[] Data { get => field ??= _data?.GetArray<TwitchDropsEntitlement>("data"); set; }
+    public ResponsePagination Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetDropsEntitlementsResponse object.
@@ -16,12 +17,10 @@ public partial class TwitchGetDropsEntitlementsResponse : RefCounted, ITwitcherS
     public static TwitchGetDropsEntitlementsResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchGetDropsEntitlementsResponse
-        {
-            Data = dataArray.Select(TwitchDropsEntitlement.FromObject).ToArray(),
-            Pagination = data.Get("pagination").As<ResponsePagination>(),
-        };
+        var instance = new TwitchGetDropsEntitlementsResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -29,7 +28,7 @@ public partial class TwitchGetDropsEntitlementsResponse : RefCounted, ITwitcherS
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_drops_entitlements.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", new Godot.Collections.Array<GodotObject>(Data.Select(x => x.ToGodotObject()).ToArray()));
+        if(Data != null) request.Set("data", Data?.ToGodotArray());
         if(Pagination != null) request.Set("pagination", Pagination);
         return request;
     }
@@ -50,17 +49,20 @@ public partial class TwitchGetDropsEntitlementsResponse : RefCounted, ITwitcherS
         public static ResponsePagination FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new ResponsePagination
+            var instance = new ResponsePagination
             {
                 Cursor = data.Get("cursor").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/response_pagination.gd");
-            var paginationClass = script.Get("Pagination").AsGodotObject();
-            var request = paginationClass.Call("new").AsGodotObject();
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_drops_entitlements.gd");
+            var responsePaginationClass = script.Get("ResponsePagination").AsGodotObject();
+            var request = responsePaginationClass.Call("new").AsGodotObject();
             if(Cursor != null) request.Set("cursor", Cursor);
             return request;
         }

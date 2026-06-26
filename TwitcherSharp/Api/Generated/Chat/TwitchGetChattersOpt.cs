@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Chat;
@@ -19,11 +20,14 @@ public partial class TwitchGetChattersOpt : RefCounted, ITwitcherSharp<TwitchGet
     public static TwitchGetChattersOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGetChattersOpt
+        var instance = new TwitchGetChattersOpt
         {
             First = data.Get("first").AsInt32(),
             After = data.Get("after").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

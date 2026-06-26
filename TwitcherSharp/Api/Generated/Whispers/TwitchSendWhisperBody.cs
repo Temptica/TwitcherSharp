@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Whispers;
@@ -14,10 +15,13 @@ public partial class TwitchSendWhisperBody : RefCounted, ITwitcherSharp<TwitchSe
     public static TwitchSendWhisperBody FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchSendWhisperBody
+        var instance = new TwitchSendWhisperBody
         {
             Message = data.Get("message").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

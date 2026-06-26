@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Predictions;
@@ -20,12 +21,15 @@ public partial class TwitchGetPredictionsOpt : RefCounted, ITwitcherSharp<Twitch
     public static TwitchGetPredictionsOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGetPredictionsOpt
+        var instance = new TwitchGetPredictionsOpt
         {
             Id = data.Get("id").AsStringArray(),
             First = data.Get("first").AsString(),
             After = data.Get("after").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Chat;
@@ -24,7 +25,7 @@ public partial class TwitchChatSettings : RefCounted, ITwitcherSharp<TwitchChatS
     public static TwitchChatSettings FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChatSettings
+        var instance = new TwitchChatSettings
         {
             BroadcasterId = data.Get("broadcaster_id").AsString(),
             EmoteMode = data.Get("emote_mode").AsBool(),
@@ -38,6 +39,9 @@ public partial class TwitchChatSettings : RefCounted, ITwitcherSharp<TwitchChatS
             SubscriberMode = data.Get("subscriber_mode").AsBool(),
             UniqueChatMode = data.Get("unique_chat_mode").AsBool(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

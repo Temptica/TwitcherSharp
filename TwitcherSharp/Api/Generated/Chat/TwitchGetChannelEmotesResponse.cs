@@ -1,6 +1,7 @@
 using TwitcherSharp.Api.Generated.Chat.Interfaces;
 using TwitcherSharp.Api.Generated.Chat.Interfaces;
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Chat;
@@ -8,7 +9,7 @@ namespace TwitcherSharp.Api.Generated.Chat;
 public partial class TwitchGetChannelEmotesResponse : RefCounted, ITwitcherSharp<TwitchGetChannelEmotesResponse>
 {
     private GodotObject _data;
-    public TwitchChannelEmote[] Data { get; set; }
+    public TwitchChannelEmote[] Data { get => field ??= _data?.GetArray<TwitchChannelEmote>("data"); set; }
     public string Template { get; set; }
 
     /// <summary> 
@@ -17,12 +18,13 @@ public partial class TwitchGetChannelEmotesResponse : RefCounted, ITwitcherSharp
     public static TwitchGetChannelEmotesResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchGetChannelEmotesResponse
+        var instance = new TwitchGetChannelEmotesResponse
         {
-            Data = dataArray.Select(TwitchChannelEmote.FromObject).ToArray(),
             Template = data.Get("template").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -30,7 +32,7 @@ public partial class TwitchGetChannelEmotesResponse : RefCounted, ITwitcherSharp
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_channel_emotes.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", new Godot.Collections.Array<GodotObject>(Data.Select(x => x.ToGodotObject()).ToArray()));
+        if(Data != null) request.Set("data", Data?.ToGodotArray());
         request.Set("template", Template);
         return request;
     }

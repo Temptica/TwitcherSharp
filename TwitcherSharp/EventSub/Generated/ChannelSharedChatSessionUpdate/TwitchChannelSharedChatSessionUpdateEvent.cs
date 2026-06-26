@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
@@ -7,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.ChannelSharedChatSessionUpdate;
 
 public partial class TwitchChannelSharedChatSessionUpdateEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelSharedChatSessionUpdateEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// The unique identifier for the shared chat session.
     /// </summary>
@@ -45,7 +48,7 @@ public partial class TwitchChannelSharedChatSessionUpdateEvent : RefCounted, ITw
     /// <summary> 
     /// The list of participants in the session.
     /// </summary>
-    public TwitchParticipants[] Participants { get; set; }
+    public TwitchParticipants[] Participants { get => field ??= _data?.GetArray<TwitchParticipants>("participants"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelSharedChatSessionUpdateEvent object.
@@ -53,8 +56,7 @@ public partial class TwitchChannelSharedChatSessionUpdateEvent : RefCounted, ITw
     public static TwitchChannelSharedChatSessionUpdateEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var participantsArray = data.Get("participants").AsGodotArray<GodotObject>();
-        return new TwitchChannelSharedChatSessionUpdateEvent
+        var instance = new TwitchChannelSharedChatSessionUpdateEvent
         {
             SessionId = data.Get("session_id").AsString(),
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
@@ -63,8 +65,10 @@ public partial class TwitchChannelSharedChatSessionUpdateEvent : RefCounted, ITw
             HostBroadcasterUserId = data.Get("host_broadcaster_user_id").AsString(),
             HostBroadcasterUserName = data.Get("host_broadcaster_user_name").AsString(),
             HostBroadcasterUserLogin = data.Get("host_broadcaster_user_login").AsString(),
-            Participants = participantsArray.Select(TwitchParticipants.FromObject).ToArray(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -79,13 +83,15 @@ public partial class TwitchChannelSharedChatSessionUpdateEvent : RefCounted, ITw
         request.Set("host_broadcaster_user_id", HostBroadcasterUserId);
         request.Set("host_broadcaster_user_name", HostBroadcasterUserName);
         request.Set("host_broadcaster_user_login", HostBroadcasterUserLogin);
-        request.Set("participants", new Godot.Collections.Array(Participants.Select(x => x.ToGodotObject()).ToArray()));
+        if(Participants != null) request.Set("participants", Participants?.ToGodotArray());
         return request;
     }
 
 
     public partial class TwitchParticipants : RefCounted, ITwitcherSharpEventSub<TwitchParticipants>
     {
+        private GodotObject _data;
+        
         /// <summary> 
         /// The User ID of the participant channel.
         /// </summary>
@@ -107,12 +113,15 @@ public partial class TwitchChannelSharedChatSessionUpdateEvent : RefCounted, ITw
         public static TwitchParticipants FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchParticipants
+            var instance = new TwitchParticipants
             {
                 BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
                 BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
                 BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

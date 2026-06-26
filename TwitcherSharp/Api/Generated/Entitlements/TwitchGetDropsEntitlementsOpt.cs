@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Entitlements;
@@ -23,7 +24,7 @@ public partial class TwitchGetDropsEntitlementsOpt : RefCounted, ITwitcherSharp<
     public static TwitchGetDropsEntitlementsOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGetDropsEntitlementsOpt
+        var instance = new TwitchGetDropsEntitlementsOpt
         {
             Id = data.Get("id").AsStringArray(),
             UserId = data.Get("user_id").AsString(),
@@ -32,6 +33,9 @@ public partial class TwitchGetDropsEntitlementsOpt : RefCounted, ITwitcherSharp<
             After = data.Get("after").AsString(),
             First = data.Get("first").AsInt32(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

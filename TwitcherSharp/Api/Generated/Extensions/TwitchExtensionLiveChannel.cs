@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Extensions;
@@ -18,7 +19,7 @@ public partial class TwitchExtensionLiveChannel : RefCounted, ITwitcherSharp<Twi
     public static TwitchExtensionLiveChannel FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchExtensionLiveChannel
+        var instance = new TwitchExtensionLiveChannel
         {
             BroadcasterId = data.Get("broadcaster_id").AsString(),
             BroadcasterName = data.Get("broadcaster_name").AsString(),
@@ -26,6 +27,9 @@ public partial class TwitchExtensionLiveChannel : RefCounted, ITwitcherSharp<Twi
             GameId = data.Get("game_id").AsString(),
             Title = data.Get("title").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

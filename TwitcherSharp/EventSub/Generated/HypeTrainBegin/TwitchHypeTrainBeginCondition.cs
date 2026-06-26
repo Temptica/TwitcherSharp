@@ -1,18 +1,21 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
 namespace TwitcherSharp.EventSub.Generated.HypeTrainBegin;
 
-public partial class TwitchHypeTrainBeginCondition : RefCounted, ITwitcherSharpCondition<TwitchHypeTrainBeginCondition>
+public partial class TwitchHypeTrainBeginCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchHypeTrainBeginCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchHypeTrainBeginCondition);
 
     /// <summary> 
     /// The ID of the broadcaster that you want to get Hype Train begin notifications for.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchHypeTrainBeginCondition object.
@@ -20,10 +23,10 @@ public partial class TwitchHypeTrainBeginCondition : RefCounted, ITwitcherSharpC
     public static TwitchHypeTrainBeginCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchHypeTrainBeginCondition
-        {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-        };
+        var instance = new TwitchHypeTrainBeginCondition(data.Get("broadcaster_user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -37,9 +40,8 @@ public partial class TwitchHypeTrainBeginCondition : RefCounted, ITwitcherSharpC
 
     public static TwitchHypeTrainBeginCondition FromDictionary(Dictionary data)
     {
-        return new TwitchHypeTrainBeginCondition
+        return new TwitchHypeTrainBeginCondition(data["broadcaster_user_id"].AsString())
         {
-            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
         };
     }
 

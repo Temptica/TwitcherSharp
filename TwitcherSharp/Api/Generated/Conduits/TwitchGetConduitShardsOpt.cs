@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Conduits;
@@ -19,11 +20,14 @@ public partial class TwitchGetConduitShardsOpt : RefCounted, ITwitcherSharp<Twit
     public static TwitchGetConduitShardsOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGetConduitShardsOpt
+        var instance = new TwitchGetConduitShardsOpt
         {
             Status = data.Get("status").AsString(),
             After = data.Get("after").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

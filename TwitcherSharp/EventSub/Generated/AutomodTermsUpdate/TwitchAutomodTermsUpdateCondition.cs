@@ -1,23 +1,26 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
 namespace TwitcherSharp.EventSub.Generated.AutomodTermsUpdate;
 
-public partial class TwitchAutomodTermsUpdateCondition : RefCounted, ITwitcherSharpCondition<TwitchAutomodTermsUpdateCondition>
+public partial class TwitchAutomodTermsUpdateCondition(string broadcasterUserId, string moderatorUserId) : RefCounted, ITwitcherSharpCondition<TwitchAutomodTermsUpdateCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchAutomodTermsUpdateCondition);
 
     /// <summary> 
     /// User ID of the broadcaster (channel). Maximum:1.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
     /// User ID of the moderator creating the subscription. Maximum:1
     /// </summary>
-    public string ModeratorUserId { get; set; }
+    public string ModeratorUserId { get; set; } = moderatorUserId;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchAutomodTermsUpdateCondition object.
@@ -25,11 +28,10 @@ public partial class TwitchAutomodTermsUpdateCondition : RefCounted, ITwitcherSh
     public static TwitchAutomodTermsUpdateCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchAutomodTermsUpdateCondition
-        {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-            ModeratorUserId = data.Get("moderator_user_id").AsString(),
-        };
+        var instance = new TwitchAutomodTermsUpdateCondition(data.Get("broadcaster_user_id").AsString(), data.Get("moderator_user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -44,10 +46,8 @@ public partial class TwitchAutomodTermsUpdateCondition : RefCounted, ITwitcherSh
 
     public static TwitchAutomodTermsUpdateCondition FromDictionary(Dictionary data)
     {
-        return new TwitchAutomodTermsUpdateCondition
+        return new TwitchAutomodTermsUpdateCondition(data["broadcaster_user_id"].AsString(), data["moderator_user_id"].AsString())
         {
-            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
-            ModeratorUserId = data["moderator_user_id"].AsString(),
         };
     }
 

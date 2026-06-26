@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.Chat;
@@ -7,7 +8,13 @@ namespace TwitcherSharp.Chat;
 public partial class TwitchCommandInfo : Resource, ITwitcherSharp<TwitchCommandInfo>
 {
 	private GodotObject _data;
-	public TwitchCommand Command { get; set; }
+
+	public TwitchCommand Command
+	{
+		get => field ??= TwitchCommand.FromObject(_data?.Get("command").AsGodotObject());
+		set;
+	}
+
 	public string ChannelName { get; set; }
 	public string Username { get; set; }
 	public List<string> Arguments { get; set; }
@@ -17,16 +24,21 @@ public partial class TwitchCommandInfo : Resource, ITwitcherSharp<TwitchCommandI
 	/// </summary>
 	public string TextMessage { get; set; }
 	
-	public Variant OriginalMessage { get; set; }
-	
+	public Variant OriginalMessage => _data.Get("original_message");
+
 	public TwitchChatMessageType MessageType { get; set; }
-	
-	
+
+
 	/// <summary>
 	/// Only available if MessageType is ChatMessage
 	/// </summary>
-	public TwitchChatMessage ChatMessage { get; set; }
-	public Dictionary WhisperMessage { get; set; }
+	public TwitchChatMessage ChatMessage
+	{
+		get => field ??= TwitchChatMessage.FromObject(OriginalMessage.AsGodotObject());
+		set;
+	}
+
+	public Dictionary WhisperMessage { get => field ??= OriginalMessage.AsGodotDictionary(); set; }
 	
 	public static TwitchCommandInfo FromObject(GodotObject data)
 	{
@@ -35,9 +47,7 @@ public partial class TwitchCommandInfo : Resource, ITwitcherSharp<TwitchCommandI
 			ChannelName = data.Get("channel_name").AsString(),
 			Username = data.Get("username").AsString(),
 			Arguments = data.Get("arguments").AsGodotArray<string>().ToList(),
-			OriginalMessage = data.Get("original_message"),
 			TextMessage = data.Get("text_message").AsString(),
-			Command = TwitchCommand.FromObject(data.Get("command").AsGodotObject()),
 			_data = data,
 		};
 
@@ -46,11 +56,6 @@ public partial class TwitchCommandInfo : Resource, ITwitcherSharp<TwitchCommandI
 			//whisper
 			info.MessageType = TwitchChatMessageType.WhisperMessage;
 			info.WhisperMessage = info.OriginalMessage.AsGodotDictionary();
-		}
-		else if(info.OriginalMessage.VariantType == Variant.Type.Object)
-		{
-			info.MessageType = TwitchChatMessageType.ChatMessage;
-			info.ChatMessage = TwitchChatMessage.FromObject(info.OriginalMessage.AsGodotObject());
 		}
 
 		return info;
@@ -61,7 +66,7 @@ public partial class TwitchCommandInfo : Resource, ITwitcherSharp<TwitchCommandI
 	{
 		var script = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_command_info.gd");
 		var instance = script.New(Command?.ToGodotObject(),ChannelName, Username, OriginalMessage, TextMessage).AsGodotObject();
-		instance.Set("arguments", Arguments?.ToArray());
+		instance.Set("arguments", Arguments?.ToVariantArray());
 		return instance;
 	}
 }

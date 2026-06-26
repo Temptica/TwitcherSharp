@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Users;
@@ -19,11 +20,14 @@ public partial class TwitchGetUsersOpt : RefCounted, ITwitcherSharp<TwitchGetUse
     public static TwitchGetUsersOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGetUsersOpt
+        var instance = new TwitchGetUsersOpt
         {
             Id = data.Get("id").AsStringArray(),
             Login = data.Get("login").AsStringArray(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Chat;
@@ -16,12 +17,15 @@ public partial class TwitchSendChatAnnouncementBody : RefCounted, ITwitcherSharp
     public static TwitchSendChatAnnouncementBody FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchSendChatAnnouncementBody
+        var instance = new TwitchSendChatAnnouncementBody
         {
             Message = data.Get("message").AsString(),
             Color = data.Get("color").AsString(),
             SourceOnly = data.Get("source_only").AsBool(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

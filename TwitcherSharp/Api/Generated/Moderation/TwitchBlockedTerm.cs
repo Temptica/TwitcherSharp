@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
@@ -20,7 +21,7 @@ public partial class TwitchBlockedTerm : RefCounted, ITwitcherSharp<TwitchBlocke
     public static TwitchBlockedTerm FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchBlockedTerm
+        var instance = new TwitchBlockedTerm
         {
             BroadcasterId = data.Get("broadcaster_id").AsString(),
             ModeratorId = data.Get("moderator_id").AsString(),
@@ -30,6 +31,9 @@ public partial class TwitchBlockedTerm : RefCounted, ITwitcherSharp<TwitchBlocke
             UpdatedAt = data.Get("updated_at").AsString(),
             ExpiresAt = data.Get("expires_at").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

@@ -1,5 +1,6 @@
 using Godot;
 using TwitcherSharp.Api.Generated.Users;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.Chat;
@@ -35,8 +36,8 @@ public partial class TwitchCommandHelp: TwitchCommand, ITwitcherSharp<TwitchComm
 	public new GodotObject ToGodotObject()
 	{
 		var data = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_command_help.gd").New().AsGodotObject();
-		data.Set("command_prefixes", CommandPrefixes.ToArray());
-		data.Set("aliases", Aliases.ToArray());
+		data.Set("command_prefixes", CommandPrefixes.ToVariantArray());
+		data.Set("aliases", Aliases.ToVariantArray());
 		data.Set("args_min", ArgsMin);
 		data.Set("args_max", ArgsMax);
 		data.Set("sender_user", SenderUser?.ToGodotObject());

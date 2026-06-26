@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
@@ -7,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.Goals;
 
 public partial class TwitchGoalsEvent : RefCounted, ITwitcherSharpEventSub<TwitchGoalsEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// An ID that identifies this event.
     /// </summary>
@@ -68,7 +71,7 @@ public partial class TwitchGoalsEvent : RefCounted, ITwitcherSharpEventSub<Twitc
     public static TwitchGoalsEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGoalsEvent
+        var instance = new TwitchGoalsEvent
         {
             Id = data.Get("id").AsString(),
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
@@ -82,6 +85,9 @@ public partial class TwitchGoalsEvent : RefCounted, ITwitcherSharpEventSub<Twitc
             StartedAt = data.Get("started_at").AsString(),
             EndedAt = data.Get("ended_at").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

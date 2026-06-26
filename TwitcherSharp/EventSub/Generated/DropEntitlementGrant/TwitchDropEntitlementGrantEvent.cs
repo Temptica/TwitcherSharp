@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
@@ -7,6 +8,8 @@ namespace TwitcherSharp.EventSub.Generated.DropEntitlementGrant;
 
 public partial class TwitchDropEntitlementGrantEvent : RefCounted, ITwitcherSharpEventSub<TwitchDropEntitlementGrantEvent>
 {
+    private GodotObject _data;
+    
     /// <summary> 
     /// Individual event ID, as assigned by EventSub. Use this for de-duplicating messages.
     /// </summary>
@@ -15,7 +18,7 @@ public partial class TwitchDropEntitlementGrantEvent : RefCounted, ITwitcherShar
     /// <summary> 
     /// Entitlement object.
     /// </summary>
-    public TwitchData[] Data { get; set; }
+    public TwitchData[] Data { get => field ??= _data?.GetArray<TwitchData>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchDropEntitlementGrantEvent object.
@@ -23,12 +26,13 @@ public partial class TwitchDropEntitlementGrantEvent : RefCounted, ITwitcherShar
     public static TwitchDropEntitlementGrantEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchDropEntitlementGrantEvent
+        var instance = new TwitchDropEntitlementGrantEvent
         {
             Id = data.Get("id").AsString(),
-            Data = dataArray.Select(TwitchData.FromObject).ToArray(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -37,13 +41,15 @@ public partial class TwitchDropEntitlementGrantEvent : RefCounted, ITwitcherShar
         var eventClass = script.Get("Event").As<GDScript>();
         var request = eventClass.New().AsGodotObject();
         request.Set("id", Id);
-        request.Set("data", new Godot.Collections.Array(Data.Select(x => x.ToGodotObject()).ToArray()));
+        if(Data != null) request.Set("data", Data?.ToGodotArray());
         return request;
     }
 
 
     public partial class TwitchData : RefCounted, ITwitcherSharpEventSub<TwitchData>
     {
+        private GodotObject _data;
+        
         /// <summary> 
         /// The ID of the organization that owns the game that has Drops enabled.
         /// </summary>
@@ -100,7 +106,7 @@ public partial class TwitchDropEntitlementGrantEvent : RefCounted, ITwitcherShar
         public static TwitchData FromObject(GodotObject data)
         {
             if(data == null) return null;
-            return new TwitchData
+            var instance = new TwitchData
             {
                 OrganizationId = data.Get("organization_id").AsString(),
                 CategoryId = data.Get("category_id").AsString(),
@@ -113,6 +119,9 @@ public partial class TwitchDropEntitlementGrantEvent : RefCounted, ITwitcherShar
                 BenefitId = data.Get("benefit_id").AsString(),
                 CreatedAt = data.Get("created_at").AsString(),
             };
+            
+            instance._data = data;
+            return instance;
         }
     
         public GodotObject ToGodotObject()

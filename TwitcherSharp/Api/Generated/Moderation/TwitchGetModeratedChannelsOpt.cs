@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
@@ -19,11 +20,14 @@ public partial class TwitchGetModeratedChannelsOpt : RefCounted, ITwitcherSharp<
     public static TwitchGetModeratedChannelsOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGetModeratedChannelsOpt
+        var instance = new TwitchGetModeratedChannelsOpt
         {
             After = data.Get("after").AsString(),
             First = data.Get("first").AsInt32(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

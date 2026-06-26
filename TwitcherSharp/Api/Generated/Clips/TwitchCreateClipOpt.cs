@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Clips;
@@ -19,11 +20,14 @@ public partial class TwitchCreateClipOpt : RefCounted, ITwitcherSharp<TwitchCrea
     public static TwitchCreateClipOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchCreateClipOpt
+        var instance = new TwitchCreateClipOpt
         {
             Title = data.Get("title").AsString(),
             Duration = data.Get("duration").AsDouble(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

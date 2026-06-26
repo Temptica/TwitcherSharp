@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.GuestStar;
@@ -18,7 +19,7 @@ public partial class TwitchUpdateChannelGuestStarSettingsBody : RefCounted, ITwi
     public static TwitchUpdateChannelGuestStarSettingsBody FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchUpdateChannelGuestStarSettingsBody
+        var instance = new TwitchUpdateChannelGuestStarSettingsBody
         {
             IsModeratorSendLiveEnabled = data.Get("is_moderator_send_live_enabled").AsBool(),
             SlotCount = data.Get("slot_count").AsInt32(),
@@ -26,6 +27,9 @@ public partial class TwitchUpdateChannelGuestStarSettingsBody : RefCounted, ITwi
             GroupLayout = data.Get("group_layout").AsString(),
             RegenerateBrowserSources = data.Get("regenerate_browser_sources").AsBool(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

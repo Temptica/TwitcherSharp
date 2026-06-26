@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Search;
@@ -16,12 +17,15 @@ public partial class TwitchCategory : RefCounted, ITwitcherSharp<TwitchCategory>
     public static TwitchCategory FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchCategory
+        var instance = new TwitchCategory
         {
             BoxArtUrl = data.Get("box_art_url").AsString(),
             Name = data.Get("name").AsString(),
             Id = data.Get("id").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Extensions;
@@ -17,13 +18,16 @@ public partial class TwitchExtensionConfigurationSegment : RefCounted, ITwitcher
     public static TwitchExtensionConfigurationSegment FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchExtensionConfigurationSegment
+        var instance = new TwitchExtensionConfigurationSegment
         {
             Segment = data.Get("segment").AsString(),
             BroadcasterId = data.Get("broadcaster_id").AsString(),
             Content = data.Get("content").AsString(),
             Version = data.Get("version").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

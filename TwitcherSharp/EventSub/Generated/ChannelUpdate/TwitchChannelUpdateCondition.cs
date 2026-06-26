@@ -1,18 +1,21 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
 namespace TwitcherSharp.EventSub.Generated.ChannelUpdate;
 
-public partial class TwitchChannelUpdateCondition : RefCounted, ITwitcherSharpCondition<TwitchChannelUpdateCondition>
+public partial class TwitchChannelUpdateCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelUpdateCondition>
 {
+    private GodotObject _data;
+    
     public string Name => nameof(TwitchChannelUpdateCondition);
 
     /// <summary> 
     /// The broadcaster user ID for the channel you want to get updates for.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelUpdateCondition object.
@@ -20,10 +23,10 @@ public partial class TwitchChannelUpdateCondition : RefCounted, ITwitcherSharpCo
     public static TwitchChannelUpdateCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchChannelUpdateCondition
-        {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-        };
+        var instance = new TwitchChannelUpdateCondition(data.Get("broadcaster_user_id").AsString());
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -37,9 +40,8 @@ public partial class TwitchChannelUpdateCondition : RefCounted, ITwitcherSharpCo
 
     public static TwitchChannelUpdateCondition FromDictionary(Dictionary data)
     {
-        return new TwitchChannelUpdateCondition
+        return new TwitchChannelUpdateCondition(data["broadcaster_user_id"].AsString())
         {
-            BroadcasterUserId = data["broadcaster_user_id"].AsString(),
         };
     }
 

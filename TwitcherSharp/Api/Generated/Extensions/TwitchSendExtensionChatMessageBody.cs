@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Extensions;
@@ -16,12 +17,15 @@ public partial class TwitchSendExtensionChatMessageBody : RefCounted, ITwitcherS
     public static TwitchSendExtensionChatMessageBody FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchSendExtensionChatMessageBody
+        var instance = new TwitchSendExtensionChatMessageBody
         {
             Text = data.Get("text").AsString(),
             ExtensionId = data.Get("extension_id").AsString(),
             ExtensionVersion = data.Get("extension_version").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

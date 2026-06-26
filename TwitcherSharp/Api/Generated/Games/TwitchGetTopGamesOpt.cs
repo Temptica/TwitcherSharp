@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Games;
@@ -20,12 +21,15 @@ public partial class TwitchGetTopGamesOpt : RefCounted, ITwitcherSharp<TwitchGet
     public static TwitchGetTopGamesOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchGetTopGamesOpt
+        var instance = new TwitchGetTopGamesOpt
         {
             First = data.Get("first").AsInt32(),
             After = data.Get("after").AsString(),
             Before = data.Get("before").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.CCLs;
@@ -6,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.CCLs;
 public partial class TwitchGetContentClassificationLabelsResponse : RefCounted, ITwitcherSharp<TwitchGetContentClassificationLabelsResponse>
 {
     private GodotObject _data;
-    public TwitchContentClassificationLabel[] Data { get; set; }
+    public TwitchContentClassificationLabel[] Data { get => field ??= _data?.GetArray<TwitchContentClassificationLabel>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetContentClassificationLabelsResponse object.
@@ -14,11 +15,10 @@ public partial class TwitchGetContentClassificationLabelsResponse : RefCounted, 
     public static TwitchGetContentClassificationLabelsResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchGetContentClassificationLabelsResponse
-        {
-            Data = dataArray.Select(TwitchContentClassificationLabel.FromObject).ToArray(),
-        };
+        var instance = new TwitchGetContentClassificationLabelsResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -26,7 +26,7 @@ public partial class TwitchGetContentClassificationLabelsResponse : RefCounted, 
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_content_classification_labels.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", new Godot.Collections.Array<GodotObject>(Data.Select(x => x.ToGodotObject()).ToArray()));
+        if(Data != null) request.Set("data", Data?.ToGodotArray());
         return request;
     }
 

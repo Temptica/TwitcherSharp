@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Schedule;
@@ -19,7 +20,7 @@ public partial class TwitchCreateChannelStreamScheduleSegmentBody : RefCounted, 
     public static TwitchCreateChannelStreamScheduleSegmentBody FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchCreateChannelStreamScheduleSegmentBody
+        var instance = new TwitchCreateChannelStreamScheduleSegmentBody
         {
             StartTime = data.Get("start_time").AsString(),
             Timezone = data.Get("timezone").AsString(),
@@ -28,6 +29,9 @@ public partial class TwitchCreateChannelStreamScheduleSegmentBody : RefCounted, 
             CategoryId = data.Get("category_id").AsString(),
             Title = data.Get("title").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

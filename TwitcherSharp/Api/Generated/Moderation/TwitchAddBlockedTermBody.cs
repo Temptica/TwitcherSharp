@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
@@ -14,10 +15,13 @@ public partial class TwitchAddBlockedTermBody : RefCounted, ITwitcherSharp<Twitc
     public static TwitchAddBlockedTermBody FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchAddBlockedTermBody
+        var instance = new TwitchAddBlockedTermBody
         {
             Text = data.Get("text").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

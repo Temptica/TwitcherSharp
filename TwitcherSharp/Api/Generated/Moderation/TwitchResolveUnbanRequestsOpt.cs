@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Moderation;
@@ -18,10 +19,13 @@ public partial class TwitchResolveUnbanRequestsOpt : RefCounted, ITwitcherSharp<
     public static TwitchResolveUnbanRequestsOpt FromObject(GodotObject data)
     {
         if(data == null) return null;
-        return new TwitchResolveUnbanRequestsOpt
+        var instance = new TwitchResolveUnbanRequestsOpt
         {
             ResolutionText = data.Get("resolution_text").AsString(),
         };
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()

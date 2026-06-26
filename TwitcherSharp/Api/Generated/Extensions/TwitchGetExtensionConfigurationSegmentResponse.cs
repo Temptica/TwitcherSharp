@@ -1,4 +1,5 @@
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Extensions;
 using Godot;
    
 namespace TwitcherSharp.Api.Generated.Extensions;
@@ -6,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Extensions;
 public partial class TwitchGetExtensionConfigurationSegmentResponse : RefCounted, ITwitcherSharp<TwitchGetExtensionConfigurationSegmentResponse>
 {
     private GodotObject _data;
-    public TwitchExtensionConfigurationSegment[] Data { get; set; }
+    public TwitchExtensionConfigurationSegment[] Data { get => field ??= _data?.GetArray<TwitchExtensionConfigurationSegment>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetExtensionConfigurationSegmentResponse object.
@@ -14,11 +15,10 @@ public partial class TwitchGetExtensionConfigurationSegmentResponse : RefCounted
     public static TwitchGetExtensionConfigurationSegmentResponse FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var dataArray = data.Get("data").AsGodotArray<GodotObject>();
-        return new TwitchGetExtensionConfigurationSegmentResponse
-        {
-            Data = dataArray.Select(TwitchExtensionConfigurationSegment.FromObject).ToArray(),
-        };
+        var instance = new TwitchGetExtensionConfigurationSegmentResponse();
+        
+        instance._data = data;
+        return instance;
     }
 
     public GodotObject ToGodotObject()
@@ -26,7 +26,7 @@ public partial class TwitchGetExtensionConfigurationSegmentResponse : RefCounted
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_extension_configuration_segment.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", new Godot.Collections.Array<GodotObject>(Data.Select(x => x.ToGodotObject()).ToArray()));
+        if(Data != null) request.Set("data", Data?.ToGodotArray());
         return request;
     }
 
