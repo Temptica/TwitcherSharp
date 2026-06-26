@@ -3,15 +3,10 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.Chat;
 
-public partial class TwitchAnnouncementColor : RefCounted, ITwitcherSharp<TwitchAnnouncementColor>
+public partial class TwitchAnnouncementColor(string color) : RefCounted, ITwitcherSharp<TwitchAnnouncementColor>
 {
     private GodotObject _data;
-    public string Value { get; set; }
-
-    private TwitchAnnouncementColor(string color)
-    {
-        Value = color;
-    }
+    public string Value { get; set; } = color;
 
     public static readonly TwitchAnnouncementColor Blue = new("blue");
     public static readonly TwitchAnnouncementColor Green = new("green");
@@ -24,10 +19,14 @@ public partial class TwitchAnnouncementColor : RefCounted, ITwitcherSharp<Twitch
         return new TwitchAnnouncementColor(data.Get("value").AsString());
     }
 
-
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_announcement_color.gd");
         return script.New(Value).AsGodotObject();
+    }
+
+    public static implicit operator TwitchAnnouncementColor(string color)
+    {
+        return new TwitchAnnouncementColor(color);
     }
 }

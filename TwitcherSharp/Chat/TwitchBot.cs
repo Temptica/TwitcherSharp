@@ -141,7 +141,7 @@ public partial class TwitchBot : RefCounted, ITwitcherSharpSingleton<TwitchBot>
 
         if (Instance.IsLinked)
         {
-            await Instance._data.CallAsync("send_Shoutout", fromUser.ToGodotObject(), targetUser.ToGodotObject());
+            await Instance._data.CallAsync("send_shoutout", fromUser.ToGodotObject(), targetUser.ToGodotObject());
             return;
         }
 
