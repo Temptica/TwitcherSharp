@@ -57,3 +57,6 @@ nunit-*.xml
 riderModule.iml
 /_ReSharper.Caches/
 .idea/
+
+# graphify
+graphify-out/
