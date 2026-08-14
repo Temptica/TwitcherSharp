@@ -6,17 +6,17 @@ namespace TwitcherSharp.Api.Generated.Shared;
 
 public partial class TwitchUserExtensionComponentUpdate : RefCounted, ITwitcherSharp<TwitchUserExtensionComponentUpdate>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     public bool Active { get; set; }
-    public string Id { get; set; }
-    public string Version { get; set; }
+    public string? Id { get; set; }
+    public string? Version { get; set; }
     public int? X { get; set; }
     public int? Y { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUserExtensionComponentUpdate object.
     /// </summary> 
-    public static TwitchUserExtensionComponentUpdate FromObject(GodotObject data)
+    public static TwitchUserExtensionComponentUpdate? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchUserExtensionComponentUpdate

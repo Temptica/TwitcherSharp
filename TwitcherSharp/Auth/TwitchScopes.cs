@@ -12,8 +12,9 @@ public partial class TwitchScopes(StringName val, string description, string cat
 
     public string GetCategory => string.IsNullOrEmpty(Category) ? Value.ToString().Split(':')[0] : Category;
 
-    public static TwitchScopes FromObject(GodotObject data)
+    public static TwitchScopes? FromObject(GodotObject? data)
     {
+        if (data == null) return null;
         return new TwitchScopes(data.Get("value").AsStringName(), data.Get("description").AsStringName(),
             data.Get("category").AsStringName());
     }

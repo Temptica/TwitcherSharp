@@ -8,27 +8,27 @@ namespace TwitcherSharp.EventSub.Generated.ChannelPointsCustomRewardUpdate;
 
 public partial class TwitchChannelPointsCustomRewardUpdateEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelPointsCustomRewardUpdateEvent>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     /// <summary> 
     /// The reward identifier.
     /// </summary>
-    public string Id { get; set; }
+    public string? Id { get; set; }
 
     /// <summary> 
     /// The requested broadcaster ID.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string? BroadcasterUserId { get; set; }
 
     /// <summary> 
     /// The requested broadcaster login.
     /// </summary>
-    public string BroadcasterUserLogin { get; set; }
+    public string? BroadcasterUserLogin { get; set; }
 
     /// <summary> 
     /// The requested broadcaster display name.
     /// </summary>
-    public string BroadcasterUserName { get; set; }
+    public string? BroadcasterUserName { get; set; }
 
     /// <summary> 
     /// Is the reward currently enabled. If false, the reward won’t show up to viewers.
@@ -48,7 +48,7 @@ public partial class TwitchChannelPointsCustomRewardUpdateEvent : RefCounted, IT
     /// <summary> 
     /// The reward title.
     /// </summary>
-    public string Title { get; set; }
+    public string? Title { get; set; }
 
     /// <summary> 
     /// The reward cost.
@@ -58,7 +58,7 @@ public partial class TwitchChannelPointsCustomRewardUpdateEvent : RefCounted, IT
     /// <summary> 
     /// The reward description.
     /// </summary>
-    public string Prompt { get; set; }
+    public string? Prompt { get; set; }
 
     /// <summary> 
     /// Does the viewer need to enter information when redeeming the reward.
@@ -73,32 +73,32 @@ public partial class TwitchChannelPointsCustomRewardUpdateEvent : RefCounted, IT
     /// <summary> 
     /// 
     /// </summary>
-    public TwitchMaxPerStream MaxPerStream { get => field ??= _data?.Get<TwitchMaxPerStream>("max_per_stream"); set; }
+    public TwitchMaxPerStream? MaxPerStream { get => field ??= _data?.Get<TwitchMaxPerStream>("max_per_stream"); set; }
 
     /// <summary> 
     /// 
     /// </summary>
-    public TwitchMaxPerUserPerStream MaxPerUserPerStream { get => field ??= _data?.Get<TwitchMaxPerUserPerStream>("max_per_user_per_stream"); set; }
+    public TwitchMaxPerUserPerStream? MaxPerUserPerStream { get => field ??= _data?.Get<TwitchMaxPerUserPerStream>("max_per_user_per_stream"); set; }
 
     /// <summary> 
     /// Custom background color for the reward. Format: Hex with # prefix. Example: #FA1ED2.
     /// </summary>
-    public string BackgroundColor { get; set; }
+    public string? BackgroundColor { get; set; }
 
     /// <summary> 
     /// 
     /// </summary>
-    public TwitchImage Image { get => field ??= _data?.Get<TwitchImage>("image"); set; }
+    public TwitchImage? Image { get => field ??= _data?.Get<TwitchImage>("image"); set; }
 
     /// <summary> 
     /// 
     /// </summary>
-    public TwitchGlobalCooldown GlobalCooldown { get => field ??= _data?.Get<TwitchGlobalCooldown>("global_cooldown"); set; }
+    public TwitchGlobalCooldown? GlobalCooldown { get => field ??= _data?.Get<TwitchGlobalCooldown>("global_cooldown"); set; }
 
     /// <summary> 
     /// Timestamp of the cooldown expiration. null if the reward isn’t on cooldown.
     /// </summary>
-    public string CooldownExpiresAt { get; set; }
+    public string? CooldownExpiresAt { get; set; }
 
     /// <summary> 
     /// The number of redemptions redeemed during the current live stream. Counts against the max_per_stream limit. null if the broadcasters stream isn’t live or max_per_stream isn’t enabled.
@@ -108,7 +108,7 @@ public partial class TwitchChannelPointsCustomRewardUpdateEvent : RefCounted, IT
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelPointsCustomRewardUpdateEvent object.
     /// </summary> 
-    public static TwitchChannelPointsCustomRewardUpdateEvent FromObject(GodotObject data)
+    public static TwitchChannelPointsCustomRewardUpdateEvent? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannelPointsCustomRewardUpdateEvent
@@ -139,24 +139,24 @@ public partial class TwitchChannelPointsCustomRewardUpdateEvent : RefCounted, IT
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_points_custom_reward_update.gd");
         var eventClass = script.Get("Event").As<GDScript>();
         var request = eventClass.New().AsGodotObject();
-        request.Set("id", Id);
-        request.Set("broadcaster_user_id", BroadcasterUserId);
-        request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        request.Set("broadcaster_user_name", BroadcasterUserName);
+        if(Id != null) request.Set("id", Id);
+        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
+        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
         request.Set("is_enabled", IsEnabled);
         request.Set("is_paused", IsPaused);
         request.Set("is_in_stock", IsInStock);
-        request.Set("title", Title);
+        if(Title != null) request.Set("title", Title);
         request.Set("cost", Cost);
-        request.Set("prompt", Prompt);
+        if(Prompt != null) request.Set("prompt", Prompt);
         request.Set("is_user_input_required", IsUserInputRequired);
         request.Set("should_redemptions_skip_request_queue", ShouldRedemptionsSkipRequestQueue);
-        request.Set("max_per_stream", MaxPerStream?.ToGodotObject());
-        request.Set("max_per_user_per_stream", MaxPerUserPerStream?.ToGodotObject());
-        request.Set("background_color", BackgroundColor);
-        request.Set("image", Image?.ToGodotObject());
-        request.Set("global_cooldown", GlobalCooldown?.ToGodotObject());
-        request.Set("cooldown_expires_at", CooldownExpiresAt);
+        if(MaxPerStream != null) request.Set("max_per_stream", MaxPerStream.ToGodotObject());
+        if(MaxPerUserPerStream != null) request.Set("max_per_user_per_stream", MaxPerUserPerStream.ToGodotObject());
+        if(BackgroundColor != null) request.Set("background_color", BackgroundColor);
+        if(Image != null) request.Set("image", Image.ToGodotObject());
+        if(GlobalCooldown != null) request.Set("global_cooldown", GlobalCooldown.ToGodotObject());
+        if(CooldownExpiresAt != null) request.Set("cooldown_expires_at", CooldownExpiresAt);
         request.Set("redemptions_redeemed_current_stream", RedemptionsRedeemedCurrentStream);
         return request;
     }

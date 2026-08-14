@@ -6,12 +6,12 @@ namespace TwitcherSharp.Api.Generated.ChannelPoints;
 
 public partial class TwitchCreateCustomRewardsBody : RefCounted, ITwitcherSharp<TwitchCreateCustomRewardsBody>
 {
-    private GodotObject _data;
-    public string Title { get; set; }
+    private GodotObject? _data;
+    public string? Title { get; set; }
     public int Cost { get; set; }
-    public string Prompt { get; set; }
+    public string? Prompt { get; set; }
     public bool? IsEnabled { get; set; }
-    public string BackgroundColor { get; set; }
+    public string? BackgroundColor { get; set; }
     public bool? IsUserInputRequired { get; set; }
     public bool? IsMaxPerStreamEnabled { get; set; }
     public int? MaxPerStream { get; set; }
@@ -24,7 +24,7 @@ public partial class TwitchCreateCustomRewardsBody : RefCounted, ITwitcherSharp<
     /// <summary> 
     /// Transforms the godot data into a TwitchCreateCustomRewardsBody object.
     /// </summary> 
-    public static TwitchCreateCustomRewardsBody FromObject(GodotObject data)
+    public static TwitchCreateCustomRewardsBody? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchCreateCustomRewardsBody
@@ -53,7 +53,7 @@ public partial class TwitchCreateCustomRewardsBody : RefCounted, ITwitcherSharp<
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_create_custom_rewards.gd");
         var bodyClass = script.Get("Body").AsGodotObject();
         var request = bodyClass.Call("new").AsGodotObject();
-        request.Set("title", Title);
+        if(Title != null) request.Set("title", Title);
         request.Set("cost", Cost);
         if(Prompt != null) request.Set("prompt", Prompt);
         if(IsEnabled.HasValue) request.Set("is_enabled", IsEnabled.Value);

@@ -6,12 +6,12 @@ namespace TwitcherSharp.Api.Generated.Chat;
 
 public partial class TwitchChatSettingsUpdated : RefCounted, ITwitcherSharp<TwitchChatSettingsUpdated>
 {
-    private GodotObject _data;
-    public string BroadcasterId { get; set; }
+    private GodotObject? _data;
+    public string? BroadcasterId { get; set; }
     public bool EmoteMode { get; set; }
     public bool FollowerMode { get; set; }
     public int FollowerModeDuration { get; set; }
-    public string ModeratorId { get; set; }
+    public string? ModeratorId { get; set; }
     public bool NonModeratorChatDelay { get; set; }
     public int NonModeratorChatDelayDuration { get; set; }
     public bool SlowMode { get; set; }
@@ -22,7 +22,7 @@ public partial class TwitchChatSettingsUpdated : RefCounted, ITwitcherSharp<Twit
     /// <summary> 
     /// Transforms the godot data into a TwitchChatSettingsUpdated object.
     /// </summary> 
-    public static TwitchChatSettingsUpdated FromObject(GodotObject data)
+    public static TwitchChatSettingsUpdated? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChatSettingsUpdated
@@ -48,7 +48,7 @@ public partial class TwitchChatSettingsUpdated : RefCounted, ITwitcherSharp<Twit
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_chat_settings_updated.gd");
         var request = script.Call("new").AsGodotObject();
-        request.Set("broadcaster_id", BroadcasterId);
+        if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
         request.Set("emote_mode", EmoteMode);
         request.Set("follower_mode", FollowerMode);
         request.Set("follower_mode_duration", FollowerModeDuration);

@@ -6,18 +6,18 @@ namespace TwitcherSharp.Api.Generated.Schedule;
 
 public partial class TwitchUpdateChannelStreamScheduleSegmentBody : RefCounted, ITwitcherSharp<TwitchUpdateChannelStreamScheduleSegmentBody>
 {
-    private GodotObject _data;
-    public string StartTime { get; set; }
-    public string Duration { get; set; }
-    public string CategoryId { get; set; }
-    public string Title { get; set; }
+    private GodotObject? _data;
+    public string? StartTime { get; set; }
+    public string? Duration { get; set; }
+    public string? CategoryId { get; set; }
+    public string? Title { get; set; }
     public bool? IsCanceled { get; set; }
-    public string Timezone { get; set; }
+    public string? Timezone { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUpdateChannelStreamScheduleSegmentBody object.
     /// </summary> 
-    public static TwitchUpdateChannelStreamScheduleSegmentBody FromObject(GodotObject data)
+    public static TwitchUpdateChannelStreamScheduleSegmentBody? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchUpdateChannelStreamScheduleSegmentBody

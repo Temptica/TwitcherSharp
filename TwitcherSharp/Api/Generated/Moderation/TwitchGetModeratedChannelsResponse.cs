@@ -1,4 +1,3 @@
-using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 using TwitcherSharp.Extensions;
 using Godot;
@@ -7,14 +6,14 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 
 public partial class TwitchGetModeratedChannelsResponse : RefCounted, ITwitcherSharp<TwitchGetModeratedChannelsResponse>
 {
-    private GodotObject _data;
-    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
-    public ResponsePagination Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
+    private GodotObject? _data;
+    public TwitchResponseData[]? Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
+    public ResponsePagination? Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetModeratedChannelsResponse object.
     /// </summary> 
-    public static TwitchGetModeratedChannelsResponse FromObject(GodotObject data)
+    public static TwitchGetModeratedChannelsResponse? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetModeratedChannelsResponse();
@@ -28,7 +27,7 @@ public partial class TwitchGetModeratedChannelsResponse : RefCounted, ITwitcherS
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_moderated_channels.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data?.ToGodotArray());
+        if(Data != null) request.Set("data", Data.ToGodotArray());
         if(Pagination != null) request.Set("pagination", Pagination);
         return request;
     }
@@ -40,13 +39,13 @@ public partial class TwitchGetModeratedChannelsResponse : RefCounted, ITwitcherS
     /// </summary>
     public partial class ResponsePagination : RefCounted, ITwitcherSharp<ResponsePagination>
     {
-        private GodotObject _data;
-        public string Cursor { get; set; }
+        private GodotObject? _data;
+        public string? Cursor { get; set; }
     
         /// <summary> 
         /// Transforms the godot data into a ResponsePagination object.
         /// </summary> 
-        public static ResponsePagination FromObject(GodotObject data)
+        public static ResponsePagination? FromObject(GodotObject? data)
         {
             if(data == null) return null;
             var instance = new ResponsePagination
@@ -74,15 +73,15 @@ public partial class TwitchGetModeratedChannelsResponse : RefCounted, ITwitcherS
     /// </summary>
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
-        private GodotObject _data;
-        public string BroadcasterId { get; set; }
-        public string BroadcasterLogin { get; set; }
-        public string BroadcasterName { get; set; }
+        private GodotObject? _data;
+        public string? BroadcasterId { get; set; }
+        public string? BroadcasterLogin { get; set; }
+        public string? BroadcasterName { get; set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseData object.
         /// </summary> 
-        public static TwitchResponseData FromObject(GodotObject data)
+        public static TwitchResponseData? FromObject(GodotObject? data)
         {
             if(data == null) return null;
             var instance = new TwitchResponseData
@@ -101,9 +100,9 @@ public partial class TwitchGetModeratedChannelsResponse : RefCounted, ITwitcherS
             var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_moderated_channels.gd");
             var twitchResponseDataClass = script.Get("ResponseData").AsGodotObject();
             var request = twitchResponseDataClass.Call("new").AsGodotObject();
-            request.Set("broadcaster_id", BroadcasterId);
-            request.Set("broadcaster_login", BroadcasterLogin);
-            request.Set("broadcaster_name", BroadcasterName);
+            if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
+            if(BroadcasterLogin != null) request.Set("broadcaster_login", BroadcasterLogin);
+            if(BroadcasterName != null) request.Set("broadcaster_name", BroadcasterName);
             return request;
         }
     

@@ -8,37 +8,37 @@ namespace TwitcherSharp.EventSub.Generated.Goals;
 
 public partial class TwitchGoalsEvent : RefCounted, ITwitcherSharpEventSub<TwitchGoalsEvent>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     /// <summary> 
     /// An ID that identifies this event.
     /// </summary>
-    public string Id { get; set; }
+    public string? Id { get; set; }
 
     /// <summary> 
     /// An ID that uniquely identifies the broadcaster.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string? BroadcasterUserId { get; set; }
 
     /// <summary> 
     /// The broadcaster’s display name.
     /// </summary>
-    public string BroadcasterUserName { get; set; }
+    public string? BroadcasterUserName { get; set; }
 
     /// <summary> 
     /// The broadcaster’s user handle.
     /// </summary>
-    public string BroadcasterUserLogin { get; set; }
+    public string? BroadcasterUserLogin { get; set; }
 
     /// <summary> 
     /// The type of goal. Possible values are: follow — The goal is to increase followers.subscription — The goal is to increase subscriptions. This type shows the net increase or decrease in tier points associated with the subscriptions.subscription_count — The goal is to increase subscriptions. This type shows the net increase or decrease in the number of subscriptions.new_subscription — The goal is to increase subscriptions. This type shows only the net increase in tier points associated with the subscriptions (it does not account for users that unsubscribed since the goal started).new_subscription_count — The goal is to increase subscriptions. This type shows only the net increase in the number of subscriptions (it does not account for users that unsubscribed since the goal started).new_bit — The goal is to increase the amount of Bits used on the channel.new_cheerer — The goal is to increase the number of unique Cheerers to Cheer on the channel.
     /// </summary>
-    public string Type { get; set; }
+    public string? Type { get; set; }
 
     /// <summary> 
     /// A description of the goal, if specified. The description may contain a maximum of 40 characters.
     /// </summary>
-    public string Description { get; set; }
+    public string? Description { get; set; }
 
     /// <summary> 
     /// A Boolean value that indicates whether the broadcaster achieved their goal. Is true if the goal was achieved; otherwise, false.Only the channel.goal.end event includes this field.
@@ -58,17 +58,17 @@ public partial class TwitchGoalsEvent : RefCounted, ITwitcherSharpEventSub<Twitc
     /// <summary> 
     /// The UTC timestamp in RFC 3339 format, which indicates when the broadcaster created the goal.
     /// </summary>
-    public string StartedAt { get; set; }
+    public string? StartedAt { get; set; }
 
     /// <summary> 
     /// The UTC timestamp in RFC 3339 format, which indicates when the broadcaster ended the goal.Only the channel.goal.end event includes this field.
     /// </summary>
-    public string EndedAt { get; set; }
+    public string? EndedAt { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGoalsEvent object.
     /// </summary> 
-    public static TwitchGoalsEvent FromObject(GodotObject data)
+    public static TwitchGoalsEvent? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGoalsEvent
@@ -95,17 +95,17 @@ public partial class TwitchGoalsEvent : RefCounted, ITwitcherSharpEventSub<Twitc
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_goals.gd");
         var eventClass = script.Get("Event").As<GDScript>();
         var request = eventClass.New().AsGodotObject();
-        request.Set("id", Id);
-        request.Set("broadcaster_user_id", BroadcasterUserId);
-        request.Set("broadcaster_user_name", BroadcasterUserName);
-        request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        request.Set("type", Type);
-        request.Set("description", Description);
+        if(Id != null) request.Set("id", Id);
+        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
+        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
+        if(Type != null) request.Set("type", Type);
+        if(Description != null) request.Set("description", Description);
         request.Set("is_achieved", IsAchieved);
         request.Set("current_amount", CurrentAmount);
         request.Set("target_amount", TargetAmount);
-        request.Set("started_at", StartedAt);
-        request.Set("ended_at", EndedAt);
+        if(StartedAt != null) request.Set("started_at", StartedAt);
+        if(EndedAt != null) request.Set("ended_at", EndedAt);
         return request;
     }
 }

@@ -6,9 +6,9 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 
 public partial class TwitchAutoModSettings : RefCounted, ITwitcherSharp<TwitchAutoModSettings>
 {
-    private GodotObject _data;
-    public string BroadcasterId { get; set; }
-    public string ModeratorId { get; set; }
+    private GodotObject? _data;
+    public string? BroadcasterId { get; set; }
+    public string? ModeratorId { get; set; }
     public int OverallLevel { get; set; }
     public int Disability { get; set; }
     public int Aggression { get; set; }
@@ -22,7 +22,7 @@ public partial class TwitchAutoModSettings : RefCounted, ITwitcherSharp<TwitchAu
     /// <summary> 
     /// Transforms the godot data into a TwitchAutoModSettings object.
     /// </summary> 
-    public static TwitchAutoModSettings FromObject(GodotObject data)
+    public static TwitchAutoModSettings? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchAutoModSettings
@@ -48,8 +48,8 @@ public partial class TwitchAutoModSettings : RefCounted, ITwitcherSharp<TwitchAu
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_auto_mod_settings.gd");
         var request = script.Call("new").AsGodotObject();
-        request.Set("broadcaster_id", BroadcasterId);
-        request.Set("moderator_id", ModeratorId);
+        if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
+        if(ModeratorId != null) request.Set("moderator_id", ModeratorId);
         request.Set("overall_level", OverallLevel);
         request.Set("disability", Disability);
         request.Set("aggression", Aggression);

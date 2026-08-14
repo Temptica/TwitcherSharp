@@ -6,13 +6,13 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 
 public partial class TwitchWarnChatUserResponse : RefCounted, ITwitcherSharp<TwitchWarnChatUserResponse>
 {
-    private GodotObject _data;
-    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
+    private GodotObject? _data;
+    public TwitchResponseData[]? Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchWarnChatUserResponse object.
     /// </summary> 
-    public static TwitchWarnChatUserResponse FromObject(GodotObject data)
+    public static TwitchWarnChatUserResponse? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchWarnChatUserResponse();
@@ -26,7 +26,7 @@ public partial class TwitchWarnChatUserResponse : RefCounted, ITwitcherSharp<Twi
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_warn_chat_user.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data?.ToGodotArray());
+        if(Data != null) request.Set("data", Data.ToGodotArray());
         return request;
     }
     
@@ -35,16 +35,16 @@ public partial class TwitchWarnChatUserResponse : RefCounted, ITwitcherSharp<Twi
     /// </summary>
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
-        private GodotObject _data;
-        public string BroadcasterId { get; set; }
-        public string UserId { get; set; }
-        public string ModeratorId { get; set; }
-        public string Reason { get; set; }
+        private GodotObject? _data;
+        public string? BroadcasterId { get; set; }
+        public string? UserId { get; set; }
+        public string? ModeratorId { get; set; }
+        public string? Reason { get; set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseData object.
         /// </summary> 
-        public static TwitchResponseData FromObject(GodotObject data)
+        public static TwitchResponseData? FromObject(GodotObject? data)
         {
             if(data == null) return null;
             var instance = new TwitchResponseData
@@ -64,10 +64,10 @@ public partial class TwitchWarnChatUserResponse : RefCounted, ITwitcherSharp<Twi
             var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_warn_chat_user.gd");
             var twitchResponseDataClass = script.Get("ResponseData").AsGodotObject();
             var request = twitchResponseDataClass.Call("new").AsGodotObject();
-            request.Set("broadcaster_id", BroadcasterId);
-            request.Set("user_id", UserId);
-            request.Set("moderator_id", ModeratorId);
-            request.Set("reason", Reason);
+            if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
+            if(UserId != null) request.Set("user_id", UserId);
+            if(ModeratorId != null) request.Set("moderator_id", ModeratorId);
+            if(Reason != null) request.Set("reason", Reason);
             return request;
         }
     

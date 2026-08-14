@@ -6,18 +6,18 @@ namespace TwitcherSharp.Api.Generated.Schedule;
 
 public partial class TwitchCreateChannelStreamScheduleSegmentBody : RefCounted, ITwitcherSharp<TwitchCreateChannelStreamScheduleSegmentBody>
 {
-    private GodotObject _data;
-    public string StartTime { get; set; }
-    public string Timezone { get; set; }
-    public string Duration { get; set; }
+    private GodotObject? _data;
+    public string? StartTime { get; set; }
+    public string? Timezone { get; set; }
+    public string? Duration { get; set; }
     public bool? IsRecurring { get; set; }
-    public string CategoryId { get; set; }
-    public string Title { get; set; }
+    public string? CategoryId { get; set; }
+    public string? Title { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCreateChannelStreamScheduleSegmentBody object.
     /// </summary> 
-    public static TwitchCreateChannelStreamScheduleSegmentBody FromObject(GodotObject data)
+    public static TwitchCreateChannelStreamScheduleSegmentBody? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchCreateChannelStreamScheduleSegmentBody
@@ -39,9 +39,9 @@ public partial class TwitchCreateChannelStreamScheduleSegmentBody : RefCounted, 
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_create_channel_stream_schedule_segment.gd");
         var bodyClass = script.Get("Body").AsGodotObject();
         var request = bodyClass.Call("new").AsGodotObject();
-        request.Set("start_time", StartTime);
-        request.Set("timezone", Timezone);
-        request.Set("duration", Duration);
+        if(StartTime != null) request.Set("start_time", StartTime);
+        if(Timezone != null) request.Set("timezone", Timezone);
+        if(Duration != null) request.Set("duration", Duration);
         if(IsRecurring.HasValue) request.Set("is_recurring", IsRecurring.Value);
         if(CategoryId != null) request.Set("category_id", CategoryId);
         if(Title != null) request.Set("title", Title);

@@ -6,17 +6,17 @@ namespace TwitcherSharp.Api.Generated.Bits;
 
 public partial class TwitchBitsLeaderboard : RefCounted, ITwitcherSharp<TwitchBitsLeaderboard>
 {
-    private GodotObject _data;
-    public string UserId { get; set; }
-    public string UserLogin { get; set; }
-    public string UserName { get; set; }
+    private GodotObject? _data;
+    public string? UserId { get; set; }
+    public string? UserLogin { get; set; }
+    public string? UserName { get; set; }
     public int Rank { get; set; }
     public int Score { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchBitsLeaderboard object.
     /// </summary> 
-    public static TwitchBitsLeaderboard FromObject(GodotObject data)
+    public static TwitchBitsLeaderboard? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchBitsLeaderboard
@@ -36,9 +36,9 @@ public partial class TwitchBitsLeaderboard : RefCounted, ITwitcherSharp<TwitchBi
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_bits_leaderboard.gd");
         var request = script.Call("new").AsGodotObject();
-        request.Set("user_id", UserId);
-        request.Set("user_login", UserLogin);
-        request.Set("user_name", UserName);
+        if(UserId != null) request.Set("user_id", UserId);
+        if(UserLogin != null) request.Set("user_login", UserLogin);
+        if(UserName != null) request.Set("user_name", UserName);
         request.Set("rank", Rank);
         request.Set("score", Score);
         return request;

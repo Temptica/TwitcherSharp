@@ -6,15 +6,15 @@ namespace TwitcherSharp.Api.Generated.Search;
 
 public partial class TwitchCategory : RefCounted, ITwitcherSharp<TwitchCategory>
 {
-    private GodotObject _data;
-    public string BoxArtUrl { get; set; }
-    public string Name { get; set; }
-    public string Id { get; set; }
+    private GodotObject? _data;
+    public string? BoxArtUrl { get; set; }
+    public string? Name { get; set; }
+    public string? Id { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCategory object.
     /// </summary> 
-    public static TwitchCategory FromObject(GodotObject data)
+    public static TwitchCategory? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchCategory
@@ -32,9 +32,9 @@ public partial class TwitchCategory : RefCounted, ITwitcherSharp<TwitchCategory>
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_category.gd");
         var request = script.Call("new").AsGodotObject();
-        request.Set("box_art_url", BoxArtUrl);
-        request.Set("name", Name);
-        request.Set("id", Id);
+        if(BoxArtUrl != null) request.Set("box_art_url", BoxArtUrl);
+        if(Name != null) request.Set("name", Name);
+        if(Id != null) request.Set("id", Id);
         return request;
     }
 

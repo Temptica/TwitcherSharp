@@ -6,13 +6,13 @@ namespace TwitcherSharp.Api.Generated.Users;
 
 public partial class TwitchUpdateUserExtensionsBody : RefCounted, ITwitcherSharp<TwitchUpdateUserExtensionsBody>
 {
-    private GodotObject _data;
-    public TwitchBodyData Data { get => field ??= _data?.Get<TwitchBodyData>("data"); set; }
+    private GodotObject? _data;
+    public TwitchBodyData? Data { get => field ??= _data?.Get<TwitchBodyData>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUpdateUserExtensionsBody object.
     /// </summary> 
-    public static TwitchUpdateUserExtensionsBody FromObject(GodotObject data)
+    public static TwitchUpdateUserExtensionsBody? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchUpdateUserExtensionsBody();
@@ -26,7 +26,7 @@ public partial class TwitchUpdateUserExtensionsBody : RefCounted, ITwitcherSharp
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_update_user_extensions.gd");
         var bodyClass = script.Get("Body").AsGodotObject();
         var request = bodyClass.Call("new").AsGodotObject();
-        request.Set("data", Data?.ToGodotObject());
+        if(Data != null) request.Set("data", Data.ToGodotObject());
         return request;
     }
     
@@ -39,7 +39,7 @@ public partial class TwitchUpdateUserExtensionsBody : RefCounted, ITwitcherSharp
     /// </summary>
     public partial class TwitchBodyData : RefCounted, ITwitcherSharp<TwitchBodyData>
     {
-        private GodotObject _data;
+        private GodotObject? _data;
         public Variant? Panel { get; set; }
         public Variant? Overlay { get; set; }
         public Variant? Component { get; set; }
@@ -47,7 +47,7 @@ public partial class TwitchUpdateUserExtensionsBody : RefCounted, ITwitcherSharp
         /// <summary> 
         /// Transforms the godot data into a TwitchBodyData object.
         /// </summary> 
-        public static TwitchBodyData FromObject(GodotObject data)
+        public static TwitchBodyData? FromObject(GodotObject? data)
         {
             if(data == null) return null;
             var instance = new TwitchBodyData

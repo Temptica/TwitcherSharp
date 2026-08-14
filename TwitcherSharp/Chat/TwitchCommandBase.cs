@@ -169,6 +169,6 @@ public abstract partial class TwitchCommandBase : RefCounted, ITwitcherSharp
         data.Set("case_insensitive", CaseInsensitive);
         data.Set("user_cooldown", UserCooldown);
         data.Set("global_cooldown", GlobalCooldown);
-        data.Set("all_commands", new Godot.Collections.Array(AllCommands.Select(c => c?.ToGodotObject()).ToArray()));
+        data.Set("all_commands", new Godot.Collections.Array(AllCommands.Select(c => c?.ToGodotObject() ?? new Variant()).ToArray()));
     }
 }

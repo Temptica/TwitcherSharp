@@ -113,9 +113,9 @@ public partial class TwitchRedemption(
         var script = GD.Load<GDScript>("res://addons/twitcher/reward/twitch_redemption.gd");
         var instance = script.New().AsGodotObject();
         instance.Set("id", Id);
-        instance.Set("reward", Reward?.ToGodotObject());
-        instance.Set("broadcaster", Broadcaster?.ToGodotObject());
-        instance.Set("user", User?.ToGodotObject());
+        instance.Set("reward", Reward?.ToGodotObject() ?? new Variant());
+        instance.Set("broadcaster", Broadcaster?.ToGodotObject() ?? new Variant());
+        instance.Set("user", User?.ToGodotObject() ?? new Variant());
         instance.Set("user_input", UserInput);
         instance.Set("current_status", (int)CurrentStatus);
         instance.Set("redeemed_at", XmlConvert.ToString(RedeemedAt, XmlDateTimeSerializationMode.Utc));

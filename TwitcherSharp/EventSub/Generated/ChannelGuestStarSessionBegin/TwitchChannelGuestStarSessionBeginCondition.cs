@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelGuestStarSessionBegin;
 
 public partial class TwitchChannelGuestStarSessionBeginCondition(string broadcasterUserId, string moderatorUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelGuestStarSessionBeginCondition>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     public string Name => nameof(TwitchChannelGuestStarSessionBeginCondition);
 
@@ -25,7 +25,7 @@ public partial class TwitchChannelGuestStarSessionBeginCondition(string broadcas
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelGuestStarSessionBeginCondition object.
     /// </summary> 
-    public static TwitchChannelGuestStarSessionBeginCondition FromObject(GodotObject data)
+    public static TwitchChannelGuestStarSessionBeginCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannelGuestStarSessionBeginCondition(data.Get("broadcaster_user_id").AsString(), data.Get("moderator_user_id").AsString());

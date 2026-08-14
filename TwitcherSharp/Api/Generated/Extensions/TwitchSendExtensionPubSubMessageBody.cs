@@ -6,16 +6,16 @@ namespace TwitcherSharp.Api.Generated.Extensions;
 
 public partial class TwitchSendExtensionPubSubMessageBody : RefCounted, ITwitcherSharp<TwitchSendExtensionPubSubMessageBody>
 {
-    private GodotObject _data;
-    public string[] Target { get; set; }
-    public string BroadcasterId { get; set; }
+    private GodotObject? _data;
+    public string[]? Target { get; set; }
+    public string? BroadcasterId { get; set; }
     public bool? IsGlobalBroadcast { get; set; }
-    public string Message { get; set; }
+    public string? Message { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchSendExtensionPubSubMessageBody object.
     /// </summary> 
-    public static TwitchSendExtensionPubSubMessageBody FromObject(GodotObject data)
+    public static TwitchSendExtensionPubSubMessageBody? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchSendExtensionPubSubMessageBody
@@ -36,9 +36,9 @@ public partial class TwitchSendExtensionPubSubMessageBody : RefCounted, ITwitche
         var bodyClass = script.Get("Body").AsGodotObject();
         var request = bodyClass.Call("new").AsGodotObject();
         if(Target != null) request.Set("target", new Godot.Collections.Array<string>(Target));
-        request.Set("broadcaster_id", BroadcasterId);
+        if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
         if(IsGlobalBroadcast.HasValue) request.Set("is_global_broadcast", IsGlobalBroadcast.Value);
-        request.Set("message", Message);
+        if(Message != null) request.Set("message", Message);
         return request;
     }
 

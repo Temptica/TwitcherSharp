@@ -98,8 +98,8 @@ public partial class TwitchRedeemListener : RefCounted, ITwitcherSharp<TwitchRed
         var script = GD.Load<GDScript>("res://addons/twitcher/reward/twitch_redeem_listener.gd");
         var instance = script.New().AsGodotObject();
         instance.Set("rewards_to_listen", RewardsToListen.ToGodotArray());
-        instance.Set("twitch_event_sub", TwitchEventSub?.ToGodotObject());
-        instance.Set("twitch_api", TwitchApi?.ToGodotObject());
+        instance.Set("twitch_event_sub", TwitchEventSub?.ToGodotObject() ?? new Variant());
+        instance.Set("twitch_api", TwitchApi?.ToGodotObject() ?? new Variant());
         instance.Set("ensure_subscriptions_on_ready", EnsureSubscriptionsOnReady);
         return instance;
     }

@@ -19,7 +19,7 @@ public partial class OAuthTokenHandler : Resource, ITwitcherSharp<OAuthTokenHand
         get;
         set
         {
-            _data.Call("_update_token", value?.ToGodotObject());
+            _data.Call("_update_token", value?.ToGodotObject() ?? new Variant());
             field = value;
         }
     }
@@ -79,7 +79,7 @@ public partial class OAuthTokenHandler : Resource, ITwitcherSharp<OAuthTokenHand
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/lib/oOuch/oauth_token_handler.gd");
         var token = script.New().AsGodotObject();
-        token.Set("token", Token?.ToGodotObject());
+        token.Set("token", Token?.ToGodotObject() ?? new Variant());
         
         return token;
     }

@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.Shared;
 
 public partial class TwitchEmotes : RefCounted, ITwitcherSharpEventSub<TwitchEmotes>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     /// <summary> 
     /// The index of where the Emote starts in the text.
@@ -23,12 +23,12 @@ public partial class TwitchEmotes : RefCounted, ITwitcherSharpEventSub<TwitchEmo
     /// <summary> 
     /// The emote ID.
     /// </summary>
-    public string Id { get; set; }
+    public string? Id { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchEmotes object.
     /// </summary> 
-    public static TwitchEmotes FromObject(GodotObject data)
+    public static TwitchEmotes? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchEmotes
@@ -48,7 +48,7 @@ public partial class TwitchEmotes : RefCounted, ITwitcherSharpEventSub<TwitchEmo
         var request = script.New().AsGodotObject();
         request.Set("begin", Begin);
         request.Set("end", End);
-        request.Set("id", Id);
+        if(Id != null) request.Set("id", Id);
         return request;
     }
 }

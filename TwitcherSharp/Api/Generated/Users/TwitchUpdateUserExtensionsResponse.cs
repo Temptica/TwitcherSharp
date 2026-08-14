@@ -6,13 +6,13 @@ namespace TwitcherSharp.Api.Generated.Users;
 
 public partial class TwitchUpdateUserExtensionsResponse : RefCounted, ITwitcherSharp<TwitchUpdateUserExtensionsResponse>
 {
-    private GodotObject _data;
-    public TwitchResponseData Data { get => field ??= _data?.Get<TwitchResponseData>("data"); set; }
+    private GodotObject? _data;
+    public TwitchResponseData? Data { get => field ??= _data?.Get<TwitchResponseData>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUpdateUserExtensionsResponse object.
     /// </summary> 
-    public static TwitchUpdateUserExtensionsResponse FromObject(GodotObject data)
+    public static TwitchUpdateUserExtensionsResponse? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchUpdateUserExtensionsResponse();
@@ -26,7 +26,7 @@ public partial class TwitchUpdateUserExtensionsResponse : RefCounted, ITwitcherS
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_update_user_extensions.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        request.Set("data", Data?.ToGodotObject());
+        if(Data != null) request.Set("data", Data.ToGodotObject());
         return request;
     }
     
@@ -35,7 +35,7 @@ public partial class TwitchUpdateUserExtensionsResponse : RefCounted, ITwitcherS
     /// </summary>
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
-        private GodotObject _data;
+        private GodotObject? _data;
         public Variant Panel { get; set; }
         public Variant Overlay { get; set; }
         public Variant Component { get; set; }
@@ -43,7 +43,7 @@ public partial class TwitchUpdateUserExtensionsResponse : RefCounted, ITwitcherS
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseData object.
         /// </summary> 
-        public static TwitchResponseData FromObject(GodotObject data)
+        public static TwitchResponseData? FromObject(GodotObject? data)
         {
             if(data == null) return null;
             var instance = new TwitchResponseData

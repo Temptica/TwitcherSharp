@@ -6,15 +6,15 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 
 public partial class TwitchManageHeldAutoModMessagesBody : RefCounted, ITwitcherSharp<TwitchManageHeldAutoModMessagesBody>
 {
-    private GodotObject _data;
-    public string UserId { get; set; }
-    public string MsgId { get; set; }
-    public string Action { get; set; }
+    private GodotObject? _data;
+    public string? UserId { get; set; }
+    public string? MsgId { get; set; }
+    public string? Action { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchManageHeldAutoModMessagesBody object.
     /// </summary> 
-    public static TwitchManageHeldAutoModMessagesBody FromObject(GodotObject data)
+    public static TwitchManageHeldAutoModMessagesBody? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchManageHeldAutoModMessagesBody
@@ -33,9 +33,9 @@ public partial class TwitchManageHeldAutoModMessagesBody : RefCounted, ITwitcher
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_manage_held_auto_mod_messages.gd");
         var bodyClass = script.Get("Body").AsGodotObject();
         var request = bodyClass.Call("new").AsGodotObject();
-        request.Set("user_id", UserId);
-        request.Set("msg_id", MsgId);
-        request.Set("action", Action);
+        if(UserId != null) request.Set("user_id", UserId);
+        if(MsgId != null) request.Set("msg_id", MsgId);
+        if(Action != null) request.Set("action", Action);
         return request;
     }
 

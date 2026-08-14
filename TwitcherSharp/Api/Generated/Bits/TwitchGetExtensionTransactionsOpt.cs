@@ -10,15 +10,15 @@ namespace TwitcherSharp.Api.Generated.Bits;
 /// </summary>
 public partial class TwitchGetExtensionTransactionsOpt : RefCounted, ITwitcherSharp<TwitchGetExtensionTransactionsOpt>
 {
-    private GodotObject _data;
-    public string[] Id { get; set; }
+    private GodotObject? _data;
+    public string[]? Id { get; set; }
     public int? First { get; set; }
-    public string After { get; set; }
+    public string? After { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetExtensionTransactionsOpt object.
     /// </summary> 
-    public static TwitchGetExtensionTransactionsOpt FromObject(GodotObject data)
+    public static TwitchGetExtensionTransactionsOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetExtensionTransactionsOpt

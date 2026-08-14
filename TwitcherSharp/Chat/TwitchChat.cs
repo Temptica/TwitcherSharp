@@ -33,7 +33,7 @@ public partial class TwitchChat : RefCounted, ITwitcherSharpSingleton<TwitchChat
         get => _data != null ? TwitchUser.FromObject(_data.Get("broadcaster_user").AsGodotObject()) : field;
         set
         {
-            _data?.Set("broadcaster_user", value?.ToGodotObject());
+            _data?.Set("broadcaster_user", value?.ToGodotObject() ?? new Variant());
             field = value;
         }
     }
@@ -43,7 +43,7 @@ public partial class TwitchChat : RefCounted, ITwitcherSharpSingleton<TwitchChat
         get => _data != null ? TwitchUser.FromObject(_data.Get("sender_user").AsGodotObject()) : field;
         set
         {
-            _data?.Set("sender_user", value?.ToGodotObject());
+            _data?.Set("sender_user", value?.ToGodotObject() ?? new Variant());
             field = value;
         }
     }
@@ -122,8 +122,8 @@ public partial class TwitchChat : RefCounted, ITwitcherSharpSingleton<TwitchChat
 
         var script = GD.Load<GDScript>(ScriptPath);
         var instance = script.New().AsGodotObject();
-        instance.Set("broadcaster_user", BroadcasterUser?.ToGodotObject());
-        instance.Set("sender_user", SenderUser?.ToGodotObject());
+        instance.Set("broadcaster_user", BroadcasterUser?.ToGodotObject() ?? new Variant());
+        instance.Set("sender_user", SenderUser?.ToGodotObject() ?? new Variant());
         instance.SetMeta("_twitcher_sharp_instance", this);
         _data = instance;
         ConnectSignals();

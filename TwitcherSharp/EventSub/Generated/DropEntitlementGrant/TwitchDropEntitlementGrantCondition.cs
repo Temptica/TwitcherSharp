@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.DropEntitlementGrant;
 
 public partial class TwitchDropEntitlementGrantCondition(string organizationId) : RefCounted, ITwitcherSharpCondition<TwitchDropEntitlementGrantCondition>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     public string Name => nameof(TwitchDropEntitlementGrantCondition);
 
@@ -20,17 +20,17 @@ public partial class TwitchDropEntitlementGrantCondition(string organizationId) 
     /// <summary> 
     /// The category (or game) ID of the game for which entitlement notifications will be received.
     /// </summary>
-    public string CategoryId { get; set; }
+    public string? CategoryId { get; set; }
 
     /// <summary> 
     /// The campaign ID for a specific campaign for which entitlement notifications will be received.
     /// </summary>
-    public string CampaignId { get; set; }
+    public string? CampaignId { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchDropEntitlementGrantCondition object.
     /// </summary> 
-    public static TwitchDropEntitlementGrantCondition FromObject(GodotObject data)
+    public static TwitchDropEntitlementGrantCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchDropEntitlementGrantCondition(data.Get("organization_id").AsString())
@@ -49,8 +49,8 @@ public partial class TwitchDropEntitlementGrantCondition(string organizationId) 
         var conditionClass = script.Get("Condition").As<GDScript>();
         var request = conditionClass.New().AsGodotObject();
         request.Set("organization_id", OrganizationId);
-        request.Set("category_id", CategoryId);
-        request.Set("campaign_id", CampaignId);
+        if(CategoryId != null) request.Set("category_id", CategoryId);
+        if(CampaignId != null) request.Set("campaign_id", CampaignId);
         return request;
     }
 
@@ -68,8 +68,8 @@ public partial class TwitchDropEntitlementGrantCondition(string organizationId) 
         return new Dictionary
         {
             {"organization_id", OrganizationId},
-            {"category_id", CategoryId},
-            {"campaign_id", CampaignId},
+            {"category_id", CategoryId!},
+            {"campaign_id", CampaignId!},
         };
     }
 }

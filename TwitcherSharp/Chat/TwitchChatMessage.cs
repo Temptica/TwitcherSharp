@@ -91,11 +91,11 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
         instance.Set("chatter_user_name", ChatterUserName);
         instance.Set("chatter_user_login", ChatterUserLogin);
         instance.Set("message_id", MessageId);
-        instance.Set("message", Content?.ToGodotObject());
+        instance.Set("message", Content?.ToGodotObject() ?? new Variant());
         instance.Set("message_type", (int)ChatMessageType);
-        instance.Set("cheer", CheerMetadata?.ToGodotObject());
+        instance.Set("cheer", CheerMetadata?.ToGodotObject() ?? new Variant());
         instance.Set("color", Color);
-        instance.Set("reply", ReplyMetadata?.ToGodotObject());
+        instance.Set("reply", ReplyMetadata?.ToGodotObject() ?? new Variant());
         instance.Set("channel_points_custom_reward_id", ChannelPointsCustomRewardId);
         instance.Set("source_broadcaster_user_id", SourceBroadcasterUserId);
         instance.Set("source_broadcaster_user_name", SourceBroadcasterUserName);
@@ -161,9 +161,9 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
             var instance = script.Get("Fragment").AsGodotObject().Call("new").AsGodotObject();
             instance.Set("type", (int)Type);
             instance.Set("text", Text);
-            instance.Set("cheermote", Cheermote?.ToGodotObject());
-            instance.Set("emote", Emote?.ToGodotObject());
-            instance.Set("mention", Mention?.ToGodotObject());
+            instance.Set("cheermote", Cheermote?.ToGodotObject() ?? new Variant());
+            instance.Set("emote", Emote?.ToGodotObject() ?? new Variant());
+            instance.Set("mention", Mention?.ToGodotObject() ?? new Variant());
             return instance;
         }
     }

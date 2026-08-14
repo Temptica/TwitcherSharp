@@ -6,10 +6,10 @@ namespace TwitcherSharp.Api.Generated.Polls;
 
 public partial class TwitchCreatePollBody : RefCounted, ITwitcherSharp<TwitchCreatePollBody>
 {
-    private GodotObject _data;
-    public string BroadcasterId { get; set; }
-    public string Title { get; set; }
-    public TwitchBodyChoices[] Choices { get => field ??= _data?.GetArray<TwitchBodyChoices>("choices"); set; }
+    private GodotObject? _data;
+    public string? BroadcasterId { get; set; }
+    public string? Title { get; set; }
+    public TwitchBodyChoices[]? Choices { get => field ??= _data?.GetArray<TwitchBodyChoices>("choices"); set; }
     public int Duration { get; set; }
     public bool? ChannelPointsVotingEnabled { get; set; }
     public int? ChannelPointsPerVote { get; set; }
@@ -17,7 +17,7 @@ public partial class TwitchCreatePollBody : RefCounted, ITwitcherSharp<TwitchCre
     /// <summary> 
     /// Transforms the godot data into a TwitchCreatePollBody object.
     /// </summary> 
-    public static TwitchCreatePollBody FromObject(GodotObject data)
+    public static TwitchCreatePollBody? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchCreatePollBody
@@ -38,9 +38,9 @@ public partial class TwitchCreatePollBody : RefCounted, ITwitcherSharp<TwitchCre
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_create_poll.gd");
         var bodyClass = script.Get("Body").AsGodotObject();
         var request = bodyClass.Call("new").AsGodotObject();
-        request.Set("broadcaster_id", BroadcasterId);
-        request.Set("title", Title);
-        if(Choices != null) request.Set("choices", Choices?.ToGodotArray());
+        if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
+        if(Title != null) request.Set("title", Title);
+        if(Choices != null) request.Set("choices", Choices.ToGodotArray());
         request.Set("duration", Duration);
         if(ChannelPointsVotingEnabled.HasValue) request.Set("channel_points_voting_enabled", ChannelPointsVotingEnabled.Value);
         if(ChannelPointsPerVote.HasValue) request.Set("channel_points_per_vote", ChannelPointsPerVote.Value);
@@ -52,13 +52,13 @@ public partial class TwitchCreatePollBody : RefCounted, ITwitcherSharp<TwitchCre
     /// </summary>
     public partial class TwitchBodyChoices : RefCounted, ITwitcherSharp<TwitchBodyChoices>
     {
-        private GodotObject _data;
-        public string Title { get; set; }
+        private GodotObject? _data;
+        public string? Title { get; set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchBodyChoices object.
         /// </summary> 
-        public static TwitchBodyChoices FromObject(GodotObject data)
+        public static TwitchBodyChoices? FromObject(GodotObject? data)
         {
             if(data == null) return null;
             var instance = new TwitchBodyChoices
@@ -75,7 +75,7 @@ public partial class TwitchCreatePollBody : RefCounted, ITwitcherSharp<TwitchCre
             var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_create_poll.gd");
             var twitchBodyChoicesClass = script.Get("BodyChoices").AsGodotObject();
             var request = twitchBodyChoicesClass.Call("new").AsGodotObject();
-            request.Set("title", Title);
+            if(Title != null) request.Set("title", Title);
             return request;
         }
     

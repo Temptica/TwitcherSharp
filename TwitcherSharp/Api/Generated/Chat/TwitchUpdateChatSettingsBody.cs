@@ -6,7 +6,7 @@ namespace TwitcherSharp.Api.Generated.Chat;
 
 public partial class TwitchUpdateChatSettingsBody : RefCounted, ITwitcherSharp<TwitchUpdateChatSettingsBody>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     public bool? EmoteMode { get; set; }
     public bool? FollowerMode { get; set; }
     public int? FollowerModeDuration { get; set; }
@@ -20,7 +20,7 @@ public partial class TwitchUpdateChatSettingsBody : RefCounted, ITwitcherSharp<T
     /// <summary> 
     /// Transforms the godot data into a TwitchUpdateChatSettingsBody object.
     /// </summary> 
-    public static TwitchUpdateChatSettingsBody FromObject(GodotObject data)
+    public static TwitchUpdateChatSettingsBody? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchUpdateChatSettingsBody

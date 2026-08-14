@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using Godot;
 
 namespace TwitcherSharp.Interfaces;
@@ -20,7 +19,7 @@ public interface ITwitcherSharpSingleton<out TSelf> : ITwitcherSharpSingleton, I
     /// <p>This object will also be added to the metaData of the linked node. When that node is removed from the scene, it will also remove this refCounted object</p>
     /// </summary>
     /// <returns>The Instance when found, else returns null</returns>
-    public static TSelf Instance {
+    public static TSelf? Instance {
         get
         {
             if (field is not null)
@@ -44,7 +43,7 @@ public interface ITwitcherSharpSingleton<out TSelf> : ITwitcherSharpSingleton, I
     /// <param name="configure">optional configuration for the new instance</param>
     /// <returns>The newly created instance</returns>
     // public static abstract TSelf CreateInstance(Action<TSelf> configure = null);
-    public static TSelf CreateInstance(Action<TSelf> configure = null)
+    public static TSelf CreateInstance(Action<TSelf>? configure = null)
     {
         Instance = new TSelf();
         configure?.Invoke(Instance);

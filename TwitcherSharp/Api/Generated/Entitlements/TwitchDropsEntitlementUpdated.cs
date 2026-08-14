@@ -6,14 +6,14 @@ namespace TwitcherSharp.Api.Generated.Entitlements;
 
 public partial class TwitchDropsEntitlementUpdated : RefCounted, ITwitcherSharp<TwitchDropsEntitlementUpdated>
 {
-    private GodotObject _data;
-    public string Status { get; set; }
-    public string[] Ids { get; set; }
+    private GodotObject? _data;
+    public string? Status { get; set; }
+    public string[]? Ids { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchDropsEntitlementUpdated object.
     /// </summary> 
-    public static TwitchDropsEntitlementUpdated FromObject(GodotObject data)
+    public static TwitchDropsEntitlementUpdated? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchDropsEntitlementUpdated
@@ -30,7 +30,7 @@ public partial class TwitchDropsEntitlementUpdated : RefCounted, ITwitcherSharp<
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_drops_entitlement_updated.gd");
         var request = script.Call("new").AsGodotObject();
-        request.Set("status", Status);
+        if(Status != null) request.Set("status", Status);
         if(Ids != null) request.Set("ids", new Godot.Collections.Array<string>(Ids));
         return request;
     }

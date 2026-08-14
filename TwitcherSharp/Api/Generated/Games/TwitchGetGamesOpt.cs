@@ -10,15 +10,15 @@ namespace TwitcherSharp.Api.Generated.Games;
 /// </summary>
 public partial class TwitchGetGamesOpt : RefCounted, ITwitcherSharp<TwitchGetGamesOpt>
 {
-    private GodotObject _data;
-    public string[] Id { get; set; }
-    public string[] Name { get; set; }
-    public string[] IgdbId { get; set; }
+    private GodotObject? _data;
+    public string[]? Id { get; set; }
+    public string[]? Name { get; set; }
+    public string[]? IgdbId { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetGamesOpt object.
     /// </summary> 
-    public static TwitchGetGamesOpt FromObject(GodotObject data)
+    public static TwitchGetGamesOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetGamesOpt

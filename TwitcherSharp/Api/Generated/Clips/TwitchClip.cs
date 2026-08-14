@@ -6,21 +6,21 @@ namespace TwitcherSharp.Api.Generated.Clips;
 
 public partial class TwitchClip : RefCounted, ITwitcherSharp<TwitchClip>
 {
-    private GodotObject _data;
-    public string Id { get; set; }
-    public string Url { get; set; }
-    public string EmbedUrl { get; set; }
-    public string BroadcasterId { get; set; }
-    public string BroadcasterName { get; set; }
-    public string CreatorId { get; set; }
-    public string CreatorName { get; set; }
-    public string VideoId { get; set; }
-    public string GameId { get; set; }
-    public string Language { get; set; }
-    public string Title { get; set; }
+    private GodotObject? _data;
+    public string? Id { get; set; }
+    public string? Url { get; set; }
+    public string? EmbedUrl { get; set; }
+    public string? BroadcasterId { get; set; }
+    public string? BroadcasterName { get; set; }
+    public string? CreatorId { get; set; }
+    public string? CreatorName { get; set; }
+    public string? VideoId { get; set; }
+    public string? GameId { get; set; }
+    public string? Language { get; set; }
+    public string? Title { get; set; }
     public int ViewCount { get; set; }
-    public string CreatedAt { get; set; }
-    public string ThumbnailUrl { get; set; }
+    public string? CreatedAt { get; set; }
+    public string? ThumbnailUrl { get; set; }
     public double Duration { get; set; }
     public int VodOffset { get; set; }
     public bool IsFeatured { get; set; }
@@ -28,7 +28,7 @@ public partial class TwitchClip : RefCounted, ITwitcherSharp<TwitchClip>
     /// <summary> 
     /// Transforms the godot data into a TwitchClip object.
     /// </summary> 
-    public static TwitchClip FromObject(GodotObject data)
+    public static TwitchClip? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchClip
@@ -60,20 +60,20 @@ public partial class TwitchClip : RefCounted, ITwitcherSharp<TwitchClip>
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_clip.gd");
         var request = script.Call("new").AsGodotObject();
-        request.Set("id", Id);
-        request.Set("url", Url);
-        request.Set("embed_url", EmbedUrl);
-        request.Set("broadcaster_id", BroadcasterId);
-        request.Set("broadcaster_name", BroadcasterName);
-        request.Set("creator_id", CreatorId);
-        request.Set("creator_name", CreatorName);
-        request.Set("video_id", VideoId);
-        request.Set("game_id", GameId);
-        request.Set("language", Language);
-        request.Set("title", Title);
+        if(Id != null) request.Set("id", Id);
+        if(Url != null) request.Set("url", Url);
+        if(EmbedUrl != null) request.Set("embed_url", EmbedUrl);
+        if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
+        if(BroadcasterName != null) request.Set("broadcaster_name", BroadcasterName);
+        if(CreatorId != null) request.Set("creator_id", CreatorId);
+        if(CreatorName != null) request.Set("creator_name", CreatorName);
+        if(VideoId != null) request.Set("video_id", VideoId);
+        if(GameId != null) request.Set("game_id", GameId);
+        if(Language != null) request.Set("language", Language);
+        if(Title != null) request.Set("title", Title);
         request.Set("view_count", ViewCount);
-        request.Set("created_at", CreatedAt);
-        request.Set("thumbnail_url", ThumbnailUrl);
+        if(CreatedAt != null) request.Set("created_at", CreatedAt);
+        if(ThumbnailUrl != null) request.Set("thumbnail_url", ThumbnailUrl);
         request.Set("duration", Duration);
         request.Set("vod_offset", VodOffset);
         request.Set("is_featured", IsFeatured);

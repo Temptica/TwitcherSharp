@@ -6,19 +6,19 @@ namespace TwitcherSharp.Api.Generated.Schedule;
 
 public partial class TwitchChannelStreamScheduleSegment : RefCounted, ITwitcherSharp<TwitchChannelStreamScheduleSegment>
 {
-    private GodotObject _data;
-    public string Id { get; set; }
-    public string StartTime { get; set; }
-    public string EndTime { get; set; }
-    public string Title { get; set; }
-    public string CanceledUntil { get; set; }
-    public TwitchCategory Category { get => field ??= _data?.Get<TwitchCategory>("category"); set; }
+    private GodotObject? _data;
+    public string? Id { get; set; }
+    public string? StartTime { get; set; }
+    public string? EndTime { get; set; }
+    public string? Title { get; set; }
+    public string? CanceledUntil { get; set; }
+    public TwitchCategory? Category { get => field ??= _data?.Get<TwitchCategory>("category"); set; }
     public bool IsRecurring { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelStreamScheduleSegment object.
     /// </summary> 
-    public static TwitchChannelStreamScheduleSegment FromObject(GodotObject data)
+    public static TwitchChannelStreamScheduleSegment? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannelStreamScheduleSegment
@@ -39,12 +39,12 @@ public partial class TwitchChannelStreamScheduleSegment : RefCounted, ITwitcherS
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_channel_stream_schedule_segment.gd");
         var request = script.Call("new").AsGodotObject();
-        request.Set("id", Id);
-        request.Set("start_time", StartTime);
-        request.Set("end_time", EndTime);
-        request.Set("title", Title);
-        request.Set("canceled_until", CanceledUntil);
-        request.Set("category", Category?.ToGodotObject());
+        if(Id != null) request.Set("id", Id);
+        if(StartTime != null) request.Set("start_time", StartTime);
+        if(EndTime != null) request.Set("end_time", EndTime);
+        if(Title != null) request.Set("title", Title);
+        if(CanceledUntil != null) request.Set("canceled_until", CanceledUntil);
+        if(Category != null) request.Set("category", Category.ToGodotObject());
         request.Set("is_recurring", IsRecurring);
         return request;
     }
@@ -54,14 +54,14 @@ public partial class TwitchChannelStreamScheduleSegment : RefCounted, ITwitcherS
     /// </summary>
     public partial class TwitchCategory : RefCounted, ITwitcherSharp<TwitchCategory>
     {
-        private GodotObject _data;
-        public string Id { get; set; }
-        public string Name { get; set; }
+        private GodotObject? _data;
+        public string? Id { get; set; }
+        public string? Name { get; set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchCategory object.
         /// </summary> 
-        public static TwitchCategory FromObject(GodotObject data)
+        public static TwitchCategory? FromObject(GodotObject? data)
         {
             if(data == null) return null;
             var instance = new TwitchCategory
@@ -79,8 +79,8 @@ public partial class TwitchChannelStreamScheduleSegment : RefCounted, ITwitcherS
             var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_channel_stream_schedule_segment.gd");
             var twitchCategoryClass = script.Get("Category").AsGodotObject();
             var request = twitchCategoryClass.Call("new").AsGodotObject();
-            request.Set("id", Id);
-            request.Set("name", Name);
+            if(Id != null) request.Set("id", Id);
+            if(Name != null) request.Set("name", Name);
             return request;
         }
     

@@ -6,15 +6,15 @@ namespace TwitcherSharp.Api.Generated.Bits;
 
 public partial class TwitchGetBitsLeaderboardResponse : RefCounted, ITwitcherSharp<TwitchGetBitsLeaderboardResponse>
 {
-    private GodotObject _data;
-    public TwitchBitsLeaderboard[] Data { get => field ??= _data?.GetArray<TwitchBitsLeaderboard>("data"); set; }
-    public TwitchResponseDateRange DateRange { get => field ??= _data?.Get<TwitchResponseDateRange>("date_range"); set; }
+    private GodotObject? _data;
+    public TwitchBitsLeaderboard[]? Data { get => field ??= _data?.GetArray<TwitchBitsLeaderboard>("data"); set; }
+    public TwitchResponseDateRange? DateRange { get => field ??= _data?.Get<TwitchResponseDateRange>("date_range"); set; }
     public int Total { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetBitsLeaderboardResponse object.
     /// </summary> 
-    public static TwitchGetBitsLeaderboardResponse FromObject(GodotObject data)
+    public static TwitchGetBitsLeaderboardResponse? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetBitsLeaderboardResponse
@@ -31,8 +31,8 @@ public partial class TwitchGetBitsLeaderboardResponse : RefCounted, ITwitcherSha
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_bits_leaderboard.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data?.ToGodotArray());
-        request.Set("date_range", DateRange?.ToGodotObject());
+        if(Data != null) request.Set("data", Data.ToGodotArray());
+        if(DateRange != null) request.Set("date_range", DateRange.ToGodotObject());
         request.Set("total", Total);
         return request;
     }
@@ -42,14 +42,14 @@ public partial class TwitchGetBitsLeaderboardResponse : RefCounted, ITwitcherSha
     /// </summary>
     public partial class TwitchResponseDateRange : RefCounted, ITwitcherSharp<TwitchResponseDateRange>
     {
-        private GodotObject _data;
-        public string StartedAt { get; set; }
-        public string EndedAt { get; set; }
+        private GodotObject? _data;
+        public string? StartedAt { get; set; }
+        public string? EndedAt { get; set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseDateRange object.
         /// </summary> 
-        public static TwitchResponseDateRange FromObject(GodotObject data)
+        public static TwitchResponseDateRange? FromObject(GodotObject? data)
         {
             if(data == null) return null;
             var instance = new TwitchResponseDateRange
@@ -67,8 +67,8 @@ public partial class TwitchGetBitsLeaderboardResponse : RefCounted, ITwitcherSha
             var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_bits_leaderboard.gd");
             var twitchResponseDateRangeClass = script.Get("ResponseDateRange").AsGodotObject();
             var request = twitchResponseDateRangeClass.Call("new").AsGodotObject();
-            request.Set("started_at", StartedAt);
-            request.Set("ended_at", EndedAt);
+            if(StartedAt != null) request.Set("started_at", StartedAt);
+            if(EndedAt != null) request.Set("ended_at", EndedAt);
             return request;
         }
     

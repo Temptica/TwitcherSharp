@@ -10,15 +10,15 @@ namespace TwitcherSharp.Api.Generated.Search;
 /// </summary>
 public partial class TwitchSearchChannelsOpt : RefCounted, ITwitcherSharp<TwitchSearchChannelsOpt>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     public bool? LiveOnly { get; set; }
     public int? First { get; set; }
-    public string After { get; set; }
+    public string? After { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchSearchChannelsOpt object.
     /// </summary> 
-    public static TwitchSearchChannelsOpt FromObject(GodotObject data)
+    public static TwitchSearchChannelsOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchSearchChannelsOpt

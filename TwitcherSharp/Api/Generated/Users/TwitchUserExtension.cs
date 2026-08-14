@@ -6,17 +6,17 @@ namespace TwitcherSharp.Api.Generated.Users;
 
 public partial class TwitchUserExtension : RefCounted, ITwitcherSharp<TwitchUserExtension>
 {
-    private GodotObject _data;
-    public string Id { get; set; }
-    public string Version { get; set; }
-    public string Name { get; set; }
+    private GodotObject? _data;
+    public string? Id { get; set; }
+    public string? Version { get; set; }
+    public string? Name { get; set; }
     public bool CanActivate { get; set; }
-    public string[] Type { get; set; }
+    public string[]? Type { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUserExtension object.
     /// </summary> 
-    public static TwitchUserExtension FromObject(GodotObject data)
+    public static TwitchUserExtension? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchUserExtension
@@ -36,9 +36,9 @@ public partial class TwitchUserExtension : RefCounted, ITwitcherSharp<TwitchUser
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_user_extension.gd");
         var request = script.Call("new").AsGodotObject();
-        request.Set("id", Id);
-        request.Set("version", Version);
-        request.Set("name", Name);
+        if(Id != null) request.Set("id", Id);
+        if(Version != null) request.Set("version", Version);
+        if(Name != null) request.Set("name", Name);
         request.Set("can_activate", CanActivate);
         if(Type != null) request.Set("type", new Godot.Collections.Array<string>(Type));
         return request;

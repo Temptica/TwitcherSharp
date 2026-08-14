@@ -6,13 +6,13 @@ namespace TwitcherSharp.Api.Generated.Conduits;
 
 public partial class TwitchCreateConduitsBody : RefCounted, ITwitcherSharp<TwitchCreateConduitsBody>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     public int ShardCount { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCreateConduitsBody object.
     /// </summary> 
-    public static TwitchCreateConduitsBody FromObject(GodotObject data)
+    public static TwitchCreateConduitsBody? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchCreateConduitsBody

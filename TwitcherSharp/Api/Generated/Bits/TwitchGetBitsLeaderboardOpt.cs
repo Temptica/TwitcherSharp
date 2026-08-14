@@ -10,16 +10,16 @@ namespace TwitcherSharp.Api.Generated.Bits;
 /// </summary>
 public partial class TwitchGetBitsLeaderboardOpt : RefCounted, ITwitcherSharp<TwitchGetBitsLeaderboardOpt>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     public int? Count { get; set; }
-    public string Period { get; set; }
-    public string StartedAt { get; set; }
-    public string UserId { get; set; }
+    public string? Period { get; set; }
+    public string? StartedAt { get; set; }
+    public string? UserId { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetBitsLeaderboardOpt object.
     /// </summary> 
-    public static TwitchGetBitsLeaderboardOpt FromObject(GodotObject data)
+    public static TwitchGetBitsLeaderboardOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetBitsLeaderboardOpt

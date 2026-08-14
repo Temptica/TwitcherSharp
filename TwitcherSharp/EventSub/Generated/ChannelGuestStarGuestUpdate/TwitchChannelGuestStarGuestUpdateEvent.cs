@@ -8,82 +8,82 @@ namespace TwitcherSharp.EventSub.Generated.ChannelGuestStarGuestUpdate;
 
 public partial class TwitchChannelGuestStarGuestUpdateEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelGuestStarGuestUpdateEvent>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     /// <summary> 
     /// The non-host broadcaster user ID.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string? BroadcasterUserId { get; set; }
 
     /// <summary> 
     /// The non-host broadcaster display name.
     /// </summary>
-    public string BroadcasterUserName { get; set; }
+    public string? BroadcasterUserName { get; set; }
 
     /// <summary> 
     /// The non-host broadcaster login.
     /// </summary>
-    public string BroadcasterUserLogin { get; set; }
+    public string? BroadcasterUserLogin { get; set; }
 
     /// <summary> 
     /// ID representing the unique session that was started.
     /// </summary>
-    public string SessionId { get; set; }
+    public string? SessionId { get; set; }
 
     /// <summary> 
     /// The user ID of the moderator who updated the guest’s state (could be the host). null if the update was performed by the guest.
     /// </summary>
-    public string ModeratorUserId { get; set; }
+    public string? ModeratorUserId { get; set; }
 
     /// <summary> 
     /// The moderator display name.null if the update was performed by the guest.
     /// </summary>
-    public string ModeratorUserName { get; set; }
+    public string? ModeratorUserName { get; set; }
 
     /// <summary> 
     /// The moderator login. null if the update was performed by the guest.
     /// </summary>
-    public string ModeratorUserLogin { get; set; }
+    public string? ModeratorUserLogin { get; set; }
 
     /// <summary> 
     /// The user ID of the guest who transitioned states in the session. null if the slot is now empty.
     /// </summary>
-    public string GuestUserId { get; set; }
+    public string? GuestUserId { get; set; }
 
     /// <summary> 
     /// The guest display name. null if the slot is now empty.
     /// </summary>
-    public string GuestUserName { get; set; }
+    public string? GuestUserName { get; set; }
 
     /// <summary> 
     /// The guest login. null if the slot is now empty.
     /// </summary>
-    public string GuestUserLogin { get; set; }
+    public string? GuestUserLogin { get; set; }
 
     /// <summary> 
     /// The ID of the slot assignment the guest is assigned to. null if the guest is in the INVITED, REMOVED, READY, or ACCEPTED state.
     /// </summary>
-    public string SlotId { get; set; }
+    public string? SlotId { get; set; }
 
     /// <summary> 
     /// The current state of the user after the update has taken place. null if the slot is now empty. Can otherwise be one of the following: invited — The guest has transitioned to the invite queue. This can take place when the guest was previously assigned a slot, but have been removed from the call and are sent back to the invite queue.accepted — The guest has accepted the invite and is currently in the process of setting up to join the session.ready — The guest has signaled they are ready and can be assigned a slot.backstage — The guest has been assigned a slot in the session, but is not currently seen live in the broadcasting software.live — The guest is now live in the host's broadcasting software.removed — The guest was removed from the call or queue.accepted — The guest has accepted the invite to the call.
     /// </summary>
-    public string State { get; set; }
+    public string? State { get; set; }
 
     /// <summary> 
     /// User ID of the host channel.
     /// </summary>
-    public string HostUserId { get; set; }
+    public string? HostUserId { get; set; }
 
     /// <summary> 
     /// The host display name.
     /// </summary>
-    public string HostUserName { get; set; }
+    public string? HostUserName { get; set; }
 
     /// <summary> 
     /// The host login.
     /// </summary>
-    public string HostUserLogin { get; set; }
+    public string? HostUserLogin { get; set; }
 
     /// <summary> 
     /// Flag that signals whether the host is allowing the slot’s video to be seen by participants within the session. null  if the guest is not slotted.
@@ -103,7 +103,7 @@ public partial class TwitchChannelGuestStarGuestUpdateEvent : RefCounted, ITwitc
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelGuestStarGuestUpdateEvent object.
     /// </summary> 
-    public static TwitchChannelGuestStarGuestUpdateEvent FromObject(GodotObject data)
+    public static TwitchChannelGuestStarGuestUpdateEvent? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannelGuestStarGuestUpdateEvent
@@ -137,21 +137,21 @@ public partial class TwitchChannelGuestStarGuestUpdateEvent : RefCounted, ITwitc
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_guest_star_guest_update.gd");
         var eventClass = script.Get("Event").As<GDScript>();
         var request = eventClass.New().AsGodotObject();
-        request.Set("broadcaster_user_id", BroadcasterUserId);
-        request.Set("broadcaster_user_name", BroadcasterUserName);
-        request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        request.Set("session_id", SessionId);
-        request.Set("moderator_user_id", ModeratorUserId);
-        request.Set("moderator_user_name", ModeratorUserName);
-        request.Set("moderator_user_login", ModeratorUserLogin);
-        request.Set("guest_user_id", GuestUserId);
-        request.Set("guest_user_name", GuestUserName);
-        request.Set("guest_user_login", GuestUserLogin);
-        request.Set("slot_id", SlotId);
-        request.Set("state", State);
-        request.Set("host_user_id", HostUserId);
-        request.Set("host_user_name", HostUserName);
-        request.Set("host_user_login", HostUserLogin);
+        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
+        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
+        if(SessionId != null) request.Set("session_id", SessionId);
+        if(ModeratorUserId != null) request.Set("moderator_user_id", ModeratorUserId);
+        if(ModeratorUserName != null) request.Set("moderator_user_name", ModeratorUserName);
+        if(ModeratorUserLogin != null) request.Set("moderator_user_login", ModeratorUserLogin);
+        if(GuestUserId != null) request.Set("guest_user_id", GuestUserId);
+        if(GuestUserName != null) request.Set("guest_user_name", GuestUserName);
+        if(GuestUserLogin != null) request.Set("guest_user_login", GuestUserLogin);
+        if(SlotId != null) request.Set("slot_id", SlotId);
+        if(State != null) request.Set("state", State);
+        if(HostUserId != null) request.Set("host_user_id", HostUserId);
+        if(HostUserName != null) request.Set("host_user_name", HostUserName);
+        if(HostUserLogin != null) request.Set("host_user_login", HostUserLogin);
         request.Set("host_video_enabled", HostVideoEnabled);
         request.Set("host_audio_enabled", HostAudioEnabled);
         request.Set("host_volume", HostVolume);

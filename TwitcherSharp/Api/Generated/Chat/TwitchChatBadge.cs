@@ -6,14 +6,14 @@ namespace TwitcherSharp.Api.Generated.Chat;
 
 public partial class TwitchChatBadge : RefCounted, ITwitcherSharp<TwitchChatBadge>
 {
-    private GodotObject _data;
-    public string SetId { get; set; }
-    public TwitchVersions[] Versions { get => field ??= _data?.GetArray<TwitchVersions>("versions"); set; }
+    private GodotObject? _data;
+    public string? SetId { get; set; }
+    public TwitchVersions[]? Versions { get => field ??= _data?.GetArray<TwitchVersions>("versions"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChatBadge object.
     /// </summary> 
-    public static TwitchChatBadge FromObject(GodotObject data)
+    public static TwitchChatBadge? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChatBadge
@@ -29,8 +29,8 @@ public partial class TwitchChatBadge : RefCounted, ITwitcherSharp<TwitchChatBadg
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_chat_badge.gd");
         var request = script.Call("new").AsGodotObject();
-        request.Set("set_id", SetId);
-        if(Versions != null) request.Set("versions", Versions?.ToGodotArray());
+        if(SetId != null) request.Set("set_id", SetId);
+        if(Versions != null) request.Set("versions", Versions.ToGodotArray());
         return request;
     }
     
@@ -39,20 +39,20 @@ public partial class TwitchChatBadge : RefCounted, ITwitcherSharp<TwitchChatBadg
     /// </summary>
     public partial class TwitchVersions : RefCounted, ITwitcherSharp<TwitchVersions>
     {
-        private GodotObject _data;
-        public string Id { get; set; }
-        public string ImageUrl1x { get; set; }
-        public string ImageUrl2x { get; set; }
-        public string ImageUrl4x { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public string ClickAction { get; set; }
-        public string ClickUrl { get; set; }
+        private GodotObject? _data;
+        public string? Id { get; set; }
+        public string? ImageUrl1x { get; set; }
+        public string? ImageUrl2x { get; set; }
+        public string? ImageUrl4x { get; set; }
+        public string? Title { get; set; }
+        public string? Description { get; set; }
+        public string? ClickAction { get; set; }
+        public string? ClickUrl { get; set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchVersions object.
         /// </summary> 
-        public static TwitchVersions FromObject(GodotObject data)
+        public static TwitchVersions? FromObject(GodotObject? data)
         {
             if(data == null) return null;
             var instance = new TwitchVersions
@@ -76,14 +76,14 @@ public partial class TwitchChatBadge : RefCounted, ITwitcherSharp<TwitchChatBadg
             var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_chat_badge.gd");
             var twitchVersionsClass = script.Get("Versions").AsGodotObject();
             var request = twitchVersionsClass.Call("new").AsGodotObject();
-            request.Set("id", Id);
-            request.Set("image_url_1x", ImageUrl1x);
-            request.Set("image_url_2x", ImageUrl2x);
-            request.Set("image_url_4x", ImageUrl4x);
-            request.Set("title", Title);
-            request.Set("description", Description);
-            request.Set("click_action", ClickAction);
-            request.Set("click_url", ClickUrl);
+            if(Id != null) request.Set("id", Id);
+            if(ImageUrl1x != null) request.Set("image_url_1x", ImageUrl1x);
+            if(ImageUrl2x != null) request.Set("image_url_2x", ImageUrl2x);
+            if(ImageUrl4x != null) request.Set("image_url_4x", ImageUrl4x);
+            if(Title != null) request.Set("title", Title);
+            if(Description != null) request.Set("description", Description);
+            if(ClickAction != null) request.Set("click_action", ClickAction);
+            if(ClickUrl != null) request.Set("click_url", ClickUrl);
             return request;
         }
     

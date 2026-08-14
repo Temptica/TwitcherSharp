@@ -6,16 +6,16 @@ namespace TwitcherSharp.Api.Generated.Tags;
 
 public partial class TwitchStreamTag : RefCounted, ITwitcherSharp<TwitchStreamTag>
 {
-    private GodotObject _data;
-    public string TagId { get; set; }
+    private GodotObject? _data;
+    public string? TagId { get; set; }
     public bool IsAuto { get; set; }
-    public Godot.Collections.Dictionary<string, string> LocalizationNames { get; set; }
-    public Godot.Collections.Dictionary<string, string> LocalizationDescriptions { get; set; }
+    public Godot.Collections.Dictionary<string, string>? LocalizationNames { get; set; }
+    public Godot.Collections.Dictionary<string, string>? LocalizationDescriptions { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchStreamTag object.
     /// </summary> 
-    public static TwitchStreamTag FromObject(GodotObject data)
+    public static TwitchStreamTag? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchStreamTag
@@ -34,10 +34,10 @@ public partial class TwitchStreamTag : RefCounted, ITwitcherSharp<TwitchStreamTa
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_stream_tag.gd");
         var request = script.Call("new").AsGodotObject();
-        request.Set("tag_id", TagId);
+        if(TagId != null) request.Set("tag_id", TagId);
         request.Set("is_auto", IsAuto);
-        request.Set("localization_names", LocalizationNames);
-        request.Set("localization_descriptions", LocalizationDescriptions);
+        if(LocalizationNames != null) request.Set("localization_names", LocalizationNames);
+        if(LocalizationDescriptions != null) request.Set("localization_descriptions", LocalizationDescriptions);
         return request;
     }
 

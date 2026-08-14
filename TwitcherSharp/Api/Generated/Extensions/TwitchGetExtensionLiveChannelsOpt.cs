@@ -10,14 +10,14 @@ namespace TwitcherSharp.Api.Generated.Extensions;
 /// </summary>
 public partial class TwitchGetExtensionLiveChannelsOpt : RefCounted, ITwitcherSharp<TwitchGetExtensionLiveChannelsOpt>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     public int? First { get; set; }
-    public string After { get; set; }
+    public string? After { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetExtensionLiveChannelsOpt object.
     /// </summary> 
-    public static TwitchGetExtensionLiveChannelsOpt FromObject(GodotObject data)
+    public static TwitchGetExtensionLiveChannelsOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetExtensionLiveChannelsOpt

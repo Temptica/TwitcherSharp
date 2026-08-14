@@ -6,13 +6,13 @@ namespace TwitcherSharp.Api.Generated.Users;
 
 public partial class TwitchGetUserActiveExtensionsResponse : RefCounted, ITwitcherSharp<TwitchGetUserActiveExtensionsResponse>
 {
-    private GodotObject _data;
-    public TwitchResponseData Data { get => field ??= _data?.Get<TwitchResponseData>("data"); set; }
+    private GodotObject? _data;
+    public TwitchResponseData? Data { get => field ??= _data?.Get<TwitchResponseData>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetUserActiveExtensionsResponse object.
     /// </summary> 
-    public static TwitchGetUserActiveExtensionsResponse FromObject(GodotObject data)
+    public static TwitchGetUserActiveExtensionsResponse? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetUserActiveExtensionsResponse();
@@ -35,7 +35,7 @@ public partial class TwitchGetUserActiveExtensionsResponse : RefCounted, ITwitch
     /// </summary>
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
-        private GodotObject _data;
+        private GodotObject? _data;
         public Variant? Panel { get; set; }
         public Variant? Overlay { get; set; }
         public Variant? Component { get; set; }
@@ -43,7 +43,7 @@ public partial class TwitchGetUserActiveExtensionsResponse : RefCounted, ITwitch
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseData object.
         /// </summary> 
-        public static TwitchResponseData FromObject(GodotObject data)
+        public static TwitchResponseData? FromObject(GodotObject? data)
         {
             if(data == null) return null;
             var instance = new TwitchResponseData

@@ -6,13 +6,13 @@ namespace TwitcherSharp.Api.Generated.Ads;
 
 public partial class TwitchGetAdScheduleResponse : RefCounted, ITwitcherSharp<TwitchGetAdScheduleResponse>
 {
-    private GodotObject _data;
-    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
+    private GodotObject? _data;
+    public TwitchResponseData[]? Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetAdScheduleResponse object.
     /// </summary> 
-    public static TwitchGetAdScheduleResponse FromObject(GodotObject data)
+    public static TwitchGetAdScheduleResponse? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetAdScheduleResponse();
@@ -26,7 +26,7 @@ public partial class TwitchGetAdScheduleResponse : RefCounted, ITwitcherSharp<Tw
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_ad_schedule.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data?.ToGodotArray());
+        if(Data != null) request.Set("data", Data.ToGodotArray());
         return request;
     }
     
@@ -35,7 +35,7 @@ public partial class TwitchGetAdScheduleResponse : RefCounted, ITwitcherSharp<Tw
     /// </summary>
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
-        private GodotObject _data;
+        private GodotObject? _data;
         public int SnoozeCount { get; set; }
         public float SnoozeRefreshAt { get; set; }
         public float NextAdAt { get; set; }
@@ -46,7 +46,7 @@ public partial class TwitchGetAdScheduleResponse : RefCounted, ITwitcherSharp<Tw
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseData object.
         /// </summary> 
-        public static TwitchResponseData FromObject(GodotObject data)
+        public static TwitchResponseData? FromObject(GodotObject? data)
         {
             if(data == null) return null;
             var instance = new TwitchResponseData

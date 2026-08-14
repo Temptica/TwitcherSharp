@@ -10,14 +10,14 @@ namespace TwitcherSharp.Api.Generated.Streams;
 /// </summary>
 public partial class TwitchGetFollowedStreamsOpt : RefCounted, ITwitcherSharp<TwitchGetFollowedStreamsOpt>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     public int? First { get; set; }
-    public string After { get; set; }
+    public string? After { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetFollowedStreamsOpt object.
     /// </summary> 
-    public static TwitchGetFollowedStreamsOpt FromObject(GodotObject data)
+    public static TwitchGetFollowedStreamsOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetFollowedStreamsOpt

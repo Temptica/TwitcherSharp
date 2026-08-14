@@ -40,18 +40,20 @@ namespace TwitcherSharp.Api.Generated;
 ///<summary> Interaction with the Twitch REST API.</summary>
 public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
 {
-    private GodotObject _data;
+    private GodotObject _data = null!;
     
-    public bool IsLinked => _data is not null && !_data.IsQueuedForDeletion();
+    // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+    public bool IsLinked => _data is not null && !_data.IsQueuedForDeletion(); 
     public static string ScriptPath => "res://addons/twitcher/generated/twitch_api.gd";
     
-    public static TwitchApi Instance
+    public static TwitchApi? Instance
     {
         get => ITwitcherSharpSingleton<TwitchApi>.Instance;
         private set => ITwitcherSharpSingleton<TwitchApi>.Instance = value;
     }
     
-    public static TwitchApi CreateInstance(Action<TwitchApi> configure = null) =>
+    // ReSharper disable once UnusedParameter.Global
+    public static TwitchApi CreateInstance(Action<TwitchApi>? configure = null) =>
         ITwitcherSharpSingleton<TwitchApi>.CreateInstance(configure);
     
     [Signal]
@@ -72,7 +74,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
         _data.Connect("unauthorized", Callable.From(EmitSignalUnauthorized));
     }
     
-    public static TwitchApi FromObject(GodotObject data)
+    public static TwitchApi? FromObject(GodotObject? data)
     {
         if (data is null) return null;
         var twitchApi = new TwitchApi
@@ -145,7 +147,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetExtensionAnalyticsResponse"/></returns>
     public async Task<TwitchGetExtensionAnalyticsResponse> GetExtensionAnalytics(TwitchGetExtensionAnalyticsOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetExtensionAnalyticsResponse>("get_extension_analytics", opt?.ToGodotObject()); 
+        return await _data.CallAsync<TwitchGetExtensionAnalyticsResponse>("get_extension_analytics", opt?.ToGodotObject() ?? new Variant()); 
     }
 
     /// <summary>
@@ -155,7 +157,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetGameAnalyticsResponse"/></returns>
     public async Task<TwitchGetGameAnalyticsResponse> GetGameAnalytics(TwitchGetGameAnalyticsOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetGameAnalyticsResponse>("get_game_analytics", opt?.ToGodotObject()); 
+        return await _data.CallAsync<TwitchGetGameAnalyticsResponse>("get_game_analytics", opt?.ToGodotObject() ?? new Variant()); 
     }
 
     /// <summary>
@@ -165,7 +167,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetBitsLeaderboardResponse"/></returns>
     public async Task<TwitchGetBitsLeaderboardResponse> GetBitsLeaderboard(TwitchGetBitsLeaderboardOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetBitsLeaderboardResponse>("get_bits_leaderboard", opt?.ToGodotObject()); 
+        return await _data.CallAsync<TwitchGetBitsLeaderboardResponse>("get_bits_leaderboard", opt?.ToGodotObject() ?? new Variant()); 
     }
 
     /// <summary>
@@ -175,7 +177,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetCheermotesResponse"/></returns>
     public async Task<TwitchGetCheermotesResponse> GetCheermotes(TwitchGetCheermotesOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetCheermotesResponse>("get_cheermotes", opt?.ToGodotObject()); 
+        return await _data.CallAsync<TwitchGetCheermotesResponse>("get_cheermotes", opt?.ToGodotObject() ?? new Variant()); 
     }
 
     /// <summary>
@@ -197,7 +199,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetExtensionTransactionsResponse"/></returns>
     public async Task<TwitchGetExtensionTransactionsResponse> GetExtensionTransactions(string extensionId, TwitchGetExtensionTransactionsOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetExtensionTransactionsResponse>("get_extension_transactions", opt?.ToGodotObject(), extensionId); 
+        return await _data.CallAsync<TwitchGetExtensionTransactionsResponse>("get_extension_transactions", opt?.ToGodotObject() ?? new Variant(), extensionId); 
     }
 
     /// <summary>
@@ -239,7 +241,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetFollowedChannelsResponse"/></returns>
     public async Task<TwitchGetFollowedChannelsResponse> GetFollowedChannels(string userId, TwitchGetFollowedChannelsOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetFollowedChannelsResponse>("get_followed_channels", opt?.ToGodotObject(), userId); 
+        return await _data.CallAsync<TwitchGetFollowedChannelsResponse>("get_followed_channels", opt?.ToGodotObject() ?? new Variant(), userId); 
     }
 
     /// <summary>
@@ -250,7 +252,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetChannelFollowersResponse"/></returns>
     public async Task<TwitchGetChannelFollowersResponse> GetChannelFollowers(string broadcasterId, TwitchGetChannelFollowersOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetChannelFollowersResponse>("get_channel_followers", opt?.ToGodotObject(), broadcasterId); 
+        return await _data.CallAsync<TwitchGetChannelFollowersResponse>("get_channel_followers", opt?.ToGodotObject() ?? new Variant(), broadcasterId); 
     }
 
     /// <summary>
@@ -283,7 +285,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetCustomRewardResponse"/></returns>
     public async Task<TwitchGetCustomRewardResponse> GetCustomReward(string broadcasterId, TwitchGetCustomRewardOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetCustomRewardResponse>("get_custom_reward", opt?.ToGodotObject(), broadcasterId); 
+        return await _data.CallAsync<TwitchGetCustomRewardResponse>("get_custom_reward", opt?.ToGodotObject() ?? new Variant(), broadcasterId); 
     }
 
     /// <summary>
@@ -307,7 +309,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetCustomRewardRedemptionResponse"/></returns>
     public async Task<TwitchGetCustomRewardRedemptionResponse> GetCustomRewardRedemption(string broadcasterId, string rewardId, TwitchGetCustomRewardRedemptionOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetCustomRewardRedemptionResponse>("get_custom_reward_redemption", opt?.ToGodotObject(), broadcasterId, rewardId); 
+        return await _data.CallAsync<TwitchGetCustomRewardRedemptionResponse>("get_custom_reward_redemption", opt?.ToGodotObject() ?? new Variant(), broadcasterId, rewardId); 
     }
 
     /// <summary>
@@ -341,7 +343,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetCharityCampaignDonationsResponse"/></returns>
     public async Task<TwitchGetCharityCampaignDonationsResponse> GetCharityCampaignDonations(string broadcasterId, TwitchGetCharityCampaignDonationsOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetCharityCampaignDonationsResponse>("get_charity_campaign_donations", opt?.ToGodotObject(), broadcasterId); 
+        return await _data.CallAsync<TwitchGetCharityCampaignDonationsResponse>("get_charity_campaign_donations", opt?.ToGodotObject() ?? new Variant(), broadcasterId); 
     }
 
     /// <summary>
@@ -353,7 +355,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetChattersResponse"/></returns>
     public async Task<TwitchGetChattersResponse> GetChatters(string broadcasterId, string moderatorId, TwitchGetChattersOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetChattersResponse>("get_chatters", opt?.ToGodotObject(), broadcasterId, moderatorId); 
+        return await _data.CallAsync<TwitchGetChattersResponse>("get_chatters", opt?.ToGodotObject() ?? new Variant(), broadcasterId, moderatorId); 
     }
 
     /// <summary>
@@ -414,7 +416,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetChatSettingsResponse"/></returns>
     public async Task<TwitchGetChatSettingsResponse> GetChatSettings(string broadcasterId, TwitchGetChatSettingsOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetChatSettingsResponse>("get_chat_settings", opt?.ToGodotObject(), broadcasterId); 
+        return await _data.CallAsync<TwitchGetChatSettingsResponse>("get_chat_settings", opt?.ToGodotObject() ?? new Variant(), broadcasterId); 
     }
 
     /// <summary>
@@ -447,7 +449,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetUserEmotesResponse"/></returns>
     public async Task<TwitchGetUserEmotesResponse> GetUserEmotes(string userId, TwitchGetUserEmotesOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetUserEmotesResponse>("get_user_emotes", opt?.ToGodotObject(), userId); 
+        return await _data.CallAsync<TwitchGetUserEmotesResponse>("get_user_emotes", opt?.ToGodotObject() ?? new Variant(), userId); 
     }
 
     /// <summary>
@@ -584,7 +586,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchCreateClipResponse"/></returns>
     public async Task<TwitchCreateClipResponse> CreateClip(string broadcasterId, TwitchCreateClipOpt opt = null)
     {
-        return await _data.CallAsync<TwitchCreateClipResponse>("create_clip", opt?.ToGodotObject(), broadcasterId); 
+        return await _data.CallAsync<TwitchCreateClipResponse>("create_clip", opt?.ToGodotObject() ?? new Variant(), broadcasterId); 
     }
 
     /// <summary>
@@ -594,7 +596,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetClipsResponse"/></returns>
     public async Task<TwitchGetClipsResponse> GetClips(TwitchGetClipsOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetClipsResponse>("get_clips", opt?.ToGodotObject()); 
+        return await _data.CallAsync<TwitchGetClipsResponse>("get_clips", opt?.ToGodotObject() ?? new Variant()); 
     }
 
     /// <summary>
@@ -609,7 +611,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchCreateClipFromVODResponse"/></returns>
     public async Task<TwitchCreateClipFromVODResponse> CreateClipFromVod(string editorId, string broadcasterId, string vodId, int vodOffset, string title, TwitchCreateClipFromVodOpt opt = null)
     {
-        return await _data.CallAsync<TwitchCreateClipFromVODResponse>("create_clip_from_vod", opt?.ToGodotObject(), editorId, broadcasterId, vodId, vodOffset, title); 
+        return await _data.CallAsync<TwitchCreateClipFromVODResponse>("create_clip_from_vod", opt?.ToGodotObject() ?? new Variant(), editorId, broadcasterId, vodId, vodOffset, title); 
     }
 
     /// <summary>
@@ -671,7 +673,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetConduitShardsResponse"/></returns>
     public async Task<TwitchGetConduitShardsResponse> GetConduitShards(string conduitId, TwitchGetConduitShardsOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetConduitShardsResponse>("get_conduit_shards", opt?.ToGodotObject(), conduitId); 
+        return await _data.CallAsync<TwitchGetConduitShardsResponse>("get_conduit_shards", opt?.ToGodotObject() ?? new Variant(), conduitId); 
     }
 
     /// <summary>
@@ -691,7 +693,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetContentClassificationLabelsResponse"/></returns>
     public async Task<TwitchGetContentClassificationLabelsResponse> GetContentClassificationLabels(TwitchGetContentClassificationLabelsOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetContentClassificationLabelsResponse>("get_content_classification_labels", opt?.ToGodotObject()); 
+        return await _data.CallAsync<TwitchGetContentClassificationLabelsResponse>("get_content_classification_labels", opt?.ToGodotObject() ?? new Variant()); 
     }
 
     /// <summary>
@@ -701,7 +703,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetDropsEntitlementsResponse"/></returns>
     public async Task<TwitchGetDropsEntitlementsResponse> GetDropsEntitlements(TwitchGetDropsEntitlementsOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetDropsEntitlementsResponse>("get_drops_entitlements", opt?.ToGodotObject()); 
+        return await _data.CallAsync<TwitchGetDropsEntitlementsResponse>("get_drops_entitlements", opt?.ToGodotObject() ?? new Variant()); 
     }
 
     /// <summary>
@@ -731,7 +733,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetExtensionConfigurationSegmentResponse"/></returns>
     public async Task<TwitchGetExtensionConfigurationSegmentResponse> GetExtensionConfigurationSegment(string extensionId, string segment, TwitchGetExtensionConfigurationSegmentOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetExtensionConfigurationSegmentResponse>("get_extension_configuration_segment", opt?.ToGodotObject(), extensionId, segment); 
+        return await _data.CallAsync<TwitchGetExtensionConfigurationSegmentResponse>("get_extension_configuration_segment", opt?.ToGodotObject() ?? new Variant(), extensionId, segment); 
     }
 
     /// <summary>
@@ -773,7 +775,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetExtensionLiveChannelsResponse"/></returns>
     public async Task<TwitchGetExtensionLiveChannelsResponse> GetExtensionLiveChannels(string extensionId, TwitchGetExtensionLiveChannelsOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetExtensionLiveChannelsResponse>("get_extension_live_channels", opt?.ToGodotObject(), extensionId); 
+        return await _data.CallAsync<TwitchGetExtensionLiveChannelsResponse>("get_extension_live_channels", opt?.ToGodotObject() ?? new Variant(), extensionId); 
     }
 
     /// <summary>
@@ -793,7 +795,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchCreateExtensionSecretResponse"/></returns>
     public async Task<TwitchCreateExtensionSecretResponse> CreateExtensionSecret(string extensionId, TwitchCreateExtensionSecretOpt opt = null)
     {
-        return await _data.CallAsync<TwitchCreateExtensionSecretResponse>("create_extension_secret", opt?.ToGodotObject(), extensionId); 
+        return await _data.CallAsync<TwitchCreateExtensionSecretResponse>("create_extension_secret", opt?.ToGodotObject() ?? new Variant(), extensionId); 
     }
 
     /// <summary>
@@ -815,7 +817,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetExtensionsResponse"/></returns>
     public async Task<TwitchGetExtensionsResponse> GetExtensions(string extensionId, TwitchGetExtensionsOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetExtensionsResponse>("get_extensions", opt?.ToGodotObject(), extensionId); 
+        return await _data.CallAsync<TwitchGetExtensionsResponse>("get_extensions", opt?.ToGodotObject() ?? new Variant(), extensionId); 
     }
 
     /// <summary>
@@ -826,7 +828,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetReleasedExtensionsResponse"/></returns>
     public async Task<TwitchGetReleasedExtensionsResponse> GetReleasedExtensions(string extensionId, TwitchGetReleasedExtensionsOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetReleasedExtensionsResponse>("get_released_extensions", opt?.ToGodotObject(), extensionId); 
+        return await _data.CallAsync<TwitchGetReleasedExtensionsResponse>("get_released_extensions", opt?.ToGodotObject() ?? new Variant(), extensionId); 
     }
 
     /// <summary>
@@ -836,7 +838,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetExtensionBitsProductsResponse"/></returns>
     public async Task<TwitchGetExtensionBitsProductsResponse> GetExtensionBitsProducts(TwitchGetExtensionBitsProductsOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetExtensionBitsProductsResponse>("get_extension_bits_products", opt?.ToGodotObject()); 
+        return await _data.CallAsync<TwitchGetExtensionBitsProductsResponse>("get_extension_bits_products", opt?.ToGodotObject() ?? new Variant()); 
     }
 
     /// <summary>
@@ -877,7 +879,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetEventSubSubscriptionsResponse&lt;T&gt;"/></returns>
     public async Task<TwitchGetEventSubSubscriptionsResponse<T>> GetEventsubSubscriptions<T>(TwitchGetEventSubSubscriptionsResponse<T> body, TwitchGetEventsubSubscriptionsOpt opt = null) where T : RefCounted, ITwitcherSharpCondition<T>
     {
-        return await _data.CallAsync<TwitchGetEventSubSubscriptionsResponse<T>>("get_eventsub_subscriptions", body.ToGodotObject(), opt?.ToGodotObject()); 
+        return await _data.CallAsync<TwitchGetEventSubSubscriptionsResponse<T>>("get_eventsub_subscriptions", body.ToGodotObject(), opt?.ToGodotObject() ?? new Variant()); 
     }
 
     /// <summary>
@@ -887,7 +889,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetTopGamesResponse"/></returns>
     public async Task<TwitchGetTopGamesResponse> GetTopGames(TwitchGetTopGamesOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetTopGamesResponse>("get_top_games", opt?.ToGodotObject()); 
+        return await _data.CallAsync<TwitchGetTopGamesResponse>("get_top_games", opt?.ToGodotObject() ?? new Variant()); 
     }
 
     /// <summary>
@@ -897,7 +899,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetGamesResponse"/></returns>
     public async Task<TwitchGetGamesResponse> GetGames(TwitchGetGamesOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetGamesResponse>("get_games", opt?.ToGodotObject()); 
+        return await _data.CallAsync<TwitchGetGamesResponse>("get_games", opt?.ToGodotObject() ?? new Variant()); 
     }
 
     /// <summary>
@@ -1027,7 +1029,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="ResponseData"/></returns>
     public async Task<ResponseData> UpdateGuestStarSlot(string broadcasterId, string moderatorId, string sessionId, string sourceSlotId, TwitchUpdateGuestStarSlotOpt opt = null)
     {
-        return await _data.CallAsync<ResponseData>("update_guest_star_slot", opt?.ToGodotObject(), broadcasterId, moderatorId, sessionId, sourceSlotId); 
+        return await _data.CallAsync<ResponseData>("update_guest_star_slot", opt?.ToGodotObject() ?? new Variant(), broadcasterId, moderatorId, sessionId, sourceSlotId); 
     }
 
     /// <summary>
@@ -1042,7 +1044,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="ResponseData"/></returns>
     public async Task<ResponseData> DeleteGuestStarSlot(string broadcasterId, string moderatorId, string sessionId, string guestId, string slotId, TwitchDeleteGuestStarSlotOpt opt = null)
     {
-        return await _data.CallAsync<ResponseData>("delete_guest_star_slot", opt?.ToGodotObject(), broadcasterId, moderatorId, sessionId, guestId, slotId); 
+        return await _data.CallAsync<ResponseData>("delete_guest_star_slot", opt?.ToGodotObject() ?? new Variant(), broadcasterId, moderatorId, sessionId, guestId, slotId); 
     }
 
     /// <summary>
@@ -1056,7 +1058,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="ResponseData"/></returns>
     public async Task<ResponseData> UpdateGuestStarSlotSettings(string broadcasterId, string moderatorId, string sessionId, string slotId, TwitchUpdateGuestStarSlotSettingsOpt opt = null)
     {
-        return await _data.CallAsync<ResponseData>("update_guest_star_slot_settings", opt?.ToGodotObject(), broadcasterId, moderatorId, sessionId, slotId); 
+        return await _data.CallAsync<ResponseData>("update_guest_star_slot_settings", opt?.ToGodotObject() ?? new Variant(), broadcasterId, moderatorId, sessionId, slotId); 
     }
 
     /// <summary>
@@ -1121,7 +1123,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetBannedUsersResponse"/></returns>
     public async Task<TwitchGetBannedUsersResponse> GetBannedUsers(string broadcasterId, TwitchGetBannedUsersOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetBannedUsersResponse>("get_banned_users", opt?.ToGodotObject(), broadcasterId); 
+        return await _data.CallAsync<TwitchGetBannedUsersResponse>("get_banned_users", opt?.ToGodotObject() ?? new Variant(), broadcasterId); 
     }
 
     /// <summary>
@@ -1166,7 +1168,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetUnbanRequestsResponse"/></returns>
     public async Task<TwitchGetUnbanRequestsResponse> GetUnbanRequests(string broadcasterId, string moderatorId, string status, TwitchGetUnbanRequestsOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetUnbanRequestsResponse>("get_unban_requests", opt?.ToGodotObject(), broadcasterId, moderatorId, status); 
+        return await _data.CallAsync<TwitchGetUnbanRequestsResponse>("get_unban_requests", opt?.ToGodotObject() ?? new Variant(), broadcasterId, moderatorId, status); 
     }
 
     /// <summary>
@@ -1185,7 +1187,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchResolveUnbanRequestsResponse"/></returns>
     public async Task<TwitchResolveUnbanRequestsResponse> ResolveUnbanRequests(string broadcasterId, string moderatorId, string unbanRequestId, string status, TwitchResolveUnbanRequestsOpt opt = null)
     {
-        return await _data.CallAsync<TwitchResolveUnbanRequestsResponse>("resolve_unban_requests", opt?.ToGodotObject(), broadcasterId, moderatorId, unbanRequestId, status); 
+        return await _data.CallAsync<TwitchResolveUnbanRequestsResponse>("resolve_unban_requests", opt?.ToGodotObject() ?? new Variant(), broadcasterId, moderatorId, unbanRequestId, status); 
     }
 
     /// <summary>
@@ -1197,7 +1199,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetBlockedTermsResponse"/></returns>
     public async Task<TwitchGetBlockedTermsResponse> GetBlockedTerms(string broadcasterId, string moderatorId, TwitchGetBlockedTermsOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetBlockedTermsResponse>("get_blocked_terms", opt?.ToGodotObject(), broadcasterId, moderatorId); 
+        return await _data.CallAsync<TwitchGetBlockedTermsResponse>("get_blocked_terms", opt?.ToGodotObject() ?? new Variant(), broadcasterId, moderatorId); 
     }
 
     /// <summary>
@@ -1233,7 +1235,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="ResponseData"/></returns>
     public async Task<ResponseData> DeleteChatMessages(string broadcasterId, string moderatorId, TwitchDeleteChatMessagesOpt opt = null)
     {
-        return await _data.CallAsync<ResponseData>("delete_chat_messages", opt?.ToGodotObject(), broadcasterId, moderatorId); 
+        return await _data.CallAsync<ResponseData>("delete_chat_messages", opt?.ToGodotObject() ?? new Variant(), broadcasterId, moderatorId); 
     }
 
     /// <summary>
@@ -1244,7 +1246,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetModeratedChannelsResponse"/></returns>
     public async Task<TwitchGetModeratedChannelsResponse> GetModeratedChannels(string userId, TwitchGetModeratedChannelsOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetModeratedChannelsResponse>("get_moderated_channels", opt?.ToGodotObject(), userId); 
+        return await _data.CallAsync<TwitchGetModeratedChannelsResponse>("get_moderated_channels", opt?.ToGodotObject() ?? new Variant(), userId); 
     }
 
     /// <summary>
@@ -1255,7 +1257,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetModeratorsResponse"/></returns>
     public async Task<TwitchGetModeratorsResponse> GetModerators(string broadcasterId, TwitchGetModeratorsOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetModeratorsResponse>("get_moderators", opt?.ToGodotObject(), broadcasterId); 
+        return await _data.CallAsync<TwitchGetModeratorsResponse>("get_moderators", opt?.ToGodotObject() ?? new Variant(), broadcasterId); 
     }
 
     /// <summary>
@@ -1288,7 +1290,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetVIPsResponse"/></returns>
     public async Task<TwitchGetVIPsResponse> GetVips(string broadcasterId, TwitchGetVipsOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetVIPsResponse>("get_vips", opt?.ToGodotObject(), broadcasterId); 
+        return await _data.CallAsync<TwitchGetVIPsResponse>("get_vips", opt?.ToGodotObject() ?? new Variant(), broadcasterId); 
     }
 
     /// <summary>
@@ -1380,7 +1382,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetPollsResponse"/></returns>
     public async Task<TwitchGetPollsResponse> GetPolls(string broadcasterId, TwitchGetPollsOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetPollsResponse>("get_polls", opt?.ToGodotObject(), broadcasterId); 
+        return await _data.CallAsync<TwitchGetPollsResponse>("get_polls", opt?.ToGodotObject() ?? new Variant(), broadcasterId); 
     }
 
     /// <summary>
@@ -1411,7 +1413,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetPredictionsResponse"/></returns>
     public async Task<TwitchGetPredictionsResponse> GetPredictions(string broadcasterId, TwitchGetPredictionsOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetPredictionsResponse>("get_predictions", opt?.ToGodotObject(), broadcasterId); 
+        return await _data.CallAsync<TwitchGetPredictionsResponse>("get_predictions", opt?.ToGodotObject() ?? new Variant(), broadcasterId); 
     }
 
     /// <summary>
@@ -1441,7 +1443,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchStartARaidResponse"/></returns>
     public async Task<TwitchStartARaidResponse> StartARaid(TwitchStartARaidOpt opt = null)
     {
-        return await _data.CallAsync<TwitchStartARaidResponse>("start_a_raid", opt?.ToGodotObject()); 
+        return await _data.CallAsync<TwitchStartARaidResponse>("start_a_raid", opt?.ToGodotObject() ?? new Variant()); 
     }
 
     /// <summary>
@@ -1462,7 +1464,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetChannelStreamScheduleResponse"/></returns>
     public async Task<TwitchGetChannelStreamScheduleResponse> GetChannelStreamSchedule(string broadcasterId, TwitchGetChannelStreamScheduleOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetChannelStreamScheduleResponse>("get_channel_stream_schedule", opt?.ToGodotObject(), broadcasterId); 
+        return await _data.CallAsync<TwitchGetChannelStreamScheduleResponse>("get_channel_stream_schedule", opt?.ToGodotObject() ?? new Variant(), broadcasterId); 
     }
 
     /// <summary>
@@ -1483,7 +1485,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="ResponseData"/></returns>
     public async Task<ResponseData> UpdateChannelStreamSchedule(string broadcasterId, TwitchUpdateChannelStreamScheduleOpt opt = null)
     {
-        return await _data.CallAsync<ResponseData>("update_channel_stream_schedule", opt?.ToGodotObject(), broadcasterId); 
+        return await _data.CallAsync<ResponseData>("update_channel_stream_schedule", opt?.ToGodotObject() ?? new Variant(), broadcasterId); 
     }
 
     /// <summary>
@@ -1528,7 +1530,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchSearchCategoriesResponse"/></returns>
     public async Task<TwitchSearchCategoriesResponse> SearchCategories(string query, TwitchSearchCategoriesOpt opt = null)
     {
-        return await _data.CallAsync<TwitchSearchCategoriesResponse>("search_categories", opt?.ToGodotObject(), query); 
+        return await _data.CallAsync<TwitchSearchCategoriesResponse>("search_categories", opt?.ToGodotObject() ?? new Variant(), query); 
     }
 
     /// <summary>
@@ -1539,7 +1541,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchSearchChannelsResponse"/></returns>
     public async Task<TwitchSearchChannelsResponse> SearchChannels(string query, TwitchSearchChannelsOpt opt = null)
     {
-        return await _data.CallAsync<TwitchSearchChannelsResponse>("search_channels", opt?.ToGodotObject(), query); 
+        return await _data.CallAsync<TwitchSearchChannelsResponse>("search_channels", opt?.ToGodotObject() ?? new Variant(), query); 
     }
 
     /// <summary>
@@ -1559,7 +1561,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetStreamsResponse"/></returns>
     public async Task<TwitchGetStreamsResponse> GetStreams(TwitchGetStreamsOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetStreamsResponse>("get_streams", opt?.ToGodotObject()); 
+        return await _data.CallAsync<TwitchGetStreamsResponse>("get_streams", opt?.ToGodotObject() ?? new Variant()); 
     }
 
     /// <summary>
@@ -1570,7 +1572,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetFollowedStreamsResponse"/></returns>
     public async Task<TwitchGetFollowedStreamsResponse> GetFollowedStreams(string userId, TwitchGetFollowedStreamsOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetFollowedStreamsResponse>("get_followed_streams", opt?.ToGodotObject(), userId); 
+        return await _data.CallAsync<TwitchGetFollowedStreamsResponse>("get_followed_streams", opt?.ToGodotObject() ?? new Variant(), userId); 
     }
 
     /// <summary>
@@ -1590,7 +1592,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetStreamMarkersResponse"/></returns>
     public async Task<TwitchGetStreamMarkersResponse> GetStreamMarkers(TwitchGetStreamMarkersOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetStreamMarkersResponse>("get_stream_markers", opt?.ToGodotObject()); 
+        return await _data.CallAsync<TwitchGetStreamMarkersResponse>("get_stream_markers", opt?.ToGodotObject() ?? new Variant()); 
     }
 
     /// <summary>
@@ -1601,7 +1603,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetBroadcasterSubscriptionsResponse"/></returns>
     public async Task<TwitchGetBroadcasterSubscriptionsResponse> GetBroadcasterSubscriptions(string broadcasterId, TwitchGetBroadcasterSubscriptionsOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetBroadcasterSubscriptionsResponse>("get_broadcaster_subscriptions", opt?.ToGodotObject(), broadcasterId); 
+        return await _data.CallAsync<TwitchGetBroadcasterSubscriptionsResponse>("get_broadcaster_subscriptions", opt?.ToGodotObject() ?? new Variant(), broadcasterId); 
     }
 
     /// <summary>
@@ -1622,7 +1624,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetAllStreamTagsResponse"/></returns>
     public async Task<TwitchGetAllStreamTagsResponse> GetAllStreamTags(TwitchGetAllStreamTagsOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetAllStreamTagsResponse>("get_all_stream_tags", opt?.ToGodotObject()); 
+        return await _data.CallAsync<TwitchGetAllStreamTagsResponse>("get_all_stream_tags", opt?.ToGodotObject() ?? new Variant()); 
     }
 
     /// <summary>
@@ -1652,7 +1654,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetTeamsResponse"/></returns>
     public async Task<TwitchGetTeamsResponse> GetTeams(TwitchGetTeamsOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetTeamsResponse>("get_teams", opt?.ToGodotObject()); 
+        return await _data.CallAsync<TwitchGetTeamsResponse>("get_teams", opt?.ToGodotObject() ?? new Variant()); 
     }
 
     /// <summary>
@@ -1662,7 +1664,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetUsersResponse"/></returns>
     public async Task<TwitchGetUsersResponse> GetUsers(TwitchGetUsersOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetUsersResponse>("get_users", opt?.ToGodotObject()); 
+        return await _data.CallAsync<TwitchGetUsersResponse>("get_users", opt?.ToGodotObject() ?? new Variant()); 
     }
 
     /// <summary>
@@ -1672,7 +1674,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchUpdateUserResponse"/></returns>
     public async Task<TwitchUpdateUserResponse> UpdateUser(TwitchUpdateUserOpt opt = null)
     {
-        return await _data.CallAsync<TwitchUpdateUserResponse>("update_user", opt?.ToGodotObject()); 
+        return await _data.CallAsync<TwitchUpdateUserResponse>("update_user", opt?.ToGodotObject() ?? new Variant()); 
     }
 
     /// <summary>
@@ -1693,7 +1695,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetUserBlockListResponse"/></returns>
     public async Task<TwitchGetUserBlockListResponse> GetUserBlockList(string broadcasterId, TwitchGetUserBlockListOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetUserBlockListResponse>("get_user_block_list", opt?.ToGodotObject(), broadcasterId); 
+        return await _data.CallAsync<TwitchGetUserBlockListResponse>("get_user_block_list", opt?.ToGodotObject() ?? new Variant(), broadcasterId); 
     }
 
     /// <summary>
@@ -1704,7 +1706,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="ResponseData"/></returns>
     public async Task<ResponseData> BlockUser(string targetUserId, TwitchBlockUserOpt opt = null)
     {
-        return await _data.CallAsync<ResponseData>("block_user", opt?.ToGodotObject(), targetUserId); 
+        return await _data.CallAsync<ResponseData>("block_user", opt?.ToGodotObject() ?? new Variant(), targetUserId); 
     }
 
     /// <summary>
@@ -1733,7 +1735,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetUserActiveExtensionsResponse"/></returns>
     public async Task<TwitchGetUserActiveExtensionsResponse> GetUserActiveExtensions(TwitchGetUserActiveExtensionsOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetUserActiveExtensionsResponse>("get_user_active_extensions", opt?.ToGodotObject()); 
+        return await _data.CallAsync<TwitchGetUserActiveExtensionsResponse>("get_user_active_extensions", opt?.ToGodotObject() ?? new Variant()); 
     }
 
     /// <summary>
@@ -1753,7 +1755,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <returns><see cref="TwitchGetVideosResponse"/></returns>
     public async Task<TwitchGetVideosResponse> GetVideos(TwitchGetVideosOpt opt = null)
     {
-        return await _data.CallAsync<TwitchGetVideosResponse>("get_videos", opt?.ToGodotObject()); 
+        return await _data.CallAsync<TwitchGetVideosResponse>("get_videos", opt?.ToGodotObject() ?? new Variant()); 
     }
 
     /// <summary>

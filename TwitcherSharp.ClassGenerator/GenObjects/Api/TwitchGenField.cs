@@ -30,6 +30,17 @@ public class TwitchGenField : IEquatable<TwitchGenField>
     public string CleanedArrayType => Type.Split('/')[^1] + (TypedComponent?.HasGeneric == true ? "<T>" : "");
     public bool IsTyped => TypedComponent != null;
 
+    /// <summary>
+    /// A scalar C# value type (non-array, non-class). Only these stay non-nullable when required.
+    /// </summary>
+    public bool IsValueType => !IsArray && !IsTyped && Type is "int" or "bool" or "double" or "float" or "Variant";
+
+    /// <summary>
+    /// The nullability suffix to append to a property type under <c>&lt;Nullable&gt;enable</c>.
+    /// Reference types are always nullable (godot data may lack the key); value types are nullable only when optional.
+    /// </summary>
+    public string NullableSuffix => IsValueType ? (IsRequired ? "" : "?") : "?";
+
     public string GetAsType()
     {
         return CleanedType switch

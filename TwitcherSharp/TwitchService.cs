@@ -104,7 +104,7 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
     public void Chat(string message, string replyParentMessageId = "", TwitchUser broadcaster = null,
         TwitchUser sender = null)
     {
-        _data.Call("chat", message, replyParentMessageId, broadcaster?.ToGodotObject(), sender?.ToGodotObject());
+        _data.Call("chat", message, replyParentMessageId, broadcaster?.ToGodotObject() ?? new Variant(), sender?.ToGodotObject() ?? new Variant());
     }
 
     /// <summary>
@@ -115,7 +115,7 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
     /// <param name="moderator">The moderator that sends it</param>
     public void Shoutout(TwitchUser user, TwitchUser broadcaster = null, TwitchUser moderator = null)
     {
-        _data.Call("send_shoutout", user.ToGodotObject(), broadcaster?.ToGodotObject(), moderator?.ToGodotObject());
+        _data.Call("send_shoutout", user.ToGodotObject(), broadcaster?.ToGodotObject() ?? new Variant(), moderator?.ToGodotObject() ?? new Variant());
     }
 
     /// <summary>
@@ -129,8 +129,8 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
         TwitchUser moderator = null)
     {
         color ??= TwitchAnnouncementColor.Primary;
-        _data.Call("send_announcement", message, color.ToGodotObject(), broadcaster?.ToGodotObject(),
-            moderator?.ToGodotObject());
+        _data.Call("send_announcement", message, color.ToGodotObject(), broadcaster?.ToGodotObject() ?? new Variant(),
+            moderator?.ToGodotObject() ?? new Variant());
     }
 
     /// <summary>

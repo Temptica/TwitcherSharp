@@ -8,22 +8,22 @@ namespace TwitcherSharp.EventSub.Generated.Shared;
 
 public partial class TwitchOutcomes : RefCounted, ITwitcherSharpEventSub<TwitchOutcomes>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     /// <summary> 
     /// The outcome ID.
     /// </summary>
-    public string Id { get; set; }
+    public string? Id { get; set; }
 
     /// <summary> 
     /// The outcome title.
     /// </summary>
-    public string Title { get; set; }
+    public string? Title { get; set; }
 
     /// <summary> 
     /// The color for the outcome. Valid values are pink and blue.
     /// </summary>
-    public string Color { get; set; }
+    public string? Color { get; set; }
 
     /// <summary> 
     /// The number of users who used Channel Points on this outcome.
@@ -38,12 +38,12 @@ public partial class TwitchOutcomes : RefCounted, ITwitcherSharpEventSub<TwitchO
     /// <summary> 
     /// An array of up to 10 objects that describe users who participated in a Channel Points Prediction.
     /// </summary>
-    public TwitchTopPredictors TopPredictors { get => field ??= _data?.Get<TwitchTopPredictors>("top_predictors"); set; }
+    public TwitchTopPredictors? TopPredictors { get => field ??= _data?.Get<TwitchTopPredictors>("top_predictors"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchOutcomes object.
     /// </summary> 
-    public static TwitchOutcomes FromObject(GodotObject data)
+    public static TwitchOutcomes? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchOutcomes
@@ -63,12 +63,12 @@ public partial class TwitchOutcomes : RefCounted, ITwitcherSharpEventSub<TwitchO
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_outcomes.gd");
         var request = script.New().AsGodotObject();
-        request.Set("id", Id);
-        request.Set("title", Title);
-        request.Set("color", Color);
+        if(Id != null) request.Set("id", Id);
+        if(Title != null) request.Set("title", Title);
+        if(Color != null) request.Set("color", Color);
         request.Set("users", Users);
         request.Set("channel_points", ChannelPoints);
-        request.Set("top_predictors", TopPredictors?.ToGodotObject());
+        if(TopPredictors != null) request.Set("top_predictors", TopPredictors.ToGodotObject());
         return request;
     }
 }

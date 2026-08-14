@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ConduitShardDisabled;
 
 public partial class TwitchConduitShardDisabledCondition(string clientId) : RefCounted, ITwitcherSharpCondition<TwitchConduitShardDisabledCondition>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     public string Name => nameof(TwitchConduitShardDisabledCondition);
 
@@ -20,12 +20,12 @@ public partial class TwitchConduitShardDisabledCondition(string clientId) : RefC
     /// <summary> 
     /// The conduit ID to receive events for. If omitted, events for all of this client’s conduits are sent.
     /// </summary>
-    public string ConduitId { get; set; }
+    public string? ConduitId { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchConduitShardDisabledCondition object.
     /// </summary> 
-    public static TwitchConduitShardDisabledCondition FromObject(GodotObject data)
+    public static TwitchConduitShardDisabledCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchConduitShardDisabledCondition(data.Get("client_id").AsString())
@@ -43,7 +43,7 @@ public partial class TwitchConduitShardDisabledCondition(string clientId) : RefC
         var conditionClass = script.Get("Condition").As<GDScript>();
         var request = conditionClass.New().AsGodotObject();
         request.Set("client_id", ClientId);
-        request.Set("conduit_id", ConduitId);
+        if(ConduitId != null) request.Set("conduit_id", ConduitId);
         return request;
     }
 
@@ -60,7 +60,7 @@ public partial class TwitchConduitShardDisabledCondition(string clientId) : RefC
         return new Dictionary
         {
             {"client_id", ClientId},
-            {"conduit_id", ConduitId},
+            {"conduit_id", ConduitId!},
         };
     }
 }

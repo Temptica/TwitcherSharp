@@ -10,14 +10,14 @@ namespace TwitcherSharp.Api.Generated.Teams;
 /// </summary>
 public partial class TwitchGetTeamsOpt : RefCounted, ITwitcherSharp<TwitchGetTeamsOpt>
 {
-    private GodotObject _data;
-    public string Name { get; set; }
-    public string Id { get; set; }
+    private GodotObject? _data;
+    public string? Name { get; set; }
+    public string? Id { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetTeamsOpt object.
     /// </summary> 
-    public static TwitchGetTeamsOpt FromObject(GodotObject data)
+    public static TwitchGetTeamsOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetTeamsOpt

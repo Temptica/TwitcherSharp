@@ -129,8 +129,8 @@ public partial class TwitchRewardService(TwitchApi api, TwitchMediaLoader twitch
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/reward/twitch_reward_service.gd");
         var instance = script.New().AsGodotObject();
-        instance.Set("twitch_api", TwitchApi?.ToGodotObject());
-        instance.Set("twitch_media_loader", TwitchMediaLoader?.ToGodotObject());
+        instance.Set("twitch_api", TwitchApi?.ToGodotObject() ?? new Variant());
+        instance.Set("twitch_media_loader", TwitchMediaLoader?.ToGodotObject() ?? new Variant());
         return instance;
     }
 }

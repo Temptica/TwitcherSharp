@@ -6,22 +6,22 @@ namespace TwitcherSharp.Api.Generated.Teams;
 
 public partial class TwitchTeam : RefCounted, ITwitcherSharp<TwitchTeam>
 {
-    private GodotObject _data;
-    public TwitchResponseUsers[] Users { get => field ??= _data?.GetArray<TwitchResponseUsers>("users"); set; }
-    public string BackgroundImageUrl { get; set; }
-    public string Banner { get; set; }
-    public string CreatedAt { get; set; }
-    public string UpdatedAt { get; set; }
-    public string Info { get; set; }
-    public string ThumbnailUrl { get; set; }
-    public string TeamName { get; set; }
-    public string TeamDisplayName { get; set; }
-    public string Id { get; set; }
+    private GodotObject? _data;
+    public TwitchResponseUsers[]? Users { get => field ??= _data?.GetArray<TwitchResponseUsers>("users"); set; }
+    public string? BackgroundImageUrl { get; set; }
+    public string? Banner { get; set; }
+    public string? CreatedAt { get; set; }
+    public string? UpdatedAt { get; set; }
+    public string? Info { get; set; }
+    public string? ThumbnailUrl { get; set; }
+    public string? TeamName { get; set; }
+    public string? TeamDisplayName { get; set; }
+    public string? Id { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchTeam object.
     /// </summary> 
-    public static TwitchTeam FromObject(GodotObject data)
+    public static TwitchTeam? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchTeam
@@ -45,16 +45,16 @@ public partial class TwitchTeam : RefCounted, ITwitcherSharp<TwitchTeam>
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_team.gd");
         var request = script.Call("new").AsGodotObject();
-        if(Users != null) request.Set("users", Users?.ToGodotArray());
-        request.Set("background_image_url", BackgroundImageUrl);
-        request.Set("banner", Banner);
-        request.Set("created_at", CreatedAt);
-        request.Set("updated_at", UpdatedAt);
-        request.Set("info", Info);
-        request.Set("thumbnail_url", ThumbnailUrl);
-        request.Set("team_name", TeamName);
-        request.Set("team_display_name", TeamDisplayName);
-        request.Set("id", Id);
+        if(Users != null) request.Set("users", Users.ToGodotArray());
+        if(BackgroundImageUrl != null) request.Set("background_image_url", BackgroundImageUrl);
+        if(Banner != null) request.Set("banner", Banner);
+        if(CreatedAt != null) request.Set("created_at", CreatedAt);
+        if(UpdatedAt != null) request.Set("updated_at", UpdatedAt);
+        if(Info != null) request.Set("info", Info);
+        if(ThumbnailUrl != null) request.Set("thumbnail_url", ThumbnailUrl);
+        if(TeamName != null) request.Set("team_name", TeamName);
+        if(TeamDisplayName != null) request.Set("team_display_name", TeamDisplayName);
+        if(Id != null) request.Set("id", Id);
         return request;
     }
     
@@ -63,15 +63,15 @@ public partial class TwitchTeam : RefCounted, ITwitcherSharp<TwitchTeam>
     /// </summary>
     public partial class TwitchResponseUsers : RefCounted, ITwitcherSharp<TwitchResponseUsers>
     {
-        private GodotObject _data;
-        public string UserId { get; set; }
-        public string UserLogin { get; set; }
-        public string UserName { get; set; }
+        private GodotObject? _data;
+        public string? UserId { get; set; }
+        public string? UserLogin { get; set; }
+        public string? UserName { get; set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseUsers object.
         /// </summary> 
-        public static TwitchResponseUsers FromObject(GodotObject data)
+        public static TwitchResponseUsers? FromObject(GodotObject? data)
         {
             if(data == null) return null;
             var instance = new TwitchResponseUsers
@@ -90,9 +90,9 @@ public partial class TwitchTeam : RefCounted, ITwitcherSharp<TwitchTeam>
             var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_team.gd");
             var twitchResponseUsersClass = script.Get("Users").AsGodotObject();
             var request = twitchResponseUsersClass.Call("new").AsGodotObject();
-            request.Set("user_id", UserId);
-            request.Set("user_login", UserLogin);
-            request.Set("user_name", UserName);
+            if(UserId != null) request.Set("user_id", UserId);
+            if(UserLogin != null) request.Set("user_login", UserLogin);
+            if(UserName != null) request.Set("user_name", UserName);
             return request;
         }
     

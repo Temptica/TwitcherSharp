@@ -6,24 +6,24 @@ namespace TwitcherSharp.Api.Generated.Predictions;
 
 public partial class TwitchPrediction : RefCounted, ITwitcherSharp<TwitchPrediction>
 {
-    private GodotObject _data;
-    public string Id { get; set; }
-    public string BroadcasterId { get; set; }
-    public string BroadcasterName { get; set; }
-    public string BroadcasterLogin { get; set; }
-    public string Title { get; set; }
-    public string WinningOutcomeId { get; set; }
-    public TwitchPredictionOutcome[] Outcomes { get => field ??= _data?.GetArray<TwitchPredictionOutcome>("outcomes"); set; }
+    private GodotObject? _data;
+    public string? Id { get; set; }
+    public string? BroadcasterId { get; set; }
+    public string? BroadcasterName { get; set; }
+    public string? BroadcasterLogin { get; set; }
+    public string? Title { get; set; }
+    public string? WinningOutcomeId { get; set; }
+    public TwitchPredictionOutcome[]? Outcomes { get => field ??= _data?.GetArray<TwitchPredictionOutcome>("outcomes"); set; }
     public int PredictionWindow { get; set; }
-    public string Status { get; set; }
-    public string CreatedAt { get; set; }
-    public string EndedAt { get; set; }
-    public string LockedAt { get; set; }
+    public string? Status { get; set; }
+    public string? CreatedAt { get; set; }
+    public string? EndedAt { get; set; }
+    public string? LockedAt { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchPrediction object.
     /// </summary> 
-    public static TwitchPrediction FromObject(GodotObject data)
+    public static TwitchPrediction? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchPrediction
@@ -49,18 +49,18 @@ public partial class TwitchPrediction : RefCounted, ITwitcherSharp<TwitchPredict
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_prediction.gd");
         var request = script.Call("new").AsGodotObject();
-        request.Set("id", Id);
-        request.Set("broadcaster_id", BroadcasterId);
-        request.Set("broadcaster_name", BroadcasterName);
-        request.Set("broadcaster_login", BroadcasterLogin);
-        request.Set("title", Title);
-        request.Set("winning_outcome_id", WinningOutcomeId);
-        if(Outcomes != null) request.Set("outcomes", Outcomes?.ToGodotArray());
+        if(Id != null) request.Set("id", Id);
+        if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
+        if(BroadcasterName != null) request.Set("broadcaster_name", BroadcasterName);
+        if(BroadcasterLogin != null) request.Set("broadcaster_login", BroadcasterLogin);
+        if(Title != null) request.Set("title", Title);
+        if(WinningOutcomeId != null) request.Set("winning_outcome_id", WinningOutcomeId);
+        if(Outcomes != null) request.Set("outcomes", Outcomes.ToGodotArray());
         request.Set("prediction_window", PredictionWindow);
-        request.Set("status", Status);
-        request.Set("created_at", CreatedAt);
-        request.Set("ended_at", EndedAt);
-        request.Set("locked_at", LockedAt);
+        if(Status != null) request.Set("status", Status);
+        if(CreatedAt != null) request.Set("created_at", CreatedAt);
+        if(EndedAt != null) request.Set("ended_at", EndedAt);
+        if(LockedAt != null) request.Set("locked_at", LockedAt);
         return request;
     }
 

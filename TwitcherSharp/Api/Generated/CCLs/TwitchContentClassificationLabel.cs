@@ -6,15 +6,15 @@ namespace TwitcherSharp.Api.Generated.CCLs;
 
 public partial class TwitchContentClassificationLabel : RefCounted, ITwitcherSharp<TwitchContentClassificationLabel>
 {
-    private GodotObject _data;
-    public string Id { get; set; }
-    public string Description { get; set; }
-    public string Name { get; set; }
+    private GodotObject? _data;
+    public string? Id { get; set; }
+    public string? Description { get; set; }
+    public string? Name { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchContentClassificationLabel object.
     /// </summary> 
-    public static TwitchContentClassificationLabel FromObject(GodotObject data)
+    public static TwitchContentClassificationLabel? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchContentClassificationLabel
@@ -32,9 +32,9 @@ public partial class TwitchContentClassificationLabel : RefCounted, ITwitcherSha
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_content_classification_label.gd");
         var request = script.Call("new").AsGodotObject();
-        request.Set("id", Id);
-        request.Set("description", Description);
-        request.Set("name", Name);
+        if(Id != null) request.Set("id", Id);
+        if(Description != null) request.Set("description", Description);
+        if(Name != null) request.Set("name", Name);
         return request;
     }
 

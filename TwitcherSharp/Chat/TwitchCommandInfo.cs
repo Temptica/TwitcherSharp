@@ -65,7 +65,7 @@ public partial class TwitchCommandInfo : Resource, ITwitcherSharp<TwitchCommandI
 	public GodotObject ToGodotObject()
 	{
 		var script = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_command_info.gd");
-		var instance = script.New(Command?.ToGodotObject(),ChannelName, Username, OriginalMessage, TextMessage).AsGodotObject();
+		var instance = script.New(Command?.ToGodotObject() ?? new Variant(),ChannelName, Username, OriginalMessage, TextMessage).AsGodotObject();
 		instance.Set("arguments", Arguments?.ToVariantArray());
 		return instance;
 	}

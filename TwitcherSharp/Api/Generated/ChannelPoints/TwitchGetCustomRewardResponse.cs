@@ -6,13 +6,13 @@ namespace TwitcherSharp.Api.Generated.ChannelPoints;
 
 public partial class TwitchGetCustomRewardResponse : RefCounted, ITwitcherSharp<TwitchGetCustomRewardResponse>
 {
-    private GodotObject _data;
-    public TwitchCustomReward[] Data { get => field ??= _data?.GetArray<TwitchCustomReward>("data"); set; }
+    private GodotObject? _data;
+    public TwitchCustomReward[]? Data { get => field ??= _data?.GetArray<TwitchCustomReward>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetCustomRewardResponse object.
     /// </summary> 
-    public static TwitchGetCustomRewardResponse FromObject(GodotObject data)
+    public static TwitchGetCustomRewardResponse? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetCustomRewardResponse();
@@ -26,7 +26,7 @@ public partial class TwitchGetCustomRewardResponse : RefCounted, ITwitcherSharp<
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_custom_reward.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data?.ToGodotArray());
+        if(Data != null) request.Set("data", Data.ToGodotArray());
         return request;
     }
 

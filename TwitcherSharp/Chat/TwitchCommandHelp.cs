@@ -40,8 +40,8 @@ public partial class TwitchCommandHelp: TwitchCommand, ITwitcherSharp<TwitchComm
 		data.Set("aliases", Aliases.ToVariantArray());
 		data.Set("args_min", ArgsMin);
 		data.Set("args_max", ArgsMax);
-		data.Set("sender_user", SenderUser?.ToGodotObject());
-		data.Set("current_user", CurrentUser?.ToGodotObject());
+		data.Set("sender_user", SenderUser?.ToGodotObject() ?? new Variant());
+		data.Set("current_user", CurrentUser?.ToGodotObject() ?? new Variant());
 		GetBaseProperties(data);
 		return data;
 	}

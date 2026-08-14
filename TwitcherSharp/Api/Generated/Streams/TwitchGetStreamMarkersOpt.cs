@@ -10,17 +10,17 @@ namespace TwitcherSharp.Api.Generated.Streams;
 /// </summary>
 public partial class TwitchGetStreamMarkersOpt : RefCounted, ITwitcherSharp<TwitchGetStreamMarkersOpt>
 {
-    private GodotObject _data;
-    public string UserId { get; set; }
-    public string VideoId { get; set; }
-    public string First { get; set; }
-    public string Before { get; set; }
-    public string After { get; set; }
+    private GodotObject? _data;
+    public string? UserId { get; set; }
+    public string? VideoId { get; set; }
+    public string? First { get; set; }
+    public string? Before { get; set; }
+    public string? After { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetStreamMarkersOpt object.
     /// </summary> 
-    public static TwitchGetStreamMarkersOpt FromObject(GodotObject data)
+    public static TwitchGetStreamMarkersOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetStreamMarkersOpt

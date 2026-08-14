@@ -6,24 +6,24 @@ namespace TwitcherSharp.Api.Generated.Search;
 
 public partial class TwitchChannel : RefCounted, ITwitcherSharp<TwitchChannel>
 {
-    private GodotObject _data;
-    public string BroadcasterLanguage { get; set; }
-    public string BroadcasterLogin { get; set; }
-    public string DisplayName { get; set; }
-    public string GameId { get; set; }
-    public string GameName { get; set; }
-    public string Id { get; set; }
+    private GodotObject? _data;
+    public string? BroadcasterLanguage { get; set; }
+    public string? BroadcasterLogin { get; set; }
+    public string? DisplayName { get; set; }
+    public string? GameId { get; set; }
+    public string? GameName { get; set; }
+    public string? Id { get; set; }
     public bool IsLive { get; set; }
-    public string[] TagIds { get; set; }
-    public string[] Tags { get; set; }
-    public string ThumbnailUrl { get; set; }
-    public string Title { get; set; }
-    public string StartedAt { get; set; }
+    public string[]? TagIds { get; set; }
+    public string[]? Tags { get; set; }
+    public string? ThumbnailUrl { get; set; }
+    public string? Title { get; set; }
+    public string? StartedAt { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannel object.
     /// </summary> 
-    public static TwitchChannel FromObject(GodotObject data)
+    public static TwitchChannel? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannel
@@ -50,18 +50,18 @@ public partial class TwitchChannel : RefCounted, ITwitcherSharp<TwitchChannel>
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_channel.gd");
         var request = script.Call("new").AsGodotObject();
-        request.Set("broadcaster_language", BroadcasterLanguage);
-        request.Set("broadcaster_login", BroadcasterLogin);
-        request.Set("display_name", DisplayName);
-        request.Set("game_id", GameId);
-        request.Set("game_name", GameName);
-        request.Set("id", Id);
+        if(BroadcasterLanguage != null) request.Set("broadcaster_language", BroadcasterLanguage);
+        if(BroadcasterLogin != null) request.Set("broadcaster_login", BroadcasterLogin);
+        if(DisplayName != null) request.Set("display_name", DisplayName);
+        if(GameId != null) request.Set("game_id", GameId);
+        if(GameName != null) request.Set("game_name", GameName);
+        if(Id != null) request.Set("id", Id);
         request.Set("is_live", IsLive);
         if(TagIds != null) request.Set("tag_ids", new Godot.Collections.Array<string>(TagIds));
         if(Tags != null) request.Set("tags", new Godot.Collections.Array<string>(Tags));
-        request.Set("thumbnail_url", ThumbnailUrl);
-        request.Set("title", Title);
-        request.Set("started_at", StartedAt);
+        if(ThumbnailUrl != null) request.Set("thumbnail_url", ThumbnailUrl);
+        if(Title != null) request.Set("title", Title);
+        if(StartedAt != null) request.Set("started_at", StartedAt);
         return request;
     }
 

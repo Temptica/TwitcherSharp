@@ -32,7 +32,7 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
             : TwitchImageTransformer.FromObject(_data.Get("image_transformer").AsGodotObject());
         set
         {
-            _data?.Set("image_transformer", value?.ToGodotObject());
+            _data?.Set("image_transformer", value?.ToGodotObject() ?? new Variant());
             field = value;
         }
     } = new();
@@ -290,7 +290,7 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
 
         var script = GD.Load<GDScript>(ScriptPath);
         _data = script.New().AsGodotObject();
-        _data.Set("image_transformer", ImageTransformer?.ToGodotObject());
+        _data.Set("image_transformer", ImageTransformer?.ToGodotObject() ?? new Variant());
         _data.Set("fallback_texture", FallbackTexture);
         _data.Set("fallback_profile", FallbackProfile);
         _data.Set("image_cdn_host", ImageCdnHost);

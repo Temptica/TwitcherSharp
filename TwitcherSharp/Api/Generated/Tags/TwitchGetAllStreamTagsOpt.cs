@@ -10,15 +10,15 @@ namespace TwitcherSharp.Api.Generated.Tags;
 /// </summary>
 public partial class TwitchGetAllStreamTagsOpt : RefCounted, ITwitcherSharp<TwitchGetAllStreamTagsOpt>
 {
-    private GodotObject _data;
-    public string[] TagId { get; set; }
+    private GodotObject? _data;
+    public string[]? TagId { get; set; }
     public int? First { get; set; }
-    public string After { get; set; }
+    public string? After { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetAllStreamTagsOpt object.
     /// </summary> 
-    public static TwitchGetAllStreamTagsOpt FromObject(GodotObject data)
+    public static TwitchGetAllStreamTagsOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetAllStreamTagsOpt

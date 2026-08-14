@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelPollProgress;
 
 public partial class TwitchChannelPollProgressCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelPollProgressCondition>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     public string Name => nameof(TwitchChannelPollProgressCondition);
 
@@ -20,7 +20,7 @@ public partial class TwitchChannelPollProgressCondition(string broadcasterUserId
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelPollProgressCondition object.
     /// </summary> 
-    public static TwitchChannelPollProgressCondition FromObject(GodotObject data)
+    public static TwitchChannelPollProgressCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannelPollProgressCondition(data.Get("broadcaster_user_id").AsString());

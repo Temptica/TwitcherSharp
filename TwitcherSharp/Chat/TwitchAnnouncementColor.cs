@@ -5,7 +5,7 @@ namespace TwitcherSharp.Chat;
 
 public partial class TwitchAnnouncementColor(string color) : RefCounted, ITwitcherSharp<TwitchAnnouncementColor>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     public string Value { get; set; } = color;
 
     public static readonly TwitchAnnouncementColor Blue = new("blue");
@@ -14,9 +14,9 @@ public partial class TwitchAnnouncementColor(string color) : RefCounted, ITwitch
     public static readonly TwitchAnnouncementColor Purple = new("purple");
     public static readonly TwitchAnnouncementColor Primary = new("primary");
 
-    public static TwitchAnnouncementColor FromObject(GodotObject data)
+    public static TwitchAnnouncementColor? FromObject(GodotObject? data)
     {
-        return new TwitchAnnouncementColor(data.Get("value").AsString());
+        return data == null ? null : new TwitchAnnouncementColor(data.Get("value").AsString());
     }
 
     public GodotObject ToGodotObject()

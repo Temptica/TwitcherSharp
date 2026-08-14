@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelUnban;
 
 public partial class TwitchChannelUnbanCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelUnbanCondition>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     public string Name => nameof(TwitchChannelUnbanCondition);
 
@@ -20,7 +20,7 @@ public partial class TwitchChannelUnbanCondition(string broadcasterUserId) : Ref
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelUnbanCondition object.
     /// </summary> 
-    public static TwitchChannelUnbanCondition FromObject(GodotObject data)
+    public static TwitchChannelUnbanCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannelUnbanCondition(data.Get("broadcaster_user_id").AsString());

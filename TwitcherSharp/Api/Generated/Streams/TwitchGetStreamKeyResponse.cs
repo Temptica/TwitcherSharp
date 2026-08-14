@@ -6,13 +6,13 @@ namespace TwitcherSharp.Api.Generated.Streams;
 
 public partial class TwitchGetStreamKeyResponse : RefCounted, ITwitcherSharp<TwitchGetStreamKeyResponse>
 {
-    private GodotObject _data;
-    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
+    private GodotObject? _data;
+    public TwitchResponseData[]? Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetStreamKeyResponse object.
     /// </summary> 
-    public static TwitchGetStreamKeyResponse FromObject(GodotObject data)
+    public static TwitchGetStreamKeyResponse? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetStreamKeyResponse();
@@ -26,7 +26,7 @@ public partial class TwitchGetStreamKeyResponse : RefCounted, ITwitcherSharp<Twi
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_stream_key.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data?.ToGodotArray());
+        if(Data != null) request.Set("data", Data.ToGodotArray());
         return request;
     }
     
@@ -35,13 +35,13 @@ public partial class TwitchGetStreamKeyResponse : RefCounted, ITwitcherSharp<Twi
     /// </summary>
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
-        private GodotObject _data;
-        public string StreamKey { get; set; }
+        private GodotObject? _data;
+        public string? StreamKey { get; set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseData object.
         /// </summary> 
-        public static TwitchResponseData FromObject(GodotObject data)
+        public static TwitchResponseData? FromObject(GodotObject? data)
         {
             if(data == null) return null;
             var instance = new TwitchResponseData
@@ -58,7 +58,7 @@ public partial class TwitchGetStreamKeyResponse : RefCounted, ITwitcherSharp<Twi
             var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_stream_key.gd");
             var twitchResponseDataClass = script.Get("ResponseData").AsGodotObject();
             var request = twitchResponseDataClass.Call("new").AsGodotObject();
-            request.Set("stream_key", StreamKey);
+            if(StreamKey != null) request.Set("stream_key", StreamKey);
             return request;
         }
     

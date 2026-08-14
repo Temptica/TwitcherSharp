@@ -10,17 +10,17 @@ namespace TwitcherSharp.Api.Generated.Schedule;
 /// </summary>
 public partial class TwitchGetChannelStreamScheduleOpt : RefCounted, ITwitcherSharp<TwitchGetChannelStreamScheduleOpt>
 {
-    private GodotObject _data;
-    public string[] Id { get; set; }
-    public string StartTime { get; set; }
-    public string UtcOffset { get; set; }
+    private GodotObject? _data;
+    public string[]? Id { get; set; }
+    public string? StartTime { get; set; }
+    public string? UtcOffset { get; set; }
     public int? First { get; set; }
-    public string After { get; set; }
+    public string? After { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetChannelStreamScheduleOpt object.
     /// </summary> 
-    public static TwitchGetChannelStreamScheduleOpt FromObject(GodotObject data)
+    public static TwitchGetChannelStreamScheduleOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetChannelStreamScheduleOpt

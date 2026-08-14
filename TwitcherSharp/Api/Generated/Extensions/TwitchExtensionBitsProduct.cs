@@ -6,18 +6,18 @@ namespace TwitcherSharp.Api.Generated.Extensions;
 
 public partial class TwitchExtensionBitsProduct : RefCounted, ITwitcherSharp<TwitchExtensionBitsProduct>
 {
-    private GodotObject _data;
-    public string Sku { get; set; }
-    public TwitchCost Cost { get => field ??= _data?.Get<TwitchCost>("cost"); set; }
+    private GodotObject? _data;
+    public string? Sku { get; set; }
+    public TwitchCost? Cost { get => field ??= _data?.Get<TwitchCost>("cost"); set; }
     public bool InDevelopment { get; set; }
-    public string DisplayName { get; set; }
-    public string Expiration { get; set; }
+    public string? DisplayName { get; set; }
+    public string? Expiration { get; set; }
     public bool IsBroadcast { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchExtensionBitsProduct object.
     /// </summary> 
-    public static TwitchExtensionBitsProduct FromObject(GodotObject data)
+    public static TwitchExtensionBitsProduct? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchExtensionBitsProduct
@@ -37,11 +37,11 @@ public partial class TwitchExtensionBitsProduct : RefCounted, ITwitcherSharp<Twi
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_extension_bits_product.gd");
         var request = script.Call("new").AsGodotObject();
-        request.Set("sku", Sku);
-        request.Set("cost", Cost?.ToGodotObject());
+        if(Sku != null) request.Set("sku", Sku);
+        if(Cost != null) request.Set("cost", Cost.ToGodotObject());
         request.Set("in_development", InDevelopment);
-        request.Set("display_name", DisplayName);
-        request.Set("expiration", Expiration);
+        if(DisplayName != null) request.Set("display_name", DisplayName);
+        if(Expiration != null) request.Set("expiration", Expiration);
         request.Set("is_broadcast", IsBroadcast);
         return request;
     }
@@ -51,14 +51,14 @@ public partial class TwitchExtensionBitsProduct : RefCounted, ITwitcherSharp<Twi
     /// </summary>
     public partial class TwitchCost : RefCounted, ITwitcherSharp<TwitchCost>
     {
-        private GodotObject _data;
+        private GodotObject? _data;
         public int Amount { get; set; }
-        public string Type { get; set; }
+        public string? Type { get; set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchCost object.
         /// </summary> 
-        public static TwitchCost FromObject(GodotObject data)
+        public static TwitchCost? FromObject(GodotObject? data)
         {
             if(data == null) return null;
             var instance = new TwitchCost
@@ -77,7 +77,7 @@ public partial class TwitchExtensionBitsProduct : RefCounted, ITwitcherSharp<Twi
             var twitchCostClass = script.Get("Cost").AsGodotObject();
             var request = twitchCostClass.Call("new").AsGodotObject();
             request.Set("amount", Amount);
-            request.Set("type", Type);
+            if(Type != null) request.Set("type", Type);
             return request;
         }
     

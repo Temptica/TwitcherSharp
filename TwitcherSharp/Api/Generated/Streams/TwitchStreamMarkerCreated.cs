@@ -6,16 +6,16 @@ namespace TwitcherSharp.Api.Generated.Streams;
 
 public partial class TwitchStreamMarkerCreated : RefCounted, ITwitcherSharp<TwitchStreamMarkerCreated>
 {
-    private GodotObject _data;
-    public string Id { get; set; }
-    public string CreatedAt { get; set; }
+    private GodotObject? _data;
+    public string? Id { get; set; }
+    public string? CreatedAt { get; set; }
     public int PositionSeconds { get; set; }
-    public string Description { get; set; }
+    public string? Description { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchStreamMarkerCreated object.
     /// </summary> 
-    public static TwitchStreamMarkerCreated FromObject(GodotObject data)
+    public static TwitchStreamMarkerCreated? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchStreamMarkerCreated
@@ -34,10 +34,10 @@ public partial class TwitchStreamMarkerCreated : RefCounted, ITwitcherSharp<Twit
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_stream_marker_created.gd");
         var request = script.Call("new").AsGodotObject();
-        request.Set("id", Id);
-        request.Set("created_at", CreatedAt);
+        if(Id != null) request.Set("id", Id);
+        if(CreatedAt != null) request.Set("created_at", CreatedAt);
         request.Set("position_seconds", PositionSeconds);
-        request.Set("description", Description);
+        if(Description != null) request.Set("description", Description);
         return request;
     }
 

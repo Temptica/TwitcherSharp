@@ -8,57 +8,57 @@ namespace TwitcherSharp.EventSub.Generated.ExtensionBitsTransactionCreate;
 
 public partial class TwitchExtensionBitsTransactionCreateEvent : RefCounted, ITwitcherSharpEventSub<TwitchExtensionBitsTransactionCreateEvent>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     /// <summary> 
     /// Client ID of the extension.
     /// </summary>
-    public string ExtensionClientId { get; set; }
+    public string? ExtensionClientId { get; set; }
 
     /// <summary> 
     /// Transaction ID.
     /// </summary>
-    public string Id { get; set; }
+    public string? Id { get; set; }
 
     /// <summary> 
     /// The transaction’s broadcaster ID.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string? BroadcasterUserId { get; set; }
 
     /// <summary> 
     /// The transaction’s broadcaster login.
     /// </summary>
-    public string BroadcasterUserLogin { get; set; }
+    public string? BroadcasterUserLogin { get; set; }
 
     /// <summary> 
     /// The transaction’s broadcaster display name.
     /// </summary>
-    public string BroadcasterUserName { get; set; }
+    public string? BroadcasterUserName { get; set; }
 
     /// <summary> 
     /// The transaction’s user ID.
     /// </summary>
-    public string UserId { get; set; }
+    public string? UserId { get; set; }
 
     /// <summary> 
     /// The transaction’s user login.
     /// </summary>
-    public string UserLogin { get; set; }
+    public string? UserLogin { get; set; }
 
     /// <summary> 
     /// The transaction’s user display name.
     /// </summary>
-    public string UserName { get; set; }
+    public string? UserName { get; set; }
 
     /// <summary> 
     /// Additional information about a product acquired via a Twitch Extension Bits transaction.
     /// </summary>
-    public TwitchProduct Product { get => field ??= _data?.Get<TwitchProduct>("product"); set; }
+    public TwitchProduct? Product { get => field ??= _data?.Get<TwitchProduct>("product"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchExtensionBitsTransactionCreateEvent object.
     /// </summary> 
-    public static TwitchExtensionBitsTransactionCreateEvent FromObject(GodotObject data)
+    public static TwitchExtensionBitsTransactionCreateEvent? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchExtensionBitsTransactionCreateEvent
@@ -82,15 +82,15 @@ public partial class TwitchExtensionBitsTransactionCreateEvent : RefCounted, ITw
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_extension_bits_transaction_create.gd");
         var eventClass = script.Get("Event").As<GDScript>();
         var request = eventClass.New().AsGodotObject();
-        request.Set("extension_client_id", ExtensionClientId);
-        request.Set("id", Id);
-        request.Set("broadcaster_user_id", BroadcasterUserId);
-        request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        request.Set("broadcaster_user_name", BroadcasterUserName);
-        request.Set("user_id", UserId);
-        request.Set("user_login", UserLogin);
-        request.Set("user_name", UserName);
-        request.Set("product", Product?.ToGodotObject());
+        if(ExtensionClientId != null) request.Set("extension_client_id", ExtensionClientId);
+        if(Id != null) request.Set("id", Id);
+        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
+        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
+        if(UserId != null) request.Set("user_id", UserId);
+        if(UserLogin != null) request.Set("user_login", UserLogin);
+        if(UserName != null) request.Set("user_name", UserName);
+        if(Product != null) request.Set("product", Product.ToGodotObject());
         return request;
     }
 }

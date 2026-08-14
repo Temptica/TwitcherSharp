@@ -6,7 +6,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 
 public partial class TwitchUpdateAutoModSettingsBody : RefCounted, ITwitcherSharp<TwitchUpdateAutoModSettingsBody>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     public int? Aggression { get; set; }
     public int? Bullying { get; set; }
     public int? Disability { get; set; }
@@ -20,7 +20,7 @@ public partial class TwitchUpdateAutoModSettingsBody : RefCounted, ITwitcherShar
     /// <summary> 
     /// Transforms the godot data into a TwitchUpdateAutoModSettingsBody object.
     /// </summary> 
-    public static TwitchUpdateAutoModSettingsBody FromObject(GodotObject data)
+    public static TwitchUpdateAutoModSettingsBody? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchUpdateAutoModSettingsBody

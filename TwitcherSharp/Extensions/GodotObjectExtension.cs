@@ -82,7 +82,7 @@ public static class GodotObjectExtension
 
         public T Call<T>(string method, params Variant[] args) where T : RefCounted, ITwitcherSharp<T>
         {
-            return T.FromObject(obj.Call(method, args).AsGodotObject());
+            return T.FromObject(obj.Call(method, args).AsGodotObject())!;
         }
 
         public async Task<T> CallAsync<T>(string method, params Variant[] args) where T : RefCounted, ITwitcherSharp<T>
@@ -92,10 +92,10 @@ public static class GodotObjectExtension
             if (task.HasSignal("completed"))
             {
                 var result = await obj.ToSignal(task, "completed");
-                return T.FromObject(result[0].AsGodotObject());
+                return T.FromObject(result[0].AsGodotObject())!;
             }
 
-            return T.FromObject(task);
+            return T.FromObject(task)!;
         }
 
         public async Task<Variant> CallAsync(string methode, params Variant[] args)
@@ -124,7 +124,7 @@ public static class GodotObjectExtension
             var dictionary = new Godot.Collections.Dictionary<T, TVariant>();
             var result = await obj.CallAsync(method, args);
             var resultDictionary = result.AsGodotDictionary<GodotObject, TVariant>()
-                .Select(x => (T.FromObject(x.Key), x.Value));
+                .Select(x => (T.FromObject(x.Key)!, x.Value));
 
             foreach (var (key, value) in resultDictionary)
             {
@@ -149,7 +149,7 @@ public static class GodotObjectExtension
             var dictionary = new Godot.Collections.Dictionary<TVariant, T>();
             var result = await obj.CallAsync(method, args);
             var resultDictionary = result.AsGodotDictionary<TVariant, GodotObject>()
-                .Select(x => (x.Key, T.FromObject(x.Value)));
+                .Select(x => (x.Key, T.FromObject(x.Value)!));
 
             foreach (var (key, value) in resultDictionary)
             {
@@ -174,7 +174,7 @@ public static class GodotObjectExtension
             var dictionary = new Godot.Collections.Dictionary<T, TVariant>();
             var result = obj.Call(method, args);
             var resultDictionary = result.AsGodotDictionary<GodotObject, TVariant>()
-                .Select(x => (T.FromObject(x.Key), x.Value));
+                .Select(x => (T.FromObject(x.Key)!, x.Value));
 
             foreach (var (key, value) in resultDictionary)
             {
@@ -199,7 +199,7 @@ public static class GodotObjectExtension
             var dictionary = new Godot.Collections.Dictionary<TVariant, T>();
             var result = obj.Call(method, args);
             var resultDictionary = result.AsGodotDictionary<TVariant, GodotObject>()
-                .Select(x => (x.Key, T.FromObject(x.Value)));
+                .Select(x => (x.Key, T.FromObject(x.Value)!));
 
             foreach (var (key, value) in resultDictionary)
             {
@@ -222,6 +222,7 @@ public static class GodotObjectExtension
             var result = obj.Call(method, args);
             return result.AsGodotArray<GodotObject>()
                 .Select(T.FromObject)
+                .OfType<T>()
                 .ToList();
         }
 
@@ -238,22 +239,23 @@ public static class GodotObjectExtension
             var result = await obj.CallAsync(method, args);
             return result.AsGodotArray<GodotObject>()
                 .Select(T.FromObject)
+                .OfType<T>()
                 .ToList();
         }
 
         internal List<T> GetList<T>(string propertyName) where T : RefCounted, ITwitcherSharp<T>
         {
-            return obj?.Get(propertyName).AsGodotObjectArray<GodotObject>().Select(T.FromObject).ToList();
+            return obj.Get(propertyName).AsGodotObjectArray<GodotObject>().Select(T.FromObject).OfType<T>().ToList();
         }
 
         internal T[] GetArray<T>(string propertyName) where T : RefCounted, ITwitcherSharp<T>
         {
-            return obj?.Get(propertyName).AsGodotObjectArray<GodotObject>().Select(T.FromObject).ToArray();
+            return obj.Get(propertyName).AsGodotObjectArray<GodotObject>().Select(T.FromObject).OfType<T>().ToArray();
         }
 
-        internal T Get<T>(string propertyName) where T : RefCounted, ITwitcherSharp<T>
+        internal T? Get<T>(string propertyName) where T : RefCounted, ITwitcherSharp<T>
         {
-            return T.FromObject(obj?.Get(propertyName).AsGodotObject());
+            return T.FromObject(obj.Get(propertyName).AsGodotObject());
         }
     }
 }

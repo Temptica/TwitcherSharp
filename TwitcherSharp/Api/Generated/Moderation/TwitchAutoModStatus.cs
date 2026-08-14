@@ -6,14 +6,14 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 
 public partial class TwitchAutoModStatus : RefCounted, ITwitcherSharp<TwitchAutoModStatus>
 {
-    private GodotObject _data;
-    public string MsgId { get; set; }
+    private GodotObject? _data;
+    public string? MsgId { get; set; }
     public bool IsPermitted { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchAutoModStatus object.
     /// </summary> 
-    public static TwitchAutoModStatus FromObject(GodotObject data)
+    public static TwitchAutoModStatus? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchAutoModStatus
@@ -30,7 +30,7 @@ public partial class TwitchAutoModStatus : RefCounted, ITwitcherSharp<TwitchAuto
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_auto_mod_status.gd");
         var request = script.Call("new").AsGodotObject();
-        request.Set("msg_id", MsgId);
+        if(MsgId != null) request.Set("msg_id", MsgId);
         request.Set("is_permitted", IsPermitted);
         return request;
     }

@@ -6,16 +6,16 @@ namespace TwitcherSharp.Api.Generated.Predictions;
 
 public partial class TwitchCreatePredictionBody : RefCounted, ITwitcherSharp<TwitchCreatePredictionBody>
 {
-    private GodotObject _data;
-    public string BroadcasterId { get; set; }
-    public string Title { get; set; }
-    public TwitchBodyOutcomes[] Outcomes { get => field ??= _data?.GetArray<TwitchBodyOutcomes>("outcomes"); set; }
+    private GodotObject? _data;
+    public string? BroadcasterId { get; set; }
+    public string? Title { get; set; }
+    public TwitchBodyOutcomes[]? Outcomes { get => field ??= _data?.GetArray<TwitchBodyOutcomes>("outcomes"); set; }
     public int PredictionWindow { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCreatePredictionBody object.
     /// </summary> 
-    public static TwitchCreatePredictionBody FromObject(GodotObject data)
+    public static TwitchCreatePredictionBody? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchCreatePredictionBody
@@ -34,9 +34,9 @@ public partial class TwitchCreatePredictionBody : RefCounted, ITwitcherSharp<Twi
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_create_prediction.gd");
         var bodyClass = script.Get("Body").AsGodotObject();
         var request = bodyClass.Call("new").AsGodotObject();
-        request.Set("broadcaster_id", BroadcasterId);
-        request.Set("title", Title);
-        if(Outcomes != null) request.Set("outcomes", Outcomes?.ToGodotArray());
+        if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
+        if(Title != null) request.Set("title", Title);
+        if(Outcomes != null) request.Set("outcomes", Outcomes.ToGodotArray());
         request.Set("prediction_window", PredictionWindow);
         return request;
     }
@@ -46,13 +46,13 @@ public partial class TwitchCreatePredictionBody : RefCounted, ITwitcherSharp<Twi
     /// </summary>
     public partial class TwitchBodyOutcomes : RefCounted, ITwitcherSharp<TwitchBodyOutcomes>
     {
-        private GodotObject _data;
-        public string Title { get; set; }
+        private GodotObject? _data;
+        public string? Title { get; set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchBodyOutcomes object.
         /// </summary> 
-        public static TwitchBodyOutcomes FromObject(GodotObject data)
+        public static TwitchBodyOutcomes? FromObject(GodotObject? data)
         {
             if(data == null) return null;
             var instance = new TwitchBodyOutcomes
@@ -69,7 +69,7 @@ public partial class TwitchCreatePredictionBody : RefCounted, ITwitcherSharp<Twi
             var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_create_prediction.gd");
             var twitchBodyOutcomesClass = script.Get("BodyOutcomes").AsGodotObject();
             var request = twitchBodyOutcomesClass.Call("new").AsGodotObject();
-            request.Set("title", Title);
+            if(Title != null) request.Set("title", Title);
             return request;
         }
     

@@ -6,13 +6,13 @@ namespace TwitcherSharp.Api.Generated.Clips;
 
 public partial class TwitchGetClipsDownloadResponse : RefCounted, ITwitcherSharp<TwitchGetClipsDownloadResponse>
 {
-    private GodotObject _data;
-    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
+    private GodotObject? _data;
+    public TwitchResponseData[]? Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetClipsDownloadResponse object.
     /// </summary> 
-    public static TwitchGetClipsDownloadResponse FromObject(GodotObject data)
+    public static TwitchGetClipsDownloadResponse? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetClipsDownloadResponse();
@@ -26,7 +26,7 @@ public partial class TwitchGetClipsDownloadResponse : RefCounted, ITwitcherSharp
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_clips_download.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data?.ToGodotArray());
+        if(Data != null) request.Set("data", Data.ToGodotArray());
         return request;
     }
     
@@ -35,15 +35,15 @@ public partial class TwitchGetClipsDownloadResponse : RefCounted, ITwitcherSharp
     /// </summary>
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
-        private GodotObject _data;
-        public string ClipId { get; set; }
-        public string LandscapeDownloadUrl { get; set; }
-        public string PortraitDownloadUrl { get; set; }
+        private GodotObject? _data;
+        public string? ClipId { get; set; }
+        public string? LandscapeDownloadUrl { get; set; }
+        public string? PortraitDownloadUrl { get; set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseData object.
         /// </summary> 
-        public static TwitchResponseData FromObject(GodotObject data)
+        public static TwitchResponseData? FromObject(GodotObject? data)
         {
             if(data == null) return null;
             var instance = new TwitchResponseData
@@ -62,9 +62,9 @@ public partial class TwitchGetClipsDownloadResponse : RefCounted, ITwitcherSharp
             var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_clips_download.gd");
             var twitchResponseDataClass = script.Get("ResponseData").AsGodotObject();
             var request = twitchResponseDataClass.Call("new").AsGodotObject();
-            request.Set("clip_id", ClipId);
-            request.Set("landscape_download_url", LandscapeDownloadUrl);
-            request.Set("portrait_download_url", PortraitDownloadUrl);
+            if(ClipId != null) request.Set("clip_id", ClipId);
+            if(LandscapeDownloadUrl != null) request.Set("landscape_download_url", LandscapeDownloadUrl);
+            if(PortraitDownloadUrl != null) request.Set("portrait_download_url", PortraitDownloadUrl);
             return request;
         }
     

@@ -6,13 +6,13 @@ namespace TwitcherSharp.Api.Generated.Ads;
 
 public partial class TwitchStartCommercialResponse : RefCounted, ITwitcherSharp<TwitchStartCommercialResponse>
 {
-    private GodotObject _data;
-    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
+    private GodotObject? _data;
+    public TwitchResponseData[]? Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchStartCommercialResponse object.
     /// </summary> 
-    public static TwitchStartCommercialResponse FromObject(GodotObject data)
+    public static TwitchStartCommercialResponse? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchStartCommercialResponse();
@@ -26,7 +26,7 @@ public partial class TwitchStartCommercialResponse : RefCounted, ITwitcherSharp<
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_start_commercial.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data?.ToGodotArray());
+        if(Data != null) request.Set("data", Data.ToGodotArray());
         return request;
     }
     
@@ -35,15 +35,15 @@ public partial class TwitchStartCommercialResponse : RefCounted, ITwitcherSharp<
     /// </summary>
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
-        private GodotObject _data;
+        private GodotObject? _data;
         public int Length { get; set; }
-        public string Message { get; set; }
+        public string? Message { get; set; }
         public int RetryAfter { get; set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseData object.
         /// </summary> 
-        public static TwitchResponseData FromObject(GodotObject data)
+        public static TwitchResponseData? FromObject(GodotObject? data)
         {
             if(data == null) return null;
             var instance = new TwitchResponseData
@@ -63,7 +63,7 @@ public partial class TwitchStartCommercialResponse : RefCounted, ITwitcherSharp<
             var twitchResponseDataClass = script.Get("ResponseData").AsGodotObject();
             var request = twitchResponseDataClass.Call("new").AsGodotObject();
             request.Set("length", Length);
-            request.Set("message", Message);
+            if(Message != null) request.Set("message", Message);
             request.Set("retry_after", RetryAfter);
             return request;
         }

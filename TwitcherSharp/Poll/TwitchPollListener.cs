@@ -120,7 +120,7 @@ public partial class TwitchPollListener : RefCounted, ITwitcherSharp<TwitchPollL
         var script = GD.Load<GDScript>("res://addons/twitcher/poll/twitch_poll_listener.gd");
         var obj = script.New().AsGodotObject();
         obj.Set("ensure_subscriptions_on_ready", EnsureSubscriptionsOnReady);
-        obj.Set("broadcaster", Broadcaster?.ToGodotObject());
+        obj.Set("broadcaster", Broadcaster?.ToGodotObject() ?? new Variant());
         return obj;
     }
 }

@@ -1,4 +1,3 @@
-using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 using TwitcherSharp.Extensions;
 using Godot;
@@ -7,14 +6,14 @@ namespace TwitcherSharp.Api.Generated.Conduits;
 
 public partial class TwitchGetConduitShardsResponse : RefCounted, ITwitcherSharp<TwitchGetConduitShardsResponse>
 {
-    private GodotObject _data;
-    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
-    public ResponsePagination Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
+    private GodotObject? _data;
+    public TwitchResponseData[]? Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
+    public ResponsePagination? Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetConduitShardsResponse object.
     /// </summary> 
-    public static TwitchGetConduitShardsResponse FromObject(GodotObject data)
+    public static TwitchGetConduitShardsResponse? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetConduitShardsResponse();
@@ -28,7 +27,7 @@ public partial class TwitchGetConduitShardsResponse : RefCounted, ITwitcherSharp
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_conduit_shards.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data?.ToGodotArray());
+        if(Data != null) request.Set("data", Data.ToGodotArray());
         if(Pagination != null) request.Set("pagination", Pagination);
         return request;
     }
@@ -40,13 +39,13 @@ public partial class TwitchGetConduitShardsResponse : RefCounted, ITwitcherSharp
     /// </summary>
     public partial class ResponsePagination : RefCounted, ITwitcherSharp<ResponsePagination>
     {
-        private GodotObject _data;
-        public string Cursor { get; set; }
+        private GodotObject? _data;
+        public string? Cursor { get; set; }
     
         /// <summary> 
         /// Transforms the godot data into a ResponsePagination object.
         /// </summary> 
-        public static ResponsePagination FromObject(GodotObject data)
+        public static ResponsePagination? FromObject(GodotObject? data)
         {
             if(data == null) return null;
             var instance = new ResponsePagination
@@ -74,15 +73,15 @@ public partial class TwitchGetConduitShardsResponse : RefCounted, ITwitcherSharp
     /// </summary>
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
-        private GodotObject _data;
-        public string Id { get; set; }
-        public string Status { get; set; }
-        public TwitchResponseTransport Transport { get => field ??= _data?.Get<TwitchResponseTransport>("transport"); set; }
+        private GodotObject? _data;
+        public string? Id { get; set; }
+        public string? Status { get; set; }
+        public TwitchResponseTransport? Transport { get => field ??= _data?.Get<TwitchResponseTransport>("transport"); set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseData object.
         /// </summary> 
-        public static TwitchResponseData FromObject(GodotObject data)
+        public static TwitchResponseData? FromObject(GodotObject? data)
         {
             if(data == null) return null;
             var instance = new TwitchResponseData
@@ -100,9 +99,9 @@ public partial class TwitchGetConduitShardsResponse : RefCounted, ITwitcherSharp
             var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_conduit_shards.gd");
             var twitchResponseDataClass = script.Get("ResponseData").AsGodotObject();
             var request = twitchResponseDataClass.Call("new").AsGodotObject();
-            request.Set("id", Id);
-            request.Set("status", Status);
-            request.Set("transport", Transport?.ToGodotObject());
+            if(Id != null) request.Set("id", Id);
+            if(Status != null) request.Set("status", Status);
+            if(Transport != null) request.Set("transport", Transport.ToGodotObject());
             return request;
         }
         
@@ -111,17 +110,17 @@ public partial class TwitchGetConduitShardsResponse : RefCounted, ITwitcherSharp
         /// </summary>
         public partial class TwitchResponseTransport : RefCounted, ITwitcherSharp<TwitchResponseTransport>
         {
-            private GodotObject _data;
-            public string Method { get; set; }
-            public string Callback { get; set; }
-            public string SessionId { get; set; }
-            public string ConnectedAt { get; set; }
-            public string DisconnectedAt { get; set; }
+            private GodotObject? _data;
+            public string? Method { get; set; }
+            public string? Callback { get; set; }
+            public string? SessionId { get; set; }
+            public string? ConnectedAt { get; set; }
+            public string? DisconnectedAt { get; set; }
         
             /// <summary> 
             /// Transforms the godot data into a TwitchResponseTransport object.
             /// </summary> 
-            public static TwitchResponseTransport FromObject(GodotObject data)
+            public static TwitchResponseTransport? FromObject(GodotObject? data)
             {
                 if(data == null) return null;
                 var instance = new TwitchResponseTransport
@@ -142,7 +141,7 @@ public partial class TwitchGetConduitShardsResponse : RefCounted, ITwitcherSharp
                 var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_conduit_shards.gd");
                 var twitchResponseTransportClass = script.Get("ResponseTransport").AsGodotObject();
                 var request = twitchResponseTransportClass.Call("new").AsGodotObject();
-                request.Set("method", Method);
+                if(Method != null) request.Set("method", Method);
                 if(Callback != null) request.Set("callback", Callback);
                 if(SessionId != null) request.Set("session_id", SessionId);
                 if(ConnectedAt != null) request.Set("connected_at", ConnectedAt);

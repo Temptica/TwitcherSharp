@@ -10,18 +10,18 @@ namespace TwitcherSharp.Api.Generated.Analytics;
 /// </summary>
 public partial class TwitchGetGameAnalyticsOpt : RefCounted, ITwitcherSharp<TwitchGetGameAnalyticsOpt>
 {
-    private GodotObject _data;
-    public string GameId { get; set; }
-    public string Type { get; set; }
-    public string StartedAt { get; set; }
-    public string EndedAt { get; set; }
+    private GodotObject? _data;
+    public string? GameId { get; set; }
+    public string? Type { get; set; }
+    public string? StartedAt { get; set; }
+    public string? EndedAt { get; set; }
     public int? First { get; set; }
-    public string After { get; set; }
+    public string? After { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetGameAnalyticsOpt object.
     /// </summary> 
-    public static TwitchGetGameAnalyticsOpt FromObject(GodotObject data)
+    public static TwitchGetGameAnalyticsOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetGameAnalyticsOpt

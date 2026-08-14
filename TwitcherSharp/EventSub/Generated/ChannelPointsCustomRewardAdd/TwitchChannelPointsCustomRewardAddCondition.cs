@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelPointsCustomRewardAdd;
 
 public partial class TwitchChannelPointsCustomRewardAddCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelPointsCustomRewardAddCondition>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     public string Name => nameof(TwitchChannelPointsCustomRewardAddCondition);
 
@@ -20,7 +20,7 @@ public partial class TwitchChannelPointsCustomRewardAddCondition(string broadcas
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelPointsCustomRewardAddCondition object.
     /// </summary> 
-    public static TwitchChannelPointsCustomRewardAddCondition FromObject(GodotObject data)
+    public static TwitchChannelPointsCustomRewardAddCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannelPointsCustomRewardAddCondition(data.Get("broadcaster_user_id").AsString());

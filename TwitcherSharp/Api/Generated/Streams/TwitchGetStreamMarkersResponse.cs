@@ -1,4 +1,3 @@
-using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 using TwitcherSharp.Extensions;
 using Godot;
@@ -7,14 +6,14 @@ namespace TwitcherSharp.Api.Generated.Streams;
 
 public partial class TwitchGetStreamMarkersResponse : RefCounted, ITwitcherSharp<TwitchGetStreamMarkersResponse>
 {
-    private GodotObject _data;
-    public TwitchStreamMarkers[] Data { get => field ??= _data?.GetArray<TwitchStreamMarkers>("data"); set; }
-    public ResponsePagination Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
+    private GodotObject? _data;
+    public TwitchStreamMarkers[]? Data { get => field ??= _data?.GetArray<TwitchStreamMarkers>("data"); set; }
+    public ResponsePagination? Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetStreamMarkersResponse object.
     /// </summary> 
-    public static TwitchGetStreamMarkersResponse FromObject(GodotObject data)
+    public static TwitchGetStreamMarkersResponse? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetStreamMarkersResponse();
@@ -28,7 +27,7 @@ public partial class TwitchGetStreamMarkersResponse : RefCounted, ITwitcherSharp
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_stream_markers.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data?.ToGodotArray());
+        if(Data != null) request.Set("data", Data.ToGodotArray());
         if(Pagination != null) request.Set("pagination", Pagination);
         return request;
     }
@@ -40,13 +39,13 @@ public partial class TwitchGetStreamMarkersResponse : RefCounted, ITwitcherSharp
     /// </summary>
     public partial class ResponsePagination : RefCounted, ITwitcherSharp<ResponsePagination>
     {
-        private GodotObject _data;
-        public string Cursor { get; set; }
+        private GodotObject? _data;
+        public string? Cursor { get; set; }
     
         /// <summary> 
         /// Transforms the godot data into a ResponsePagination object.
         /// </summary> 
-        public static ResponsePagination FromObject(GodotObject data)
+        public static ResponsePagination? FromObject(GodotObject? data)
         {
             if(data == null) return null;
             var instance = new ResponsePagination

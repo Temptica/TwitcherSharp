@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelChatClear;
 
 public partial class TwitchChannelChatClearCondition(string broadcasterUserId, string userId) : RefCounted, ITwitcherSharpCondition<TwitchChannelChatClearCondition>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     public string Name => nameof(TwitchChannelChatClearCondition);
 
@@ -25,7 +25,7 @@ public partial class TwitchChannelChatClearCondition(string broadcasterUserId, s
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelChatClearCondition object.
     /// </summary> 
-    public static TwitchChannelChatClearCondition FromObject(GodotObject data)
+    public static TwitchChannelChatClearCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannelChatClearCondition(data.Get("broadcaster_user_id").AsString(), data.Get("user_id").AsString());
