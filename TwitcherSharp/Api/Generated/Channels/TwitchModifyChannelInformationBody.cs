@@ -51,7 +51,8 @@ public partial class TwitchModifyChannelInformationBody : RefCounted, ITwitcherS
     }
     
     /// <summary> 
-    /// List of labels that should be set as the Channel’s CCLs. 
+    /// List of labels that should be set as the Channel’s CCLs.  
+    /// **Note:** To clear CCLs for a channel, set all `is_enabled` for all possible CCLs to `false` 
     /// </summary>
     public partial class TwitchBodyContentClassificationLabels : RefCounted, ITwitcherSharp<TwitchBodyContentClassificationLabels>
     {

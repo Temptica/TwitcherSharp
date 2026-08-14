@@ -179,6 +179,17 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
+    /// NEW Gets a list of custom Power-ups that the specified broadcaster created.
+    /// </summary>
+    /// <param name="opt"><see cref="TwitchGetCustomPowerUpOpt"/></param>
+    /// <param name="broadcasterId">The ID of the broadcaster whose custom Power-ups you want to get. This ID must match the user ID found in the OAuth token.</param>
+    /// <returns><see cref="TwitchGetCustomPowerUpResponse"/></returns>
+    public async Task<TwitchGetCustomPowerUpResponse> GetCustomPowerUp(string broadcasterId, TwitchGetCustomPowerUpOpt opt = null)
+    {
+        return await _data.CallAsync<TwitchGetCustomPowerUpResponse>("get_custom_power_up", opt?.ToGodotObject(), broadcasterId); 
+    }
+
+    /// <summary>
     /// Gets an extension’s list of transactions.
     /// </summary>
     /// <param name="opt"><see cref="TwitchGetExtensionTransactionsOpt"/></param>
@@ -419,7 +430,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// NEW Retrieves the active shared chat session for a channel.
+    /// Retrieves the active shared chat session for a channel.
     /// </summary>
     /// <param name="broadcasterId">The User ID of the channel broadcaster.</param>
     /// <returns><see cref="TwitchGetSharedChatSessionResponse"/></returns>
@@ -444,7 +455,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// </summary>
     /// <param name="body"><see cref="TwitchSendChatAnnouncementBody"/></param>
     /// <param name="broadcasterId">The ID of the broadcaster that owns the chat room to send the announcement to.</param>
-    /// <param name="moderatorId">The ID of a user who has permission to moderate the broadcaster’s chat room, or the broadcaster’s ID if they’re sending the announcement. This ID must match the user ID in the user access token.</param>
+    /// <param name="moderatorId">The ID of a user who has permission to moderate the broadcaster’s chat room, or the broadcaster’s ID if they’re sending the announcement.</param>
     /// <returns><see cref="ResponseData"/></returns>
     public async Task<ResponseData> SendChatAnnouncement(TwitchSendChatAnnouncementBody body, string broadcasterId, string moderatorId)
     {
@@ -471,6 +482,55 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     public async Task<TwitchSendChatMessageResponse> SendChatMessage(TwitchSendChatMessageBody body)
     {
         return await _data.CallAsync<TwitchSendChatMessageResponse>("send_chat_message", body.ToGodotObject()); 
+    }
+
+    /// <summary>
+    /// NEW Gets the currently pinned message for the broadcaster’s chat room.
+    /// </summary>
+    /// <param name="broadcasterId">The ID of the broadcaster that owns the chat room.</param>
+    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster’s chat room.</param>
+    /// <returns><see cref="TwitchGetPinnedChatMessageResponse"/></returns>
+    public async Task<TwitchGetPinnedChatMessageResponse> GetPinnedChatMessage(string broadcasterId, string moderatorId)
+    {
+        return await _data.CallAsync<TwitchGetPinnedChatMessageResponse>("get_pinned_chat_message", broadcasterId, moderatorId); 
+    }
+
+    /// <summary>
+    /// NEW Pins a chat message to the specified broadcaster’s chat room.
+    /// </summary>
+    /// <param name="opt"><see cref="TwitchPinChatMessageOpt"/></param>
+    /// <param name="broadcasterId">The ID of the broadcaster that owns the chat room.</param>
+    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster’s chat room.</param>
+    /// <param name="messageId">The ID of the message to pin.</param>
+    /// <returns><see cref="ResponseData"/></returns>
+    public async Task<ResponseData> PinChatMessage(string broadcasterId, string moderatorId, string messageId, TwitchPinChatMessageOpt opt = null)
+    {
+        return await _data.CallAsync<ResponseData>("pin_chat_message", opt?.ToGodotObject(), broadcasterId, moderatorId, messageId); 
+    }
+
+    /// <summary>
+    /// NEW Updates the duration of a pinned chat message.
+    /// </summary>
+    /// <param name="opt"><see cref="TwitchUpdatePinnedChatMessageOpt"/></param>
+    /// <param name="broadcasterId">The ID of the broadcaster that owns the chat room.</param>
+    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster’s chat room.</param>
+    /// <param name="messageId">The ID of the pinned message to update.</param>
+    /// <returns><see cref="ResponseData"/></returns>
+    public async Task<ResponseData> UpdatePinnedChatMessage(string broadcasterId, string moderatorId, string messageId, TwitchUpdatePinnedChatMessageOpt opt = null)
+    {
+        return await _data.CallAsync<ResponseData>("update_pinned_chat_message", opt?.ToGodotObject(), broadcasterId, moderatorId, messageId); 
+    }
+
+    /// <summary>
+    /// NEW Unpins a pinned chat message from the broadcaster’s chat room.
+    /// </summary>
+    /// <param name="broadcasterId">The ID of the broadcaster that owns the chat room.</param>
+    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster’s chat room.</param>
+    /// <param name="messageId">The ID of the message to unpin.</param>
+    /// <returns><see cref="ResponseData"/></returns>
+    public async Task<ResponseData> UnpinChatMessage(string broadcasterId, string moderatorId, string messageId)
+    {
+        return await _data.CallAsync<ResponseData>("unpin_chat_message", broadcasterId, moderatorId, messageId); 
     }
 
     /// <summary>
@@ -538,13 +598,13 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// NEW  Creates a clip from the broadcaster’s VOD.
+    /// NEW Creates a clip from the broadcaster’s VOD.
     /// </summary>
     /// <param name="opt"><see cref="TwitchCreateClipFromVodOpt"/></param>
     /// <param name="editorId">The user ID of the editor for the channel you want to create a clip for. If using the broadcaster’s auth token, this is the same as broadcaster_id. This must match the user_id in the user access token.</param>
     /// <param name="broadcasterId">The user ID for the channel you want to create a clip for.</param>
     /// <param name="vodId">ID of the VOD the user wants to clip.</param>
-    /// <param name="vodOffset">Offset in the VOD to create the clip. See notes above.</param>
+    /// <param name="vodOffset">The zero-based offset, in seconds, to where the clip should end in the video (VOD). See this endpoint’s description for more information on how to use this parameter.</param>
     /// <param name="title">The title of the clip.</param>
     /// <returns><see cref="TwitchCreateClipFromVODResponse"/></returns>
     public async Task<TwitchCreateClipFromVODResponse> CreateClipFromVod(string editorId, string broadcasterId, string vodId, int vodOffset, string title, TwitchCreateClipFromVodOpt opt = null)
@@ -1000,7 +1060,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// NEW Gets the status of a Hype Train for the specified broadcaster.
+    /// Gets the status of a Hype Train for the specified broadcaster.
     /// </summary>
     /// <param name="broadcasterId">The User ID of the channel broadcaster.</param>
     /// <returns><see cref="TwitchGetHypeTrainStatusResponse"/></returns>
@@ -1115,7 +1175,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <param name="opt"><see cref="TwitchResolveUnbanRequestsOpt"/></param>
     /// <param name="broadcasterId">The ID of the broadcaster whose channel is approving or denying the unban request.</param>
     /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster’s unban requests. This ID must match the user ID in the user access token.</param>
-    /// <param name="unbanRequestId">The ID of the broadcaster or a user that has permission to moderate the broadcaster’s unban requests. This ID must match the user ID in the user access token.</param>
+    /// <param name="unbanRequestId">The ID of the Unban Request to resolve.</param>
     /// <param name="status">Resolution status.   
     ///   
     /// <list type="bullet">

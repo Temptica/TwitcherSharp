@@ -6,6 +6,7 @@
         <Nullable>disable</Nullable>
         
         <PackageId>Temptica.TwitcherSharp</PackageId>
+        <Version>2.5.2</Version>
         <Authors>Temptica</Authors>
         <Description>A C# wrapper for Twitcher, the twitch integration plugin for the Godot game engine</Description>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>

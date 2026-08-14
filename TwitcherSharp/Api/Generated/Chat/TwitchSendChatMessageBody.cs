@@ -12,6 +12,7 @@ public partial class TwitchSendChatMessageBody : RefCounted, ITwitcherSharp<Twit
     public string Message { get; set; }
     public string ReplyParentMessageId { get; set; }
     public bool? ForSourceOnly { get; set; }
+    public bool? Pin { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchSendChatMessageBody object.
@@ -26,6 +27,7 @@ public partial class TwitchSendChatMessageBody : RefCounted, ITwitcherSharp<Twit
             Message = data.Get("message").AsString(),
             ReplyParentMessageId = data.Get("reply_parent_message_id").AsString(),
             ForSourceOnly = data.Get("for_source_only").AsBool(),
+            Pin = data.Get("pin").AsBool(),
         };
         
         instance._data = data;
@@ -42,6 +44,7 @@ public partial class TwitchSendChatMessageBody : RefCounted, ITwitcherSharp<Twit
         request.Set("message", Message);
         if(ReplyParentMessageId != null) request.Set("reply_parent_message_id", ReplyParentMessageId);
         if(ForSourceOnly.HasValue) request.Set("for_source_only", ForSourceOnly.Value);
+        if(Pin.HasValue) request.Set("pin", Pin.Value);
         return request;
     }
 

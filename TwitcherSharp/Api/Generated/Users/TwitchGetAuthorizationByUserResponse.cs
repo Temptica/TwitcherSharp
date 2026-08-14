@@ -40,6 +40,7 @@ public partial class TwitchGetAuthorizationByUserResponse : RefCounted, ITwitche
         public string UserName { get; set; }
         public string UserLogin { get; set; }
         public string[] Scopes { get; set; }
+        public bool HasAuthorized { get; set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseData object.
@@ -53,6 +54,7 @@ public partial class TwitchGetAuthorizationByUserResponse : RefCounted, ITwitche
                 UserName = data.Get("user_name").AsString(),
                 UserLogin = data.Get("user_login").AsString(),
                 Scopes = data.Get("scopes").AsStringArray(),
+                HasAuthorized = data.Get("has_authorized").AsBool(),
             };
             
             instance._data = data;
@@ -68,6 +70,7 @@ public partial class TwitchGetAuthorizationByUserResponse : RefCounted, ITwitche
             request.Set("user_name", UserName);
             request.Set("user_login", UserLogin);
             if(Scopes != null) request.Set("scopes", new Godot.Collections.Array<string>(Scopes));
+            request.Set("has_authorized", HasAuthorized);
             return request;
         }
     
