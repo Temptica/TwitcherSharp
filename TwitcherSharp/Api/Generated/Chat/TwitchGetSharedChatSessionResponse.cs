@@ -26,7 +26,7 @@ public partial class TwitchGetSharedChatSessionResponse : RefCounted, ITwitcherS
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_shared_chat_session.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data?.ToGodotArray());
+        if(Data != null) request.SetArray("data", Data);
         return request;
     }
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
@@ -63,7 +63,7 @@ public partial class TwitchGetSharedChatSessionResponse : RefCounted, ITwitcherS
             var request = twitchResponseDataClass.Call("new").AsGodotObject();
             request.Set("session_id", SessionId);
             request.Set("host_broadcaster_id", HostBroadcasterId);
-            if(Participants != null) request.Set("participants", Participants?.ToGodotArray());
+            if(Participants != null) request.SetArray("participants", Participants);
             request.Set("created_at", CreatedAt);
             request.Set("updated_at", UpdatedAt);
             return request;

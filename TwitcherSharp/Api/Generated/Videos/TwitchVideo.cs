@@ -75,7 +75,7 @@ public partial class TwitchVideo : RefCounted, ITwitcherSharp<TwitchVideo>
         request.Set("language", Language);
         request.Set("type", Type);
         request.Set("duration", Duration);
-        if(MutedSegments != null) request.Set("muted_segments", MutedSegments?.ToGodotArray());
+        if(MutedSegments != null) request.SetArray("muted_segments", MutedSegments);
         return request;
     }
     

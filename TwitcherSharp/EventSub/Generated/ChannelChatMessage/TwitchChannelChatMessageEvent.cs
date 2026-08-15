@@ -153,7 +153,7 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
         request.Set("message_id", MessageId);
         request.Set("message", Message?.ToGodotObject());
         request.Set("message_type", MessageType);
-        if(Badges != null) request.Set("badges", Badges?.ToGodotArray());
+        if(Badges != null) request.SetArray("badges", Badges);
         request.Set("cheer", Cheer?.ToGodotObject());
         request.Set("color", Color);
         request.Set("reply", Reply?.ToGodotObject());
@@ -162,7 +162,7 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
         request.Set("source_broadcaster_user_name", SourceBroadcasterUserName);
         request.Set("source_broadcaster_user_login", SourceBroadcasterUserLogin);
         request.Set("source_message_id", SourceMessageId);
-        if(SourceBadges != null) request.Set("source_badges", SourceBadges?.ToGodotArray());
+        if(SourceBadges != null) request.SetArray("source_badges", SourceBadges);
         request.Set("is_source_only", IsSourceOnly);
         return request;
     }
@@ -203,7 +203,7 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
             var messageClass = script.Get("Message").As<GDScript>();
             var request = messageClass.New().AsGodotObject();
             request.Set("text", Text);
-            if(Fragments != null) request.Set("fragments", Fragments?.ToGodotArray());
+            if(Fragments != null) request.SetArray("fragments", Fragments);
             return request;
         }
     

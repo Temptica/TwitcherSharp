@@ -26,7 +26,7 @@ public partial class TwitchCreateConduitsResponse : RefCounted, ITwitcherSharp<T
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_create_conduits.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data?.ToGodotArray());
+        if(Data != null) request.SetArray("data", Data);
         return request;
     }
     

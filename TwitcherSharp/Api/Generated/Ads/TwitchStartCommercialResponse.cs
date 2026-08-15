@@ -26,7 +26,7 @@ public partial class TwitchStartCommercialResponse : RefCounted, ITwitcherSharp<
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_start_commercial.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data?.ToGodotArray());
+        if(Data != null) request.SetArray("data", Data);
         return request;
     }
     

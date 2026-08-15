@@ -94,7 +94,7 @@ public partial class TwitchChannelPredictionEndEvent : RefCounted, ITwitcherShar
         request.Set("broadcaster_user_name", BroadcasterUserName);
         request.Set("title", Title);
         request.Set("winning_outcome_id", WinningOutcomeId);
-        if(Outcomes != null) request.Set("outcomes", Outcomes?.ToGodotArray());
+        if(Outcomes != null) request.SetArray("outcomes", Outcomes);
         request.Set("status", Status);
         request.Set("started_at", StartedAt);
         request.Set("ended_at", EndedAt);

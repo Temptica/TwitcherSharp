@@ -26,7 +26,7 @@ public partial class TwitchGetExtensionSecretsResponse : RefCounted, ITwitcherSh
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_extension_secrets.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data?.ToGodotArray());
+        if(Data != null) request.SetArray("data", Data);
         return request;
     }
 

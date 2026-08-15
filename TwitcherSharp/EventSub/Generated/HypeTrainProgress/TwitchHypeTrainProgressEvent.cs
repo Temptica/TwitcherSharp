@@ -48,7 +48,7 @@ public partial class TwitchHypeTrainProgressEvent : RefCounted, ITwitcherSharpEv
     /// <summary> 
     /// The top contributor for a contribution type. For example, the top contributor using BITS (by aggregate) or the top contributor using subscriptions (by count).
     /// </summary>
-    public TwitchTopContributions TopContributions { get => field ??= _data?.Get<TwitchTopContributions>("top_contributions"); set; }
+    public TwitchTopContributions[] TopContributions { get => field ??= _data?.GetArray<TwitchTopContributions>("top_contributions"); set; }
 
     /// <summary> 
     /// The ID of the user that made the contribution.
@@ -136,13 +136,13 @@ public partial class TwitchHypeTrainProgressEvent : RefCounted, ITwitcherSharpEv
         request.Set("total", Total);
         request.Set("progress", Progress);
         request.Set("goal", Goal);
-        request.Set("top_contributions", TopContributions?.ToGodotObject());
+        if(TopContributions != null) request.SetArray("top_contributions", TopContributions);
         request.Set("user_id", UserId);
         request.Set("user_login", UserLogin);
         request.Set("user_name", UserName);
         request.Set("type", Type);
         request.Set("level", Level);
-        if(SharedTrainParticipants != null) request.Set("shared_train_participants", SharedTrainParticipants?.ToGodotArray());
+        if(SharedTrainParticipants != null) request.SetArray("shared_train_participants", SharedTrainParticipants);
         request.Set("started_at", StartedAt);
         request.Set("expires_at", ExpiresAt);
         request.Set("is_shared_train", IsSharedTrain);

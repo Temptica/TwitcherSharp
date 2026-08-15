@@ -26,7 +26,7 @@ public partial class TwitchAddSuspiciousStatusToChatUserResponse : RefCounted, I
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_add_suspicious_status_to_chat_user.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data?.ToGodotArray());
+        if(Data != null) request.SetArray("data", Data);
         return request;
     }
     

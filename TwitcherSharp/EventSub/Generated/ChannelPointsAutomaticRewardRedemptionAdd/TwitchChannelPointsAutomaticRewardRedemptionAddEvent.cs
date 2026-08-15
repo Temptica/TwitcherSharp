@@ -232,7 +232,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddEvent : RefC
             var messageClass = script.Get("Message").As<GDScript>();
             var request = messageClass.New().AsGodotObject();
             request.Set("text", Text);
-            if(Emotes != null) request.Set("emotes", Emotes?.ToGodotArray());
+            if(Emotes != null) request.SetArray("emotes", Emotes);
             return request;
         }
     

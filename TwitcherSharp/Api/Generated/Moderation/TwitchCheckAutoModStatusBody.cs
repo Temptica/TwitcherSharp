@@ -26,7 +26,7 @@ public partial class TwitchCheckAutoModStatusBody : RefCounted, ITwitcherSharp<T
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_check_auto_mod_status.gd");
         var bodyClass = script.Get("Body").AsGodotObject();
         var request = bodyClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data?.ToGodotArray());
+        if(Data != null) request.SetArray("data", Data);
         return request;
     }
     

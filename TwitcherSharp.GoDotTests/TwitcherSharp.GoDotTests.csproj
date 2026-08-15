@@ -1,12 +1,12 @@
-<Project Sdk="Godot.NET.Sdk/4.6.1">
+<Project Sdk="Godot.NET.Sdk/4.6.2">
     <PropertyGroup>
         <TargetFramework>net10.0</TargetFramework>
         <EnableDynamicLoading>true</EnableDynamicLoading>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Chickensoft.GoDotTest" Version="2.0.31"/>
+        <PackageReference Include="Chickensoft.GoDotTest" Version="2.0.31" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
-        <ProjectReference Include="..\TwitcherSharp\TwitcherSharp.csproj"/>
+        <ProjectReference Include="..\TwitcherSharp\TwitcherSharp.csproj" />
         <CompilerVisibleProperty Include="GodotSourceGenerators" />
         <CompilerVisibleProperty Include="GodotDisabledSourceGenerators" />
     </ItemGroup>

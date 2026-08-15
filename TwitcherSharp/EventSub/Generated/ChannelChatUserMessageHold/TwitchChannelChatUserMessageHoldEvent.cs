@@ -123,7 +123,7 @@ public partial class TwitchChannelChatUserMessageHoldEvent : RefCounted, ITwitch
             var messageClass = script.Get("Message").As<GDScript>();
             var request = messageClass.New().AsGodotObject();
             request.Set("text", Text);
-            if(Fragments != null) request.Set("fragments", Fragments?.ToGodotArray());
+            if(Fragments != null) request.SetArray("fragments", Fragments);
             return request;
         }
     

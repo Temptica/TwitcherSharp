@@ -52,7 +52,7 @@ public interface ITwitcherSharpSingleton<out TSelf> : ITwitcherSharpSingleton, I
         var gdNode = Instance.ToGodotObject();
 
         var root = (Engine.GetMainLoop() as SceneTree)!.Root;
-        root.AddChild(gdNode as Node);
+        root.CallDeferred("add_child", gdNode);
 
         return Instance;
     }

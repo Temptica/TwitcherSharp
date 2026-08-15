@@ -91,7 +91,7 @@ public partial class TwitchChannelPollProgressEvent : RefCounted, ITwitcherSharp
         request.Set("broadcaster_user_login", BroadcasterUserLogin);
         request.Set("broadcaster_user_name", BroadcasterUserName);
         request.Set("title", Title);
-        if(Choices != null) request.Set("choices", Choices?.ToGodotArray());
+        if(Choices != null) request.SetArray("choices", Choices);
         request.Set("bits_voting", BitsVoting?.ToGodotObject());
         request.Set("channel_points_voting", ChannelPointsVoting?.ToGodotObject());
         request.Set("started_at", StartedAt);

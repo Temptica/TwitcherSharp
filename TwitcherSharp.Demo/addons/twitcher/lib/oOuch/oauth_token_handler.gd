@@ -42,6 +42,8 @@ func _ready() -> void:
 	_expiration_check_timer = Timer.new()
 	_expiration_check_timer.name = "ExpirationCheck"
 	_expiration_check_timer.timeout.connect(refresh_tokens)
+	_expiration_check_timer.ignore_time_scale = true
+	_expiration_check_timer.process_mode = Node.PROCESS_MODE_ALWAYS
 	add_child(_expiration_check_timer)
 	token.load_tokens()
 
@@ -60,6 +62,7 @@ func _update_token(val: OAuthToken) -> void:
 	if token and is_inside_tree() and token.changed.is_connected(update_expiration_check):
 		token.changed.disconnect(update_expiration_check)
 	token = val
+	update_configuration_warnings()
 	if token and is_inside_tree():
 		token.changed.connect(update_expiration_check)
 
@@ -238,7 +241,8 @@ func update_tokens(access_token: String, refresh_token: String = "", expires_in:
 
 
 func load_tokens() -> void:
-	token.load_tokens()
+	if not token._access_token:
+		token.load_tokens()
 
 
 func get_token_expiration() -> String:

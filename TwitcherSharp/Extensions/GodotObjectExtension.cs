@@ -255,5 +255,22 @@ public static class GodotObjectExtension
         {
             return T.FromObject(obj?.Get(propertyName).AsGodotObject());
         }
+
+        /// <summary>
+        /// Writes a sequence of TwitcherSharp objects into a GDScript-typed array property (e.g. <c>Array[Badge]</c>).
+        /// <p>Replacing such a property wholesale via <see cref="GodotObject.Set"/> with a freshly built,
+        /// untyped <c>Array&lt;GodotObject&gt;</c> gets silently rejected by Godot, since the assigned array's
+        /// element type doesn't match the property's declared script type. Mutating the array Godot already
+        /// created (and correctly typed) when the object was instantiated avoids that mismatch.</p>
+        /// </summary>
+        internal void SetArray<T>(string propertyName, IEnumerable<T> items) where T : RefCounted, ITwitcherSharp<T>
+        {
+            var array = obj.Get(propertyName).AsGodotArray();
+            array.Clear();
+            foreach (var item in items)
+            {
+                array.Add(Variant.From(item.ToGodotObject()));
+            }
+        }
     }
 }

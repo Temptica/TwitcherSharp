@@ -177,7 +177,7 @@ public partial class TwitchAutomodMessageUpdateEventV2 : RefCounted, ITwitcherSh
             var messageClass = script.Get("Message").As<GDScript>();
             var request = messageClass.New().AsGodotObject();
             request.Set("text", Text);
-            if(Fragments != null) request.Set("fragments", Fragments?.ToGodotArray());
+            if(Fragments != null) request.SetArray("fragments", Fragments);
             return request;
         }
     
@@ -368,7 +368,7 @@ public partial class TwitchAutomodMessageUpdateEventV2 : RefCounted, ITwitcherSh
             var request = automodV2Class.New().AsGodotObject();
             request.Set("category", Category);
             request.Set("level", Level);
-            if(Boundaries != null) request.Set("boundaries", Boundaries?.ToGodotArray());
+            if(Boundaries != null) request.SetArray("boundaries", Boundaries);
             return request;
         }
     
@@ -443,7 +443,7 @@ public partial class TwitchAutomodMessageUpdateEventV2 : RefCounted, ITwitcherSh
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_automod_message_update.gd");
             var blockedTermV2Class = script.Get("BlockedTermV2").As<GDScript>();
             var request = blockedTermV2Class.New().AsGodotObject();
-            if(TermsFound != null) request.Set("terms_found", TermsFound?.ToGodotArray());
+            if(TermsFound != null) request.SetArray("terms_found", TermsFound);
             return request;
         }
     

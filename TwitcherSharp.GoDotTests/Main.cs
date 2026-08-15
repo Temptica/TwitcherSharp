@@ -40,11 +40,11 @@ public partial class Main : Node3D
     {
         var usedScopes = TwitchOAuthScopes.Get("used_scopes");
         var scopes = usedScopes.AsStringArray();
-        
+
         var response = await TwitchMockupHelper.AwaitForStart(scopes);
 
         OAuthToken.UpdateTokens(response.AccessToken, response.RefreshToken, response.ExpiresIn, response.Scope, response.TokenType);
-        
+
         await GoTest.RunTests(Assembly.GetExecutingAssembly(), this);
     }
 }

@@ -171,7 +171,7 @@ public static class EventSubCodeHelper
                 if (field.IsArray && (field.IsTyped || field.Type == "Object"))
                 {
                     fieldCode =
-                        $"if({field.Name} != null) request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name}?.ToGodotArray());";
+                        $"if({field.Name} != null) request.SetArray(\"{field.Name.ToSnakeCase()}\", {field.Name});";
                 }
                 else if (field.IsArray)
                 {

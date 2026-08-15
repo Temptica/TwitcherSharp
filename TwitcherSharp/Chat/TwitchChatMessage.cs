@@ -77,6 +77,8 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
             SourceMessageId = data.Get("source_message_id").AsString(),
         };
 
+        result._data = data;
+
         return result;
     }
 
@@ -101,8 +103,8 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
         instance.Set("source_broadcaster_user_name", SourceBroadcasterUserName);
         instance.Set("source_broadcaster_user_login", SourceBroadcasterUserLogin);
         instance.Set("source_message_id", SourceMessageId);
-        instance.Set("badges", Badges.ToGodotArray());
-        instance.Set("source_badges", SourceBadges.ToGodotArray());
+        instance.SetArray("badges", Badges ?? []);
+        instance.SetArray("source_badges", SourceBadges ?? []);
         return instance;
     }
 
@@ -112,7 +114,7 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
     {
         private GodotObject _data;
         public string Text { get; set; }
-        public Fragment[] Fragments { get => field ??= _data.GetArray<Fragment>("fragments"); set; } = [];
+        public Fragment[] Fragments { get => field ??= _data?.GetArray<Fragment>("fragments"); set; }
 
         public static Message FromObject(GodotObject data)
         {
@@ -132,7 +134,7 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
             var script = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_chat_message.gd");
             var message = script.Get("Message").AsGodotObject().Call("new").AsGodotObject();
             message.Set("text", Text);
-            message.Set("fragments", Fragments.ToGodotArray());
+            message.SetArray("fragments", Fragments ?? []);
             return message;
         }
     }
@@ -142,9 +144,9 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
         private GodotObject _data;
         public FragmentType Type { get; set; }
         public string Text { get; set; }
-        public Cheermote Cheermote { get => field ??= _data?.Call<Cheermote>("cheermote"); set; }
-        public Emote Emote { get => field ??= _data?.Call<Emote>("emote"); set; }
-        public Mention Mention { get => field ??= _data?.Call<Mention>("mention"); set; }
+        public Cheermote Cheermote { get => field ??= _data?.Get<Cheermote>("cheermote"); set; }
+        public Emote Emote { get => field ??= _data?.Get<Emote>("emote"); set; }
+        public Mention Mention { get => field ??= _data?.Get<Mention>("mention"); set; }
 
         public static Fragment FromObject(GodotObject data)
         {
@@ -152,6 +154,7 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
             var result = new Fragment();
             result.Type = (FragmentType)data.Get("type").AsInt32();
             result.Text = data.Get("text").AsString();
+            result._data = data;
             return result;
         }
 

@@ -83,7 +83,7 @@ public partial class TwitchChannelSharedChatSessionUpdateEvent : RefCounted, ITw
         request.Set("host_broadcaster_user_id", HostBroadcasterUserId);
         request.Set("host_broadcaster_user_name", HostBroadcasterUserName);
         request.Set("host_broadcaster_user_login", HostBroadcasterUserLogin);
-        if(Participants != null) request.Set("participants", Participants?.ToGodotArray());
+        if(Participants != null) request.SetArray("participants", Participants);
         return request;
     }
 

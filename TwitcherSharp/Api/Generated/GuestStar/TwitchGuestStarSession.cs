@@ -30,7 +30,7 @@ public partial class TwitchGuestStarSession : RefCounted, ITwitcherSharp<TwitchG
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_guest_star_session.gd");
         var request = script.Call("new").AsGodotObject();
         request.Set("id", Id);
-        if(Guests != null) request.Set("guests", Guests?.ToGodotArray());
+        if(Guests != null) request.SetArray("guests", Guests);
         return request;
     }
 

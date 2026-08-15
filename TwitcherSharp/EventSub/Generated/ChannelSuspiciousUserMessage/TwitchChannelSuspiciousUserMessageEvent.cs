@@ -150,7 +150,7 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
             var request = messageClass.New().AsGodotObject();
             request.Set("message_id", MessageId);
             request.Set("text", Text);
-            if(Fragments != null) request.Set("fragments", Fragments?.ToGodotArray());
+            if(Fragments != null) request.SetArray("fragments", Fragments);
             return request;
         }
     

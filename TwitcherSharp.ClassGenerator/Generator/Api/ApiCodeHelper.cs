@@ -224,7 +224,7 @@ public static class ApiCodeHelper
                 var @interface = field.TypedComponent?.InterfacesToImplement[0].InterfaceName;
                 // get => field ??= _data?.GetArray<TwitchResponseData>("data");
                 code.AppendIndentedLine(
-                    $"public {@interface}{(field.IsRequired || field.IsNullableTyped ? "" : "?")}{(field.IsArray ? "[]" : "")} {field.Name} {{ get => field ??= _data?.{(field.IsArray ? $"GetArray<{field.Type}>" : $"Get<{field.Type}>")}(\"{field.Name.ToSnakeCase()}\"); set; }}",
+                    $"public {@interface}{(field.IsRequired || field.IsNullableTyped ? "" : "?")}{(field.IsArray ? "[]" : "")} {field.Name} {{ get => field ??= _data?.{(field.IsArray ? $"GetArray<{field.Type}>" : $"Get<{field.Type}>")}(\"{field.SnakeCaseKey}\"); set; }}",
                     1);
                 continue;
             }
@@ -238,13 +238,13 @@ public static class ApiCodeHelper
                 if (field.Equals(component.GenericField))
                 {
                     code.AppendIndentedLine(
-                        $"public {fieldType}{(field.IsRequired || field.IsNullableTyped ? "" : "?")} {field.Name} {{ get => field ??= {(field.IsArray ? $"_data?.GetArray<{fieldType.Remove("[]")}>(\"data\")" : "T.FromDictionary(_data?.Get(\"{field.Name.ToSnakeCase()}\").AsGodotDictionary())")}; set; }}",
+                        $"public {fieldType}{(field.IsRequired || field.IsNullableTyped ? "" : "?")} {field.Name} {{ get => field ??= {(field.IsArray ? $"_data?.GetArray<{fieldType.Remove("[]")}>(\"data\")" : "T.FromDictionary(_data?.Get(\"{field.SnakeCaseKey}\").AsGodotDictionary())")}; set; }}",
                         1);
                     continue;
                 }
 
                 code.AppendIndentedLine(
-                    $"public {fieldType}{(field.IsRequired || field.IsNullableTyped ? "" : "?")} {field.Name} {{ get => field ??= _data?.{(field.IsArray ? $"GetArray<{fieldType}>" : $"Get<{fieldType}>")}(\"{field.Name.ToSnakeCase()}\"); set; }}",
+                    $"public {fieldType}{(field.IsRequired || field.IsNullableTyped ? "" : "?")} {field.Name} {{ get => field ??= _data?.{(field.IsArray ? $"GetArray<{fieldType}>" : $"Get<{fieldType}>")}(\"{field.SnakeCaseKey}\"); set; }}",
                     1);
 
                 continue;
@@ -253,7 +253,7 @@ public static class ApiCodeHelper
             if (field.IsTyped)
             {
                 code.AppendIndentedLine(
-                    $"public {field.CleanedType}{(field.IsRequired || field.IsNullableTyped ? "" : "?")} {field.Name} {{ get => field ??= _data?.{(field.IsArray ? $"GetArray<{field.Type}>" : $"Get<{field.Type}>")}(\"{field.Name.ToSnakeCase()}\"); set; }}",
+                    $"public {field.CleanedType}{(field.IsRequired || field.IsNullableTyped ? "" : "?")} {field.Name} {{ get => field ??= _data?.{(field.IsArray ? $"GetArray<{field.Type}>" : $"Get<{field.Type}>")}(\"{field.SnakeCaseKey}\"); set; }}",
                     1);
                 continue;
             }
@@ -283,7 +283,7 @@ public static class ApiCodeHelper
 
             foreach (var field in nonTypedFields)
             {
-                code.AppendIndentedLine($"{field.Name} = data.Get(\"{field.Name.ToSnakeCase()}\").{field.GetAsType()},",
+                code.AppendIndentedLine($"{field.Name} = data.Get(\"{field.SnakeCaseKey}\").{field.GetAsType()},",
                     3);
             }
 
@@ -330,7 +330,7 @@ public static class ApiCodeHelper
             if (field.IsArray && field.IsTyped)
             {
                 code.AppendIndentedLine(
-                    $"if({field.Name} != null) request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name}?.ToGodotArray());",
+                    $"if({field.Name} != null) request.SetArray(\"{field.SnakeCaseKey}\", {field.Name});",
                     2);
                 continue;
             }
@@ -338,7 +338,7 @@ public static class ApiCodeHelper
             if (field.IsArray)
             {
                 code.AppendIndentedLine(
-                    $"if({field.Name} != null) request.Set(\"{field.Name.ToSnakeCase()}\", new Godot.Collections.Array<{field.CleanedArrayType}>({field.Name}));",
+                    $"if({field.Name} != null) request.Set(\"{field.SnakeCaseKey}\", new Godot.Collections.Array<{field.CleanedArrayType}>({field.Name}));",
                     2);
                 continue;
             }
@@ -346,7 +346,7 @@ public static class ApiCodeHelper
             if (component.HasGeneric && field.Equals(component.GenericField))
             {
                 code.AppendIndentedLine(
-                    $"if({field.Name} != null) request.Set(\"{field.Name.ToSnakeCase()}\", new Godot.Collections.Dictionary<string,Variant>({field.Name}.ToDictionary()));",
+                    $"if({field.Name} != null) request.Set(\"{field.SnakeCaseKey}\", new Godot.Collections.Dictionary<string,Variant>({field.Name}.ToDictionary()));",
                     2);
                 continue;
             }
@@ -358,15 +358,15 @@ public static class ApiCodeHelper
                     if (field.CleanedType.Contains("[]"))
                     {
                         code.AppendIndentedLine(
-                            $"if({field.Name} != null) request.Set(\"{field.Name.ToSnakeCase()}\", new Godot.Collections.Array<{field.CleanedArrayType.Remove("[]")}>({field.Name}));",
+                            $"if({field.Name} != null) request.Set(\"{field.SnakeCaseKey}\", new Godot.Collections.Array<{field.CleanedArrayType.Remove("[]")}>({field.Name}));",
                             2);
                         continue;
                     }
 
                     code.AppendIndentedLine($"if({field.Name} != null) " + (
                             field.Type == "Object"
-                                ? $"request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name}?.ToGodotObject());"
-                                : $"request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name});"),
+                                ? $"request.Set(\"{field.SnakeCaseKey}\", {field.Name}?.ToGodotObject());"
+                                : $"request.Set(\"{field.SnakeCaseKey}\", {field.Name});"),
                         2);
 
                     continue;
@@ -374,16 +374,16 @@ public static class ApiCodeHelper
 
                 code.AppendIndentedLine(
                     $"if({field.Name}.HasValue) " + (field.Type == "Object"
-                        ? $"request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name}.Value.ToGodotObject());"
-                        : $"request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name}.Value);"),
+                        ? $"request.Set(\"{field.SnakeCaseKey}\", {field.Name}.Value.ToGodotObject());"
+                        : $"request.Set(\"{field.SnakeCaseKey}\", {field.Name}.Value);"),
                     2);
                 continue;
             }
 
             code.AppendIndentedLine(
                 field.IsTyped
-                    ? $"request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name}?.ToGodotObject());"
-                    : $"request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name});",
+                    ? $"request.Set(\"{field.SnakeCaseKey}\", {field.Name}?.ToGodotObject());"
+                    : $"request.Set(\"{field.SnakeCaseKey}\", {field.Name});",
                 2);
         }
 

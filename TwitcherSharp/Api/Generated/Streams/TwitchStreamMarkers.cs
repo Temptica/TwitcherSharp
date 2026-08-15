@@ -36,7 +36,7 @@ public partial class TwitchStreamMarkers : RefCounted, ITwitcherSharp<TwitchStre
         request.Set("user_id", UserId);
         request.Set("user_name", UserName);
         request.Set("user_login", UserLogin);
-        if(Videos != null) request.Set("videos", Videos?.ToGodotArray());
+        if(Videos != null) request.SetArray("videos", Videos);
         return request;
     }
     
@@ -70,7 +70,7 @@ public partial class TwitchStreamMarkers : RefCounted, ITwitcherSharp<TwitchStre
             var twitchResponseVideosClass = script.Get("Videos").AsGodotObject();
             var request = twitchResponseVideosClass.Call("new").AsGodotObject();
             request.Set("video_id", VideoId);
-            if(Markers != null) request.Set("markers", Markers?.ToGodotArray());
+            if(Markers != null) request.SetArray("markers", Markers);
             return request;
         }
         

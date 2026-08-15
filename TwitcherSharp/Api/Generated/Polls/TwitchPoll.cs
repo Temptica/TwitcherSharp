@@ -58,7 +58,7 @@ public partial class TwitchPoll : RefCounted, ITwitcherSharp<TwitchPoll>
         request.Set("broadcaster_name", BroadcasterName);
         request.Set("broadcaster_login", BroadcasterLogin);
         request.Set("title", Title);
-        if(Choices != null) request.Set("choices", Choices?.ToGodotArray());
+        if(Choices != null) request.SetArray("choices", Choices);
         request.Set("bits_voting_enabled", BitsVotingEnabled);
         request.Set("bits_per_vote", BitsPerVote);
         request.Set("channel_points_voting_enabled", ChannelPointsVotingEnabled);

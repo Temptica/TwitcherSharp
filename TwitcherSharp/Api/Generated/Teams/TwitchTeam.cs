@@ -45,7 +45,7 @@ public partial class TwitchTeam : RefCounted, ITwitcherSharp<TwitchTeam>
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_team.gd");
         var request = script.Call("new").AsGodotObject();
-        if(Users != null) request.Set("users", Users?.ToGodotArray());
+        if(Users != null) request.SetArray("users", Users);
         request.Set("background_image_url", BackgroundImageUrl);
         request.Set("banner", Banner);
         request.Set("created_at", CreatedAt);

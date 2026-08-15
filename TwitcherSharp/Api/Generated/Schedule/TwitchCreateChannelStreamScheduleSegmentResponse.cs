@@ -64,7 +64,7 @@ public partial class TwitchCreateChannelStreamScheduleSegmentResponse : RefCount
             var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_create_channel_stream_schedule_segment.gd");
             var twitchResponseDataClass = script.Get("ResponseData").AsGodotObject();
             var request = twitchResponseDataClass.Call("new").AsGodotObject();
-            if(Segments != null) request.Set("segments", Segments?.ToGodotArray());
+            if(Segments != null) request.SetArray("segments", Segments);
             request.Set("broadcaster_id", BroadcasterId);
             request.Set("broadcaster_name", BroadcasterName);
             request.Set("broadcaster_login", BroadcasterLogin);

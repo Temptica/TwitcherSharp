@@ -26,7 +26,7 @@ public partial class TwitchGetPinnedChatMessageResponse : RefCounted, ITwitcherS
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_pinned_chat_message.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data?.ToGodotArray());
+        if(Data != null) request.SetArray("data", Data);
         return request;
     }
     
@@ -124,7 +124,7 @@ public partial class TwitchGetPinnedChatMessageResponse : RefCounted, ITwitcherS
                 var twitchResponseMessageClass = script.Get("ResponseMessage").AsGodotObject();
                 var request = twitchResponseMessageClass.Call("new").AsGodotObject();
                 request.Set("text", Text);
-                if(Fragments != null) request.Set("fragments", Fragments?.ToGodotArray());
+                if(Fragments != null) request.SetArray("fragments", Fragments);
                 return request;
             }
             

@@ -64,7 +64,7 @@ public static class TwitchMockupHelper
         {
             var startInfo = new ProcessStartInfo
             {
-                FileName = "/home/linuxbrew/.linuxbrew/bin/twitch",
+                FileName = "twitch",
                 Arguments = "mock-api start",
                 RedirectStandardOutput = true,
                 UseShellExecute = false,

@@ -38,7 +38,7 @@ public partial class TwitchCheermote : RefCounted, ITwitcherSharp<TwitchCheermot
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_cheermote.gd");
         var request = script.Call("new").AsGodotObject();
         request.Set("prefix", Prefix);
-        if(Tiers != null) request.Set("tiers", Tiers?.ToGodotArray());
+        if(Tiers != null) request.SetArray("tiers", Tiers);
         request.Set("type", Type);
         request.Set("order", Order);
         request.Set("last_updated", LastUpdated);

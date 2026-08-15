@@ -32,7 +32,7 @@ public partial class TwitchGetChannelEmotesResponse : RefCounted, ITwitcherSharp
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_channel_emotes.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data?.ToGodotArray());
+        if(Data != null) request.SetArray("data", Data);
         request.Set("template", Template);
         return request;
     }

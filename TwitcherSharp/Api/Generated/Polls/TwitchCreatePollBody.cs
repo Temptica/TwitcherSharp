@@ -40,7 +40,7 @@ public partial class TwitchCreatePollBody : RefCounted, ITwitcherSharp<TwitchCre
         var request = bodyClass.Call("new").AsGodotObject();
         request.Set("broadcaster_id", BroadcasterId);
         request.Set("title", Title);
-        if(Choices != null) request.Set("choices", Choices?.ToGodotArray());
+        if(Choices != null) request.SetArray("choices", Choices);
         request.Set("duration", Duration);
         if(ChannelPointsVotingEnabled.HasValue) request.Set("channel_points_voting_enabled", ChannelPointsVotingEnabled.Value);
         if(ChannelPointsPerVote.HasValue) request.Set("channel_points_per_vote", ChannelPointsPerVote.Value);

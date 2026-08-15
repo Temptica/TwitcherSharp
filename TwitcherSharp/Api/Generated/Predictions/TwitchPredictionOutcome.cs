@@ -41,7 +41,7 @@ public partial class TwitchPredictionOutcome : RefCounted, ITwitcherSharp<Twitch
         request.Set("title", Title);
         request.Set("users", Users);
         request.Set("channel_points", ChannelPoints);
-        if(TopPredictors != null) request.Set("top_predictors", TopPredictors?.ToGodotArray());
+        if(TopPredictors != null) request.SetArray("top_predictors", TopPredictors);
         request.Set("color", Color);
         return request;
     }

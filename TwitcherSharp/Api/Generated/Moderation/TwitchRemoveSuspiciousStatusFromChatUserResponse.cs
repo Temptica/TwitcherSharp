@@ -26,7 +26,7 @@ public partial class TwitchRemoveSuspiciousStatusFromChatUserResponse : RefCount
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_remove_suspicious_status_from_chat_user.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data?.ToGodotArray());
+        if(Data != null) request.SetArray("data", Data);
         return request;
     }
     

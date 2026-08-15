@@ -28,7 +28,7 @@ public partial class TwitchGetTopGamesResponse : RefCounted, ITwitcherSharp<Twit
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_top_games.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data?.ToGodotArray());
+        if(Data != null) request.SetArray("data", Data);
         if(Pagination != null) request.Set("pagination", Pagination);
         return request;
     }

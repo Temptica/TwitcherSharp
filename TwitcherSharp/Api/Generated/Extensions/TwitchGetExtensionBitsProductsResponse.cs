@@ -26,7 +26,7 @@ public partial class TwitchGetExtensionBitsProductsResponse : RefCounted, ITwitc
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_extension_bits_products.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data?.ToGodotArray());
+        if(Data != null) request.SetArray("data", Data);
         return request;
     }
 

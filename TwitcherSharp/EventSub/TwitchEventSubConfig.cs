@@ -57,6 +57,7 @@ public partial class TwitchEventSubConfig() : RefCounted, ITwitcherSharp<TwitchE
         var config = new TwitchEventSubConfig();
         config._data = data;
         config.Type = (TwitchEventSubDefinitionType)data.Get("type").AsInt32();
+        config.Id = data.Get("id").AsString();
         return config;
     }
 
@@ -66,6 +67,7 @@ public partial class TwitchEventSubConfig() : RefCounted, ITwitcherSharp<TwitchE
         var data = script.New().AsGodotObject();
         data.Set("type", (int)Type);
         data.Set("condition", new Godot.Collections.Array(Condition.Select(x => x?.ToGodotObject()).ToArray()));
+        data.Set("id", Id);
         return data;
     }
 }
