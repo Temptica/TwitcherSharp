@@ -9,7 +9,7 @@ public partial class TwitchCreateEventSubSubscriptionBody<T> : RefCounted, ITwit
     private GodotObject _data;
     public string Type { get; set; }
     public string Version { get; set; }
-    public ITwitcherSharpCondition<T> Condition { get => field ??= T.FromDictionary(_data?.Get("{field.Name.ToSnakeCase()}").AsGodotDictionary()); set; }
+    public ITwitcherSharpCondition<T> Condition { get => field ??= T.FromDictionary(_data?.Get("{field.SnakeCaseKey}").AsGodotDictionary()); set; }
     public TwitchBodyTransport Transport { get => field ??= _data?.Get<TwitchBodyTransport>("transport"); set; }
 
     /// <summary> 

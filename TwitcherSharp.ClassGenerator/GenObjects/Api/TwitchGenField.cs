@@ -21,6 +21,20 @@ public class TwitchGenField : IEquatable<TwitchGenField>
         };
     }
 
+    /// <summary>
+    /// The GDScript key for this field. <see cref="Name"/> special-cases a handful of raw Twitch schema
+    /// keys (leading digits, dots) into valid C# identifiers by underscore-prefixing them — GDScript needed
+    /// the exact same trick for the exact same reason, so <c>@export var _100x100</c> is the real property
+    /// name on the addon side too, not <c>100x100</c>. Round-tripping <see cref="Name"/> through
+    /// <see cref="StringExtension.ToSnakeCase"/> for these wrongly strips (and sometimes mangles) that
+    /// leading underscore, so they're passed through verbatim instead.
+    /// </summary>
+    public string SnakeCaseKey => Name switch
+    {
+        "_1" or "_2" or "_3" or "_4" or "_1_5" or "_100x100" or "_24x24" or "_300x200" => Name,
+        _ => Name.ToSnakeCase()
+    };
+
     public string Description { get; set; }
     public string Type { get; set; }
     public bool IsRequired { get; set; }

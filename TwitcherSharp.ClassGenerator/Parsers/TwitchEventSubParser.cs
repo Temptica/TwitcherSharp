@@ -35,15 +35,61 @@ public class TwitchEventSubParser
                 component.SubComponents.Remove(field.TypedComponent.ClassName);
                 component.AddSubComponent(subComponent);
                 field.TypedComponent = subComponent;
+                // AddSubComponent above replaces this field in component.Fields with a fresh, non-array one
+                // (it doesn't know this field already existed) — put the original back now that it points
+                // at the correctly-populated shared component, so IsArray/IsRequired survive the re-link.
+                component.Fields[field.Name] = field;
                 subComponent.IsShared = true;
             }
         }
 
         ParseComponents(doc);
         ParseConditions(doc);
-
+        ReconcileArrayCardinality();
 
         Console.WriteLine($"{Components.Count} eventsub components parsed");
+    }
+
+    /// <summary>
+    /// Twitch's own docs are inconsistent about whether a shared object (e.g. "top_contributions") is
+    /// documented as an array on every page that references it — sometimes the type column literally says
+    /// "object[]", sometimes it's just a bare link with no array wording anywhere nearby, even though the
+    /// field is the same schema object every time. Since <see cref="TwitchEventSubGenField.IsArray"/> is
+    /// parsed per field-occurrence from local text, that inconsistency otherwise survives into the C# model.
+    /// This reconciles it: if ANY occurrence of a shared component was recognized as an array, every
+    /// occurrence of that same component is treated as one.
+    /// </summary>
+    private void ReconcileArrayCardinality()
+    {
+        var allComponents = EnumerateAllComponents().ToList();
+
+        var arrayComponentNames = allComponents
+            .SelectMany(c => c.Fields.Values)
+            .Where(f => f.IsArray && f.TypedComponent != null)
+            .Select(f => f.TypedComponent.ClassName)
+            .ToHashSet();
+
+        foreach (var field in allComponents.SelectMany(c => c.Fields.Values))
+        {
+            if (field.IsArray || field.TypedComponent == null) continue;
+            if (!arrayComponentNames.Contains(field.TypedComponent.ClassName)) continue;
+
+            field.IsArray = true;
+            if (!field.Type.EndsWith("[]")) field.Type += "[]";
+        }
+    }
+
+    private IEnumerable<TwitchEventSubGenComponent> EnumerateAllComponents()
+    {
+        IEnumerable<TwitchEventSubGenComponent> Walk(TwitchEventSubGenComponent component)
+        {
+            yield return component;
+            foreach (var child in component.SubComponents.Values)
+            foreach (var descendant in Walk(child))
+                yield return descendant;
+        }
+
+        return Components.Concat(ConditionComponents).Concat(SubComponents).SelectMany(Walk);
     }
 
     private void ParseSubComponents(HtmlDocument doc)

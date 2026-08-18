@@ -23,9 +23,9 @@ public partial class TwitchExtensionIconUrls : RefCounted, ITwitcherSharp<Twitch
         if(data == null) return null;
         var instance = new TwitchExtensionIconUrls
         {
-            _100x100 = data.Get("100x_100").AsString(),
-            _24x24 = data.Get("24x_24").AsString(),
-            _300x200 = data.Get("300x_200").AsString(),
+            _100x100 = data.Get("_100x100").AsString(),
+            _24x24 = data.Get("_24x24").AsString(),
+            _300x200 = data.Get("_300x200").AsString(),
         };
         
         instance._data = data;
@@ -36,9 +36,9 @@ public partial class TwitchExtensionIconUrls : RefCounted, ITwitcherSharp<Twitch
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_extension_icon_urls.gd");
         var request = script.Call("new").AsGodotObject();
-        if(_100x100 != null) request.Set("100x_100", _100x100);
-        if(_24x24 != null) request.Set("24x_24", _24x24);
-        if(_300x200 != null) request.Set("300x_200", _300x200);
+        if(_100x100 != null) request.Set("_100x100", _100x100);
+        if(_24x24 != null) request.Set("_24x24", _24x24);
+        if(_300x200 != null) request.Set("_300x200", _300x200);
         return request;
     }
 
