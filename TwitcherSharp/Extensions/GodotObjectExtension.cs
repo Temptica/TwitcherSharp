@@ -100,13 +100,16 @@ public static class GodotObjectExtension
 
         public async Task<Variant> CallAsync(string methode, params Variant[] args)
         {
-            var task = obj.Call(methode, args);
-            if (task.AsGodotObject().HasSignal("completed"))
+            var result = obj.Call(methode, args);
+            if (result.VariantType == Variant.Type.Object)
             {
-                return (await obj.ToSignal(task.AsGodotObject(), "completed"))[0];
+                var state = result.AsGodotObject();
+                if (state.GetClass() == "GDScriptFunctionState")
+                {
+                    return (await obj.ToSignal(state, "completed"))[0];
+                }
             }
-
-            return task;
+            return result;
         }
 
         /// <summary>

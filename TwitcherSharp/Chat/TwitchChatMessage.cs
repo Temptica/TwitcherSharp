@@ -1,6 +1,7 @@
 using Godot;
 using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
+using TwitcherSharp.Media;
 
 namespace TwitcherSharp.Chat;
 
@@ -48,6 +49,7 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
     public string SourceBroadcasterUserName { get; set; }
     public string SourceBroadcasterUserLogin { get; set; }
     public string SourceMessageId { get; set; }
+    public bool IsSourceOnly { get; set; }
 
     public Badge[] SourceBadges
     {
@@ -55,12 +57,29 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
         set;
     }
 
+    public async Task<Godot.Collections.Dictionary<TwitchBadgeDefinition, SpriteFrames>> GetBadges(
+        TwitchMediaLoader mediaLoader, int scale = TwitchBadgeDefinition.Scale1)
+        => await _data.CallDictionaryKeyAsync<TwitchBadgeDefinition, SpriteFrames>("get_badges", mediaLoader.ToGodotObject(), scale);
+
+    public async Task<Godot.Collections.Dictionary<TwitchBadgeDefinition, SpriteFrames>> GetSourceBadges(
+        TwitchMediaLoader mediaLoader, int scale = TwitchBadgeDefinition.Scale1)
+        => await _data.CallDictionaryKeyAsync<TwitchBadgeDefinition, SpriteFrames>("get_source_badges", mediaLoader.ToGodotObject(), scale);
+
+    public string GetColor(string defaultColor = "#AAAAAA") => string.IsNullOrEmpty(Color) ? defaultColor : Color;
+
+    public async Task<Godot.Collections.Dictionary<TwitchBadgeDefinition, SpriteFrames>> LoadEmotesFromFragment(
+        TwitchMediaLoader mediaLoader, int scale = TwitchBadgeDefinition.Scale1,
+        string theme = TwitchEmoteDefinition.ThemeDark, string type = TwitchEmoteDefinition.TypeDefault)
+        => await _data.CallDictionaryKeyAsync<TwitchBadgeDefinition, SpriteFrames>("load_emotes_from_fragment", mediaLoader.ToGodotObject(), scale,
+            theme, type);
+
     public static TwitchChatMessage FromObject(GodotObject data)
     {
         if (data == null) return null;
 
         var result = new TwitchChatMessage
         {
+            _data = data,
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
             BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
             BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
@@ -75,6 +94,7 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
             SourceBroadcasterUserName = data.Get("source_broadcaster_user_name").AsString(),
             SourceBroadcasterUserLogin = data.Get("source_broadcaster_user_login").AsString(),
             SourceMessageId = data.Get("source_message_id").AsString(),
+            IsSourceOnly = data.Get("is_source_only").AsBool(),
         };
 
         return result;
@@ -103,16 +123,21 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
         instance.Set("source_message_id", SourceMessageId);
         instance.Set("badges", Badges.ToGodotArray());
         instance.Set("source_badges", SourceBadges.ToGodotArray());
+        instance.Set("is_source_only", IsSourceOnly);
         return instance;
     }
 
-    private string GetColor(string defaultColor = "#AAAAAA") => string.IsNullOrEmpty(Color) ? defaultColor : Color;
 
     public partial class Message : RefCounted, ITwitcherSharp<Message>
     {
         private GodotObject _data;
         public string Text { get; set; }
-        public Fragment[] Fragments { get => field ??= _data.GetArray<Fragment>("fragments"); set; } = [];
+
+        public Fragment[] Fragments
+        {
+            get => field ??= _data.GetArray<Fragment>("fragments");
+            set;
+        } = [];
 
         public static Message FromObject(GodotObject data)
         {
@@ -121,7 +146,7 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
             {
                 Text = data.Get("text").AsString()
             };
-            
+
             result._data = data;
 
             return result;
@@ -142,9 +167,24 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
         private GodotObject _data;
         public FragmentType Type { get; set; }
         public string Text { get; set; }
-        public Cheermote Cheermote { get => field ??= _data?.Call<Cheermote>("cheermote"); set; }
-        public Emote Emote { get => field ??= _data?.Call<Emote>("emote"); set; }
-        public Mention Mention { get => field ??= _data?.Call<Mention>("mention"); set; }
+
+        public Cheermote Cheermote
+        {
+            get => field ??= _data?.Call<Cheermote>("cheermote");
+            set;
+        }
+
+        public Emote Emote
+        {
+            get => field ??= _data?.Call<Emote>("emote");
+            set;
+        }
+
+        public Mention Mention
+        {
+            get => field ??= _data?.Call<Mention>("mention");
+            set;
+        }
 
         public static Fragment FromObject(GodotObject data)
         {
