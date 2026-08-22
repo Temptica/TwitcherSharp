@@ -9,125 +9,120 @@ namespace ClassGenerator.Generator.EventSub;
 /// </summary>
 public class TwitchEventSubDefinitionGenerator
 {
+    private const string TypeEnumTemplate = """
+                                             namespace TwitcherSharp.EventSub;
+
+                                             public enum TwitchEventSubDefinitionType
+                                             {
+                                             {{Values}}
+                                             }
+                                             """;
+
+    /// <summary>
+    /// Param: {{Definitions}} {{AllList}}
+    /// </summary>
+    private const string DefinitionTemplate = """
+                                                using Godot;
+                                                using TwitcherSharp.Interfaces;
+
+                                                namespace TwitcherSharp.EventSub;
+
+                                                public partial class TwitchEventSubDefinition() : RefCounted, ITwitcherSharp<TwitchEventSubDefinition>
+                                                {
+                                                    private GodotObject _data;
+
+                                                    public TwitchEventSubDefinitionType Type { get; set; }
+                                                    public StringName Value { get; set; }
+                                                    public StringName Version { get; set; }
+                                                    public List<StringName> Conditions { get; set; }
+                                                    public List<StringName> Scopes { get; set; }
+                                                    public string DocumentationLink { get; set; }
+                                                    public string GetReadableName() => $"{Value} (v{Version})";
+                                                    public GDScript Script { get; set; }
+
+                                                    public static TwitchEventSubDefinition FromObject(GodotObject data)
+                                                    {
+                                                        if (data == null) return null;
+                                                        var definition = new TwitchEventSubDefinition();
+                                                        definition._data = data;
+                                                        definition.Type = (TwitchEventSubDefinitionType)data.Get("type").AsInt32();
+                                                        definition.Value = data.Get("value").AsStringName();
+                                                        definition.Version = data.Get("version").AsStringName();
+                                                        definition.Conditions = data.Get("conditions").AsSystemArrayOfStringName().ToList();
+                                                        definition.Scopes = data.Get("scopes").AsSystemArrayOfStringName().ToList();
+                                                        definition.DocumentationLink = data.Get("documentation_link").AsString();
+                                                        return definition;
+                                                    }
+
+                                                    public GodotObject ToGodotObject()
+                                                    {
+                                                        var script = GD.Load<GDScript>("res://addons/twitcher/eventsub/twitch_eventsub_definition.gd");
+
+                                                        var conditions = new Godot.Collections.Array<StringName>(Conditions ?? []);
+                                                        var scopes = new Godot.Collections.Array<StringName>(Scopes ?? []);
+                                                        var data = script.New((int)Type, Value, Version, conditions, scopes, DocumentationLink, Script)
+                                                            .AsGodotObject();
+                                                        return data;
+                                                    }
+
+                                                    private const string basePath = "res://addons/twitcher/generated_eventsub/twitch_es_";
+
+                                                    public TwitchEventSubDefinition(TwitchEventSubDefinitionType type, string value, string version,
+                                                        List<StringName> conditions, List<StringName> scopes, string documentationLink, string name) : this()
+                                                    {
+                                                        Type = type;
+                                                        Value = value;
+                                                        Version = version;
+                                                        Conditions = conditions;
+                                                        Scopes = scopes;
+                                                        DocumentationLink = documentationLink;
+                                                        Script = GD.Load<GDScript>($"{basePath}{name}.gd");
+                                                    }
+
+                                                    #region Static Definitions
+
+                                                {{Definitions}}
+                                                    #endregion
+
+                                                    public static readonly List<TwitchEventSubDefinition> All =
+                                                    [
+                                                        {{AllList}}
+                                                    ];
+                                                }
+                                                """;
+
     public void Generate(string eventSubDir, List<TwitchEventSubDefinitionInfo> definitions)
     {
-        File.WriteAllText(Path.Combine(eventSubDir, "TwitchEventSubDefinitionType.cs"), GenerateTypeEnum(definitions));
-        File.WriteAllText(Path.Combine(eventSubDir, "TwitchEventSubDefinition.cs"), GenerateDefinition(definitions));
+        File.WriteAllText(Path.Combine(eventSubDir, "TwitchEventSubDefinitionType.cs"), GenerateTypeEnum(definitions) + "\n");
+        File.WriteAllText(Path.Combine(eventSubDir, "TwitchEventSubDefinition.cs"), GenerateDefinition(definitions) + "\n");
     }
 
     private static string GenerateTypeEnum(List<TwitchEventSubDefinitionInfo> definitions)
     {
-        var sb = new StringBuilder();
-        sb.AppendLine("namespace TwitcherSharp.EventSub;");
-        sb.AppendLine();
-        sb.AppendLine("public enum TwitchEventSubDefinitionType");
-        sb.AppendLine("{");
-        for (var i = 0; i < definitions.Count; i++)
-        {
-            sb.Append("    ").Append(definitions[i].EnumName);
-            sb.AppendLine(i < definitions.Count - 1 ? "," : "");
-        }
-
-        sb.AppendLine("}");
-        return sb.ToString();
+        var values = string.Join(",\n", definitions.Select(d => $"    {d.EnumName}"));
+        return TypeEnumTemplate.Replace("{{Values}}", values);
     }
 
     private static string GenerateDefinition(List<TwitchEventSubDefinitionInfo> definitions)
     {
-        var sb = new StringBuilder();
-        sb.AppendLine("using Godot;");
-        sb.AppendLine("using TwitcherSharp.Interfaces;");
-        sb.AppendLine();
-        sb.AppendLine("namespace TwitcherSharp.EventSub;");
-        sb.AppendLine();
-        sb.AppendLine(
-            "public partial class TwitchEventSubDefinition() : RefCounted, ITwitcherSharp<TwitchEventSubDefinition>");
-        sb.AppendLine("{");
-        sb.AppendLine("    private GodotObject _data;");
-        sb.AppendLine();
-        sb.AppendLine("    public TwitchEventSubDefinitionType Type { get; set; }");
-        sb.AppendLine("    public StringName Value { get; set; }");
-        sb.AppendLine("    public StringName Version { get; set; }");
-        sb.AppendLine("    public List<StringName> Conditions { get; set; }");
-        sb.AppendLine("    public List<StringName> Scopes { get; set; }");
-        sb.AppendLine("    public string DocumentationLink { get; set; }");
-        sb.AppendLine("    public string GetReadableName() => $\"{Value} (v{Version})\";");
-        sb.AppendLine("    public GDScript Script { get; set; }");
-        sb.AppendLine();
-        sb.AppendLine("    public static TwitchEventSubDefinition FromObject(GodotObject data)");
-        sb.AppendLine("    {");
-        sb.AppendLine("        if (data == null) return null;");
-        sb.AppendLine("        var definition = new TwitchEventSubDefinition();");
-        sb.AppendLine("        definition._data = data;");
-        sb.AppendLine("        definition.Type = (TwitchEventSubDefinitionType)data.Get(\"type\").AsInt32();");
-        sb.AppendLine("        definition.Value = data.Get(\"value\").AsStringName();");
-        sb.AppendLine("        definition.Version = data.Get(\"version\").AsStringName();");
-        sb.AppendLine("        definition.Conditions = data.Get(\"conditions\").AsSystemArrayOfStringName().ToList();");
-        sb.AppendLine("        definition.Scopes = data.Get(\"scopes\").AsSystemArrayOfStringName().ToList();");
-        sb.AppendLine("        definition.DocumentationLink = data.Get(\"documentation_link\").AsString();");
-        sb.AppendLine("        return definition;");
-        sb.AppendLine("    }");
-        sb.AppendLine();
-        sb.AppendLine("    public GodotObject ToGodotObject()");
-        sb.AppendLine("    {");
-        sb.AppendLine("        var script = GD.Load<GDScript>(\"res://addons/twitcher/eventsub/twitch_eventsub_definition.gd\");");
-        sb.AppendLine();
-        sb.AppendLine("        var conditions = new Godot.Collections.Array<StringName>(Conditions ?? []);");
-        sb.AppendLine("        var scopes = new Godot.Collections.Array<StringName>(Scopes ?? []);");
-        sb.AppendLine(
-            "        var data = script.New((int)Type, Value, Version, conditions, scopes, DocumentationLink, Script)");
-        sb.AppendLine("            .AsGodotObject();");
-        sb.AppendLine("        return data;");
-        sb.AppendLine("    }");
-        sb.AppendLine();
-        sb.AppendLine("    private const string basePath = \"res://addons/twitcher/generated_eventsub/twitch_es_\";");
-        sb.AppendLine();
-        sb.AppendLine(
-            "    public TwitchEventSubDefinition(TwitchEventSubDefinitionType type, string value, string version,");
-        sb.AppendLine(
-            "        List<StringName> conditions, List<StringName> scopes, string documentationLink, string name) : this()");
-        sb.AppendLine("    {");
-        sb.AppendLine("        Type = type;");
-        sb.AppendLine("        Value = value;");
-        sb.AppendLine("        Version = version;");
-        sb.AppendLine("        Conditions = conditions;");
-        sb.AppendLine("        Scopes = scopes;");
-        sb.AppendLine("        DocumentationLink = documentationLink;");
-        sb.AppendLine("        Script = GD.Load<GDScript>($\"{basePath}{name}.gd\");");
-        sb.AppendLine("    }");
-        sb.AppendLine();
-        sb.AppendLine("    #region Static Definitions");
-        sb.AppendLine();
-
-        foreach (var definition in definitions)
-        {
-            sb.AppendLine(FormatDefinitionField(definition));
-            sb.AppendLine();
-        }
-
-        sb.AppendLine("    #endregion");
-        sb.AppendLine();
-        sb.AppendLine("    public static readonly List<TwitchEventSubDefinition> All =");
-        sb.AppendLine("    [");
-        sb.Append("        ");
-        sb.AppendLine(WrapList(definitions.Select(d => d.EnumName), 8));
-        sb.AppendLine("    ];");
-        sb.AppendLine("}");
-        return sb.ToString();
+        var definitionFields = string.Join("\n\n", definitions.Select(FormatDefinitionField)) + "\n";
+        var allList = WrapList(definitions.Select(d => d.EnumName), 8);
+        return DefinitionTemplate
+            .Replace("{{Definitions}}", definitionFields)
+            .Replace("{{AllList}}", allList);
     }
 
     private static string FormatDefinitionField(TwitchEventSubDefinitionInfo definition)
     {
         var conditions = FormatStringArray(definition.Conditions);
         var scopes = FormatStringArray(definition.Scopes);
-        var sb = new StringBuilder();
-        sb.AppendLine($"    public static readonly TwitchEventSubDefinition {definition.EnumName} = new(");
-        sb.AppendLine(
-            $"        TwitchEventSubDefinitionType.{definition.EnumName}, \"{definition.Value}\", \"{definition.Version}\",");
-        sb.AppendLine($"        {conditions}, {scopes},");
-        sb.AppendLine($"        \"{definition.DocumentationLink}\",");
-        sb.Append($"        \"{definition.ScriptName}\");");
-        return sb.ToString();
+        return $"""
+                    public static readonly TwitchEventSubDefinition {definition.EnumName} = new(
+                        TwitchEventSubDefinitionType.{definition.EnumName}, "{definition.Value}", "{definition.Version}",
+                        {conditions}, {scopes},
+                        "{definition.DocumentationLink}",
+                        "{definition.ScriptName}");
+                """;
     }
 
     private static string FormatStringArray(List<string> values) =>
@@ -144,8 +139,7 @@ public class TwitchEventSubDefinitionGenerator
             var token = (first ? "" : ", ") + value;
             if (!first && lineLength + token.Length > maxWidth)
             {
-                sb.AppendLine(",");
-                sb.Append(new string(' ', indent)).Append(value);
+                sb.Append(",\n").Append(' ', indent).Append(value);
                 lineLength = indent + value.Length;
             }
             else
