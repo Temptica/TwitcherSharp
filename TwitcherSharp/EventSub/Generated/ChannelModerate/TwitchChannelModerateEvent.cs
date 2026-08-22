@@ -111,7 +111,7 @@ public partial class TwitchChannelModerateEvent : RefCounted, ITwitcherSharpEven
     public TwitchUntimeout? Untimeout { get => field ??= _data?.Get<TwitchUntimeout>("untimeout"); set; }
 
     /// <summary> 
-    /// Optional.. Metadata associated with the raid command.
+    /// Optional. Metadata associated with the raid command.
     /// </summary>
     public TwitchRaid? Raid { get => field ??= _data?.Get<TwitchRaid>("raid"); set; }
 

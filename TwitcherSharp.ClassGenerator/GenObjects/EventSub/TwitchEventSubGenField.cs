@@ -5,6 +5,7 @@ namespace ClassGenerator.GenObjects.EventSub;
 public class TwitchEventSubGenField(string fieldName, string description, string type, bool required = false)
 {
     public string Name { get; } = fieldName.ToPascalCase();
+    public string RawName { get; } = fieldName;
     public string Description { get; } = description;
     public string Type { get; set; } = SanitizeType(type, fieldName);
     public bool IsArray { get; set; }

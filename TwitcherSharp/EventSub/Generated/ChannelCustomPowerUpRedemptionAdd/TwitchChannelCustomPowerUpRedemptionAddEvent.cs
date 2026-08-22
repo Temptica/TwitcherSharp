@@ -4,9 +4,9 @@ using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 using TwitcherSharp.EventSub.Generated.Shared;
 
-namespace TwitcherSharp.EventSub.Generated.ChannelPointsCustomRewardRedemptionAdd;
+namespace TwitcherSharp.EventSub.Generated.ChannelCustomPowerUpRedemptionAdd;
 
-public partial class TwitchChannelPointsCustomRewardRedemptionAddEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelPointsCustomRewardRedemptionAddEvent>
+public partial class TwitchChannelCustomPowerUpRedemptionAddEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelCustomPowerUpRedemptionAddEvent>
 {
     private GodotObject _data;
     
@@ -31,17 +31,17 @@ public partial class TwitchChannelPointsCustomRewardRedemptionAddEvent : RefCoun
     public string BroadcasterUserName { get; set; }
 
     /// <summary> 
-    /// User ID of the user that redeemed the reward.
+    /// User ID of the user that redeemed the custom Power-up.
     /// </summary>
     public string UserId { get; set; }
 
     /// <summary> 
-    /// Login of the user that redeemed the reward.
+    /// Login of the user that redeemed the custom Power-up.
     /// </summary>
     public string UserLogin { get; set; }
 
     /// <summary> 
-    /// Display name of the user that redeemed the reward.
+    /// Display name of the user that redeemed the custom Power-up.
     /// </summary>
     public string UserName { get; set; }
 
@@ -56,22 +56,22 @@ public partial class TwitchChannelPointsCustomRewardRedemptionAddEvent : RefCoun
     public string Status { get; set; }
 
     /// <summary> 
-    /// RFC3339 timestamp of when the reward was redeemed.
+    /// 
+    /// </summary>
+    public TwitchCustomPowerUp CustomPowerUp { get => field ??= _data?.Get<TwitchCustomPowerUp>("custom_power_up"); set; }
+
+    /// <summary> 
+    /// RFC3339 timestamp of when the custom Power-up was redeemed.
     /// </summary>
     public string RedeemedAt { get; set; }
 
     /// <summary> 
-    /// 
-    /// </summary>
-    public TwitchReward Reward { get => field ??= _data?.Get<TwitchReward>("reward"); set; }
-
-    /// <summary> 
-    /// Transforms the godot data into a TwitchChannelPointsCustomRewardRedemptionAddEvent object.
+    /// Transforms the godot data into a TwitchChannelCustomPowerUpRedemptionAddEvent object.
     /// </summary> 
-    public static TwitchChannelPointsCustomRewardRedemptionAddEvent FromObject(GodotObject data)
+    public static TwitchChannelCustomPowerUpRedemptionAddEvent FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var instance = new TwitchChannelPointsCustomRewardRedemptionAddEvent
+        var instance = new TwitchChannelCustomPowerUpRedemptionAddEvent
         {
             Id = data.Get("id").AsString(),
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
@@ -91,7 +91,7 @@ public partial class TwitchChannelPointsCustomRewardRedemptionAddEvent : RefCoun
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_points_custom_reward_redemption_add.gd");
+        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_custom_power_up_redemption_add.gd");
         var eventClass = script.Get("Event").As<GDScript>();
         var request = eventClass.New().AsGodotObject();
         request.Set("id", Id);
@@ -103,8 +103,8 @@ public partial class TwitchChannelPointsCustomRewardRedemptionAddEvent : RefCoun
         request.Set("user_name", UserName);
         request.Set("user_input", UserInput);
         request.Set("status", Status);
+        request.Set("custom_power_up", CustomPowerUp?.ToGodotObject());
         request.Set("redeemed_at", RedeemedAt);
-        request.Set("reward", Reward?.ToGodotObject());
         return request;
     }
 }

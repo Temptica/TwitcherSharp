@@ -6,7 +6,7 @@ namespace ClassGenerator.Generator.EventSub;
 
 public static class EventSubCodeHelper
 {
-    public static bool UseTwitcherEventSubV2 = true;
+    private const bool UseTwitcherEventSubV2 = true;
 
     public static string MainEventSub(TwitchEventSubGenComponent component, string nameSpace, bool isCondition = false)
     {
