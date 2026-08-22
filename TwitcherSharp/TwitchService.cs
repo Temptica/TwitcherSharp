@@ -156,7 +156,7 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
         var result = _data!.Call("add_command", command, callable, argsMin, argsMax, (int)permissionLevel, (int)where,
             userCooldown,
             globalCooldown);
-        return TwitchCommand.FromObject(result.AsGodotObject());
+        return TwitchCommand.FromObject(result.AsGodotObject())!;
     }
 
     /// <summary>
