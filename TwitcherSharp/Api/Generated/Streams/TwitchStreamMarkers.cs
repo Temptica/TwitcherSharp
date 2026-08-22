@@ -6,16 +6,16 @@ namespace TwitcherSharp.Api.Generated.Streams;
 
 public partial class TwitchStreamMarkers : RefCounted, ITwitcherSharp<TwitchStreamMarkers>
 {
-    private GodotObject _data;
-    public string UserId { get; set; }
-    public string UserName { get; set; }
-    public string UserLogin { get; set; }
-    public TwitchResponseVideos[] Videos { get => field ??= _data?.GetArray<TwitchResponseVideos>("videos"); set; }
+    private GodotObject? _data;
+    public string UserId { get; set; } = null!;
+    public string UserName { get; set; } = null!;
+    public string UserLogin { get; set; } = null!;
+    public TwitchResponseVideos[] Videos { get => field ??= _data?.GetArray<TwitchResponseVideos>("videos")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchStreamMarkers object.
     /// </summary> 
-    public static TwitchStreamMarkers FromObject(GodotObject data)
+    public static TwitchStreamMarkers? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchStreamMarkers
@@ -33,10 +33,10 @@ public partial class TwitchStreamMarkers : RefCounted, ITwitcherSharp<TwitchStre
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_stream_markers.gd");
         var request = script.Call("new").AsGodotObject();
-        request.Set("user_id", UserId);
-        request.Set("user_name", UserName);
-        request.Set("user_login", UserLogin);
-        if(Videos != null) request.Set("videos", Videos?.ToGodotArray());
+        if(UserId != null) request.Set("user_id", UserId);
+        if(UserName != null) request.Set("user_name", UserName);
+        if(UserLogin != null) request.Set("user_login", UserLogin);
+        if(Videos != null) request.Set("videos", Videos.ToGodotArray());
         return request;
     }
     
@@ -45,14 +45,14 @@ public partial class TwitchStreamMarkers : RefCounted, ITwitcherSharp<TwitchStre
     /// </summary>
     public partial class TwitchResponseVideos : RefCounted, ITwitcherSharp<TwitchResponseVideos>
     {
-        private GodotObject _data;
-        public string VideoId { get; set; }
-        public TwitchResponseMarkers[] Markers { get => field ??= _data?.GetArray<TwitchResponseMarkers>("markers"); set; }
+        private GodotObject? _data;
+        public string VideoId { get; set; } = null!;
+        public TwitchResponseMarkers[] Markers { get => field ??= _data?.GetArray<TwitchResponseMarkers>("markers")!; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseVideos object.
         /// </summary> 
-        public static TwitchResponseVideos FromObject(GodotObject data)
+        public static TwitchResponseVideos? FromObject(GodotObject? data)
         {
             if(data == null) return null;
             var instance = new TwitchResponseVideos
@@ -69,8 +69,8 @@ public partial class TwitchStreamMarkers : RefCounted, ITwitcherSharp<TwitchStre
             var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_stream_markers.gd");
             var twitchResponseVideosClass = script.Get("Videos").AsGodotObject();
             var request = twitchResponseVideosClass.Call("new").AsGodotObject();
-            request.Set("video_id", VideoId);
-            if(Markers != null) request.Set("markers", Markers?.ToGodotArray());
+            if(VideoId != null) request.Set("video_id", VideoId);
+            if(Markers != null) request.Set("markers", Markers.ToGodotArray());
             return request;
         }
         
@@ -79,17 +79,17 @@ public partial class TwitchStreamMarkers : RefCounted, ITwitcherSharp<TwitchStre
         /// </summary>
         public partial class TwitchResponseMarkers : RefCounted, ITwitcherSharp<TwitchResponseMarkers>
         {
-            private GodotObject _data;
-            public string Id { get; set; }
-            public string CreatedAt { get; set; }
-            public string Description { get; set; }
+            private GodotObject? _data;
+            public string Id { get; set; } = null!;
+            public string CreatedAt { get; set; } = null!;
+            public string Description { get; set; } = null!;
             public int PositionSeconds { get; set; }
-            public string Url { get; set; }
+            public string Url { get; set; } = null!;
         
             /// <summary> 
             /// Transforms the godot data into a TwitchResponseMarkers object.
             /// </summary> 
-            public static TwitchResponseMarkers FromObject(GodotObject data)
+            public static TwitchResponseMarkers? FromObject(GodotObject? data)
             {
                 if(data == null) return null;
                 var instance = new TwitchResponseMarkers
@@ -110,11 +110,11 @@ public partial class TwitchStreamMarkers : RefCounted, ITwitcherSharp<TwitchStre
                 var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_stream_markers.gd");
                 var twitchResponseMarkersClass = script.Get("Markers").AsGodotObject();
                 var request = twitchResponseMarkersClass.Call("new").AsGodotObject();
-                request.Set("id", Id);
-                request.Set("created_at", CreatedAt);
-                request.Set("description", Description);
+                if(Id != null) request.Set("id", Id);
+                if(CreatedAt != null) request.Set("created_at", CreatedAt);
+                if(Description != null) request.Set("description", Description);
                 request.Set("position_seconds", PositionSeconds);
-                request.Set("url", Url);
+                if(Url != null) request.Set("url", Url);
                 return request;
             }
         

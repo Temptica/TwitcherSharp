@@ -10,22 +10,22 @@ namespace TwitcherSharp.Api.Generated.Videos;
 /// </summary>
 public partial class TwitchGetVideosOpt : RefCounted, ITwitcherSharp<TwitchGetVideosOpt>
 {
-    private GodotObject _data;
-    public string[] Id { get; set; }
-    public string UserId { get; set; }
-    public string GameId { get; set; }
-    public string Language { get; set; }
-    public string Period { get; set; }
-    public string Sort { get; set; }
-    public string Type { get; set; }
-    public string First { get; set; }
-    public string After { get; set; }
-    public string Before { get; set; }
+    private GodotObject? _data;
+    public string[]? Id { get; set; }
+    public string? UserId { get; set; }
+    public string? GameId { get; set; }
+    public string? Language { get; set; }
+    public string? Period { get; set; }
+    public string? Sort { get; set; }
+    public string? Type { get; set; }
+    public string? First { get; set; }
+    public string? After { get; set; }
+    public string? Before { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetVideosOpt object.
     /// </summary> 
-    public static TwitchGetVideosOpt FromObject(GodotObject data)
+    public static TwitchGetVideosOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetVideosOpt

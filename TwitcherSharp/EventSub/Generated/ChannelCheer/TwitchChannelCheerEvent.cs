@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelCheer;
 
 public partial class TwitchChannelCheerEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelCheerEvent>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     /// <summary> 
     /// Whether the user cheered anonymously or not.
@@ -18,37 +18,37 @@ public partial class TwitchChannelCheerEvent : RefCounted, ITwitcherSharpEventSu
     /// <summary> 
     /// The user ID for the user who cheered on the specified channel. This is null if is_anonymous is true.
     /// </summary>
-    public string UserId { get; set; }
+    public string? UserId { get; set; }
 
     /// <summary> 
     /// The user login for the user who cheered on the specified channel. This is null if is_anonymous is true.
     /// </summary>
-    public string UserLogin { get; set; }
+    public string? UserLogin { get; set; }
 
     /// <summary> 
     /// The user display name for the user who cheered on the specified channel. This is null if is_anonymous is true.
     /// </summary>
-    public string UserName { get; set; }
+    public string? UserName { get; set; }
 
     /// <summary> 
     /// The requested broadcaster ID.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string? BroadcasterUserId { get; set; }
 
     /// <summary> 
     /// The requested broadcaster login.
     /// </summary>
-    public string BroadcasterUserLogin { get; set; }
+    public string? BroadcasterUserLogin { get; set; }
 
     /// <summary> 
     /// The requested broadcaster display name.
     /// </summary>
-    public string BroadcasterUserName { get; set; }
+    public string? BroadcasterUserName { get; set; }
 
     /// <summary> 
     /// The message sent with the cheer.
     /// </summary>
-    public string Message { get; set; }
+    public string? Message { get; set; }
 
     /// <summary> 
     /// The number of Bits cheered.
@@ -58,7 +58,7 @@ public partial class TwitchChannelCheerEvent : RefCounted, ITwitcherSharpEventSu
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelCheerEvent object.
     /// </summary> 
-    public static TwitchChannelCheerEvent FromObject(GodotObject data)
+    public static TwitchChannelCheerEvent? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannelCheerEvent
@@ -84,13 +84,13 @@ public partial class TwitchChannelCheerEvent : RefCounted, ITwitcherSharpEventSu
         var eventClass = script.Get("Event").As<GDScript>();
         var request = eventClass.New().AsGodotObject();
         request.Set("is_anonymous", IsAnonymous);
-        request.Set("user_id", UserId);
-        request.Set("user_login", UserLogin);
-        request.Set("user_name", UserName);
-        request.Set("broadcaster_user_id", BroadcasterUserId);
-        request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        request.Set("broadcaster_user_name", BroadcasterUserName);
-        request.Set("message", Message);
+        if(UserId != null) request.Set("user_id", UserId);
+        if(UserLogin != null) request.Set("user_login", UserLogin);
+        if(UserName != null) request.Set("user_name", UserName);
+        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
+        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
+        if(Message != null) request.Set("message", Message);
         request.Set("bits", Bits);
         return request;
     }

@@ -37,7 +37,7 @@ public static class EventSubCodeStrings
                                                 /// <summary> 
                                                 /// Transforms the godot data into a {{className}} object.
                                                 /// </summary> 
-                                                public static {{className}} FromObject(GodotObject data)
+                                                public static {{className}}? FromObject(GodotObject? data)
                                                 {
                                                     if(data == null) return null;
                                             """;

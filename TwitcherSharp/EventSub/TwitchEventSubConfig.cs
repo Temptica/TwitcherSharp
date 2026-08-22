@@ -5,7 +5,7 @@ namespace TwitcherSharp.EventSub;
 
 public partial class TwitchEventSubConfig() : RefCounted, ITwitcherSharp<TwitchEventSubConfig>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     private TwitchEventSubDefinitionType _type;
     public TwitchEventSubDefinitionType Type
@@ -22,7 +22,7 @@ public partial class TwitchEventSubConfig() : RefCounted, ITwitcherSharp<TwitchE
     public List<ITwitcherSharpCondition> Condition { get; set; } = [];
     public TwitchEventSubDefinition Definition => TwitchEventSubDefinition.All.First(x => x.Type == Type);
 
-    public string Id { get; set; }
+    public string? Id { get; set; }
 
     [Signal]
     public delegate void TypeChangedEventHandler(TwitchEventSubDefinitionType type);
@@ -33,7 +33,7 @@ public partial class TwitchEventSubConfig() : RefCounted, ITwitcherSharp<TwitchE
         Condition = conditions.ToList();
         foreach (var condition in Condition.Select(x => x.Name))
         {
-            if (!definition.Conditions.Contains(condition))
+            if (definition.Conditions?.Contains(condition) != true)
             {
                 GD.PushError($"Following conditions may be missing: {condition}");
             }
@@ -45,13 +45,13 @@ public partial class TwitchEventSubConfig() : RefCounted, ITwitcherSharp<TwitchE
         if (type == Type) return Type;
 
         var definition = TwitchEventSubDefinition.All.First(x => x.Type == type);
-        Condition = Condition.Where(x => definition.Conditions.Contains(x.Name)).ToList();
+        Condition = Condition.Where(x => definition.Conditions?.Contains(x.Name) == true).ToList();
         _type = type;
         EmitSignalTypeChanged(type);
         return Type;
     }
 
-    public static TwitchEventSubConfig FromObject(GodotObject data)
+    public static TwitchEventSubConfig? FromObject(GodotObject? data)
     {
         if (data == null) return null;
         var config = new TwitchEventSubConfig();
@@ -65,7 +65,7 @@ public partial class TwitchEventSubConfig() : RefCounted, ITwitcherSharp<TwitchE
         var script = GD.Load<GDScript>("res://addons/twitcher/eventsub/twitch_eventsub_config.gd");
         var data = script.New().AsGodotObject();
         data.Set("type", (int)Type);
-        data.Set("condition", new Godot.Collections.Array(Condition.Select(x => x?.ToGodotObject()).ToArray()));
+        data.Set("condition", new Godot.Collections.Array(Condition.Select(x => x?.ToGodotObject() ?? new Variant()).ToArray()));
         return data;
     }
 }

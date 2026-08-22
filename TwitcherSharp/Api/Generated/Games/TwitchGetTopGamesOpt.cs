@@ -10,15 +10,15 @@ namespace TwitcherSharp.Api.Generated.Games;
 /// </summary>
 public partial class TwitchGetTopGamesOpt : RefCounted, ITwitcherSharp<TwitchGetTopGamesOpt>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     public int? First { get; set; }
-    public string After { get; set; }
-    public string Before { get; set; }
+    public string? After { get; set; }
+    public string? Before { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetTopGamesOpt object.
     /// </summary> 
-    public static TwitchGetTopGamesOpt FromObject(GodotObject data)
+    public static TwitchGetTopGamesOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetTopGamesOpt

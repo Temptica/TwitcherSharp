@@ -6,13 +6,13 @@ namespace TwitcherSharp.Api.Generated.Chat;
 
 public partial class TwitchGetGlobalChatBadgesResponse : RefCounted, ITwitcherSharp<TwitchGetGlobalChatBadgesResponse>
 {
-    private GodotObject _data;
-    public TwitchChatBadge[] Data { get => field ??= _data?.GetArray<TwitchChatBadge>("data"); set; }
+    private GodotObject? _data;
+    public TwitchChatBadge[] Data { get => field ??= _data?.GetArray<TwitchChatBadge>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetGlobalChatBadgesResponse object.
     /// </summary> 
-    public static TwitchGetGlobalChatBadgesResponse FromObject(GodotObject data)
+    public static TwitchGetGlobalChatBadgesResponse? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetGlobalChatBadgesResponse();
@@ -26,7 +26,7 @@ public partial class TwitchGetGlobalChatBadgesResponse : RefCounted, ITwitcherSh
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_global_chat_badges.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data?.ToGodotArray());
+        if(Data != null) request.Set("data", Data.ToGodotArray());
         return request;
     }
 

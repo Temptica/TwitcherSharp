@@ -10,13 +10,13 @@ namespace TwitcherSharp.Api.Generated.Extensions;
 /// </summary>
 public partial class TwitchGetExtensionBitsProductsOpt : RefCounted, ITwitcherSharp<TwitchGetExtensionBitsProductsOpt>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     public bool? ShouldIncludeAll { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetExtensionBitsProductsOpt object.
     /// </summary> 
-    public static TwitchGetExtensionBitsProductsOpt FromObject(GodotObject data)
+    public static TwitchGetExtensionBitsProductsOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetExtensionBitsProductsOpt

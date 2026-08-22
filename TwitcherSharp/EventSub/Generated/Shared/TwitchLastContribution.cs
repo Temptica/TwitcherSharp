@@ -8,27 +8,27 @@ namespace TwitcherSharp.EventSub.Generated.Shared;
 
 public partial class TwitchLastContribution : RefCounted, ITwitcherSharpEventSub<TwitchLastContribution>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     /// <summary> 
     /// The ID of the user that made the contribution.
     /// </summary>
-    public string UserId { get; set; }
+    public string? UserId { get; set; }
 
     /// <summary> 
     /// The user’s login name.
     /// </summary>
-    public string UserLogin { get; set; }
+    public string? UserLogin { get; set; }
 
     /// <summary> 
     /// The user’s display name.
     /// </summary>
-    public string UserName { get; set; }
+    public string? UserName { get; set; }
 
     /// <summary> 
     /// The contribution method used. Possible values are:  bits — Cheering with Bits.subscription — Subscription activity like subscribing or gifting subscriptions.other — Covers other contribution methods not listed.
     /// </summary>
-    public string Type { get; set; }
+    public string? Type { get; set; }
 
     /// <summary> 
     /// The total amount contributed. If type is bits, total represents the amount of Bits used. If type is subscription, total is 500, 1000, or 2500 to represent tier 1, 2, or 3 subscriptions, respectively.
@@ -38,7 +38,7 @@ public partial class TwitchLastContribution : RefCounted, ITwitcherSharpEventSub
     /// <summary> 
     /// Transforms the godot data into a TwitchLastContribution object.
     /// </summary> 
-    public static TwitchLastContribution FromObject(GodotObject data)
+    public static TwitchLastContribution? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchLastContribution
@@ -58,10 +58,10 @@ public partial class TwitchLastContribution : RefCounted, ITwitcherSharpEventSub
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_last_contribution.gd");
         var request = script.New().AsGodotObject();
-        request.Set("user_id", UserId);
-        request.Set("user_login", UserLogin);
-        request.Set("user_name", UserName);
-        request.Set("type", Type);
+        if(UserId != null) request.Set("user_id", UserId);
+        if(UserLogin != null) request.Set("user_login", UserLogin);
+        if(UserName != null) request.Set("user_name", UserName);
+        if(Type != null) request.Set("type", Type);
         request.Set("total", Total);
         return request;
     }

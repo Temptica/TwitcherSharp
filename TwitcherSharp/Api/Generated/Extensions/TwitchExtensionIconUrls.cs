@@ -10,15 +10,15 @@ namespace TwitcherSharp.Api.Generated.Extensions;
 /// </summary>
 public partial class TwitchExtensionIconUrls : RefCounted, ITwitcherSharp<TwitchExtensionIconUrls>
 {
-    private GodotObject _data;
-    public string _100x100 { get; set; }
-    public string _24x24 { get; set; }
-    public string _300x200 { get; set; }
+    private GodotObject? _data;
+    public string? _100x100 { get; set; }
+    public string? _24x24 { get; set; }
+    public string? _300x200 { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchExtensionIconUrls object.
     /// </summary> 
-    public static TwitchExtensionIconUrls FromObject(GodotObject data)
+    public static TwitchExtensionIconUrls? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchExtensionIconUrls

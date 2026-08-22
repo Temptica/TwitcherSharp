@@ -10,16 +10,16 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 /// </summary>
 public partial class TwitchGetBannedUsersOpt : RefCounted, ITwitcherSharp<TwitchGetBannedUsersOpt>
 {
-    private GodotObject _data;
-    public string[] UserId { get; set; }
+    private GodotObject? _data;
+    public string[]? UserId { get; set; }
     public int? First { get; set; }
-    public string After { get; set; }
-    public string Before { get; set; }
+    public string? After { get; set; }
+    public string? Before { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetBannedUsersOpt object.
     /// </summary> 
-    public static TwitchGetBannedUsersOpt FromObject(GodotObject data)
+    public static TwitchGetBannedUsersOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetBannedUsersOpt

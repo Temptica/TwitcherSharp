@@ -32,16 +32,16 @@ public partial class TwitchCheermoteDefinition(string prefix, string tier)
 
     public string Prefix { get; set; } = prefix;
     public string Tier { get; set; } = tier;
-    public string Theme { get; set; }
-    public string Type { get; set; }
+    public string? Theme { get; set; }
+    public string? Type { get; set; }
 
-    public string Scale
+    public string? Scale
     {
         get;
         set => field = SetScale(value);
     }
 
-    private string SetScale(string value)
+    private string SetScale(string? value)
     {
         if (string.IsNullOrEmpty(value))
         {
@@ -120,8 +120,9 @@ public partial class TwitchCheermoteDefinition(string prefix, string tier)
         return $"/{Prefix}/{Tier}/{Theme}/{Type}/{Scale}";
     }
 
-    public static TwitchCheermoteDefinition FromObject(GodotObject data)
+    public static TwitchCheermoteDefinition? FromObject(GodotObject? data)
     {
+        if (data == null) return null;
         return new TwitchCheermoteDefinition(data.Get("prefix").AsString(), data.Get("tier").AsString())
         {
             Theme = data.Get("theme").AsString(),
@@ -136,9 +137,9 @@ public partial class TwitchCheermoteDefinition(string prefix, string tier)
         var request = script.New().AsGodotObject();
         request.Set("prefix", Prefix);
         request.Set("tier", Tier);
-        request.Set("theme", Theme);
-        request.Set("type", Type);
-        request.Set("scale", Scale);
+        if (Theme != null) request.Set("theme", Theme);
+        if (Type != null) request.Set("type", Type);
+        if (Scale != null) request.Set("scale", Scale);
         return request;
     }
 }

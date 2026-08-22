@@ -8,42 +8,42 @@ namespace TwitcherSharp.EventSub.Generated.Shared;
 
 public partial class TwitchTransport : RefCounted, ITwitcherSharpEventSub<TwitchTransport>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     /// <summary> 
     /// yes
     /// </summary>
-    public string Method { get; set; }
+    public string? Method { get; set; }
 
     /// <summary> 
     /// no
     /// </summary>
-    public string Callback { get; set; }
+    public string? Callback { get; set; }
 
     /// <summary> 
     /// no
     /// </summary>
-    public string Secret { get; set; }
+    public string? Secret { get; set; }
 
     /// <summary> 
     /// no
     /// </summary>
-    public string SessionId { get; set; }
+    public string? SessionId { get; set; }
 
     /// <summary> 
     /// no
     /// </summary>
-    public string ConnectedAt { get; set; }
+    public string? ConnectedAt { get; set; }
 
     /// <summary> 
     /// no
     /// </summary>
-    public string DisconnectedAt { get; set; }
+    public string? DisconnectedAt { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchTransport object.
     /// </summary> 
-    public static TwitchTransport FromObject(GodotObject data)
+    public static TwitchTransport? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchTransport
@@ -64,12 +64,12 @@ public partial class TwitchTransport : RefCounted, ITwitcherSharpEventSub<Twitch
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_transport.gd");
         var request = script.New().AsGodotObject();
-        request.Set("method", Method);
-        request.Set("callback", Callback);
-        request.Set("secret", Secret);
-        request.Set("session_id", SessionId);
-        request.Set("connected_at", ConnectedAt);
-        request.Set("disconnected_at", DisconnectedAt);
+        if(Method != null) request.Set("method", Method);
+        if(Callback != null) request.Set("callback", Callback);
+        if(Secret != null) request.Set("secret", Secret);
+        if(SessionId != null) request.Set("session_id", SessionId);
+        if(ConnectedAt != null) request.Set("connected_at", ConnectedAt);
+        if(DisconnectedAt != null) request.Set("disconnected_at", DisconnectedAt);
         return request;
     }
 }

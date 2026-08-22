@@ -5,7 +5,7 @@ namespace TwitcherSharp.Media;
 
 public partial class TwitchImageTransformer : RefCounted, ITwitcherSharp<TwitchImageTransformer>
 {
-    public Texture2D FallbackTexture { get; set; }
+    public Texture2D? FallbackTexture { get; set; }
 
     public bool IsSupportingAnimation => false;
     public bool IsSupported => true;
@@ -31,7 +31,7 @@ public partial class TwitchImageTransformer : RefCounted, ITwitcherSharp<TwitchI
         return spriteFrames;
     }
 
-    public static TwitchImageTransformer FromObject(GodotObject data)
+    public static TwitchImageTransformer FromObject(GodotObject? data)
     {
         if (data == null)
         {
@@ -48,7 +48,7 @@ public partial class TwitchImageTransformer : RefCounted, ITwitcherSharp<TwitchI
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/media/twitch_image_transformer.gd");
         var data = script.New().AsGodotObject();
-        data.Set("fallback_texture", FallbackTexture);
+        if (FallbackTexture != null) data.Set("fallback_texture", FallbackTexture);
 
         return data;
     }

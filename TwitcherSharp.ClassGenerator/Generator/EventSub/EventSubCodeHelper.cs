@@ -52,7 +52,7 @@ public static class EventSubCodeHelper
         code.AppendLine(header.Replace("{{ClassName}}", component.ClassName));
 
         code.AppendLine("{");
-        code.AppendIndentedLine("private GodotObject _data;\n", 1);
+        code.AppendIndentedLine("private GodotObject? _data;\n", 1);
 
         if (isCondition)
         {
@@ -73,13 +73,13 @@ public static class EventSubCodeHelper
             if ((field.IsArray && field.TypedComponent != null) || field.IsTyped)
             {
                 code.AppendIndentedLine(
-                    $"public {fieldType} {field.Name} {{ get => field ??= _data?.Get{(field.IsArray ? "Array" : "")}<{field.Type.Remove("[]")}>(\"{field.Name.ToSnakeCase()}\"); set; }}{(field.IsRequired ? $"= {field.Name.ToCamelCase()};" : "")}",
+                    $"public {fieldType}{(field.IsRequired ? "" : "?")} {field.Name} {{ get => field ??= _data?.Get{(field.IsArray ? "Array" : "")}<{field.Type.Remove("[]")}>(\"{field.Name.ToSnakeCase()}\"); set; }}{(field.IsRequired ? $"= {field.Name.ToCamelCase()};" : "")}",
                     1);
             }
             else if (field.IsRequired)
                 code.AppendIndentedLine(
                     $"public {fieldType} {field.Name} {{ get; set; }} = {field.Name.ToCamelCase()};", 1);
-            else code.AppendIndentedLine($"public {fieldType} {field.Name} {{ get; set; }}", 1);
+            else code.AppendIndentedLine($"public {fieldType}{(field.IsValueType ? "" : "?")} {field.Name} {{ get; set; }}", 1);
 
             if (field != fields[^1]) code.AppendLine();
         }
@@ -171,7 +171,7 @@ public static class EventSubCodeHelper
                 if (field.IsArray && (field.IsTyped || field.Type == "Object"))
                 {
                     fieldCode =
-                        $"if({field.Name} != null) request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name}?.ToGodotArray());";
+                        $"if({field.Name} != null) request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name}.ToGodotArray());";
                 }
                 else if (field.IsArray)
                 {
@@ -180,9 +180,11 @@ public static class EventSubCodeHelper
                 }
                 else if (field.Type == "Object" || field.IsTyped)
                 {
-                    fieldCode = $"request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name}?.ToGodotObject());";
+                    fieldCode = $"if({field.Name} != null) request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name}.ToGodotObject());";
                 }
-                else fieldCode = $"request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name});";
+                else if (field.IsValueType || field.IsRequired)
+                    fieldCode = $"request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name});";
+                else fieldCode = $"if({field.Name} != null) request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name});";
 
                 code.AppendIndentedLine(fieldCode, 2);
             }
@@ -240,7 +242,9 @@ public static class EventSubCodeHelper
 
             foreach (var field in component.Fields.Values)
             {
-                var fieldCode = $$"""{"{{field.Name.ToSnakeCase()}}", {{field.Name}}},""";
+                // Nullable reference fields need the null-forgiving operator to satisfy the Variant conversion.
+                var bang = field.IsValueType || field.IsRequired ? "" : "!";
+                var fieldCode = $$"""{"{{field.Name.ToSnakeCase()}}", {{field.Name}}{{bang}}},""";
 
                 code.AppendIndentedLine(fieldCode, 3);
             }

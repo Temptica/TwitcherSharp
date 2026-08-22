@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelChatUserMessageHold;
 
 public partial class TwitchChannelChatUserMessageHoldCondition(string broadcasterUserId, string userId) : RefCounted, ITwitcherSharpCondition<TwitchChannelChatUserMessageHoldCondition>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     public string Name => nameof(TwitchChannelChatUserMessageHoldCondition);
 
@@ -25,7 +25,7 @@ public partial class TwitchChannelChatUserMessageHoldCondition(string broadcaste
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelChatUserMessageHoldCondition object.
     /// </summary> 
-    public static TwitchChannelChatUserMessageHoldCondition FromObject(GodotObject data)
+    public static TwitchChannelChatUserMessageHoldCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannelChatUserMessageHoldCondition(data.Get("broadcaster_user_id").AsString(), data.Get("user_id").AsString());

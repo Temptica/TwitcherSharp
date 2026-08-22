@@ -10,13 +10,13 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 /// </summary>
 public partial class TwitchDeleteChatMessagesOpt : RefCounted, ITwitcherSharp<TwitchDeleteChatMessagesOpt>
 {
-    private GodotObject _data;
-    public string MessageId { get; set; }
+    private GodotObject? _data;
+    public string? MessageId { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchDeleteChatMessagesOpt object.
     /// </summary> 
-    public static TwitchDeleteChatMessagesOpt FromObject(GodotObject data)
+    public static TwitchDeleteChatMessagesOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchDeleteChatMessagesOpt

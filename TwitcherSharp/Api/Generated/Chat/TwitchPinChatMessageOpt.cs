@@ -10,13 +10,13 @@ namespace TwitcherSharp.Api.Generated.Chat;
 /// </summary>
 public partial class TwitchPinChatMessageOpt : RefCounted, ITwitcherSharp<TwitchPinChatMessageOpt>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     public int? DurationSeconds { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchPinChatMessageOpt object.
     /// </summary> 
-    public static TwitchPinChatMessageOpt FromObject(GodotObject data)
+    public static TwitchPinChatMessageOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchPinChatMessageOpt

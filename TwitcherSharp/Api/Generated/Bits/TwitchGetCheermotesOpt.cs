@@ -10,13 +10,13 @@ namespace TwitcherSharp.Api.Generated.Bits;
 /// </summary>
 public partial class TwitchGetCheermotesOpt : RefCounted, ITwitcherSharp<TwitchGetCheermotesOpt>
 {
-    private GodotObject _data;
-    public string BroadcasterId { get; set; }
+    private GodotObject? _data;
+    public string? BroadcasterId { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetCheermotesOpt object.
     /// </summary> 
-    public static TwitchGetCheermotesOpt FromObject(GodotObject data)
+    public static TwitchGetCheermotesOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetCheermotesOpt

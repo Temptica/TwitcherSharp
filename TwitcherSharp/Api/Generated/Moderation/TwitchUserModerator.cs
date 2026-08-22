@@ -6,15 +6,15 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 
 public partial class TwitchUserModerator : RefCounted, ITwitcherSharp<TwitchUserModerator>
 {
-    private GodotObject _data;
-    public string UserId { get; set; }
-    public string UserLogin { get; set; }
-    public string UserName { get; set; }
+    private GodotObject? _data;
+    public string UserId { get; set; } = null!;
+    public string UserLogin { get; set; } = null!;
+    public string UserName { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUserModerator object.
     /// </summary> 
-    public static TwitchUserModerator FromObject(GodotObject data)
+    public static TwitchUserModerator? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchUserModerator
@@ -32,9 +32,9 @@ public partial class TwitchUserModerator : RefCounted, ITwitcherSharp<TwitchUser
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_user_moderator.gd");
         var request = script.Call("new").AsGodotObject();
-        request.Set("user_id", UserId);
-        request.Set("user_login", UserLogin);
-        request.Set("user_name", UserName);
+        if(UserId != null) request.Set("user_id", UserId);
+        if(UserLogin != null) request.Set("user_login", UserLogin);
+        if(UserName != null) request.Set("user_name", UserName);
         return request;
     }
 

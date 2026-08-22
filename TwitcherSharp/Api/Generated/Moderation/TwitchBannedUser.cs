@@ -6,21 +6,21 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 
 public partial class TwitchBannedUser : RefCounted, ITwitcherSharp<TwitchBannedUser>
 {
-    private GodotObject _data;
-    public string UserId { get; set; }
-    public string UserLogin { get; set; }
-    public string UserName { get; set; }
-    public string ExpiresAt { get; set; }
-    public string CreatedAt { get; set; }
-    public string Reason { get; set; }
-    public string ModeratorId { get; set; }
-    public string ModeratorLogin { get; set; }
-    public string ModeratorName { get; set; }
+    private GodotObject? _data;
+    public string UserId { get; set; } = null!;
+    public string UserLogin { get; set; } = null!;
+    public string UserName { get; set; } = null!;
+    public string ExpiresAt { get; set; } = null!;
+    public string CreatedAt { get; set; } = null!;
+    public string Reason { get; set; } = null!;
+    public string ModeratorId { get; set; } = null!;
+    public string ModeratorLogin { get; set; } = null!;
+    public string ModeratorName { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchBannedUser object.
     /// </summary> 
-    public static TwitchBannedUser FromObject(GodotObject data)
+    public static TwitchBannedUser? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchBannedUser
@@ -44,15 +44,15 @@ public partial class TwitchBannedUser : RefCounted, ITwitcherSharp<TwitchBannedU
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_banned_user.gd");
         var request = script.Call("new").AsGodotObject();
-        request.Set("user_id", UserId);
-        request.Set("user_login", UserLogin);
-        request.Set("user_name", UserName);
-        request.Set("expires_at", ExpiresAt);
-        request.Set("created_at", CreatedAt);
-        request.Set("reason", Reason);
-        request.Set("moderator_id", ModeratorId);
-        request.Set("moderator_login", ModeratorLogin);
-        request.Set("moderator_name", ModeratorName);
+        if(UserId != null) request.Set("user_id", UserId);
+        if(UserLogin != null) request.Set("user_login", UserLogin);
+        if(UserName != null) request.Set("user_name", UserName);
+        if(ExpiresAt != null) request.Set("expires_at", ExpiresAt);
+        if(CreatedAt != null) request.Set("created_at", CreatedAt);
+        if(Reason != null) request.Set("reason", Reason);
+        if(ModeratorId != null) request.Set("moderator_id", ModeratorId);
+        if(ModeratorLogin != null) request.Set("moderator_login", ModeratorLogin);
+        if(ModeratorName != null) request.Set("moderator_name", ModeratorName);
         return request;
     }
 

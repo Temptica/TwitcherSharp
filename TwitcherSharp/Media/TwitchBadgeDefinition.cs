@@ -63,8 +63,9 @@ public partial class TwitchBadgeDefinition : RefCounted, ITwitcherSharp<TwitchBa
     public override string ToString() => "Badge[" + Channel + "/" + BadgeSet + "/" + BadgeId + "]";
     public string GetCacheId() => _cacheId;
     
-    public static TwitchBadgeDefinition FromObject(GodotObject data)
+    public static TwitchBadgeDefinition? FromObject(GodotObject? data)
     {
+        if (data == null) return null;
         return new TwitchBadgeDefinition(data.Get("set_id").AsString(), data.Get("id").AsString(), data.Get("badge_scale").AsInt32(), data.Get("badge_channel").AsString());
     }
 

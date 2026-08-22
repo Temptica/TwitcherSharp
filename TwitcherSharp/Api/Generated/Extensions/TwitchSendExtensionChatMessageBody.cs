@@ -6,15 +6,15 @@ namespace TwitcherSharp.Api.Generated.Extensions;
 
 public partial class TwitchSendExtensionChatMessageBody : RefCounted, ITwitcherSharp<TwitchSendExtensionChatMessageBody>
 {
-    private GodotObject _data;
-    public string Text { get; set; }
-    public string ExtensionId { get; set; }
-    public string ExtensionVersion { get; set; }
+    private GodotObject? _data;
+    public string Text { get; set; } = null!;
+    public string ExtensionId { get; set; } = null!;
+    public string ExtensionVersion { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchSendExtensionChatMessageBody object.
     /// </summary> 
-    public static TwitchSendExtensionChatMessageBody FromObject(GodotObject data)
+    public static TwitchSendExtensionChatMessageBody? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchSendExtensionChatMessageBody
@@ -33,9 +33,9 @@ public partial class TwitchSendExtensionChatMessageBody : RefCounted, ITwitcherS
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_send_extension_chat_message.gd");
         var bodyClass = script.Get("Body").AsGodotObject();
         var request = bodyClass.Call("new").AsGodotObject();
-        request.Set("text", Text);
-        request.Set("extension_id", ExtensionId);
-        request.Set("extension_version", ExtensionVersion);
+        if(Text != null) request.Set("text", Text);
+        if(ExtensionId != null) request.Set("extension_id", ExtensionId);
+        if(ExtensionVersion != null) request.Set("extension_version", ExtensionVersion);
         return request;
     }
 

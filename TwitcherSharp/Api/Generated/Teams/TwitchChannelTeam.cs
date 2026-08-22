@@ -6,24 +6,24 @@ namespace TwitcherSharp.Api.Generated.Teams;
 
 public partial class TwitchChannelTeam : RefCounted, ITwitcherSharp<TwitchChannelTeam>
 {
-    private GodotObject _data;
-    public string BroadcasterId { get; set; }
-    public string BroadcasterLogin { get; set; }
-    public string BroadcasterName { get; set; }
-    public string BackgroundImageUrl { get; set; }
-    public string Banner { get; set; }
-    public string CreatedAt { get; set; }
-    public string UpdatedAt { get; set; }
-    public string Info { get; set; }
-    public string ThumbnailUrl { get; set; }
-    public string TeamName { get; set; }
-    public string TeamDisplayName { get; set; }
-    public string Id { get; set; }
+    private GodotObject? _data;
+    public string BroadcasterId { get; set; } = null!;
+    public string BroadcasterLogin { get; set; } = null!;
+    public string BroadcasterName { get; set; } = null!;
+    public string BackgroundImageUrl { get; set; } = null!;
+    public string Banner { get; set; } = null!;
+    public string CreatedAt { get; set; } = null!;
+    public string UpdatedAt { get; set; } = null!;
+    public string Info { get; set; } = null!;
+    public string ThumbnailUrl { get; set; } = null!;
+    public string TeamName { get; set; } = null!;
+    public string TeamDisplayName { get; set; } = null!;
+    public string Id { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelTeam object.
     /// </summary> 
-    public static TwitchChannelTeam FromObject(GodotObject data)
+    public static TwitchChannelTeam? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannelTeam
@@ -50,18 +50,18 @@ public partial class TwitchChannelTeam : RefCounted, ITwitcherSharp<TwitchChanne
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_channel_team.gd");
         var request = script.Call("new").AsGodotObject();
-        request.Set("broadcaster_id", BroadcasterId);
-        request.Set("broadcaster_login", BroadcasterLogin);
-        request.Set("broadcaster_name", BroadcasterName);
-        request.Set("background_image_url", BackgroundImageUrl);
-        request.Set("banner", Banner);
-        request.Set("created_at", CreatedAt);
-        request.Set("updated_at", UpdatedAt);
-        request.Set("info", Info);
-        request.Set("thumbnail_url", ThumbnailUrl);
-        request.Set("team_name", TeamName);
-        request.Set("team_display_name", TeamDisplayName);
-        request.Set("id", Id);
+        if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
+        if(BroadcasterLogin != null) request.Set("broadcaster_login", BroadcasterLogin);
+        if(BroadcasterName != null) request.Set("broadcaster_name", BroadcasterName);
+        if(BackgroundImageUrl != null) request.Set("background_image_url", BackgroundImageUrl);
+        if(Banner != null) request.Set("banner", Banner);
+        if(CreatedAt != null) request.Set("created_at", CreatedAt);
+        if(UpdatedAt != null) request.Set("updated_at", UpdatedAt);
+        if(Info != null) request.Set("info", Info);
+        if(ThumbnailUrl != null) request.Set("thumbnail_url", ThumbnailUrl);
+        if(TeamName != null) request.Set("team_name", TeamName);
+        if(TeamDisplayName != null) request.Set("team_display_name", TeamDisplayName);
+        if(Id != null) request.Set("id", Id);
         return request;
     }
 

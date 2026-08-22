@@ -10,14 +10,14 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 /// </summary>
 public partial class TwitchGetBlockedTermsOpt : RefCounted, ITwitcherSharp<TwitchGetBlockedTermsOpt>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     public int? First { get; set; }
-    public string After { get; set; }
+    public string? After { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetBlockedTermsOpt object.
     /// </summary> 
-    public static TwitchGetBlockedTermsOpt FromObject(GodotObject data)
+    public static TwitchGetBlockedTermsOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetBlockedTermsOpt

@@ -6,16 +6,16 @@ namespace TwitcherSharp.Api.Generated.EventSub;
 
 public partial class TwitchCreateEventSubSubscriptionBody<T> : RefCounted, ITwitcherSharp<TwitchCreateEventSubSubscriptionBody<T>> where T : RefCounted, ITwitcherSharpCondition<T>
 {
-    private GodotObject _data;
-    public string Type { get; set; }
-    public string Version { get; set; }
-    public ITwitcherSharpCondition<T> Condition { get => field ??= T.FromDictionary(_data?.Get("{field.Name.ToSnakeCase()}").AsGodotDictionary()); set; }
-    public TwitchBodyTransport Transport { get => field ??= _data?.Get<TwitchBodyTransport>("transport"); set; }
+    private GodotObject? _data;
+    public string Type { get; set; } = null!;
+    public string Version { get; set; } = null!;
+    public ITwitcherSharpCondition<T> Condition { get => field ??= T.FromDictionary(_data?.Get("condition").AsGodotDictionary()!); set; } = null!;
+    public TwitchBodyTransport Transport { get => field ??= _data?.Get<TwitchBodyTransport>("transport")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCreateEventSubSubscriptionBody object.
     /// </summary> 
-    public static TwitchCreateEventSubSubscriptionBody<T> FromObject(GodotObject data)
+    public static TwitchCreateEventSubSubscriptionBody<T>? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchCreateEventSubSubscriptionBody<T>
@@ -33,10 +33,10 @@ public partial class TwitchCreateEventSubSubscriptionBody<T> : RefCounted, ITwit
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_create_event_sub_subscription.gd");
         var bodyClass = script.Get("Body").AsGodotObject();
         var request = bodyClass.Call("new").AsGodotObject();
-        request.Set("type", Type);
-        request.Set("version", Version);
+        if(Type != null) request.Set("type", Type);
+        if(Version != null) request.Set("version", Version);
         if(Condition != null) request.Set("condition", new Godot.Collections.Dictionary<string,Variant>(Condition.ToDictionary()));
-        request.Set("transport", Transport?.ToGodotObject());
+        if(Transport != null) request.Set("transport", Transport.ToGodotObject());
         return request;
     }
     
@@ -45,17 +45,17 @@ public partial class TwitchCreateEventSubSubscriptionBody<T> : RefCounted, ITwit
     /// </summary>
     public partial class TwitchBodyTransport : RefCounted, ITwitcherSharp<TwitchBodyTransport>
     {
-        private GodotObject _data;
-        public string Method { get; set; }
-        public string Callback { get; set; }
-        public string Secret { get; set; }
-        public string SessionId { get; set; }
-        public string ConduitId { get; set; }
+        private GodotObject? _data;
+        public string Method { get; set; } = null!;
+        public string? Callback { get; set; }
+        public string? Secret { get; set; }
+        public string? SessionId { get; set; }
+        public string? ConduitId { get; set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchBodyTransport object.
         /// </summary> 
-        public static TwitchBodyTransport FromObject(GodotObject data)
+        public static TwitchBodyTransport? FromObject(GodotObject? data)
         {
             if(data == null) return null;
             var instance = new TwitchBodyTransport
@@ -76,7 +76,7 @@ public partial class TwitchCreateEventSubSubscriptionBody<T> : RefCounted, ITwit
             var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_create_event_sub_subscription.gd");
             var twitchBodyTransportClass = script.Get("BodyTransport").AsGodotObject();
             var request = twitchBodyTransportClass.Call("new").AsGodotObject();
-            request.Set("method", Method);
+            if(Method != null) request.Set("method", Method);
             if(Callback != null) request.Set("callback", Callback);
             if(Secret != null) request.Set("secret", Secret);
             if(SessionId != null) request.Set("session_id", SessionId);

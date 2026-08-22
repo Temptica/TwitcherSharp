@@ -8,52 +8,52 @@ namespace TwitcherSharp.EventSub.Generated.ChannelPredictionBegin;
 
 public partial class TwitchChannelPredictionBeginEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelPredictionBeginEvent>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     /// <summary> 
     /// Channel Points Prediction ID.
     /// </summary>
-    public string Id { get; set; }
+    public string? Id { get; set; }
 
     /// <summary> 
     /// The requested broadcaster ID.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string? BroadcasterUserId { get; set; }
 
     /// <summary> 
     /// The requested broadcaster login.
     /// </summary>
-    public string BroadcasterUserLogin { get; set; }
+    public string? BroadcasterUserLogin { get; set; }
 
     /// <summary> 
     /// The requested broadcaster display name.
     /// </summary>
-    public string BroadcasterUserName { get; set; }
+    public string? BroadcasterUserName { get; set; }
 
     /// <summary> 
     /// Title for the Channel Points Prediction.
     /// </summary>
-    public string Title { get; set; }
+    public string? Title { get; set; }
 
     /// <summary> 
     /// An array of outcomes for the Channel Points Prediction.
     /// </summary>
-    public TwitchOutcomes[] Outcomes { get => field ??= _data?.GetArray<TwitchOutcomes>("outcomes"); set; }
+    public TwitchOutcomes[]? Outcomes { get => field ??= _data?.GetArray<TwitchOutcomes>("outcomes"); set; }
 
     /// <summary> 
     /// The time the Channel Points Prediction started.
     /// </summary>
-    public string StartedAt { get; set; }
+    public string? StartedAt { get; set; }
 
     /// <summary> 
     /// The time the Channel Points Prediction will automatically lock.
     /// </summary>
-    public string LocksAt { get; set; }
+    public string? LocksAt { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelPredictionBeginEvent object.
     /// </summary> 
-    public static TwitchChannelPredictionBeginEvent FromObject(GodotObject data)
+    public static TwitchChannelPredictionBeginEvent? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannelPredictionBeginEvent
@@ -76,14 +76,14 @@ public partial class TwitchChannelPredictionBeginEvent : RefCounted, ITwitcherSh
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_prediction_begin.gd");
         var eventClass = script.Get("Event").As<GDScript>();
         var request = eventClass.New().AsGodotObject();
-        request.Set("id", Id);
-        request.Set("broadcaster_user_id", BroadcasterUserId);
-        request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        request.Set("broadcaster_user_name", BroadcasterUserName);
-        request.Set("title", Title);
-        if(Outcomes != null) request.Set("outcomes", Outcomes?.ToGodotArray());
-        request.Set("started_at", StartedAt);
-        request.Set("locks_at", LocksAt);
+        if(Id != null) request.Set("id", Id);
+        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
+        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
+        if(Title != null) request.Set("title", Title);
+        if(Outcomes != null) request.Set("outcomes", Outcomes.ToGodotArray());
+        if(StartedAt != null) request.Set("started_at", StartedAt);
+        if(LocksAt != null) request.Set("locks_at", LocksAt);
         return request;
     }
 }

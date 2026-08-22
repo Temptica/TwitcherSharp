@@ -10,14 +10,14 @@ namespace TwitcherSharp.Api.Generated.Chat;
 /// </summary>
 public partial class TwitchGetChattersOpt : RefCounted, ITwitcherSharp<TwitchGetChattersOpt>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     public int? First { get; set; }
-    public string After { get; set; }
+    public string? After { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetChattersOpt object.
     /// </summary> 
-    public static TwitchGetChattersOpt FromObject(GodotObject data)
+    public static TwitchGetChattersOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetChattersOpt

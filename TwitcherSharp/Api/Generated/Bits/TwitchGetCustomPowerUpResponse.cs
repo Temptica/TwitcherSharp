@@ -6,13 +6,13 @@ namespace TwitcherSharp.Api.Generated.Bits;
 
 public partial class TwitchGetCustomPowerUpResponse : RefCounted, ITwitcherSharp<TwitchGetCustomPowerUpResponse>
 {
-    private GodotObject _data;
-    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
+    private GodotObject? _data;
+    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetCustomPowerUpResponse object.
     /// </summary> 
-    public static TwitchGetCustomPowerUpResponse FromObject(GodotObject data)
+    public static TwitchGetCustomPowerUpResponse? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetCustomPowerUpResponse();
@@ -26,7 +26,7 @@ public partial class TwitchGetCustomPowerUpResponse : RefCounted, ITwitcherSharp
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_custom_power_up.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data?.ToGodotArray());
+        if(Data != null) request.Set("data", Data.ToGodotArray());
         return request;
     }
     
@@ -35,31 +35,31 @@ public partial class TwitchGetCustomPowerUpResponse : RefCounted, ITwitcherSharp
     /// </summary>
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
-        private GodotObject _data;
-        public string BroadcasterId { get; set; }
-        public string BroadcasterLogin { get; set; }
-        public string BroadcasterName { get; set; }
-        public string Id { get; set; }
-        public string Title { get; set; }
-        public string Prompt { get; set; }
+        private GodotObject? _data;
+        public string BroadcasterId { get; set; } = null!;
+        public string BroadcasterLogin { get; set; } = null!;
+        public string BroadcasterName { get; set; } = null!;
+        public string Id { get; set; } = null!;
+        public string Title { get; set; } = null!;
+        public string Prompt { get; set; } = null!;
         public int Bits { get; set; }
-        public TwitchResponseImage Image { get => field ??= _data?.Get<TwitchResponseImage>("image"); set; }
-        public TwitchResponseDefaultImage DefaultImage { get => field ??= _data?.Get<TwitchResponseDefaultImage>("default_image"); set; }
-        public string BackgroundColor { get; set; }
+        public TwitchResponseImage Image { get => field ??= _data?.Get<TwitchResponseImage>("image")!; set; } = null!;
+        public TwitchResponseDefaultImage DefaultImage { get => field ??= _data?.Get<TwitchResponseDefaultImage>("default_image")!; set; } = null!;
+        public string BackgroundColor { get; set; } = null!;
         public bool IsEnabled { get; set; }
         public bool IsUserInputRequired { get; set; }
-        public TwitchResponseMaxPerStreamSetting MaxPerStreamSetting { get => field ??= _data?.Get<TwitchResponseMaxPerStreamSetting>("max_per_stream_setting"); set; }
-        public TwitchResponseMaxPerUserPerStreamSetting MaxPerUserPerStreamSetting { get => field ??= _data?.Get<TwitchResponseMaxPerUserPerStreamSetting>("max_per_user_per_stream_setting"); set; }
-        public TwitchResponseGlobalCooldownSetting GlobalCooldownSetting { get => field ??= _data?.Get<TwitchResponseGlobalCooldownSetting>("global_cooldown_setting"); set; }
+        public TwitchResponseMaxPerStreamSetting MaxPerStreamSetting { get => field ??= _data?.Get<TwitchResponseMaxPerStreamSetting>("max_per_stream_setting")!; set; } = null!;
+        public TwitchResponseMaxPerUserPerStreamSetting MaxPerUserPerStreamSetting { get => field ??= _data?.Get<TwitchResponseMaxPerUserPerStreamSetting>("max_per_user_per_stream_setting")!; set; } = null!;
+        public TwitchResponseGlobalCooldownSetting GlobalCooldownSetting { get => field ??= _data?.Get<TwitchResponseGlobalCooldownSetting>("global_cooldown_setting")!; set; } = null!;
         public bool IsPaused { get; set; }
         public bool IsInStock { get; set; }
         public int RedemptionsRedeemedCurrentStream { get; set; }
-        public string CooldownExpiresAt { get; set; }
+        public string CooldownExpiresAt { get; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseData object.
         /// </summary> 
-        public static TwitchResponseData FromObject(GodotObject data)
+        public static TwitchResponseData? FromObject(GodotObject? data)
         {
             if(data == null) return null;
             var instance = new TwitchResponseData
@@ -89,25 +89,25 @@ public partial class TwitchGetCustomPowerUpResponse : RefCounted, ITwitcherSharp
             var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_custom_power_up.gd");
             var twitchResponseDataClass = script.Get("ResponseData").AsGodotObject();
             var request = twitchResponseDataClass.Call("new").AsGodotObject();
-            request.Set("broadcaster_id", BroadcasterId);
-            request.Set("broadcaster_login", BroadcasterLogin);
-            request.Set("broadcaster_name", BroadcasterName);
-            request.Set("id", Id);
-            request.Set("title", Title);
-            request.Set("prompt", Prompt);
+            if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
+            if(BroadcasterLogin != null) request.Set("broadcaster_login", BroadcasterLogin);
+            if(BroadcasterName != null) request.Set("broadcaster_name", BroadcasterName);
+            if(Id != null) request.Set("id", Id);
+            if(Title != null) request.Set("title", Title);
+            if(Prompt != null) request.Set("prompt", Prompt);
             request.Set("bits", Bits);
-            request.Set("image", Image?.ToGodotObject());
-            request.Set("default_image", DefaultImage?.ToGodotObject());
-            request.Set("background_color", BackgroundColor);
+            if(Image != null) request.Set("image", Image.ToGodotObject());
+            if(DefaultImage != null) request.Set("default_image", DefaultImage.ToGodotObject());
+            if(BackgroundColor != null) request.Set("background_color", BackgroundColor);
             request.Set("is_enabled", IsEnabled);
             request.Set("is_user_input_required", IsUserInputRequired);
-            request.Set("max_per_stream_setting", MaxPerStreamSetting?.ToGodotObject());
-            request.Set("max_per_user_per_stream_setting", MaxPerUserPerStreamSetting?.ToGodotObject());
-            request.Set("global_cooldown_setting", GlobalCooldownSetting?.ToGodotObject());
+            if(MaxPerStreamSetting != null) request.Set("max_per_stream_setting", MaxPerStreamSetting.ToGodotObject());
+            if(MaxPerUserPerStreamSetting != null) request.Set("max_per_user_per_stream_setting", MaxPerUserPerStreamSetting.ToGodotObject());
+            if(GlobalCooldownSetting != null) request.Set("global_cooldown_setting", GlobalCooldownSetting.ToGodotObject());
             request.Set("is_paused", IsPaused);
             request.Set("is_in_stock", IsInStock);
             request.Set("redemptions_redeemed_current_stream", RedemptionsRedeemedCurrentStream);
-            request.Set("cooldown_expires_at", CooldownExpiresAt);
+            if(CooldownExpiresAt != null) request.Set("cooldown_expires_at", CooldownExpiresAt);
             return request;
         }
         
@@ -116,15 +116,15 @@ public partial class TwitchGetCustomPowerUpResponse : RefCounted, ITwitcherSharp
         /// </summary>
         public partial class TwitchResponseImage : RefCounted, ITwitcherSharp<TwitchResponseImage>
         {
-            private GodotObject _data;
-            public string Url1x { get; set; }
-            public string Url2x { get; set; }
-            public string Url4x { get; set; }
+            private GodotObject? _data;
+            public string Url1x { get; set; } = null!;
+            public string Url2x { get; set; } = null!;
+            public string Url4x { get; set; } = null!;
         
             /// <summary> 
             /// Transforms the godot data into a TwitchResponseImage object.
             /// </summary> 
-            public static TwitchResponseImage FromObject(GodotObject data)
+            public static TwitchResponseImage? FromObject(GodotObject? data)
             {
                 if(data == null) return null;
                 var instance = new TwitchResponseImage
@@ -143,9 +143,9 @@ public partial class TwitchGetCustomPowerUpResponse : RefCounted, ITwitcherSharp
                 var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_custom_power_up.gd");
                 var twitchResponseImageClass = script.Get("ResponseImage").AsGodotObject();
                 var request = twitchResponseImageClass.Call("new").AsGodotObject();
-                request.Set("url_1x", Url1x);
-                request.Set("url_2x", Url2x);
-                request.Set("url_4x", Url4x);
+                if(Url1x != null) request.Set("url_1x", Url1x);
+                if(Url2x != null) request.Set("url_2x", Url2x);
+                if(Url4x != null) request.Set("url_4x", Url4x);
                 return request;
             }
         
@@ -156,15 +156,15 @@ public partial class TwitchGetCustomPowerUpResponse : RefCounted, ITwitcherSharp
         /// </summary>
         public partial class TwitchResponseDefaultImage : RefCounted, ITwitcherSharp<TwitchResponseDefaultImage>
         {
-            private GodotObject _data;
-            public string Url1x { get; set; }
-            public string Url2x { get; set; }
-            public string Url4x { get; set; }
+            private GodotObject? _data;
+            public string Url1x { get; set; } = null!;
+            public string Url2x { get; set; } = null!;
+            public string Url4x { get; set; } = null!;
         
             /// <summary> 
             /// Transforms the godot data into a TwitchResponseDefaultImage object.
             /// </summary> 
-            public static TwitchResponseDefaultImage FromObject(GodotObject data)
+            public static TwitchResponseDefaultImage? FromObject(GodotObject? data)
             {
                 if(data == null) return null;
                 var instance = new TwitchResponseDefaultImage
@@ -183,9 +183,9 @@ public partial class TwitchGetCustomPowerUpResponse : RefCounted, ITwitcherSharp
                 var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_custom_power_up.gd");
                 var twitchResponseDefaultImageClass = script.Get("ResponseDefaultImage").AsGodotObject();
                 var request = twitchResponseDefaultImageClass.Call("new").AsGodotObject();
-                request.Set("url_1x", Url1x);
-                request.Set("url_2x", Url2x);
-                request.Set("url_4x", Url4x);
+                if(Url1x != null) request.Set("url_1x", Url1x);
+                if(Url2x != null) request.Set("url_2x", Url2x);
+                if(Url4x != null) request.Set("url_4x", Url4x);
                 return request;
             }
         
@@ -196,14 +196,14 @@ public partial class TwitchGetCustomPowerUpResponse : RefCounted, ITwitcherSharp
         /// </summary>
         public partial class TwitchResponseMaxPerStreamSetting : RefCounted, ITwitcherSharp<TwitchResponseMaxPerStreamSetting>
         {
-            private GodotObject _data;
+            private GodotObject? _data;
             public bool IsEnabled { get; set; }
             public int MaxPerStream { get; set; }
         
             /// <summary> 
             /// Transforms the godot data into a TwitchResponseMaxPerStreamSetting object.
             /// </summary> 
-            public static TwitchResponseMaxPerStreamSetting FromObject(GodotObject data)
+            public static TwitchResponseMaxPerStreamSetting? FromObject(GodotObject? data)
             {
                 if(data == null) return null;
                 var instance = new TwitchResponseMaxPerStreamSetting
@@ -233,14 +233,14 @@ public partial class TwitchGetCustomPowerUpResponse : RefCounted, ITwitcherSharp
         /// </summary>
         public partial class TwitchResponseMaxPerUserPerStreamSetting : RefCounted, ITwitcherSharp<TwitchResponseMaxPerUserPerStreamSetting>
         {
-            private GodotObject _data;
+            private GodotObject? _data;
             public bool IsEnabled { get; set; }
             public int MaxPerUserPerStream { get; set; }
         
             /// <summary> 
             /// Transforms the godot data into a TwitchResponseMaxPerUserPerStreamSetting object.
             /// </summary> 
-            public static TwitchResponseMaxPerUserPerStreamSetting FromObject(GodotObject data)
+            public static TwitchResponseMaxPerUserPerStreamSetting? FromObject(GodotObject? data)
             {
                 if(data == null) return null;
                 var instance = new TwitchResponseMaxPerUserPerStreamSetting
@@ -270,14 +270,14 @@ public partial class TwitchGetCustomPowerUpResponse : RefCounted, ITwitcherSharp
         /// </summary>
         public partial class TwitchResponseGlobalCooldownSetting : RefCounted, ITwitcherSharp<TwitchResponseGlobalCooldownSetting>
         {
-            private GodotObject _data;
+            private GodotObject? _data;
             public bool IsEnabled { get; set; }
             public int GlobalCooldownSeconds { get; set; }
         
             /// <summary> 
             /// Transforms the godot data into a TwitchResponseGlobalCooldownSetting object.
             /// </summary> 
-            public static TwitchResponseGlobalCooldownSetting FromObject(GodotObject data)
+            public static TwitchResponseGlobalCooldownSetting? FromObject(GodotObject? data)
             {
                 if(data == null) return null;
                 var instance = new TwitchResponseGlobalCooldownSetting

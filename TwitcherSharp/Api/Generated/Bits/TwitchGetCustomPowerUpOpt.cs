@@ -10,13 +10,13 @@ namespace TwitcherSharp.Api.Generated.Bits;
 /// </summary>
 public partial class TwitchGetCustomPowerUpOpt : RefCounted, ITwitcherSharp<TwitchGetCustomPowerUpOpt>
 {
-    private GodotObject _data;
-    public string[] Id { get; set; }
+    private GodotObject? _data;
+    public string[]? Id { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetCustomPowerUpOpt object.
     /// </summary> 
-    public static TwitchGetCustomPowerUpOpt FromObject(GodotObject data)
+    public static TwitchGetCustomPowerUpOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetCustomPowerUpOpt

@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelPredictionLock;
 
 public partial class TwitchChannelPredictionLockCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelPredictionLockCondition>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     public string Name => nameof(TwitchChannelPredictionLockCondition);
 
@@ -20,7 +20,7 @@ public partial class TwitchChannelPredictionLockCondition(string broadcasterUser
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelPredictionLockCondition object.
     /// </summary> 
-    public static TwitchChannelPredictionLockCondition FromObject(GodotObject data)
+    public static TwitchChannelPredictionLockCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannelPredictionLockCondition(data.Get("broadcaster_user_id").AsString());

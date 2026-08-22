@@ -10,21 +10,21 @@ namespace TwitcherSharp.Api.Generated.Clips;
 /// </summary>
 public partial class TwitchGetClipsOpt : RefCounted, ITwitcherSharp<TwitchGetClipsOpt>
 {
-    private GodotObject _data;
-    public string BroadcasterId { get; set; }
-    public string GameId { get; set; }
-    public string[] Id { get; set; }
-    public string StartedAt { get; set; }
-    public string EndedAt { get; set; }
+    private GodotObject? _data;
+    public string? BroadcasterId { get; set; }
+    public string? GameId { get; set; }
+    public string[]? Id { get; set; }
+    public string? StartedAt { get; set; }
+    public string? EndedAt { get; set; }
     public int? First { get; set; }
-    public string Before { get; set; }
-    public string After { get; set; }
+    public string? Before { get; set; }
+    public string? After { get; set; }
     public bool? IsFeatured { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetClipsOpt object.
     /// </summary> 
-    public static TwitchGetClipsOpt FromObject(GodotObject data)
+    public static TwitchGetClipsOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetClipsOpt

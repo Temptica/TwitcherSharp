@@ -7,25 +7,26 @@ namespace TwitcherSharp.Chat;
 
 public partial class TwitchAutoMessage : RefCounted, ITwitcherSharp<TwitchAutoMessage>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     public bool UseBot { get; set; }
     public bool Announcement { get; set; }
 
     public TwitchAnnouncementColor AnnouncementColor
     {
-        get => field ??= _data?.Get<TwitchAnnouncementColor>("announcement_color") ;
+        get => field ??= _data?.Get<TwitchAnnouncementColor>("announcement_color") ?? TwitchAnnouncementColor.Primary ;
         set;
     }
 
-    public string Message { get; set; }
+    public string Message { get; set; } = "";
     public bool SourceOnly { get; set; } = true;
     public int Weight { get; set; } = 1;
 
-    public TwitchUser Broadcaster { get => field ??= _data?.Get<TwitchUser>("broadcaster"); set; }
-    public TwitchUser Sender { get => field ??= _data?.Get<TwitchUser>("sender"); set; }
+    public TwitchUser? Broadcaster { get => field ??= _data?.Get<TwitchUser>("broadcaster"); set; }
+    public TwitchUser? Sender { get => field ??= _data?.Get<TwitchUser>("sender"); set; }
 
-    public static TwitchAutoMessage FromObject(GodotObject data)
+    public static TwitchAutoMessage? FromObject(GodotObject? data)
     {
+        if (data == null) return null;
         return new TwitchAutoMessage
         {
             _data = data,
@@ -46,18 +47,18 @@ public partial class TwitchAutoMessage : RefCounted, ITwitcherSharp<TwitchAutoMe
         var instances = script.New().AsGodotObject();
         instances.Set("use_bot", UseBot);
         instances.Set("announcement", Announcement);
-        instances.Set("announcement_color", AnnouncementColor?.ToGodotObject());
+        instances.Set("announcement_color", AnnouncementColor.ToGodotObject());
         instances.Set("message", Message);
         instances.Set("source_only", SourceOnly);
         instances.Set("weight", Weight);
-        instances.Set("user", Broadcaster?.ToGodotObject());
-        instances.Set("sender", Sender?.ToGodotObject());
+        instances.Set("user", Broadcaster?.ToGodotObject() ?? new Variant());
+        instances.Set("sender", Sender?.ToGodotObject() ?? new Variant());
 
         return instances;
     }
 
     public async Task Send()
     {
-        await _data.CallAsync("send");
+        await _data!.CallAsync("send");
     }
 }

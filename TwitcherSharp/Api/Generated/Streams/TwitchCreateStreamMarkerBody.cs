@@ -6,14 +6,14 @@ namespace TwitcherSharp.Api.Generated.Streams;
 
 public partial class TwitchCreateStreamMarkerBody : RefCounted, ITwitcherSharp<TwitchCreateStreamMarkerBody>
 {
-    private GodotObject _data;
-    public string UserId { get; set; }
-    public string Description { get; set; }
+    private GodotObject? _data;
+    public string UserId { get; set; } = null!;
+    public string? Description { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCreateStreamMarkerBody object.
     /// </summary> 
-    public static TwitchCreateStreamMarkerBody FromObject(GodotObject data)
+    public static TwitchCreateStreamMarkerBody? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchCreateStreamMarkerBody
@@ -31,7 +31,7 @@ public partial class TwitchCreateStreamMarkerBody : RefCounted, ITwitcherSharp<T
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_create_stream_marker.gd");
         var bodyClass = script.Get("Body").AsGodotObject();
         var request = bodyClass.Call("new").AsGodotObject();
-        request.Set("user_id", UserId);
+        if(UserId != null) request.Set("user_id", UserId);
         if(Description != null) request.Set("description", Description);
         return request;
     }

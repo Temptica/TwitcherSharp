@@ -6,26 +6,26 @@ namespace TwitcherSharp.Api.Generated.Polls;
 
 public partial class TwitchPoll : RefCounted, ITwitcherSharp<TwitchPoll>
 {
-    private GodotObject _data;
-    public string Id { get; set; }
-    public string BroadcasterId { get; set; }
-    public string BroadcasterName { get; set; }
-    public string BroadcasterLogin { get; set; }
-    public string Title { get; set; }
-    public TwitchChoices[] Choices { get => field ??= _data?.GetArray<TwitchChoices>("choices"); set; }
+    private GodotObject? _data;
+    public string Id { get; set; } = null!;
+    public string BroadcasterId { get; set; } = null!;
+    public string BroadcasterName { get; set; } = null!;
+    public string BroadcasterLogin { get; set; } = null!;
+    public string Title { get; set; } = null!;
+    public TwitchChoices[] Choices { get => field ??= _data?.GetArray<TwitchChoices>("choices")!; set; } = null!;
     public bool BitsVotingEnabled { get; set; }
     public int BitsPerVote { get; set; }
     public bool ChannelPointsVotingEnabled { get; set; }
     public int ChannelPointsPerVote { get; set; }
-    public string Status { get; set; }
+    public string Status { get; set; } = null!;
     public int Duration { get; set; }
-    public string StartedAt { get; set; }
-    public string EndedAt { get; set; }
+    public string StartedAt { get; set; } = null!;
+    public string EndedAt { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchPoll object.
     /// </summary> 
-    public static TwitchPoll FromObject(GodotObject data)
+    public static TwitchPoll? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchPoll
@@ -53,20 +53,20 @@ public partial class TwitchPoll : RefCounted, ITwitcherSharp<TwitchPoll>
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_poll.gd");
         var request = script.Call("new").AsGodotObject();
-        request.Set("id", Id);
-        request.Set("broadcaster_id", BroadcasterId);
-        request.Set("broadcaster_name", BroadcasterName);
-        request.Set("broadcaster_login", BroadcasterLogin);
-        request.Set("title", Title);
-        if(Choices != null) request.Set("choices", Choices?.ToGodotArray());
+        if(Id != null) request.Set("id", Id);
+        if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
+        if(BroadcasterName != null) request.Set("broadcaster_name", BroadcasterName);
+        if(BroadcasterLogin != null) request.Set("broadcaster_login", BroadcasterLogin);
+        if(Title != null) request.Set("title", Title);
+        if(Choices != null) request.Set("choices", Choices.ToGodotArray());
         request.Set("bits_voting_enabled", BitsVotingEnabled);
         request.Set("bits_per_vote", BitsPerVote);
         request.Set("channel_points_voting_enabled", ChannelPointsVotingEnabled);
         request.Set("channel_points_per_vote", ChannelPointsPerVote);
-        request.Set("status", Status);
+        if(Status != null) request.Set("status", Status);
         request.Set("duration", Duration);
-        request.Set("started_at", StartedAt);
-        request.Set("ended_at", EndedAt);
+        if(StartedAt != null) request.Set("started_at", StartedAt);
+        if(EndedAt != null) request.Set("ended_at", EndedAt);
         return request;
     }
     
@@ -75,9 +75,9 @@ public partial class TwitchPoll : RefCounted, ITwitcherSharp<TwitchPoll>
     /// </summary>
     public partial class TwitchChoices : RefCounted, ITwitcherSharp<TwitchChoices>
     {
-        private GodotObject _data;
-        public string Id { get; set; }
-        public string Title { get; set; }
+        private GodotObject? _data;
+        public string Id { get; set; } = null!;
+        public string Title { get; set; } = null!;
         public int Votes { get; set; }
         public int ChannelPointsVotes { get; set; }
         public int BitsVotes { get; set; }
@@ -85,7 +85,7 @@ public partial class TwitchPoll : RefCounted, ITwitcherSharp<TwitchPoll>
         /// <summary> 
         /// Transforms the godot data into a TwitchChoices object.
         /// </summary> 
-        public static TwitchChoices FromObject(GodotObject data)
+        public static TwitchChoices? FromObject(GodotObject? data)
         {
             if(data == null) return null;
             var instance = new TwitchChoices
@@ -106,8 +106,8 @@ public partial class TwitchPoll : RefCounted, ITwitcherSharp<TwitchPoll>
             var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_poll.gd");
             var twitchChoicesClass = script.Get("Choices").AsGodotObject();
             var request = twitchChoicesClass.Call("new").AsGodotObject();
-            request.Set("id", Id);
-            request.Set("title", Title);
+            if(Id != null) request.Set("id", Id);
+            if(Title != null) request.Set("title", Title);
             request.Set("votes", Votes);
             request.Set("channel_points_votes", ChannelPointsVotes);
             request.Set("bits_votes", BitsVotes);

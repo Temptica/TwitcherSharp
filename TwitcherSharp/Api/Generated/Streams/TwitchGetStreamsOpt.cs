@@ -10,20 +10,20 @@ namespace TwitcherSharp.Api.Generated.Streams;
 /// </summary>
 public partial class TwitchGetStreamsOpt : RefCounted, ITwitcherSharp<TwitchGetStreamsOpt>
 {
-    private GodotObject _data;
-    public string[] UserId { get; set; }
-    public string[] UserLogin { get; set; }
-    public string[] GameId { get; set; }
-    public string Type { get; set; }
-    public string[] Language { get; set; }
+    private GodotObject? _data;
+    public string[]? UserId { get; set; }
+    public string[]? UserLogin { get; set; }
+    public string[]? GameId { get; set; }
+    public string? Type { get; set; }
+    public string[]? Language { get; set; }
     public int? First { get; set; }
-    public string Before { get; set; }
-    public string After { get; set; }
+    public string? Before { get; set; }
+    public string? After { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetStreamsOpt object.
     /// </summary> 
-    public static TwitchGetStreamsOpt FromObject(GodotObject data)
+    public static TwitchGetStreamsOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetStreamsOpt

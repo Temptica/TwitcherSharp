@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.Shared;
 
 public partial class TwitchBitsVoting : RefCounted, ITwitcherSharpEventSub<TwitchBitsVoting>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     /// <summary> 
     /// Not used; will be set to false.
@@ -23,7 +23,7 @@ public partial class TwitchBitsVoting : RefCounted, ITwitcherSharpEventSub<Twitc
     /// <summary> 
     /// Transforms the godot data into a TwitchBitsVoting object.
     /// </summary> 
-    public static TwitchBitsVoting FromObject(GodotObject data)
+    public static TwitchBitsVoting? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchBitsVoting

@@ -8,52 +8,52 @@ namespace TwitcherSharp.EventSub.Generated.ChannelUpdate;
 
 public partial class TwitchChannelUpdateEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelUpdateEvent>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     /// <summary> 
     /// The broadcaster’s user ID.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string? BroadcasterUserId { get; set; }
 
     /// <summary> 
     /// The broadcaster’s user login.
     /// </summary>
-    public string BroadcasterUserLogin { get; set; }
+    public string? BroadcasterUserLogin { get; set; }
 
     /// <summary> 
     /// The broadcaster’s user display name.
     /// </summary>
-    public string BroadcasterUserName { get; set; }
+    public string? BroadcasterUserName { get; set; }
 
     /// <summary> 
     /// The channel’s stream title.
     /// </summary>
-    public string Title { get; set; }
+    public string? Title { get; set; }
 
     /// <summary> 
     /// The channel’s broadcast language.
     /// </summary>
-    public string Language { get; set; }
+    public string? Language { get; set; }
 
     /// <summary> 
     /// The channel’s category ID.
     /// </summary>
-    public string CategoryId { get; set; }
+    public string? CategoryId { get; set; }
 
     /// <summary> 
     /// The category name.
     /// </summary>
-    public string CategoryName { get; set; }
+    public string? CategoryName { get; set; }
 
     /// <summary> 
     /// Array of content classification label IDs currently applied on the Channel. To retrieve a list of all possible IDs, use the Get Content Classification Labels API endpoint.
     /// </summary>
-    public string[] ContentClassificationLabels { get; set; }
+    public string[]? ContentClassificationLabels { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelUpdateEvent object.
     /// </summary> 
-    public static TwitchChannelUpdateEvent FromObject(GodotObject data)
+    public static TwitchChannelUpdateEvent? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannelUpdateEvent
@@ -76,13 +76,13 @@ public partial class TwitchChannelUpdateEvent : RefCounted, ITwitcherSharpEventS
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_update.gd");
         var eventClass = script.Get("Event").As<GDScript>();
         var request = eventClass.New().AsGodotObject();
-        request.Set("broadcaster_user_id", BroadcasterUserId);
-        request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        request.Set("broadcaster_user_name", BroadcasterUserName);
-        request.Set("title", Title);
-        request.Set("language", Language);
-        request.Set("category_id", CategoryId);
-        request.Set("category_name", CategoryName);
+        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
+        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
+        if(Title != null) request.Set("title", Title);
+        if(Language != null) request.Set("language", Language);
+        if(CategoryId != null) request.Set("category_id", CategoryId);
+        if(CategoryName != null) request.Set("category_name", CategoryName);
         if(ContentClassificationLabels != null) request.Set("content_classification_labels", new Godot.Collections.Array<string>(ContentClassificationLabels));
         return request;
     }

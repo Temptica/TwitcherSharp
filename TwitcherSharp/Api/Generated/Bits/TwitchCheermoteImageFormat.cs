@@ -6,17 +6,17 @@ namespace TwitcherSharp.Api.Generated.Bits;
 
 public partial class TwitchCheermoteImageFormat : RefCounted, ITwitcherSharp<TwitchCheermoteImageFormat>
 {
-    private GodotObject _data;
-    public string _1 { get; set; }
-    public string _2 { get; set; }
-    public string _3 { get; set; }
-    public string _4 { get; set; }
-    public string _1_5 { get; set; }
+    private GodotObject? _data;
+    public string? _1 { get; set; }
+    public string? _2 { get; set; }
+    public string? _3 { get; set; }
+    public string? _4 { get; set; }
+    public string? _1_5 { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCheermoteImageFormat object.
     /// </summary> 
-    public static TwitchCheermoteImageFormat FromObject(GodotObject data)
+    public static TwitchCheermoteImageFormat? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchCheermoteImageFormat

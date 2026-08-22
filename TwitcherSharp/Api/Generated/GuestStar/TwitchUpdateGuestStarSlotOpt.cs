@@ -10,13 +10,13 @@ namespace TwitcherSharp.Api.Generated.GuestStar;
 /// </summary>
 public partial class TwitchUpdateGuestStarSlotOpt : RefCounted, ITwitcherSharp<TwitchUpdateGuestStarSlotOpt>
 {
-    private GodotObject _data;
-    public string DestinationSlotId { get; set; }
+    private GodotObject? _data;
+    public string? DestinationSlotId { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUpdateGuestStarSlotOpt object.
     /// </summary> 
-    public static TwitchUpdateGuestStarSlotOpt FromObject(GodotObject data)
+    public static TwitchUpdateGuestStarSlotOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchUpdateGuestStarSlotOpt

@@ -10,13 +10,13 @@ namespace TwitcherSharp.Api.Generated.Extensions;
 /// </summary>
 public partial class TwitchCreateExtensionSecretOpt : RefCounted, ITwitcherSharp<TwitchCreateExtensionSecretOpt>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     public int? Delay { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCreateExtensionSecretOpt object.
     /// </summary> 
-    public static TwitchCreateExtensionSecretOpt FromObject(GodotObject data)
+    public static TwitchCreateExtensionSecretOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchCreateExtensionSecretOpt

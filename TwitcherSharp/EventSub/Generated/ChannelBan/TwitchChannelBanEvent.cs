@@ -8,67 +8,67 @@ namespace TwitcherSharp.EventSub.Generated.ChannelBan;
 
 public partial class TwitchChannelBanEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelBanEvent>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     /// <summary> 
     /// The user ID for the user who was banned on the specified channel.
     /// </summary>
-    public string UserId { get; set; }
+    public string? UserId { get; set; }
 
     /// <summary> 
     /// The user login for the user who was banned on the specified channel.
     /// </summary>
-    public string UserLogin { get; set; }
+    public string? UserLogin { get; set; }
 
     /// <summary> 
     /// The user display name for the user who was banned on the specified channel.
     /// </summary>
-    public string UserName { get; set; }
+    public string? UserName { get; set; }
 
     /// <summary> 
     /// The requested broadcaster ID.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string? BroadcasterUserId { get; set; }
 
     /// <summary> 
     /// The requested broadcaster login.
     /// </summary>
-    public string BroadcasterUserLogin { get; set; }
+    public string? BroadcasterUserLogin { get; set; }
 
     /// <summary> 
     /// The requested broadcaster display name.
     /// </summary>
-    public string BroadcasterUserName { get; set; }
+    public string? BroadcasterUserName { get; set; }
 
     /// <summary> 
     /// The user ID of the issuer of the ban.
     /// </summary>
-    public string ModeratorUserId { get; set; }
+    public string? ModeratorUserId { get; set; }
 
     /// <summary> 
     /// The user login of the issuer of the ban.
     /// </summary>
-    public string ModeratorUserLogin { get; set; }
+    public string? ModeratorUserLogin { get; set; }
 
     /// <summary> 
     /// The user name of the issuer of the ban.
     /// </summary>
-    public string ModeratorUserName { get; set; }
+    public string? ModeratorUserName { get; set; }
 
     /// <summary> 
     /// The reason behind the ban.
     /// </summary>
-    public string Reason { get; set; }
+    public string? Reason { get; set; }
 
     /// <summary> 
     /// The UTC date and time (in RFC3339 format) of when the user was banned or put in a timeout.
     /// </summary>
-    public string BannedAt { get; set; }
+    public string? BannedAt { get; set; }
 
     /// <summary> 
     /// The UTC date and time (in RFC3339 format) of when the timeout ends. Is null if the user was banned instead of put in a timeout.
     /// </summary>
-    public string EndsAt { get; set; }
+    public string? EndsAt { get; set; }
 
     /// <summary> 
     /// Indicates whether the ban is permanent (true) or a timeout (false). If true, ends_at will be null.
@@ -78,7 +78,7 @@ public partial class TwitchChannelBanEvent : RefCounted, ITwitcherSharpEventSub<
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelBanEvent object.
     /// </summary> 
-    public static TwitchChannelBanEvent FromObject(GodotObject data)
+    public static TwitchChannelBanEvent? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannelBanEvent
@@ -107,18 +107,18 @@ public partial class TwitchChannelBanEvent : RefCounted, ITwitcherSharpEventSub<
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_ban.gd");
         var eventClass = script.Get("Event").As<GDScript>();
         var request = eventClass.New().AsGodotObject();
-        request.Set("user_id", UserId);
-        request.Set("user_login", UserLogin);
-        request.Set("user_name", UserName);
-        request.Set("broadcaster_user_id", BroadcasterUserId);
-        request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        request.Set("broadcaster_user_name", BroadcasterUserName);
-        request.Set("moderator_user_id", ModeratorUserId);
-        request.Set("moderator_user_login", ModeratorUserLogin);
-        request.Set("moderator_user_name", ModeratorUserName);
-        request.Set("reason", Reason);
-        request.Set("banned_at", BannedAt);
-        request.Set("ends_at", EndsAt);
+        if(UserId != null) request.Set("user_id", UserId);
+        if(UserLogin != null) request.Set("user_login", UserLogin);
+        if(UserName != null) request.Set("user_name", UserName);
+        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
+        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
+        if(ModeratorUserId != null) request.Set("moderator_user_id", ModeratorUserId);
+        if(ModeratorUserLogin != null) request.Set("moderator_user_login", ModeratorUserLogin);
+        if(ModeratorUserName != null) request.Set("moderator_user_name", ModeratorUserName);
+        if(Reason != null) request.Set("reason", Reason);
+        if(BannedAt != null) request.Set("banned_at", BannedAt);
+        if(EndsAt != null) request.Set("ends_at", EndsAt);
         request.Set("is_permanent", IsPermanent);
         return request;
     }

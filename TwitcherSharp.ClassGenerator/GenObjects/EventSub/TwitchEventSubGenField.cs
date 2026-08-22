@@ -13,6 +13,12 @@ public class TwitchEventSubGenField(string fieldName, string description, string
     public bool IsRequired { get; set; } = required;
     public TwitchEventSubGenComponent TypedComponent { get; set; }
 
+    /// <summary>
+    /// A scalar C# value type (non-array, non-class). These stay non-nullable (they default to 0/false and
+    /// never represented absence), which also keeps <c>request.Set</c> / dictionary conversions valid.
+    /// </summary>
+    public bool IsValueType => !IsArray && !IsTyped && Type is "int" or "bool" or "double";
+
     public string GetAsType()
     {
         return Type switch

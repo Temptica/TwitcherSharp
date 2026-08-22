@@ -10,14 +10,14 @@ namespace TwitcherSharp.Api.Generated.Users;
 /// </summary>
 public partial class TwitchGetUsersOpt : RefCounted, ITwitcherSharp<TwitchGetUsersOpt>
 {
-    private GodotObject _data;
-    public string[] Id { get; set; }
-    public string[] Login { get; set; }
+    private GodotObject? _data;
+    public string[]? Id { get; set; }
+    public string[]? Login { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetUsersOpt object.
     /// </summary> 
-    public static TwitchGetUsersOpt FromObject(GodotObject data)
+    public static TwitchGetUsersOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetUsersOpt

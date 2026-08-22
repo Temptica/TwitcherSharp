@@ -15,7 +15,7 @@ public static class CallableExtension
         /// <returns>A Godot <see cref="Callable"/> that handles the type conversion automatically.</returns>
         public static Callable FromTwitcherSharp<T>(Action<T> action) where T : RefCounted, ITwitcherSharp<T>
         {
-            return Callable.From<GodotObject>(data => action.Invoke(T.FromObject(data)));
+            return Callable.From<GodotObject>(data => action.Invoke(T.FromObject(data)!));
         }
 
         /// <summary>
@@ -33,14 +33,14 @@ public static class CallableExtension
         internal static Callable FromTwitcherSharp<T>(Action<string, T, string[]> action) where T : RefCounted, ITwitcherSharp<T>
         {
             return Callable.From<string, GodotObject, string[]>((userName, info, args) =>
-                action.Invoke(userName, T.FromObject(info), args));
+                action.Invoke(userName, T.FromObject(info)!, args));
         }
 
         internal static Callable FromTwitcherSharp<T>(Action<string, T, string[], float> action)
             where T : RefCounted, ITwitcherSharp<T>
         {
             return Callable.From<string, GodotObject, string[], float>((userName, info, args, cooldown) =>
-                action.Invoke(userName, T.FromObject(info), args, cooldown));
+                action.Invoke(userName, T.FromObject(info)!, args, cooldown));
         }
     }
 }

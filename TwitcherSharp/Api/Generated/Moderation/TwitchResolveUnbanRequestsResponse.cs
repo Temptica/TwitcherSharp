@@ -6,13 +6,13 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 
 public partial class TwitchResolveUnbanRequestsResponse : RefCounted, ITwitcherSharp<TwitchResolveUnbanRequestsResponse>
 {
-    private GodotObject _data;
-    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
+    private GodotObject? _data;
+    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchResolveUnbanRequestsResponse object.
     /// </summary> 
-    public static TwitchResolveUnbanRequestsResponse FromObject(GodotObject data)
+    public static TwitchResolveUnbanRequestsResponse? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchResolveUnbanRequestsResponse();
@@ -26,32 +26,32 @@ public partial class TwitchResolveUnbanRequestsResponse : RefCounted, ITwitcherS
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_resolve_unban_requests.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data?.ToGodotArray());
+        if(Data != null) request.Set("data", Data.ToGodotArray());
         return request;
     }
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
-        private GodotObject _data;
-        public string Id { get; set; }
-        public string BroadcasterId { get; set; }
-        public string BroadcasterLogin { get; set; }
-        public string BroadcasterName { get; set; }
-        public string ModeratorId { get; set; }
-        public string ModeratorLogin { get; set; }
-        public string ModeratorName { get; set; }
-        public string UserId { get; set; }
-        public string UserLogin { get; set; }
-        public string UserName { get; set; }
-        public string Text { get; set; }
-        public string Status { get; set; }
-        public string CreatedAt { get; set; }
-        public string ResolvedAt { get; set; }
-        public string ResolutionText { get; set; }
+        private GodotObject? _data;
+        public string Id { get; set; } = null!;
+        public string BroadcasterId { get; set; } = null!;
+        public string BroadcasterLogin { get; set; } = null!;
+        public string BroadcasterName { get; set; } = null!;
+        public string ModeratorId { get; set; } = null!;
+        public string ModeratorLogin { get; set; } = null!;
+        public string ModeratorName { get; set; } = null!;
+        public string UserId { get; set; } = null!;
+        public string UserLogin { get; set; } = null!;
+        public string UserName { get; set; } = null!;
+        public string Text { get; set; } = null!;
+        public string Status { get; set; } = null!;
+        public string CreatedAt { get; set; } = null!;
+        public string ResolvedAt { get; set; } = null!;
+        public string ResolutionText { get; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseData object.
         /// </summary> 
-        public static TwitchResponseData FromObject(GodotObject data)
+        public static TwitchResponseData? FromObject(GodotObject? data)
         {
             if(data == null) return null;
             var instance = new TwitchResponseData
@@ -82,21 +82,21 @@ public partial class TwitchResolveUnbanRequestsResponse : RefCounted, ITwitcherS
             var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_resolve_unban_requests.gd");
             var twitchResponseDataClass = script.Get("ResponseData").AsGodotObject();
             var request = twitchResponseDataClass.Call("new").AsGodotObject();
-            request.Set("id", Id);
-            request.Set("broadcaster_id", BroadcasterId);
-            request.Set("broadcaster_login", BroadcasterLogin);
-            request.Set("broadcaster_name", BroadcasterName);
-            request.Set("moderator_id", ModeratorId);
-            request.Set("moderator_login", ModeratorLogin);
-            request.Set("moderator_name", ModeratorName);
-            request.Set("user_id", UserId);
-            request.Set("user_login", UserLogin);
-            request.Set("user_name", UserName);
-            request.Set("text", Text);
-            request.Set("status", Status);
-            request.Set("created_at", CreatedAt);
-            request.Set("resolved_at", ResolvedAt);
-            request.Set("resolution_text", ResolutionText);
+            if(Id != null) request.Set("id", Id);
+            if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
+            if(BroadcasterLogin != null) request.Set("broadcaster_login", BroadcasterLogin);
+            if(BroadcasterName != null) request.Set("broadcaster_name", BroadcasterName);
+            if(ModeratorId != null) request.Set("moderator_id", ModeratorId);
+            if(ModeratorLogin != null) request.Set("moderator_login", ModeratorLogin);
+            if(ModeratorName != null) request.Set("moderator_name", ModeratorName);
+            if(UserId != null) request.Set("user_id", UserId);
+            if(UserLogin != null) request.Set("user_login", UserLogin);
+            if(UserName != null) request.Set("user_name", UserName);
+            if(Text != null) request.Set("text", Text);
+            if(Status != null) request.Set("status", Status);
+            if(CreatedAt != null) request.Set("created_at", CreatedAt);
+            if(ResolvedAt != null) request.Set("resolved_at", ResolvedAt);
+            if(ResolutionText != null) request.Set("resolution_text", ResolutionText);
             return request;
         }
     
