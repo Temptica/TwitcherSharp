@@ -8,17 +8,17 @@ namespace TwitcherSharp.EventSub.Generated.Shared;
 
 public partial class TwitchCustomPowerUp : RefCounted, ITwitcherSharpEventSub<TwitchCustomPowerUp>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     /// <summary> 
     /// The unique ID for this Custom Power-up.
     /// </summary>
-    public string Id { get; set; }
+    public string? Id { get; set; }
 
     /// <summary> 
     /// The user-viewable name of this Custom Power-up.
     /// </summary>
-    public string Title { get; set; }
+    public string? Title { get; set; }
 
     /// <summary> 
     /// The cost of the Custom Power-up to redeem.
@@ -28,12 +28,12 @@ public partial class TwitchCustomPowerUp : RefCounted, ITwitcherSharpEventSub<Tw
     /// <summary> 
     /// The creator-provided description for this Power-up.
     /// </summary>
-    public string Prompt { get; set; }
+    public string? Prompt { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCustomPowerUp object.
     /// </summary> 
-    public static TwitchCustomPowerUp FromObject(GodotObject data)
+    public static TwitchCustomPowerUp? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchCustomPowerUp
@@ -52,10 +52,10 @@ public partial class TwitchCustomPowerUp : RefCounted, ITwitcherSharpEventSub<Tw
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_custom_power_up.gd");
         var request = script.New().AsGodotObject();
-        request.Set("id", Id);
-        request.Set("title", Title);
+        if(Id != null) request.Set("id", Id);
+        if(Title != null) request.Set("title", Title);
         request.Set("bits", Bits);
-        request.Set("prompt", Prompt);
+        if(Prompt != null) request.Set("prompt", Prompt);
         return request;
     }
 }

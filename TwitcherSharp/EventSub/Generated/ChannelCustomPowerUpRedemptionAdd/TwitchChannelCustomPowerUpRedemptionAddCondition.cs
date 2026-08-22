@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelCustomPowerUpRedemptionAdd;
 
 public partial class TwitchChannelCustomPowerUpRedemptionAddCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelCustomPowerUpRedemptionAddCondition>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     public string Name => nameof(TwitchChannelCustomPowerUpRedemptionAddCondition);
 
@@ -20,12 +20,12 @@ public partial class TwitchChannelCustomPowerUpRedemptionAddCondition(string bro
     /// <summary> 
     /// Optional. Specify a reward id to only receive notifications for a specific custom Power-up.
     /// </summary>
-    public string RewardId { get; set; }
+    public string? RewardId { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelCustomPowerUpRedemptionAddCondition object.
     /// </summary> 
-    public static TwitchChannelCustomPowerUpRedemptionAddCondition FromObject(GodotObject data)
+    public static TwitchChannelCustomPowerUpRedemptionAddCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannelCustomPowerUpRedemptionAddCondition(data.Get("broadcaster_user_id").AsString())
@@ -43,7 +43,7 @@ public partial class TwitchChannelCustomPowerUpRedemptionAddCondition(string bro
         var conditionClass = script.Get("Condition").As<GDScript>();
         var request = conditionClass.New().AsGodotObject();
         request.Set("broadcaster_user_id", BroadcasterUserId);
-        request.Set("reward_id", RewardId);
+        if(RewardId != null) request.Set("reward_id", RewardId);
         return request;
     }
 
@@ -60,7 +60,7 @@ public partial class TwitchChannelCustomPowerUpRedemptionAddCondition(string bro
         return new Dictionary
         {
             {"broadcaster_user_id", BroadcasterUserId},
-            {"reward_id", RewardId},
+            {"reward_id", RewardId!},
         };
     }
 }
