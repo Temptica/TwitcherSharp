@@ -66,7 +66,7 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
     public TwitchMessage Message { get => field ??= _data?.Get<TwitchMessage>("message"); set; }
 
     /// <summary> 
-    /// The type of notice. Possible values are: subresubsub_giftcommunity_sub_giftgift_paid_upgradeprime_paid_upgraderaidunraidpay_it_forwardannouncementbits_badge_tiercharity_donationwatch_streakshared_chat_subshared_chat_resubshared_chat_sub_giftshared_chat_community_sub_giftshared_chat_gift_paid_upgradeshared_chat_prime_paid_upgradeshared_chat_raidshared_chat_pay_it_forwardshared_chat_announcement
+    /// The type of notice. Possible values are: subresubsub_giftcommunity_sub_giftgift_paid_upgradeprime_paid_upgraderaidunraidpay_it_forwardannouncementbits_badge_tiercharity_donationwatch_streakmodiversaryshared_chat_subshared_chat_resubshared_chat_sub_giftshared_chat_community_sub_giftshared_chat_gift_paid_upgradeshared_chat_prime_paid_upgradeshared_chat_raidshared_chat_pay_it_forwardshared_chat_announcementshared_chat_modiversaryunknown
     /// </summary>
     public string NoticeType { get; set; }
 
@@ -146,6 +146,11 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
     public TwitchWatchStreak WatchStreak { get => field ??= _data?.Get<TwitchWatchStreak>("watch_streak"); set; }
 
     /// <summary> 
+    /// Information about the modiversary event. Null if notice_type is not modiversary.
+    /// </summary>
+    public TwitchModiversary Modiversary { get => field ??= _data?.Get<TwitchModiversary>("modiversary"); set; }
+
+    /// <summary> 
     /// Optional. The broadcaster user ID of the channel the message was sent from. Is null when the message notification happens in the same channel as the broadcaster. Is not null when in a shared chat session, and the action happens in the channel of a participant other than the broadcaster.
     /// </summary>
     public string SourceBroadcasterUserId { get; set; }
@@ -221,6 +226,11 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
     public TwitchAnnouncement SharedChatAnnouncement { get => field ??= _data?.Get<TwitchAnnouncement>("shared_chat_announcement"); set; }
 
     /// <summary> 
+    /// Optional. Information about the shared_chat_modiversary event. Is null if notice_type is not shared_chat_modiversary. This field has the same information as the modiversary field but for a notice that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
+    /// </summary>
+    public TwitchModiversary SharedChatModiversary { get => field ??= _data?.Get<TwitchModiversary>("shared_chat_modiversary"); set; }
+
+    /// <summary> 
     /// Transforms the godot data into a TwitchChannelChatNotificationEvent object.
     /// </summary> 
     public static TwitchChannelChatNotificationEvent FromObject(GodotObject data)
@@ -284,6 +294,7 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         request.Set("charity_name", CharityName);
         request.Set("amount", Amount?.ToGodotObject());
         request.Set("watch_streak", WatchStreak?.ToGodotObject());
+        request.Set("modiversary", Modiversary?.ToGodotObject());
         request.Set("source_broadcaster_user_id", SourceBroadcasterUserId);
         request.Set("source_broadcaster_user_name", SourceBroadcasterUserName);
         request.Set("source_broadcaster_user_login", SourceBroadcasterUserLogin);
@@ -299,6 +310,7 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         request.Set("shared_chat_pay_it_forward", SharedChatPayItForward?.ToGodotObject());
         request.Set("shared_chat_raid", SharedChatRaid?.ToGodotObject());
         request.Set("shared_chat_announcement", SharedChatAnnouncement?.ToGodotObject());
+        request.Set("shared_chat_modiversary", SharedChatModiversary?.ToGodotObject());
         return request;
     }
 
@@ -455,9 +467,9 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
                 private GodotObject _data;
                 
                 /// <summary> 
-                /// The name portion of the Cheermote string that you use in chat to cheer Bits. The full Cheermote string is the concatenation of {prefix} + {number of Bits}. For example, if the prefix is “Cheer” and you want to cheer 100 Bits, the full Cheermote string is Cheer100. When the Cheermote string is entered in chat, Twitch converts it to the image associated with the Bits tier that was cheered.
+                /// The name portion of the Cheermote string that you use in chat to cheer Bits, converted to lowercase. The full Cheermote string is the concatenation of {prefix} + {number of Bits}.For example, if the prefix is “cheer” and you want to cheer 100 Bits, the full Cheermote string is cheer100. When the Cheermote string is entered in chat, Twitch converts it to the image associated with the Bits tier that was cheered.
                 /// </summary>
-                public Dictionary Prefix { get; set; }
+                public string Prefix { get; set; }
             
                 /// <summary> 
                 /// The amount of Bits cheered.
@@ -477,7 +489,7 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
                     if(data == null) return null;
                     var instance = new TwitchCheermote
                     {
-                        Prefix = data.Get("prefix").AsGodotDictionary(),
+                        Prefix = data.Get("prefix").AsString(),
                         Bits = data.Get("bits").AsInt32(),
                         Tier = data.Get("tier").AsInt32(),
                     };
@@ -675,7 +687,7 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         public string SubTier { get; set; }
     
         /// <summary> 
-        /// Optional. The number of consecutive months the user has subscribed.
+        /// Optional. Whether or not this subscription is a Prime subscription.
         /// </summary>
         public bool IsPrime { get; set; }
     
@@ -1230,6 +1242,40 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
             var request = watchStreakClass.New().AsGodotObject();
             request.Set("streak_count", StreakCount);
             request.Set("channel_points_awarded", ChannelPointsAwarded);
+            return request;
+        }
+    }
+
+    public partial class TwitchModiversary : RefCounted, ITwitcherSharpEventSub<TwitchModiversary>
+    {
+        private GodotObject _data;
+        
+        /// <summary> 
+        /// The number of months the user has been a moderator in this channel.
+        /// </summary>
+        public int Months { get; set; }
+    
+        /// <summary> 
+        /// Transforms the godot data into a TwitchModiversary object.
+        /// </summary> 
+        public static TwitchModiversary FromObject(GodotObject data)
+        {
+            if(data == null) return null;
+            var instance = new TwitchModiversary
+            {
+                Months = data.Get("months").AsInt32(),
+            };
+            
+            instance._data = data;
+            return instance;
+        }
+    
+        public GodotObject ToGodotObject()
+        {
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_notification.gd");
+            var modiversaryClass = script.Get("Modiversary").As<GDScript>();
+            var request = modiversaryClass.New().AsGodotObject();
+            request.Set("months", Months);
             return request;
         }
     }

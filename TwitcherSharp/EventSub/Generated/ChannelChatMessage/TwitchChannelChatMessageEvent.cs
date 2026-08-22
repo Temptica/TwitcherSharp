@@ -213,7 +213,7 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
             private GodotObject _data;
             
             /// <summary> 
-            /// The type of message fragment. Possible values: textcheermoteemotemention
+            /// The type of message fragment. Possible values: textcheermoteemotementiongif
             /// </summary>
             public string Type { get; set; }
         
@@ -236,6 +236,11 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
             /// Optional. Metadata pertaining to the mention.
             /// </summary>
             public TwitchMention Mention { get => field ??= _data?.Get<TwitchMention>("mention"); set; }
+        
+            /// <summary> 
+            /// Optional. Metadata pertaining to the GIF.
+            /// </summary>
+            public TwitchGif Gif { get => field ??= _data?.Get<TwitchGif>("gif"); set; }
         
             /// <summary> 
             /// Transforms the godot data into a TwitchFragments object.
@@ -263,6 +268,7 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
                 request.Set("cheermote", Cheermote?.ToGodotObject());
                 request.Set("emote", Emote?.ToGodotObject());
                 request.Set("mention", Mention?.ToGodotObject());
+                request.Set("gif", Gif?.ToGodotObject());
                 return request;
             }
         
@@ -272,7 +278,7 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
                 private GodotObject _data;
                 
                 /// <summary> 
-                /// The name portion of the Cheermote string that you use in chat to cheer Bits. The full Cheermote string is the concatenation of {prefix} + {number of Bits}. For example, if the prefix is “Cheer” and you want to cheer 100 Bits, the full Cheermote string is Cheer100. When the Cheermote string is entered in chat, Twitch converts it to the image associated with the Bits tier that was cheered.
+                /// The name portion of the Cheermote string that you use in chat to cheer Bits, converted to lowercase. The full Cheermote string is the concatenation of {prefix} + {number of Bits}.For example, if the prefix is “cheer” and you want to cheer 100 Bits, the full Cheermote string is cheer100. When the Cheermote string is entered in chat, Twitch converts it to the image associated with the Bits tier that was cheered.
                 /// </summary>
                 public string Prefix { get; set; }
             
@@ -413,6 +419,47 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
                     request.Set("user_id", UserId);
                     request.Set("user_name", UserName);
                     request.Set("user_login", UserLogin);
+                    return request;
+                }
+            }
+        
+            public partial class TwitchGif : RefCounted, ITwitcherSharpEventSub<TwitchGif>
+            {
+                private GodotObject _data;
+                
+                /// <summary> 
+                /// An ID that uniquely identifies this GIF.
+                /// </summary>
+                public string GifId { get; set; }
+            
+                /// <summary> 
+                /// The URL of the GIF asset. Applications rendering the GIF must use the full URL provided; it must not be modified.
+                /// </summary>
+                public string Url { get; set; }
+            
+                /// <summary> 
+                /// Transforms the godot data into a TwitchGif object.
+                /// </summary> 
+                public static TwitchGif FromObject(GodotObject data)
+                {
+                    if(data == null) return null;
+                    var instance = new TwitchGif
+                    {
+                        GifId = data.Get("gif_id").AsString(),
+                        Url = data.Get("url").AsString(),
+                    };
+                    
+                    instance._data = data;
+                    return instance;
+                }
+            
+                public GodotObject ToGodotObject()
+                {
+                    var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_message.gd");
+                    var gifClass = script.Get("Gif").As<GDScript>();
+                    var request = gifClass.New().AsGodotObject();
+                    request.Set("gif_id", GifId);
+                    request.Set("url", Url);
                     return request;
                 }
             }
