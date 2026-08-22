@@ -6,7 +6,7 @@ namespace TwitcherSharp.Chat;
 
 public abstract partial class TwitchCommandBase : RefCounted, ITwitcherSharp
 {
-    protected GodotObject Data;
+    protected GodotObject Data = null!;
     public static List<TwitchCommandBase> AllCommands = [];
 
     #region Signals
@@ -70,12 +70,12 @@ public abstract partial class TwitchCommandBase : RefCounted, ITwitcherSharp
     /// <summary>
     /// Command name
     /// </summary>
-    public string Command { get; set; }
+    public string? Command { get; set; }
 
     /// <summary>
     /// Description for the user
     /// </summary>
-    public string Description { get; set; }
+    public string? Description { get; set; }
 
     /// <summary>
     /// Wich role of user is allowed to use it
@@ -154,14 +154,14 @@ public abstract partial class TwitchCommandBase : RefCounted, ITwitcherSharp
             nameof(TwitchCommandContains) => TwitchCommandContains.FromObject(data),
             nameof(TwitchCommandHelp) => TwitchCommandHelp.FromObject(data),
             _ => throw new ArgumentException("Invalid command type", nameof(data)),
-        };
+        } ?? throw new ArgumentException("Invalid command data", nameof(data));
     }
 
     protected void GetBaseProperties(GodotObject data)
     {
         Data = data;
-        data.Set("command", Command);
-        data.Set("description", Description);
+        if (Command != null) data.Set("command", Command);
+        if (Description != null) data.Set("description", Description);
         data.Set("permission_level", (int)PermissionLevel);
         data.Set("where", (int)Where);
         data.Set("allowed_users", AllowedUsers.ToVariantArray());

@@ -9,7 +9,7 @@ public partial class TwitchCommandContains : TwitchCommandBase, ITwitcherSharp<T
     /// <summary>
     /// Words or phrases that triggers this command
     /// </summary>
-    public List<string> Contains { get; set; }
+    public List<string>? Contains { get; set; }
 
     /// <summary>
     /// When all words / phrases from contains should match
@@ -21,8 +21,9 @@ public partial class TwitchCommandContains : TwitchCommandBase, ITwitcherSharp<T
     /// </summary>
     public bool MatchWord { get; set; }
 
-    public static TwitchCommandContains FromObject(GodotObject data)
+    public static TwitchCommandContains? FromObject(GodotObject? data)
     {
+        if (data == null) return null;
         var command = new TwitchCommandContains
         {
             Data = data,
@@ -38,7 +39,7 @@ public partial class TwitchCommandContains : TwitchCommandBase, ITwitcherSharp<T
     public override GodotObject ToGodotObject()
     {
         var data = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_command_contains.gd").New().AsGodotObject();
-        data.Set("contains", Contains?.ToVariantArray());
+        if (Contains != null) data.Set("contains", Contains.ToVariantArray());
         data.Set("match_all", MatchAll);
         data.Set("match_word", MatchWord);
         GetBaseProperties(data);

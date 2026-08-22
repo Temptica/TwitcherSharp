@@ -38,7 +38,7 @@ public partial class TwitchCommand : TwitchCommandBase, ITwitcherSharp<TwitchCom
 
     public override string ToString() => $"{CommandPrefixes[0]}{Command}";
 
-    public static TwitchCommand FromObject(GodotObject data)
+    public static TwitchCommand? FromObject(GodotObject? data)
     {
         if (data == null) return null;
         var command = new TwitchCommand
