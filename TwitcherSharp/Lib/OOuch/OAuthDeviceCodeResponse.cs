@@ -5,14 +5,15 @@ namespace TwitcherSharp.Lib.OOuch;
 
 public partial class OAuthDeviceCodeResponse : RefCounted, ITwitcherSharp<OAuthDeviceCodeResponse>
 {
-    public string DeviceCode { get; set; }
+    public string? DeviceCode { get; set; }
     public int ExpiresIn { get; set; }
     public int Interval { get; set; }
-    public string UserCode { get; set; }
-    public string VerificationUri { get; set; }
+    public string? UserCode { get; set; }
+    public string? VerificationUri { get; set; }
 
-    public static OAuthDeviceCodeResponse FromObject(GodotObject data)
+    public static OAuthDeviceCodeResponse? FromObject(GodotObject? data)
     {
+        if (data == null) return null;
         var response = new OAuthDeviceCodeResponse();
         response.DeviceCode = data.Get("device_code").AsString();
         response.ExpiresIn = data.Get("expires_in").AsInt32();
@@ -26,11 +27,11 @@ public partial class OAuthDeviceCodeResponse : RefCounted, ITwitcherSharp<OAuthD
     {
         var dict = new Godot.Collections.Dictionary<string, Variant>()
         {
-            ["device_code"] = DeviceCode,
+            ["device_code"] = DeviceCode!,
             ["expires_in"] = ExpiresIn,
             ["interval"] = Interval,
-            ["user_code"] = UserCode,
-            ["verification_uri"] = VerificationUri
+            ["user_code"] = UserCode!,
+            ["verification_uri"] = VerificationUri!
         };
 
         var script = GD.Load<GDScript>("res://addons/twitcher/lib/oOuch/oauth_device_code_response.gd");

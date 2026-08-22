@@ -150,7 +150,7 @@ public abstract partial class TwitchCommandBase : RefCounted, ITwitcherSharp
     {
         return data.GetClass() switch
         {
-            nameof(TwitchCommand) => TwitchCommand.FromObject(data),
+            nameof(TwitchCommand) => (TwitchCommandBase?)TwitchCommand.FromObject(data),
             nameof(TwitchCommandContains) => TwitchCommandContains.FromObject(data),
             nameof(TwitchCommandHelp) => TwitchCommandHelp.FromObject(data),
             _ => throw new ArgumentException("Invalid command type", nameof(data)),
