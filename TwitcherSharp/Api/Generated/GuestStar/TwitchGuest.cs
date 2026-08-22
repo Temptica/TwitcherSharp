@@ -6,21 +6,21 @@ namespace TwitcherSharp.Api.Generated.GuestStar;
 
 public partial class TwitchGuest : RefCounted, ITwitcherSharp<TwitchGuest>
 {
-    private GodotObject _data;
-    public string SlotId { get; set; }
+    private GodotObject? _data;
+    public string SlotId { get; set; } = null!;
     public bool IsLive { get; set; }
-    public string UserId { get; set; }
-    public string UserDisplayName { get; set; }
-    public string UserLogin { get; set; }
+    public string UserId { get; set; } = null!;
+    public string UserDisplayName { get; set; } = null!;
+    public string UserLogin { get; set; } = null!;
     public int Volume { get; set; }
-    public string AssignedAt { get; set; }
-    public TwitchAudioSettings AudioSettings { get => field ??= _data?.Get<TwitchAudioSettings>("audio_settings"); set; }
-    public TwitchVideoSettings VideoSettings { get => field ??= _data?.Get<TwitchVideoSettings>("video_settings"); set; }
+    public string AssignedAt { get; set; } = null!;
+    public TwitchAudioSettings AudioSettings { get => field ??= _data?.Get<TwitchAudioSettings>("audio_settings")!; set; } = null!;
+    public TwitchVideoSettings VideoSettings { get => field ??= _data?.Get<TwitchVideoSettings>("video_settings")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGuest object.
     /// </summary> 
-    public static TwitchGuest FromObject(GodotObject data)
+    public static TwitchGuest? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGuest
@@ -42,15 +42,15 @@ public partial class TwitchGuest : RefCounted, ITwitcherSharp<TwitchGuest>
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_guest.gd");
         var request = script.Call("new").AsGodotObject();
-        request.Set("slot_id", SlotId);
+        if(SlotId != null) request.Set("slot_id", SlotId);
         request.Set("is_live", IsLive);
-        request.Set("user_id", UserId);
-        request.Set("user_display_name", UserDisplayName);
-        request.Set("user_login", UserLogin);
+        if(UserId != null) request.Set("user_id", UserId);
+        if(UserDisplayName != null) request.Set("user_display_name", UserDisplayName);
+        if(UserLogin != null) request.Set("user_login", UserLogin);
         request.Set("volume", Volume);
-        request.Set("assigned_at", AssignedAt);
-        request.Set("audio_settings", AudioSettings?.ToGodotObject());
-        request.Set("video_settings", VideoSettings?.ToGodotObject());
+        if(AssignedAt != null) request.Set("assigned_at", AssignedAt);
+        if(AudioSettings != null) request.Set("audio_settings", AudioSettings.ToGodotObject());
+        if(VideoSettings != null) request.Set("video_settings", VideoSettings.ToGodotObject());
         return request;
     }
     
@@ -59,7 +59,7 @@ public partial class TwitchGuest : RefCounted, ITwitcherSharp<TwitchGuest>
     /// </summary>
     public partial class TwitchAudioSettings : RefCounted, ITwitcherSharp<TwitchAudioSettings>
     {
-        private GodotObject _data;
+        private GodotObject? _data;
         public bool IsHostEnabled { get; set; }
         public bool IsGuestEnabled { get; set; }
         public bool IsAvailable { get; set; }
@@ -67,7 +67,7 @@ public partial class TwitchGuest : RefCounted, ITwitcherSharp<TwitchGuest>
         /// <summary> 
         /// Transforms the godot data into a TwitchAudioSettings object.
         /// </summary> 
-        public static TwitchAudioSettings FromObject(GodotObject data)
+        public static TwitchAudioSettings? FromObject(GodotObject? data)
         {
             if(data == null) return null;
             var instance = new TwitchAudioSettings
@@ -99,7 +99,7 @@ public partial class TwitchGuest : RefCounted, ITwitcherSharp<TwitchGuest>
     /// </summary>
     public partial class TwitchVideoSettings : RefCounted, ITwitcherSharp<TwitchVideoSettings>
     {
-        private GodotObject _data;
+        private GodotObject? _data;
         public bool IsHostEnabled { get; set; }
         public bool IsGuestEnabled { get; set; }
         public bool IsAvailable { get; set; }
@@ -107,7 +107,7 @@ public partial class TwitchGuest : RefCounted, ITwitcherSharp<TwitchGuest>
         /// <summary> 
         /// Transforms the godot data into a TwitchVideoSettings object.
         /// </summary> 
-        public static TwitchVideoSettings FromObject(GodotObject data)
+        public static TwitchVideoSettings? FromObject(GodotObject? data)
         {
             if(data == null) return null;
             var instance = new TwitchVideoSettings

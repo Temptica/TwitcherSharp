@@ -8,37 +8,37 @@ namespace TwitcherSharp.EventSub.Generated.ChannelSubscriptionGift;
 
 public partial class TwitchChannelSubscriptionGiftEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelSubscriptionGiftEvent>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     /// <summary> 
     /// The user ID of the user who sent the subscription gift. Set to null if it was an anonymous subscription gift.
     /// </summary>
-    public string UserId { get; set; }
+    public string? UserId { get; set; }
 
     /// <summary> 
     /// The user login of the user who sent the gift. Set to null if it was an anonymous subscription gift.
     /// </summary>
-    public string UserLogin { get; set; }
+    public string? UserLogin { get; set; }
 
     /// <summary> 
     /// The user display name of the user who sent the gift. Set to null if it was an anonymous subscription gift.
     /// </summary>
-    public string UserName { get; set; }
+    public string? UserName { get; set; }
 
     /// <summary> 
     /// The broadcaster user ID.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string? BroadcasterUserId { get; set; }
 
     /// <summary> 
     /// The broadcaster login.
     /// </summary>
-    public string BroadcasterUserLogin { get; set; }
+    public string? BroadcasterUserLogin { get; set; }
 
     /// <summary> 
     /// The broadcaster display name.
     /// </summary>
-    public string BroadcasterUserName { get; set; }
+    public string? BroadcasterUserName { get; set; }
 
     /// <summary> 
     /// The number of subscriptions in the subscription gift.
@@ -48,7 +48,7 @@ public partial class TwitchChannelSubscriptionGiftEvent : RefCounted, ITwitcherS
     /// <summary> 
     /// The tier of subscriptions in the subscription gift.
     /// </summary>
-    public string Tier { get; set; }
+    public string? Tier { get; set; }
 
     /// <summary> 
     /// The number of subscriptions gifted by this user in the channel. This value is null for anonymous gifts or if the gifter has opted out of sharing this information.
@@ -63,7 +63,7 @@ public partial class TwitchChannelSubscriptionGiftEvent : RefCounted, ITwitcherS
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelSubscriptionGiftEvent object.
     /// </summary> 
-    public static TwitchChannelSubscriptionGiftEvent FromObject(GodotObject data)
+    public static TwitchChannelSubscriptionGiftEvent? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannelSubscriptionGiftEvent
@@ -89,14 +89,14 @@ public partial class TwitchChannelSubscriptionGiftEvent : RefCounted, ITwitcherS
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_subscription_gift.gd");
         var eventClass = script.Get("Event").As<GDScript>();
         var request = eventClass.New().AsGodotObject();
-        request.Set("user_id", UserId);
-        request.Set("user_login", UserLogin);
-        request.Set("user_name", UserName);
-        request.Set("broadcaster_user_id", BroadcasterUserId);
-        request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        request.Set("broadcaster_user_name", BroadcasterUserName);
+        if(UserId != null) request.Set("user_id", UserId);
+        if(UserLogin != null) request.Set("user_login", UserLogin);
+        if(UserName != null) request.Set("user_name", UserName);
+        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
+        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
         request.Set("total", Total);
-        request.Set("tier", Tier);
+        if(Tier != null) request.Set("tier", Tier);
         request.Set("cumulative_total", CumulativeTotal);
         request.Set("is_anonymous", IsAnonymous);
         return request;

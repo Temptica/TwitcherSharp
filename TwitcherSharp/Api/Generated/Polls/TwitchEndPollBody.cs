@@ -6,15 +6,15 @@ namespace TwitcherSharp.Api.Generated.Polls;
 
 public partial class TwitchEndPollBody : RefCounted, ITwitcherSharp<TwitchEndPollBody>
 {
-    private GodotObject _data;
-    public string BroadcasterId { get; set; }
-    public string Id { get; set; }
-    public string Status { get; set; }
+    private GodotObject? _data;
+    public string BroadcasterId { get; set; } = null!;
+    public string Id { get; set; } = null!;
+    public string Status { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchEndPollBody object.
     /// </summary> 
-    public static TwitchEndPollBody FromObject(GodotObject data)
+    public static TwitchEndPollBody? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchEndPollBody
@@ -33,9 +33,9 @@ public partial class TwitchEndPollBody : RefCounted, ITwitcherSharp<TwitchEndPol
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_end_poll.gd");
         var bodyClass = script.Get("Body").AsGodotObject();
         var request = bodyClass.Call("new").AsGodotObject();
-        request.Set("broadcaster_id", BroadcasterId);
-        request.Set("id", Id);
-        request.Set("status", Status);
+        if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
+        if(Id != null) request.Set("id", Id);
+        if(Status != null) request.Set("status", Status);
         return request;
     }
 

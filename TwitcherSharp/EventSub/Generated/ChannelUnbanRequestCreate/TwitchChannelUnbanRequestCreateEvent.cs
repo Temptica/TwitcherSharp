@@ -8,57 +8,57 @@ namespace TwitcherSharp.EventSub.Generated.ChannelUnbanRequestCreate;
 
 public partial class TwitchChannelUnbanRequestCreateEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelUnbanRequestCreateEvent>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     /// <summary> 
     /// The ID of the unban request.
     /// </summary>
-    public string Id { get; set; }
+    public string? Id { get; set; }
 
     /// <summary> 
     /// The broadcaster’s user ID for the channel the unban request was created for.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string? BroadcasterUserId { get; set; }
 
     /// <summary> 
     /// The broadcaster’s login name.
     /// </summary>
-    public string BroadcasterUserLogin { get; set; }
+    public string? BroadcasterUserLogin { get; set; }
 
     /// <summary> 
     /// The broadcaster’s display name.
     /// </summary>
-    public string BroadcasterUserName { get; set; }
+    public string? BroadcasterUserName { get; set; }
 
     /// <summary> 
     /// User ID of user that is requesting to be unbanned.
     /// </summary>
-    public string UserId { get; set; }
+    public string? UserId { get; set; }
 
     /// <summary> 
     /// The user’s login name.
     /// </summary>
-    public string UserLogin { get; set; }
+    public string? UserLogin { get; set; }
 
     /// <summary> 
     /// The user’s display name.
     /// </summary>
-    public string UserName { get; set; }
+    public string? UserName { get; set; }
 
     /// <summary> 
     /// Message sent in the unban request.
     /// </summary>
-    public string Text { get; set; }
+    public string? Text { get; set; }
 
     /// <summary> 
     /// The UTC timestamp (in RFC3339 format) of when the unban request was created.
     /// </summary>
-    public string CreatedAt { get; set; }
+    public string? CreatedAt { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelUnbanRequestCreateEvent object.
     /// </summary> 
-    public static TwitchChannelUnbanRequestCreateEvent FromObject(GodotObject data)
+    public static TwitchChannelUnbanRequestCreateEvent? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannelUnbanRequestCreateEvent
@@ -83,15 +83,15 @@ public partial class TwitchChannelUnbanRequestCreateEvent : RefCounted, ITwitche
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_unban_request_create.gd");
         var eventClass = script.Get("Event").As<GDScript>();
         var request = eventClass.New().AsGodotObject();
-        request.Set("id", Id);
-        request.Set("broadcaster_user_id", BroadcasterUserId);
-        request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        request.Set("broadcaster_user_name", BroadcasterUserName);
-        request.Set("user_id", UserId);
-        request.Set("user_login", UserLogin);
-        request.Set("user_name", UserName);
-        request.Set("text", Text);
-        request.Set("created_at", CreatedAt);
+        if(Id != null) request.Set("id", Id);
+        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
+        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
+        if(UserId != null) request.Set("user_id", UserId);
+        if(UserLogin != null) request.Set("user_login", UserLogin);
+        if(UserName != null) request.Set("user_name", UserName);
+        if(Text != null) request.Set("text", Text);
+        if(CreatedAt != null) request.Set("created_at", CreatedAt);
         return request;
     }
 }

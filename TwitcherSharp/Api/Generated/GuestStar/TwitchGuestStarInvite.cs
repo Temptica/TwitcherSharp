@@ -6,10 +6,10 @@ namespace TwitcherSharp.Api.Generated.GuestStar;
 
 public partial class TwitchGuestStarInvite : RefCounted, ITwitcherSharp<TwitchGuestStarInvite>
 {
-    private GodotObject _data;
-    public string UserId { get; set; }
-    public string InvitedAt { get; set; }
-    public string Status { get; set; }
+    private GodotObject? _data;
+    public string UserId { get; set; } = null!;
+    public string InvitedAt { get; set; } = null!;
+    public string Status { get; set; } = null!;
     public bool IsVideoEnabled { get; set; }
     public bool IsAudioEnabled { get; set; }
     public bool IsVideoAvailable { get; set; }
@@ -18,7 +18,7 @@ public partial class TwitchGuestStarInvite : RefCounted, ITwitcherSharp<TwitchGu
     /// <summary> 
     /// Transforms the godot data into a TwitchGuestStarInvite object.
     /// </summary> 
-    public static TwitchGuestStarInvite FromObject(GodotObject data)
+    public static TwitchGuestStarInvite? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGuestStarInvite
@@ -40,9 +40,9 @@ public partial class TwitchGuestStarInvite : RefCounted, ITwitcherSharp<TwitchGu
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_guest_star_invite.gd");
         var request = script.Call("new").AsGodotObject();
-        request.Set("user_id", UserId);
-        request.Set("invited_at", InvitedAt);
-        request.Set("status", Status);
+        if(UserId != null) request.Set("user_id", UserId);
+        if(InvitedAt != null) request.Set("invited_at", InvitedAt);
+        if(Status != null) request.Set("status", Status);
         request.Set("is_video_enabled", IsVideoEnabled);
         request.Set("is_audio_enabled", IsAudioEnabled);
         request.Set("is_video_available", IsVideoAvailable);

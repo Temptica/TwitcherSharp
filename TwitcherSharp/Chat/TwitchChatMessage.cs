@@ -6,56 +6,69 @@ namespace TwitcherSharp.Chat;
 
 public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMessage>
 {
-    private GodotObject _data;
-    public string BroadcasterUserId { get; set; }
-    public string BroadcasterUserName { get; set; }
-    public string BroadcasterUserLogin { get; set; }
-    public string ChatterUserId { get; set; }
-    public string ChatterUserName { get; set; }
-    public string ChatterUserLogin { get; set; }
-    public string MessageId { get; set; }
+    private GodotObject? _data;
+    public string BroadcasterUserId { get; set; } = null!;
+    public string BroadcasterUserName { get; set; } = null!;
+    public string BroadcasterUserLogin { get; set; } = null!;
+    public string ChatterUserId { get; set; } = null!;
+    public string ChatterUserName { get; set; } = null!;
+    public string ChatterUserLogin { get; set; } = null!;
+    public string MessageId { get; set; } = null!;
 
     public Message Content
     {
-        get => field ??= Message.FromObject(_data?.Get("message").AsGodotObject());
+        get => field ??= Message.FromObject(_data?.Get("message").AsGodotObject())!;
         set;
-    }
+    } = null!;
 
     public MessageType ChatMessageType { get; set; }
 
     public Badge[] Badges
     {
-        get => field ??= _data?.Get("badges").AsGodotArray<GodotObject>().Select(Badge.FromObject).ToArray();
+        get => field ??= _data?.Get("badges").AsGodotArray<GodotObject>().Select(Badge.FromObject).OfType<Badge>().ToArray()!;
         set;
-    }
+    } = null!;
 
-    public Cheer CheerMetadata
+    /// <summary>
+    /// Present only for cheer messages.
+    /// </summary>
+    public Cheer? CheerMetadata
     {
         get => field ??= Cheer.FromObject(_data?.Get("cheer").AsGodotObject());
         set;
     }
 
-    public string Color { get; set; }
+    public string Color { get; set; } = null!;
 
-    public Reply ReplyMetadata
+    /// <summary>
+    /// Present only when the message is a reply to another message.
+    /// </summary>
+    public Reply? ReplyMetadata
     {
         get => field ??= Reply.FromObject(_data?.Get("reply").AsGodotObject());
         set;
     }
 
-    public string ChannelPointsCustomRewardId { get; set; }
-    public string SourceBroadcasterUserId { get; set; }
-    public string SourceBroadcasterUserName { get; set; }
-    public string SourceBroadcasterUserLogin { get; set; }
-    public string SourceMessageId { get; set; }
+    /// <summary>
+    /// Present only when the message was sent alongside a channel points reward redemption.
+    /// </summary>
+    public string? ChannelPointsCustomRewardId { get; set; }
 
-    public Badge[] SourceBadges
+    /// <summary>
+    /// The following Source* fields are present only for messages sent to a shared chat.
+    /// </summary>
+    public string? SourceBroadcasterUserId { get; set; }
+    public string? SourceBroadcasterUserName { get; set; }
+    public string? SourceBroadcasterUserLogin { get; set; }
+    public string? SourceMessageId { get; set; }
+
+    public Badge[]? SourceBadges
     {
-        get => field ??= _data?.Get("source_badges").AsGodotArray<GodotObject>().Select(Badge.FromObject).ToArray();
+        get => field ??= _data?.Get("source_badges").AsGodotArray<GodotObject>().Select(Badge.FromObject).OfType<Badge>().ToArray();
         set;
     }
 
-    public static TwitchChatMessage FromObject(GodotObject data)
+    public static TwitchChatMessage? FromObject(GodotObject? data)
     {
         if (data == null) return null;
 
@@ -77,6 +90,8 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
             SourceMessageId = data.Get("source_message_id").AsString(),
         };
 
+        result._data = data;
+
         return result;
     }
 
@@ -91,18 +106,18 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
         instance.Set("chatter_user_name", ChatterUserName);
         instance.Set("chatter_user_login", ChatterUserLogin);
         instance.Set("message_id", MessageId);
-        instance.Set("message", Content?.ToGodotObject());
+        instance.Set("message", Content.ToGodotObject());
         instance.Set("message_type", (int)ChatMessageType);
-        instance.Set("cheer", CheerMetadata?.ToGodotObject());
+        instance.Set("cheer", CheerMetadata?.ToGodotObject() ?? new Variant());
         instance.Set("color", Color);
-        instance.Set("reply", ReplyMetadata?.ToGodotObject());
-        instance.Set("channel_points_custom_reward_id", ChannelPointsCustomRewardId);
-        instance.Set("source_broadcaster_user_id", SourceBroadcasterUserId);
-        instance.Set("source_broadcaster_user_name", SourceBroadcasterUserName);
-        instance.Set("source_broadcaster_user_login", SourceBroadcasterUserLogin);
-        instance.Set("source_message_id", SourceMessageId);
+        instance.Set("reply", ReplyMetadata?.ToGodotObject() ?? new Variant());
+        if (ChannelPointsCustomRewardId != null) instance.Set("channel_points_custom_reward_id", ChannelPointsCustomRewardId);
+        if (SourceBroadcasterUserId != null) instance.Set("source_broadcaster_user_id", SourceBroadcasterUserId);
+        if (SourceBroadcasterUserName != null) instance.Set("source_broadcaster_user_name", SourceBroadcasterUserName);
+        if (SourceBroadcasterUserLogin != null) instance.Set("source_broadcaster_user_login", SourceBroadcasterUserLogin);
+        if (SourceMessageId != null) instance.Set("source_message_id", SourceMessageId);
         instance.Set("badges", Badges.ToGodotArray());
-        instance.Set("source_badges", SourceBadges.ToGodotArray());
+        if (SourceBadges != null) instance.Set("source_badges", SourceBadges.ToGodotArray());
         return instance;
     }
 
@@ -110,18 +125,18 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
 
     public partial class Message : RefCounted, ITwitcherSharp<Message>
     {
-        private GodotObject _data;
-        public string Text { get; set; }
-        public Fragment[] Fragments { get => field ??= _data.GetArray<Fragment>("fragments"); set; } = [];
+        private GodotObject? _data;
+        public string Text { get; set; } = null!;
+        public Fragment[] Fragments { get => field ??= _data?.GetArray<Fragment>("fragments") ?? []; set; } = [];
 
-        public static Message FromObject(GodotObject data)
+        public static Message? FromObject(GodotObject? data)
         {
             if (data == null) return null;
             var result = new Message
             {
                 Text = data.Get("text").AsString()
             };
-            
+
             result._data = data;
 
             return result;
@@ -139,19 +154,26 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
 
     public partial class Fragment : RefCounted, ITwitcherSharp<Fragment>
     {
-        private GodotObject _data;
+        private GodotObject? _data;
         public FragmentType Type { get; set; }
-        public string Text { get; set; }
-        public Cheermote Cheermote { get => field ??= _data?.Call<Cheermote>("cheermote"); set; }
-        public Emote Emote { get => field ??= _data?.Call<Emote>("emote"); set; }
-        public Mention Mention { get => field ??= _data?.Call<Mention>("mention"); set; }
+        public string Text { get; set; } = null!;
 
-        public static Fragment FromObject(GodotObject data)
+        /// <summary>
+        /// Exactly one of Cheermote/Emote/Mention is present, matching Type.
+        /// </summary>
+        public Cheermote? Cheermote { get => field ??= _data?.Call<Cheermote>("cheermote"); set; }
+        public Emote? Emote { get => field ??= _data?.Call<Emote>("emote"); set; }
+        public Mention? Mention { get => field ??= _data?.Call<Mention>("mention"); set; }
+
+        public static Fragment? FromObject(GodotObject? data)
         {
             if (data == null) return null;
-            var result = new Fragment();
-            result.Type = (FragmentType)data.Get("type").AsInt32();
-            result.Text = data.Get("text").AsString();
+            var result = new Fragment
+            {
+                Type = (FragmentType)data.Get("type").AsInt32(),
+                Text = data.Get("text").AsString()
+            };
+            result._data = data;
             return result;
         }
 
@@ -161,20 +183,20 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
             var instance = script.Get("Fragment").AsGodotObject().Call("new").AsGodotObject();
             instance.Set("type", (int)Type);
             instance.Set("text", Text);
-            instance.Set("cheermote", Cheermote?.ToGodotObject());
-            instance.Set("emote", Emote?.ToGodotObject());
-            instance.Set("mention", Mention?.ToGodotObject());
+            instance.Set("cheermote", Cheermote?.ToGodotObject() ?? new Variant());
+            instance.Set("emote", Emote?.ToGodotObject() ?? new Variant());
+            instance.Set("mention", Mention?.ToGodotObject() ?? new Variant());
             return instance;
         }
     }
 
     public partial class Mention : RefCounted, ITwitcherSharp<Mention>
     {
-        public string UserId { get; set; }
-        public string UserName { get; set; }
-        public string UserLogin { get; set; }
+        public string UserId { get; set; } = null!;
+        public string UserName { get; set; } = null!;
+        public string UserLogin { get; set; } = null!;
 
-        public static Mention FromObject(GodotObject data)
+        public static Mention? FromObject(GodotObject? data)
         {
             if (data == null) return null;
             return new Mention
@@ -198,11 +220,11 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
 
     public partial class Cheermote : RefCounted, ITwitcherSharp<Cheermote>
     {
-        public string Prefix { get; set; }
+        public string Prefix { get; set; } = null!;
         public int Bits { get; set; }
         public int Tier { get; set; }
 
-        public static Cheermote FromObject(GodotObject data)
+        public static Cheermote? FromObject(GodotObject? data)
         {
             if (data == null) return null;
             return new Cheermote
@@ -226,12 +248,12 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
 
     public partial class Emote : RefCounted, ITwitcherSharp<Emote>
     {
-        public string Id { get; set; }
-        public string EmoteSetId { get; set; }
-        public string OwnerId { get; set; }
+        public string Id { get; set; } = null!;
+        public string EmoteSetId { get; set; } = null!;
+        public string OwnerId { get; set; } = null!;
         public EmoteFormat[] Format { get; set; } = [];
 
-        public static Emote FromObject(GodotObject data)
+        public static Emote? FromObject(GodotObject? data)
         {
             if (data == null) return null;
             var result = new Emote
@@ -261,11 +283,15 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
 
     public partial class Badge : RefCounted, ITwitcherSharp<Badge>
     {
-        public string SetId { get; set; }
-        public string Id { get; set; }
-        public string Info { get; set; }
+        public string SetId { get; set; } = null!;
+        public string Id { get; set; } = null!;
 
-        public static Badge FromObject(GodotObject data)
+        /// <summary>
+        /// Only present for subscriber and bits badges.
+        /// </summary>
+        public string? Info { get; set; }
+
+        public static Badge? FromObject(GodotObject? data)
         {
             if (data == null) return null;
             return new Badge
@@ -282,7 +308,7 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
             var instance = script.Get("Badge").AsGodotObject().Call("new").AsGodotObject();
             instance.Set("set_id", SetId);
             instance.Set("id", Id);
-            instance.Set("info", Info);
+            if (Info != null) instance.Set("info", Info);
             return instance;
         }
     }
@@ -291,7 +317,7 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
     {
         public int Bits { get; set; }
 
-        public static Cheer FromObject(GodotObject data) =>
+        public static Cheer? FromObject(GodotObject? data) =>
             data == null ? null : new Cheer { Bits = data.Get("bits").AsInt32() };
 
         public GodotObject ToGodotObject()
@@ -305,17 +331,17 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
 
     public partial class Reply : RefCounted, ITwitcherSharp<Reply>
     {
-        public string ParentMessageId { get; set; }
-        public string ParentMessageBody { get; set; }
-        public string ParentUserId { get; set; }
-        public string ParentUserName { get; set; }
-        public string ParentUserLogin { get; set; }
-        public string ThreadMessageId { get; set; }
-        public string ThreadUserId { get; set; }
-        public string ThreadUserName { get; set; }
-        public string ThreadUserLogin { get; set; }
+        public string ParentMessageId { get; set; } = null!;
+        public string ParentMessageBody { get; set; } = null!;
+        public string ParentUserId { get; set; } = null!;
+        public string ParentUserName { get; set; } = null!;
+        public string ParentUserLogin { get; set; } = null!;
+        public string ThreadMessageId { get; set; } = null!;
+        public string ThreadUserId { get; set; } = null!;
+        public string ThreadUserName { get; set; } = null!;
+        public string ThreadUserLogin { get; set; } = null!;
 
-        public static Reply FromObject(GodotObject data)
+        public static Reply? FromObject(GodotObject? data)
         {
             if (data == null) return null;
             return new Reply

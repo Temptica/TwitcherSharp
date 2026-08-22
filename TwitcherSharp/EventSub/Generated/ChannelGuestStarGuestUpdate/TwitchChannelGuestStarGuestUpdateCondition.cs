@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelGuestStarGuestUpdate;
 
 public partial class TwitchChannelGuestStarGuestUpdateCondition(string broadcasterUserId, string moderatorUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelGuestStarGuestUpdateCondition>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     public string Name => nameof(TwitchChannelGuestStarGuestUpdateCondition);
 
@@ -25,7 +25,7 @@ public partial class TwitchChannelGuestStarGuestUpdateCondition(string broadcast
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelGuestStarGuestUpdateCondition object.
     /// </summary> 
-    public static TwitchChannelGuestStarGuestUpdateCondition FromObject(GodotObject data)
+    public static TwitchChannelGuestStarGuestUpdateCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannelGuestStarGuestUpdateCondition(data.Get("broadcaster_user_id").AsString(), data.Get("moderator_user_id").AsString());

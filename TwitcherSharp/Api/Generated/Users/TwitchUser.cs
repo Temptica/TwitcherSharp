@@ -6,23 +6,23 @@ namespace TwitcherSharp.Api.Generated.Users;
 
 public partial class TwitchUser : RefCounted, ITwitcherSharp<TwitchUser>
 {
-    private GodotObject _data;
-    public string Id { get; set; }
-    public string Login { get; set; }
-    public string DisplayName { get; set; }
-    public string Type { get; set; }
-    public string BroadcasterType { get; set; }
-    public string Description { get; set; }
-    public string ProfileImageUrl { get; set; }
-    public string OfflineImageUrl { get; set; }
+    private GodotObject? _data;
+    public string Id { get; set; } = null!;
+    public string Login { get; set; } = null!;
+    public string DisplayName { get; set; } = null!;
+    public string Type { get; set; } = null!;
+    public string BroadcasterType { get; set; } = null!;
+    public string Description { get; set; } = null!;
+    public string ProfileImageUrl { get; set; } = null!;
+    public string OfflineImageUrl { get; set; } = null!;
     public int ViewCount { get; set; }
-    public string Email { get; set; }
-    public string CreatedAt { get; set; }
+    public string? Email { get; set; }
+    public string CreatedAt { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUser object.
     /// </summary> 
-    public static TwitchUser FromObject(GodotObject data)
+    public static TwitchUser? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchUser
@@ -48,17 +48,17 @@ public partial class TwitchUser : RefCounted, ITwitcherSharp<TwitchUser>
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_user.gd");
         var request = script.Call("new").AsGodotObject();
-        request.Set("id", Id);
-        request.Set("login", Login);
-        request.Set("display_name", DisplayName);
-        request.Set("type", Type);
-        request.Set("broadcaster_type", BroadcasterType);
-        request.Set("description", Description);
-        request.Set("profile_image_url", ProfileImageUrl);
-        request.Set("offline_image_url", OfflineImageUrl);
+        if(Id != null) request.Set("id", Id);
+        if(Login != null) request.Set("login", Login);
+        if(DisplayName != null) request.Set("display_name", DisplayName);
+        if(Type != null) request.Set("type", Type);
+        if(BroadcasterType != null) request.Set("broadcaster_type", BroadcasterType);
+        if(Description != null) request.Set("description", Description);
+        if(ProfileImageUrl != null) request.Set("profile_image_url", ProfileImageUrl);
+        if(OfflineImageUrl != null) request.Set("offline_image_url", OfflineImageUrl);
         request.Set("view_count", ViewCount);
         if(Email != null) request.Set("email", Email);
-        request.Set("created_at", CreatedAt);
+        if(CreatedAt != null) request.Set("created_at", CreatedAt);
         return request;
     }
 

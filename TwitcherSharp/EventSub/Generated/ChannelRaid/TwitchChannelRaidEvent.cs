@@ -8,37 +8,37 @@ namespace TwitcherSharp.EventSub.Generated.ChannelRaid;
 
 public partial class TwitchChannelRaidEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelRaidEvent>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     /// <summary> 
     /// The broadcaster ID that created the raid.
     /// </summary>
-    public string FromBroadcasterUserId { get; set; }
+    public string? FromBroadcasterUserId { get; set; }
 
     /// <summary> 
     /// The broadcaster login that created the raid.
     /// </summary>
-    public string FromBroadcasterUserLogin { get; set; }
+    public string? FromBroadcasterUserLogin { get; set; }
 
     /// <summary> 
     /// The broadcaster display name that created the raid.
     /// </summary>
-    public string FromBroadcasterUserName { get; set; }
+    public string? FromBroadcasterUserName { get; set; }
 
     /// <summary> 
     /// The broadcaster ID that received the raid.
     /// </summary>
-    public string ToBroadcasterUserId { get; set; }
+    public string? ToBroadcasterUserId { get; set; }
 
     /// <summary> 
     /// The broadcaster login that received the raid.
     /// </summary>
-    public string ToBroadcasterUserLogin { get; set; }
+    public string? ToBroadcasterUserLogin { get; set; }
 
     /// <summary> 
     /// The broadcaster display name that received the raid.
     /// </summary>
-    public string ToBroadcasterUserName { get; set; }
+    public string? ToBroadcasterUserName { get; set; }
 
     /// <summary> 
     /// The number of viewers in the raid.
@@ -48,7 +48,7 @@ public partial class TwitchChannelRaidEvent : RefCounted, ITwitcherSharpEventSub
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelRaidEvent object.
     /// </summary> 
-    public static TwitchChannelRaidEvent FromObject(GodotObject data)
+    public static TwitchChannelRaidEvent? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannelRaidEvent
@@ -71,12 +71,12 @@ public partial class TwitchChannelRaidEvent : RefCounted, ITwitcherSharpEventSub
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_raid.gd");
         var eventClass = script.Get("Event").As<GDScript>();
         var request = eventClass.New().AsGodotObject();
-        request.Set("from_broadcaster_user_id", FromBroadcasterUserId);
-        request.Set("from_broadcaster_user_login", FromBroadcasterUserLogin);
-        request.Set("from_broadcaster_user_name", FromBroadcasterUserName);
-        request.Set("to_broadcaster_user_id", ToBroadcasterUserId);
-        request.Set("to_broadcaster_user_login", ToBroadcasterUserLogin);
-        request.Set("to_broadcaster_user_name", ToBroadcasterUserName);
+        if(FromBroadcasterUserId != null) request.Set("from_broadcaster_user_id", FromBroadcasterUserId);
+        if(FromBroadcasterUserLogin != null) request.Set("from_broadcaster_user_login", FromBroadcasterUserLogin);
+        if(FromBroadcasterUserName != null) request.Set("from_broadcaster_user_name", FromBroadcasterUserName);
+        if(ToBroadcasterUserId != null) request.Set("to_broadcaster_user_id", ToBroadcasterUserId);
+        if(ToBroadcasterUserLogin != null) request.Set("to_broadcaster_user_login", ToBroadcasterUserLogin);
+        if(ToBroadcasterUserName != null) request.Set("to_broadcaster_user_name", ToBroadcasterUserName);
         request.Set("viewers", Viewers);
         return request;
     }

@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.UserAuthorizationRevoke;
 
 public partial class TwitchUserAuthorizationRevokeCondition(string clientId) : RefCounted, ITwitcherSharpCondition<TwitchUserAuthorizationRevokeCondition>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     public string Name => nameof(TwitchUserAuthorizationRevokeCondition);
 
@@ -20,7 +20,7 @@ public partial class TwitchUserAuthorizationRevokeCondition(string clientId) : R
     /// <summary> 
     /// Transforms the godot data into a TwitchUserAuthorizationRevokeCondition object.
     /// </summary> 
-    public static TwitchUserAuthorizationRevokeCondition FromObject(GodotObject data)
+    public static TwitchUserAuthorizationRevokeCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchUserAuthorizationRevokeCondition(data.Get("client_id").AsString());

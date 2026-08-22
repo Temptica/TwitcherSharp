@@ -8,22 +8,22 @@ namespace TwitcherSharp.EventSub.Generated.ChannelChatSettingsUpdate;
 
 public partial class TwitchChannelChatSettingsUpdateEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelChatSettingsUpdateEvent>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     /// <summary> 
     /// The ID of the broadcaster specified in the request.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string? BroadcasterUserId { get; set; }
 
     /// <summary> 
     /// The login of the broadcaster specified in the request.
     /// </summary>
-    public string BroadcasterUserLogin { get; set; }
+    public string? BroadcasterUserLogin { get; set; }
 
     /// <summary> 
     /// The user name of the broadcaster specified in the request.
     /// </summary>
-    public string BroadcasterUserName { get; set; }
+    public string? BroadcasterUserName { get; set; }
 
     /// <summary> 
     /// A Boolean value that determines whether chat messages must contain only emotes. True if only messages that are 100% emotes are allowed; otherwise false.
@@ -63,7 +63,7 @@ public partial class TwitchChannelChatSettingsUpdateEvent : RefCounted, ITwitche
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelChatSettingsUpdateEvent object.
     /// </summary> 
-    public static TwitchChannelChatSettingsUpdateEvent FromObject(GodotObject data)
+    public static TwitchChannelChatSettingsUpdateEvent? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannelChatSettingsUpdateEvent
@@ -89,9 +89,9 @@ public partial class TwitchChannelChatSettingsUpdateEvent : RefCounted, ITwitche
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_settings_update.gd");
         var eventClass = script.Get("Event").As<GDScript>();
         var request = eventClass.New().AsGodotObject();
-        request.Set("broadcaster_user_id", BroadcasterUserId);
-        request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        request.Set("broadcaster_user_name", BroadcasterUserName);
+        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
+        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
         request.Set("emote_mode", EmoteMode);
         request.Set("follower_mode", FollowerMode);
         request.Set("follower_mode_duration_minutes", FollowerModeDurationMinutes);

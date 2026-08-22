@@ -6,16 +6,16 @@ namespace TwitcherSharp.Api.Generated.Analytics;
 
 public partial class TwitchExtensionAnalytics : RefCounted, ITwitcherSharp<TwitchExtensionAnalytics>
 {
-    private GodotObject _data;
-    public string ExtensionId { get; set; }
-    public string URL { get; set; }
-    public string Type { get; set; }
-    public TwitchResponseDateRange DateRange { get => field ??= _data?.Get<TwitchResponseDateRange>("date_range"); set; }
+    private GodotObject? _data;
+    public string ExtensionId { get; set; } = null!;
+    public string URL { get; set; } = null!;
+    public string Type { get; set; } = null!;
+    public TwitchResponseDateRange DateRange { get => field ??= _data?.Get<TwitchResponseDateRange>("date_range")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchExtensionAnalytics object.
     /// </summary> 
-    public static TwitchExtensionAnalytics FromObject(GodotObject data)
+    public static TwitchExtensionAnalytics? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchExtensionAnalytics
@@ -33,10 +33,10 @@ public partial class TwitchExtensionAnalytics : RefCounted, ITwitcherSharp<Twitc
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_extension_analytics.gd");
         var request = script.Call("new").AsGodotObject();
-        request.Set("extension_id", ExtensionId);
-        request.Set("url", URL);
-        request.Set("type", Type);
-        request.Set("date_range", DateRange?.ToGodotObject());
+        if(ExtensionId != null) request.Set("extension_id", ExtensionId);
+        if(URL != null) request.Set("url", URL);
+        if(Type != null) request.Set("type", Type);
+        if(DateRange != null) request.Set("date_range", DateRange.ToGodotObject());
         return request;
     }
     
@@ -45,14 +45,14 @@ public partial class TwitchExtensionAnalytics : RefCounted, ITwitcherSharp<Twitc
     /// </summary>
     public partial class TwitchResponseDateRange : RefCounted, ITwitcherSharp<TwitchResponseDateRange>
     {
-        private GodotObject _data;
-        public string StartedAt { get; set; }
-        public string EndedAt { get; set; }
+        private GodotObject? _data;
+        public string StartedAt { get; set; } = null!;
+        public string EndedAt { get; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseDateRange object.
         /// </summary> 
-        public static TwitchResponseDateRange FromObject(GodotObject data)
+        public static TwitchResponseDateRange? FromObject(GodotObject? data)
         {
             if(data == null) return null;
             var instance = new TwitchResponseDateRange
@@ -70,8 +70,8 @@ public partial class TwitchExtensionAnalytics : RefCounted, ITwitcherSharp<Twitc
             var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_extension_analytics.gd");
             var twitchResponseDateRangeClass = script.Get("DateRange").AsGodotObject();
             var request = twitchResponseDateRangeClass.Call("new").AsGodotObject();
-            request.Set("started_at", StartedAt);
-            request.Set("ended_at", EndedAt);
+            if(StartedAt != null) request.Set("started_at", StartedAt);
+            if(EndedAt != null) request.Set("ended_at", EndedAt);
             return request;
         }
     

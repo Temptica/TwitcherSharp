@@ -8,6 +8,8 @@ public class TwitchEventSubGenComponent(string name)
 
     public string Description { get; set; }
 
+    public string Id { get; set; }
+
     public TwitchEventSubGenComponent Parent { get; set; }
 
     public Dictionary<string, TwitchEventSubGenComponent> SubComponents { get; } = [];

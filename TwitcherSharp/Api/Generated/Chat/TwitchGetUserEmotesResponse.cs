@@ -1,4 +1,3 @@
-using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 using TwitcherSharp.Extensions;
 using Godot;
@@ -7,15 +6,15 @@ namespace TwitcherSharp.Api.Generated.Chat;
 
 public partial class TwitchGetUserEmotesResponse : RefCounted, ITwitcherSharp<TwitchGetUserEmotesResponse>
 {
-    private GodotObject _data;
-    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
-    public string Template { get; set; }
-    public ResponsePagination Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
+    private GodotObject? _data;
+    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data")!; set; } = null!;
+    public string Template { get; set; } = null!;
+    public ResponsePagination? Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetUserEmotesResponse object.
     /// </summary> 
-    public static TwitchGetUserEmotesResponse FromObject(GodotObject data)
+    public static TwitchGetUserEmotesResponse? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetUserEmotesResponse
@@ -32,26 +31,26 @@ public partial class TwitchGetUserEmotesResponse : RefCounted, ITwitcherSharp<Tw
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_user_emotes.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data?.ToGodotArray());
-        request.Set("template", Template);
+        if(Data != null) request.Set("data", Data.ToGodotArray());
+        if(Template != null) request.Set("template", Template);
         if(Pagination != null) request.Set("pagination", Pagination);
         return request;
     }
     public async Task<TwitchGetUserEmotesResponse> NextPage() =>
-        await _data.CallAsync<TwitchGetUserEmotesResponse>("next_page");
+        await _data!.CallAsync<TwitchGetUserEmotesResponse>("next_page");
     
     /// <summary> 
     /// Contains the information used to page through the list of results. The object is empty if there are no more pages left to page through 
     /// </summary>
     public partial class ResponsePagination : RefCounted, ITwitcherSharp<ResponsePagination>
     {
-        private GodotObject _data;
-        public string Cursor { get; set; }
+        private GodotObject? _data;
+        public string? Cursor { get; set; }
     
         /// <summary> 
         /// Transforms the godot data into a ResponsePagination object.
         /// </summary> 
-        public static ResponsePagination FromObject(GodotObject data)
+        public static ResponsePagination? FromObject(GodotObject? data)
         {
             if(data == null) return null;
             var instance = new ResponsePagination
@@ -75,20 +74,20 @@ public partial class TwitchGetUserEmotesResponse : RefCounted, ITwitcherSharp<Tw
     }
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
-        private GodotObject _data;
-        public string Id { get; set; }
-        public string Name { get; set; }
-        public string EmoteType { get; set; }
-        public string EmoteSetId { get; set; }
-        public string OwnerId { get; set; }
-        public string[] Format { get; set; }
-        public string[] Scale { get; set; }
-        public string[] ThemeMode { get; set; }
+        private GodotObject? _data;
+        public string Id { get; set; } = null!;
+        public string Name { get; set; } = null!;
+        public string EmoteType { get; set; } = null!;
+        public string EmoteSetId { get; set; } = null!;
+        public string OwnerId { get; set; } = null!;
+        public string[] Format { get; set; } = null!;
+        public string[] Scale { get; set; } = null!;
+        public string[] ThemeMode { get; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseData object.
         /// </summary> 
-        public static TwitchResponseData FromObject(GodotObject data)
+        public static TwitchResponseData? FromObject(GodotObject? data)
         {
             if(data == null) return null;
             var instance = new TwitchResponseData
@@ -112,11 +111,11 @@ public partial class TwitchGetUserEmotesResponse : RefCounted, ITwitcherSharp<Tw
             var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_user_emotes.gd");
             var twitchResponseDataClass = script.Get("ResponseData").AsGodotObject();
             var request = twitchResponseDataClass.Call("new").AsGodotObject();
-            request.Set("id", Id);
-            request.Set("name", Name);
-            request.Set("emote_type", EmoteType);
-            request.Set("emote_set_id", EmoteSetId);
-            request.Set("owner_id", OwnerId);
+            if(Id != null) request.Set("id", Id);
+            if(Name != null) request.Set("name", Name);
+            if(EmoteType != null) request.Set("emote_type", EmoteType);
+            if(EmoteSetId != null) request.Set("emote_set_id", EmoteSetId);
+            if(OwnerId != null) request.Set("owner_id", OwnerId);
             if(Format != null) request.Set("format", new Godot.Collections.Array<string>(Format));
             if(Scale != null) request.Set("scale", new Godot.Collections.Array<string>(Scale));
             if(ThemeMode != null) request.Set("theme_mode", new Godot.Collections.Array<string>(ThemeMode));

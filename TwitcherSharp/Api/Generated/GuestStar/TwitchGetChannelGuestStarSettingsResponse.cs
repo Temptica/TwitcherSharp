@@ -6,17 +6,17 @@ namespace TwitcherSharp.Api.Generated.GuestStar;
 
 public partial class TwitchGetChannelGuestStarSettingsResponse : RefCounted, ITwitcherSharp<TwitchGetChannelGuestStarSettingsResponse>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     public bool IsModeratorSendLiveEnabled { get; set; }
     public int SlotCount { get; set; }
     public bool IsBrowserSourceAudioEnabled { get; set; }
-    public string GroupLayout { get; set; }
-    public string BrowserSourceToken { get; set; }
+    public string GroupLayout { get; set; } = null!;
+    public string BrowserSourceToken { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetChannelGuestStarSettingsResponse object.
     /// </summary> 
-    public static TwitchGetChannelGuestStarSettingsResponse FromObject(GodotObject data)
+    public static TwitchGetChannelGuestStarSettingsResponse? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetChannelGuestStarSettingsResponse
@@ -40,8 +40,8 @@ public partial class TwitchGetChannelGuestStarSettingsResponse : RefCounted, ITw
         request.Set("is_moderator_send_live_enabled", IsModeratorSendLiveEnabled);
         request.Set("slot_count", SlotCount);
         request.Set("is_browser_source_audio_enabled", IsBrowserSourceAudioEnabled);
-        request.Set("group_layout", GroupLayout);
-        request.Set("browser_source_token", BrowserSourceToken);
+        if(GroupLayout != null) request.Set("group_layout", GroupLayout);
+        if(BrowserSourceToken != null) request.Set("browser_source_token", BrowserSourceToken);
         return request;
     }
 

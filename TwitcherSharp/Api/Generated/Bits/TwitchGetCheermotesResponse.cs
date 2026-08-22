@@ -6,13 +6,13 @@ namespace TwitcherSharp.Api.Generated.Bits;
 
 public partial class TwitchGetCheermotesResponse : RefCounted, ITwitcherSharp<TwitchGetCheermotesResponse>
 {
-    private GodotObject _data;
-    public TwitchCheermote[] Data { get => field ??= _data?.GetArray<TwitchCheermote>("data"); set; }
+    private GodotObject? _data;
+    public TwitchCheermote[] Data { get => field ??= _data?.GetArray<TwitchCheermote>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetCheermotesResponse object.
     /// </summary> 
-    public static TwitchGetCheermotesResponse FromObject(GodotObject data)
+    public static TwitchGetCheermotesResponse? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetCheermotesResponse();
@@ -26,7 +26,7 @@ public partial class TwitchGetCheermotesResponse : RefCounted, ITwitcherSharp<Tw
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_cheermotes.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data?.ToGodotArray());
+        if(Data != null) request.Set("data", Data.ToGodotArray());
         return request;
     }
 

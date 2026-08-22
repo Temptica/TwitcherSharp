@@ -22,19 +22,19 @@ namespace TwitcherSharp.Poll;
 /// </summary>
 public partial class TwitchPollListener : RefCounted, ITwitcherSharp<TwitchPollListener>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
 
     /// <summary>
     /// The <see cref="TwitchEventSub"/> for subscribing. If left empty, the Node attempts to fetch the <see cref="TwitchEventSub"/> itself.
     /// If it doesn't exist, it will create a new one and add it to the root of the SceneTree.
     /// </summary>
-    public TwitchEventSub TwitchEventSub { get; set; }
+    public TwitchEventSub? TwitchEventSub { get; set; }
 
     /// <summary>
     /// The <see cref="TwitchApi"/> for API calls. If left empty, the Node attempts to fetch the <see cref="TwitchApi"/> itself.
     /// If it doesn't exist, it will create a new one and add it to the root of the SceneTree.'
     /// </summary>
-    public TwitchApi TwitchApi { get; set; }
+    public TwitchApi? TwitchApi { get; set; }
 
     /// <summary>
     /// Should the node automatically subscribe to the necessary eventsubs in the ready function? 
@@ -44,7 +44,7 @@ public partial class TwitchPollListener : RefCounted, ITwitcherSharp<TwitchPollL
     /// <summary>
     /// The broadcaster user. If left empty, the Node attempts to fetch it from the <see cref="TwitchApi"/>.
     /// </summary>
-    public TwitchUser Broadcaster { get; set; }
+    public TwitchUser? Broadcaster { get; set; }
 
     /// <summary>
     /// Emit the raw JSON response from the <see cref="TwitchEventSubDefinitionType.ChannelPollBegin"/>, <see cref="TwitchEventSubDefinitionType.ChannelPollProgress"/> and <see cref="TwitchEventSubDefinitionType.ChannelPollEnd"/>.
@@ -84,12 +84,12 @@ public partial class TwitchPollListener : RefCounted, ITwitcherSharp<TwitchPollL
 
     public void EnsureSubscriptions()
     {
-        _data.Call("ensure_subscriptions");
+        _data!.Call("ensure_subscriptions");
     }
 
     public void ConnectSignals()
     {
-        _data.Connect("poll_json", Callable.From<Dictionary>(EmitSignalPollJson));
+        _data!.Connect("poll_json", Callable.From<Dictionary>(EmitSignalPollJson));
         _data.Connect("poll_begin", Callable.FromTwitcherSharp<TwitchPoll>(EmitSignalPollBegin));
         _data.Connect("poll_progress", Callable.FromTwitcherSharp<TwitchPoll>(EmitSignalPollProgress));
         _data.Connect("poll_completed", Callable.FromTwitcherSharp<TwitchPoll>(EmitSignalPollCompleted));
@@ -97,21 +97,22 @@ public partial class TwitchPollListener : RefCounted, ITwitcherSharp<TwitchPollL
         _data.Connect("poll_archived", Callable.FromTwitcherSharp<TwitchPoll>(EmitSignalPollArchived));
     }
 
-    public static TwitchPollListener FromObject(GodotObject data)
+    public static TwitchPollListener? FromObject(GodotObject? data)
     {
+        if (data == null) return null;
         var pollListener = new TwitchPollListener()
         {
             _data = data,
             EnsureSubscriptionsOnReady = data.Get("ensure_subscriptions_on_ready").AsBool(),
             Broadcaster = TwitchUser.FromObject(data.Get("broadcaster").As<GodotObject>()),
         };
-        
+
         pollListener.TwitchEventSub ??= TwitchEventSub.Instance ?? TwitchEventSub.CreateInstance();
         pollListener.TwitchApi ??= TwitchApi.Instance;
-        pollListener.Broadcaster ??= TwitchApi.Instance.GetUsers().GetAwaiter().GetResult().Data[0];
-        
+        pollListener.Broadcaster ??= TwitchApi.Instance!.GetUsers().GetAwaiter().GetResult().Data![0];
+
         pollListener.ConnectSignals();
-        
+
         return pollListener;
     }
 
@@ -120,7 +121,7 @@ public partial class TwitchPollListener : RefCounted, ITwitcherSharp<TwitchPollL
         var script = GD.Load<GDScript>("res://addons/twitcher/poll/twitch_poll_listener.gd");
         var obj = script.New().AsGodotObject();
         obj.Set("ensure_subscriptions_on_ready", EnsureSubscriptionsOnReady);
-        obj.Set("broadcaster", Broadcaster?.ToGodotObject());
+        obj.Set("broadcaster", Broadcaster?.ToGodotObject() ?? new Variant());
         return obj;
     }
 }

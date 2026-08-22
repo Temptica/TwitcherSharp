@@ -6,13 +6,13 @@ namespace TwitcherSharp.Api.Generated.Videos;
 
 public partial class TwitchDeleteVideosResponse : RefCounted, ITwitcherSharp<TwitchDeleteVideosResponse>
 {
-    private GodotObject _data;
-    public string[] Data { get; set; }
+    private GodotObject? _data;
+    public string[] Data { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchDeleteVideosResponse object.
     /// </summary> 
-    public static TwitchDeleteVideosResponse FromObject(GodotObject data)
+    public static TwitchDeleteVideosResponse? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchDeleteVideosResponse

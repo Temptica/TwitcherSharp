@@ -10,13 +10,13 @@ namespace TwitcherSharp.Api.Generated.Users;
 /// </summary>
 public partial class TwitchGetUserActiveExtensionsOpt : RefCounted, ITwitcherSharp<TwitchGetUserActiveExtensionsOpt>
 {
-    private GodotObject _data;
-    public string UserId { get; set; }
+    private GodotObject? _data;
+    public string? UserId { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetUserActiveExtensionsOpt object.
     /// </summary> 
-    public static TwitchGetUserActiveExtensionsOpt FromObject(GodotObject data)
+    public static TwitchGetUserActiveExtensionsOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetUserActiveExtensionsOpt

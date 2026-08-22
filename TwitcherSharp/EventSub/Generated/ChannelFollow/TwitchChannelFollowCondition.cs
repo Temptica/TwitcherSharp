@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelFollow;
 
 public partial class TwitchChannelFollowCondition(string broadcasterUserId, string moderatorUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelFollowCondition>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     public string Name => nameof(TwitchChannelFollowCondition);
 
@@ -25,7 +25,7 @@ public partial class TwitchChannelFollowCondition(string broadcasterUserId, stri
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelFollowCondition object.
     /// </summary> 
-    public static TwitchChannelFollowCondition FromObject(GodotObject data)
+    public static TwitchChannelFollowCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannelFollowCondition(data.Get("broadcaster_user_id").AsString(), data.Get("moderator_user_id").AsString());

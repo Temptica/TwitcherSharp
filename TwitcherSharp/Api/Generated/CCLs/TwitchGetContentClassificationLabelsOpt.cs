@@ -10,13 +10,13 @@ namespace TwitcherSharp.Api.Generated.CCLs;
 /// </summary>
 public partial class TwitchGetContentClassificationLabelsOpt : RefCounted, ITwitcherSharp<TwitchGetContentClassificationLabelsOpt>
 {
-    private GodotObject _data;
-    public string Locale { get; set; }
+    private GodotObject? _data;
+    public string? Locale { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetContentClassificationLabelsOpt object.
     /// </summary> 
-    public static TwitchGetContentClassificationLabelsOpt FromObject(GodotObject data)
+    public static TwitchGetContentClassificationLabelsOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetContentClassificationLabelsOpt

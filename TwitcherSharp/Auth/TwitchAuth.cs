@@ -6,7 +6,7 @@ namespace TwitcherSharp.Auth;
 
 public partial class TwitchAuth : RefCounted, ITwitcherSharp<TwitchAuth>
 {
-	private GodotObject _data;
+	private GodotObject? _data;
 
 	public bool ForceVerify
 	{
@@ -18,19 +18,20 @@ public partial class TwitchAuth : RefCounted, ITwitcherSharp<TwitchAuth>
 		}
 	}
 	
-	public bool IsAuthenticated() => _data.Get("is_authenticated").AsBool();
+	public bool IsAuthenticated() => _data?.Get("is_authenticated").AsBool() ?? false;
 	
-	public bool Authorize(bool force = false) => _data.CallAsync("authorize",force).Result.AsBool();
+	public bool Authorize(bool force = false) => _data?.CallAsync("authorize",force).Result.AsBool() ?? false;
 	
-	public void DoUnSetup() => _data.Call("do_unsetup");
+	public void DoUnSetup() => _data?.Call("do_unsetup");
 	
-	public void RefreshToken() => _data.Call("refresh_token");
+	public void RefreshToken() => _data?.Call("refresh_token");
 	
-	public bool IsConfigured() => _data.Call("is_configured").AsBool();
+	public bool IsConfigured() => _data?.Call("is_configured").AsBool() ?? false;
 	
 
-	public static TwitchAuth FromObject(GodotObject data)
+	public static TwitchAuth? FromObject(GodotObject? data)
 	{
+		if (data == null) return null;
 		var auth = new TwitchAuth();
 		auth._data = data;
 		auth.ForceVerify = data.Get("force_verify").AsBool();

@@ -10,14 +10,14 @@ namespace TwitcherSharp.Api.Generated.ChannelPoints;
 /// </summary>
 public partial class TwitchGetCustomRewardOpt : RefCounted, ITwitcherSharp<TwitchGetCustomRewardOpt>
 {
-    private GodotObject _data;
-    public string[] Id { get; set; }
+    private GodotObject? _data;
+    public string[]? Id { get; set; }
     public bool? OnlyManageableRewards { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetCustomRewardOpt object.
     /// </summary> 
-    public static TwitchGetCustomRewardOpt FromObject(GodotObject data)
+    public static TwitchGetCustomRewardOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetCustomRewardOpt

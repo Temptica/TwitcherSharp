@@ -6,16 +6,16 @@ namespace TwitcherSharp.Api.Generated.Shared;
 
 public partial class TwitchUserExtensionOverlay : RefCounted, ITwitcherSharp<TwitchUserExtensionOverlay>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     public bool Active { get; set; }
-    public string Id { get; set; }
-    public string Version { get; set; }
-    public string Name { get; set; }
+    public string? Id { get; set; }
+    public string? Version { get; set; }
+    public string? Name { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUserExtensionOverlay object.
     /// </summary> 
-    public static TwitchUserExtensionOverlay FromObject(GodotObject data)
+    public static TwitchUserExtensionOverlay? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchUserExtensionOverlay

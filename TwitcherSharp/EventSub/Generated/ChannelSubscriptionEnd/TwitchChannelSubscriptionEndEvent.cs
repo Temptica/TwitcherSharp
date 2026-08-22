@@ -8,42 +8,42 @@ namespace TwitcherSharp.EventSub.Generated.ChannelSubscriptionEnd;
 
 public partial class TwitchChannelSubscriptionEndEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelSubscriptionEndEvent>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     /// <summary> 
     /// The user ID for the user whose subscription ended.
     /// </summary>
-    public string UserId { get; set; }
+    public string? UserId { get; set; }
 
     /// <summary> 
     /// The user login for the user whose subscription ended.
     /// </summary>
-    public string UserLogin { get; set; }
+    public string? UserLogin { get; set; }
 
     /// <summary> 
     /// The user display name for the user whose subscription ended.
     /// </summary>
-    public string UserName { get; set; }
+    public string? UserName { get; set; }
 
     /// <summary> 
     /// The broadcaster user ID.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string? BroadcasterUserId { get; set; }
 
     /// <summary> 
     /// The broadcaster login.
     /// </summary>
-    public string BroadcasterUserLogin { get; set; }
+    public string? BroadcasterUserLogin { get; set; }
 
     /// <summary> 
     /// The broadcaster display name.
     /// </summary>
-    public string BroadcasterUserName { get; set; }
+    public string? BroadcasterUserName { get; set; }
 
     /// <summary> 
     /// The tier of the subscription that ended. Valid values are 1000, 2000, and 3000.
     /// </summary>
-    public string Tier { get; set; }
+    public string? Tier { get; set; }
 
     /// <summary> 
     /// Whether the subscription was a gift.
@@ -53,7 +53,7 @@ public partial class TwitchChannelSubscriptionEndEvent : RefCounted, ITwitcherSh
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelSubscriptionEndEvent object.
     /// </summary> 
-    public static TwitchChannelSubscriptionEndEvent FromObject(GodotObject data)
+    public static TwitchChannelSubscriptionEndEvent? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannelSubscriptionEndEvent
@@ -77,13 +77,13 @@ public partial class TwitchChannelSubscriptionEndEvent : RefCounted, ITwitcherSh
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_subscription_end.gd");
         var eventClass = script.Get("Event").As<GDScript>();
         var request = eventClass.New().AsGodotObject();
-        request.Set("user_id", UserId);
-        request.Set("user_login", UserLogin);
-        request.Set("user_name", UserName);
-        request.Set("broadcaster_user_id", BroadcasterUserId);
-        request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        request.Set("broadcaster_user_name", BroadcasterUserName);
-        request.Set("tier", Tier);
+        if(UserId != null) request.Set("user_id", UserId);
+        if(UserLogin != null) request.Set("user_login", UserLogin);
+        if(UserName != null) request.Set("user_name", UserName);
+        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
+        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
+        if(Tier != null) request.Set("tier", Tier);
         request.Set("is_gift", IsGift);
         return request;
     }

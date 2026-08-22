@@ -10,14 +10,14 @@ namespace TwitcherSharp.Api.Generated.Clips;
 /// </summary>
 public partial class TwitchCreateClipOpt : RefCounted, ITwitcherSharp<TwitchCreateClipOpt>
 {
-    private GodotObject _data;
-    public string Title { get; set; }
+    private GodotObject? _data;
+    public string? Title { get; set; }
     public double? Duration { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCreateClipOpt object.
     /// </summary> 
-    public static TwitchCreateClipOpt FromObject(GodotObject data)
+    public static TwitchCreateClipOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchCreateClipOpt

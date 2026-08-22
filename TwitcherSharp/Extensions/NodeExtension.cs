@@ -33,7 +33,7 @@ public static class NodeExtension
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T GetTwitcherSharp<T>() where T : RefCounted, ITwitcherSharp<T>
+        public T? GetTwitcherSharp<T>() where T : RefCounted, ITwitcherSharp<T>
         {
             if (node.HasTwitcherSharp())
             {
@@ -49,7 +49,7 @@ public static class NodeExtension
         /// <param name="twitcherObject"></param>
         /// <typeparam name="T">The typed TwitcherSharp object</typeparam>
         /// <returns>True if successful, false otherwise</returns>
-        public bool TryGetTwitcherSharp<T>(out T twitcherObject) where T : RefCounted, ITwitcherSharp<T>
+        public bool TryGetTwitcherSharp<T>(out T? twitcherObject) where T : RefCounted, ITwitcherSharp<T>
         {
             twitcherObject = null;
             if (!node.HasTwitcherSharp()) return false;
@@ -74,7 +74,7 @@ public static class NodeExtension
         /// <param name="path">The absolute or relative path to the node</param>
         /// <typeparam name="T"> a <see cref="RefCounted"/> <see cref="ITwitcherSharp&lt;T&gt;"/></typeparam>
         /// <returns>Returns the TwitcherSharp object when successful, or null if the node cannot be found or bound</returns>
-        public T GetTwitcherNode<T>(NodePath path)
+        public T? GetTwitcherNode<T>(NodePath path)
             where T : RefCounted, ITwitcherSharp<T>
         {
             var twitcherNode = node.GetNode(path);
@@ -84,13 +84,13 @@ public static class NodeExtension
             }
 
             // Node Exists
-            if (twitcherNode.TryGetTwitcherSharp(out T twitcherSharp))
+            if (twitcherNode.TryGetTwitcherSharp(out T? twitcherSharp))
             {
                 return twitcherSharp;
             }
 
             twitcherSharp = T.FromObject(twitcherNode);
-            twitcherNode.SetTwitcherSharp(twitcherSharp);
+            if (twitcherSharp != null) twitcherNode.SetTwitcherSharp(twitcherSharp);
 
             return twitcherSharp;
         }

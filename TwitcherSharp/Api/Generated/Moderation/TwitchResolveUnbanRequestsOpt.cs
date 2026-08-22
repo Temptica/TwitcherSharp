@@ -10,13 +10,13 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 /// </summary>
 public partial class TwitchResolveUnbanRequestsOpt : RefCounted, ITwitcherSharp<TwitchResolveUnbanRequestsOpt>
 {
-    private GodotObject _data;
-    public string ResolutionText { get; set; }
+    private GodotObject? _data;
+    public string? ResolutionText { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchResolveUnbanRequestsOpt object.
     /// </summary> 
-    public static TwitchResolveUnbanRequestsOpt FromObject(GodotObject data)
+    public static TwitchResolveUnbanRequestsOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchResolveUnbanRequestsOpt

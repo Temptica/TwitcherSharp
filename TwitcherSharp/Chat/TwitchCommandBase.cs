@@ -6,7 +6,7 @@ namespace TwitcherSharp.Chat;
 
 public abstract partial class TwitchCommandBase : RefCounted, ITwitcherSharp
 {
-    protected GodotObject Data;
+    protected GodotObject Data = null!;
     public static List<TwitchCommandBase> AllCommands = [];
 
     #region Signals
@@ -70,12 +70,12 @@ public abstract partial class TwitchCommandBase : RefCounted, ITwitcherSharp
     /// <summary>
     /// Command name
     /// </summary>
-    public string Command { get; set; }
+    public string Command { get; set; } = null!;
 
     /// <summary>
     /// Description for the user
     /// </summary>
-    public string Description { get; set; }
+    public string Description { get; set; } = "";
 
     /// <summary>
     /// Wich role of user is allowed to use it
@@ -150,11 +150,11 @@ public abstract partial class TwitchCommandBase : RefCounted, ITwitcherSharp
     {
         return data.GetClass() switch
         {
-            nameof(TwitchCommand) => TwitchCommand.FromObject(data),
+            nameof(TwitchCommand) => (TwitchCommandBase?)TwitchCommand.FromObject(data),
             nameof(TwitchCommandContains) => TwitchCommandContains.FromObject(data),
             nameof(TwitchCommandHelp) => TwitchCommandHelp.FromObject(data),
             _ => throw new ArgumentException("Invalid command type", nameof(data)),
-        };
+        } ?? throw new ArgumentException("Invalid command data", nameof(data));
     }
 
     protected void GetBaseProperties(GodotObject data)
@@ -169,6 +169,6 @@ public abstract partial class TwitchCommandBase : RefCounted, ITwitcherSharp
         data.Set("case_insensitive", CaseInsensitive);
         data.Set("user_cooldown", UserCooldown);
         data.Set("global_cooldown", GlobalCooldown);
-        data.Set("all_commands", new Godot.Collections.Array(AllCommands.Select(c => c?.ToGodotObject()).ToArray()));
+        data.Set("all_commands", new Godot.Collections.Array(AllCommands.Select(c => c?.ToGodotObject() ?? new Variant()).ToArray()));
     }
 }

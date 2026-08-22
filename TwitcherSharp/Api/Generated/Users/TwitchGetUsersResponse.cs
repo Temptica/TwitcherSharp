@@ -6,13 +6,13 @@ namespace TwitcherSharp.Api.Generated.Users;
 
 public partial class TwitchGetUsersResponse : RefCounted, ITwitcherSharp<TwitchGetUsersResponse>
 {
-    private GodotObject _data;
-    public TwitchUser[] Data { get => field ??= _data?.GetArray<TwitchUser>("data"); set; }
+    private GodotObject? _data;
+    public TwitchUser[] Data { get => field ??= _data?.GetArray<TwitchUser>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetUsersResponse object.
     /// </summary> 
-    public static TwitchGetUsersResponse FromObject(GodotObject data)
+    public static TwitchGetUsersResponse? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetUsersResponse();
@@ -26,7 +26,7 @@ public partial class TwitchGetUsersResponse : RefCounted, ITwitcherSharp<TwitchG
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_users.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data?.ToGodotArray());
+        if(Data != null) request.Set("data", Data.ToGodotArray());
         return request;
     }
 

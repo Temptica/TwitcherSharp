@@ -6,13 +6,13 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 
 public partial class TwitchGetShieldModeStatusResponse : RefCounted, ITwitcherSharp<TwitchGetShieldModeStatusResponse>
 {
-    private GodotObject _data;
-    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
+    private GodotObject? _data;
+    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetShieldModeStatusResponse object.
     /// </summary> 
-    public static TwitchGetShieldModeStatusResponse FromObject(GodotObject data)
+    public static TwitchGetShieldModeStatusResponse? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetShieldModeStatusResponse();
@@ -26,7 +26,7 @@ public partial class TwitchGetShieldModeStatusResponse : RefCounted, ITwitcherSh
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_shield_mode_status.gd");
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data?.ToGodotArray());
+        if(Data != null) request.Set("data", Data.ToGodotArray());
         return request;
     }
     
@@ -35,17 +35,17 @@ public partial class TwitchGetShieldModeStatusResponse : RefCounted, ITwitcherSh
     /// </summary>
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
-        private GodotObject _data;
+        private GodotObject? _data;
         public bool IsActive { get; set; }
-        public string ModeratorId { get; set; }
-        public string ModeratorLogin { get; set; }
-        public string ModeratorName { get; set; }
-        public string LastActivatedAt { get; set; }
+        public string ModeratorId { get; set; } = null!;
+        public string ModeratorLogin { get; set; } = null!;
+        public string ModeratorName { get; set; } = null!;
+        public string LastActivatedAt { get; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseData object.
         /// </summary> 
-        public static TwitchResponseData FromObject(GodotObject data)
+        public static TwitchResponseData? FromObject(GodotObject? data)
         {
             if(data == null) return null;
             var instance = new TwitchResponseData
@@ -67,10 +67,10 @@ public partial class TwitchGetShieldModeStatusResponse : RefCounted, ITwitcherSh
             var twitchResponseDataClass = script.Get("ResponseData").AsGodotObject();
             var request = twitchResponseDataClass.Call("new").AsGodotObject();
             request.Set("is_active", IsActive);
-            request.Set("moderator_id", ModeratorId);
-            request.Set("moderator_login", ModeratorLogin);
-            request.Set("moderator_name", ModeratorName);
-            request.Set("last_activated_at", LastActivatedAt);
+            if(ModeratorId != null) request.Set("moderator_id", ModeratorId);
+            if(ModeratorLogin != null) request.Set("moderator_login", ModeratorLogin);
+            if(ModeratorName != null) request.Set("moderator_name", ModeratorName);
+            if(LastActivatedAt != null) request.Set("last_activated_at", LastActivatedAt);
             return request;
         }
     

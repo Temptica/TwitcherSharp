@@ -10,14 +10,14 @@ namespace TwitcherSharp.Api.Generated.Raids;
 /// </summary>
 public partial class TwitchStartARaidOpt : RefCounted, ITwitcherSharp<TwitchStartARaidOpt>
 {
-    private GodotObject _data;
-    public string FromBroadcasterId { get; set; }
-    public string ToBroadcasterId { get; set; }
+    private GodotObject? _data;
+    public string? FromBroadcasterId { get; set; }
+    public string? ToBroadcasterId { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchStartARaidOpt object.
     /// </summary> 
-    public static TwitchStartARaidOpt FromObject(GodotObject data)
+    public static TwitchStartARaidOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchStartARaidOpt

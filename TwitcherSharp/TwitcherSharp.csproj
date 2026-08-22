@@ -3,10 +3,10 @@
     <PropertyGroup>
         <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>disable</Nullable>
+        <Nullable>enable</Nullable>
         
         <PackageId>Temptica.TwitcherSharp</PackageId>
-        <Version>2.5.2</Version>
+        <Version>2.5.2-3</Version>
         <Authors>Temptica</Authors>
         <Description>A C# wrapper for Twitcher, the twitch integration plugin for the Godot game engine</Description>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -22,9 +22,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Godot.SourceGenerators" Version="4.6.2"/>
-        <PackageReference Include="GodotSharp" Version="4.6.2"/>
-        <PackageReference Include="GodotSharpEditor" Version="4.6.2"/>
+        <PackageReference Include="Godot.SourceGenerators" Version="4.7.0"/>
+        <PackageReference Include="GodotSharp" Version="4.7.0"/>
+        <PackageReference Include="GodotSharpEditor" Version="4.7.0"/>
     </ItemGroup>
 
     <ItemGroup>

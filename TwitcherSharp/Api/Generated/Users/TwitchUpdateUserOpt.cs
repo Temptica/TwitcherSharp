@@ -10,13 +10,13 @@ namespace TwitcherSharp.Api.Generated.Users;
 /// </summary>
 public partial class TwitchUpdateUserOpt : RefCounted, ITwitcherSharp<TwitchUpdateUserOpt>
 {
-    private GodotObject _data;
-    public string Description { get; set; }
+    private GodotObject? _data;
+    public string? Description { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUpdateUserOpt object.
     /// </summary> 
-    public static TwitchUpdateUserOpt FromObject(GodotObject data)
+    public static TwitchUpdateUserOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchUpdateUserOpt

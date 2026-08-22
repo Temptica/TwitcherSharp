@@ -10,18 +10,18 @@ namespace TwitcherSharp.Api.Generated.EventSub;
 /// </summary>
 public partial class TwitchGetEventsubSubscriptionsOpt : RefCounted, ITwitcherSharp<TwitchGetEventsubSubscriptionsOpt>
 {
-    private GodotObject _data;
-    public string Status { get; set; }
-    public string Type { get; set; }
-    public string UserId { get; set; }
-    public string SubscriptionId { get; set; }
-    public string ConduitId { get; set; }
-    public string After { get; set; }
+    private GodotObject? _data;
+    public string? Status { get; set; }
+    public string? Type { get; set; }
+    public string? UserId { get; set; }
+    public string? SubscriptionId { get; set; }
+    public string? ConduitId { get; set; }
+    public string? After { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetEventsubSubscriptionsOpt object.
     /// </summary> 
-    public static TwitchGetEventsubSubscriptionsOpt FromObject(GodotObject data)
+    public static TwitchGetEventsubSubscriptionsOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetEventsubSubscriptionsOpt

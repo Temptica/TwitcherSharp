@@ -10,14 +10,14 @@ namespace TwitcherSharp.Api.Generated.Chat;
 /// </summary>
 public partial class TwitchGetUserEmotesOpt : RefCounted, ITwitcherSharp<TwitchGetUserEmotesOpt>
 {
-    private GodotObject _data;
-    public string After { get; set; }
-    public string BroadcasterId { get; set; }
+    private GodotObject? _data;
+    public string? After { get; set; }
+    public string? BroadcasterId { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetUserEmotesOpt object.
     /// </summary> 
-    public static TwitchGetUserEmotesOpt FromObject(GodotObject data)
+    public static TwitchGetUserEmotesOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetUserEmotesOpt

@@ -13,7 +13,7 @@ public interface ITwitcherSharp<out TSelf> : ITwitcherSharp where TSelf: RefCoun
     /// </summary>
     /// <param name="data"></param>
     /// <returns></returns>
-    static abstract TSelf FromObject(GodotObject data);
+    static abstract TSelf? FromObject(GodotObject? data);
 }
 
 /// <summary>

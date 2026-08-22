@@ -8,62 +8,62 @@ namespace TwitcherSharp.EventSub.Generated.ChannelPointsAutomaticRewardRedemptio
 
 public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : RefCounted, ITwitcherSharpEventSub<TwitchChannelPointsAutomaticRewardRedemptionAddV2Event>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     /// <summary> 
     /// The ID of the channel where the reward was redeemed.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string? BroadcasterUserId { get; set; }
 
     /// <summary> 
     /// The login of the channel where the reward was redeemed.
     /// </summary>
-    public string BroadcasterUserLogin { get; set; }
+    public string? BroadcasterUserLogin { get; set; }
 
     /// <summary> 
     /// The display name of the channel where the reward was redeemed.
     /// </summary>
-    public string BroadcasterUserName { get; set; }
+    public string? BroadcasterUserName { get; set; }
 
     /// <summary> 
     /// The ID of the redeeming user.
     /// </summary>
-    public string UserId { get; set; }
+    public string? UserId { get; set; }
 
     /// <summary> 
     /// The login of the redeeming user.
     /// </summary>
-    public string UserLogin { get; set; }
+    public string? UserLogin { get; set; }
 
     /// <summary> 
     /// The display name of the redeeming user.
     /// </summary>
-    public string UserName { get; set; }
+    public string? UserName { get; set; }
 
     /// <summary> 
     /// The ID of the Redemption.
     /// </summary>
-    public string Id { get; set; }
+    public string? Id { get; set; }
 
     /// <summary> 
     /// 
     /// </summary>
-    public TwitchReward Reward { get => field ??= _data?.Get<TwitchReward>("reward"); set; }
+    public TwitchReward? Reward { get => field ??= _data?.Get<TwitchReward>("reward"); set; }
 
     /// <summary> 
     /// 
     /// </summary>
-    public TwitchMessage Message { get => field ??= _data?.Get<TwitchMessage>("message"); set; }
+    public TwitchMessage? Message { get => field ??= _data?.Get<TwitchMessage>("message"); set; }
 
     /// <summary> 
     /// The UTC date and time (in RFC3339 format) of when the reward was redeemed.
     /// </summary>
-    public string RedeemedAt { get; set; }
+    public string? RedeemedAt { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelPointsAutomaticRewardRedemptionAddV2Event object.
     /// </summary> 
-    public static TwitchChannelPointsAutomaticRewardRedemptionAddV2Event FromObject(GodotObject data)
+    public static TwitchChannelPointsAutomaticRewardRedemptionAddV2Event? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannelPointsAutomaticRewardRedemptionAddV2Event
@@ -87,28 +87,28 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_points_automatic_reward_redemption_add.gd");
         var eventClass = script.Get("Event").As<GDScript>();
         var request = eventClass.New().AsGodotObject();
-        request.Set("broadcaster_user_id", BroadcasterUserId);
-        request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        request.Set("broadcaster_user_name", BroadcasterUserName);
-        request.Set("user_id", UserId);
-        request.Set("user_login", UserLogin);
-        request.Set("user_name", UserName);
-        request.Set("id", Id);
-        request.Set("reward", Reward?.ToGodotObject());
-        request.Set("message", Message?.ToGodotObject());
-        request.Set("redeemed_at", RedeemedAt);
+        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
+        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
+        if(UserId != null) request.Set("user_id", UserId);
+        if(UserLogin != null) request.Set("user_login", UserLogin);
+        if(UserName != null) request.Set("user_name", UserName);
+        if(Id != null) request.Set("id", Id);
+        if(Reward != null) request.Set("reward", Reward.ToGodotObject());
+        if(Message != null) request.Set("message", Message.ToGodotObject());
+        if(RedeemedAt != null) request.Set("redeemed_at", RedeemedAt);
         return request;
     }
 
 
     public partial class TwitchReward : RefCounted, ITwitcherSharpEventSub<TwitchReward>
     {
-        private GodotObject _data;
+        private GodotObject? _data;
         
         /// <summary> 
         /// The type of reward. One of:  single_message_bypass_sub_modesend_highlighted_messagerandom_sub_emote_unlockchosen_sub_emote_unlockchosen_modified_sub_emote_unlock
         /// </summary>
-        public string Type { get; set; }
+        public string? Type { get; set; }
     
         /// <summary> 
         /// Number of channel points used.
@@ -118,12 +118,12 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
         /// <summary> 
         /// Optional. Emote associated with the reward.
         /// </summary>
-        public TwitchEmote Emote { get => field ??= _data?.Get<TwitchEmote>("emote"); set; }
+        public TwitchEmote? Emote { get => field ??= _data?.Get<TwitchEmote>("emote"); set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchReward object.
         /// </summary> 
-        public static TwitchReward FromObject(GodotObject data)
+        public static TwitchReward? FromObject(GodotObject? data)
         {
             if(data == null) return null;
             var instance = new TwitchReward
@@ -141,31 +141,31 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_points_automatic_reward_redemption_add.gd");
             var rewardClass = script.Get("Reward").As<GDScript>();
             var request = rewardClass.New().AsGodotObject();
-            request.Set("type", Type);
+            if(Type != null) request.Set("type", Type);
             request.Set("channel_points", ChannelPoints);
-            request.Set("emote", Emote?.ToGodotObject());
+            if(Emote != null) request.Set("emote", Emote.ToGodotObject());
             return request;
         }
     
     
         public partial class TwitchEmote : RefCounted, ITwitcherSharpEventSub<TwitchEmote>
         {
-            private GodotObject _data;
+            private GodotObject? _data;
             
             /// <summary> 
             /// The emote ID.
             /// </summary>
-            public string Id { get; set; }
+            public string? Id { get; set; }
         
             /// <summary> 
             /// The human readable emote token.
             /// </summary>
-            public string Name { get; set; }
+            public string? Name { get; set; }
         
             /// <summary> 
             /// Transforms the godot data into a TwitchEmote object.
             /// </summary> 
-            public static TwitchEmote FromObject(GodotObject data)
+            public static TwitchEmote? FromObject(GodotObject? data)
             {
                 if(data == null) return null;
                 var instance = new TwitchEmote
@@ -183,8 +183,8 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
                 var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_points_automatic_reward_redemption_add.gd");
                 var emoteClass = script.Get("Emote").As<GDScript>();
                 var request = emoteClass.New().AsGodotObject();
-                request.Set("id", Id);
-                request.Set("name", Name);
+                if(Id != null) request.Set("id", Id);
+                if(Name != null) request.Set("name", Name);
                 return request;
             }
         }
@@ -192,22 +192,22 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
 
     public partial class TwitchMessage : RefCounted, ITwitcherSharpEventSub<TwitchMessage>
     {
-        private GodotObject _data;
+        private GodotObject? _data;
         
         /// <summary> 
         /// The chat message in plain text.
         /// </summary>
-        public string Text { get; set; }
+        public string? Text { get; set; }
     
         /// <summary> 
         /// The ordered list of chat message fragments.
         /// </summary>
-        public TwitchFragments[] Fragments { get => field ??= _data?.GetArray<TwitchFragments>("fragments"); set; }
+        public TwitchFragments[]? Fragments { get => field ??= _data?.GetArray<TwitchFragments>("fragments"); set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchMessage object.
         /// </summary> 
-        public static TwitchMessage FromObject(GodotObject data)
+        public static TwitchMessage? FromObject(GodotObject? data)
         {
             if(data == null) return null;
             var instance = new TwitchMessage
@@ -224,35 +224,35 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_points_automatic_reward_redemption_add.gd");
             var messageClass = script.Get("Message").As<GDScript>();
             var request = messageClass.New().AsGodotObject();
-            request.Set("text", Text);
-            if(Fragments != null) request.Set("fragments", Fragments?.ToGodotArray());
+            if(Text != null) request.Set("text", Text);
+            if(Fragments != null) request.Set("fragments", Fragments.ToGodotArray());
             return request;
         }
     
     
         public partial class TwitchFragments : RefCounted, ITwitcherSharpEventSub<TwitchFragments>
         {
-            private GodotObject _data;
+            private GodotObject? _data;
             
             /// <summary> 
             /// The message text in fragment.
             /// </summary>
-            public string Text { get; set; }
+            public string? Text { get; set; }
         
             /// <summary> 
             /// The type of message fragment. Possible values are: textemote
             /// </summary>
-            public string Type { get; set; }
+            public string? Type { get; set; }
         
             /// <summary> 
             /// Optional. The metadata pertaining to the emote.
             /// </summary>
-            public TwitchEmote Emote { get => field ??= _data?.Get<TwitchEmote>("emote"); set; }
+            public TwitchEmote? Emote { get => field ??= _data?.Get<TwitchEmote>("emote"); set; }
         
             /// <summary> 
             /// Transforms the godot data into a TwitchFragments object.
             /// </summary> 
-            public static TwitchFragments FromObject(GodotObject data)
+            public static TwitchFragments? FromObject(GodotObject? data)
             {
                 if(data == null) return null;
                 var instance = new TwitchFragments
@@ -270,26 +270,26 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
                 var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_points_automatic_reward_redemption_add.gd");
                 var fragmentsClass = script.Get("Fragments").As<GDScript>();
                 var request = fragmentsClass.New().AsGodotObject();
-                request.Set("text", Text);
-                request.Set("type", Type);
-                request.Set("emote", Emote?.ToGodotObject());
+                if(Text != null) request.Set("text", Text);
+                if(Type != null) request.Set("type", Type);
+                if(Emote != null) request.Set("emote", Emote.ToGodotObject());
                 return request;
             }
         
         
             public partial class TwitchEmote : RefCounted, ITwitcherSharpEventSub<TwitchEmote>
             {
-                private GodotObject _data;
+                private GodotObject? _data;
                 
                 /// <summary> 
                 /// The ID that uniquely identifies this emote.
                 /// </summary>
-                public string Id { get; set; }
+                public string? Id { get; set; }
             
                 /// <summary> 
                 /// Transforms the godot data into a TwitchEmote object.
                 /// </summary> 
-                public static TwitchEmote FromObject(GodotObject data)
+                public static TwitchEmote? FromObject(GodotObject? data)
                 {
                     if(data == null) return null;
                     var instance = new TwitchEmote
@@ -306,7 +306,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
                     var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_points_automatic_reward_redemption_add.gd");
                     var emoteClass = script.Get("Emote").As<GDScript>();
                     var request = emoteClass.New().AsGodotObject();
-                    request.Set("id", Id);
+                    if(Id != null) request.Set("id", Id);
                     return request;
                 }
             }

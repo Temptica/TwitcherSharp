@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelSubscribe;
 
 public partial class TwitchChannelSubscribeCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelSubscribeCondition>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     public string Name => nameof(TwitchChannelSubscribeCondition);
 
@@ -20,7 +20,7 @@ public partial class TwitchChannelSubscribeCondition(string broadcasterUserId) :
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelSubscribeCondition object.
     /// </summary> 
-    public static TwitchChannelSubscribeCondition FromObject(GodotObject data)
+    public static TwitchChannelSubscribeCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannelSubscribeCondition(data.Get("broadcaster_user_id").AsString());

@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.Shared;
 
 public partial class TwitchMaxPerStream : RefCounted, ITwitcherSharpEventSub<TwitchMaxPerStream>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     /// <summary> 
     /// Is the setting enabled.
@@ -23,7 +23,7 @@ public partial class TwitchMaxPerStream : RefCounted, ITwitcherSharpEventSub<Twi
     /// <summary> 
     /// Transforms the godot data into a TwitchMaxPerStream object.
     /// </summary> 
-    public static TwitchMaxPerStream FromObject(GodotObject data)
+    public static TwitchMaxPerStream? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchMaxPerStream

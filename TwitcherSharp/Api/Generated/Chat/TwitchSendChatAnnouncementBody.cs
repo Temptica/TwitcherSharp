@@ -6,15 +6,15 @@ namespace TwitcherSharp.Api.Generated.Chat;
 
 public partial class TwitchSendChatAnnouncementBody : RefCounted, ITwitcherSharp<TwitchSendChatAnnouncementBody>
 {
-    private GodotObject _data;
-    public string Message { get; set; }
-    public string Color { get; set; }
+    private GodotObject? _data;
+    public string Message { get; set; } = null!;
+    public string? Color { get; set; }
     public bool? ForSourceOnly { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchSendChatAnnouncementBody object.
     /// </summary> 
-    public static TwitchSendChatAnnouncementBody FromObject(GodotObject data)
+    public static TwitchSendChatAnnouncementBody? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchSendChatAnnouncementBody
@@ -33,7 +33,7 @@ public partial class TwitchSendChatAnnouncementBody : RefCounted, ITwitcherSharp
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_send_chat_announcement.gd");
         var bodyClass = script.Get("Body").AsGodotObject();
         var request = bodyClass.Call("new").AsGodotObject();
-        request.Set("message", Message);
+        if(Message != null) request.Set("message", Message);
         if(Color != null) request.Set("color", Color);
         if(ForSourceOnly.HasValue) request.Set("for_source_only", ForSourceOnly.Value);
         return request;

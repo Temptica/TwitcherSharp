@@ -6,21 +6,21 @@ namespace TwitcherSharp.Api.Generated.Goals;
 
 public partial class TwitchCreatorGoal : RefCounted, ITwitcherSharp<TwitchCreatorGoal>
 {
-    private GodotObject _data;
-    public string Id { get; set; }
-    public string BroadcasterId { get; set; }
-    public string BroadcasterName { get; set; }
-    public string BroadcasterLogin { get; set; }
-    public string Type { get; set; }
-    public string Description { get; set; }
+    private GodotObject? _data;
+    public string Id { get; set; } = null!;
+    public string BroadcasterId { get; set; } = null!;
+    public string BroadcasterName { get; set; } = null!;
+    public string BroadcasterLogin { get; set; } = null!;
+    public string Type { get; set; } = null!;
+    public string Description { get; set; } = null!;
     public int CurrentAmount { get; set; }
     public int TargetAmount { get; set; }
-    public string CreatedAt { get; set; }
+    public string CreatedAt { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCreatorGoal object.
     /// </summary> 
-    public static TwitchCreatorGoal FromObject(GodotObject data)
+    public static TwitchCreatorGoal? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchCreatorGoal
@@ -44,15 +44,15 @@ public partial class TwitchCreatorGoal : RefCounted, ITwitcherSharp<TwitchCreato
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_creator_goal.gd");
         var request = script.Call("new").AsGodotObject();
-        request.Set("id", Id);
-        request.Set("broadcaster_id", BroadcasterId);
-        request.Set("broadcaster_name", BroadcasterName);
-        request.Set("broadcaster_login", BroadcasterLogin);
-        request.Set("type", Type);
-        request.Set("description", Description);
+        if(Id != null) request.Set("id", Id);
+        if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
+        if(BroadcasterName != null) request.Set("broadcaster_name", BroadcasterName);
+        if(BroadcasterLogin != null) request.Set("broadcaster_login", BroadcasterLogin);
+        if(Type != null) request.Set("type", Type);
+        if(Description != null) request.Set("description", Description);
         request.Set("current_amount", CurrentAmount);
         request.Set("target_amount", TargetAmount);
-        request.Set("created_at", CreatedAt);
+        if(CreatedAt != null) request.Set("created_at", CreatedAt);
         return request;
     }
 

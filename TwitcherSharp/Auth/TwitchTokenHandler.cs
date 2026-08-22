@@ -7,21 +7,24 @@ namespace TwitcherSharp.Auth;
 
 public partial class TwitchTokenHandler : RefCounted, ITwitcherSharp<TwitchTokenHandler>
 {
-    private GodotObject _data;
+    private GodotObject _data = null!;
 
     /// <summary>
     /// Validates a token.
-    /// Note: It might be easier to get the GodotObject and call <code>await godotObject.CallAsync<ResponseData>(TwitchTokenHandler.Methods.ValidateToken, token);</code>
     /// </summary>
-    /// <param name="token"></param>
     /// <returns></returns>
-    public async Task<ResponseData> ValidateToken() => await _data.CallAsync<ResponseData>(Methods.ValidateToken);
+    public async Task<ResponseData?> ValidateToken() => await _data.CallAsync<ResponseData>(Methods.ValidateToken) ;
+    
+    /// <summary>
+    /// Revokes a token.
+    /// </summary>
+    public async Task RevokeToken() => await _data.CallAsync(Methods.RevokeToken);
 
     /*func validate_token(token: String) -> BufferedHTTPClient.ResponseData:*/
     /*revoke_token() -> void:*/
-    public static TwitchTokenHandler FromObject(GodotObject data)
+    public static TwitchTokenHandler? FromObject(GodotObject? data)
     {
-        return new TwitchTokenHandler { _data = data };
+        return data == null ? null : new TwitchTokenHandler { _data = data };
     }
 
     public GodotObject ToGodotObject()
@@ -31,7 +34,7 @@ public partial class TwitchTokenHandler : RefCounted, ITwitcherSharp<TwitchToken
 
     public static class Methods
     {
-        public static string ValidateToken = "validate_token";
-        public static string RevokeToken = "revoke_token";
+        public const string ValidateToken = "validate_token";
+        public const string RevokeToken = "revoke_token";
     }
 }

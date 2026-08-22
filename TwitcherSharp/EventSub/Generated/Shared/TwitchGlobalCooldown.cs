@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.Shared;
 
 public partial class TwitchGlobalCooldown : RefCounted, ITwitcherSharpEventSub<TwitchGlobalCooldown>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     /// <summary> 
     /// Is the setting enabled.
@@ -23,7 +23,7 @@ public partial class TwitchGlobalCooldown : RefCounted, ITwitcherSharpEventSub<T
     /// <summary> 
     /// Transforms the godot data into a TwitchGlobalCooldown object.
     /// </summary> 
-    public static TwitchGlobalCooldown FromObject(GodotObject data)
+    public static TwitchGlobalCooldown? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGlobalCooldown

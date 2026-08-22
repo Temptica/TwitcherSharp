@@ -10,14 +10,14 @@ namespace TwitcherSharp.Api.Generated.Charity;
 /// </summary>
 public partial class TwitchGetCharityCampaignDonationsOpt : RefCounted, ITwitcherSharp<TwitchGetCharityCampaignDonationsOpt>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     public int? First { get; set; }
-    public string After { get; set; }
+    public string? After { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetCharityCampaignDonationsOpt object.
     /// </summary> 
-    public static TwitchGetCharityCampaignDonationsOpt FromObject(GodotObject data)
+    public static TwitchGetCharityCampaignDonationsOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetCharityCampaignDonationsOpt

@@ -14,7 +14,7 @@ namespace TwitcherSharp.Reward;
 public partial class TwitchRewardService(TwitchApi api, TwitchMediaLoader twitchMediaLoader)
     : RefCounted, ITwitcherSharp<TwitchRewardService>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     public TwitchApi TwitchApi { get; set; } = api;
     public TwitchMediaLoader TwitchMediaLoader { get; set; } = twitchMediaLoader;
 
@@ -116,11 +116,12 @@ public partial class TwitchRewardService(TwitchApi api, TwitchMediaLoader twitch
     /// </summary>
     /// <param name="data"></param>
     /// <returns></returns>
-    public static TwitchRewardService FromObject(GodotObject data)
+    public static TwitchRewardService? FromObject(GodotObject? data)
     {
-        var rewardService = new TwitchRewardService(TwitchApi.FromObject(data.Get("twitch_api").AsGodotObject())
-            , TwitchMediaLoader.FromObject(data.Get("twitch_media_loader").AsGodotObject()));
-        
+        if (data == null) return null;
+        var rewardService = new TwitchRewardService(TwitchApi.FromObject(data.Get("twitch_api").AsGodotObject())!
+            , TwitchMediaLoader.FromObject(data.Get("twitch_media_loader").AsGodotObject())!);
+
         rewardService._data = data;
         return rewardService;
     }
@@ -129,8 +130,8 @@ public partial class TwitchRewardService(TwitchApi api, TwitchMediaLoader twitch
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/reward/twitch_reward_service.gd");
         var instance = script.New().AsGodotObject();
-        instance.Set("twitch_api", TwitchApi?.ToGodotObject());
-        instance.Set("twitch_media_loader", TwitchMediaLoader?.ToGodotObject());
+        instance.Set("twitch_api", TwitchApi?.ToGodotObject() ?? new Variant());
+        instance.Set("twitch_media_loader", TwitchMediaLoader?.ToGodotObject() ?? new Variant());
         return instance;
     }
 }

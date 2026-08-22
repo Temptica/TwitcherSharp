@@ -6,13 +6,13 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 
 public partial class TwitchUpdateShieldModeStatusBody : RefCounted, ITwitcherSharp<TwitchUpdateShieldModeStatusBody>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     public bool IsActive { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUpdateShieldModeStatusBody object.
     /// </summary> 
-    public static TwitchUpdateShieldModeStatusBody FromObject(GodotObject data)
+    public static TwitchUpdateShieldModeStatusBody? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchUpdateShieldModeStatusBody

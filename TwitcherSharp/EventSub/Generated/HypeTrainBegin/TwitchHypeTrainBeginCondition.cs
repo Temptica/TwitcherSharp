@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.HypeTrainBegin;
 
 public partial class TwitchHypeTrainBeginCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchHypeTrainBeginCondition>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     public string Name => nameof(TwitchHypeTrainBeginCondition);
 
@@ -20,7 +20,7 @@ public partial class TwitchHypeTrainBeginCondition(string broadcasterUserId) : R
     /// <summary> 
     /// Transforms the godot data into a TwitchHypeTrainBeginCondition object.
     /// </summary> 
-    public static TwitchHypeTrainBeginCondition FromObject(GodotObject data)
+    public static TwitchHypeTrainBeginCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchHypeTrainBeginCondition(data.Get("broadcaster_user_id").AsString());

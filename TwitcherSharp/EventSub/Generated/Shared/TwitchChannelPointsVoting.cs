@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.Shared;
 
 public partial class TwitchChannelPointsVoting : RefCounted, ITwitcherSharpEventSub<TwitchChannelPointsVoting>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     /// <summary> 
     /// Indicates if Channel Points can be used for voting.
@@ -23,7 +23,7 @@ public partial class TwitchChannelPointsVoting : RefCounted, ITwitcherSharpEvent
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelPointsVoting object.
     /// </summary> 
-    public static TwitchChannelPointsVoting FromObject(GodotObject data)
+    public static TwitchChannelPointsVoting? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannelPointsVoting

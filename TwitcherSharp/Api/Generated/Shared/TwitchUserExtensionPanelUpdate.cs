@@ -6,15 +6,15 @@ namespace TwitcherSharp.Api.Generated.Shared;
 
 public partial class TwitchUserExtensionPanelUpdate : RefCounted, ITwitcherSharp<TwitchUserExtensionPanelUpdate>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     public bool Active { get; set; }
-    public string Id { get; set; }
-    public string Version { get; set; }
+    public string? Id { get; set; }
+    public string? Version { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUserExtensionPanelUpdate object.
     /// </summary> 
-    public static TwitchUserExtensionPanelUpdate FromObject(GodotObject data)
+    public static TwitchUserExtensionPanelUpdate? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchUserExtensionPanelUpdate
