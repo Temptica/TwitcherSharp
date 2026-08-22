@@ -12,6 +12,10 @@ namespace ClassGenerator.Generator.EventSub;
 ///
 /// This deliberately does not validate against the Twitcher addon's generated_eventsub folder - that addon isn't
 /// reliably kept in sync with Twitch, so it isn't a trustworthy source of truth here.
+///
+/// For every override, an extra "Legacy" definition is also generated using the pre-override, mechanically-derived
+/// script name - anyone who already depends on that name (guessed, or from before an override was added here)
+/// keeps working. It's marked obsolete and shouldn't be used going forward.
 /// </summary>
 public static class EventSubScriptNameResolver
 {
@@ -39,18 +43,39 @@ public static class EventSubScriptNameResolver
 
     public static void Resolve(List<TwitchEventSubDefinitionInfo> definitions)
     {
+        var result = new List<TwitchEventSubDefinitionInfo>(definitions.Count);
+
         foreach (var definition in definitions)
         {
+            var defaultCandidate = GetDefaultCandidate(definition.Value);
+
             if (Overrides.TryGetValue(definition.Value, out var overrideName))
             {
                 definition.ScriptName = overrideName;
+                result.Add(definition);
+
+                if (defaultCandidate != overrideName)
+                {
+                    var legacy = definition.Clone();
+                    legacy.EnumName = definition.EnumName + "Legacy";
+                    legacy.ScriptName = defaultCandidate;
+                    legacy.IsObsolete = true;
+                    result.Add(legacy);
+                }
+
                 continue;
             }
 
-            // Twitch's own type name sometimes repeats "channel_" (e.g. channel.channel_points_custom_reward...),
-            // but the addon's script names don't - safe to dedupe unconditionally.
-            var defaultCandidate = definition.Value.Replace(".", "_");
-            definition.ScriptName = Regex.Replace(defaultCandidate, "^channel_channel_", "channel_");
+            definition.ScriptName = defaultCandidate;
+            result.Add(definition);
         }
+
+        definitions.Clear();
+        definitions.AddRange(result);
     }
+
+    // Twitch's own type name sometimes repeats "channel_" (e.g. channel.channel_points_custom_reward...),
+    // but the addon's script names don't - safe to dedupe unconditionally.
+    private static string GetDefaultCandidate(string value) =>
+        Regex.Replace(value.Replace(".", "_"), "^channel_channel_", "channel_");
 }

@@ -6,6 +6,8 @@ namespace ClassGenerator.Generator.EventSub;
 public class TwitchEventSubDefinitionGenerator
 {
     private const string TypeEnumTemplate = """
+                                             using System;
+
                                              namespace TwitcherSharp.EventSub;
 
                                              public enum TwitchEventSubDefinitionType
@@ -18,6 +20,7 @@ public class TwitchEventSubDefinitionGenerator
     /// Param: {{Definitions}} {{AllList}}
     /// </summary>
     private const string DefinitionTemplate = """
+                                                using System;
                                                 using Godot;
                                                 using TwitcherSharp.Interfaces;
 
@@ -95,7 +98,10 @@ public class TwitchEventSubDefinitionGenerator
 
     private static string GenerateTypeEnum(List<TwitchEventSubDefinitionInfo> definitions)
     {
-        var values = string.Join(",\n", definitions.Select(d => $"    {d.EnumName}"));
+        var values = string.Join(",\n", definitions.Select(d =>
+            d.IsObsolete
+                ? $"    [Obsolete(\"{ObsoleteMessage(d)}\")]\n    {d.EnumName}"
+                : $"    {d.EnumName}"));
         return TypeEnumTemplate.Replace("{{Values}}", values);
     }
 
@@ -112,14 +118,20 @@ public class TwitchEventSubDefinitionGenerator
     {
         var conditions = FormatStringArray(definition.Conditions);
         var scopes = FormatStringArray(definition.Scopes);
+        var obsoleteAttribute = definition.IsObsolete ? $"    [Obsolete(\"{ObsoleteMessage(definition)}\")]\n" : "";
         return $"""
-                    public static readonly TwitchEventSubDefinition {definition.EnumName} = new(
+                {obsoleteAttribute}    public static readonly TwitchEventSubDefinition {definition.EnumName} = new(
                         TwitchEventSubDefinitionType.{definition.EnumName}, "{definition.Value}", "{definition.Version}",
                         {conditions}, {scopes},
                         "{definition.DocumentationLink}",
                         "{definition.ScriptName}");
                 """;
     }
+
+    // Legacy definitions are always named "{Primary}Legacy" - see EventSubScriptNameResolver.
+    private static string ObsoleteMessage(TwitchEventSubDefinitionInfo definition) =>
+        $"Kept for backwards compatibility - points at the pre-override script name '{definition.ScriptName}'. " +
+        $"Use {definition.EnumName[..^"Legacy".Length]} instead.";
 
     private static string FormatStringArray(List<string> values) =>
         values.Count == 0 ? "[]" : $"[{string.Join(", ", values.Select(v => $"\"{v}\""))}]";
