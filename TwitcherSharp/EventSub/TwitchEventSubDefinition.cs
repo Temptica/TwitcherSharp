@@ -1,4 +1,3 @@
-using System;
 using Godot;
 using TwitcherSharp.Interfaces;
 
@@ -406,25 +405,11 @@ public partial class TwitchEventSubDefinition() : RefCounted, ITwitcherSharp<Twi
         "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelhype_trainbegin",
         "hype_train_begin");
 
-    [Obsolete("Kept for backwards compatibility - points at the pre-override script name 'channel_hype_train_begin'. Use ChannelHypeTrainBegin instead.")]
-    public static readonly TwitchEventSubDefinition ChannelHypeTrainBeginLegacy = new(
-        TwitchEventSubDefinitionType.ChannelHypeTrainBeginLegacy, "channel.hype_train.begin", "2",
-        ["broadcaster_user_id"], ["channel:read:hype_train"],
-        "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelhype_trainbegin",
-        "channel_hype_train_begin");
-
     public static readonly TwitchEventSubDefinition ChannelHypeTrainProgress = new(
         TwitchEventSubDefinitionType.ChannelHypeTrainProgress, "channel.hype_train.progress", "2",
         ["broadcaster_user_id"], ["channel:read:hype_train"],
         "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelhype_trainprogress",
         "hype_train_progress");
-
-    [Obsolete("Kept for backwards compatibility - points at the pre-override script name 'channel_hype_train_progress'. Use ChannelHypeTrainProgress instead.")]
-    public static readonly TwitchEventSubDefinition ChannelHypeTrainProgressLegacy = new(
-        TwitchEventSubDefinitionType.ChannelHypeTrainProgressLegacy, "channel.hype_train.progress", "2",
-        ["broadcaster_user_id"], ["channel:read:hype_train"],
-        "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelhype_trainprogress",
-        "channel_hype_train_progress");
 
     public static readonly TwitchEventSubDefinition ChannelHypeTrainEnd = new(
         TwitchEventSubDefinitionType.ChannelHypeTrainEnd, "channel.hype_train.end", "2",
@@ -432,25 +417,11 @@ public partial class TwitchEventSubDefinition() : RefCounted, ITwitcherSharp<Twi
         "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelhype_trainend",
         "hype_train_end");
 
-    [Obsolete("Kept for backwards compatibility - points at the pre-override script name 'channel_hype_train_end'. Use ChannelHypeTrainEnd instead.")]
-    public static readonly TwitchEventSubDefinition ChannelHypeTrainEndLegacy = new(
-        TwitchEventSubDefinitionType.ChannelHypeTrainEndLegacy, "channel.hype_train.end", "2",
-        ["broadcaster_user_id"], ["channel:read:hype_train"],
-        "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelhype_trainend",
-        "channel_hype_train_end");
-
     public static readonly TwitchEventSubDefinition ChannelCharityCampaignDonate = new(
         TwitchEventSubDefinitionType.ChannelCharityCampaignDonate, "channel.charity_campaign.donate", "1",
         ["broadcaster_user_id"], ["channel:read:charity"],
         "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelcharity_campaigndonate",
         "charity_donation");
-
-    [Obsolete("Kept for backwards compatibility - points at the pre-override script name 'channel_charity_campaign_donate'. Use ChannelCharityCampaignDonate instead.")]
-    public static readonly TwitchEventSubDefinition ChannelCharityCampaignDonateLegacy = new(
-        TwitchEventSubDefinitionType.ChannelCharityCampaignDonateLegacy, "channel.charity_campaign.donate", "1",
-        ["broadcaster_user_id"], ["channel:read:charity"],
-        "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelcharity_campaigndonate",
-        "channel_charity_campaign_donate");
 
     public static readonly TwitchEventSubDefinition ChannelCharityCampaignStart = new(
         TwitchEventSubDefinitionType.ChannelCharityCampaignStart, "channel.charity_campaign.start", "1",
@@ -458,25 +429,11 @@ public partial class TwitchEventSubDefinition() : RefCounted, ITwitcherSharp<Twi
         "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelcharity_campaignstart",
         "charity_campaign_start");
 
-    [Obsolete("Kept for backwards compatibility - points at the pre-override script name 'channel_charity_campaign_start'. Use ChannelCharityCampaignStart instead.")]
-    public static readonly TwitchEventSubDefinition ChannelCharityCampaignStartLegacy = new(
-        TwitchEventSubDefinitionType.ChannelCharityCampaignStartLegacy, "channel.charity_campaign.start", "1",
-        ["broadcaster_user_id"], ["channel:read:charity"],
-        "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelcharity_campaignstart",
-        "channel_charity_campaign_start");
-
     public static readonly TwitchEventSubDefinition ChannelCharityCampaignProgress = new(
         TwitchEventSubDefinitionType.ChannelCharityCampaignProgress, "channel.charity_campaign.progress", "1",
         ["broadcaster_user_id"], ["channel:read:charity"],
         "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelcharity_campaignprogress",
         "charity_campaign_progress");
-
-    [Obsolete("Kept for backwards compatibility - points at the pre-override script name 'channel_charity_campaign_progress'. Use ChannelCharityCampaignProgress instead.")]
-    public static readonly TwitchEventSubDefinition ChannelCharityCampaignProgressLegacy = new(
-        TwitchEventSubDefinitionType.ChannelCharityCampaignProgressLegacy, "channel.charity_campaign.progress", "1",
-        ["broadcaster_user_id"], ["channel:read:charity"],
-        "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelcharity_campaignprogress",
-        "channel_charity_campaign_progress");
 
     public static readonly TwitchEventSubDefinition ChannelCharityCampaignStop = new(
         TwitchEventSubDefinitionType.ChannelCharityCampaignStop, "channel.charity_campaign.stop", "1",
@@ -484,25 +441,11 @@ public partial class TwitchEventSubDefinition() : RefCounted, ITwitcherSharp<Twi
         "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelcharity_campaignstop",
         "charity_campaign_stop");
 
-    [Obsolete("Kept for backwards compatibility - points at the pre-override script name 'channel_charity_campaign_stop'. Use ChannelCharityCampaignStop instead.")]
-    public static readonly TwitchEventSubDefinition ChannelCharityCampaignStopLegacy = new(
-        TwitchEventSubDefinitionType.ChannelCharityCampaignStopLegacy, "channel.charity_campaign.stop", "1",
-        ["broadcaster_user_id"], ["channel:read:charity"],
-        "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelcharity_campaignstop",
-        "channel_charity_campaign_stop");
-
     public static readonly TwitchEventSubDefinition ChannelSharedChatBegin = new(
         TwitchEventSubDefinitionType.ChannelSharedChatBegin, "channel.shared_chat.begin", "1",
         ["broadcaster_user_id"], [],
         "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelshared_chatbegin",
         "channel_shared_chat_session_begin");
-
-    [Obsolete("Kept for backwards compatibility - points at the pre-override script name 'channel_shared_chat_begin'. Use ChannelSharedChatBegin instead.")]
-    public static readonly TwitchEventSubDefinition ChannelSharedChatBeginLegacy = new(
-        TwitchEventSubDefinitionType.ChannelSharedChatBeginLegacy, "channel.shared_chat.begin", "1",
-        ["broadcaster_user_id"], [],
-        "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelshared_chatbegin",
-        "channel_shared_chat_begin");
 
     public static readonly TwitchEventSubDefinition ChannelSharedChatUpdate = new(
         TwitchEventSubDefinitionType.ChannelSharedChatUpdate, "channel.shared_chat.update", "1",
@@ -510,25 +453,11 @@ public partial class TwitchEventSubDefinition() : RefCounted, ITwitcherSharp<Twi
         "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelshared_chatupdate",
         "channel_shared_chat_session_update");
 
-    [Obsolete("Kept for backwards compatibility - points at the pre-override script name 'channel_shared_chat_update'. Use ChannelSharedChatUpdate instead.")]
-    public static readonly TwitchEventSubDefinition ChannelSharedChatUpdateLegacy = new(
-        TwitchEventSubDefinitionType.ChannelSharedChatUpdateLegacy, "channel.shared_chat.update", "1",
-        ["broadcaster_user_id"], [],
-        "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelshared_chatupdate",
-        "channel_shared_chat_update");
-
     public static readonly TwitchEventSubDefinition ChannelSharedChatEnd = new(
         TwitchEventSubDefinitionType.ChannelSharedChatEnd, "channel.shared_chat.end", "1",
         ["broadcaster_user_id"], [],
         "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelshared_chatend",
         "channel_shared_chat_session_end");
-
-    [Obsolete("Kept for backwards compatibility - points at the pre-override script name 'channel_shared_chat_end'. Use ChannelSharedChatEnd instead.")]
-    public static readonly TwitchEventSubDefinition ChannelSharedChatEndLegacy = new(
-        TwitchEventSubDefinitionType.ChannelSharedChatEndLegacy, "channel.shared_chat.end", "1",
-        ["broadcaster_user_id"], [],
-        "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelshared_chatend",
-        "channel_shared_chat_end");
 
     public static readonly TwitchEventSubDefinition ChannelShieldModeBegin = new(
         TwitchEventSubDefinitionType.ChannelShieldModeBegin, "channel.shield_mode.begin", "1",
@@ -536,25 +465,11 @@ public partial class TwitchEventSubDefinition() : RefCounted, ITwitcherSharp<Twi
         "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelshield_modebegin",
         "shield_mode");
 
-    [Obsolete("Kept for backwards compatibility - points at the pre-override script name 'channel_shield_mode_begin'. Use ChannelShieldModeBegin instead.")]
-    public static readonly TwitchEventSubDefinition ChannelShieldModeBeginLegacy = new(
-        TwitchEventSubDefinitionType.ChannelShieldModeBeginLegacy, "channel.shield_mode.begin", "1",
-        ["broadcaster_user_id", "moderator_user_id"], ["moderator:read:shield_mode", "moderator:manage:shield_mode"],
-        "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelshield_modebegin",
-        "channel_shield_mode_begin");
-
     public static readonly TwitchEventSubDefinition ChannelShieldModeEnd = new(
         TwitchEventSubDefinitionType.ChannelShieldModeEnd, "channel.shield_mode.end", "1",
         ["broadcaster_user_id", "moderator_user_id"], ["moderator:read:shield_mode", "moderator:manage:shield_mode"],
         "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelshield_modeend",
         "shield_mode");
-
-    [Obsolete("Kept for backwards compatibility - points at the pre-override script name 'channel_shield_mode_end'. Use ChannelShieldModeEnd instead.")]
-    public static readonly TwitchEventSubDefinition ChannelShieldModeEndLegacy = new(
-        TwitchEventSubDefinitionType.ChannelShieldModeEndLegacy, "channel.shield_mode.end", "1",
-        ["broadcaster_user_id", "moderator_user_id"], ["moderator:read:shield_mode", "moderator:manage:shield_mode"],
-        "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelshield_modeend",
-        "channel_shield_mode_end");
 
     public static readonly TwitchEventSubDefinition ChannelShoutoutCreate = new(
         TwitchEventSubDefinitionType.ChannelShoutoutCreate, "channel.shoutout.create", "1",
@@ -562,25 +477,11 @@ public partial class TwitchEventSubDefinition() : RefCounted, ITwitcherSharp<Twi
         "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelshoutoutcreate",
         "shoutout_create");
 
-    [Obsolete("Kept for backwards compatibility - points at the pre-override script name 'channel_shoutout_create'. Use ChannelShoutoutCreate instead.")]
-    public static readonly TwitchEventSubDefinition ChannelShoutoutCreateLegacy = new(
-        TwitchEventSubDefinitionType.ChannelShoutoutCreateLegacy, "channel.shoutout.create", "1",
-        ["broadcaster_user_id", "moderator_user_id"], ["moderator:read:shoutouts", "moderator:manage:shoutouts"],
-        "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelshoutoutcreate",
-        "channel_shoutout_create");
-
     public static readonly TwitchEventSubDefinition ChannelShoutoutReceive = new(
         TwitchEventSubDefinitionType.ChannelShoutoutReceive, "channel.shoutout.receive", "1",
         ["broadcaster_user_id", "moderator_user_id"], ["moderator:read:shoutouts", "moderator:manage:shoutouts"],
         "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelshoutoutreceive",
         "shoutout_received");
-
-    [Obsolete("Kept for backwards compatibility - points at the pre-override script name 'channel_shoutout_receive'. Use ChannelShoutoutReceive instead.")]
-    public static readonly TwitchEventSubDefinition ChannelShoutoutReceiveLegacy = new(
-        TwitchEventSubDefinitionType.ChannelShoutoutReceiveLegacy, "channel.shoutout.receive", "1",
-        ["broadcaster_user_id", "moderator_user_id"], ["moderator:read:shoutouts", "moderator:manage:shoutouts"],
-        "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelshoutoutreceive",
-        "channel_shoutout_receive");
 
     public static readonly TwitchEventSubDefinition ConduitShardDisabled = new(
         TwitchEventSubDefinitionType.ConduitShardDisabled, "conduit.shard.disabled", "1",
@@ -606,38 +507,17 @@ public partial class TwitchEventSubDefinition() : RefCounted, ITwitcherSharp<Twi
         "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelgoalbegin",
         "goals");
 
-    [Obsolete("Kept for backwards compatibility - points at the pre-override script name 'channel_goal_begin'. Use ChannelGoalBegin instead.")]
-    public static readonly TwitchEventSubDefinition ChannelGoalBeginLegacy = new(
-        TwitchEventSubDefinitionType.ChannelGoalBeginLegacy, "channel.goal.begin", "1",
-        ["broadcaster_user_id"], ["channel:read:goals"],
-        "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelgoalbegin",
-        "channel_goal_begin");
-
     public static readonly TwitchEventSubDefinition ChannelGoalProgress = new(
         TwitchEventSubDefinitionType.ChannelGoalProgress, "channel.goal.progress", "1",
         ["broadcaster_user_id"], ["channel:read:goals"],
         "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelgoalprogress",
         "goals");
 
-    [Obsolete("Kept for backwards compatibility - points at the pre-override script name 'channel_goal_progress'. Use ChannelGoalProgress instead.")]
-    public static readonly TwitchEventSubDefinition ChannelGoalProgressLegacy = new(
-        TwitchEventSubDefinitionType.ChannelGoalProgressLegacy, "channel.goal.progress", "1",
-        ["broadcaster_user_id"], ["channel:read:goals"],
-        "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelgoalprogress",
-        "channel_goal_progress");
-
     public static readonly TwitchEventSubDefinition ChannelGoalEnd = new(
         TwitchEventSubDefinitionType.ChannelGoalEnd, "channel.goal.end", "1",
         ["broadcaster_user_id"], ["channel:read:goals"],
         "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelgoalend",
         "goals");
-
-    [Obsolete("Kept for backwards compatibility - points at the pre-override script name 'channel_goal_end'. Use ChannelGoalEnd instead.")]
-    public static readonly TwitchEventSubDefinition ChannelGoalEndLegacy = new(
-        TwitchEventSubDefinitionType.ChannelGoalEndLegacy, "channel.goal.end", "1",
-        ["broadcaster_user_id"], ["channel:read:goals"],
-        "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelgoalend",
-        "channel_goal_end");
 
     public static readonly TwitchEventSubDefinition StreamOnline = new(
         TwitchEventSubDefinitionType.StreamOnline, "stream.online", "1",
@@ -675,13 +555,6 @@ public partial class TwitchEventSubDefinition() : RefCounted, ITwitcherSharp<Twi
         "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#userwhispermessage",
         "whisper_received");
 
-    [Obsolete("Kept for backwards compatibility - points at the pre-override script name 'user_whisper_message'. Use UserWhisperMessage instead.")]
-    public static readonly TwitchEventSubDefinition UserWhisperMessageLegacy = new(
-        TwitchEventSubDefinitionType.UserWhisperMessageLegacy, "user.whisper.message", "1",
-        ["user_id"], ["user:read:whispers", "user:manage:whispers"],
-        "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#userwhispermessage",
-        "user_whisper_message");
-
     #endregion
 
     public static readonly List<TwitchEventSubDefinition> All =
@@ -700,17 +573,12 @@ public partial class TwitchEventSubDefinition() : RefCounted, ITwitcherSharp<Twi
         ChannelChannelPointsCustomRewardRedemptionUpdate, ChannelCustomPowerUpRedemptionAdd, ChannelPollBegin,
         ChannelPollProgress, ChannelPollEnd, ChannelPredictionBegin, ChannelPredictionProgress, ChannelPredictionLock,
         ChannelPredictionEnd, ChannelSuspiciousUserUpdate, ChannelSuspiciousUserMessage, ChannelVipAdd, ChannelVipRemove,
-        ChannelWarningAcknowledge, ChannelWarningSend, ChannelHypeTrainBegin, ChannelHypeTrainBeginLegacy,
-        ChannelHypeTrainProgress, ChannelHypeTrainProgressLegacy, ChannelHypeTrainEnd, ChannelHypeTrainEndLegacy,
-        ChannelCharityCampaignDonate, ChannelCharityCampaignDonateLegacy, ChannelCharityCampaignStart,
-        ChannelCharityCampaignStartLegacy, ChannelCharityCampaignProgress, ChannelCharityCampaignProgressLegacy,
-        ChannelCharityCampaignStop, ChannelCharityCampaignStopLegacy, ChannelSharedChatBegin,
-        ChannelSharedChatBeginLegacy, ChannelSharedChatUpdate, ChannelSharedChatUpdateLegacy, ChannelSharedChatEnd,
-        ChannelSharedChatEndLegacy, ChannelShieldModeBegin, ChannelShieldModeBeginLegacy, ChannelShieldModeEnd,
-        ChannelShieldModeEndLegacy, ChannelShoutoutCreate, ChannelShoutoutCreateLegacy, ChannelShoutoutReceive,
-        ChannelShoutoutReceiveLegacy, ConduitShardDisabled, DropEntitlementGrant, ExtensionBitsTransactionCreate,
-        ChannelGoalBegin, ChannelGoalBeginLegacy, ChannelGoalProgress, ChannelGoalProgressLegacy, ChannelGoalEnd,
-        ChannelGoalEndLegacy, StreamOnline, StreamOffline, UserAuthorizationGrant, UserAuthorizationRevoke, UserUpdate,
-        UserWhisperMessage, UserWhisperMessageLegacy
+        ChannelWarningAcknowledge, ChannelWarningSend, ChannelHypeTrainBegin, ChannelHypeTrainProgress,
+        ChannelHypeTrainEnd, ChannelCharityCampaignDonate, ChannelCharityCampaignStart, ChannelCharityCampaignProgress,
+        ChannelCharityCampaignStop, ChannelSharedChatBegin, ChannelSharedChatUpdate, ChannelSharedChatEnd,
+        ChannelShieldModeBegin, ChannelShieldModeEnd, ChannelShoutoutCreate, ChannelShoutoutReceive,
+        ConduitShardDisabled, DropEntitlementGrant, ExtensionBitsTransactionCreate, ChannelGoalBegin,
+        ChannelGoalProgress, ChannelGoalEnd, StreamOnline, StreamOffline, UserAuthorizationGrant,
+        UserAuthorizationRevoke, UserUpdate, UserWhisperMessage
     ];
 }
