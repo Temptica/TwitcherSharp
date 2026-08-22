@@ -5,7 +5,7 @@ namespace ClassGenerator.Generator.EventSub;
 
 public class TwitchEventSubGenerator
 {
-    public void GenerateEventSub(string path, TwitchEventSubParser parser)
+    public static void GenerateEventSub(string path, TwitchEventSubParser parser)
     {
         foreach (var component in parser.SubComponents)
         {

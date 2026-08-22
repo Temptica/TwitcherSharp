@@ -3,10 +3,6 @@ using ClassGenerator.GenObjects.EventSub;
 
 namespace ClassGenerator.Generator.EventSub;
 
-/// <summary>
-/// Generates the C# TwitchEventSubDefinitionType enum and TwitchEventSubDefinition static definitions
-/// from the parsed subscription types list.
-/// </summary>
 public class TwitchEventSubDefinitionGenerator
 {
     private const string TypeEnumTemplate = """
@@ -91,7 +87,7 @@ public class TwitchEventSubDefinitionGenerator
                                                 }
                                                 """;
 
-    public void Generate(string eventSubDir, List<TwitchEventSubDefinitionInfo> definitions)
+    public static void Generate(string eventSubDir, List<TwitchEventSubDefinitionInfo> definitions)
     {
         File.WriteAllText(Path.Combine(eventSubDir, "TwitchEventSubDefinitionType.cs"), GenerateTypeEnum(definitions) + "\n");
         File.WriteAllText(Path.Combine(eventSubDir, "TwitchEventSubDefinition.cs"), GenerateDefinition(definitions) + "\n");

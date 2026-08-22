@@ -28,7 +28,7 @@ apiGenerator.GenerateApi(apiPath, apiParser);
 var eventSubParser = new TwitchEventSubParser();
 await eventSubParser.ParseEventSub();
 var eventSubGenerator = new TwitchEventSubGenerator();
-eventSubGenerator.GenerateEventSub(eventSubGeneratedPath, eventSubParser);
+TwitchEventSubGenerator.GenerateEventSub(eventSubGeneratedPath, eventSubParser);
 
 if (!Directory.Exists(twitcherPath))
 {
@@ -41,4 +41,4 @@ await subscriptionTypeParser.ParseSubscriptionTypes(eventSubParser.ConditionComp
 EventSubScriptNameResolver.Resolve(subscriptionTypeParser.Definitions, generatedEventSubDir);
 
 var definitionGenerator = new TwitchEventSubDefinitionGenerator();
-definitionGenerator.Generate(eventSubPath, subscriptionTypeParser.Definitions);
+TwitchEventSubDefinitionGenerator.Generate(eventSubPath, subscriptionTypeParser.Definitions);
