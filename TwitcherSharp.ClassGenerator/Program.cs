@@ -7,7 +7,7 @@ var apiPath = path + "Api/Generated/";
 var eventSubPath = path + "EventSub/";
 var eventSubGeneratedPath = eventSubPath + "Generated/";
 
-//remove (sub) directories of they already exist, then create them
+//remove (sub) directories if they already exist, then create them
 if (Directory.Exists(apiPath)) Directory.Delete(apiPath, true);
 if (Directory.Exists(eventSubGeneratedPath)) Directory.Delete(eventSubGeneratedPath, true);
 
