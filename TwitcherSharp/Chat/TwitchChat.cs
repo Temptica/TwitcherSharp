@@ -10,25 +10,25 @@ namespace TwitcherSharp.Chat;
 
 public partial class TwitchChat : RefCounted, ITwitcherSharpSingleton<TwitchChat>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     public bool IsLinked => _data is not null;
 
     public static string ScriptPath => "res://addons/twitcher/chat/twitch_chat.gd";
 
-    public static TwitchChat Instance
+    public static TwitchChat? Instance
     {
         get => ITwitcherSharpSingleton<TwitchChat>.Instance;
         private set => ITwitcherSharpSingleton<TwitchChat>.Instance = value;
     }
-    public static TwitchChat CreateInstance(Action<TwitchChat> configure = null) =>
+    public static TwitchChat CreateInstance(Action<TwitchChat>? configure = null) =>
         ITwitcherSharpSingleton<TwitchChat>.CreateInstance(configure);
-    
+
     /// <summary>
     /// Twitch API (Will automatically look for first TwitchApi (twitcher) in the scene tree. Else will create a new one and add it to the root)
     /// </summary>
     public static TwitchApi Api { get; set; } = TwitchApi.Instance??TwitchApi.CreateInstance();
 
-    public TwitchUser BroadcasterUser
+    public TwitchUser? BroadcasterUser
     {
         get => _data != null ? TwitchUser.FromObject(_data.Get("broadcaster_user").AsGodotObject()) : field;
         set
@@ -38,7 +38,7 @@ public partial class TwitchChat : RefCounted, ITwitcherSharpSingleton<TwitchChat
         }
     }
 
-    public TwitchUser SenderUser
+    public TwitchUser? SenderUser
     {
         get => _data != null ? TwitchUser.FromObject(_data.Get("sender_user").AsGodotObject()) : field;
         set
@@ -51,7 +51,7 @@ public partial class TwitchChat : RefCounted, ITwitcherSharpSingleton<TwitchChat
     /// <summary>
     /// Media loader it uses for emotes and badges. (Will automatically look for first TwitchMediaLoader (twitcher) in the scene tree)
     /// </summary>
-    public TwitchMediaLoader MediaLoader { get; set; } = TwitchMediaLoader.Instance;
+    public TwitchMediaLoader? MediaLoader { get; set; } = TwitchMediaLoader.Instance;
 
     /// <summary>
     /// Should it subscribe on ready
@@ -61,7 +61,7 @@ public partial class TwitchChat : RefCounted, ITwitcherSharpSingleton<TwitchChat
     [Signal]
     public delegate void MessageReceivedEventHandler(TwitchChatMessage message);
 
-    public void Subscribe() => _data.Call("subscribe");
+    public void Subscribe() => _data!.Call("subscribe");
 
     /// <summary>
     /// Sends a message to the chat. If twitchApi is connected and linked, it will use the c# code.
@@ -72,37 +72,38 @@ public partial class TwitchChat : RefCounted, ITwitcherSharpSingleton<TwitchChat
     /// <returns></returns>
     /// <exception cref="Exception">throws if neither TwitchApi or TwitchChat is linked</exception>
     public async Task<TwitchSendChatMessageResponse.TwitchResponseData[]> SendMessage(string message,
-        string replyParentMessageId = null)
+        string? replyParentMessageId = null)
     {
         if (!Api.IsLinked)
         {
             if (!IsLinked) throw new Exception("TwitchChat is not linked to TwitchApi");
 
-            return (await _data.CallAsync("send_message", message, replyParentMessageId))
+            return (await _data!.CallAsync("send_message", message, replyParentMessageId ?? ""))
                 .AsGodotArray<GodotObject>()
                 .Select(TwitchSendChatMessageResponse.TwitchResponseData.FromObject)
+                .OfType<TwitchSendChatMessageResponse.TwitchResponseData>()
                 .ToArray();
         }
 
         var request = new TwitchSendChatMessageBody()
         {
-            BroadcasterId = BroadcasterUser.Id,
-            SenderId = SenderUser.Id,
+            BroadcasterId = BroadcasterUser?.Id,
+            SenderId = SenderUser?.Id,
             Message = message,
             ReplyParentMessageId = replyParentMessageId
         };
 
         var response = await Api.SendChatMessage(request);
-        return response.Data;
+        return response.Data ?? [];
     }
 
     private void ConnectSignals()
     {
-        _data.Connect("message_received",
-            Callable.From<GodotObject>(d => EmitSignalMessageReceived(TwitchChatMessage.FromObject(d))));
+        _data!.Connect("message_received",
+            Callable.From<GodotObject>(d => EmitSignalMessageReceived(TwitchChatMessage.FromObject(d)!)));
     }
 
-    public static TwitchChat FromObject(GodotObject data)
+    public static TwitchChat? FromObject(GodotObject? data)
     {
         if (data == null) return null;
 

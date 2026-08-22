@@ -5,18 +5,18 @@ namespace TwitcherSharp.EventSub;
 
 public partial class TwitchEventSubDefinition() : RefCounted, ITwitcherSharp<TwitchEventSubDefinition>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
 
     public TwitchEventSubDefinitionType Type { get; set; }
-    public StringName Value { get; set; }
-    public StringName Version { get; set; }
-    public List<StringName> Conditions { get; set; }
-    public List<StringName> Scopes { get; set; }
-    public string DocumentationLink { get; set; }
+    public StringName? Value { get; set; }
+    public StringName? Version { get; set; }
+    public List<StringName>? Conditions { get; set; }
+    public List<StringName>? Scopes { get; set; }
+    public string? DocumentationLink { get; set; }
     public string GetReadableName() => $"{Value} (v{Version})";
-    public GDScript Script { get; set; }
+    public GDScript? Script { get; set; }
 
-    public static TwitchEventSubDefinition FromObject(GodotObject data)
+    public static TwitchEventSubDefinition? FromObject(GodotObject? data)
     {
         if (data == null) return null;
         var definition = new TwitchEventSubDefinition();
@@ -36,7 +36,7 @@ public partial class TwitchEventSubDefinition() : RefCounted, ITwitcherSharp<Twi
 
         var conditions = new Godot.Collections.Array<StringName>(Conditions ?? []);
         var scopes = new Godot.Collections.Array<StringName>(Scopes ?? []);
-        var data = script.New((int)Type, Value, Version, conditions, scopes, DocumentationLink, Script)
+        var data = script.New((int)Type, Value!, Version!, conditions, scopes, DocumentationLink!, Script!)
             .AsGodotObject();
         return data;
     }

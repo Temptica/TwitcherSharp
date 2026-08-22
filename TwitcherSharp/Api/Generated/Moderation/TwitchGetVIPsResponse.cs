@@ -32,7 +32,7 @@ public partial class TwitchGetVIPsResponse : RefCounted, ITwitcherSharp<TwitchGe
         return request;
     }
     public async Task<TwitchGetVIPsResponse> NextPage() =>
-        await _data.CallAsync<TwitchGetVIPsResponse>("next_page");
+        await _data!.CallAsync<TwitchGetVIPsResponse>("next_page");
     
     /// <summary> 
     /// Contains the information used to page through the list of results. The object is empty if there are no more pages left to page through 

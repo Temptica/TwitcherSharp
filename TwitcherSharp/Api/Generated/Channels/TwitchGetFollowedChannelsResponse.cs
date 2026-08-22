@@ -37,7 +37,7 @@ public partial class TwitchGetFollowedChannelsResponse : RefCounted, ITwitcherSh
         return request;
     }
     public async Task<TwitchGetFollowedChannelsResponse> NextPage() =>
-        await _data.CallAsync<TwitchGetFollowedChannelsResponse>("next_page");
+        await _data!.CallAsync<TwitchGetFollowedChannelsResponse>("next_page");
     
     /// <summary> 
     /// Contains the information used to page through the list of results. The object is empty if there are no more pages left to page through 

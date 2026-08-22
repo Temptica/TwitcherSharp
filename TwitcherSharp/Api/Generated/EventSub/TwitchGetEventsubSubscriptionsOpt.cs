@@ -15,6 +15,7 @@ public partial class TwitchGetEventsubSubscriptionsOpt : RefCounted, ITwitcherSh
     public string? Type { get; set; }
     public string? UserId { get; set; }
     public string? SubscriptionId { get; set; }
+    public string? ConduitId { get; set; }
     public string? After { get; set; }
 
     /// <summary> 
@@ -29,6 +30,7 @@ public partial class TwitchGetEventsubSubscriptionsOpt : RefCounted, ITwitcherSh
             Type = data.Get("type").AsString(),
             UserId = data.Get("user_id").AsString(),
             SubscriptionId = data.Get("subscription_id").AsString(),
+            ConduitId = data.Get("conduit_id").AsString(),
             After = data.Get("after").AsString(),
         };
         
@@ -45,6 +47,7 @@ public partial class TwitchGetEventsubSubscriptionsOpt : RefCounted, ITwitcherSh
         if(Type != null) request.Set("type", Type);
         if(UserId != null) request.Set("user_id", UserId);
         if(SubscriptionId != null) request.Set("subscription_id", SubscriptionId);
+        if(ConduitId != null) request.Set("conduit_id", ConduitId);
         if(After != null) request.Set("after", After);
         return request;
     }

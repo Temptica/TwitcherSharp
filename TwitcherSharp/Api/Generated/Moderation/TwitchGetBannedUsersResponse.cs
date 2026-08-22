@@ -32,7 +32,7 @@ public partial class TwitchGetBannedUsersResponse : RefCounted, ITwitcherSharp<T
         return request;
     }
     public async Task<TwitchGetBannedUsersResponse> NextPage() =>
-        await _data.CallAsync<TwitchGetBannedUsersResponse>("next_page");
+        await _data!.CallAsync<TwitchGetBannedUsersResponse>("next_page");
     
     /// <summary> 
     /// Contains the information used to page through the list of results. The object is empty if there are no more pages left to page through 

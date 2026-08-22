@@ -32,7 +32,7 @@ public partial class TwitchGetClipsResponse : RefCounted, ITwitcherSharp<TwitchG
         return request;
     }
     public async Task<TwitchGetClipsResponse> NextPage() =>
-        await _data.CallAsync<TwitchGetClipsResponse>("next_page");
+        await _data!.CallAsync<TwitchGetClipsResponse>("next_page");
     
     /// <summary> 
     /// Contains the information used to page through the list of results. The object is empty if there are no more pages left to page through 

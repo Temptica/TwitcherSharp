@@ -32,7 +32,7 @@ public partial class TwitchGetGameAnalyticsResponse : RefCounted, ITwitcherSharp
         return request;
     }
     public async Task<TwitchGetGameAnalyticsResponse> NextPage() =>
-        await _data.CallAsync<TwitchGetGameAnalyticsResponse>("next_page");
+        await _data!.CallAsync<TwitchGetGameAnalyticsResponse>("next_page");
     
     /// <summary> 
     /// Contains the information used to page through the list of results. The object is empty if there are no more pages left to page through 

@@ -37,7 +37,7 @@ public partial class TwitchGetChattersResponse : RefCounted, ITwitcherSharp<Twit
         return request;
     }
     public async Task<TwitchGetChattersResponse> NextPage() =>
-        await _data.CallAsync<TwitchGetChattersResponse>("next_page");
+        await _data!.CallAsync<TwitchGetChattersResponse>("next_page");
     
     /// <summary> 
     /// Contains the information used to page through the list of results. The object is empty if there are no more pages left to page through 

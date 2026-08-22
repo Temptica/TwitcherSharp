@@ -11,22 +11,22 @@ public partial class TwitchReward : RefCounted, ITwitcherSharp<TwitchReward>
     /// <summary>
     /// The ID that uniquely identifies this custom reward.
     /// </summary>
-    public string Id { get; set; }
+    public string? Id { get; set; }
 
     /// <summary>
     /// Owner of this reward
     /// </summary>
-    public TwitchUser BroadcasterUser { get; set; }
+    public TwitchUser? BroadcasterUser { get; set; }
 
     /// <summary>
     /// The title of the reward.
     /// </summary>
-    public string Title { get; set; }
+    public string? Title { get; set; }
 
     /// <summary>
     /// The prompt shown to the viewer when they redeem the reward.
     /// </summary>
-    public string Description { get; set; }
+    public string? Description { get; set; }
 
     /// <summary>
     /// The cost of the reward in Channel Points.
@@ -34,9 +34,9 @@ public partial class TwitchReward : RefCounted, ITwitcherSharp<TwitchReward>
     public int Cost { get; set; } = 1;
 
     // Custom Images
-    public Image Image1 { get; set; }
-    public Image Image2 { get; set; }
-    public Image Image4 { get; set; }
+    public Image? Image1 { get; set; }
+    public Image? Image2 { get; set; }
+    public Image? Image4 { get; set; }
 
     // Default Images (Loading them via GD.Load to mimic preload)
     public CompressedTexture2D DefaultImage1 { get; set; } =
@@ -68,7 +68,7 @@ public partial class TwitchReward : RefCounted, ITwitcherSharp<TwitchReward>
 
     public int RedemptionsRedeemedCurrentStream { get; set; }
 
-    public string CooldownExpiresAt { get; set; }
+    public string? CooldownExpiresAt { get; set; }
 
     #endregion
 
@@ -87,8 +87,10 @@ public partial class TwitchReward : RefCounted, ITwitcherSharp<TwitchReward>
         return Image4 != null ? ImageTexture.CreateFromImage(Image4) : DefaultImage4;
     }
 
-    public static TwitchReward FromObject(GodotObject data)
+    public static TwitchReward? FromObject(GodotObject? data)
     {
+        if (data == null) return null;
+
         return new TwitchReward
         {
             Id = data.Get("id").AsString(),
@@ -120,14 +122,14 @@ public partial class TwitchReward : RefCounted, ITwitcherSharp<TwitchReward>
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/reward/twitch_reward.gd");
         var reward = script.New().AsGodotObject();
-        reward.Set("id", Id);
+        if (Id != null) reward.Set("id", Id);
         reward.Set("broadcaster_user", BroadcasterUser?.ToGodotObject() ?? new Variant());
-        reward.Set("title", Title);
-        reward.Set("description", Description);
+        if (Title != null) reward.Set("title", Title);
+        if (Description != null) reward.Set("description", Description);
         reward.Set("cost", Cost);
-        reward.Set("image_1", Image1);
-        reward.Set("image_2", Image2);
-        reward.Set("image_4", Image4);
+        if (Image1 != null) reward.Set("image_1", Image1);
+        if (Image2 != null) reward.Set("image_2", Image2);
+        if (Image4 != null) reward.Set("image_4", Image4);
         reward.Set("background_color", BackgroundColor);
         reward.Set("is_enabled", IsEnabled);
         reward.Set("is_user_input_required", IsUserInputRequired);
@@ -141,7 +143,7 @@ public partial class TwitchReward : RefCounted, ITwitcherSharp<TwitchReward>
         reward.Set("global_cooldown_seconds", GlobalCooldownSeconds);
         reward.Set("is_in_stock", IsInStock);
         reward.Set("redemptions_redeemed_current_stream", RedemptionsRedeemedCurrentStream);
-        reward.Set("cooldown_expires_at", CooldownExpiresAt);
+        if (CooldownExpiresAt != null) reward.Set("cooldown_expires_at", CooldownExpiresAt);
         
         return reward;
     }

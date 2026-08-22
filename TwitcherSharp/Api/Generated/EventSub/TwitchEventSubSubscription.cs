@@ -11,7 +11,7 @@ public partial class TwitchEventSubSubscription<T> : RefCounted, ITwitcherSharp<
     public string? Status { get; set; }
     public string? Type { get; set; }
     public string? Version { get; set; }
-    public ITwitcherSharpCondition<T> Condition { get => field ??= T.FromDictionary(_data?.Get("{field.Name.ToSnakeCase()}").AsGodotDictionary()); set; }
+    public ITwitcherSharpCondition<T> Condition { get => field ??= T.FromDictionary(_data?.Get("condition").AsGodotDictionary()!); set; }
     public string? CreatedAt { get; set; }
     public TwitchTransport? Transport { get => field ??= _data?.Get<TwitchTransport>("transport"); set; }
     public int Cost { get; set; }

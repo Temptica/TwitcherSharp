@@ -43,13 +43,13 @@ public static class ApiCodeStrings
                                               public async Task<ResponseData> Request(string path, int method, string body = "", string contentType = "",
                                                   int errorCount = 0)
                                               {
-                                                  return await _data.CallAsync<ResponseData>("request", this, path, method, body, contentType, errorCount);
+                                                  return await _data!.CallAsync<ResponseData>("request", this, path, method, body, contentType, errorCount);
                                               }
-                                              
+
                                               private void ConnectSignals()
                                               {
-                                                  _data.Connect("unauthenticated", Callable.From(EmitSignalUnauthenticated));
-                                                  _data.Connect("unauthorized", Callable.From(EmitSignalUnauthorized));
+                                                  _data!.Connect("unauthenticated", Callable.From(EmitSignalUnauthenticated));
+                                                  _data!.Connect("unauthorized", Callable.From(EmitSignalUnauthorized));
                                               }
                                               
                                               public static TwitchApi? FromObject(GodotObject? data)
@@ -146,7 +146,7 @@ public static class ApiCodeStrings
     /// </summary>
     public const string NextPageCode = """
                                        public async Task<{{response}}> NextPage() =>
-                                           await _data.CallAsync<{{response}}>("next_page");
+                                           await _data!.CallAsync<{{response}}>("next_page");
                                        """;
     
 }

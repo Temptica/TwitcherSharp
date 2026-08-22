@@ -8,7 +8,7 @@ public partial class TwitchGameAnalytics : RefCounted, ITwitcherSharp<TwitchGame
 {
     private GodotObject? _data;
     public string? GameId { get; set; }
-    public string? Url { get; set; }
+    public string? URL { get; set; }
     public string? Type { get; set; }
     public TwitchResponseDateRange? DateRange { get => field ??= _data?.Get<TwitchResponseDateRange>("date_range"); set; }
 
@@ -21,7 +21,7 @@ public partial class TwitchGameAnalytics : RefCounted, ITwitcherSharp<TwitchGame
         var instance = new TwitchGameAnalytics
         {
             GameId = data.Get("game_id").AsString(),
-            Url = data.Get("url").AsString(),
+            URL = data.Get("url").AsString(),
             Type = data.Get("type").AsString(),
         };
         
@@ -34,7 +34,7 @@ public partial class TwitchGameAnalytics : RefCounted, ITwitcherSharp<TwitchGame
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_game_analytics.gd");
         var request = script.Call("new").AsGodotObject();
         if(GameId != null) request.Set("game_id", GameId);
-        if(Url != null) request.Set("url", Url);
+        if(URL != null) request.Set("url", URL);
         if(Type != null) request.Set("type", Type);
         if(DateRange != null) request.Set("date_range", DateRange.ToGodotObject());
         return request;

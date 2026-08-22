@@ -32,7 +32,7 @@ public partial class TwitchGetDropsEntitlementsResponse : RefCounted, ITwitcherS
         return request;
     }
     public async Task<TwitchGetDropsEntitlementsResponse> NextPage() =>
-        await _data.CallAsync<TwitchGetDropsEntitlementsResponse>("next_page");
+        await _data!.CallAsync<TwitchGetDropsEntitlementsResponse>("next_page");
     
     /// <summary> 
     /// Contains the information used to page through the list of results. The object is empty if there are no more pages left to page through 

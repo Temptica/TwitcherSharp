@@ -37,7 +37,7 @@ public partial class TwitchGetUserEmotesResponse : RefCounted, ITwitcherSharp<Tw
         return request;
     }
     public async Task<TwitchGetUserEmotesResponse> NextPage() =>
-        await _data.CallAsync<TwitchGetUserEmotesResponse>("next_page");
+        await _data!.CallAsync<TwitchGetUserEmotesResponse>("next_page");
     
     /// <summary> 
     /// Contains the information used to page through the list of results. The object is empty if there are no more pages left to page through 

@@ -32,7 +32,7 @@ public partial class TwitchGetExtensionTransactionsResponse : RefCounted, ITwitc
         return request;
     }
     public async Task<TwitchGetExtensionTransactionsResponse> NextPage() =>
-        await _data.CallAsync<TwitchGetExtensionTransactionsResponse>("next_page");
+        await _data!.CallAsync<TwitchGetExtensionTransactionsResponse>("next_page");
     
     /// <summary> 
     /// Contains the information used to page through the list of results. The object is empty if there are no more pages left to page through 

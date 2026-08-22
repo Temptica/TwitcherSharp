@@ -49,8 +49,8 @@ public static class ApiCodeHelper
 
         methodString.AppendIndentedLine(
             !string.IsNullOrEmpty(methods)
-                ? $"return await _data.CallAsync<{method.ResultType}>(\"{method.Name.ToSnakeCase()}\", {methods}); "
-                : $"return await _data.CallAsync<{method.ResultType}>(\"{method.Name.ToSnakeCase()}\"); ",
+                ? $"return await _data!.CallAsync<{method.ResultType}>(\"{method.Name.ToSnakeCase()}\", {methods}); "
+                : $"return await _data!.CallAsync<{method.ResultType}>(\"{method.Name.ToSnakeCase()}\"); ",
             2);
 
         methodString.AppendIndentedLine("}", 1);
@@ -105,7 +105,7 @@ public static class ApiCodeHelper
 
         if (method.ContainsOptional)
         {
-            parmsList.Add($"{method.GetOptionalClassName()} opt = null");
+            parmsList.Add($"{method.GetOptionalClassName()}? opt = null");
         }
 
         return string.Join(", ", parmsList);
@@ -248,7 +248,11 @@ public static class ApiCodeHelper
                 if (field.Equals(component.GenericField))
                 {
                     code.AppendIndentedLine(
-                        $"public {fieldType}{field.NullableSuffix} {field.Name} {{ get => field ??= {(field.IsArray ? $"_data?.GetArray<{fieldType.Remove("[]")}>(\"data\")" : "T.FromDictionary(_data?.Get(\"{field.Name.ToSnakeCase()}\").AsGodotDictionary())")}; set; }}",
+                        // The generic condition field's declared type (ITwitcherSharpCondition<T>) is a reference type,
+                        // but field.Type is "Variant" here (the parser's placeholder for an untyped object), which
+                        // makes IsValueType/NullableSuffix treat it as non-nullable when required. FromDictionary's
+                        // parameter is non-nullable, so null-forgive the (possibly missing) godot data explicitly.
+                        $"public {fieldType}{field.NullableSuffix} {field.Name} {{ get => field ??= {(field.IsArray ? $"_data?.GetArray<{fieldType.Remove("[]")}>(\"data\")" : $"T.FromDictionary(_data?.Get(\"{field.Name.ToSnakeCase()}\").AsGodotDictionary()!)")}; set; }}",
                         1);
                     continue;
                 }

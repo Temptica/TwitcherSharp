@@ -43,7 +43,7 @@ public partial class TwitchGetEventSubSubscriptionsResponse<T> : RefCounted, ITw
         return request;
     }
     public async Task<TwitchGetEventSubSubscriptionsResponse<T>> NextPage() =>
-        await _data.CallAsync<TwitchGetEventSubSubscriptionsResponse<T>>("next_page");
+        await _data!.CallAsync<TwitchGetEventSubSubscriptionsResponse<T>>("next_page");
     
     /// <summary> 
     /// Contains the information used to page through the list of results. The object is empty if there are no more pages left to page through 

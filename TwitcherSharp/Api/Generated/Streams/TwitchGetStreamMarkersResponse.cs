@@ -32,7 +32,7 @@ public partial class TwitchGetStreamMarkersResponse : RefCounted, ITwitcherSharp
         return request;
     }
     public async Task<TwitchGetStreamMarkersResponse> NextPage() =>
-        await _data.CallAsync<TwitchGetStreamMarkersResponse>("next_page");
+        await _data!.CallAsync<TwitchGetStreamMarkersResponse>("next_page");
     
     /// <summary> 
     /// Contains the information used to page through the list of results. The object is empty if there are no more pages left to page through 
