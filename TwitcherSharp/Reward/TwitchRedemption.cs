@@ -12,7 +12,7 @@ public partial class TwitchRedemption(
     TwitchUser broadcaster,
     TwitchUser user) : RefCounted, ITwitcherSharp<TwitchRedemption>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
 
     public enum Status
     {
@@ -31,7 +31,7 @@ public partial class TwitchRedemption(
     public TwitchReward Reward { get; set; } = twitchReward;
     public TwitchUser Broadcaster { get; set; } = broadcaster;
     public TwitchUser User { get; set; } = user;
-    public string UserInput { get; set; }
+    public string? UserInput { get; set; }
 
     /// <summary>
     /// Defaults to "unfulfilled". Possible values are "unknown", "unfulfilled", "fulfilled", and "canceled".
@@ -57,7 +57,7 @@ public partial class TwitchRedemption(
     /// </summary>
     public void Fullfill()
     {
-        _data.Call("fullfill");
+        _data!.Call("fullfill");
     }
 
     /// <summary>
@@ -73,7 +73,7 @@ public partial class TwitchRedemption(
     /// </summary>
     public void Cancel()
     {
-        _data.Call("cancel");
+        _data!.Call("cancel");
     }
 
     /// <summary>
@@ -86,17 +86,18 @@ public partial class TwitchRedemption(
 
     private void ConnectToSignals()
     {
-        _data.Connect("fullfilled", Callable.From(NotifyFullfilled));
-        _data.Connect("cancelled", Callable.From(NotifyCancelled));
+        _data!.Connect("fullfilled", Callable.From(NotifyFullfilled));
+        _data!.Connect("cancelled", Callable.From(NotifyCancelled));
     }
 
-    public static TwitchRedemption FromObject(GodotObject data)
+    public static TwitchRedemption? FromObject(GodotObject? data)
     {
+        if (data == null) return null;
         var redemption = new TwitchRedemption(
             data.Get("id").AsString(),
-            TwitchReward.FromObject(data.Get("reward").AsGodotObject()),
-            TwitchUser.FromObject(data.Get("broadcaster").AsGodotObject()),
-            TwitchUser.FromObject(data.Get("user").AsGodotObject()))
+            TwitchReward.FromObject(data.Get("reward").AsGodotObject())!,
+            TwitchUser.FromObject(data.Get("broadcaster").AsGodotObject())!,
+            TwitchUser.FromObject(data.Get("user").AsGodotObject())!)
         {
             _data = data,
             UserInput = data.Get("user_input").AsString(),
@@ -116,7 +117,7 @@ public partial class TwitchRedemption(
         instance.Set("reward", Reward?.ToGodotObject() ?? new Variant());
         instance.Set("broadcaster", Broadcaster?.ToGodotObject() ?? new Variant());
         instance.Set("user", User?.ToGodotObject() ?? new Variant());
-        instance.Set("user_input", UserInput);
+        if (UserInput != null) instance.Set("user_input", UserInput);
         instance.Set("current_status", (int)CurrentStatus);
         instance.Set("redeemed_at", XmlConvert.ToString(RedeemedAt, XmlDateTimeSerializationMode.Utc));
         return instance;

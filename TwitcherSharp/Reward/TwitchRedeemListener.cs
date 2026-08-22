@@ -10,7 +10,7 @@ namespace TwitcherSharp.Reward;
 
 public partial class TwitchRedeemListener : RefCounted, ITwitcherSharp<TwitchRedeemListener>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
 
     /// <summary>
     /// List of all rewards to listen for. Use AddReward to add more rewards. RemoveReward to remove rewards.
@@ -20,12 +20,12 @@ public partial class TwitchRedeemListener : RefCounted, ITwitcherSharp<TwitchRed
     /// <summary>
     /// Eventsub to listen for the redemption's. Will try to look for it in the scene tree if not set. Else it will create one to the scene root.
     /// </summary>
-    public TwitchEventSub TwitchEventSub { get; set; }
+    public TwitchEventSub? TwitchEventSub { get; set; }
 
     /// <summary>
     /// Api to use for the redemption's. Will try to look for it in the scene tree if not set. Else it will create one to the scene root.'
     /// </summary>
-    public TwitchApi TwitchApi { get; set; }
+    public TwitchApi? TwitchApi { get; set; }
 
     /// <summary>
     /// Should the node automatically subscribe to the necessary eventsubs in the ready function?
@@ -40,23 +40,23 @@ public partial class TwitchRedeemListener : RefCounted, ITwitcherSharp<TwitchRed
 
     public void EnsureSubscription()
     {
-        _data.Call("ensure_subscription");
+        _data!.Call("ensure_subscription");
     }
 
     public void AddReward(TwitchReward reward)
     {
         RewardsToListen.Add(reward);
-        _data.Set("rewards_to_listen", RewardsToListen);
+        _data!.Set("rewards_to_listen", RewardsToListen);
     }
 
     public void RemoveReward(TwitchReward reward)
     {
         RewardsToListen.Remove(reward);
-        _data.Set("rewards_to_listen", RewardsToListen);
+        _data!.Set("rewards_to_listen", RewardsToListen);
     }
 
     public async Task FullFillRedemption(string redemptionId, TwitchReward reward, string broadcasterId)
-        => await _data.CallAsync("fulfill_redemption", redemptionId, reward.ToGodotObject(), broadcasterId);
+        => await _data!.CallAsync("fulfill_redemption", redemptionId, reward.ToGodotObject(), broadcasterId);
 
     /// <summary>
     /// Cancels existing redemption for a specified reward and broadcaster.
@@ -67,16 +67,17 @@ public partial class TwitchRedeemListener : RefCounted, ITwitcherSharp<TwitchRed
     /// <returns>Returns the details of the canceled redemption as a <see cref="TwitchCustomRewardRedemption"/> object. Returns null on error</returns>
     public async Task<TwitchCustomRewardRedemption> CancelRedemption(string redemptionId, TwitchReward reward,
         string broadcasterId)
-        => await _data.CallAsync<TwitchCustomRewardRedemption>("cancel_redemption", redemptionId,
+        => await _data!.CallAsync<TwitchCustomRewardRedemption>("cancel_redemption", redemptionId,
             reward.ToGodotObject(), broadcasterId);
 
     private void ConnectSignals()
     {
-        _data.Connect("redeemed", Callable.FromTwitcherSharp<TwitchRedemption>(EmitSignalRedeemed));
+        _data!.Connect("redeemed", Callable.FromTwitcherSharp<TwitchRedemption>(EmitSignalRedeemed));
     }
 
-    public static TwitchRedeemListener FromObject(GodotObject data)
+    public static TwitchRedeemListener? FromObject(GodotObject? data)
     {
+        if (data == null) return null;
         var listener = new TwitchRedeemListener
         {
             RewardsToListen = data.Get("rewards_to_listen").As<Array<TwitchReward>>(),
