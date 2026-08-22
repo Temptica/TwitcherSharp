@@ -7,12 +7,6 @@ var apiPath = path + "Api/Generated/";
 var eventSubPath = path + "EventSub/";
 var eventSubGeneratedPath = eventSubPath + "Generated/";
 
-// The Twitcher (GDScript) addon is expected to live as a sibling checkout of this repo, e.g.
-// ~/Projects/TwitcherSharp and ~/Projects/twitcher. Its generated_eventsub scripts are the source of
-// truth for what each TwitchEventSubDefinition's response script is named.
-var twitcherPath = Environment.CurrentDirectory + "/../../../../../twitcher/";
-var generatedEventSubDir = twitcherPath + "addons/twitcher/generated_eventsub/";
-
 //remove (sub) directories of they already exist, then create them
 if (Directory.Exists(apiPath)) Directory.Delete(apiPath, true);
 if (Directory.Exists(eventSubGeneratedPath)) Directory.Delete(eventSubGeneratedPath, true);
@@ -27,18 +21,10 @@ apiGenerator.GenerateApi(apiPath, apiParser);
 
 var eventSubParser = new TwitchEventSubParser();
 await eventSubParser.ParseEventSub();
-var eventSubGenerator = new TwitchEventSubGenerator();
 TwitchEventSubGenerator.GenerateEventSub(eventSubGeneratedPath, eventSubParser);
-
-if (!Directory.Exists(twitcherPath))
-{
-    Console.WriteLine(
-        $"Warning: sibling Twitcher project not found at '{twitcherPath}', script names will fall back to best-effort guesses.");
-}
 
 var subscriptionTypeParser = new TwitchEventSubSubscriptionTypeParser();
 await subscriptionTypeParser.ParseSubscriptionTypes(eventSubParser.ConditionComponents);
-EventSubScriptNameResolver.Resolve(subscriptionTypeParser.Definitions, generatedEventSubDir);
+EventSubScriptNameResolver.Resolve(subscriptionTypeParser.Definitions);
 
-var definitionGenerator = new TwitchEventSubDefinitionGenerator();
 TwitchEventSubDefinitionGenerator.Generate(eventSubPath, subscriptionTypeParser.Definitions);
