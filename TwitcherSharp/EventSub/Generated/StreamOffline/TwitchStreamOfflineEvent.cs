@@ -11,6 +11,11 @@ public partial class TwitchStreamOfflineEvent : RefCounted, ITwitcherSharpEventS
     private GodotObject _data;
     
     /// <summary> 
+    /// The id of the stream.
+    /// </summary>
+    public string Id { get; set; }
+
+    /// <summary> 
     /// The broadcaster’s user id.
     /// </summary>
     public string BroadcasterUserId { get; set; }
@@ -33,6 +38,7 @@ public partial class TwitchStreamOfflineEvent : RefCounted, ITwitcherSharpEventS
         if(data == null) return null;
         var instance = new TwitchStreamOfflineEvent
         {
+            Id = data.Get("id").AsString(),
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
             BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
             BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
@@ -47,6 +53,7 @@ public partial class TwitchStreamOfflineEvent : RefCounted, ITwitcherSharpEventS
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_stream_offline.gd");
         var eventClass = script.Get("Event").As<GDScript>();
         var request = eventClass.New().AsGodotObject();
+        request.Set("id", Id);
         request.Set("broadcaster_user_id", BroadcasterUserId);
         request.Set("broadcaster_user_login", BroadcasterUserLogin);
         request.Set("broadcaster_user_name", BroadcasterUserName);

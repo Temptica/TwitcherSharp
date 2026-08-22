@@ -6,7 +6,7 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelAdBreakBegin;
 
-public partial class TwitchChannelAdBreakBeginCondition(string broadcasterId) : RefCounted, ITwitcherSharpCondition<TwitchChannelAdBreakBeginCondition>
+public partial class TwitchChannelAdBreakBeginCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelAdBreakBeginCondition>
 {
     private GodotObject _data;
     
@@ -15,7 +15,7 @@ public partial class TwitchChannelAdBreakBeginCondition(string broadcasterId) : 
     /// <summary> 
     /// The ID of the broadcaster that you want to get Channel Ad Break begin notifications for. Maximum: 1
     /// </summary>
-    public string BroadcasterId { get; set; } = broadcasterId;
+    public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelAdBreakBeginCondition object.
@@ -23,7 +23,7 @@ public partial class TwitchChannelAdBreakBeginCondition(string broadcasterId) : 
     public static TwitchChannelAdBreakBeginCondition FromObject(GodotObject data)
     {
         if(data == null) return null;
-        var instance = new TwitchChannelAdBreakBeginCondition(data.Get("broadcaster_id").AsString());
+        var instance = new TwitchChannelAdBreakBeginCondition(data.Get("broadcaster_user_id").AsString());
         
         instance._data = data;
         return instance;
@@ -34,13 +34,13 @@ public partial class TwitchChannelAdBreakBeginCondition(string broadcasterId) : 
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_ad_break_begin.gd");
         var conditionClass = script.Get("Condition").As<GDScript>();
         var request = conditionClass.New().AsGodotObject();
-        request.Set("broadcaster_id", BroadcasterId);
+        request.Set("broadcaster_user_id", BroadcasterUserId);
         return request;
     }
 
     public static TwitchChannelAdBreakBeginCondition FromDictionary(Dictionary data)
     {
-        return new TwitchChannelAdBreakBeginCondition(data["broadcaster_id"].AsString())
+        return new TwitchChannelAdBreakBeginCondition(data["broadcaster_user_id"].AsString())
         {
         };
     }
@@ -49,7 +49,7 @@ public partial class TwitchChannelAdBreakBeginCondition(string broadcasterId) : 
     {
         return new Dictionary
         {
-            {"broadcaster_id", BroadcasterId},
+            {"broadcaster_user_id", BroadcasterUserId},
         };
     }
 }
