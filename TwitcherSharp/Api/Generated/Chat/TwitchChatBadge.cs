@@ -7,8 +7,8 @@ namespace TwitcherSharp.Api.Generated.Chat;
 public partial class TwitchChatBadge : RefCounted, ITwitcherSharp<TwitchChatBadge>
 {
     private GodotObject? _data;
-    public string? SetId { get; set; }
-    public TwitchVersions[]? Versions { get => field ??= _data?.GetArray<TwitchVersions>("versions"); set; }
+    public string SetId { get; set; } = null!;
+    public TwitchVersions[] Versions { get => field ??= _data?.GetArray<TwitchVersions>("versions")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChatBadge object.
@@ -40,14 +40,14 @@ public partial class TwitchChatBadge : RefCounted, ITwitcherSharp<TwitchChatBadg
     public partial class TwitchVersions : RefCounted, ITwitcherSharp<TwitchVersions>
     {
         private GodotObject? _data;
-        public string? Id { get; set; }
-        public string? ImageUrl1x { get; set; }
-        public string? ImageUrl2x { get; set; }
-        public string? ImageUrl4x { get; set; }
-        public string? Title { get; set; }
-        public string? Description { get; set; }
-        public string? ClickAction { get; set; }
-        public string? ClickUrl { get; set; }
+        public string Id { get; set; } = null!;
+        public string ImageUrl1x { get; set; } = null!;
+        public string ImageUrl2x { get; set; } = null!;
+        public string ImageUrl4x { get; set; } = null!;
+        public string Title { get; set; } = null!;
+        public string Description { get; set; } = null!;
+        public string ClickAction { get; set; } = null!;
+        public string ClickUrl { get; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchVersions object.

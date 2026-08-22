@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Charity;
 public partial class TwitchGetCharityCampaignResponse : RefCounted, ITwitcherSharp<TwitchGetCharityCampaignResponse>
 {
     private GodotObject? _data;
-    public TwitchCharityCampaign[]? Data { get => field ??= _data?.GetArray<TwitchCharityCampaign>("data"); set; }
+    public TwitchCharityCampaign[] Data { get => field ??= _data?.GetArray<TwitchCharityCampaign>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetCharityCampaignResponse object.

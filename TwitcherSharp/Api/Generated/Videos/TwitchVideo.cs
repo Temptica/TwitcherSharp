@@ -7,23 +7,23 @@ namespace TwitcherSharp.Api.Generated.Videos;
 public partial class TwitchVideo : RefCounted, ITwitcherSharp<TwitchVideo>
 {
     private GodotObject? _data;
-    public string? Id { get; set; }
-    public string? StreamId { get; set; }
-    public string? UserId { get; set; }
-    public string? UserLogin { get; set; }
-    public string? UserName { get; set; }
-    public string? Title { get; set; }
-    public string? Description { get; set; }
-    public string? CreatedAt { get; set; }
-    public string? PublishedAt { get; set; }
-    public string? Url { get; set; }
-    public string? ThumbnailUrl { get; set; }
-    public string? Viewable { get; set; }
+    public string Id { get; set; } = null!;
+    public string StreamId { get; set; } = null!;
+    public string UserId { get; set; } = null!;
+    public string UserLogin { get; set; } = null!;
+    public string UserName { get; set; } = null!;
+    public string Title { get; set; } = null!;
+    public string Description { get; set; } = null!;
+    public string CreatedAt { get; set; } = null!;
+    public string PublishedAt { get; set; } = null!;
+    public string Url { get; set; } = null!;
+    public string ThumbnailUrl { get; set; } = null!;
+    public string Viewable { get; set; } = null!;
     public int ViewCount { get; set; }
-    public string? Language { get; set; }
-    public string? Type { get; set; }
-    public string? Duration { get; set; }
-    public TwitchResponseMutedSegments[]? MutedSegments { get => field ??= _data?.GetArray<TwitchResponseMutedSegments>("muted_segments"); set; }
+    public string Language { get; set; } = null!;
+    public string Type { get; set; } = null!;
+    public string Duration { get; set; } = null!;
+    public TwitchResponseMutedSegments[] MutedSegments { get => field ??= _data?.GetArray<TwitchResponseMutedSegments>("muted_segments")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchVideo object.

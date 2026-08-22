@@ -7,9 +7,9 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 public partial class TwitchManageHeldAutoModMessagesBody : RefCounted, ITwitcherSharp<TwitchManageHeldAutoModMessagesBody>
 {
     private GodotObject? _data;
-    public string? UserId { get; set; }
-    public string? MsgId { get; set; }
-    public string? Action { get; set; }
+    public string UserId { get; set; } = null!;
+    public string MsgId { get; set; } = null!;
+    public string Action { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchManageHeldAutoModMessagesBody object.

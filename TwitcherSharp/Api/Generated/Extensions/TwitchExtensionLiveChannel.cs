@@ -7,11 +7,11 @@ namespace TwitcherSharp.Api.Generated.Extensions;
 public partial class TwitchExtensionLiveChannel : RefCounted, ITwitcherSharp<TwitchExtensionLiveChannel>
 {
     private GodotObject? _data;
-    public string? BroadcasterId { get; set; }
-    public string? BroadcasterName { get; set; }
-    public string? GameName { get; set; }
-    public string? GameId { get; set; }
-    public string? Title { get; set; }
+    public string BroadcasterId { get; set; } = null!;
+    public string BroadcasterName { get; set; } = null!;
+    public string GameName { get; set; } = null!;
+    public string GameId { get; set; } = null!;
+    public string Title { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchExtensionLiveChannel object.

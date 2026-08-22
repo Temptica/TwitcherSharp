@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.ChannelPoints;
 public partial class TwitchUpdateRedemptionStatusResponse : RefCounted, ITwitcherSharp<TwitchUpdateRedemptionStatusResponse>
 {
     private GodotObject? _data;
-    public TwitchCustomRewardRedemption[]? Data { get => field ??= _data?.GetArray<TwitchCustomRewardRedemption>("data"); set; }
+    public TwitchCustomRewardRedemption[] Data { get => field ??= _data?.GetArray<TwitchCustomRewardRedemption>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUpdateRedemptionStatusResponse object.

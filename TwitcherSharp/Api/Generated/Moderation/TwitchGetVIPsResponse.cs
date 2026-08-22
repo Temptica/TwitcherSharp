@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 public partial class TwitchGetVIPsResponse : RefCounted, ITwitcherSharp<TwitchGetVIPsResponse>
 {
     private GodotObject? _data;
-    public TwitchUserVip[]? Data { get => field ??= _data?.GetArray<TwitchUserVip>("data"); set; }
+    public TwitchUserVip[] Data { get => field ??= _data?.GetArray<TwitchUserVip>("data")!; set; } = null!;
     public ResponsePagination? Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
 
     /// <summary> 

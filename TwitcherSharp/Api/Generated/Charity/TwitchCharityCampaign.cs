@@ -7,16 +7,16 @@ namespace TwitcherSharp.Api.Generated.Charity;
 public partial class TwitchCharityCampaign : RefCounted, ITwitcherSharp<TwitchCharityCampaign>
 {
     private GodotObject? _data;
-    public string? Id { get; set; }
-    public string? BroadcasterId { get; set; }
-    public string? BroadcasterLogin { get; set; }
-    public string? BroadcasterName { get; set; }
-    public string? CharityName { get; set; }
-    public string? CharityDescription { get; set; }
-    public string? CharityLogo { get; set; }
-    public string? CharityWebsite { get; set; }
-    public TwitchResponseCurrentAmount? CurrentAmount { get => field ??= _data?.Get<TwitchResponseCurrentAmount>("current_amount"); set; }
-    public TwitchResponseTargetAmount? TargetAmount { get => field ??= _data?.Get<TwitchResponseTargetAmount>("target_amount"); set; }
+    public string Id { get; set; } = null!;
+    public string BroadcasterId { get; set; } = null!;
+    public string BroadcasterLogin { get; set; } = null!;
+    public string BroadcasterName { get; set; } = null!;
+    public string CharityName { get; set; } = null!;
+    public string CharityDescription { get; set; } = null!;
+    public string CharityLogo { get; set; } = null!;
+    public string CharityWebsite { get; set; } = null!;
+    public TwitchResponseCurrentAmount CurrentAmount { get => field ??= _data?.Get<TwitchResponseCurrentAmount>("current_amount")!; set; } = null!;
+    public TwitchResponseTargetAmount TargetAmount { get => field ??= _data?.Get<TwitchResponseTargetAmount>("target_amount")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCharityCampaign object.
@@ -65,7 +65,7 @@ public partial class TwitchCharityCampaign : RefCounted, ITwitcherSharp<TwitchCh
         private GodotObject? _data;
         public int Value { get; set; }
         public int DecimalPlaces { get; set; }
-        public string? Currency { get; set; }
+        public string Currency { get; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseCurrentAmount object.
@@ -105,7 +105,7 @@ public partial class TwitchCharityCampaign : RefCounted, ITwitcherSharp<TwitchCh
         private GodotObject? _data;
         public int Value { get; set; }
         public int DecimalPlaces { get; set; }
-        public string? Currency { get; set; }
+        public string Currency { get; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseTargetAmount object.

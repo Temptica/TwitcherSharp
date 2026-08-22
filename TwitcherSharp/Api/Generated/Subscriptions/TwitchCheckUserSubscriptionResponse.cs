@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Subscriptions;
 public partial class TwitchCheckUserSubscriptionResponse : RefCounted, ITwitcherSharp<TwitchCheckUserSubscriptionResponse>
 {
     private GodotObject? _data;
-    public TwitchUserSubscription[]? Data { get => field ??= _data?.GetArray<TwitchUserSubscription>("data"); set; }
+    public TwitchUserSubscription[] Data { get => field ??= _data?.GetArray<TwitchUserSubscription>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCheckUserSubscriptionResponse object.

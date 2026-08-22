@@ -31,7 +31,7 @@ public partial class TwitchRedemption(
     public TwitchReward Reward { get; set; } = twitchReward;
     public TwitchUser Broadcaster { get; set; } = broadcaster;
     public TwitchUser User { get; set; } = user;
-    public string? UserInput { get; set; }
+    public string UserInput { get; set; } = "";
 
     /// <summary>
     /// Defaults to "unfulfilled". Possible values are "unknown", "unfulfilled", "fulfilled", and "canceled".
@@ -114,10 +114,10 @@ public partial class TwitchRedemption(
         var script = GD.Load<GDScript>("res://addons/twitcher/reward/twitch_redemption.gd");
         var instance = script.New().AsGodotObject();
         instance.Set("id", Id);
-        instance.Set("reward", Reward?.ToGodotObject() ?? new Variant());
-        instance.Set("broadcaster", Broadcaster?.ToGodotObject() ?? new Variant());
-        instance.Set("user", User?.ToGodotObject() ?? new Variant());
-        if (UserInput != null) instance.Set("user_input", UserInput);
+        instance.Set("reward", Reward.ToGodotObject());
+        instance.Set("broadcaster", Broadcaster.ToGodotObject());
+        instance.Set("user", User.ToGodotObject());
+        instance.Set("user_input", UserInput);
         instance.Set("current_status", (int)CurrentStatus);
         instance.Set("redeemed_at", XmlConvert.ToString(RedeemedAt, XmlDateTimeSerializationMode.Utc));
         return instance;

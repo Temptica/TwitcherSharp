@@ -7,26 +7,26 @@ namespace TwitcherSharp.Api.Generated.ChannelPoints;
 public partial class TwitchCustomReward : RefCounted, ITwitcherSharp<TwitchCustomReward>
 {
     private GodotObject? _data;
-    public string? BroadcasterId { get; set; }
-    public string? BroadcasterLogin { get; set; }
-    public string? BroadcasterName { get; set; }
-    public string? Id { get; set; }
-    public string? Title { get; set; }
-    public string? Prompt { get; set; }
+    public string BroadcasterId { get; set; } = null!;
+    public string BroadcasterLogin { get; set; } = null!;
+    public string BroadcasterName { get; set; } = null!;
+    public string Id { get; set; } = null!;
+    public string Title { get; set; } = null!;
+    public string Prompt { get; set; } = null!;
     public int Cost { get; set; }
-    public TwitchImage? Image { get => field ??= _data?.Get<TwitchImage>("image"); set; }
-    public TwitchDefaultImage? DefaultImage { get => field ??= _data?.Get<TwitchDefaultImage>("default_image"); set; }
-    public string? BackgroundColor { get; set; }
+    public TwitchImage Image { get => field ??= _data?.Get<TwitchImage>("image")!; set; } = null!;
+    public TwitchDefaultImage DefaultImage { get => field ??= _data?.Get<TwitchDefaultImage>("default_image")!; set; } = null!;
+    public string BackgroundColor { get; set; } = null!;
     public bool IsEnabled { get; set; }
     public bool IsUserInputRequired { get; set; }
-    public TwitchMaxPerStreamSetting? MaxPerStreamSetting { get => field ??= _data?.Get<TwitchMaxPerStreamSetting>("max_per_stream_setting"); set; }
-    public TwitchMaxPerUserPerStreamSetting? MaxPerUserPerStreamSetting { get => field ??= _data?.Get<TwitchMaxPerUserPerStreamSetting>("max_per_user_per_stream_setting"); set; }
-    public TwitchGlobalCooldownSetting? GlobalCooldownSetting { get => field ??= _data?.Get<TwitchGlobalCooldownSetting>("global_cooldown_setting"); set; }
+    public TwitchMaxPerStreamSetting MaxPerStreamSetting { get => field ??= _data?.Get<TwitchMaxPerStreamSetting>("max_per_stream_setting")!; set; } = null!;
+    public TwitchMaxPerUserPerStreamSetting MaxPerUserPerStreamSetting { get => field ??= _data?.Get<TwitchMaxPerUserPerStreamSetting>("max_per_user_per_stream_setting")!; set; } = null!;
+    public TwitchGlobalCooldownSetting GlobalCooldownSetting { get => field ??= _data?.Get<TwitchGlobalCooldownSetting>("global_cooldown_setting")!; set; } = null!;
     public bool IsPaused { get; set; }
     public bool IsInStock { get; set; }
     public bool ShouldRedemptionsSkipRequestQueue { get; set; }
     public int RedemptionsRedeemedCurrentStream { get; set; }
-    public string? CooldownExpiresAt { get; set; }
+    public string CooldownExpiresAt { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCustomReward object.
@@ -90,9 +90,9 @@ public partial class TwitchCustomReward : RefCounted, ITwitcherSharp<TwitchCusto
     public partial class TwitchImage : RefCounted, ITwitcherSharp<TwitchImage>
     {
         private GodotObject? _data;
-        public string? Url1x { get; set; }
-        public string? Url2x { get; set; }
-        public string? Url4x { get; set; }
+        public string Url1x { get; set; } = null!;
+        public string Url2x { get; set; } = null!;
+        public string Url4x { get; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchImage object.
@@ -130,9 +130,9 @@ public partial class TwitchCustomReward : RefCounted, ITwitcherSharp<TwitchCusto
     public partial class TwitchDefaultImage : RefCounted, ITwitcherSharp<TwitchDefaultImage>
     {
         private GodotObject? _data;
-        public string? Url1x { get; set; }
-        public string? Url2x { get; set; }
-        public string? Url4x { get; set; }
+        public string Url1x { get; set; } = null!;
+        public string Url2x { get; set; } = null!;
+        public string Url4x { get; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchDefaultImage object.

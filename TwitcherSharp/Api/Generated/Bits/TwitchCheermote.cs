@@ -7,11 +7,11 @@ namespace TwitcherSharp.Api.Generated.Bits;
 public partial class TwitchCheermote : RefCounted, ITwitcherSharp<TwitchCheermote>
 {
     private GodotObject? _data;
-    public string? Prefix { get; set; }
-    public TwitchResponseTiers[]? Tiers { get => field ??= _data?.GetArray<TwitchResponseTiers>("tiers"); set; }
-    public string? Type { get; set; }
+    public string Prefix { get; set; } = null!;
+    public TwitchResponseTiers[] Tiers { get => field ??= _data?.GetArray<TwitchResponseTiers>("tiers")!; set; } = null!;
+    public string Type { get; set; } = null!;
     public int Order { get; set; }
-    public string? LastUpdated { get; set; }
+    public string LastUpdated { get; set; } = null!;
     public bool IsCharitable { get; set; }
 
     /// <summary> 
@@ -53,9 +53,9 @@ public partial class TwitchCheermote : RefCounted, ITwitcherSharp<TwitchCheermot
     {
         private GodotObject? _data;
         public int MinBits { get; set; }
-        public string? Id { get; set; }
-        public string? Color { get; set; }
-        public TwitchCheermoteImages? Images { get => field ??= _data?.Get<TwitchCheermoteImages>("images"); set; }
+        public string Id { get; set; } = null!;
+        public string Color { get; set; } = null!;
+        public TwitchCheermoteImages Images { get => field ??= _data?.Get<TwitchCheermoteImages>("images")!; set; } = null!;
         public bool CanCheer { get; set; }
         public bool ShowInBitsCard { get; set; }
     

@@ -8,8 +8,8 @@ namespace TwitcherSharp.Api.Generated.Chat;
 public partial class TwitchGetChannelEmotesResponse : RefCounted, ITwitcherSharp<TwitchGetChannelEmotesResponse>
 {
     private GodotObject? _data;
-    public TwitchChannelEmote[]? Data { get => field ??= _data?.GetArray<TwitchChannelEmote>("data"); set; }
-    public string? Template { get; set; }
+    public TwitchChannelEmote[] Data { get => field ??= _data?.GetArray<TwitchChannelEmote>("data")!; set; } = null!;
+    public string Template { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetChannelEmotesResponse object.

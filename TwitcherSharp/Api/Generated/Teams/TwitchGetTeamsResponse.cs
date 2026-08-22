@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Teams;
 public partial class TwitchGetTeamsResponse : RefCounted, ITwitcherSharp<TwitchGetTeamsResponse>
 {
     private GodotObject? _data;
-    public TwitchTeam[]? Data { get => field ??= _data?.GetArray<TwitchTeam>("data"); set; }
+    public TwitchTeam[] Data { get => field ??= _data?.GetArray<TwitchTeam>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetTeamsResponse object.

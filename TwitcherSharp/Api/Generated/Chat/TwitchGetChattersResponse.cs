@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Chat;
 public partial class TwitchGetChattersResponse : RefCounted, ITwitcherSharp<TwitchGetChattersResponse>
 {
     private GodotObject? _data;
-    public TwitchChatter[]? Data { get => field ??= _data?.GetArray<TwitchChatter>("data"); set; }
+    public TwitchChatter[] Data { get => field ??= _data?.GetArray<TwitchChatter>("data")!; set; } = null!;
     public ResponsePagination? Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
     public int Total { get; set; }
 

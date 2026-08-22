@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Extensions;
 public partial class TwitchCreateExtensionSecretResponse : RefCounted, ITwitcherSharp<TwitchCreateExtensionSecretResponse>
 {
     private GodotObject? _data;
-    public TwitchExtensionSecret[]? Data { get => field ??= _data?.GetArray<TwitchExtensionSecret>("data"); set; }
+    public TwitchExtensionSecret[] Data { get => field ??= _data?.GetArray<TwitchExtensionSecret>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCreateExtensionSecretResponse object.

@@ -7,20 +7,20 @@ namespace TwitcherSharp.Api.Generated.Polls;
 public partial class TwitchPoll : RefCounted, ITwitcherSharp<TwitchPoll>
 {
     private GodotObject? _data;
-    public string? Id { get; set; }
-    public string? BroadcasterId { get; set; }
-    public string? BroadcasterName { get; set; }
-    public string? BroadcasterLogin { get; set; }
-    public string? Title { get; set; }
-    public TwitchChoices[]? Choices { get => field ??= _data?.GetArray<TwitchChoices>("choices"); set; }
+    public string Id { get; set; } = null!;
+    public string BroadcasterId { get; set; } = null!;
+    public string BroadcasterName { get; set; } = null!;
+    public string BroadcasterLogin { get; set; } = null!;
+    public string Title { get; set; } = null!;
+    public TwitchChoices[] Choices { get => field ??= _data?.GetArray<TwitchChoices>("choices")!; set; } = null!;
     public bool BitsVotingEnabled { get; set; }
     public int BitsPerVote { get; set; }
     public bool ChannelPointsVotingEnabled { get; set; }
     public int ChannelPointsPerVote { get; set; }
-    public string? Status { get; set; }
+    public string Status { get; set; } = null!;
     public int Duration { get; set; }
-    public string? StartedAt { get; set; }
-    public string? EndedAt { get; set; }
+    public string StartedAt { get; set; } = null!;
+    public string EndedAt { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchPoll object.
@@ -76,8 +76,8 @@ public partial class TwitchPoll : RefCounted, ITwitcherSharp<TwitchPoll>
     public partial class TwitchChoices : RefCounted, ITwitcherSharp<TwitchChoices>
     {
         private GodotObject? _data;
-        public string? Id { get; set; }
-        public string? Title { get; set; }
+        public string Id { get; set; } = null!;
+        public string Title { get; set; } = null!;
         public int Votes { get; set; }
         public int ChannelPointsVotes { get; set; }
         public int BitsVotes { get; set; }

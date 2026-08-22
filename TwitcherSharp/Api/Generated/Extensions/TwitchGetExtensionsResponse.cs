@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Extensions;
 public partial class TwitchGetExtensionsResponse : RefCounted, ITwitcherSharp<TwitchGetExtensionsResponse>
 {
     private GodotObject? _data;
-    public TwitchExtension[]? Data { get => field ??= _data?.GetArray<TwitchExtension>("data"); set; }
+    public TwitchExtension[] Data { get => field ??= _data?.GetArray<TwitchExtension>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetExtensionsResponse object.

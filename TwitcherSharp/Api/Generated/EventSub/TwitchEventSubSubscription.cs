@@ -7,13 +7,13 @@ namespace TwitcherSharp.Api.Generated.EventSub;
 public partial class TwitchEventSubSubscription<T> : RefCounted, ITwitcherSharp<TwitchEventSubSubscription<T>> where T : RefCounted, ITwitcherSharpCondition<T>
 {
     private GodotObject? _data;
-    public string? Id { get; set; }
-    public string? Status { get; set; }
-    public string? Type { get; set; }
-    public string? Version { get; set; }
-    public ITwitcherSharpCondition<T> Condition { get => field ??= T.FromDictionary(_data?.Get("condition").AsGodotDictionary()!); set; }
-    public string? CreatedAt { get; set; }
-    public TwitchTransport? Transport { get => field ??= _data?.Get<TwitchTransport>("transport"); set; }
+    public string Id { get; set; } = null!;
+    public string Status { get; set; } = null!;
+    public string Type { get; set; } = null!;
+    public string Version { get; set; } = null!;
+    public ITwitcherSharpCondition<T> Condition { get => field ??= T.FromDictionary(_data?.Get("condition").AsGodotDictionary()!); set; } = null!;
+    public string CreatedAt { get; set; } = null!;
+    public TwitchTransport Transport { get => field ??= _data?.Get<TwitchTransport>("transport")!; set; } = null!;
     public int Cost { get; set; }
 
     /// <summary> 
@@ -57,7 +57,7 @@ public partial class TwitchEventSubSubscription<T> : RefCounted, ITwitcherSharp<
     public partial class TwitchTransport : RefCounted, ITwitcherSharp<TwitchTransport>
     {
         private GodotObject? _data;
-        public string? Method { get; set; }
+        public string Method { get; set; } = null!;
         public string? Callback { get; set; }
         public string? SessionId { get; set; }
         public string? ConnectedAt { get; set; }

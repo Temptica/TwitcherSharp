@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Chat;
 public partial class TwitchSendChatMessageResponse : RefCounted, ITwitcherSharp<TwitchSendChatMessageResponse>
 {
     private GodotObject? _data;
-    public TwitchResponseData[]? Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
+    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchSendChatMessageResponse object.
@@ -32,7 +32,7 @@ public partial class TwitchSendChatMessageResponse : RefCounted, ITwitcherSharp<
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
         private GodotObject? _data;
-        public string? MessageId { get; set; }
+        public string MessageId { get; set; } = null!;
         public bool IsSent { get; set; }
         public TwitchResponseDropReason? DropReason { get => field ??= _data?.Get<TwitchResponseDropReason>("drop_reason"); set; }
     
@@ -69,8 +69,8 @@ public partial class TwitchSendChatMessageResponse : RefCounted, ITwitcherSharp<
         public partial class TwitchResponseDropReason : RefCounted, ITwitcherSharp<TwitchResponseDropReason>
         {
             private GodotObject? _data;
-            public string? Code { get; set; }
-            public string? Message { get; set; }
+            public string Code { get; set; } = null!;
+            public string Message { get; set; } = null!;
         
             /// <summary> 
             /// Transforms the godot data into a TwitchResponseDropReason object.

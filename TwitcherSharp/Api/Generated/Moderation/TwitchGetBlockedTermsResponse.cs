@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 public partial class TwitchGetBlockedTermsResponse : RefCounted, ITwitcherSharp<TwitchGetBlockedTermsResponse>
 {
     private GodotObject? _data;
-    public TwitchBlockedTerm[]? Data { get => field ??= _data?.GetArray<TwitchBlockedTerm>("data"); set; }
+    public TwitchBlockedTerm[] Data { get => field ??= _data?.GetArray<TwitchBlockedTerm>("data")!; set; } = null!;
     public ResponsePagination? Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
 
     /// <summary> 

@@ -7,9 +7,9 @@ namespace TwitcherSharp.Api.Generated.Schedule;
 public partial class TwitchCreateChannelStreamScheduleSegmentBody : RefCounted, ITwitcherSharp<TwitchCreateChannelStreamScheduleSegmentBody>
 {
     private GodotObject? _data;
-    public string? StartTime { get; set; }
-    public string? Timezone { get; set; }
-    public string? Duration { get; set; }
+    public string StartTime { get; set; } = null!;
+    public string Timezone { get; set; } = null!;
+    public string Duration { get; set; } = null!;
     public bool? IsRecurring { get; set; }
     public string? CategoryId { get; set; }
     public string? Title { get; set; }

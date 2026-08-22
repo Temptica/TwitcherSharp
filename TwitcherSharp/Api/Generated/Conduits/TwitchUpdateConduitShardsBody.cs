@@ -7,8 +7,8 @@ namespace TwitcherSharp.Api.Generated.Conduits;
 public partial class TwitchUpdateConduitShardsBody : RefCounted, ITwitcherSharp<TwitchUpdateConduitShardsBody>
 {
     private GodotObject? _data;
-    public string? ConduitId { get; set; }
-    public TwitchBodyShards[]? Shards { get => field ??= _data?.GetArray<TwitchBodyShards>("shards"); set; }
+    public string ConduitId { get; set; } = null!;
+    public TwitchBodyShards[] Shards { get => field ??= _data?.GetArray<TwitchBodyShards>("shards")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUpdateConduitShardsBody object.
@@ -41,8 +41,8 @@ public partial class TwitchUpdateConduitShardsBody : RefCounted, ITwitcherSharp<
     public partial class TwitchBodyShards : RefCounted, ITwitcherSharp<TwitchBodyShards>
     {
         private GodotObject? _data;
-        public string? Id { get; set; }
-        public TwitchBodyTransport? Transport { get => field ??= _data?.Get<TwitchBodyTransport>("transport"); set; }
+        public string Id { get; set; } = null!;
+        public TwitchBodyTransport Transport { get => field ??= _data?.Get<TwitchBodyTransport>("transport")!; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchBodyShards object.

@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Channels;
 public partial class TwitchGetChannelFollowersResponse : RefCounted, ITwitcherSharp<TwitchGetChannelFollowersResponse>
 {
     private GodotObject? _data;
-    public TwitchResponseData[]? Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
+    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data")!; set; } = null!;
     public ResponsePagination? Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
     public int Total { get; set; }
 
@@ -79,10 +79,10 @@ public partial class TwitchGetChannelFollowersResponse : RefCounted, ITwitcherSh
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
         private GodotObject? _data;
-        public string? FollowedAt { get; set; }
-        public string? UserId { get; set; }
-        public string? UserLogin { get; set; }
-        public string? UserName { get; set; }
+        public string FollowedAt { get; set; } = null!;
+        public string UserId { get; set; } = null!;
+        public string UserLogin { get; set; } = null!;
+        public string UserName { get; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseData object.

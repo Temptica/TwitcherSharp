@@ -77,11 +77,13 @@ public partial class TwitchBot : RefCounted, ITwitcherSharpSingleton<TwitchBot>
         }
 
         if (TwitchApi.Instance == null) throw new NullReferenceException("TwitchApi is not initialized.");
+        if (Instance.Receiver == null) throw new NullReferenceException("TwitchBot.Receiver is not set.");
+        if (Instance.Sender == null) throw new NullReferenceException("TwitchBot.Sender is not set.");
 
         var cmb = new TwitchSendChatMessageBody
         {
-            BroadcasterId = Instance.Receiver?.Id,
-            SenderId = Instance.Sender?.Id,
+            BroadcasterId = Instance.Receiver.Id,
+            SenderId = Instance.Sender.Id,
             ReplyParentMessageId = replyParentMessageId,
             ForSourceOnly = forSourceOnly,
             Message = message,

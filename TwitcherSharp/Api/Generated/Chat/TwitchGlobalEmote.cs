@@ -8,12 +8,12 @@ namespace TwitcherSharp.Api.Generated.Chat;
 public partial class TwitchGlobalEmote : RefCounted, ITwitcherSharp<TwitchGlobalEmote>, ITwitchEmote
 {
     private GodotObject? _data;
-    public string? Id { get; set; }
-    public string? Name { get; set; }
-    public ITwitchImages? Images { get => field ??= _data?.Get<TwitchResponseImages>("images"); set; }
-    public string[]? Format { get; set; }
-    public string[]? Scale { get; set; }
-    public string[]? ThemeMode { get; set; }
+    public string Id { get; set; } = null!;
+    public string Name { get; set; } = null!;
+    public ITwitchImages Images { get => field ??= _data?.Get<TwitchResponseImages>("images")!; set; } = null!;
+    public string[] Format { get; set; } = null!;
+    public string[] Scale { get; set; } = null!;
+    public string[] ThemeMode { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGlobalEmote object.
@@ -55,9 +55,9 @@ public partial class TwitchGlobalEmote : RefCounted, ITwitcherSharp<TwitchGlobal
     public partial class TwitchResponseImages : RefCounted, ITwitcherSharp<TwitchResponseImages>, ITwitchImages
     {
         private GodotObject? _data;
-        public string? Url1x { get; set; }
-        public string? Url2x { get; set; }
-        public string? Url4x { get; set; }
+        public string Url1x { get; set; } = null!;
+        public string Url2x { get; set; } = null!;
+        public string Url4x { get; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseImages object.

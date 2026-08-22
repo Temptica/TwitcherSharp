@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.GuestStar;
 public partial class TwitchGetGuestStarInvitesResponse : RefCounted, ITwitcherSharp<TwitchGetGuestStarInvitesResponse>
 {
     private GodotObject? _data;
-    public TwitchGuestStarInvite[]? Data { get => field ??= _data?.GetArray<TwitchGuestStarInvite>("data"); set; }
+    public TwitchGuestStarInvite[] Data { get => field ??= _data?.GetArray<TwitchGuestStarInvite>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetGuestStarInvitesResponse object.

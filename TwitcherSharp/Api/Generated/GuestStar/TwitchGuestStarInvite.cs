@@ -7,9 +7,9 @@ namespace TwitcherSharp.Api.Generated.GuestStar;
 public partial class TwitchGuestStarInvite : RefCounted, ITwitcherSharp<TwitchGuestStarInvite>
 {
     private GodotObject? _data;
-    public string? UserId { get; set; }
-    public string? InvitedAt { get; set; }
-    public string? Status { get; set; }
+    public string UserId { get; set; } = null!;
+    public string InvitedAt { get; set; } = null!;
+    public string Status { get; set; } = null!;
     public bool IsVideoEnabled { get; set; }
     public bool IsAudioEnabled { get; set; }
     public bool IsVideoAvailable { get; set; }

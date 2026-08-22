@@ -7,15 +7,15 @@ namespace TwitcherSharp.Api.Generated.Goals;
 public partial class TwitchCreatorGoal : RefCounted, ITwitcherSharp<TwitchCreatorGoal>
 {
     private GodotObject? _data;
-    public string? Id { get; set; }
-    public string? BroadcasterId { get; set; }
-    public string? BroadcasterName { get; set; }
-    public string? BroadcasterLogin { get; set; }
-    public string? Type { get; set; }
-    public string? Description { get; set; }
+    public string Id { get; set; } = null!;
+    public string BroadcasterId { get; set; } = null!;
+    public string BroadcasterName { get; set; } = null!;
+    public string BroadcasterLogin { get; set; } = null!;
+    public string Type { get; set; } = null!;
+    public string Description { get; set; } = null!;
     public int CurrentAmount { get; set; }
     public int TargetAmount { get; set; }
-    public string? CreatedAt { get; set; }
+    public string CreatedAt { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCreatorGoal object.

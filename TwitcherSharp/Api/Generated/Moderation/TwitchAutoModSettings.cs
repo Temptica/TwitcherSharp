@@ -7,8 +7,8 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 public partial class TwitchAutoModSettings : RefCounted, ITwitcherSharp<TwitchAutoModSettings>
 {
     private GodotObject? _data;
-    public string? BroadcasterId { get; set; }
-    public string? ModeratorId { get; set; }
+    public string BroadcasterId { get; set; } = null!;
+    public string ModeratorId { get; set; } = null!;
     public int OverallLevel { get; set; }
     public int Disability { get; set; }
     public int Aggression { get; set; }

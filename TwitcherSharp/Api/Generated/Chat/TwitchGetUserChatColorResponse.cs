@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Chat;
 public partial class TwitchGetUserChatColorResponse : RefCounted, ITwitcherSharp<TwitchGetUserChatColorResponse>
 {
     private GodotObject? _data;
-    public TwitchUserChatColor[]? Data { get => field ??= _data?.GetArray<TwitchUserChatColor>("data"); set; }
+    public TwitchUserChatColor[] Data { get => field ??= _data?.GetArray<TwitchUserChatColor>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetUserChatColorResponse object.

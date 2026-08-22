@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.ChannelPoints;
 public partial class TwitchCreateCustomRewardsBody : RefCounted, ITwitcherSharp<TwitchCreateCustomRewardsBody>
 {
     private GodotObject? _data;
-    public string? Title { get; set; }
+    public string Title { get; set; } = null!;
     public int Cost { get; set; }
     public string? Prompt { get; set; }
     public bool? IsEnabled { get; set; }

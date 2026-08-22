@@ -7,18 +7,18 @@ namespace TwitcherSharp.Api.Generated.Predictions;
 public partial class TwitchPrediction : RefCounted, ITwitcherSharp<TwitchPrediction>
 {
     private GodotObject? _data;
-    public string? Id { get; set; }
-    public string? BroadcasterId { get; set; }
-    public string? BroadcasterName { get; set; }
-    public string? BroadcasterLogin { get; set; }
-    public string? Title { get; set; }
-    public string? WinningOutcomeId { get; set; }
-    public TwitchPredictionOutcome[]? Outcomes { get => field ??= _data?.GetArray<TwitchPredictionOutcome>("outcomes"); set; }
+    public string Id { get; set; } = null!;
+    public string BroadcasterId { get; set; } = null!;
+    public string BroadcasterName { get; set; } = null!;
+    public string BroadcasterLogin { get; set; } = null!;
+    public string Title { get; set; } = null!;
+    public string WinningOutcomeId { get; set; } = null!;
+    public TwitchPredictionOutcome[] Outcomes { get => field ??= _data?.GetArray<TwitchPredictionOutcome>("outcomes")!; set; } = null!;
     public int PredictionWindow { get; set; }
-    public string? Status { get; set; }
-    public string? CreatedAt { get; set; }
-    public string? EndedAt { get; set; }
-    public string? LockedAt { get; set; }
+    public string Status { get; set; } = null!;
+    public string CreatedAt { get; set; } = null!;
+    public string EndedAt { get; set; } = null!;
+    public string LockedAt { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchPrediction object.

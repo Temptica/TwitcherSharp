@@ -7,9 +7,9 @@ namespace TwitcherSharp.Api.Generated.Polls;
 public partial class TwitchCreatePollBody : RefCounted, ITwitcherSharp<TwitchCreatePollBody>
 {
     private GodotObject? _data;
-    public string? BroadcasterId { get; set; }
-    public string? Title { get; set; }
-    public TwitchBodyChoices[]? Choices { get => field ??= _data?.GetArray<TwitchBodyChoices>("choices"); set; }
+    public string BroadcasterId { get; set; } = null!;
+    public string Title { get; set; } = null!;
+    public TwitchBodyChoices[] Choices { get => field ??= _data?.GetArray<TwitchBodyChoices>("choices")!; set; } = null!;
     public int Duration { get; set; }
     public bool? ChannelPointsVotingEnabled { get; set; }
     public int? ChannelPointsPerVote { get; set; }
@@ -53,7 +53,7 @@ public partial class TwitchCreatePollBody : RefCounted, ITwitcherSharp<TwitchCre
     public partial class TwitchBodyChoices : RefCounted, ITwitcherSharp<TwitchBodyChoices>
     {
         private GodotObject? _data;
-        public string? Title { get; set; }
+        public string Title { get; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchBodyChoices object.

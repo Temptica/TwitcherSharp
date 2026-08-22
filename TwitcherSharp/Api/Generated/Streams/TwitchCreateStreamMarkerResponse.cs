@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Streams;
 public partial class TwitchCreateStreamMarkerResponse : RefCounted, ITwitcherSharp<TwitchCreateStreamMarkerResponse>
 {
     private GodotObject? _data;
-    public TwitchStreamMarkerCreated[]? Data { get => field ??= _data?.GetArray<TwitchStreamMarkerCreated>("data"); set; }
+    public TwitchStreamMarkerCreated[] Data { get => field ??= _data?.GetArray<TwitchStreamMarkerCreated>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCreateStreamMarkerResponse object.

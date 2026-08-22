@@ -7,8 +7,8 @@ namespace TwitcherSharp.Api.Generated.Bits;
 public partial class TwitchGetBitsLeaderboardResponse : RefCounted, ITwitcherSharp<TwitchGetBitsLeaderboardResponse>
 {
     private GodotObject? _data;
-    public TwitchBitsLeaderboard[]? Data { get => field ??= _data?.GetArray<TwitchBitsLeaderboard>("data"); set; }
-    public TwitchResponseDateRange? DateRange { get => field ??= _data?.Get<TwitchResponseDateRange>("date_range"); set; }
+    public TwitchBitsLeaderboard[] Data { get => field ??= _data?.GetArray<TwitchBitsLeaderboard>("data")!; set; } = null!;
+    public TwitchResponseDateRange DateRange { get => field ??= _data?.Get<TwitchResponseDateRange>("date_range")!; set; } = null!;
     public int Total { get; set; }
 
     /// <summary> 
@@ -43,8 +43,8 @@ public partial class TwitchGetBitsLeaderboardResponse : RefCounted, ITwitcherSha
     public partial class TwitchResponseDateRange : RefCounted, ITwitcherSharp<TwitchResponseDateRange>
     {
         private GodotObject? _data;
-        public string? StartedAt { get; set; }
-        public string? EndedAt { get; set; }
+        public string StartedAt { get; set; } = null!;
+        public string EndedAt { get; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseDateRange object.

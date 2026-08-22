@@ -7,9 +7,9 @@ namespace TwitcherSharp.Api.Generated.HypeTrain;
 public partial class TwitchGetHypeTrainStatusResponse : RefCounted, ITwitcherSharp<TwitchGetHypeTrainStatusResponse>
 {
     private GodotObject? _data;
-    public TwitchResponseData[]? Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
-    public TwitchResponseAllTimeHigh? AllTimeHigh { get => field ??= _data?.Get<TwitchResponseAllTimeHigh>("all_time_high"); set; }
-    public TwitchResponseSharedAllTimeHigh? SharedAllTimeHigh { get => field ??= _data?.Get<TwitchResponseSharedAllTimeHigh>("shared_all_time_high"); set; }
+    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data")!; set; } = null!;
+    public TwitchResponseAllTimeHigh AllTimeHigh { get => field ??= _data?.Get<TwitchResponseAllTimeHigh>("all_time_high")!; set; } = null!;
+    public TwitchResponseSharedAllTimeHigh SharedAllTimeHigh { get => field ??= _data?.Get<TwitchResponseSharedAllTimeHigh>("shared_all_time_high")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetHypeTrainStatusResponse object.
@@ -40,7 +40,7 @@ public partial class TwitchGetHypeTrainStatusResponse : RefCounted, ITwitcherSha
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
         private GodotObject? _data;
-        public TwitchResponseCurrent? Current { get => field ??= _data?.Get<TwitchResponseCurrent>("current"); set; }
+        public TwitchResponseCurrent Current { get => field ??= _data?.Get<TwitchResponseCurrent>("current")!; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseData object.
@@ -69,15 +69,15 @@ public partial class TwitchGetHypeTrainStatusResponse : RefCounted, ITwitcherSha
         public partial class TwitchResponseCurrent : RefCounted, ITwitcherSharp<TwitchResponseCurrent>
         {
             private GodotObject? _data;
-            public string? Id { get; set; }
-            public string? BroadcasterUserId { get; set; }
-            public string? BroadcasterUserLogin { get; set; }
-            public string? BroadcasterUserName { get; set; }
+            public string Id { get; set; } = null!;
+            public string BroadcasterUserId { get; set; } = null!;
+            public string BroadcasterUserLogin { get; set; } = null!;
+            public string BroadcasterUserName { get; set; } = null!;
             public int Level { get; set; }
             public int Total { get; set; }
             public int Progress { get; set; }
             public int Goal { get; set; }
-            public TwitchResponseTopContributions[]? TopContributions { get => field ??= _data?.GetArray<TwitchResponseTopContributions>("top_contributions"); set; }
+            public TwitchResponseTopContributions[] TopContributions { get => field ??= _data?.GetArray<TwitchResponseTopContributions>("top_contributions")!; set; } = null!;
         
             /// <summary> 
             /// Transforms the godot data into a TwitchResponseCurrent object.
@@ -124,14 +124,14 @@ public partial class TwitchGetHypeTrainStatusResponse : RefCounted, ITwitcherSha
             public partial class TwitchResponseTopContributions : RefCounted, ITwitcherSharp<TwitchResponseTopContributions>
             {
                 private GodotObject? _data;
-                public string? UserId { get; set; }
-                public string? UserLogin { get; set; }
-                public string? UserName { get; set; }
-                public string? Type { get; set; }
+                public string UserId { get; set; } = null!;
+                public string UserLogin { get; set; } = null!;
+                public string UserName { get; set; } = null!;
+                public string Type { get; set; } = null!;
                 public int Total { get; set; }
-                public TwitchResponseSharedTrainParticipants[]? SharedTrainParticipants { get => field ??= _data?.GetArray<TwitchResponseSharedTrainParticipants>("shared_train_participants"); set; }
-                public string? StartedAt { get; set; }
-                public string? ExpiresAt { get; set; }
+                public TwitchResponseSharedTrainParticipants[] SharedTrainParticipants { get => field ??= _data?.GetArray<TwitchResponseSharedTrainParticipants>("shared_train_participants")!; set; } = null!;
+                public string StartedAt { get; set; } = null!;
+                public string ExpiresAt { get; set; } = null!;
                 public bool IsSharedTrain { get; set; }
             
                 /// <summary> 
@@ -179,9 +179,9 @@ public partial class TwitchGetHypeTrainStatusResponse : RefCounted, ITwitcherSha
                 public partial class TwitchResponseSharedTrainParticipants : RefCounted, ITwitcherSharp<TwitchResponseSharedTrainParticipants>
                 {
                     private GodotObject? _data;
-                    public string? BroadcasterUserId { get; set; }
-                    public string? BroadcasterUserLogin { get; set; }
-                    public string? BroadcasterUserName { get; set; }
+                    public string BroadcasterUserId { get; set; } = null!;
+                    public string BroadcasterUserLogin { get; set; } = null!;
+                    public string BroadcasterUserName { get; set; } = null!;
                 
                     /// <summary> 
                     /// Transforms the godot data into a TwitchResponseSharedTrainParticipants object.
@@ -227,7 +227,7 @@ public partial class TwitchGetHypeTrainStatusResponse : RefCounted, ITwitcherSha
         private GodotObject? _data;
         public int Level { get; set; }
         public int Total { get; set; }
-        public string? AchievedAt { get; set; }
+        public string AchievedAt { get; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseAllTimeHigh object.
@@ -267,7 +267,7 @@ public partial class TwitchGetHypeTrainStatusResponse : RefCounted, ITwitcherSha
         private GodotObject? _data;
         public int Level { get; set; }
         public int Total { get; set; }
-        public string? AchievedAt { get; set; }
+        public string AchievedAt { get; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseSharedAllTimeHigh object.

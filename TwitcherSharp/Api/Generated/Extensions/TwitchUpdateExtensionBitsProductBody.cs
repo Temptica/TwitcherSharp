@@ -7,9 +7,9 @@ namespace TwitcherSharp.Api.Generated.Extensions;
 public partial class TwitchUpdateExtensionBitsProductBody : RefCounted, ITwitcherSharp<TwitchUpdateExtensionBitsProductBody>
 {
     private GodotObject? _data;
-    public string? Sku { get; set; }
-    public TwitchBodyCost? Cost { get => field ??= _data?.Get<TwitchBodyCost>("cost"); set; }
-    public string? DisplayName { get; set; }
+    public string Sku { get; set; } = null!;
+    public TwitchBodyCost Cost { get => field ??= _data?.Get<TwitchBodyCost>("cost")!; set; } = null!;
+    public string DisplayName { get; set; } = null!;
     public bool? InDevelopment { get; set; }
     public string? Expiration { get; set; }
     public bool? IsBroadcast { get; set; }
@@ -54,7 +54,7 @@ public partial class TwitchUpdateExtensionBitsProductBody : RefCounted, ITwitche
     {
         private GodotObject? _data;
         public int Amount { get; set; }
-        public string? Type { get; set; }
+        public string Type { get; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchBodyCost object.

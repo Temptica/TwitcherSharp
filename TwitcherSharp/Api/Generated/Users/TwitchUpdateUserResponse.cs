@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Users;
 public partial class TwitchUpdateUserResponse : RefCounted, ITwitcherSharp<TwitchUpdateUserResponse>
 {
     private GodotObject? _data;
-    public TwitchUser[]? Data { get => field ??= _data?.GetArray<TwitchUser>("data"); set; }
+    public TwitchUser[] Data { get => field ??= _data?.GetArray<TwitchUser>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUpdateUserResponse object.

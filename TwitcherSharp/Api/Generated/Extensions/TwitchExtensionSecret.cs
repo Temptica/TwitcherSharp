@@ -8,7 +8,7 @@ public partial class TwitchExtensionSecret : RefCounted, ITwitcherSharp<TwitchEx
 {
     private GodotObject? _data;
     public int FormatVersion { get; set; }
-    public TwitchSecrets[]? Secrets { get => field ??= _data?.GetArray<TwitchSecrets>("secrets"); set; }
+    public TwitchSecrets[] Secrets { get => field ??= _data?.GetArray<TwitchSecrets>("secrets")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchExtensionSecret object.
@@ -40,9 +40,9 @@ public partial class TwitchExtensionSecret : RefCounted, ITwitcherSharp<TwitchEx
     public partial class TwitchSecrets : RefCounted, ITwitcherSharp<TwitchSecrets>
     {
         private GodotObject? _data;
-        public string? Content { get; set; }
-        public string? ActiveAt { get; set; }
-        public string? ExpiresAt { get; set; }
+        public string Content { get; set; } = null!;
+        public string ActiveAt { get; set; } = null!;
+        public string ExpiresAt { get; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchSecrets object.

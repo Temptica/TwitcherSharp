@@ -7,15 +7,15 @@ namespace TwitcherSharp.Api.Generated.GuestStar;
 public partial class TwitchGuest : RefCounted, ITwitcherSharp<TwitchGuest>
 {
     private GodotObject? _data;
-    public string? SlotId { get; set; }
+    public string SlotId { get; set; } = null!;
     public bool IsLive { get; set; }
-    public string? UserId { get; set; }
-    public string? UserDisplayName { get; set; }
-    public string? UserLogin { get; set; }
+    public string UserId { get; set; } = null!;
+    public string UserDisplayName { get; set; } = null!;
+    public string UserLogin { get; set; } = null!;
     public int Volume { get; set; }
-    public string? AssignedAt { get; set; }
-    public TwitchAudioSettings? AudioSettings { get => field ??= _data?.Get<TwitchAudioSettings>("audio_settings"); set; }
-    public TwitchVideoSettings? VideoSettings { get => field ??= _data?.Get<TwitchVideoSettings>("video_settings"); set; }
+    public string AssignedAt { get; set; } = null!;
+    public TwitchAudioSettings AudioSettings { get => field ??= _data?.Get<TwitchAudioSettings>("audio_settings")!; set; } = null!;
+    public TwitchVideoSettings VideoSettings { get => field ??= _data?.Get<TwitchVideoSettings>("video_settings")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGuest object.

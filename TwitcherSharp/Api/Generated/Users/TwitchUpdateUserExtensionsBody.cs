@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Users;
 public partial class TwitchUpdateUserExtensionsBody : RefCounted, ITwitcherSharp<TwitchUpdateUserExtensionsBody>
 {
     private GodotObject? _data;
-    public TwitchBodyData? Data { get => field ??= _data?.Get<TwitchBodyData>("data"); set; }
+    public TwitchBodyData Data { get => field ??= _data?.Get<TwitchBodyData>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUpdateUserExtensionsBody object.

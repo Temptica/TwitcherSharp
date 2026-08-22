@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Chat;
 public partial class TwitchChatSettingsUpdated : RefCounted, ITwitcherSharp<TwitchChatSettingsUpdated>
 {
     private GodotObject? _data;
-    public string? BroadcasterId { get; set; }
+    public string BroadcasterId { get; set; } = null!;
     public bool EmoteMode { get; set; }
     public bool FollowerMode { get; set; }
     public int FollowerModeDuration { get; set; }

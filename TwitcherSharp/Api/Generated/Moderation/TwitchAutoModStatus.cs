@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 public partial class TwitchAutoModStatus : RefCounted, ITwitcherSharp<TwitchAutoModStatus>
 {
     private GodotObject? _data;
-    public string? MsgId { get; set; }
+    public string MsgId { get; set; } = null!;
     public bool IsPermitted { get; set; }
 
     /// <summary> 

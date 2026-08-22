@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Users;
 public partial class TwitchGetUserBlockListResponse : RefCounted, ITwitcherSharp<TwitchGetUserBlockListResponse>
 {
     private GodotObject? _data;
-    public TwitchUserBlockList[]? Data { get => field ??= _data?.GetArray<TwitchUserBlockList>("data"); set; }
+    public TwitchUserBlockList[] Data { get => field ??= _data?.GetArray<TwitchUserBlockList>("data")!; set; } = null!;
     public ResponsePagination? Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
 
     /// <summary> 

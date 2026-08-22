@@ -7,9 +7,9 @@ namespace TwitcherSharp.Api.Generated.CCLs;
 public partial class TwitchContentClassificationLabel : RefCounted, ITwitcherSharp<TwitchContentClassificationLabel>
 {
     private GodotObject? _data;
-    public string? Id { get; set; }
-    public string? Description { get; set; }
-    public string? Name { get; set; }
+    public string Id { get; set; } = null!;
+    public string Description { get; set; } = null!;
+    public string Name { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchContentClassificationLabel object.

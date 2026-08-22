@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.ChannelPoints;
 public partial class TwitchGetCustomRewardRedemptionResponse : RefCounted, ITwitcherSharp<TwitchGetCustomRewardRedemptionResponse>
 {
     private GodotObject? _data;
-    public TwitchCustomRewardRedemption[]? Data { get => field ??= _data?.GetArray<TwitchCustomRewardRedemption>("data"); set; }
+    public TwitchCustomRewardRedemption[] Data { get => field ??= _data?.GetArray<TwitchCustomRewardRedemption>("data")!; set; } = null!;
     public ResponsePagination? Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
 
     /// <summary> 

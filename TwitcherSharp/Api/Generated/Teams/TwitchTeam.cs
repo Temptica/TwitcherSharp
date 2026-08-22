@@ -7,16 +7,16 @@ namespace TwitcherSharp.Api.Generated.Teams;
 public partial class TwitchTeam : RefCounted, ITwitcherSharp<TwitchTeam>
 {
     private GodotObject? _data;
-    public TwitchResponseUsers[]? Users { get => field ??= _data?.GetArray<TwitchResponseUsers>("users"); set; }
-    public string? BackgroundImageUrl { get; set; }
-    public string? Banner { get; set; }
-    public string? CreatedAt { get; set; }
-    public string? UpdatedAt { get; set; }
-    public string? Info { get; set; }
-    public string? ThumbnailUrl { get; set; }
-    public string? TeamName { get; set; }
-    public string? TeamDisplayName { get; set; }
-    public string? Id { get; set; }
+    public TwitchResponseUsers[] Users { get => field ??= _data?.GetArray<TwitchResponseUsers>("users")!; set; } = null!;
+    public string BackgroundImageUrl { get; set; } = null!;
+    public string Banner { get; set; } = null!;
+    public string CreatedAt { get; set; } = null!;
+    public string UpdatedAt { get; set; } = null!;
+    public string Info { get; set; } = null!;
+    public string ThumbnailUrl { get; set; } = null!;
+    public string TeamName { get; set; } = null!;
+    public string TeamDisplayName { get; set; } = null!;
+    public string Id { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchTeam object.
@@ -64,9 +64,9 @@ public partial class TwitchTeam : RefCounted, ITwitcherSharp<TwitchTeam>
     public partial class TwitchResponseUsers : RefCounted, ITwitcherSharp<TwitchResponseUsers>
     {
         private GodotObject? _data;
-        public string? UserId { get; set; }
-        public string? UserLogin { get; set; }
-        public string? UserName { get; set; }
+        public string UserId { get; set; } = null!;
+        public string UserLogin { get; set; } = null!;
+        public string UserName { get; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseUsers object.

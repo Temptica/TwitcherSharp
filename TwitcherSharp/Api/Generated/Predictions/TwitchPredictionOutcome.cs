@@ -7,12 +7,12 @@ namespace TwitcherSharp.Api.Generated.Predictions;
 public partial class TwitchPredictionOutcome : RefCounted, ITwitcherSharp<TwitchPredictionOutcome>
 {
     private GodotObject? _data;
-    public string? Id { get; set; }
-    public string? Title { get; set; }
+    public string Id { get; set; } = null!;
+    public string Title { get; set; } = null!;
     public int Users { get; set; }
     public int ChannelPoints { get; set; }
-    public TwitchTopPredictors[]? TopPredictors { get => field ??= _data?.GetArray<TwitchTopPredictors>("top_predictors"); set; }
-    public string? Color { get; set; }
+    public TwitchTopPredictors[] TopPredictors { get => field ??= _data?.GetArray<TwitchTopPredictors>("top_predictors")!; set; } = null!;
+    public string Color { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchPredictionOutcome object.
@@ -52,9 +52,9 @@ public partial class TwitchPredictionOutcome : RefCounted, ITwitcherSharp<Twitch
     public partial class TwitchTopPredictors : RefCounted, ITwitcherSharp<TwitchTopPredictors>
     {
         private GodotObject? _data;
-        public string? UserId { get; set; }
-        public string? UserName { get; set; }
-        public string? UserLogin { get; set; }
+        public string UserId { get; set; } = null!;
+        public string UserName { get; set; } = null!;
+        public string UserLogin { get; set; } = null!;
         public int ChannelPointsUsed { get; set; }
         public int ChannelPointsWon { get; set; }
     

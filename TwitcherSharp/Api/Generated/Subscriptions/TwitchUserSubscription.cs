@@ -7,14 +7,14 @@ namespace TwitcherSharp.Api.Generated.Subscriptions;
 public partial class TwitchUserSubscription : RefCounted, ITwitcherSharp<TwitchUserSubscription>
 {
     private GodotObject? _data;
-    public string? BroadcasterId { get; set; }
-    public string? BroadcasterLogin { get; set; }
-    public string? BroadcasterName { get; set; }
+    public string BroadcasterId { get; set; } = null!;
+    public string BroadcasterLogin { get; set; } = null!;
+    public string BroadcasterName { get; set; } = null!;
     public string? GifterId { get; set; }
     public string? GifterLogin { get; set; }
     public string? GifterName { get; set; }
     public bool IsGift { get; set; }
-    public string? Tier { get; set; }
+    public string Tier { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUserSubscription object.

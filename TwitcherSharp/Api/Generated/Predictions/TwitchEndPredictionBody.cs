@@ -7,9 +7,9 @@ namespace TwitcherSharp.Api.Generated.Predictions;
 public partial class TwitchEndPredictionBody : RefCounted, ITwitcherSharp<TwitchEndPredictionBody>
 {
     private GodotObject? _data;
-    public string? BroadcasterId { get; set; }
-    public string? Id { get; set; }
-    public string? Status { get; set; }
+    public string BroadcasterId { get; set; } = null!;
+    public string Id { get; set; } = null!;
+    public string Status { get; set; } = null!;
     public string? WinningOutcomeId { get; set; }
 
     /// <summary> 

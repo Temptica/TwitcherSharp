@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Entitlements;
 public partial class TwitchUpdateDropsEntitlementsResponse : RefCounted, ITwitcherSharp<TwitchUpdateDropsEntitlementsResponse>
 {
     private GodotObject? _data;
-    public TwitchDropsEntitlementUpdated[]? Data { get => field ??= _data?.GetArray<TwitchDropsEntitlementUpdated>("data"); set; }
+    public TwitchDropsEntitlementUpdated[] Data { get => field ??= _data?.GetArray<TwitchDropsEntitlementUpdated>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUpdateDropsEntitlementsResponse object.

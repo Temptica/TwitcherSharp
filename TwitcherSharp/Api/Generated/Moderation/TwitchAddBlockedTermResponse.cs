@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 public partial class TwitchAddBlockedTermResponse : RefCounted, ITwitcherSharp<TwitchAddBlockedTermResponse>
 {
     private GodotObject? _data;
-    public TwitchBlockedTerm[]? Data { get => field ??= _data?.GetArray<TwitchBlockedTerm>("data"); set; }
+    public TwitchBlockedTerm[] Data { get => field ??= _data?.GetArray<TwitchBlockedTerm>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchAddBlockedTermResponse object.

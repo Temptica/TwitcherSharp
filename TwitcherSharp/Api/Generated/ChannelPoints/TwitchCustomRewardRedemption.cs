@@ -7,17 +7,17 @@ namespace TwitcherSharp.Api.Generated.ChannelPoints;
 public partial class TwitchCustomRewardRedemption : RefCounted, ITwitcherSharp<TwitchCustomRewardRedemption>
 {
     private GodotObject? _data;
-    public string? BroadcasterId { get; set; }
-    public string? BroadcasterLogin { get; set; }
-    public string? BroadcasterName { get; set; }
-    public string? Id { get; set; }
-    public string? UserId { get; set; }
-    public string? UserName { get; set; }
-    public string? UserLogin { get; set; }
-    public TwitchReward? Reward { get => field ??= _data?.Get<TwitchReward>("reward"); set; }
-    public string? UserInput { get; set; }
-    public string? Status { get; set; }
-    public string? RedeemedAt { get; set; }
+    public string BroadcasterId { get; set; } = null!;
+    public string BroadcasterLogin { get; set; } = null!;
+    public string BroadcasterName { get; set; } = null!;
+    public string Id { get; set; } = null!;
+    public string UserId { get; set; } = null!;
+    public string UserName { get; set; } = null!;
+    public string UserLogin { get; set; } = null!;
+    public TwitchReward Reward { get => field ??= _data?.Get<TwitchReward>("reward")!; set; } = null!;
+    public string UserInput { get; set; } = null!;
+    public string Status { get; set; } = null!;
+    public string RedeemedAt { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCustomRewardRedemption object.
@@ -67,9 +67,9 @@ public partial class TwitchCustomRewardRedemption : RefCounted, ITwitcherSharp<T
     public partial class TwitchReward : RefCounted, ITwitcherSharp<TwitchReward>
     {
         private GodotObject? _data;
-        public string? Id { get; set; }
-        public string? Title { get; set; }
-        public string? Prompt { get; set; }
+        public string Id { get; set; } = null!;
+        public string Title { get; set; } = null!;
+        public string Prompt { get; set; } = null!;
         public int Cost { get; set; }
     
         /// <summary> 

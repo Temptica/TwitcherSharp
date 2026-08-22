@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 public partial class TwitchAddBlockedTermBody : RefCounted, ITwitcherSharp<TwitchAddBlockedTermBody>
 {
     private GodotObject? _data;
-    public string? Text { get; set; }
+    public string Text { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchAddBlockedTermBody object.

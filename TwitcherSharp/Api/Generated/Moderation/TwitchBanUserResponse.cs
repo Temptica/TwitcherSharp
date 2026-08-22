@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 public partial class TwitchBanUserResponse : RefCounted, ITwitcherSharp<TwitchBanUserResponse>
 {
     private GodotObject? _data;
-    public TwitchResponseData[]? Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
+    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchBanUserResponse object.
@@ -36,11 +36,11 @@ public partial class TwitchBanUserResponse : RefCounted, ITwitcherSharp<TwitchBa
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
         private GodotObject? _data;
-        public string? BroadcasterId { get; set; }
-        public string? ModeratorId { get; set; }
-        public string? UserId { get; set; }
-        public string? CreatedAt { get; set; }
-        public string? EndTime { get; set; }
+        public string BroadcasterId { get; set; } = null!;
+        public string ModeratorId { get; set; } = null!;
+        public string UserId { get; set; } = null!;
+        public string CreatedAt { get; set; } = null!;
+        public string EndTime { get; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseData object.

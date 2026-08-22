@@ -7,9 +7,9 @@ namespace TwitcherSharp.Api.Generated.Bits;
 public partial class TwitchBitsLeaderboard : RefCounted, ITwitcherSharp<TwitchBitsLeaderboard>
 {
     private GodotObject? _data;
-    public string? UserId { get; set; }
-    public string? UserLogin { get; set; }
-    public string? UserName { get; set; }
+    public string UserId { get; set; } = null!;
+    public string UserLogin { get; set; } = null!;
+    public string UserName { get; set; } = null!;
     public int Rank { get; set; }
     public int Score { get; set; }
 

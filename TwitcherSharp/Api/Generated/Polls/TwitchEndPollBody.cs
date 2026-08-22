@@ -7,9 +7,9 @@ namespace TwitcherSharp.Api.Generated.Polls;
 public partial class TwitchEndPollBody : RefCounted, ITwitcherSharp<TwitchEndPollBody>
 {
     private GodotObject? _data;
-    public string? BroadcasterId { get; set; }
-    public string? Id { get; set; }
-    public string? Status { get; set; }
+    public string BroadcasterId { get; set; } = null!;
+    public string Id { get; set; } = null!;
+    public string Status { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchEndPollBody object.

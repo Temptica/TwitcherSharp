@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Conduits;
 public partial class TwitchCreateConduitsResponse : RefCounted, ITwitcherSharp<TwitchCreateConduitsResponse>
 {
     private GodotObject? _data;
-    public TwitchResponseData[]? Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
+    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCreateConduitsResponse object.
@@ -36,7 +36,7 @@ public partial class TwitchCreateConduitsResponse : RefCounted, ITwitcherSharp<T
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
         private GodotObject? _data;
-        public string? Id { get; set; }
+        public string Id { get; set; } = null!;
         public int ShardCount { get; set; }
     
         /// <summary> 

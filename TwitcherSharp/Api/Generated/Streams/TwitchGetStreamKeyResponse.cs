@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Streams;
 public partial class TwitchGetStreamKeyResponse : RefCounted, ITwitcherSharp<TwitchGetStreamKeyResponse>
 {
     private GodotObject? _data;
-    public TwitchResponseData[]? Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
+    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetStreamKeyResponse object.
@@ -36,7 +36,7 @@ public partial class TwitchGetStreamKeyResponse : RefCounted, ITwitcherSharp<Twi
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
         private GodotObject? _data;
-        public string? StreamKey { get; set; }
+        public string StreamKey { get; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseData object.

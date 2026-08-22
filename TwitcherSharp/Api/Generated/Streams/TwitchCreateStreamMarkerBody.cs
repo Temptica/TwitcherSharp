@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Streams;
 public partial class TwitchCreateStreamMarkerBody : RefCounted, ITwitcherSharp<TwitchCreateStreamMarkerBody>
 {
     private GodotObject? _data;
-    public string? UserId { get; set; }
+    public string UserId { get; set; } = null!;
     public string? Description { get; set; }
 
     /// <summary> 

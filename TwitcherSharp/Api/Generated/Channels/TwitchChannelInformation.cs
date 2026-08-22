@@ -7,16 +7,16 @@ namespace TwitcherSharp.Api.Generated.Channels;
 public partial class TwitchChannelInformation : RefCounted, ITwitcherSharp<TwitchChannelInformation>
 {
     private GodotObject? _data;
-    public string? BroadcasterId { get; set; }
-    public string? BroadcasterLogin { get; set; }
-    public string? BroadcasterName { get; set; }
-    public string? BroadcasterLanguage { get; set; }
-    public string? GameName { get; set; }
-    public string? GameId { get; set; }
-    public string? Title { get; set; }
+    public string BroadcasterId { get; set; } = null!;
+    public string BroadcasterLogin { get; set; } = null!;
+    public string BroadcasterName { get; set; } = null!;
+    public string BroadcasterLanguage { get; set; } = null!;
+    public string GameName { get; set; } = null!;
+    public string GameId { get; set; } = null!;
+    public string Title { get; set; } = null!;
     public int Delay { get; set; }
-    public string[]? Tags { get; set; }
-    public string[]? ContentClassificationLabels { get; set; }
+    public string[] Tags { get; set; } = null!;
+    public string[] ContentClassificationLabels { get; set; } = null!;
     public bool IsBrandedContent { get; set; }
 
     /// <summary> 

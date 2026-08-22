@@ -7,16 +7,16 @@ namespace TwitcherSharp.Api.Generated.Bits;
 public partial class TwitchExtensionTransaction : RefCounted, ITwitcherSharp<TwitchExtensionTransaction>
 {
     private GodotObject? _data;
-    public string? Id { get; set; }
-    public string? Timestamp { get; set; }
-    public string? BroadcasterId { get; set; }
-    public string? BroadcasterLogin { get; set; }
-    public string? BroadcasterName { get; set; }
-    public string? UserId { get; set; }
-    public string? UserLogin { get; set; }
-    public string? UserName { get; set; }
-    public string? ProductType { get; set; }
-    public TwitchResponseProductData? ProductData { get => field ??= _data?.Get<TwitchResponseProductData>("product_data"); set; }
+    public string Id { get; set; } = null!;
+    public string Timestamp { get; set; } = null!;
+    public string BroadcasterId { get; set; } = null!;
+    public string BroadcasterLogin { get; set; } = null!;
+    public string BroadcasterName { get; set; } = null!;
+    public string UserId { get; set; } = null!;
+    public string UserLogin { get; set; } = null!;
+    public string UserName { get; set; } = null!;
+    public string ProductType { get; set; } = null!;
+    public TwitchResponseProductData ProductData { get => field ??= _data?.Get<TwitchResponseProductData>("product_data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchExtensionTransaction object.
@@ -64,12 +64,12 @@ public partial class TwitchExtensionTransaction : RefCounted, ITwitcherSharp<Twi
     public partial class TwitchResponseProductData : RefCounted, ITwitcherSharp<TwitchResponseProductData>
     {
         private GodotObject? _data;
-        public string? Sku { get; set; }
-        public string? Domain { get; set; }
-        public TwitchResponseCost? Cost { get => field ??= _data?.Get<TwitchResponseCost>("cost"); set; }
+        public string Sku { get; set; } = null!;
+        public string Domain { get; set; } = null!;
+        public TwitchResponseCost Cost { get => field ??= _data?.Get<TwitchResponseCost>("cost")!; set; } = null!;
         public bool InDevelopment { get; set; }
-        public string? DisplayName { get; set; }
-        public string? Expiration { get; set; }
+        public string DisplayName { get; set; } = null!;
+        public string Expiration { get; set; } = null!;
         public bool Broadcast { get; set; }
     
         /// <summary> 
@@ -114,7 +114,7 @@ public partial class TwitchExtensionTransaction : RefCounted, ITwitcherSharp<Twi
         {
             private GodotObject? _data;
             public int Amount { get; set; }
-            public string? Type { get; set; }
+            public string Type { get; set; } = null!;
         
             /// <summary> 
             /// Transforms the godot data into a TwitchResponseCost object.

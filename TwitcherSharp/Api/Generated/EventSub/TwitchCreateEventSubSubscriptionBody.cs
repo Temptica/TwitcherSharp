@@ -7,10 +7,10 @@ namespace TwitcherSharp.Api.Generated.EventSub;
 public partial class TwitchCreateEventSubSubscriptionBody<T> : RefCounted, ITwitcherSharp<TwitchCreateEventSubSubscriptionBody<T>> where T : RefCounted, ITwitcherSharpCondition<T>
 {
     private GodotObject? _data;
-    public string? Type { get; set; }
-    public string? Version { get; set; }
-    public ITwitcherSharpCondition<T> Condition { get => field ??= T.FromDictionary(_data?.Get("condition").AsGodotDictionary()!); set; }
-    public TwitchBodyTransport? Transport { get => field ??= _data?.Get<TwitchBodyTransport>("transport"); set; }
+    public string Type { get; set; } = null!;
+    public string Version { get; set; } = null!;
+    public ITwitcherSharpCondition<T> Condition { get => field ??= T.FromDictionary(_data?.Get("condition").AsGodotDictionary()!); set; } = null!;
+    public TwitchBodyTransport Transport { get => field ??= _data?.Get<TwitchBodyTransport>("transport")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCreateEventSubSubscriptionBody object.
@@ -46,7 +46,7 @@ public partial class TwitchCreateEventSubSubscriptionBody<T> : RefCounted, ITwit
     public partial class TwitchBodyTransport : RefCounted, ITwitcherSharp<TwitchBodyTransport>
     {
         private GodotObject? _data;
-        public string? Method { get; set; }
+        public string Method { get; set; } = null!;
         public string? Callback { get; set; }
         public string? Secret { get; set; }
         public string? SessionId { get; set; }

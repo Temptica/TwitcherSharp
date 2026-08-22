@@ -7,8 +7,8 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 public partial class TwitchAddSuspiciousStatusToChatUserBody : RefCounted, ITwitcherSharp<TwitchAddSuspiciousStatusToChatUserBody>
 {
     private GodotObject? _data;
-    public string? UserId { get; set; }
-    public string? Status { get; set; }
+    public string UserId { get; set; } = null!;
+    public string Status { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchAddSuspiciousStatusToChatUserBody object.

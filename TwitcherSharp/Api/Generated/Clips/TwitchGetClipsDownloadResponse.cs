@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Clips;
 public partial class TwitchGetClipsDownloadResponse : RefCounted, ITwitcherSharp<TwitchGetClipsDownloadResponse>
 {
     private GodotObject? _data;
-    public TwitchResponseData[]? Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
+    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetClipsDownloadResponse object.
@@ -36,9 +36,9 @@ public partial class TwitchGetClipsDownloadResponse : RefCounted, ITwitcherSharp
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
         private GodotObject? _data;
-        public string? ClipId { get; set; }
-        public string? LandscapeDownloadUrl { get; set; }
-        public string? PortraitDownloadUrl { get; set; }
+        public string ClipId { get; set; } = null!;
+        public string LandscapeDownloadUrl { get; set; } = null!;
+        public string PortraitDownloadUrl { get; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseData object.

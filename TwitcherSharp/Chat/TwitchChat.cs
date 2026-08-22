@@ -85,10 +85,13 @@ public partial class TwitchChat : RefCounted, ITwitcherSharpSingleton<TwitchChat
                 .ToArray();
         }
 
+        if (BroadcasterUser == null) throw new Exception("TwitchChat.BroadcasterUser is not set.");
+        if (SenderUser == null) throw new Exception("TwitchChat.SenderUser is not set.");
+
         var request = new TwitchSendChatMessageBody()
         {
-            BroadcasterId = BroadcasterUser?.Id,
-            SenderId = SenderUser?.Id,
+            BroadcasterId = BroadcasterUser.Id,
+            SenderId = SenderUser.Id,
             Message = message,
             ReplyParentMessageId = replyParentMessageId
         };

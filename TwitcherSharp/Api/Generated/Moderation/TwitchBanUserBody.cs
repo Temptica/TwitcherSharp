@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 public partial class TwitchBanUserBody : RefCounted, ITwitcherSharp<TwitchBanUserBody>
 {
     private GodotObject? _data;
-    public TwitchBodyData? Data { get => field ??= _data?.Get<TwitchBodyData>("data"); set; }
+    public TwitchBodyData Data { get => field ??= _data?.Get<TwitchBodyData>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchBanUserBody object.
@@ -36,7 +36,7 @@ public partial class TwitchBanUserBody : RefCounted, ITwitcherSharp<TwitchBanUse
     public partial class TwitchBodyData : RefCounted, ITwitcherSharp<TwitchBodyData>
     {
         private GodotObject? _data;
-        public string? UserId { get; set; }
+        public string UserId { get; set; } = null!;
         public int? Duration { get; set; }
         public string? Reason { get; set; }
     

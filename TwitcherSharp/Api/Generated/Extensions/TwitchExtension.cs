@@ -7,29 +7,29 @@ namespace TwitcherSharp.Api.Generated.Extensions;
 public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtension>
 {
     private GodotObject? _data;
-    public string? AuthorName { get; set; }
+    public string AuthorName { get; set; } = null!;
     public bool BitsEnabled { get; set; }
     public bool CanInstall { get; set; }
-    public string? ConfigurationLocation { get; set; }
-    public string? Description { get; set; }
-    public string? EulaTosUrl { get; set; }
+    public string ConfigurationLocation { get; set; } = null!;
+    public string Description { get; set; } = null!;
+    public string EulaTosUrl { get; set; } = null!;
     public bool HasChatSupport { get; set; }
-    public string? IconUrl { get; set; }
-    public TwitchExtensionIconUrls? IconUrls { get => field ??= _data?.Get<TwitchExtensionIconUrls>("icon_urls"); set; }
-    public string? Id { get; set; }
-    public string? Name { get; set; }
-    public string? PrivacyPolicyUrl { get; set; }
+    public string IconUrl { get; set; } = null!;
+    public TwitchExtensionIconUrls IconUrls { get => field ??= _data?.Get<TwitchExtensionIconUrls>("icon_urls")!; set; } = null!;
+    public string Id { get; set; } = null!;
+    public string Name { get; set; } = null!;
+    public string PrivacyPolicyUrl { get; set; } = null!;
     public bool RequestIdentityLink { get; set; }
-    public string[]? ScreenshotUrls { get; set; }
-    public string? State { get; set; }
-    public string? SubscriptionsSupportLevel { get; set; }
-    public string? Summary { get; set; }
-    public string? SupportEmail { get; set; }
-    public string? Version { get; set; }
-    public string? ViewerSummary { get; set; }
-    public TwitchViews? Views { get => field ??= _data?.Get<TwitchViews>("views"); set; }
-    public string[]? AllowlistedConfigUrls { get; set; }
-    public string[]? AllowlistedPanelUrls { get; set; }
+    public string[] ScreenshotUrls { get; set; } = null!;
+    public string State { get; set; } = null!;
+    public string SubscriptionsSupportLevel { get; set; } = null!;
+    public string Summary { get; set; } = null!;
+    public string SupportEmail { get; set; } = null!;
+    public string Version { get; set; } = null!;
+    public string ViewerSummary { get; set; } = null!;
+    public TwitchViews Views { get => field ??= _data?.Get<TwitchViews>("views")!; set; } = null!;
+    public string[] AllowlistedConfigUrls { get; set; } = null!;
+    public string[] AllowlistedPanelUrls { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchExtension object.
@@ -102,11 +102,11 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
     public partial class TwitchViews : RefCounted, ITwitcherSharp<TwitchViews>
     {
         private GodotObject? _data;
-        public TwitchMobile? Mobile { get => field ??= _data?.Get<TwitchMobile>("mobile"); set; }
-        public TwitchPanel? Panel { get => field ??= _data?.Get<TwitchPanel>("panel"); set; }
-        public TwitchVideoOverlay? VideoOverlay { get => field ??= _data?.Get<TwitchVideoOverlay>("video_overlay"); set; }
-        public TwitchComponent? Component { get => field ??= _data?.Get<TwitchComponent>("component"); set; }
-        public TwitchConfig? Config { get => field ??= _data?.Get<TwitchConfig>("config"); set; }
+        public TwitchMobile Mobile { get => field ??= _data?.Get<TwitchMobile>("mobile")!; set; } = null!;
+        public TwitchPanel Panel { get => field ??= _data?.Get<TwitchPanel>("panel")!; set; } = null!;
+        public TwitchVideoOverlay VideoOverlay { get => field ??= _data?.Get<TwitchVideoOverlay>("video_overlay")!; set; } = null!;
+        public TwitchComponent Component { get => field ??= _data?.Get<TwitchComponent>("component")!; set; } = null!;
+        public TwitchConfig Config { get => field ??= _data?.Get<TwitchConfig>("config")!; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchViews object.
@@ -139,7 +139,7 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
         public partial class TwitchMobile : RefCounted, ITwitcherSharp<TwitchMobile>
         {
             private GodotObject? _data;
-            public string? ViewerUrl { get; set; }
+            public string ViewerUrl { get; set; } = null!;
         
             /// <summary> 
             /// Transforms the godot data into a TwitchMobile object.
@@ -173,7 +173,7 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
         public partial class TwitchPanel : RefCounted, ITwitcherSharp<TwitchPanel>
         {
             private GodotObject? _data;
-            public string? ViewerUrl { get; set; }
+            public string ViewerUrl { get; set; } = null!;
             public int Height { get; set; }
             public bool CanLinkExternalContent { get; set; }
         
@@ -213,7 +213,7 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
         public partial class TwitchVideoOverlay : RefCounted, ITwitcherSharp<TwitchVideoOverlay>
         {
             private GodotObject? _data;
-            public string? ViewerUrl { get; set; }
+            public string ViewerUrl { get; set; } = null!;
             public bool CanLinkExternalContent { get; set; }
         
             /// <summary> 
@@ -250,7 +250,7 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
         public partial class TwitchComponent : RefCounted, ITwitcherSharp<TwitchComponent>
         {
             private GodotObject? _data;
-            public string? ViewerUrl { get; set; }
+            public string ViewerUrl { get; set; } = null!;
             public int AspectRatioX { get; set; }
             public int AspectRatioY { get; set; }
             public bool Autoscale { get; set; }
@@ -302,7 +302,7 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
         public partial class TwitchConfig : RefCounted, ITwitcherSharp<TwitchConfig>
         {
             private GodotObject? _data;
-            public string? ViewerUrl { get; set; }
+            public string ViewerUrl { get; set; } = null!;
             public bool CanLinkExternalContent { get; set; }
         
             /// <summary> 

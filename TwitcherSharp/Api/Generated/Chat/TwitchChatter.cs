@@ -7,9 +7,9 @@ namespace TwitcherSharp.Api.Generated.Chat;
 public partial class TwitchChatter : RefCounted, ITwitcherSharp<TwitchChatter>
 {
     private GodotObject? _data;
-    public string? UserId { get; set; }
-    public string? UserLogin { get; set; }
-    public string? UserName { get; set; }
+    public string UserId { get; set; } = null!;
+    public string UserLogin { get; set; } = null!;
+    public string UserName { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChatter object.

@@ -7,18 +7,18 @@ namespace TwitcherSharp.Api.Generated.Teams;
 public partial class TwitchChannelTeam : RefCounted, ITwitcherSharp<TwitchChannelTeam>
 {
     private GodotObject? _data;
-    public string? BroadcasterId { get; set; }
-    public string? BroadcasterLogin { get; set; }
-    public string? BroadcasterName { get; set; }
-    public string? BackgroundImageUrl { get; set; }
-    public string? Banner { get; set; }
-    public string? CreatedAt { get; set; }
-    public string? UpdatedAt { get; set; }
-    public string? Info { get; set; }
-    public string? ThumbnailUrl { get; set; }
-    public string? TeamName { get; set; }
-    public string? TeamDisplayName { get; set; }
-    public string? Id { get; set; }
+    public string BroadcasterId { get; set; } = null!;
+    public string BroadcasterLogin { get; set; } = null!;
+    public string BroadcasterName { get; set; } = null!;
+    public string BackgroundImageUrl { get; set; } = null!;
+    public string Banner { get; set; } = null!;
+    public string CreatedAt { get; set; } = null!;
+    public string UpdatedAt { get; set; } = null!;
+    public string Info { get; set; } = null!;
+    public string ThumbnailUrl { get; set; } = null!;
+    public string TeamName { get; set; } = null!;
+    public string TeamDisplayName { get; set; } = null!;
+    public string Id { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelTeam object.

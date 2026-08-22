@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Extensions;
 public partial class TwitchGetExtensionLiveChannelsResponse : RefCounted, ITwitcherSharp<TwitchGetExtensionLiveChannelsResponse>
 {
     private GodotObject? _data;
-    public TwitchExtensionLiveChannel[]? Data { get => field ??= _data?.GetArray<TwitchExtensionLiveChannel>("data"); set; }
+    public TwitchExtensionLiveChannel[] Data { get => field ??= _data?.GetArray<TwitchExtensionLiveChannel>("data")!; set; } = null!;
     public string? Pagination { get; set; }
 
     /// <summary> 

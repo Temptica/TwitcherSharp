@@ -31,15 +31,32 @@ public class TwitchGenField : IEquatable<TwitchGenField>
     public bool IsTyped => TypedComponent != null;
 
     /// <summary>
-    /// A scalar C# value type (non-array, non-class). Only these stay non-nullable when required.
+    /// A scalar C# value type (non-array, non-class).
     /// </summary>
     public bool IsValueType => !IsArray && !IsTyped && Type is "int" or "bool" or "double" or "float" or "Variant";
 
     /// <summary>
     /// The nullability suffix to append to a property type under <c>&lt;Nullable&gt;enable</c>.
-    /// Reference types are always nullable (godot data may lack the key); value types are nullable only when optional.
+    /// Follows the Twitch API docs: fields the docs mark as required stay non-nullable, everything else is nullable.
     /// </summary>
-    public string NullableSuffix => IsValueType ? (IsRequired ? "" : "?") : "?";
+    public string NullableSuffix => IsRequired ? "" : "?";
+
+    /// <summary>
+    /// Property initializer for required reference-type fields. These are always populated by FromObject, but that
+    /// happens via an object initializer (after the parameterless constructor exits), which the compiler can't see -
+    /// so it would otherwise flag the non-nullable property as possibly uninitialized (CS8618). `null!` tells the
+    /// compiler to trust the factory method instead of forcing a real default (which would also break `field ??=`
+    /// lazy-loading getters, since a non-null default like `[]` would short-circuit the `??=`).
+    /// </summary>
+    public string DefaultInitializer => IsRequired && !IsValueType ? " = null!;" : "";
+
+    /// <summary>
+    /// Null-forgiving operator for the lazy-load fetch (`_data?.Get&lt;T&gt;(...)`) of a required reference-type
+    /// field: the fetch itself is nullable-typed (godot data COULD be absent), but the declared property type is
+    /// non-nullable to match the Twitch docs, so the fetch needs to be asserted non-null to satisfy the getter's
+    /// return type.
+    /// </summary>
+    public string RequiredBang => IsRequired && !IsValueType ? "!" : "";
 
     public string GetAsType()
     {

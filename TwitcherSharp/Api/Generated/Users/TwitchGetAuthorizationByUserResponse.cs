@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Users;
 public partial class TwitchGetAuthorizationByUserResponse : RefCounted, ITwitcherSharp<TwitchGetAuthorizationByUserResponse>
 {
     private GodotObject? _data;
-    public TwitchResponseData[]? Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
+    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetAuthorizationByUserResponse object.
@@ -36,10 +36,10 @@ public partial class TwitchGetAuthorizationByUserResponse : RefCounted, ITwitche
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
         private GodotObject? _data;
-        public string? UserId { get; set; }
-        public string? UserName { get; set; }
-        public string? UserLogin { get; set; }
-        public string[]? Scopes { get; set; }
+        public string UserId { get; set; } = null!;
+        public string UserName { get; set; } = null!;
+        public string UserLogin { get; set; } = null!;
+        public string[] Scopes { get; set; } = null!;
         public bool HasAuthorized { get; set; }
     
         /// <summary> 

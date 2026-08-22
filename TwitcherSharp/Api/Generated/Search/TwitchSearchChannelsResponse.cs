@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Search;
 public partial class TwitchSearchChannelsResponse : RefCounted, ITwitcherSharp<TwitchSearchChannelsResponse>
 {
     private GodotObject? _data;
-    public TwitchChannel[]? Data { get => field ??= _data?.GetArray<TwitchChannel>("data"); set; }
+    public TwitchChannel[] Data { get => field ??= _data?.GetArray<TwitchChannel>("data")!; set; } = null!;
     public ResponsePagination? Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
 
     /// <summary> 

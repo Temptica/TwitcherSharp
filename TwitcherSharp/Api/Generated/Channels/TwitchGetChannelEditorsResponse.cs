@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Channels;
 public partial class TwitchGetChannelEditorsResponse : RefCounted, ITwitcherSharp<TwitchGetChannelEditorsResponse>
 {
     private GodotObject? _data;
-    public TwitchChannelEditor[]? Data { get => field ??= _data?.GetArray<TwitchChannelEditor>("data"); set; }
+    public TwitchChannelEditor[] Data { get => field ??= _data?.GetArray<TwitchChannelEditor>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetChannelEditorsResponse object.

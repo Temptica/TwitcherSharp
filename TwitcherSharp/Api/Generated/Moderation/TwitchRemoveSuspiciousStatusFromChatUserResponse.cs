@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 public partial class TwitchRemoveSuspiciousStatusFromChatUserResponse : RefCounted, ITwitcherSharp<TwitchRemoveSuspiciousStatusFromChatUserResponse>
 {
     private GodotObject? _data;
-    public TwitchResponseData[]? Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
+    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchRemoveSuspiciousStatusFromChatUserResponse object.
@@ -36,12 +36,12 @@ public partial class TwitchRemoveSuspiciousStatusFromChatUserResponse : RefCount
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
         private GodotObject? _data;
-        public string? UserId { get; set; }
-        public string? BroadcasterId { get; set; }
-        public string? ModeratorId { get; set; }
-        public string? UpdatedAt { get; set; }
-        public string? Status { get; set; }
-        public string[]? Types { get; set; }
+        public string UserId { get; set; } = null!;
+        public string BroadcasterId { get; set; } = null!;
+        public string ModeratorId { get; set; } = null!;
+        public string UpdatedAt { get; set; } = null!;
+        public string Status { get; set; } = null!;
+        public string[] Types { get; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseData object.

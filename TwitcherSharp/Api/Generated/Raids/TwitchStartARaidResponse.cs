@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Raids;
 public partial class TwitchStartARaidResponse : RefCounted, ITwitcherSharp<TwitchStartARaidResponse>
 {
     private GodotObject? _data;
-    public TwitchResponseData[]? Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
+    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchStartARaidResponse object.
@@ -36,7 +36,7 @@ public partial class TwitchStartARaidResponse : RefCounted, ITwitcherSharp<Twitc
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
         private GodotObject? _data;
-        public string? CreatedAt { get; set; }
+        public string CreatedAt { get; set; } = null!;
         public bool IsMature { get; set; }
     
         /// <summary> 

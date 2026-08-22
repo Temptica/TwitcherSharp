@@ -7,20 +7,20 @@ namespace TwitcherSharp.Api.Generated.Streams;
 public partial class TwitchStream : RefCounted, ITwitcherSharp<TwitchStream>
 {
     private GodotObject? _data;
-    public string? Id { get; set; }
-    public string? UserId { get; set; }
-    public string? UserLogin { get; set; }
-    public string? UserName { get; set; }
-    public string? GameId { get; set; }
-    public string? GameName { get; set; }
-    public string? Type { get; set; }
-    public string? Title { get; set; }
+    public string Id { get; set; } = null!;
+    public string UserId { get; set; } = null!;
+    public string UserLogin { get; set; } = null!;
+    public string UserName { get; set; } = null!;
+    public string GameId { get; set; } = null!;
+    public string GameName { get; set; } = null!;
+    public string Type { get; set; } = null!;
+    public string Title { get; set; } = null!;
     public int ViewerCount { get; set; }
-    public string? StartedAt { get; set; }
-    public string? Language { get; set; }
-    public string? ThumbnailUrl { get; set; }
-    public string[]? TagIds { get; set; }
-    public string[]? Tags { get; set; }
+    public string StartedAt { get; set; } = null!;
+    public string Language { get; set; } = null!;
+    public string ThumbnailUrl { get; set; } = null!;
+    public string[] TagIds { get; set; } = null!;
+    public string[] Tags { get; set; } = null!;
     public bool IsMature { get; set; }
 
     /// <summary> 

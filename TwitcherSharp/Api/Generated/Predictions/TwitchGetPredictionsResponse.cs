@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Predictions;
 public partial class TwitchGetPredictionsResponse : RefCounted, ITwitcherSharp<TwitchGetPredictionsResponse>
 {
     private GodotObject? _data;
-    public TwitchPrediction[]? Data { get => field ??= _data?.GetArray<TwitchPrediction>("data"); set; }
+    public TwitchPrediction[] Data { get => field ??= _data?.GetArray<TwitchPrediction>("data")!; set; } = null!;
     public ResponsePagination? Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
 
     /// <summary> 

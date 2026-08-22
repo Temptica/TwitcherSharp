@@ -7,10 +7,10 @@ namespace TwitcherSharp.Api.Generated.Extensions;
 public partial class TwitchSendExtensionPubSubMessageBody : RefCounted, ITwitcherSharp<TwitchSendExtensionPubSubMessageBody>
 {
     private GodotObject? _data;
-    public string[]? Target { get; set; }
-    public string? BroadcasterId { get; set; }
+    public string[] Target { get; set; } = null!;
+    public string BroadcasterId { get; set; } = null!;
     public bool? IsGlobalBroadcast { get; set; }
-    public string? Message { get; set; }
+    public string Message { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchSendExtensionPubSubMessageBody object.

@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 public partial class TwitchCheckAutoModStatusResponse : RefCounted, ITwitcherSharp<TwitchCheckAutoModStatusResponse>
 {
     private GodotObject? _data;
-    public TwitchAutoModStatus[]? Data { get => field ??= _data?.GetArray<TwitchAutoModStatus>("data"); set; }
+    public TwitchAutoModStatus[] Data { get => field ??= _data?.GetArray<TwitchAutoModStatus>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCheckAutoModStatusResponse object.

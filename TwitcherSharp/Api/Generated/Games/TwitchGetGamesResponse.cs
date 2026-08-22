@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Games;
 public partial class TwitchGetGamesResponse : RefCounted, ITwitcherSharp<TwitchGetGamesResponse>
 {
     private GodotObject? _data;
-    public TwitchGame[]? Data { get => field ??= _data?.GetArray<TwitchGame>("data"); set; }
+    public TwitchGame[] Data { get => field ??= _data?.GetArray<TwitchGame>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetGamesResponse object.

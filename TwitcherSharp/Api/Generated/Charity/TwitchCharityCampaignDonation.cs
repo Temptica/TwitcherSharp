@@ -7,12 +7,12 @@ namespace TwitcherSharp.Api.Generated.Charity;
 public partial class TwitchCharityCampaignDonation : RefCounted, ITwitcherSharp<TwitchCharityCampaignDonation>
 {
     private GodotObject? _data;
-    public string? Id { get; set; }
-    public string? CampaignId { get; set; }
-    public string? UserId { get; set; }
-    public string? UserLogin { get; set; }
-    public string? UserName { get; set; }
-    public TwitchResponseAmount? Amount { get => field ??= _data?.Get<TwitchResponseAmount>("amount"); set; }
+    public string Id { get; set; } = null!;
+    public string CampaignId { get; set; } = null!;
+    public string UserId { get; set; } = null!;
+    public string UserLogin { get; set; } = null!;
+    public string UserName { get; set; } = null!;
+    public TwitchResponseAmount Amount { get => field ??= _data?.Get<TwitchResponseAmount>("amount")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCharityCampaignDonation object.
@@ -54,7 +54,7 @@ public partial class TwitchCharityCampaignDonation : RefCounted, ITwitcherSharp<
         private GodotObject? _data;
         public int Value { get; set; }
         public int DecimalPlaces { get; set; }
-        public string? Currency { get; set; }
+        public string Currency { get; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseAmount object.

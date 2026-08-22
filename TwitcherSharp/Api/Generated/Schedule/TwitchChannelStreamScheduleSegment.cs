@@ -7,12 +7,12 @@ namespace TwitcherSharp.Api.Generated.Schedule;
 public partial class TwitchChannelStreamScheduleSegment : RefCounted, ITwitcherSharp<TwitchChannelStreamScheduleSegment>
 {
     private GodotObject? _data;
-    public string? Id { get; set; }
-    public string? StartTime { get; set; }
-    public string? EndTime { get; set; }
-    public string? Title { get; set; }
-    public string? CanceledUntil { get; set; }
-    public TwitchCategory? Category { get => field ??= _data?.Get<TwitchCategory>("category"); set; }
+    public string Id { get; set; } = null!;
+    public string StartTime { get; set; } = null!;
+    public string EndTime { get; set; } = null!;
+    public string Title { get; set; } = null!;
+    public string CanceledUntil { get; set; } = null!;
+    public TwitchCategory Category { get => field ??= _data?.Get<TwitchCategory>("category")!; set; } = null!;
     public bool IsRecurring { get; set; }
 
     /// <summary> 
@@ -55,8 +55,8 @@ public partial class TwitchChannelStreamScheduleSegment : RefCounted, ITwitcherS
     public partial class TwitchCategory : RefCounted, ITwitcherSharp<TwitchCategory>
     {
         private GodotObject? _data;
-        public string? Id { get; set; }
-        public string? Name { get; set; }
+        public string Id { get; set; } = null!;
+        public string Name { get; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchCategory object.

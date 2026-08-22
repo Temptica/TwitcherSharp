@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.ChannelPoints;
 public partial class TwitchUpdateRedemptionStatusBody : RefCounted, ITwitcherSharp<TwitchUpdateRedemptionStatusBody>
 {
     private GodotObject? _data;
-    public string? Status { get; set; }
+    public string Status { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUpdateRedemptionStatusBody object.

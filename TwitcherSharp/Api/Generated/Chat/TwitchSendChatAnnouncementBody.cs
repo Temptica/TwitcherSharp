@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Chat;
 public partial class TwitchSendChatAnnouncementBody : RefCounted, ITwitcherSharp<TwitchSendChatAnnouncementBody>
 {
     private GodotObject? _data;
-    public string? Message { get; set; }
+    public string Message { get; set; } = null!;
     public string? Color { get; set; }
     public bool? ForSourceOnly { get; set; }
 

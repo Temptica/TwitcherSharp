@@ -7,11 +7,11 @@ namespace TwitcherSharp.Api.Generated.Users;
 public partial class TwitchUserExtension : RefCounted, ITwitcherSharp<TwitchUserExtension>
 {
     private GodotObject? _data;
-    public string? Id { get; set; }
-    public string? Version { get; set; }
-    public string? Name { get; set; }
+    public string Id { get; set; } = null!;
+    public string Version { get; set; } = null!;
+    public string Name { get; set; } = null!;
     public bool CanActivate { get; set; }
-    public string[]? Type { get; set; }
+    public string[] Type { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUserExtension object.

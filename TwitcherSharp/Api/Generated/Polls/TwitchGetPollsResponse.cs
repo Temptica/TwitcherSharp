@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Polls;
 public partial class TwitchGetPollsResponse : RefCounted, ITwitcherSharp<TwitchGetPollsResponse>
 {
     private GodotObject? _data;
-    public TwitchPoll[]? Data { get => field ??= _data?.GetArray<TwitchPoll>("data"); set; }
+    public TwitchPoll[] Data { get => field ??= _data?.GetArray<TwitchPoll>("data")!; set; } = null!;
     public ResponsePagination? Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
 
     /// <summary> 

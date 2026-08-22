@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Bits;
 public partial class TwitchGetCustomPowerUpResponse : RefCounted, ITwitcherSharp<TwitchGetCustomPowerUpResponse>
 {
     private GodotObject? _data;
-    public TwitchResponseData[]? Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
+    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetCustomPowerUpResponse object.
@@ -36,25 +36,25 @@ public partial class TwitchGetCustomPowerUpResponse : RefCounted, ITwitcherSharp
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
         private GodotObject? _data;
-        public string? BroadcasterId { get; set; }
-        public string? BroadcasterLogin { get; set; }
-        public string? BroadcasterName { get; set; }
-        public string? Id { get; set; }
-        public string? Title { get; set; }
-        public string? Prompt { get; set; }
+        public string BroadcasterId { get; set; } = null!;
+        public string BroadcasterLogin { get; set; } = null!;
+        public string BroadcasterName { get; set; } = null!;
+        public string Id { get; set; } = null!;
+        public string Title { get; set; } = null!;
+        public string Prompt { get; set; } = null!;
         public int Bits { get; set; }
-        public TwitchResponseImage? Image { get => field ??= _data?.Get<TwitchResponseImage>("image"); set; }
-        public TwitchResponseDefaultImage? DefaultImage { get => field ??= _data?.Get<TwitchResponseDefaultImage>("default_image"); set; }
-        public string? BackgroundColor { get; set; }
+        public TwitchResponseImage Image { get => field ??= _data?.Get<TwitchResponseImage>("image")!; set; } = null!;
+        public TwitchResponseDefaultImage DefaultImage { get => field ??= _data?.Get<TwitchResponseDefaultImage>("default_image")!; set; } = null!;
+        public string BackgroundColor { get; set; } = null!;
         public bool IsEnabled { get; set; }
         public bool IsUserInputRequired { get; set; }
-        public TwitchResponseMaxPerStreamSetting? MaxPerStreamSetting { get => field ??= _data?.Get<TwitchResponseMaxPerStreamSetting>("max_per_stream_setting"); set; }
-        public TwitchResponseMaxPerUserPerStreamSetting? MaxPerUserPerStreamSetting { get => field ??= _data?.Get<TwitchResponseMaxPerUserPerStreamSetting>("max_per_user_per_stream_setting"); set; }
-        public TwitchResponseGlobalCooldownSetting? GlobalCooldownSetting { get => field ??= _data?.Get<TwitchResponseGlobalCooldownSetting>("global_cooldown_setting"); set; }
+        public TwitchResponseMaxPerStreamSetting MaxPerStreamSetting { get => field ??= _data?.Get<TwitchResponseMaxPerStreamSetting>("max_per_stream_setting")!; set; } = null!;
+        public TwitchResponseMaxPerUserPerStreamSetting MaxPerUserPerStreamSetting { get => field ??= _data?.Get<TwitchResponseMaxPerUserPerStreamSetting>("max_per_user_per_stream_setting")!; set; } = null!;
+        public TwitchResponseGlobalCooldownSetting GlobalCooldownSetting { get => field ??= _data?.Get<TwitchResponseGlobalCooldownSetting>("global_cooldown_setting")!; set; } = null!;
         public bool IsPaused { get; set; }
         public bool IsInStock { get; set; }
         public int RedemptionsRedeemedCurrentStream { get; set; }
-        public string? CooldownExpiresAt { get; set; }
+        public string CooldownExpiresAt { get; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseData object.
@@ -117,9 +117,9 @@ public partial class TwitchGetCustomPowerUpResponse : RefCounted, ITwitcherSharp
         public partial class TwitchResponseImage : RefCounted, ITwitcherSharp<TwitchResponseImage>
         {
             private GodotObject? _data;
-            public string? Url1x { get; set; }
-            public string? Url2x { get; set; }
-            public string? Url4x { get; set; }
+            public string Url1x { get; set; } = null!;
+            public string Url2x { get; set; } = null!;
+            public string Url4x { get; set; } = null!;
         
             /// <summary> 
             /// Transforms the godot data into a TwitchResponseImage object.
@@ -157,9 +157,9 @@ public partial class TwitchGetCustomPowerUpResponse : RefCounted, ITwitcherSharp
         public partial class TwitchResponseDefaultImage : RefCounted, ITwitcherSharp<TwitchResponseDefaultImage>
         {
             private GodotObject? _data;
-            public string? Url1x { get; set; }
-            public string? Url2x { get; set; }
-            public string? Url4x { get; set; }
+            public string Url1x { get; set; } = null!;
+            public string Url2x { get; set; } = null!;
+            public string Url4x { get; set; } = null!;
         
             /// <summary> 
             /// Transforms the godot data into a TwitchResponseDefaultImage object.

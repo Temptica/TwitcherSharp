@@ -7,18 +7,18 @@ namespace TwitcherSharp.Api.Generated.Search;
 public partial class TwitchChannel : RefCounted, ITwitcherSharp<TwitchChannel>
 {
     private GodotObject? _data;
-    public string? BroadcasterLanguage { get; set; }
-    public string? BroadcasterLogin { get; set; }
-    public string? DisplayName { get; set; }
-    public string? GameId { get; set; }
-    public string? GameName { get; set; }
-    public string? Id { get; set; }
+    public string BroadcasterLanguage { get; set; } = null!;
+    public string BroadcasterLogin { get; set; } = null!;
+    public string DisplayName { get; set; } = null!;
+    public string GameId { get; set; } = null!;
+    public string GameName { get; set; } = null!;
+    public string Id { get; set; } = null!;
     public bool IsLive { get; set; }
-    public string[]? TagIds { get; set; }
-    public string[]? Tags { get; set; }
-    public string? ThumbnailUrl { get; set; }
-    public string? Title { get; set; }
-    public string? StartedAt { get; set; }
+    public string[] TagIds { get; set; } = null!;
+    public string[] Tags { get; set; } = null!;
+    public string ThumbnailUrl { get; set; } = null!;
+    public string Title { get; set; } = null!;
+    public string StartedAt { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannel object.

@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Predictions;
 public partial class TwitchEndPredictionResponse : RefCounted, ITwitcherSharp<TwitchEndPredictionResponse>
 {
     private GodotObject? _data;
-    public TwitchPrediction[]? Data { get => field ??= _data?.GetArray<TwitchPrediction>("data"); set; }
+    public TwitchPrediction[] Data { get => field ??= _data?.GetArray<TwitchPrediction>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchEndPredictionResponse object.

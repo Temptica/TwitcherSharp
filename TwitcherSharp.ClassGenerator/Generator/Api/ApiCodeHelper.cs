@@ -234,7 +234,7 @@ public static class ApiCodeHelper
                 var @interface = field.TypedComponent?.InterfacesToImplement[0].InterfaceName;
                 // get => field ??= _data?.GetArray<TwitchResponseData>("data");
                 code.AppendIndentedLine(
-                    $"public {@interface}{(field.IsArray ? "[]" : "")}{field.NullableSuffix} {field.Name} {{ get => field ??= _data?.{(field.IsArray ? $"GetArray<{field.Type}>" : $"Get<{field.Type}>")}(\"{field.Name.ToSnakeCase()}\"); set; }}",
+                    $"public {@interface}{(field.IsArray ? "[]" : "")}{field.NullableSuffix} {field.Name} {{ get => field ??= _data?.{(field.IsArray ? $"GetArray<{field.Type}>" : $"Get<{field.Type}>")}(\"{field.Name.ToSnakeCase()}\"){field.RequiredBang}; set; }}{field.DefaultInitializer}",
                     1);
                 continue;
             }
@@ -247,18 +247,19 @@ public static class ApiCodeHelper
 
                 if (field.Equals(component.GenericField))
                 {
+                    // The generic condition field's declared type (ITwitcherSharpCondition<T>) is a reference type,
+                    // but field.Type is "Variant" here (the parser's placeholder for an untyped object), which
+                    // makes IsValueType/DefaultInitializer treat it as a value type. FromDictionary's parameter is
+                    // non-nullable, so null-forgive the (possibly missing) godot data explicitly, and always supply
+                    // the `= null!;` default since DefaultInitializer won't apply it for this field.
                     code.AppendIndentedLine(
-                        // The generic condition field's declared type (ITwitcherSharpCondition<T>) is a reference type,
-                        // but field.Type is "Variant" here (the parser's placeholder for an untyped object), which
-                        // makes IsValueType/NullableSuffix treat it as non-nullable when required. FromDictionary's
-                        // parameter is non-nullable, so null-forgive the (possibly missing) godot data explicitly.
-                        $"public {fieldType}{field.NullableSuffix} {field.Name} {{ get => field ??= {(field.IsArray ? $"_data?.GetArray<{fieldType.Remove("[]")}>(\"data\")" : $"T.FromDictionary(_data?.Get(\"{field.Name.ToSnakeCase()}\").AsGodotDictionary()!)")}; set; }}",
+                        $"public {fieldType}{field.NullableSuffix} {field.Name} {{ get => field ??= {(field.IsArray ? $"_data?.GetArray<{fieldType.Remove("[]")}>(\"data\"){field.RequiredBang}" : $"T.FromDictionary(_data?.Get(\"{field.Name.ToSnakeCase()}\").AsGodotDictionary()!)")}; set; }}{(field.IsRequired ? " = null!;" : "")}",
                         1);
                     continue;
                 }
 
                 code.AppendIndentedLine(
-                    $"public {fieldType}{field.NullableSuffix} {field.Name} {{ get => field ??= _data?.{(field.IsArray ? $"GetArray<{fieldType}>" : $"Get<{fieldType}>")}(\"{field.Name.ToSnakeCase()}\"); set; }}",
+                    $"public {fieldType}{field.NullableSuffix} {field.Name} {{ get => field ??= _data?.{(field.IsArray ? $"GetArray<{fieldType}>" : $"Get<{fieldType}>")}(\"{field.Name.ToSnakeCase()}\"){field.RequiredBang}; set; }}{field.DefaultInitializer}",
                     1);
 
                 continue;
@@ -267,13 +268,13 @@ public static class ApiCodeHelper
             if (field.IsTyped)
             {
                 code.AppendIndentedLine(
-                    $"public {field.CleanedType}{field.NullableSuffix} {field.Name} {{ get => field ??= _data?.{(field.IsArray ? $"GetArray<{field.Type}>" : $"Get<{field.Type}>")}(\"{field.Name.ToSnakeCase()}\"); set; }}",
+                    $"public {field.CleanedType}{field.NullableSuffix} {field.Name} {{ get => field ??= _data?.{(field.IsArray ? $"GetArray<{field.Type}>" : $"Get<{field.Type}>")}(\"{field.Name.ToSnakeCase()}\"){field.RequiredBang}; set; }}{field.DefaultInitializer}",
                     1);
                 continue;
             }
 
             code.AppendIndentedLine(
-                $"public {field.CleanedType}{field.NullableSuffix} {field.Name} {{ get; set; }}",
+                $"public {field.CleanedType}{field.NullableSuffix} {field.Name} {{ get; set; }}{field.DefaultInitializer}",
                 1);
         }
 

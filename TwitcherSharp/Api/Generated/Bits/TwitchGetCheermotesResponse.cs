@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Bits;
 public partial class TwitchGetCheermotesResponse : RefCounted, ITwitcherSharp<TwitchGetCheermotesResponse>
 {
     private GodotObject? _data;
-    public TwitchCheermote[]? Data { get => field ??= _data?.GetArray<TwitchCheermote>("data"); set; }
+    public TwitchCheermote[] Data { get => field ??= _data?.GetArray<TwitchCheermote>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetCheermotesResponse object.

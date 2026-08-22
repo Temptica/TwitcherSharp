@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Ads;
 public partial class TwitchGetAdScheduleResponse : RefCounted, ITwitcherSharp<TwitchGetAdScheduleResponse>
 {
     private GodotObject? _data;
-    public TwitchResponseData[]? Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
+    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetAdScheduleResponse object.

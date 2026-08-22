@@ -7,10 +7,10 @@ namespace TwitcherSharp.Api.Generated.Chat;
 public partial class TwitchUserChatColor : RefCounted, ITwitcherSharp<TwitchUserChatColor>
 {
     private GodotObject? _data;
-    public string? UserId { get; set; }
-    public string? UserLogin { get; set; }
-    public string? UserName { get; set; }
-    public string? Color { get; set; }
+    public string UserId { get; set; } = null!;
+    public string UserLogin { get; set; } = null!;
+    public string UserName { get; set; } = null!;
+    public string Color { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUserChatColor object.

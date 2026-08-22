@@ -7,9 +7,9 @@ namespace TwitcherSharp.Api.Generated.Search;
 public partial class TwitchCategory : RefCounted, ITwitcherSharp<TwitchCategory>
 {
     private GodotObject? _data;
-    public string? BoxArtUrl { get; set; }
-    public string? Name { get; set; }
-    public string? Id { get; set; }
+    public string BoxArtUrl { get; set; } = null!;
+    public string Name { get; set; } = null!;
+    public string Id { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCategory object.

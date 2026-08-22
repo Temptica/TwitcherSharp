@@ -7,9 +7,9 @@ namespace TwitcherSharp.Api.Generated.Users;
 public partial class TwitchUserBlockList : RefCounted, ITwitcherSharp<TwitchUserBlockList>
 {
     private GodotObject? _data;
-    public string? UserId { get; set; }
-    public string? UserLogin { get; set; }
-    public string? DisplayName { get; set; }
+    public string UserId { get; set; } = null!;
+    public string UserLogin { get; set; } = null!;
+    public string DisplayName { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUserBlockList object.

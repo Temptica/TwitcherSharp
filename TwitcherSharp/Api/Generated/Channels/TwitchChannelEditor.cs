@@ -7,9 +7,9 @@ namespace TwitcherSharp.Api.Generated.Channels;
 public partial class TwitchChannelEditor : RefCounted, ITwitcherSharp<TwitchChannelEditor>
 {
     private GodotObject? _data;
-    public string? UserId { get; set; }
-    public string? UserName { get; set; }
-    public string? CreatedAt { get; set; }
+    public string UserId { get; set; } = null!;
+    public string UserName { get; set; } = null!;
+    public string CreatedAt { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelEditor object.

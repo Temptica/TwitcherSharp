@@ -7,10 +7,10 @@ namespace TwitcherSharp.Api.Generated.Analytics;
 public partial class TwitchExtensionAnalytics : RefCounted, ITwitcherSharp<TwitchExtensionAnalytics>
 {
     private GodotObject? _data;
-    public string? ExtensionId { get; set; }
-    public string? URL { get; set; }
-    public string? Type { get; set; }
-    public TwitchResponseDateRange? DateRange { get => field ??= _data?.Get<TwitchResponseDateRange>("date_range"); set; }
+    public string ExtensionId { get; set; } = null!;
+    public string URL { get; set; } = null!;
+    public string Type { get; set; } = null!;
+    public TwitchResponseDateRange DateRange { get => field ??= _data?.Get<TwitchResponseDateRange>("date_range")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchExtensionAnalytics object.
@@ -46,8 +46,8 @@ public partial class TwitchExtensionAnalytics : RefCounted, ITwitcherSharp<Twitc
     public partial class TwitchResponseDateRange : RefCounted, ITwitcherSharp<TwitchResponseDateRange>
     {
         private GodotObject? _data;
-        public string? StartedAt { get; set; }
-        public string? EndedAt { get; set; }
+        public string StartedAt { get; set; } = null!;
+        public string EndedAt { get; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseDateRange object.

@@ -7,10 +7,10 @@ namespace TwitcherSharp.Api.Generated.Games;
 public partial class TwitchGame : RefCounted, ITwitcherSharp<TwitchGame>
 {
     private GodotObject? _data;
-    public string? Id { get; set; }
-    public string? Name { get; set; }
-    public string? BoxArtUrl { get; set; }
-    public string? IgdbId { get; set; }
+    public string Id { get; set; } = null!;
+    public string Name { get; set; } = null!;
+    public string BoxArtUrl { get; set; } = null!;
+    public string IgdbId { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGame object.

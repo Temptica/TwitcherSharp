@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Streams;
 public partial class TwitchGetStreamsResponse : RefCounted, ITwitcherSharp<TwitchGetStreamsResponse>
 {
     private GodotObject? _data;
-    public TwitchStream[]? Data { get => field ??= _data?.GetArray<TwitchStream>("data"); set; }
+    public TwitchStream[] Data { get => field ??= _data?.GetArray<TwitchStream>("data")!; set; } = null!;
     public ResponsePagination? Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
 
     /// <summary> 

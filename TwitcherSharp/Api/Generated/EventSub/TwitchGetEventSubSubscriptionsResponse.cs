@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.EventSub;
 public partial class TwitchGetEventSubSubscriptionsResponse<T> : RefCounted, ITwitcherSharp<TwitchGetEventSubSubscriptionsResponse<T>> where T : RefCounted, ITwitcherSharpCondition<T>
 {
     private GodotObject? _data;
-    public TwitchEventSubSubscription<T>[]? Data { get => field ??= _data?.GetArray<TwitchEventSubSubscription<T>>("data"); set; }
+    public TwitchEventSubSubscription<T>[] Data { get => field ??= _data?.GetArray<TwitchEventSubSubscription<T>>("data")!; set; } = null!;
     public int Total { get; set; }
     public int TotalCost { get; set; }
     public int MaxTotalCost { get; set; }

@@ -7,9 +7,9 @@ namespace TwitcherSharp.Api.Generated.Chat;
 public partial class TwitchSendChatMessageBody : RefCounted, ITwitcherSharp<TwitchSendChatMessageBody>
 {
     private GodotObject? _data;
-    public string? BroadcasterId { get; set; }
-    public string? SenderId { get; set; }
-    public string? Message { get; set; }
+    public string BroadcasterId { get; set; } = null!;
+    public string SenderId { get; set; } = null!;
+    public string Message { get; set; } = null!;
     public string? ReplyParentMessageId { get; set; }
     public bool? ForSourceOnly { get; set; }
     public bool? Pin { get; set; }

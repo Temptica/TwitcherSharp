@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Conduits;
 public partial class TwitchGetConduitShardsResponse : RefCounted, ITwitcherSharp<TwitchGetConduitShardsResponse>
 {
     private GodotObject? _data;
-    public TwitchResponseData[]? Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
+    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data")!; set; } = null!;
     public ResponsePagination? Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
 
     /// <summary> 
@@ -74,9 +74,9 @@ public partial class TwitchGetConduitShardsResponse : RefCounted, ITwitcherSharp
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
         private GodotObject? _data;
-        public string? Id { get; set; }
-        public string? Status { get; set; }
-        public TwitchResponseTransport? Transport { get => field ??= _data?.Get<TwitchResponseTransport>("transport"); set; }
+        public string Id { get; set; } = null!;
+        public string Status { get; set; } = null!;
+        public TwitchResponseTransport Transport { get => field ??= _data?.Get<TwitchResponseTransport>("transport")!; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseData object.
@@ -111,7 +111,7 @@ public partial class TwitchGetConduitShardsResponse : RefCounted, ITwitcherSharp
         public partial class TwitchResponseTransport : RefCounted, ITwitcherSharp<TwitchResponseTransport>
         {
             private GodotObject? _data;
-            public string? Method { get; set; }
+            public string Method { get; set; } = null!;
             public string? Callback { get; set; }
             public string? SessionId { get; set; }
             public string? ConnectedAt { get; set; }

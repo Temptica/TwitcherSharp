@@ -7,17 +7,17 @@ namespace TwitcherSharp.Api.Generated.Users;
 public partial class TwitchUser : RefCounted, ITwitcherSharp<TwitchUser>
 {
     private GodotObject? _data;
-    public string? Id { get; set; }
-    public string? Login { get; set; }
-    public string? DisplayName { get; set; }
-    public string? Type { get; set; }
-    public string? BroadcasterType { get; set; }
-    public string? Description { get; set; }
-    public string? ProfileImageUrl { get; set; }
-    public string? OfflineImageUrl { get; set; }
+    public string Id { get; set; } = null!;
+    public string Login { get; set; } = null!;
+    public string DisplayName { get; set; } = null!;
+    public string Type { get; set; } = null!;
+    public string BroadcasterType { get; set; } = null!;
+    public string Description { get; set; } = null!;
+    public string ProfileImageUrl { get; set; } = null!;
+    public string OfflineImageUrl { get; set; } = null!;
     public int ViewCount { get; set; }
     public string? Email { get; set; }
-    public string? CreatedAt { get; set; }
+    public string CreatedAt { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUser object.

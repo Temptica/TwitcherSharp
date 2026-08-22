@@ -7,9 +7,9 @@ namespace TwitcherSharp.Api.Generated.Extensions;
 public partial class TwitchSendExtensionChatMessageBody : RefCounted, ITwitcherSharp<TwitchSendExtensionChatMessageBody>
 {
     private GodotObject? _data;
-    public string? Text { get; set; }
-    public string? ExtensionId { get; set; }
-    public string? ExtensionVersion { get; set; }
+    public string Text { get; set; } = null!;
+    public string ExtensionId { get; set; } = null!;
+    public string ExtensionVersion { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchSendExtensionChatMessageBody object.

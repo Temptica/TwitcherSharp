@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Tags;
 public partial class TwitchGetAllStreamTagsResponse : RefCounted, ITwitcherSharp<TwitchGetAllStreamTagsResponse>
 {
     private GodotObject? _data;
-    public TwitchStreamTag[]? Data { get => field ??= _data?.GetArray<TwitchStreamTag>("data"); set; }
+    public TwitchStreamTag[] Data { get => field ??= _data?.GetArray<TwitchStreamTag>("data")!; set; } = null!;
     public ResponsePagination? Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
 
     /// <summary> 

@@ -70,12 +70,12 @@ public abstract partial class TwitchCommandBase : RefCounted, ITwitcherSharp
     /// <summary>
     /// Command name
     /// </summary>
-    public string? Command { get; set; }
+    public string Command { get; set; } = null!;
 
     /// <summary>
     /// Description for the user
     /// </summary>
-    public string? Description { get; set; }
+    public string Description { get; set; } = "";
 
     /// <summary>
     /// Wich role of user is allowed to use it
@@ -160,8 +160,8 @@ public abstract partial class TwitchCommandBase : RefCounted, ITwitcherSharp
     protected void GetBaseProperties(GodotObject data)
     {
         Data = data;
-        if (Command != null) data.Set("command", Command);
-        if (Description != null) data.Set("description", Description);
+        data.Set("command", Command);
+        data.Set("description", Description);
         data.Set("permission_level", (int)PermissionLevel);
         data.Set("where", (int)Where);
         data.Set("allowed_users", AllowedUsers.ToVariantArray());

@@ -7,10 +7,10 @@ namespace TwitcherSharp.Api.Generated.Tags;
 public partial class TwitchStreamTag : RefCounted, ITwitcherSharp<TwitchStreamTag>
 {
     private GodotObject? _data;
-    public string? TagId { get; set; }
+    public string TagId { get; set; } = null!;
     public bool IsAuto { get; set; }
-    public Godot.Collections.Dictionary<string, string>? LocalizationNames { get; set; }
-    public Godot.Collections.Dictionary<string, string>? LocalizationDescriptions { get; set; }
+    public Godot.Collections.Dictionary<string, string> LocalizationNames { get; set; } = null!;
+    public Godot.Collections.Dictionary<string, string> LocalizationDescriptions { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchStreamTag object.

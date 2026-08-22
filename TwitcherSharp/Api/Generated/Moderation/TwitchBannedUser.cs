@@ -7,15 +7,15 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 public partial class TwitchBannedUser : RefCounted, ITwitcherSharp<TwitchBannedUser>
 {
     private GodotObject? _data;
-    public string? UserId { get; set; }
-    public string? UserLogin { get; set; }
-    public string? UserName { get; set; }
-    public string? ExpiresAt { get; set; }
-    public string? CreatedAt { get; set; }
-    public string? Reason { get; set; }
-    public string? ModeratorId { get; set; }
-    public string? ModeratorLogin { get; set; }
-    public string? ModeratorName { get; set; }
+    public string UserId { get; set; } = null!;
+    public string UserLogin { get; set; } = null!;
+    public string UserName { get; set; } = null!;
+    public string ExpiresAt { get; set; } = null!;
+    public string CreatedAt { get; set; } = null!;
+    public string Reason { get; set; } = null!;
+    public string ModeratorId { get; set; } = null!;
+    public string ModeratorLogin { get; set; } = null!;
+    public string ModeratorName { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchBannedUser object.

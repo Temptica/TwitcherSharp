@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Subscriptions;
 public partial class TwitchGetBroadcasterSubscriptionsResponse : RefCounted, ITwitcherSharp<TwitchGetBroadcasterSubscriptionsResponse>
 {
     private GodotObject? _data;
-    public TwitchBroadcasterSubscription[]? Data { get => field ??= _data?.GetArray<TwitchBroadcasterSubscription>("data"); set; }
+    public TwitchBroadcasterSubscription[] Data { get => field ??= _data?.GetArray<TwitchBroadcasterSubscription>("data")!; set; } = null!;
     public ResponsePagination? Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
     public int Points { get; set; }
     public int Total { get; set; }

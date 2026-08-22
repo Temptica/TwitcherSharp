@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 public partial class TwitchUpdateShieldModeStatusResponse : RefCounted, ITwitcherSharp<TwitchUpdateShieldModeStatusResponse>
 {
     private GodotObject? _data;
-    public TwitchResponseData[]? Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
+    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUpdateShieldModeStatusResponse object.
@@ -37,10 +37,10 @@ public partial class TwitchUpdateShieldModeStatusResponse : RefCounted, ITwitche
     {
         private GodotObject? _data;
         public bool IsActive { get; set; }
-        public string? ModeratorId { get; set; }
-        public string? ModeratorLogin { get; set; }
-        public string? ModeratorName { get; set; }
-        public string? LastActivatedAt { get; set; }
+        public string ModeratorId { get; set; } = null!;
+        public string ModeratorLogin { get; set; } = null!;
+        public string ModeratorName { get; set; } = null!;
+        public string LastActivatedAt { get; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseData object.

@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 public partial class TwitchCheckAutoModStatusBody : RefCounted, ITwitcherSharp<TwitchCheckAutoModStatusBody>
 {
     private GodotObject? _data;
-    public TwitchBodyData[]? Data { get => field ??= _data?.GetArray<TwitchBodyData>("data"); set; }
+    public TwitchBodyData[] Data { get => field ??= _data?.GetArray<TwitchBodyData>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCheckAutoModStatusBody object.
@@ -36,8 +36,8 @@ public partial class TwitchCheckAutoModStatusBody : RefCounted, ITwitcherSharp<T
     public partial class TwitchBodyData : RefCounted, ITwitcherSharp<TwitchBodyData>
     {
         private GodotObject? _data;
-        public string? MsgId { get; set; }
-        public string? MsgText { get; set; }
+        public string MsgId { get; set; } = null!;
+        public string MsgText { get; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchBodyData object.

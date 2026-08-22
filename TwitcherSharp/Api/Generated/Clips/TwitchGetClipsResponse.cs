@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Clips;
 public partial class TwitchGetClipsResponse : RefCounted, ITwitcherSharp<TwitchGetClipsResponse>
 {
     private GodotObject? _data;
-    public TwitchClip[]? Data { get => field ??= _data?.GetArray<TwitchClip>("data"); set; }
+    public TwitchClip[] Data { get => field ??= _data?.GetArray<TwitchClip>("data")!; set; } = null!;
     public ResponsePagination? Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
 
     /// <summary> 

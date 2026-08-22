@@ -11,22 +11,22 @@ public partial class TwitchReward : RefCounted, ITwitcherSharp<TwitchReward>
     /// <summary>
     /// The ID that uniquely identifies this custom reward.
     /// </summary>
-    public string? Id { get; set; }
+    public string Id { get; set; } = null!;
 
     /// <summary>
     /// Owner of this reward
     /// </summary>
-    public TwitchUser? BroadcasterUser { get; set; }
+    public TwitchUser BroadcasterUser { get; set; } = null!;
 
     /// <summary>
     /// The title of the reward.
     /// </summary>
-    public string? Title { get; set; }
+    public string Title { get; set; } = null!;
 
     /// <summary>
     /// The prompt shown to the viewer when they redeem the reward.
     /// </summary>
-    public string? Description { get; set; }
+    public string Description { get; set; } = null!;
 
     /// <summary>
     /// The cost of the reward in Channel Points.
@@ -94,7 +94,7 @@ public partial class TwitchReward : RefCounted, ITwitcherSharp<TwitchReward>
         return new TwitchReward
         {
             Id = data.Get("id").AsString(),
-            BroadcasterUser = TwitchUser.FromObject(data.Get("broadcaster_user").AsGodotObject()),
+            BroadcasterUser = TwitchUser.FromObject(data.Get("broadcaster_user").AsGodotObject())!,
             Title = data.Get("title").AsString(),
             Description = data.Get("description").AsString(),
             Cost = data.Get("cost").AsInt32(),
@@ -122,10 +122,10 @@ public partial class TwitchReward : RefCounted, ITwitcherSharp<TwitchReward>
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/reward/twitch_reward.gd");
         var reward = script.New().AsGodotObject();
-        if (Id != null) reward.Set("id", Id);
-        reward.Set("broadcaster_user", BroadcasterUser?.ToGodotObject() ?? new Variant());
-        if (Title != null) reward.Set("title", Title);
-        if (Description != null) reward.Set("description", Description);
+        reward.Set("id", Id);
+        reward.Set("broadcaster_user", BroadcasterUser.ToGodotObject());
+        reward.Set("title", Title);
+        reward.Set("description", Description);
         reward.Set("cost", Cost);
         if (Image1 != null) reward.Set("image_1", Image1);
         if (Image2 != null) reward.Set("image_2", Image2);

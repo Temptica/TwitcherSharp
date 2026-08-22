@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Chat;
 public partial class TwitchUpdateChatSettingsResponse : RefCounted, ITwitcherSharp<TwitchUpdateChatSettingsResponse>
 {
     private GodotObject? _data;
-    public TwitchChatSettingsUpdated[]? Data { get => field ??= _data?.GetArray<TwitchChatSettingsUpdated>("data"); set; }
+    public TwitchChatSettingsUpdated[] Data { get => field ??= _data?.GetArray<TwitchChatSettingsUpdated>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUpdateChatSettingsResponse object.

@@ -7,8 +7,8 @@ namespace TwitcherSharp.Api.Generated.Extensions;
 public partial class TwitchSetExtensionConfigurationSegmentBody : RefCounted, ITwitcherSharp<TwitchSetExtensionConfigurationSegmentBody>
 {
     private GodotObject? _data;
-    public string? ExtensionId { get; set; }
-    public string? Segment { get; set; }
+    public string ExtensionId { get; set; } = null!;
+    public string Segment { get; set; } = null!;
     public string? BroadcasterId { get; set; }
     public string? Content { get; set; }
     public string? Version { get; set; }

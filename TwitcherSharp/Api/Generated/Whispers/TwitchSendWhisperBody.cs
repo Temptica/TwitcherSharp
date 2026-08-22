@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Whispers;
 public partial class TwitchSendWhisperBody : RefCounted, ITwitcherSharp<TwitchSendWhisperBody>
 {
     private GodotObject? _data;
-    public string? Message { get; set; }
+    public string Message { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchSendWhisperBody object.

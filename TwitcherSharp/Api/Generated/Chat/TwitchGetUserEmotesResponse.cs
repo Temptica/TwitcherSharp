@@ -7,8 +7,8 @@ namespace TwitcherSharp.Api.Generated.Chat;
 public partial class TwitchGetUserEmotesResponse : RefCounted, ITwitcherSharp<TwitchGetUserEmotesResponse>
 {
     private GodotObject? _data;
-    public TwitchResponseData[]? Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
-    public string? Template { get; set; }
+    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data")!; set; } = null!;
+    public string Template { get; set; } = null!;
     public ResponsePagination? Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
 
     /// <summary> 
@@ -75,14 +75,14 @@ public partial class TwitchGetUserEmotesResponse : RefCounted, ITwitcherSharp<Tw
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
         private GodotObject? _data;
-        public string? Id { get; set; }
-        public string? Name { get; set; }
-        public string? EmoteType { get; set; }
-        public string? EmoteSetId { get; set; }
-        public string? OwnerId { get; set; }
-        public string[]? Format { get; set; }
-        public string[]? Scale { get; set; }
-        public string[]? ThemeMode { get; set; }
+        public string Id { get; set; } = null!;
+        public string Name { get; set; } = null!;
+        public string EmoteType { get; set; } = null!;
+        public string EmoteSetId { get; set; } = null!;
+        public string OwnerId { get; set; } = null!;
+        public string[] Format { get; set; } = null!;
+        public string[] Scale { get; set; } = null!;
+        public string[] ThemeMode { get; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseData object.

@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Ads;
 public partial class TwitchStartCommercialResponse : RefCounted, ITwitcherSharp<TwitchStartCommercialResponse>
 {
     private GodotObject? _data;
-    public TwitchResponseData[]? Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
+    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchStartCommercialResponse object.
@@ -37,7 +37,7 @@ public partial class TwitchStartCommercialResponse : RefCounted, ITwitcherSharp<
     {
         private GodotObject? _data;
         public int Length { get; set; }
-        public string? Message { get; set; }
+        public string Message { get; set; } = null!;
         public int RetryAfter { get; set; }
     
         /// <summary> 

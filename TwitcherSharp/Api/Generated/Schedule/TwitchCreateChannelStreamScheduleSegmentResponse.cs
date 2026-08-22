@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Schedule;
 public partial class TwitchCreateChannelStreamScheduleSegmentResponse : RefCounted, ITwitcherSharp<TwitchCreateChannelStreamScheduleSegmentResponse>
 {
     private GodotObject? _data;
-    public TwitchResponseData? Data { get => field ??= _data?.Get<TwitchResponseData>("data"); set; }
+    public TwitchResponseData Data { get => field ??= _data?.Get<TwitchResponseData>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCreateChannelStreamScheduleSegmentResponse object.
@@ -36,11 +36,11 @@ public partial class TwitchCreateChannelStreamScheduleSegmentResponse : RefCount
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
         private GodotObject? _data;
-        public TwitchChannelStreamScheduleSegment[]? Segments { get => field ??= _data?.GetArray<TwitchChannelStreamScheduleSegment>("segments"); set; }
-        public string? BroadcasterId { get; set; }
-        public string? BroadcasterName { get; set; }
-        public string? BroadcasterLogin { get; set; }
-        public TwitchResponseVacation? Vacation { get => field ??= _data?.Get<TwitchResponseVacation>("vacation"); set; }
+        public TwitchChannelStreamScheduleSegment[] Segments { get => field ??= _data?.GetArray<TwitchChannelStreamScheduleSegment>("segments")!; set; } = null!;
+        public string BroadcasterId { get; set; } = null!;
+        public string BroadcasterName { get; set; } = null!;
+        public string BroadcasterLogin { get; set; } = null!;
+        public TwitchResponseVacation Vacation { get => field ??= _data?.Get<TwitchResponseVacation>("vacation")!; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseData object.
@@ -78,8 +78,8 @@ public partial class TwitchCreateChannelStreamScheduleSegmentResponse : RefCount
         public partial class TwitchResponseVacation : RefCounted, ITwitcherSharp<TwitchResponseVacation>
         {
             private GodotObject? _data;
-            public string? StartTime { get; set; }
-            public string? EndTime { get; set; }
+            public string StartTime { get; set; } = null!;
+            public string EndTime { get; set; } = null!;
         
             /// <summary> 
             /// Transforms the godot data into a TwitchResponseVacation object.

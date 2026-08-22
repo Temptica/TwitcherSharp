@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Analytics;
 public partial class TwitchGetGameAnalyticsResponse : RefCounted, ITwitcherSharp<TwitchGetGameAnalyticsResponse>
 {
     private GodotObject? _data;
-    public TwitchGameAnalytics[]? Data { get => field ??= _data?.GetArray<TwitchGameAnalytics>("data"); set; }
+    public TwitchGameAnalytics[] Data { get => field ??= _data?.GetArray<TwitchGameAnalytics>("data")!; set; } = null!;
     public ResponsePagination? Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
 
     /// <summary> 

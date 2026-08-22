@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 public partial class TwitchGetBannedUsersResponse : RefCounted, ITwitcherSharp<TwitchGetBannedUsersResponse>
 {
     private GodotObject? _data;
-    public TwitchBannedUser[]? Data { get => field ??= _data?.GetArray<TwitchBannedUser>("data"); set; }
+    public TwitchBannedUser[] Data { get => field ??= _data?.GetArray<TwitchBannedUser>("data")!; set; } = null!;
     public ResponsePagination? Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
 
     /// <summary> 

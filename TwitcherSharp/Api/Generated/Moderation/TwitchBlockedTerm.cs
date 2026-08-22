@@ -7,13 +7,13 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 public partial class TwitchBlockedTerm : RefCounted, ITwitcherSharp<TwitchBlockedTerm>
 {
     private GodotObject? _data;
-    public string? BroadcasterId { get; set; }
-    public string? ModeratorId { get; set; }
-    public string? Id { get; set; }
-    public string? Text { get; set; }
-    public string? CreatedAt { get; set; }
-    public string? UpdatedAt { get; set; }
-    public string? ExpiresAt { get; set; }
+    public string BroadcasterId { get; set; } = null!;
+    public string ModeratorId { get; set; } = null!;
+    public string Id { get; set; } = null!;
+    public string Text { get; set; } = null!;
+    public string CreatedAt { get; set; } = null!;
+    public string UpdatedAt { get; set; } = null!;
+    public string ExpiresAt { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchBlockedTerm object.

@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Chat;
 public partial class TwitchGetGlobalChatBadgesResponse : RefCounted, ITwitcherSharp<TwitchGetGlobalChatBadgesResponse>
 {
     private GodotObject? _data;
-    public TwitchChatBadge[]? Data { get => field ??= _data?.GetArray<TwitchChatBadge>("data"); set; }
+    public TwitchChatBadge[] Data { get => field ??= _data?.GetArray<TwitchChatBadge>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetGlobalChatBadgesResponse object.

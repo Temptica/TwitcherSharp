@@ -57,7 +57,7 @@ public partial class TwitchModifyChannelInformationBody : RefCounted, ITwitcherS
     public partial class TwitchBodyContentClassificationLabels : RefCounted, ITwitcherSharp<TwitchBodyContentClassificationLabels>
     {
         private GodotObject? _data;
-        public string? Id { get; set; }
+        public string Id { get; set; } = null!;
         public bool IsEnabled { get; set; }
     
         /// <summary> 

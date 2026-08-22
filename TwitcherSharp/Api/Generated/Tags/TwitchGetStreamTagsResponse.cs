@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Tags;
 public partial class TwitchGetStreamTagsResponse : RefCounted, ITwitcherSharp<TwitchGetStreamTagsResponse>
 {
     private GodotObject? _data;
-    public TwitchStreamTag[]? Data { get => field ??= _data?.GetArray<TwitchStreamTag>("data"); set; }
+    public TwitchStreamTag[] Data { get => field ??= _data?.GetArray<TwitchStreamTag>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetStreamTagsResponse object.

@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 public partial class TwitchGetAutoModSettingsResponse : RefCounted, ITwitcherSharp<TwitchGetAutoModSettingsResponse>
 {
     private GodotObject? _data;
-    public TwitchAutoModSettings[]? Data { get => field ??= _data?.GetArray<TwitchAutoModSettings>("data"); set; }
+    public TwitchAutoModSettings[] Data { get => field ??= _data?.GetArray<TwitchAutoModSettings>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetAutoModSettingsResponse object.

@@ -7,9 +7,9 @@ namespace TwitcherSharp.Api.Generated.Predictions;
 public partial class TwitchCreatePredictionBody : RefCounted, ITwitcherSharp<TwitchCreatePredictionBody>
 {
     private GodotObject? _data;
-    public string? BroadcasterId { get; set; }
-    public string? Title { get; set; }
-    public TwitchBodyOutcomes[]? Outcomes { get => field ??= _data?.GetArray<TwitchBodyOutcomes>("outcomes"); set; }
+    public string BroadcasterId { get; set; } = null!;
+    public string Title { get; set; } = null!;
+    public TwitchBodyOutcomes[] Outcomes { get => field ??= _data?.GetArray<TwitchBodyOutcomes>("outcomes")!; set; } = null!;
     public int PredictionWindow { get; set; }
 
     /// <summary> 
@@ -47,7 +47,7 @@ public partial class TwitchCreatePredictionBody : RefCounted, ITwitcherSharp<Twi
     public partial class TwitchBodyOutcomes : RefCounted, ITwitcherSharp<TwitchBodyOutcomes>
     {
         private GodotObject? _data;
-        public string? Title { get; set; }
+        public string Title { get; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchBodyOutcomes object.

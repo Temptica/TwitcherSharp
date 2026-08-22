@@ -7,9 +7,9 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 public partial class TwitchUserModerator : RefCounted, ITwitcherSharp<TwitchUserModerator>
 {
     private GodotObject? _data;
-    public string? UserId { get; set; }
-    public string? UserLogin { get; set; }
-    public string? UserName { get; set; }
+    public string UserId { get; set; } = null!;
+    public string UserLogin { get; set; } = null!;
+    public string UserName { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUserModerator object.

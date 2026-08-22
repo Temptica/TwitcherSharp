@@ -7,9 +7,9 @@ namespace TwitcherSharp.Api.Generated.Extensions;
 public partial class TwitchSetExtensionRequiredConfigurationBody : RefCounted, ITwitcherSharp<TwitchSetExtensionRequiredConfigurationBody>
 {
     private GodotObject? _data;
-    public string? ExtensionId { get; set; }
-    public string? ExtensionVersion { get; set; }
-    public string? RequiredConfiguration { get; set; }
+    public string ExtensionId { get; set; } = null!;
+    public string ExtensionVersion { get; set; } = null!;
+    public string RequiredConfiguration { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchSetExtensionRequiredConfigurationBody object.

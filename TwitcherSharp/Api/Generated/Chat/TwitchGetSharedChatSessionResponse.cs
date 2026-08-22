@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Chat;
 public partial class TwitchGetSharedChatSessionResponse : RefCounted, ITwitcherSharp<TwitchGetSharedChatSessionResponse>
 {
     private GodotObject? _data;
-    public TwitchResponseData[]? Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
+    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetSharedChatSessionResponse object.
@@ -32,11 +32,11 @@ public partial class TwitchGetSharedChatSessionResponse : RefCounted, ITwitcherS
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
         private GodotObject? _data;
-        public string? SessionId { get; set; }
-        public string? HostBroadcasterId { get; set; }
-        public TwitchResponseParticipants[]? Participants { get => field ??= _data?.GetArray<TwitchResponseParticipants>("participants"); set; }
-        public string? CreatedAt { get; set; }
-        public string? UpdatedAt { get; set; }
+        public string SessionId { get; set; } = null!;
+        public string HostBroadcasterId { get; set; } = null!;
+        public TwitchResponseParticipants[] Participants { get => field ??= _data?.GetArray<TwitchResponseParticipants>("participants")!; set; } = null!;
+        public string CreatedAt { get; set; } = null!;
+        public string UpdatedAt { get; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseData object.
@@ -75,7 +75,7 @@ public partial class TwitchGetSharedChatSessionResponse : RefCounted, ITwitcherS
         public partial class TwitchResponseParticipants : RefCounted, ITwitcherSharp<TwitchResponseParticipants>
         {
             private GodotObject? _data;
-            public string? BroadcasterId { get; set; }
+            public string BroadcasterId { get; set; } = null!;
         
             /// <summary> 
             /// Transforms the godot data into a TwitchResponseParticipants object.

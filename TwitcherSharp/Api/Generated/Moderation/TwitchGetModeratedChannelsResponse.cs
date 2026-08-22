@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 public partial class TwitchGetModeratedChannelsResponse : RefCounted, ITwitcherSharp<TwitchGetModeratedChannelsResponse>
 {
     private GodotObject? _data;
-    public TwitchResponseData[]? Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
+    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data")!; set; } = null!;
     public ResponsePagination? Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
 
     /// <summary> 
@@ -74,9 +74,9 @@ public partial class TwitchGetModeratedChannelsResponse : RefCounted, ITwitcherS
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
         private GodotObject? _data;
-        public string? BroadcasterId { get; set; }
-        public string? BroadcasterLogin { get; set; }
-        public string? BroadcasterName { get; set; }
+        public string BroadcasterId { get; set; } = null!;
+        public string BroadcasterLogin { get; set; } = null!;
+        public string BroadcasterName { get; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseData object.

@@ -7,10 +7,10 @@ namespace TwitcherSharp.Api.Generated.Streams;
 public partial class TwitchStreamMarkers : RefCounted, ITwitcherSharp<TwitchStreamMarkers>
 {
     private GodotObject? _data;
-    public string? UserId { get; set; }
-    public string? UserName { get; set; }
-    public string? UserLogin { get; set; }
-    public TwitchResponseVideos[]? Videos { get => field ??= _data?.GetArray<TwitchResponseVideos>("videos"); set; }
+    public string UserId { get; set; } = null!;
+    public string UserName { get; set; } = null!;
+    public string UserLogin { get; set; } = null!;
+    public TwitchResponseVideos[] Videos { get => field ??= _data?.GetArray<TwitchResponseVideos>("videos")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchStreamMarkers object.
@@ -46,8 +46,8 @@ public partial class TwitchStreamMarkers : RefCounted, ITwitcherSharp<TwitchStre
     public partial class TwitchResponseVideos : RefCounted, ITwitcherSharp<TwitchResponseVideos>
     {
         private GodotObject? _data;
-        public string? VideoId { get; set; }
-        public TwitchResponseMarkers[]? Markers { get => field ??= _data?.GetArray<TwitchResponseMarkers>("markers"); set; }
+        public string VideoId { get; set; } = null!;
+        public TwitchResponseMarkers[] Markers { get => field ??= _data?.GetArray<TwitchResponseMarkers>("markers")!; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseVideos object.
@@ -80,11 +80,11 @@ public partial class TwitchStreamMarkers : RefCounted, ITwitcherSharp<TwitchStre
         public partial class TwitchResponseMarkers : RefCounted, ITwitcherSharp<TwitchResponseMarkers>
         {
             private GodotObject? _data;
-            public string? Id { get; set; }
-            public string? CreatedAt { get; set; }
-            public string? Description { get; set; }
+            public string Id { get; set; } = null!;
+            public string CreatedAt { get; set; } = null!;
+            public string Description { get; set; } = null!;
             public int PositionSeconds { get; set; }
-            public string? Url { get; set; }
+            public string Url { get; set; } = null!;
         
             /// <summary> 
             /// Transforms the godot data into a TwitchResponseMarkers object.

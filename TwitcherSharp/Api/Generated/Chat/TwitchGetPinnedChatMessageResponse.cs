@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Chat;
 public partial class TwitchGetPinnedChatMessageResponse : RefCounted, ITwitcherSharp<TwitchGetPinnedChatMessageResponse>
 {
     private GodotObject? _data;
-    public TwitchResponseData[]? Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
+    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetPinnedChatMessageResponse object.
@@ -36,18 +36,18 @@ public partial class TwitchGetPinnedChatMessageResponse : RefCounted, ITwitcherS
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
         private GodotObject? _data;
-        public string? MessageId { get; set; }
-        public string? BroadcasterId { get; set; }
-        public string? SenderUserId { get; set; }
-        public string? SenderUserLogin { get; set; }
-        public string? SenderUserName { get; set; }
-        public string? PinnedByUserId { get; set; }
-        public string? PinnedByUserLogin { get; set; }
-        public string? PinnedByUserName { get; set; }
-        public TwitchResponseMessage? Message { get => field ??= _data?.Get<TwitchResponseMessage>("message"); set; }
-        public string? StartsAt { get; set; }
-        public string? EndsAt { get; set; }
-        public string? UpdatedAt { get; set; }
+        public string MessageId { get; set; } = null!;
+        public string BroadcasterId { get; set; } = null!;
+        public string SenderUserId { get; set; } = null!;
+        public string SenderUserLogin { get; set; } = null!;
+        public string SenderUserName { get; set; } = null!;
+        public string PinnedByUserId { get; set; } = null!;
+        public string PinnedByUserLogin { get; set; } = null!;
+        public string PinnedByUserName { get; set; } = null!;
+        public TwitchResponseMessage Message { get => field ??= _data?.Get<TwitchResponseMessage>("message")!; set; } = null!;
+        public string StartsAt { get; set; } = null!;
+        public string EndsAt { get; set; } = null!;
+        public string UpdatedAt { get; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseData object.
@@ -100,8 +100,8 @@ public partial class TwitchGetPinnedChatMessageResponse : RefCounted, ITwitcherS
         public partial class TwitchResponseMessage : RefCounted, ITwitcherSharp<TwitchResponseMessage>
         {
             private GodotObject? _data;
-            public string? Text { get; set; }
-            public TwitchResponseFragments[]? Fragments { get => field ??= _data?.GetArray<TwitchResponseFragments>("fragments"); set; }
+            public string Text { get; set; } = null!;
+            public TwitchResponseFragments[] Fragments { get => field ??= _data?.GetArray<TwitchResponseFragments>("fragments")!; set; } = null!;
         
             /// <summary> 
             /// Transforms the godot data into a TwitchResponseMessage object.
@@ -134,21 +134,21 @@ public partial class TwitchGetPinnedChatMessageResponse : RefCounted, ITwitcherS
             public partial class TwitchResponseFragments : RefCounted, ITwitcherSharp<TwitchResponseFragments>
             {
                 private GodotObject? _data;
-                public string? Type { get; set; }
-                public string? Text { get; set; }
+                public string Type { get; set; } = null!;
+                public string Text { get; set; } = null!;
                 public Variant Cheermote { get; set; }
-                public string? Prefix { get; set; }
+                public string Prefix { get; set; } = null!;
                 public int Bits { get; set; }
                 public int Tier { get; set; }
                 public Variant Emote { get; set; }
-                public string? Id { get; set; }
-                public string? EmoteSetId { get; set; }
-                public string? OwnerId { get; set; }
-                public string[]? Format { get; set; }
+                public string Id { get; set; } = null!;
+                public string EmoteSetId { get; set; } = null!;
+                public string OwnerId { get; set; } = null!;
+                public string[] Format { get; set; } = null!;
                 public Variant Mention { get; set; }
-                public string? UserId { get; set; }
-                public string? UserLogin { get; set; }
-                public string? UserName { get; set; }
+                public string UserId { get; set; } = null!;
+                public string UserLogin { get; set; } = null!;
+                public string UserName { get; set; } = null!;
             
                 /// <summary> 
                 /// Transforms the godot data into a TwitchResponseFragments object.

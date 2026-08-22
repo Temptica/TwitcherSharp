@@ -7,20 +7,20 @@ namespace TwitcherSharp.Api.Generated.Clips;
 public partial class TwitchClip : RefCounted, ITwitcherSharp<TwitchClip>
 {
     private GodotObject? _data;
-    public string? Id { get; set; }
-    public string? Url { get; set; }
-    public string? EmbedUrl { get; set; }
-    public string? BroadcasterId { get; set; }
-    public string? BroadcasterName { get; set; }
-    public string? CreatorId { get; set; }
-    public string? CreatorName { get; set; }
-    public string? VideoId { get; set; }
-    public string? GameId { get; set; }
-    public string? Language { get; set; }
-    public string? Title { get; set; }
+    public string Id { get; set; } = null!;
+    public string Url { get; set; } = null!;
+    public string EmbedUrl { get; set; } = null!;
+    public string BroadcasterId { get; set; } = null!;
+    public string BroadcasterName { get; set; } = null!;
+    public string CreatorId { get; set; } = null!;
+    public string CreatorName { get; set; } = null!;
+    public string VideoId { get; set; } = null!;
+    public string GameId { get; set; } = null!;
+    public string Language { get; set; } = null!;
+    public string Title { get; set; } = null!;
     public int ViewCount { get; set; }
-    public string? CreatedAt { get; set; }
-    public string? ThumbnailUrl { get; set; }
+    public string CreatedAt { get; set; } = null!;
+    public string ThumbnailUrl { get; set; } = null!;
     public double Duration { get; set; }
     public int VodOffset { get; set; }
     public bool IsFeatured { get; set; }

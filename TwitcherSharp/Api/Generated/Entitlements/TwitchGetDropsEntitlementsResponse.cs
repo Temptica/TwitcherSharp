@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Entitlements;
 public partial class TwitchGetDropsEntitlementsResponse : RefCounted, ITwitcherSharp<TwitchGetDropsEntitlementsResponse>
 {
     private GodotObject? _data;
-    public TwitchDropsEntitlement[]? Data { get => field ??= _data?.GetArray<TwitchDropsEntitlement>("data"); set; }
+    public TwitchDropsEntitlement[] Data { get => field ??= _data?.GetArray<TwitchDropsEntitlement>("data")!; set; } = null!;
     public ResponsePagination? Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
 
     /// <summary> 

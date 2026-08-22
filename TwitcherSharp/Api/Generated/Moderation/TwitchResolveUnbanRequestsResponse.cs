@@ -7,7 +7,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 public partial class TwitchResolveUnbanRequestsResponse : RefCounted, ITwitcherSharp<TwitchResolveUnbanRequestsResponse>
 {
     private GodotObject? _data;
-    public TwitchResponseData[]? Data { get => field ??= _data?.GetArray<TwitchResponseData>("data"); set; }
+    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchResolveUnbanRequestsResponse object.
@@ -32,21 +32,21 @@ public partial class TwitchResolveUnbanRequestsResponse : RefCounted, ITwitcherS
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
         private GodotObject? _data;
-        public string? Id { get; set; }
-        public string? BroadcasterId { get; set; }
-        public string? BroadcasterLogin { get; set; }
-        public string? BroadcasterName { get; set; }
-        public string? ModeratorId { get; set; }
-        public string? ModeratorLogin { get; set; }
-        public string? ModeratorName { get; set; }
-        public string? UserId { get; set; }
-        public string? UserLogin { get; set; }
-        public string? UserName { get; set; }
-        public string? Text { get; set; }
-        public string? Status { get; set; }
-        public string? CreatedAt { get; set; }
-        public string? ResolvedAt { get; set; }
-        public string? ResolutionText { get; set; }
+        public string Id { get; set; } = null!;
+        public string BroadcasterId { get; set; } = null!;
+        public string BroadcasterLogin { get; set; } = null!;
+        public string BroadcasterName { get; set; } = null!;
+        public string ModeratorId { get; set; } = null!;
+        public string ModeratorLogin { get; set; } = null!;
+        public string ModeratorName { get; set; } = null!;
+        public string UserId { get; set; } = null!;
+        public string UserLogin { get; set; } = null!;
+        public string UserName { get; set; } = null!;
+        public string Text { get; set; } = null!;
+        public string Status { get; set; } = null!;
+        public string CreatedAt { get; set; } = null!;
+        public string ResolvedAt { get; set; } = null!;
+        public string ResolutionText { get; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseData object.
