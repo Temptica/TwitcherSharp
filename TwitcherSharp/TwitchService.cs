@@ -26,6 +26,8 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
 
     public static TwitchService CreateInstance(Action<TwitchService>? configure = null) =>
         ITwitcherSharpSingleton<TwitchService>.CreateInstance(configure);
+    
+    public static TwitchService Required => ITwitcherSharpSingleton<TwitchService>.Required;
 
     /// <summary>
     /// Call this to setup the complete Twitch integration whenever you need.

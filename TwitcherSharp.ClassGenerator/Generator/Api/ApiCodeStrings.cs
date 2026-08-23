@@ -33,7 +33,9 @@ public static class ApiCodeStrings
                                               // ReSharper disable once UnusedParameter.Global
                                               public static TwitchApi CreateInstance(Action<TwitchApi>? configure = null) =>
                                                   ITwitcherSharpSingleton<TwitchApi>.CreateInstance(configure);
-                                              
+
+                                              public static TwitchApi Required => ITwitcherSharpSingleton<TwitchApi>.Required;
+
                                               [Signal]
                                               public delegate void UnauthenticatedEventHandler();
                                               

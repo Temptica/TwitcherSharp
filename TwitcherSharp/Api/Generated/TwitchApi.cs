@@ -56,6 +56,8 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     public static TwitchApi CreateInstance(Action<TwitchApi>? configure = null) =>
         ITwitcherSharpSingleton<TwitchApi>.CreateInstance(configure);
     
+    public static TwitchApi Required => ITwitcherSharpSingleton<TwitchApi>.Required;
+
     [Signal]
     public delegate void UnauthenticatedEventHandler();
     

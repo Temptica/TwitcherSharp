@@ -18,6 +18,8 @@ public partial class TwitchEventSub : RefCounted, ITwitcherSharpSingleton<Twitch
 
     public static TwitchEventSub CreateInstance(Action<TwitchEventSub>? configure = null) =>
         ITwitcherSharpSingleton<TwitchEventSub>.CreateInstance(configure);
+    
+    public static TwitchEventSub Required => ITwitcherSharpSingleton<TwitchEventSub>.Required;
 
     public bool IsLinked => _data != null;
 

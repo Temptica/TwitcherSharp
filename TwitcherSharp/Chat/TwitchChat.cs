@@ -22,6 +22,8 @@ public partial class TwitchChat : RefCounted, ITwitcherSharpSingleton<TwitchChat
     }
     public static TwitchChat CreateInstance(Action<TwitchChat>? configure = null) =>
         ITwitcherSharpSingleton<TwitchChat>.CreateInstance(configure);
+    
+    public static TwitchChat Required => ITwitcherSharpSingleton<TwitchChat>.Required;
 
     /// <summary>
     /// Twitch API (Will automatically look for first TwitchApi (twitcher) in the scene tree. Else will create a new one and add it to the root)
