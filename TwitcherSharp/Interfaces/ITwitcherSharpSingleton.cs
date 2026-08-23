@@ -40,8 +40,8 @@ public interface ITwitcherSharpSingleton<out TSelf> : ITwitcherSharpSingleton, I
     /// <summary>
     /// Gets the current <see cref="Instance"/>, or throws if it hasn't been initialized yet.
     /// <p>Use this instead of <see cref="Instance"/> when your code only ever runs after setup
-    /// (e.g. the Twitcher autoload always initializes before your game code does) and you want a
-    /// non-nullable reference back, instead of null-checking or using <c>!</c> at every call site.</p>
+    /// (e.g., the Twitcher autoload always initializes before your game code does) and you want a
+    /// non-nullable reference back.</p>
     /// </summary>
     /// <exception cref="InvalidOperationException">The singleton has not been initialized yet.</exception>
     public static TSelf Required => Instance ?? throw new InvalidOperationException(
