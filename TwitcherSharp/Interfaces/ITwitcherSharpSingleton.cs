@@ -38,6 +38,17 @@ public interface ITwitcherSharpSingleton<out TSelf> : ITwitcherSharpSingleton, I
     }
 
     /// <summary>
+    /// Gets the current <see cref="Instance"/>, or throws if it hasn't been initialized yet.
+    /// <p>Use this instead of <see cref="Instance"/> when your code only ever runs after setup
+    /// (e.g., the Twitcher autoload always initializes before your game code does) and you want a
+    /// non-nullable reference back.</p>
+    /// </summary>
+    /// <exception cref="InvalidOperationException">The singleton has not been initialized yet.</exception>
+    public static TSelf Required => Instance ?? throw new InvalidOperationException(
+        $"{typeof(TSelf).Name}.Instance is not initialized. Make sure the Twitcher addon is enabled and set up " +
+        $"before accessing it, or call {typeof(TSelf).Name}.CreateInstance() first.");
+
+    /// <summary>
     /// Create a new instance of the TwitcherSharp singleton. This will also add a new Twitcher (gdscript) to the root of the scene.
     /// </summary>
     /// <param name="configure">optional configuration for the new instance</param>
