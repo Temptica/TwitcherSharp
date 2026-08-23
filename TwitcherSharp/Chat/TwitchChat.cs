@@ -22,8 +22,7 @@ public partial class TwitchChat : RefCounted, ITwitcherSharpSingleton<TwitchChat
     }
     public static TwitchChat CreateInstance(Action<TwitchChat>? configure = null) =>
         ITwitcherSharpSingleton<TwitchChat>.CreateInstance(configure);
-
-    /// <inheritdoc cref="ITwitcherSharpSingleton{TSelf}.Required"/>
+    
     public static TwitchChat Required => ITwitcherSharpSingleton<TwitchChat>.Required;
 
     /// <summary>

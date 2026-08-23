@@ -26,8 +26,7 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
 
     public static TwitchService CreateInstance(Action<TwitchService>? configure = null) =>
         ITwitcherSharpSingleton<TwitchService>.CreateInstance(configure);
-
-    /// <inheritdoc cref="ITwitcherSharpSingleton{TSelf}.Required"/>
+    
     public static TwitchService Required => ITwitcherSharpSingleton<TwitchService>.Required;
 
     /// <summary>
