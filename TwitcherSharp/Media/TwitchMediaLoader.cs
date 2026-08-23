@@ -22,6 +22,9 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
     public static TwitchMediaLoader CreateInstance(Action<TwitchMediaLoader>? configure = null) =>
         ITwitcherSharpSingleton<TwitchMediaLoader>.CreateInstance(configure);
 
+    /// <inheritdoc cref="ITwitcherSharpSingleton{TSelf}.Required"/>
+    public static TwitchMediaLoader Required => ITwitcherSharpSingleton<TwitchMediaLoader>.Required;
+
     [Signal]
     public delegate void EmojiLoadedEventHandler();
 

@@ -31,6 +31,9 @@ public partial class TwitchBot : RefCounted, ITwitcherSharpSingleton<TwitchBot>
     public static TwitchBot CreateInstance(Action<TwitchBot>? configure = null) =>
         ITwitcherSharpSingleton<TwitchBot>.CreateInstance(configure);
 
+    /// <inheritdoc cref="ITwitcherSharpSingleton{TSelf}.Required"/>
+    public static TwitchBot Required => ITwitcherSharpSingleton<TwitchBot>.Required;
+
     public TwitchUser? Sender
     {
         get => _data != null

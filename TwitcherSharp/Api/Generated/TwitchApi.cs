@@ -55,7 +55,10 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     // ReSharper disable once UnusedParameter.Global
     public static TwitchApi CreateInstance(Action<TwitchApi>? configure = null) =>
         ITwitcherSharpSingleton<TwitchApi>.CreateInstance(configure);
-    
+
+    /// <inheritdoc cref="ITwitcherSharpSingleton{TSelf}.Required"/>
+    public static TwitchApi Required => ITwitcherSharpSingleton<TwitchApi>.Required;
+
     [Signal]
     public delegate void UnauthenticatedEventHandler();
     
