@@ -10,14 +10,14 @@ namespace TwitcherSharp.Api.Generated.Conduits;
 /// </summary>
 public partial class TwitchGetConduitShardsOpt : RefCounted, ITwitcherSharp<TwitchGetConduitShardsOpt>
 {
-    private GodotObject _data;
-    public string Status { get; set; }
-    public string After { get; set; }
+    private GodotObject? _data;
+    public string? Status { get; set; }
+    public string? After { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetConduitShardsOpt object.
     /// </summary> 
-    public static TwitchGetConduitShardsOpt FromObject(GodotObject data)
+    public static TwitchGetConduitShardsOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetConduitShardsOpt

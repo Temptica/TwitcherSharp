@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelWarningAcknowledge;
 
 public partial class TwitchChannelWarningAcknowledgeCondition(string broadcasterUserId, string moderatorUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelWarningAcknowledgeCondition>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     public string Name => nameof(TwitchChannelWarningAcknowledgeCondition);
 
@@ -25,7 +25,7 @@ public partial class TwitchChannelWarningAcknowledgeCondition(string broadcaster
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelWarningAcknowledgeCondition object.
     /// </summary> 
-    public static TwitchChannelWarningAcknowledgeCondition FromObject(GodotObject data)
+    public static TwitchChannelWarningAcknowledgeCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannelWarningAcknowledgeCondition(data.Get("broadcaster_user_id").AsString(), data.Get("moderator_user_id").AsString());

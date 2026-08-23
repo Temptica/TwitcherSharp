@@ -10,13 +10,13 @@ namespace TwitcherSharp.Api.Generated.Extensions;
 /// </summary>
 public partial class TwitchGetReleasedExtensionsOpt : RefCounted, ITwitcherSharp<TwitchGetReleasedExtensionsOpt>
 {
-    private GodotObject _data;
-    public string ExtensionVersion { get; set; }
+    private GodotObject? _data;
+    public string? ExtensionVersion { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetReleasedExtensionsOpt object.
     /// </summary> 
-    public static TwitchGetReleasedExtensionsOpt FromObject(GodotObject data)
+    public static TwitchGetReleasedExtensionsOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetReleasedExtensionsOpt

@@ -8,17 +8,17 @@ namespace TwitcherSharp.EventSub.Generated.Shared;
 
 public partial class TwitchReward : RefCounted, ITwitcherSharpEventSub<TwitchReward>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     /// <summary> 
     /// The reward identifier.
     /// </summary>
-    public string Id { get; set; }
+    public string? Id { get; set; }
 
     /// <summary> 
     /// The reward name.
     /// </summary>
-    public string Title { get; set; }
+    public string? Title { get; set; }
 
     /// <summary> 
     /// The reward cost.
@@ -28,12 +28,12 @@ public partial class TwitchReward : RefCounted, ITwitcherSharpEventSub<TwitchRew
     /// <summary> 
     /// The reward description.
     /// </summary>
-    public string Prompt { get; set; }
+    public string? Prompt { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchReward object.
     /// </summary> 
-    public static TwitchReward FromObject(GodotObject data)
+    public static TwitchReward? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchReward
@@ -52,10 +52,10 @@ public partial class TwitchReward : RefCounted, ITwitcherSharpEventSub<TwitchRew
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_reward.gd");
         var request = script.New().AsGodotObject();
-        request.Set("id", Id);
-        request.Set("title", Title);
+        if(Id != null) request.Set("id", Id);
+        if(Title != null) request.Set("title", Title);
         request.Set("cost", Cost);
-        request.Set("prompt", Prompt);
+        if(Prompt != null) request.Set("prompt", Prompt);
         return request;
     }
 }

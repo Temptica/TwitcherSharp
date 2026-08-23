@@ -8,10 +8,11 @@ namespace TwitcherSharp.Chat;
 /// </summary>
 public partial class TwitchCommandRegex : TwitchCommandBase, ITwitcherSharp<TwitchCommandRegex>
 {
-    public string RegexToListen { get; set; }
+    public string RegexToListen { get; set; } = null!;
 
-    public static TwitchCommandRegex FromObject(GodotObject data)
+    public static TwitchCommandRegex? FromObject(GodotObject? data)
     {
+        if (data == null) return null;
         var regex = new TwitchCommandRegex();
         regex.RegexToListen = data.Get("regex_to_listen").AsString();
         regex.Data = data;

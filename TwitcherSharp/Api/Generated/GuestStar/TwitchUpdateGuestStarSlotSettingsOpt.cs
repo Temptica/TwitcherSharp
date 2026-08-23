@@ -10,7 +10,7 @@ namespace TwitcherSharp.Api.Generated.GuestStar;
 /// </summary>
 public partial class TwitchUpdateGuestStarSlotSettingsOpt : RefCounted, ITwitcherSharp<TwitchUpdateGuestStarSlotSettingsOpt>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     public bool? IsAudioEnabled { get; set; }
     public bool? IsVideoEnabled { get; set; }
     public bool? IsLive { get; set; }
@@ -19,7 +19,7 @@ public partial class TwitchUpdateGuestStarSlotSettingsOpt : RefCounted, ITwitche
     /// <summary> 
     /// Transforms the godot data into a TwitchUpdateGuestStarSlotSettingsOpt object.
     /// </summary> 
-    public static TwitchUpdateGuestStarSlotSettingsOpt FromObject(GodotObject data)
+    public static TwitchUpdateGuestStarSlotSettingsOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchUpdateGuestStarSlotSettingsOpt

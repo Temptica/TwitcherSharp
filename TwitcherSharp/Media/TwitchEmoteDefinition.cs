@@ -7,8 +7,8 @@ public partial class TwitchEmoteDefinition(string emoteId) : RefCounted, ITwitch
 {
     public string Id { get; set; } = emoteId;
     public int Scale { get; set; }
-    public StringName Type { get; set; }
-    public StringName Theme { get; set; }
+    public StringName? Type { get; set; }
+    public StringName? Theme { get; set; }
 
     public const int Scale1 = 1;
     public const int Scale2 = 2;
@@ -69,8 +69,9 @@ public partial class TwitchEmoteDefinition(string emoteId) : RefCounted, ITwitch
         return this;
     }
 
-    public static TwitchEmoteDefinition FromObject(GodotObject data)
+    public static TwitchEmoteDefinition? FromObject(GodotObject? data)
     {
+        if (data == null) return null;
         return new TwitchEmoteDefinition(data.Get("id").AsString())
         {
             Scale = data.Get("scale").AsInt32(),
@@ -85,8 +86,8 @@ public partial class TwitchEmoteDefinition(string emoteId) : RefCounted, ITwitch
         var data = script.New().AsGodotObject();
         data.Set("id", Id);
         data.Set("scale", Scale);
-        data.Set("type", Type);
-        data.Set("theme", Theme);
+        if (Type != null) data.Set("type", Type);
+        if (Theme != null) data.Set("theme", Theme);
         return data;
     }
 }

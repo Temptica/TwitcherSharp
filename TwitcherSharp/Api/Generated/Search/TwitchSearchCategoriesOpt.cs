@@ -10,14 +10,14 @@ namespace TwitcherSharp.Api.Generated.Search;
 /// </summary>
 public partial class TwitchSearchCategoriesOpt : RefCounted, ITwitcherSharp<TwitchSearchCategoriesOpt>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     public int? First { get; set; }
-    public string After { get; set; }
+    public string? After { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchSearchCategoriesOpt object.
     /// </summary> 
-    public static TwitchSearchCategoriesOpt FromObject(GodotObject data)
+    public static TwitchSearchCategoriesOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchSearchCategoriesOpt

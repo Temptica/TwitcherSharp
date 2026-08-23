@@ -6,14 +6,14 @@ namespace TwitcherSharp.Api.Generated.Bits;
 
 public partial class TwitchCheermoteImages : RefCounted, ITwitcherSharp<TwitchCheermoteImages>
 {
-    private GodotObject _data;
-    public TwitchCheermoteImageTheme Light { get => field ??= _data?.Get<TwitchCheermoteImageTheme>("light"); set; }
-    public TwitchCheermoteImageTheme Dark { get => field ??= _data?.Get<TwitchCheermoteImageTheme>("dark"); set; }
+    private GodotObject? _data;
+    public TwitchCheermoteImageTheme? Light { get => field ??= _data?.Get<TwitchCheermoteImageTheme>("light"); set; }
+    public TwitchCheermoteImageTheme? Dark { get => field ??= _data?.Get<TwitchCheermoteImageTheme>("dark"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCheermoteImages object.
     /// </summary> 
-    public static TwitchCheermoteImages FromObject(GodotObject data)
+    public static TwitchCheermoteImages? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchCheermoteImages();

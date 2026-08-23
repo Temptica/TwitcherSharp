@@ -49,8 +49,8 @@ public static class ApiCodeHelper
 
         methodString.AppendIndentedLine(
             !string.IsNullOrEmpty(methods)
-                ? $"return await _data.CallAsync<{method.ResultType}>(\"{method.Name.ToSnakeCase()}\", {methods}); "
-                : $"return await _data.CallAsync<{method.ResultType}>(\"{method.Name.ToSnakeCase()}\"); ",
+                ? $"return await _data!.CallAsync<{method.ResultType}>(\"{method.Name.ToSnakeCase()}\", {methods}); "
+                : $"return await _data!.CallAsync<{method.ResultType}>(\"{method.Name.ToSnakeCase()}\"); ",
             2);
 
         methodString.AppendIndentedLine("}", 1);
@@ -105,7 +105,7 @@ public static class ApiCodeHelper
 
         if (method.ContainsOptional)
         {
-            parmsList.Add($"{method.GetOptionalClassName()} opt = null");
+            parmsList.Add($"{method.GetOptionalClassName()}? opt = null");
         }
 
         return string.Join(", ", parmsList);
@@ -115,7 +115,7 @@ public static class ApiCodeHelper
     {
         var paramsList = new List<string>();
         if (method.ContainsBody) paramsList.Add("body.ToGodotObject()");
-        if (method.ContainsOptional) paramsList.Add("opt?.ToGodotObject()");
+        if (method.ContainsOptional) paramsList.Add("opt?.ToGodotObject() ?? new Variant()");
 
         paramsList.AddRange(method.RequiredParameters.Select(p => p.Type.Contains("[]")
             ? $"new Godot.Collections.Array<{p.Type.Remove("[]")}>({p.Name.ToCamelCase()})"
@@ -167,8 +167,18 @@ public static class ApiCodeHelper
 
         var componentCode = ComponentCode(component, out var usings, type);
 
+        // Usings already emitted above (the ComponentUsings header + the per-namespace usings) must not be
+        // repeated, otherwise the generated file gets a duplicate `using` (CS0105).
+        var alreadyUsed = new HashSet<string>(nameSpacesToUse.Select(ns => $"TwitcherSharp.Api.Generated.{ns}"))
+        {
+            "TwitcherSharp.Interfaces",
+            "TwitcherSharp.Extensions",
+            "Godot",
+        };
+
         foreach (var @using in usings.Distinct())
         {
+            if (!alreadyUsed.Add(@using)) continue;
             code.Insert(0, $"using {@using};\n");
         }
 
@@ -224,7 +234,7 @@ public static class ApiCodeHelper
                 var @interface = field.TypedComponent?.InterfacesToImplement[0].InterfaceName;
                 // get => field ??= _data?.GetArray<TwitchResponseData>("data");
                 code.AppendIndentedLine(
-                    $"public {@interface}{(field.IsRequired || field.IsNullableTyped ? "" : "?")}{(field.IsArray ? "[]" : "")} {field.Name} {{ get => field ??= _data?.{(field.IsArray ? $"GetArray<{field.Type}>" : $"Get<{field.Type}>")}(\"{field.Name.ToSnakeCase()}\"); set; }}",
+                    $"public {@interface}{(field.IsArray ? "[]" : "")}{field.NullableSuffix} {field.Name} {{ get => field ??= _data?.{(field.IsArray ? $"GetArray<{field.Type}>" : $"Get<{field.Type}>")}(\"{field.Name.ToSnakeCase()}\"){field.RequiredBang}; set; }}{field.DefaultInitializer}",
                     1);
                 continue;
             }
@@ -237,14 +247,19 @@ public static class ApiCodeHelper
 
                 if (field.Equals(component.GenericField))
                 {
+                    // The generic condition field's declared type (ITwitcherSharpCondition<T>) is a reference type,
+                    // but field.Type is "Variant" here (the parser's placeholder for an untyped object), which
+                    // makes IsValueType/DefaultInitializer treat it as a value type. FromDictionary's parameter is
+                    // non-nullable, so null-forgive the (possibly missing) godot data explicitly, and always supply
+                    // the `= null!;` default since DefaultInitializer won't apply it for this field.
                     code.AppendIndentedLine(
-                        $"public {fieldType}{(field.IsRequired || field.IsNullableTyped ? "" : "?")} {field.Name} {{ get => field ??= {(field.IsArray ? $"_data?.GetArray<{fieldType.Remove("[]")}>(\"data\")" : "T.FromDictionary(_data?.Get(\"{field.Name.ToSnakeCase()}\").AsGodotDictionary())")}; set; }}",
+                        $"public {fieldType}{field.NullableSuffix} {field.Name} {{ get => field ??= {(field.IsArray ? $"_data?.GetArray<{fieldType.Remove("[]")}>(\"data\"){field.RequiredBang}" : $"T.FromDictionary(_data?.Get(\"{field.Name.ToSnakeCase()}\").AsGodotDictionary()!)")}; set; }}{(field.IsRequired ? " = null!;" : "")}",
                         1);
                     continue;
                 }
 
                 code.AppendIndentedLine(
-                    $"public {fieldType}{(field.IsRequired || field.IsNullableTyped ? "" : "?")} {field.Name} {{ get => field ??= _data?.{(field.IsArray ? $"GetArray<{fieldType}>" : $"Get<{fieldType}>")}(\"{field.Name.ToSnakeCase()}\"); set; }}",
+                    $"public {fieldType}{field.NullableSuffix} {field.Name} {{ get => field ??= _data?.{(field.IsArray ? $"GetArray<{fieldType}>" : $"Get<{fieldType}>")}(\"{field.Name.ToSnakeCase()}\"){field.RequiredBang}; set; }}{field.DefaultInitializer}",
                     1);
 
                 continue;
@@ -253,13 +268,13 @@ public static class ApiCodeHelper
             if (field.IsTyped)
             {
                 code.AppendIndentedLine(
-                    $"public {field.CleanedType}{(field.IsRequired || field.IsNullableTyped ? "" : "?")} {field.Name} {{ get => field ??= _data?.{(field.IsArray ? $"GetArray<{field.Type}>" : $"Get<{field.Type}>")}(\"{field.Name.ToSnakeCase()}\"); set; }}",
+                    $"public {field.CleanedType}{field.NullableSuffix} {field.Name} {{ get => field ??= _data?.{(field.IsArray ? $"GetArray<{field.Type}>" : $"Get<{field.Type}>")}(\"{field.Name.ToSnakeCase()}\"){field.RequiredBang}; set; }}{field.DefaultInitializer}",
                     1);
                 continue;
             }
 
             code.AppendIndentedLine(
-                $"public {field.CleanedType}{(field.IsRequired || field.IsNullableTyped ? "" : "?")} {field.Name} {{ get; set; }}",
+                $"public {field.CleanedType}{field.NullableSuffix} {field.Name} {{ get; set; }}{field.DefaultInitializer}",
                 1);
         }
 
@@ -330,7 +345,7 @@ public static class ApiCodeHelper
             if (field.IsArray && field.IsTyped)
             {
                 code.AppendIndentedLine(
-                    $"if({field.Name} != null) request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name}?.ToGodotArray());",
+                    $"if({field.Name} != null) request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name}.ToGodotArray());",
                     2);
                 continue;
             }
@@ -365,7 +380,7 @@ public static class ApiCodeHelper
 
                     code.AppendIndentedLine($"if({field.Name} != null) " + (
                             field.Type == "Object"
-                                ? $"request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name}?.ToGodotObject());"
+                                ? $"request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name}.ToGodotObject());"
                                 : $"request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name});"),
                         2);
 
@@ -382,8 +397,10 @@ public static class ApiCodeHelper
 
             code.AppendIndentedLine(
                 field.IsTyped
-                    ? $"request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name}?.ToGodotObject());"
-                    : $"request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name});",
+                    ? $"if({field.Name} != null) request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name}.ToGodotObject());"
+                    : field.IsValueType
+                        ? $"request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name});"
+                        : $"if({field.Name} != null) request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name});",
                 2);
         }
 
@@ -465,12 +482,12 @@ public static class ApiCodeHelper
             {
                 var @interface = field.TypedComponent?.InterfacesToImplement[0].InterfaceName;
                 code.AppendIndentedLine(
-                    $"public {@interface}{(field.IsRequired || field.IsNullableTyped ? "" : "?")} {field.Name} {{ get; set; }}",
+                    $"public {@interface}{field.NullableSuffix} {field.Name} {{ get; set; }}",
                     1);
                 continue;
             }
 
-            code.AppendIndentedLine($"public {field.CleanedType} {field.Name} {{ get; set; }}", 1);
+            code.AppendIndentedLine($"public {field.CleanedType}{field.NullableSuffix} {field.Name} {{ get; set; }}", 1);
         }
 
         code.AppendIndentedLine("}");

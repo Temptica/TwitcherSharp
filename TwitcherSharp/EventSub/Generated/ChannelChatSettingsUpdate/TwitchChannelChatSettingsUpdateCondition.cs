@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelChatSettingsUpdate;
 
 public partial class TwitchChannelChatSettingsUpdateCondition(string broadcasterUserId, string userId) : RefCounted, ITwitcherSharpCondition<TwitchChannelChatSettingsUpdateCondition>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     public string Name => nameof(TwitchChannelChatSettingsUpdateCondition);
 
@@ -25,7 +25,7 @@ public partial class TwitchChannelChatSettingsUpdateCondition(string broadcaster
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelChatSettingsUpdateCondition object.
     /// </summary> 
-    public static TwitchChannelChatSettingsUpdateCondition FromObject(GodotObject data)
+    public static TwitchChannelChatSettingsUpdateCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannelChatSettingsUpdateCondition(data.Get("broadcaster_user_id").AsString(), data.Get("user_id").AsString());

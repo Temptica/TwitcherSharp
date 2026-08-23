@@ -10,16 +10,16 @@ namespace TwitcherSharp.Api.Generated.Schedule;
 /// </summary>
 public partial class TwitchUpdateChannelStreamScheduleOpt : RefCounted, ITwitcherSharp<TwitchUpdateChannelStreamScheduleOpt>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     public bool? IsVacationEnabled { get; set; }
-    public string VacationStartTime { get; set; }
-    public string VacationEndTime { get; set; }
-    public string Timezone { get; set; }
+    public string? VacationStartTime { get; set; }
+    public string? VacationEndTime { get; set; }
+    public string? Timezone { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUpdateChannelStreamScheduleOpt object.
     /// </summary> 
-    public static TwitchUpdateChannelStreamScheduleOpt FromObject(GodotObject data)
+    public static TwitchUpdateChannelStreamScheduleOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchUpdateChannelStreamScheduleOpt

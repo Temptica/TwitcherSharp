@@ -6,15 +6,15 @@ namespace TwitcherSharp.Api.Generated.Users;
 
 public partial class TwitchUserBlockList : RefCounted, ITwitcherSharp<TwitchUserBlockList>
 {
-    private GodotObject _data;
-    public string UserId { get; set; }
-    public string UserLogin { get; set; }
-    public string DisplayName { get; set; }
+    private GodotObject? _data;
+    public string UserId { get; set; } = null!;
+    public string UserLogin { get; set; } = null!;
+    public string DisplayName { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUserBlockList object.
     /// </summary> 
-    public static TwitchUserBlockList FromObject(GodotObject data)
+    public static TwitchUserBlockList? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchUserBlockList
@@ -32,9 +32,9 @@ public partial class TwitchUserBlockList : RefCounted, ITwitcherSharp<TwitchUser
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_user_block_list.gd");
         var request = script.Call("new").AsGodotObject();
-        request.Set("user_id", UserId);
-        request.Set("user_login", UserLogin);
-        request.Set("display_name", DisplayName);
+        if(UserId != null) request.Set("user_id", UserId);
+        if(UserLogin != null) request.Set("user_login", UserLogin);
+        if(DisplayName != null) request.Set("display_name", DisplayName);
         return request;
     }
 

@@ -8,24 +8,24 @@ namespace TwitcherSharp.EventSub.Generated.ChannelRaid;
 
 public partial class TwitchChannelRaidCondition() : RefCounted, ITwitcherSharpCondition<TwitchChannelRaidCondition>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     public string Name => nameof(TwitchChannelRaidCondition);
 
     /// <summary> 
     /// The broadcaster user ID that created the channel raid you want to get notifications for. Use this parameter if you want to know when a specific broadcaster raids another broadcaster. The channel raid condition must include either from_broadcaster_user_id or to_broadcaster_user_id.
     /// </summary>
-    public string FromBroadcasterUserId { get; set; }
+    public string? FromBroadcasterUserId { get; set; }
 
     /// <summary> 
     /// The broadcaster user ID that received the channel raid you want to get notifications for. Use this parameter if you want to know when a specific broadcaster is raided by another broadcaster. The channel raid condition must include either from_broadcaster_user_id or to_broadcaster_user_id.
     /// </summary>
-    public string ToBroadcasterUserId { get; set; }
+    public string? ToBroadcasterUserId { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelRaidCondition object.
     /// </summary> 
-    public static TwitchChannelRaidCondition FromObject(GodotObject data)
+    public static TwitchChannelRaidCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannelRaidCondition
@@ -43,8 +43,8 @@ public partial class TwitchChannelRaidCondition() : RefCounted, ITwitcherSharpCo
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_raid.gd");
         var conditionClass = script.Get("Condition").As<GDScript>();
         var request = conditionClass.New().AsGodotObject();
-        request.Set("from_broadcaster_user_id", FromBroadcasterUserId);
-        request.Set("to_broadcaster_user_id", ToBroadcasterUserId);
+        if(FromBroadcasterUserId != null) request.Set("from_broadcaster_user_id", FromBroadcasterUserId);
+        if(ToBroadcasterUserId != null) request.Set("to_broadcaster_user_id", ToBroadcasterUserId);
         return request;
     }
 
@@ -61,8 +61,8 @@ public partial class TwitchChannelRaidCondition() : RefCounted, ITwitcherSharpCo
     {
         return new Dictionary
         {
-            {"from_broadcaster_user_id", FromBroadcasterUserId},
-            {"to_broadcaster_user_id", ToBroadcasterUserId},
+            {"from_broadcaster_user_id", FromBroadcasterUserId!},
+            {"to_broadcaster_user_id", ToBroadcasterUserId!},
         };
     }
 }

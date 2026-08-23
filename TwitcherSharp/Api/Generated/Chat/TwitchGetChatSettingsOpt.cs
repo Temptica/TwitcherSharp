@@ -10,13 +10,13 @@ namespace TwitcherSharp.Api.Generated.Chat;
 /// </summary>
 public partial class TwitchGetChatSettingsOpt : RefCounted, ITwitcherSharp<TwitchGetChatSettingsOpt>
 {
-    private GodotObject _data;
-    public string ModeratorId { get; set; }
+    private GodotObject? _data;
+    public string? ModeratorId { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetChatSettingsOpt object.
     /// </summary> 
-    public static TwitchGetChatSettingsOpt FromObject(GodotObject data)
+    public static TwitchGetChatSettingsOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetChatSettingsOpt

@@ -10,53 +10,53 @@ namespace TwitcherSharp.Media;
 
 public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<TwitchMediaLoader>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     public bool IsLinked => _data is not null;
     public static string ScriptPath => "res://addons/twitcher/media/twitch_media_loader.gd";
 
-    public static TwitchMediaLoader Instance
+    public static TwitchMediaLoader? Instance
     {
         get => ITwitcherSharpSingleton<TwitchMediaLoader>.Instance;
         private set => ITwitcherSharpSingleton<TwitchMediaLoader>.Instance = value;
     }
-    public static TwitchMediaLoader CreateInstance(Action<TwitchMediaLoader> configure = null) =>
+    public static TwitchMediaLoader CreateInstance(Action<TwitchMediaLoader>? configure = null) =>
         ITwitcherSharpSingleton<TwitchMediaLoader>.CreateInstance(configure);
 
     [Signal]
     public delegate void EmojiLoadedEventHandler();
 
-    public TwitchImageTransformer ImageTransformer
+    public TwitchImageTransformer? ImageTransformer
     {
         get => _data is null
             ? field
             : TwitchImageTransformer.FromObject(_data.Get("image_transformer").AsGodotObject());
         set
         {
-            _data?.Set("image_transformer", value?.ToGodotObject());
+            _data?.Set("image_transformer", value?.ToGodotObject() ?? new Variant());
             field = value;
         }
     } = new();
 
-    public Texture2D FallbackTexture
+    public Texture2D? FallbackTexture
     {
         get => _data is null
             ? field
             : _data.Get("fallback_texture").As<Texture2D>();
         set
         {
-            _data?.Set("fallback_texture", value);
+            if (value != null) _data?.Set("fallback_texture", value);
             field = value;
         }
     }
 
-    public Texture2D FallbackProfile
+    public Texture2D? FallbackProfile
     {
         get => _data is null
             ? field
             : _data.Get("fallback_profile").As<Texture2D>();
         set
         {
-            _data?.Set("fallback_profile", value);
+            if (value != null) _data?.Set("fallback_profile", value);
             field = value;
         }
     }
@@ -139,44 +139,46 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
     #region Emotes
 
     public void PreloadEmotes(string channelId = "global")
-        => _data.Call("preload_emotes", channelId);
+        => _data!.Call("preload_emotes", channelId);
 
     public Godot.Collections.Dictionary<string, SpriteFrames> GetEmotes(string[] emoteIds)
-        => _data.Call("get_emotes", emoteIds).AsGodotDictionary<string, SpriteFrames>();
+        => _data!.Call("get_emotes", emoteIds).AsGodotDictionary<string, SpriteFrames>();
 
     public Godot.Collections.Dictionary<TwitchEmoteDefinition, SpriteFrames> GetEmotesByDefinition(
         TwitchEmoteDefinition[] emoteDefinitions)
     {
         var param = emoteDefinitions.Select(ed => ed.ToGodotObject()).ToArray();
-        return _data.CallDictionaryKey<TwitchEmoteDefinition, SpriteFrames>("get_emotes_by_definition", param);
+        return _data!.CallDictionaryKey<TwitchEmoteDefinition, SpriteFrames>("get_emotes_by_definition", param);
     }
 
     public async Task<Dictionary<string, ITwitchEmote>> GetCachedEmotes(string channelId)
     {
-        var result = await _data.CallAsync("get_cached_emotes");
+        var result = await _data!.CallAsync("get_cached_emotes");
         return result.AsGodotDictionary()
             .Select(x =>
             {
                 var godotObject = x.Value.AsGodotObject();
-                ITwitchEmote emote = godotObject.GetClass() switch
+                ITwitchEmote? emote = godotObject.GetClass() switch
                 {
                     "TwitchGlobalEmote" => TwitchGlobalEmote.FromObject(godotObject),
                     "TwitchChannelEmote" => TwitchChannelEmote.FromObject(godotObject),
                     _ => null
                 };
-                return (x.Key.AsString(), emote);
-            }).ToDictionary();
+                return (Key: x.Key.AsString(), Emote: emote);
+            })
+            .Where(x => x.Emote != null)
+            .ToDictionary(x => x.Key, x => x.Emote!);
     }
 
     #endregion
 
     #region Badges
 
-    public async Task PreloadBadges(string channelId = "global") => await _data.CallAsync("preload_badges", channelId);
+    public async Task PreloadBadges(string channelId = "global") => await _data!.CallAsync("preload_badges", channelId);
 
     public async Task<Godot.Collections.Dictionary<TwitchBadgeDefinition, SpriteFrames>> GetBadges(
         TwitchBadgeDefinition[] badges)
-        => await _data.CallDictionaryKeyAsync<TwitchBadgeDefinition, SpriteFrames>("get_badges",
+        => await _data!.CallDictionaryKeyAsync<TwitchBadgeDefinition, SpriteFrames>("get_badges",
             badges.Select(badge => badge.ToGodotObject()).ToArray());
 
     #endregion
@@ -192,11 +194,12 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
         public TwitchCheermote.TwitchResponseTiers Tier { get; set; } = tier;
         public SpriteFrames SpriteFrames { get; set; } = spriteFrames;
 
-        public static CheerResult FromObject(GodotObject data)
+        public static CheerResult? FromObject(GodotObject? data)
         {
+            if (data == null) return null;
             return new CheerResult(
-                TwitchCheermote.FromObject(data.Get("cheermote").AsGodotObject()),
-                TwitchCheermote.TwitchResponseTiers.FromObject(data.Get("tier").AsGodotObject()),
+                TwitchCheermote.FromObject(data.Get("cheermote").AsGodotObject())!,
+                TwitchCheermote.TwitchResponseTiers.FromObject(data.Get("tier").AsGodotObject())!,
                 data.Get("sprite_frames").As<SpriteFrames>());
         }
 
@@ -212,9 +215,10 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
         }
     }
 
-    public List<TwitchCheermote> AllCheermotes() => _data.Call("all_cheermotes")
+    public List<TwitchCheermote> AllCheermotes() => _data!.Call("all_cheermotes")
         .AsGodotObjectArray<GodotObject>()
         .Select(TwitchCheermote.FromObject)
+        .OfType<TwitchCheermote>()
         .ToList();
 
     /// <summary>
@@ -224,7 +228,7 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
     /// <param name="cheermoteDefinition"></param>
     /// <returns></returns>
     public async Task<CheerResult> GetCheerInfo(TwitchCheermoteDefinition cheermoteDefinition) =>
-        await _data.CallAsync<CheerResult>("get_cheer_info", cheermoteDefinition);
+        await _data!.CallAsync<CheerResult>("get_cheer_info", cheermoteDefinition);
 
     /// <summary>
     /// Finds the tier depending on the given number
@@ -233,7 +237,7 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
     /// <param name="cheerData"></param>
     /// <returns></returns>
     public TwitchCheermote.TwitchResponseTiers FindCheerTier(int number, TwitchCheermote cheerData)
-        => _data.Call("find_cheer_tier", number, cheerData.ToGodotObject()).As<TwitchCheermote.TwitchResponseTiers>();
+        => _data!.Call("find_cheer_tier", number, cheerData.ToGodotObject()).As<TwitchCheermote.TwitchResponseTiers>();
 
     /// <summary>
     /// 
@@ -242,14 +246,14 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
     /// <returns><see cref="SpriteFrames"/> mapped by <see cref="TwitchCheermote.TwitchResponseTiers"/> for a <see cref="TwitchCheermote"/></returns>
     public async Task<Godot.Collections.Dictionary<TwitchCheermote.TwitchResponseTiers, SpriteFrames>> GetCheermotes(
         TwitchCheermoteDefinition cheermoteDefinition)
-        => await _data.CallDictionaryKeyAsync<TwitchCheermote.TwitchResponseTiers, SpriteFrames>("get_cheermotes",
+        => await _data!.CallDictionaryKeyAsync<TwitchCheermote.TwitchResponseTiers, SpriteFrames>("get_cheermotes",
             cheermoteDefinition.ToGodotObject());
 
     #endregion
 
     #region Utils
 
-    public async Task<Image> LoadImage(string url) => (await _data.CallAsync("load_image", url)).As<Image>();
+    public async Task<Image> LoadImage(string url) => (await _data!.CallAsync("load_image", url)).As<Image>();
 
     /// <summary>
     /// Get the image of a user
@@ -257,12 +261,14 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
     /// <param name="user"></param>
     /// <returns></returns>
     public async Task<ImageTexture> LoadProfileImage(TwitchUser user) =>
-        (await _data.CallAsync("load_profile_image", user.ToGodotObject())).As<ImageTexture>();
+        (await _data!.CallAsync("load_profile_image", user.ToGodotObject())).As<ImageTexture>();
 
     #endregion
 
-    public static TwitchMediaLoader FromObject(GodotObject data)
+    public static TwitchMediaLoader? FromObject(GodotObject? data)
     {
+        if (data is null) return null;
+
         var mediaLoader = new TwitchMediaLoader()
         {
             ImageTransformer = TwitchImageTransformer.FromObject(data.Get("image_transformer").AsGodotObject()),
@@ -290,9 +296,9 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
 
         var script = GD.Load<GDScript>(ScriptPath);
         _data = script.New().AsGodotObject();
-        _data.Set("image_transformer", ImageTransformer?.ToGodotObject());
-        _data.Set("fallback_texture", FallbackTexture);
-        _data.Set("fallback_profile", FallbackProfile);
+        _data.Set("image_transformer", ImageTransformer?.ToGodotObject() ?? new Variant());
+        if (FallbackTexture != null) _data.Set("fallback_texture", FallbackTexture);
+        if (FallbackProfile != null) _data.Set("fallback_profile", FallbackProfile);
         _data.Set("image_cdn_host", ImageCdnHost);
         _data.Set("load_cache_in_editor", LoadCacheInEditor);
         _data.Set("cache_emote", CacheEmote);
@@ -305,7 +311,7 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
     public void FreeInstance()
     {
         if (_data is null) return;
-        _data.SetMeta("_twitcher_sharp_instance", Instance);
+        _data.SetMeta("_twitcher_sharp_instance", Instance!);
         _data = null;
     }
 }

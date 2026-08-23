@@ -6,18 +6,18 @@ namespace TwitcherSharp.Api.Generated.Chat;
 
 public partial class TwitchSendChatMessageBody : RefCounted, ITwitcherSharp<TwitchSendChatMessageBody>
 {
-    private GodotObject _data;
-    public string BroadcasterId { get; set; }
-    public string SenderId { get; set; }
-    public string Message { get; set; }
-    public string ReplyParentMessageId { get; set; }
+    private GodotObject? _data;
+    public string BroadcasterId { get; set; } = null!;
+    public string SenderId { get; set; } = null!;
+    public string Message { get; set; } = null!;
+    public string? ReplyParentMessageId { get; set; }
     public bool? ForSourceOnly { get; set; }
     public bool? Pin { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchSendChatMessageBody object.
     /// </summary> 
-    public static TwitchSendChatMessageBody FromObject(GodotObject data)
+    public static TwitchSendChatMessageBody? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchSendChatMessageBody
@@ -39,9 +39,9 @@ public partial class TwitchSendChatMessageBody : RefCounted, ITwitcherSharp<Twit
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_send_chat_message.gd");
         var bodyClass = script.Get("Body").AsGodotObject();
         var request = bodyClass.Call("new").AsGodotObject();
-        request.Set("broadcaster_id", BroadcasterId);
-        request.Set("sender_id", SenderId);
-        request.Set("message", Message);
+        if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
+        if(SenderId != null) request.Set("sender_id", SenderId);
+        if(Message != null) request.Set("message", Message);
         if(ReplyParentMessageId != null) request.Set("reply_parent_message_id", ReplyParentMessageId);
         if(ForSourceOnly.HasValue) request.Set("for_source_only", ForSourceOnly.Value);
         if(Pin.HasValue) request.Set("pin", Pin.Value);

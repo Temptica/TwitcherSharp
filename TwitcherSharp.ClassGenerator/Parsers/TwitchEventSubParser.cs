@@ -172,7 +172,10 @@ public class TwitchEventSubParser
         while (lastNode.GetNextElementSibling() != nextH2Node)
         {
             var h3Node = lastNode.GetNextElementSibling();
-            var conditionComponent = new TwitchEventSubGenComponent(h3Node.InnerText.Trim());
+            var conditionComponent = new TwitchEventSubGenComponent(h3Node.InnerText.Trim())
+            {
+                Id = h3Node.Id
+            };
             var table = h3Node.GetNextElementSibling();
             ParseTable(table, conditionComponent, true);
             ConditionComponents.Add(conditionComponent);

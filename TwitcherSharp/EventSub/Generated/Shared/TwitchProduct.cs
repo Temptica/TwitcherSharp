@@ -8,12 +8,12 @@ namespace TwitcherSharp.EventSub.Generated.Shared;
 
 public partial class TwitchProduct : RefCounted, ITwitcherSharpEventSub<TwitchProduct>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     /// <summary> 
     /// Product name.
     /// </summary>
-    public string Name { get; set; }
+    public string? Name { get; set; }
 
     /// <summary> 
     /// Bits involved in the transaction.
@@ -23,7 +23,7 @@ public partial class TwitchProduct : RefCounted, ITwitcherSharpEventSub<TwitchPr
     /// <summary> 
     /// Unique identifier for the product acquired.
     /// </summary>
-    public string Sku { get; set; }
+    public string? Sku { get; set; }
 
     /// <summary> 
     /// Flag indicating if the product is in development. If in_development is true, bits will be 0.
@@ -33,7 +33,7 @@ public partial class TwitchProduct : RefCounted, ITwitcherSharpEventSub<TwitchPr
     /// <summary> 
     /// Transforms the godot data into a TwitchProduct object.
     /// </summary> 
-    public static TwitchProduct FromObject(GodotObject data)
+    public static TwitchProduct? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchProduct
@@ -52,9 +52,9 @@ public partial class TwitchProduct : RefCounted, ITwitcherSharpEventSub<TwitchPr
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_product.gd");
         var request = script.New().AsGodotObject();
-        request.Set("name", Name);
+        if(Name != null) request.Set("name", Name);
         request.Set("bits", Bits);
-        request.Set("sku", Sku);
+        if(Sku != null) request.Set("sku", Sku);
         request.Set("in_development", InDevelopment);
         return request;
     }

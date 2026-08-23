@@ -8,57 +8,57 @@ namespace TwitcherSharp.EventSub.Generated.ChannelGuestStarSessionEnd;
 
 public partial class TwitchChannelGuestStarSessionEndEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelGuestStarSessionEndEvent>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     /// <summary> 
     /// The non-host broadcaster user ID.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string? BroadcasterUserId { get; set; }
 
     /// <summary> 
     /// The non-host broadcaster display name.
     /// </summary>
-    public string BroadcasterUserName { get; set; }
+    public string? BroadcasterUserName { get; set; }
 
     /// <summary> 
     /// The non-host broadcaster login.
     /// </summary>
-    public string BroadcasterUserLogin { get; set; }
+    public string? BroadcasterUserLogin { get; set; }
 
     /// <summary> 
     /// ID representing the unique session that was started.
     /// </summary>
-    public string SessionId { get; set; }
+    public string? SessionId { get; set; }
 
     /// <summary> 
     /// RFC3339 timestamp indicating the time the session began.
     /// </summary>
-    public string StartedAt { get; set; }
+    public string? StartedAt { get; set; }
 
     /// <summary> 
     /// RFC3339 timestamp indicating the time the session ended.
     /// </summary>
-    public string EndedAt { get; set; }
+    public string? EndedAt { get; set; }
 
     /// <summary> 
     /// User ID of the host channel.
     /// </summary>
-    public string HostUserId { get; set; }
+    public string? HostUserId { get; set; }
 
     /// <summary> 
     /// The host display name.
     /// </summary>
-    public string HostUserName { get; set; }
+    public string? HostUserName { get; set; }
 
     /// <summary> 
     /// The host login.
     /// </summary>
-    public string HostUserLogin { get; set; }
+    public string? HostUserLogin { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelGuestStarSessionEndEvent object.
     /// </summary> 
-    public static TwitchChannelGuestStarSessionEndEvent FromObject(GodotObject data)
+    public static TwitchChannelGuestStarSessionEndEvent? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannelGuestStarSessionEndEvent
@@ -83,15 +83,15 @@ public partial class TwitchChannelGuestStarSessionEndEvent : RefCounted, ITwitch
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_guest_star_session_end.gd");
         var eventClass = script.Get("Event").As<GDScript>();
         var request = eventClass.New().AsGodotObject();
-        request.Set("broadcaster_user_id", BroadcasterUserId);
-        request.Set("broadcaster_user_name", BroadcasterUserName);
-        request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        request.Set("session_id", SessionId);
-        request.Set("started_at", StartedAt);
-        request.Set("ended_at", EndedAt);
-        request.Set("host_user_id", HostUserId);
-        request.Set("host_user_name", HostUserName);
-        request.Set("host_user_login", HostUserLogin);
+        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
+        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
+        if(SessionId != null) request.Set("session_id", SessionId);
+        if(StartedAt != null) request.Set("started_at", StartedAt);
+        if(EndedAt != null) request.Set("ended_at", EndedAt);
+        if(HostUserId != null) request.Set("host_user_id", HostUserId);
+        if(HostUserName != null) request.Set("host_user_name", HostUserName);
+        if(HostUserLogin != null) request.Set("host_user_login", HostUserLogin);
         return request;
     }
 }

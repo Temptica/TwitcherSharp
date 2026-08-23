@@ -6,17 +6,17 @@ namespace TwitcherSharp.Api.Generated.GuestStar;
 
 public partial class TwitchUpdateChannelGuestStarSettingsBody : RefCounted, ITwitcherSharp<TwitchUpdateChannelGuestStarSettingsBody>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     public bool? IsModeratorSendLiveEnabled { get; set; }
     public int? SlotCount { get; set; }
     public bool? IsBrowserSourceAudioEnabled { get; set; }
-    public string GroupLayout { get; set; }
+    public string? GroupLayout { get; set; }
     public bool? RegenerateBrowserSources { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUpdateChannelGuestStarSettingsBody object.
     /// </summary> 
-    public static TwitchUpdateChannelGuestStarSettingsBody FromObject(GodotObject data)
+    public static TwitchUpdateChannelGuestStarSettingsBody? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchUpdateChannelGuestStarSettingsBody

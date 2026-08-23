@@ -8,62 +8,62 @@ namespace TwitcherSharp.EventSub.Generated.ChannelPollProgress;
 
 public partial class TwitchChannelPollProgressEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelPollProgressEvent>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     /// <summary> 
     /// ID of the poll.
     /// </summary>
-    public string Id { get; set; }
+    public string? Id { get; set; }
 
     /// <summary> 
     /// The requested broadcaster ID.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string? BroadcasterUserId { get; set; }
 
     /// <summary> 
     /// The requested broadcaster login.
     /// </summary>
-    public string BroadcasterUserLogin { get; set; }
+    public string? BroadcasterUserLogin { get; set; }
 
     /// <summary> 
     /// The requested broadcaster display name.
     /// </summary>
-    public string BroadcasterUserName { get; set; }
+    public string? BroadcasterUserName { get; set; }
 
     /// <summary> 
     /// Question displayed for the poll.
     /// </summary>
-    public string Title { get; set; }
+    public string? Title { get; set; }
 
     /// <summary> 
     /// An array of choices for the poll. Includes vote counts.
     /// </summary>
-    public TwitchChoices[] Choices { get => field ??= _data?.GetArray<TwitchChoices>("choices"); set; }
+    public TwitchChoices[]? Choices { get => field ??= _data?.GetArray<TwitchChoices>("choices"); set; }
 
     /// <summary> 
     /// NOTE: Bits voting is not supported.
     /// </summary>
-    public TwitchBitsVoting BitsVoting { get => field ??= _data?.Get<TwitchBitsVoting>("bits_voting"); set; }
+    public TwitchBitsVoting? BitsVoting { get => field ??= _data?.Get<TwitchBitsVoting>("bits_voting"); set; }
 
     /// <summary> 
     /// 
     /// </summary>
-    public TwitchChannelPointsVoting ChannelPointsVoting { get => field ??= _data?.Get<TwitchChannelPointsVoting>("channel_points_voting"); set; }
+    public TwitchChannelPointsVoting? ChannelPointsVoting { get => field ??= _data?.Get<TwitchChannelPointsVoting>("channel_points_voting"); set; }
 
     /// <summary> 
     /// The time the poll started.
     /// </summary>
-    public string StartedAt { get; set; }
+    public string? StartedAt { get; set; }
 
     /// <summary> 
     /// The time the poll will end.
     /// </summary>
-    public string EndsAt { get; set; }
+    public string? EndsAt { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelPollProgressEvent object.
     /// </summary> 
-    public static TwitchChannelPollProgressEvent FromObject(GodotObject data)
+    public static TwitchChannelPollProgressEvent? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannelPollProgressEvent
@@ -86,16 +86,16 @@ public partial class TwitchChannelPollProgressEvent : RefCounted, ITwitcherSharp
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_poll_progress.gd");
         var eventClass = script.Get("Event").As<GDScript>();
         var request = eventClass.New().AsGodotObject();
-        request.Set("id", Id);
-        request.Set("broadcaster_user_id", BroadcasterUserId);
-        request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        request.Set("broadcaster_user_name", BroadcasterUserName);
-        request.Set("title", Title);
-        if(Choices != null) request.Set("choices", Choices?.ToGodotArray());
-        request.Set("bits_voting", BitsVoting?.ToGodotObject());
-        request.Set("channel_points_voting", ChannelPointsVoting?.ToGodotObject());
-        request.Set("started_at", StartedAt);
-        request.Set("ends_at", EndsAt);
+        if(Id != null) request.Set("id", Id);
+        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
+        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
+        if(Title != null) request.Set("title", Title);
+        if(Choices != null) request.Set("choices", Choices.ToGodotArray());
+        if(BitsVoting != null) request.Set("bits_voting", BitsVoting.ToGodotObject());
+        if(ChannelPointsVoting != null) request.Set("channel_points_voting", ChannelPointsVoting.ToGodotObject());
+        if(StartedAt != null) request.Set("started_at", StartedAt);
+        if(EndsAt != null) request.Set("ends_at", EndsAt);
         return request;
     }
 }

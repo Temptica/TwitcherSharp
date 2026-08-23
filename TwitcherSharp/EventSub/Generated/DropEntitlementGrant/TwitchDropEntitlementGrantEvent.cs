@@ -8,22 +8,22 @@ namespace TwitcherSharp.EventSub.Generated.DropEntitlementGrant;
 
 public partial class TwitchDropEntitlementGrantEvent : RefCounted, ITwitcherSharpEventSub<TwitchDropEntitlementGrantEvent>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     /// <summary> 
     /// Individual event ID, as assigned by EventSub. Use this for de-duplicating messages.
     /// </summary>
-    public string Id { get; set; }
+    public string? Id { get; set; }
 
     /// <summary> 
     /// Entitlement object.
     /// </summary>
-    public TwitchData[] Data { get => field ??= _data?.GetArray<TwitchData>("data"); set; }
+    public TwitchData[]? Data { get => field ??= _data?.GetArray<TwitchData>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchDropEntitlementGrantEvent object.
     /// </summary> 
-    public static TwitchDropEntitlementGrantEvent FromObject(GodotObject data)
+    public static TwitchDropEntitlementGrantEvent? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchDropEntitlementGrantEvent
@@ -40,70 +40,70 @@ public partial class TwitchDropEntitlementGrantEvent : RefCounted, ITwitcherShar
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_drop_entitlement_grant.gd");
         var eventClass = script.Get("Event").As<GDScript>();
         var request = eventClass.New().AsGodotObject();
-        request.Set("id", Id);
-        if(Data != null) request.Set("data", Data?.ToGodotArray());
+        if(Id != null) request.Set("id", Id);
+        if(Data != null) request.Set("data", Data.ToGodotArray());
         return request;
     }
 
 
     public partial class TwitchData : RefCounted, ITwitcherSharpEventSub<TwitchData>
     {
-        private GodotObject _data;
+        private GodotObject? _data;
         
         /// <summary> 
         /// The ID of the organization that owns the game that has Drops enabled.
         /// </summary>
-        public string OrganizationId { get; set; }
+        public string? OrganizationId { get; set; }
     
         /// <summary> 
         /// Twitch category ID of the game that was being played when this benefit was entitled.
         /// </summary>
-        public string CategoryId { get; set; }
+        public string? CategoryId { get; set; }
     
         /// <summary> 
         /// The category name.
         /// </summary>
-        public string CategoryName { get; set; }
+        public string? CategoryName { get; set; }
     
         /// <summary> 
         /// The campaign this entitlement is associated with.
         /// </summary>
-        public string CampaignId { get; set; }
+        public string? CampaignId { get; set; }
     
         /// <summary> 
         /// Twitch user ID of the user who was granted the entitlement.
         /// </summary>
-        public string UserId { get; set; }
+        public string? UserId { get; set; }
     
         /// <summary> 
         /// The user display name of the user who was granted the entitlement.
         /// </summary>
-        public string UserName { get; set; }
+        public string? UserName { get; set; }
     
         /// <summary> 
         /// The user login of the user who was granted the entitlement.
         /// </summary>
-        public string UserLogin { get; set; }
+        public string? UserLogin { get; set; }
     
         /// <summary> 
         /// Unique identifier of the entitlement. Use this to de-duplicate entitlements.
         /// </summary>
-        public string EntitlementId { get; set; }
+        public string? EntitlementId { get; set; }
     
         /// <summary> 
         /// Identifier of the Benefit.
         /// </summary>
-        public string BenefitId { get; set; }
+        public string? BenefitId { get; set; }
     
         /// <summary> 
         /// UTC timestamp in ISO format when this entitlement was granted on Twitch.
         /// </summary>
-        public string CreatedAt { get; set; }
+        public string? CreatedAt { get; set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchData object.
         /// </summary> 
-        public static TwitchData FromObject(GodotObject data)
+        public static TwitchData? FromObject(GodotObject? data)
         {
             if(data == null) return null;
             var instance = new TwitchData
@@ -129,16 +129,16 @@ public partial class TwitchDropEntitlementGrantEvent : RefCounted, ITwitcherShar
             var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_drop_entitlement_grant.gd");
             var dataClass = script.Get("Data").As<GDScript>();
             var request = dataClass.New().AsGodotObject();
-            request.Set("organization_id", OrganizationId);
-            request.Set("category_id", CategoryId);
-            request.Set("category_name", CategoryName);
-            request.Set("campaign_id", CampaignId);
-            request.Set("user_id", UserId);
-            request.Set("user_name", UserName);
-            request.Set("user_login", UserLogin);
-            request.Set("entitlement_id", EntitlementId);
-            request.Set("benefit_id", BenefitId);
-            request.Set("created_at", CreatedAt);
+            if(OrganizationId != null) request.Set("organization_id", OrganizationId);
+            if(CategoryId != null) request.Set("category_id", CategoryId);
+            if(CategoryName != null) request.Set("category_name", CategoryName);
+            if(CampaignId != null) request.Set("campaign_id", CampaignId);
+            if(UserId != null) request.Set("user_id", UserId);
+            if(UserName != null) request.Set("user_name", UserName);
+            if(UserLogin != null) request.Set("user_login", UserLogin);
+            if(EntitlementId != null) request.Set("entitlement_id", EntitlementId);
+            if(BenefitId != null) request.Set("benefit_id", BenefitId);
+            if(CreatedAt != null) request.Set("created_at", CreatedAt);
             return request;
         }
     }

@@ -6,16 +6,17 @@ namespace TwitcherSharp.Lib.Http;
 
 public partial class ResponseData: RefCounted, ITwitcherSharp<ResponseData>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     public int Result { get; set; }
     public int ResponseCode { get; set; }
-    public RequestData RequestData { get; set; }
-    public byte[] RawResponseData { get; set; }
-    public Dictionary ResponseHeader { get; set; }
+    public RequestData? RequestData { get; set; }
+    public byte[]? RawResponseData { get; set; }
+    public Dictionary? ResponseHeader { get; set; }
     public bool Error { get; set; }
-    
-    public static ResponseData FromObject(GodotObject data)
+
+    public static ResponseData? FromObject(GodotObject? data)
     {
+        if (data == null) return null;
         return new ResponseData
         {
             _data = data,
@@ -30,6 +31,6 @@ public partial class ResponseData: RefCounted, ITwitcherSharp<ResponseData>
 
     public GodotObject ToGodotObject()
     {
-        return _data;
+        return _data!;
     }
 }

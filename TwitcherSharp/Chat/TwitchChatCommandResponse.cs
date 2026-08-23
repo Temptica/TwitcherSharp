@@ -5,9 +5,9 @@ namespace TwitcherSharp.Chat;
 
 public partial class TwitchChatCommandResponse: RefCounted, ITwitcherSharp<TwitchChatCommandResponse>
 {
-    public string ResponseMessage { get; set; }
+    public string? ResponseMessage { get; set; }
     public bool UseBot { get; set; } = true;
-    public static TwitchChatCommandResponse FromObject(GodotObject data)
+    public static TwitchChatCommandResponse? FromObject(GodotObject? data)
     {
         if (data == null) return null;
         var response = new TwitchChatCommandResponse();
@@ -20,7 +20,7 @@ public partial class TwitchChatCommandResponse: RefCounted, ITwitcherSharp<Twitc
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_chat_command_respond.gd");
         var instance = script.New().AsGodotObject();
-        instance.Set("respond_message", ResponseMessage);
+        if (ResponseMessage != null) instance.Set("respond_message", ResponseMessage);
         instance.Set("use_bot", UseBot);
         return instance;
     }

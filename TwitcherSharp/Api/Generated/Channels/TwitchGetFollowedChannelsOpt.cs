@@ -10,15 +10,15 @@ namespace TwitcherSharp.Api.Generated.Channels;
 /// </summary>
 public partial class TwitchGetFollowedChannelsOpt : RefCounted, ITwitcherSharp<TwitchGetFollowedChannelsOpt>
 {
-    private GodotObject _data;
-    public string BroadcasterId { get; set; }
+    private GodotObject? _data;
+    public string? BroadcasterId { get; set; }
     public int? First { get; set; }
-    public string After { get; set; }
+    public string? After { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetFollowedChannelsOpt object.
     /// </summary> 
-    public static TwitchGetFollowedChannelsOpt FromObject(GodotObject data)
+    public static TwitchGetFollowedChannelsOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetFollowedChannelsOpt

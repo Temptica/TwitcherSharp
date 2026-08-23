@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelUnbanRequestCreate;
 
 public partial class TwitchChannelUnbanRequestCreateCondition(string moderatorUserId, string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelUnbanRequestCreateCondition>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     public string Name => nameof(TwitchChannelUnbanRequestCreateCondition);
 
@@ -25,7 +25,7 @@ public partial class TwitchChannelUnbanRequestCreateCondition(string moderatorUs
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelUnbanRequestCreateCondition object.
     /// </summary> 
-    public static TwitchChannelUnbanRequestCreateCondition FromObject(GodotObject data)
+    public static TwitchChannelUnbanRequestCreateCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannelUnbanRequestCreateCondition(data.Get("moderator_user_id").AsString(), data.Get("broadcaster_user_id").AsString());

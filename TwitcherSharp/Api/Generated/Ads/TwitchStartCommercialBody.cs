@@ -6,14 +6,14 @@ namespace TwitcherSharp.Api.Generated.Ads;
 
 public partial class TwitchStartCommercialBody : RefCounted, ITwitcherSharp<TwitchStartCommercialBody>
 {
-    private GodotObject _data;
-    public string BroadcasterId { get; set; }
+    private GodotObject? _data;
+    public string BroadcasterId { get; set; } = null!;
     public int Length { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchStartCommercialBody object.
     /// </summary> 
-    public static TwitchStartCommercialBody FromObject(GodotObject data)
+    public static TwitchStartCommercialBody? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchStartCommercialBody
@@ -31,7 +31,7 @@ public partial class TwitchStartCommercialBody : RefCounted, ITwitcherSharp<Twit
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_start_commercial.gd");
         var bodyClass = script.Get("Body").AsGodotObject();
         var request = bodyClass.Call("new").AsGodotObject();
-        request.Set("broadcaster_id", BroadcasterId);
+        if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
         request.Set("length", Length);
         return request;
     }

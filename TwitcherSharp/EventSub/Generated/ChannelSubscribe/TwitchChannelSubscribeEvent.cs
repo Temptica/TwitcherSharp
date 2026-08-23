@@ -8,42 +8,42 @@ namespace TwitcherSharp.EventSub.Generated.ChannelSubscribe;
 
 public partial class TwitchChannelSubscribeEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelSubscribeEvent>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     /// <summary> 
     /// The user ID for the user who subscribed to the specified channel.
     /// </summary>
-    public string UserId { get; set; }
+    public string? UserId { get; set; }
 
     /// <summary> 
     /// The user login for the user who subscribed to the specified channel.
     /// </summary>
-    public string UserLogin { get; set; }
+    public string? UserLogin { get; set; }
 
     /// <summary> 
     /// The user display name for the user who subscribed to the specified channel.
     /// </summary>
-    public string UserName { get; set; }
+    public string? UserName { get; set; }
 
     /// <summary> 
     /// The requested broadcaster ID.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string? BroadcasterUserId { get; set; }
 
     /// <summary> 
     /// The requested broadcaster login.
     /// </summary>
-    public string BroadcasterUserLogin { get; set; }
+    public string? BroadcasterUserLogin { get; set; }
 
     /// <summary> 
     /// The requested broadcaster display name.
     /// </summary>
-    public string BroadcasterUserName { get; set; }
+    public string? BroadcasterUserName { get; set; }
 
     /// <summary> 
     /// The tier of the subscription. Valid values are 1000, 2000, and 3000.
     /// </summary>
-    public string Tier { get; set; }
+    public string? Tier { get; set; }
 
     /// <summary> 
     /// Whether the subscription is a gift.
@@ -53,7 +53,7 @@ public partial class TwitchChannelSubscribeEvent : RefCounted, ITwitcherSharpEve
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelSubscribeEvent object.
     /// </summary> 
-    public static TwitchChannelSubscribeEvent FromObject(GodotObject data)
+    public static TwitchChannelSubscribeEvent? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannelSubscribeEvent
@@ -77,13 +77,13 @@ public partial class TwitchChannelSubscribeEvent : RefCounted, ITwitcherSharpEve
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_subscribe.gd");
         var eventClass = script.Get("Event").As<GDScript>();
         var request = eventClass.New().AsGodotObject();
-        request.Set("user_id", UserId);
-        request.Set("user_login", UserLogin);
-        request.Set("user_name", UserName);
-        request.Set("broadcaster_user_id", BroadcasterUserId);
-        request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        request.Set("broadcaster_user_name", BroadcasterUserName);
-        request.Set("tier", Tier);
+        if(UserId != null) request.Set("user_id", UserId);
+        if(UserLogin != null) request.Set("user_login", UserLogin);
+        if(UserName != null) request.Set("user_name", UserName);
+        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
+        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
+        if(Tier != null) request.Set("tier", Tier);
         request.Set("is_gift", IsGift);
         return request;
     }

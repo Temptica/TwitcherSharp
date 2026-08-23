@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelSharedChatSessionUpdate;
 
 public partial class TwitchChannelSharedChatSessionUpdateCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelSharedChatSessionUpdateCondition>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     public string Name => nameof(TwitchChannelSharedChatSessionUpdateCondition);
 
@@ -20,7 +20,7 @@ public partial class TwitchChannelSharedChatSessionUpdateCondition(string broadc
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelSharedChatSessionUpdateCondition object.
     /// </summary> 
-    public static TwitchChannelSharedChatSessionUpdateCondition FromObject(GodotObject data)
+    public static TwitchChannelSharedChatSessionUpdateCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannelSharedChatSessionUpdateCondition(data.Get("broadcaster_user_id").AsString());

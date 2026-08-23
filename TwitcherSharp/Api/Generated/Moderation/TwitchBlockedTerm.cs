@@ -6,19 +6,19 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 
 public partial class TwitchBlockedTerm : RefCounted, ITwitcherSharp<TwitchBlockedTerm>
 {
-    private GodotObject _data;
-    public string BroadcasterId { get; set; }
-    public string ModeratorId { get; set; }
-    public string Id { get; set; }
-    public string Text { get; set; }
-    public string CreatedAt { get; set; }
-    public string UpdatedAt { get; set; }
-    public string ExpiresAt { get; set; }
+    private GodotObject? _data;
+    public string BroadcasterId { get; set; } = null!;
+    public string ModeratorId { get; set; } = null!;
+    public string Id { get; set; } = null!;
+    public string Text { get; set; } = null!;
+    public string CreatedAt { get; set; } = null!;
+    public string UpdatedAt { get; set; } = null!;
+    public string ExpiresAt { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchBlockedTerm object.
     /// </summary> 
-    public static TwitchBlockedTerm FromObject(GodotObject data)
+    public static TwitchBlockedTerm? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchBlockedTerm
@@ -40,13 +40,13 @@ public partial class TwitchBlockedTerm : RefCounted, ITwitcherSharp<TwitchBlocke
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_blocked_term.gd");
         var request = script.Call("new").AsGodotObject();
-        request.Set("broadcaster_id", BroadcasterId);
-        request.Set("moderator_id", ModeratorId);
-        request.Set("id", Id);
-        request.Set("text", Text);
-        request.Set("created_at", CreatedAt);
-        request.Set("updated_at", UpdatedAt);
-        request.Set("expires_at", ExpiresAt);
+        if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
+        if(ModeratorId != null) request.Set("moderator_id", ModeratorId);
+        if(Id != null) request.Set("id", Id);
+        if(Text != null) request.Set("text", Text);
+        if(CreatedAt != null) request.Set("created_at", CreatedAt);
+        if(UpdatedAt != null) request.Set("updated_at", UpdatedAt);
+        if(ExpiresAt != null) request.Set("expires_at", ExpiresAt);
         return request;
     }
 

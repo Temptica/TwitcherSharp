@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelAdBreakBegin;
 
 public partial class TwitchChannelAdBreakBeginEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelAdBreakBeginEvent>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     /// <summary> 
     /// Length in seconds of the mid-roll ad break requested
@@ -18,7 +18,7 @@ public partial class TwitchChannelAdBreakBeginEvent : RefCounted, ITwitcherSharp
     /// <summary> 
     /// The UTC timestamp of when the ad break began, in RFC3339 format. Note that there is potential delay between this event, when the streamer requested the ad break, and when the viewers will see ads.
     /// </summary>
-    public string StartedAt { get; set; }
+    public string? StartedAt { get; set; }
 
     /// <summary> 
     /// Indicates if the ad was automatically scheduled via Ads Manager
@@ -28,37 +28,37 @@ public partial class TwitchChannelAdBreakBeginEvent : RefCounted, ITwitcherSharp
     /// <summary> 
     /// The broadcaster’s user ID for the channel the ad was run on.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string? BroadcasterUserId { get; set; }
 
     /// <summary> 
     /// The broadcaster’s user login for the channel the ad was run on.
     /// </summary>
-    public string BroadcasterUserLogin { get; set; }
+    public string? BroadcasterUserLogin { get; set; }
 
     /// <summary> 
     /// The broadcaster’s user display name for the channel the ad was run on.
     /// </summary>
-    public string BroadcasterUserName { get; set; }
+    public string? BroadcasterUserName { get; set; }
 
     /// <summary> 
     /// The ID of the user that requested the ad. For automatic ads, this will be the ID of the broadcaster.
     /// </summary>
-    public string RequesterUserId { get; set; }
+    public string? RequesterUserId { get; set; }
 
     /// <summary> 
     /// The login of the user that requested the ad.
     /// </summary>
-    public string RequesterUserLogin { get; set; }
+    public string? RequesterUserLogin { get; set; }
 
     /// <summary> 
     /// The display name of the user that requested the ad.
     /// </summary>
-    public string RequesterUserName { get; set; }
+    public string? RequesterUserName { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelAdBreakBeginEvent object.
     /// </summary> 
-    public static TwitchChannelAdBreakBeginEvent FromObject(GodotObject data)
+    public static TwitchChannelAdBreakBeginEvent? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannelAdBreakBeginEvent
@@ -84,14 +84,14 @@ public partial class TwitchChannelAdBreakBeginEvent : RefCounted, ITwitcherSharp
         var eventClass = script.Get("Event").As<GDScript>();
         var request = eventClass.New().AsGodotObject();
         request.Set("duration_seconds", DurationSeconds);
-        request.Set("started_at", StartedAt);
+        if(StartedAt != null) request.Set("started_at", StartedAt);
         request.Set("is_automatic", IsAutomatic);
-        request.Set("broadcaster_user_id", BroadcasterUserId);
-        request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        request.Set("broadcaster_user_name", BroadcasterUserName);
-        request.Set("requester_user_id", RequesterUserId);
-        request.Set("requester_user_login", RequesterUserLogin);
-        request.Set("requester_user_name", RequesterUserName);
+        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
+        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
+        if(RequesterUserId != null) request.Set("requester_user_id", RequesterUserId);
+        if(RequesterUserLogin != null) request.Set("requester_user_login", RequesterUserLogin);
+        if(RequesterUserName != null) request.Set("requester_user_name", RequesterUserName);
         return request;
     }
 }

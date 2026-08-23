@@ -6,19 +6,19 @@ namespace TwitcherSharp.Api.Generated.Channels;
 
 public partial class TwitchModifyChannelInformationBody : RefCounted, ITwitcherSharp<TwitchModifyChannelInformationBody>
 {
-    private GodotObject _data;
-    public string GameId { get; set; }
-    public string BroadcasterLanguage { get; set; }
-    public string Title { get; set; }
+    private GodotObject? _data;
+    public string? GameId { get; set; }
+    public string? BroadcasterLanguage { get; set; }
+    public string? Title { get; set; }
     public int? Delay { get; set; }
-    public string[] Tags { get; set; }
-    public TwitchBodyContentClassificationLabels[] ContentClassificationLabels { get => field ??= _data?.GetArray<TwitchBodyContentClassificationLabels>("content_classification_labels"); set; }
+    public string[]? Tags { get; set; }
+    public TwitchBodyContentClassificationLabels[]? ContentClassificationLabels { get => field ??= _data?.GetArray<TwitchBodyContentClassificationLabels>("content_classification_labels"); set; }
     public bool? IsBrandedContent { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchModifyChannelInformationBody object.
     /// </summary> 
-    public static TwitchModifyChannelInformationBody FromObject(GodotObject data)
+    public static TwitchModifyChannelInformationBody? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchModifyChannelInformationBody
@@ -45,7 +45,7 @@ public partial class TwitchModifyChannelInformationBody : RefCounted, ITwitcherS
         if(Title != null) request.Set("title", Title);
         if(Delay.HasValue) request.Set("delay", Delay.Value);
         if(Tags != null) request.Set("tags", new Godot.Collections.Array<string>(Tags));
-        if(ContentClassificationLabels != null) request.Set("content_classification_labels", ContentClassificationLabels?.ToGodotArray());
+        if(ContentClassificationLabels != null) request.Set("content_classification_labels", ContentClassificationLabels.ToGodotArray());
         if(IsBrandedContent.HasValue) request.Set("is_branded_content", IsBrandedContent.Value);
         return request;
     }
@@ -56,14 +56,14 @@ public partial class TwitchModifyChannelInformationBody : RefCounted, ITwitcherS
     /// </summary>
     public partial class TwitchBodyContentClassificationLabels : RefCounted, ITwitcherSharp<TwitchBodyContentClassificationLabels>
     {
-        private GodotObject _data;
-        public string Id { get; set; }
+        private GodotObject? _data;
+        public string Id { get; set; } = null!;
         public bool IsEnabled { get; set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchBodyContentClassificationLabels object.
         /// </summary> 
-        public static TwitchBodyContentClassificationLabels FromObject(GodotObject data)
+        public static TwitchBodyContentClassificationLabels? FromObject(GodotObject? data)
         {
             if(data == null) return null;
             var instance = new TwitchBodyContentClassificationLabels
@@ -81,7 +81,7 @@ public partial class TwitchModifyChannelInformationBody : RefCounted, ITwitcherS
             var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_modify_channel_information.gd");
             var twitchBodyContentClassificationLabelsClass = script.Get("BodyContentClassificationLabels").AsGodotObject();
             var request = twitchBodyContentClassificationLabelsClass.Call("new").AsGodotObject();
-            request.Set("id", Id);
+            if(Id != null) request.Set("id", Id);
             request.Set("is_enabled", IsEnabled);
             return request;
         }

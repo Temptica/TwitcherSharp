@@ -7,10 +7,10 @@ namespace TwitcherSharp.EventSub;
 public partial class TwitchEventListener<T> : RefCounted, ITwitcherSharp<TwitchEventListener<T>>
     where T : RefCounted, ITwitcherSharpEventSub<T>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     private readonly List<Action<T>> _receivedEvents = [];
-    
-    public TwitchEventSubDefinition SubscriptionDefinition { get => field ??= _data?.Get<TwitchEventSubDefinition>("subscription_definition"); set; }
+
+    public TwitchEventSubDefinition? SubscriptionDefinition { get => field ??= _data?.Get<TwitchEventSubDefinition>("subscription_definition"); set; }
 
     /// <summary>
     /// Triggers whenever the Event has been recieved
@@ -26,22 +26,23 @@ public partial class TwitchEventListener<T> : RefCounted, ITwitcherSharp<TwitchE
 
     private void ConnectSignals()
     {
-        _data.Connect("typed_data_received", Callable.From<Variant>(data =>
+        _data!.Connect("typed_data_received", Callable.From<Variant>(data =>
         {
             var eventData = T.FromObject(data.AsGodotObject());
-            foreach (var action in _receivedEvents) action(eventData);
+            foreach (var action in _receivedEvents) action(eventData!);
         }));
     }
 
     /// <summary>
     /// Will automatically start when adding to a scene tree. Expects that the signal was already configured in the eventsub or has been manually subscribed.
     /// </summary>
-    public void StartListening() => _data.Call("start_listening");
+    public void StartListening() => _data!.Call("start_listening");
 
-    public void StopListening() => _data.Call("stop_listening");
+    public void StopListening() => _data!.Call("stop_listening");
 
-    public static TwitchEventListener<T> FromObject(GodotObject data)
+    public static TwitchEventListener<T>? FromObject(GodotObject? data)
     {
+        if (data == null) return null;
         var listener = new TwitchEventListener<T>
         {
             _data = data,
@@ -55,7 +56,7 @@ public partial class TwitchEventListener<T> : RefCounted, ITwitcherSharp<TwitchE
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/eventsub/twitch_event_listener.gd");
         var instance = script.New().AsGodotObject();
-        instance.Set("subscription_definition", SubscriptionDefinition.ToGodotObject());
+        if (SubscriptionDefinition != null) instance.Set("subscription_definition", SubscriptionDefinition.ToGodotObject());
         
         _data = instance;
         ConnectSignals();

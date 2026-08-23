@@ -6,19 +6,19 @@ namespace TwitcherSharp.Api.Generated.Entitlements;
 
 public partial class TwitchDropsEntitlement : RefCounted, ITwitcherSharp<TwitchDropsEntitlement>
 {
-    private GodotObject _data;
-    public string Id { get; set; }
-    public string BenefitId { get; set; }
-    public string Timestamp { get; set; }
-    public string UserId { get; set; }
-    public string GameId { get; set; }
-    public string FulfillmentStatus { get; set; }
-    public string LastUpdated { get; set; }
+    private GodotObject? _data;
+    public string Id { get; set; } = null!;
+    public string BenefitId { get; set; } = null!;
+    public string Timestamp { get; set; } = null!;
+    public string UserId { get; set; } = null!;
+    public string GameId { get; set; } = null!;
+    public string FulfillmentStatus { get; set; } = null!;
+    public string LastUpdated { get; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchDropsEntitlement object.
     /// </summary> 
-    public static TwitchDropsEntitlement FromObject(GodotObject data)
+    public static TwitchDropsEntitlement? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchDropsEntitlement
@@ -40,13 +40,13 @@ public partial class TwitchDropsEntitlement : RefCounted, ITwitcherSharp<TwitchD
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_drops_entitlement.gd");
         var request = script.Call("new").AsGodotObject();
-        request.Set("id", Id);
-        request.Set("benefit_id", BenefitId);
-        request.Set("timestamp", Timestamp);
-        request.Set("user_id", UserId);
-        request.Set("game_id", GameId);
-        request.Set("fulfillment_status", FulfillmentStatus);
-        request.Set("last_updated", LastUpdated);
+        if(Id != null) request.Set("id", Id);
+        if(BenefitId != null) request.Set("benefit_id", BenefitId);
+        if(Timestamp != null) request.Set("timestamp", Timestamp);
+        if(UserId != null) request.Set("user_id", UserId);
+        if(GameId != null) request.Set("game_id", GameId);
+        if(FulfillmentStatus != null) request.Set("fulfillment_status", FulfillmentStatus);
+        if(LastUpdated != null) request.Set("last_updated", LastUpdated);
         return request;
     }
 

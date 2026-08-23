@@ -15,15 +15,13 @@
         <None Update="EventSub.html">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
+        <None Update="SubscriptionTypes.html">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
 
     <ItemGroup>
-      <Reference Include="GodotSharp">
-        <HintPath>..\..\..\.nuget\packages\godotsharp\4.5.1\lib\net8.0\GodotSharp.dll</HintPath>
-      </Reference>
-    </ItemGroup>
-
-    <ItemGroup>
+      <PackageReference Include="GodotSharp" Version="4.7.0" />
       <PackageReference Include="HtmlAgilityPack" Version="1.12.4" />
       <PackageReference Include="Microsoft.OpenApi.Readers" Version="1.6.28" />
     </ItemGroup>

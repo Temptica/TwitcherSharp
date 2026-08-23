@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelBan;
 
 public partial class TwitchChannelBanCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelBanCondition>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     public string Name => nameof(TwitchChannelBanCondition);
 
@@ -20,7 +20,7 @@ public partial class TwitchChannelBanCondition(string broadcasterUserId) : RefCo
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelBanCondition object.
     /// </summary> 
-    public static TwitchChannelBanCondition FromObject(GodotObject data)
+    public static TwitchChannelBanCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannelBanCondition(data.Get("broadcaster_user_id").AsString());

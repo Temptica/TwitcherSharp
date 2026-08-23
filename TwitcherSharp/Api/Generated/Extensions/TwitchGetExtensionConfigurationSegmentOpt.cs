@@ -10,13 +10,13 @@ namespace TwitcherSharp.Api.Generated.Extensions;
 /// </summary>
 public partial class TwitchGetExtensionConfigurationSegmentOpt : RefCounted, ITwitcherSharp<TwitchGetExtensionConfigurationSegmentOpt>
 {
-    private GodotObject _data;
-    public string BroadcasterId { get; set; }
+    private GodotObject? _data;
+    public string? BroadcasterId { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetExtensionConfigurationSegmentOpt object.
     /// </summary> 
-    public static TwitchGetExtensionConfigurationSegmentOpt FromObject(GodotObject data)
+    public static TwitchGetExtensionConfigurationSegmentOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetExtensionConfigurationSegmentOpt

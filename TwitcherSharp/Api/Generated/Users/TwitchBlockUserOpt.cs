@@ -10,14 +10,14 @@ namespace TwitcherSharp.Api.Generated.Users;
 /// </summary>
 public partial class TwitchBlockUserOpt : RefCounted, ITwitcherSharp<TwitchBlockUserOpt>
 {
-    private GodotObject _data;
-    public string SourceContext { get; set; }
-    public string Reason { get; set; }
+    private GodotObject? _data;
+    public string? SourceContext { get; set; }
+    public string? Reason { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchBlockUserOpt object.
     /// </summary> 
-    public static TwitchBlockUserOpt FromObject(GodotObject data)
+    public static TwitchBlockUserOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchBlockUserOpt

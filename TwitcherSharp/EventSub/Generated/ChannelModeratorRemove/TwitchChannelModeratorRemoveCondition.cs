@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelModeratorRemove;
 
 public partial class TwitchChannelModeratorRemoveCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelModeratorRemoveCondition>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     public string Name => nameof(TwitchChannelModeratorRemoveCondition);
 
@@ -20,7 +20,7 @@ public partial class TwitchChannelModeratorRemoveCondition(string broadcasterUse
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelModeratorRemoveCondition object.
     /// </summary> 
-    public static TwitchChannelModeratorRemoveCondition FromObject(GodotObject data)
+    public static TwitchChannelModeratorRemoveCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannelModeratorRemoveCondition(data.Get("broadcaster_user_id").AsString());

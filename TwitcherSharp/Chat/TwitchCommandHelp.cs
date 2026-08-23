@@ -10,14 +10,15 @@ public partial class TwitchCommandHelp: TwitchCommand, ITwitcherSharp<TwitchComm
 	/// <summary>
 	/// Sender User that will send the answers on the command. Can be empty then the current user will be used
 	/// </summary>
-	public TwitchUser SenderUser { get; set; }
-	
-	public TwitchUser CurrentUser { get; set; }
+	public TwitchUser? SenderUser { get; set; }
+
+	public TwitchUser? CurrentUser { get; set; }
 
 	public void CleanupRedundantCommands() => Data.Call("cleanup_redundant_commands");
-	
-	public new static TwitchCommandHelp FromObject(GodotObject data)
+
+	public new static TwitchCommandHelp? FromObject(GodotObject? data)
 	{
+		if (data == null) return null;
 		var command = new TwitchCommandHelp
 		{
 			Data = data,
@@ -40,8 +41,8 @@ public partial class TwitchCommandHelp: TwitchCommand, ITwitcherSharp<TwitchComm
 		data.Set("aliases", Aliases.ToVariantArray());
 		data.Set("args_min", ArgsMin);
 		data.Set("args_max", ArgsMax);
-		data.Set("sender_user", SenderUser?.ToGodotObject());
-		data.Set("current_user", CurrentUser?.ToGodotObject());
+		data.Set("sender_user", SenderUser?.ToGodotObject() ?? new Variant());
+		data.Set("current_user", CurrentUser?.ToGodotObject() ?? new Variant());
 		GetBaseProperties(data);
 		return data;
 	}

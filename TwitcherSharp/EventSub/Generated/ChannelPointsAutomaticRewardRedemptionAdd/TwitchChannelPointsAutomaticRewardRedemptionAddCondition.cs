@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelPointsAutomaticRewardRedemptio
 
 public partial class TwitchChannelPointsAutomaticRewardRedemptionAddCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelPointsAutomaticRewardRedemptionAddCondition>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     public string Name => nameof(TwitchChannelPointsAutomaticRewardRedemptionAddCondition);
 
@@ -20,7 +20,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddCondition(st
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelPointsAutomaticRewardRedemptionAddCondition object.
     /// </summary> 
-    public static TwitchChannelPointsAutomaticRewardRedemptionAddCondition FromObject(GodotObject data)
+    public static TwitchChannelPointsAutomaticRewardRedemptionAddCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannelPointsAutomaticRewardRedemptionAddCondition(data.Get("broadcaster_user_id").AsString());

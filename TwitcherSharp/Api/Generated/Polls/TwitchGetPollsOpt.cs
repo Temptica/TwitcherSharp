@@ -10,15 +10,15 @@ namespace TwitcherSharp.Api.Generated.Polls;
 /// </summary>
 public partial class TwitchGetPollsOpt : RefCounted, ITwitcherSharp<TwitchGetPollsOpt>
 {
-    private GodotObject _data;
-    public string[] Id { get; set; }
-    public string First { get; set; }
-    public string After { get; set; }
+    private GodotObject? _data;
+    public string[]? Id { get; set; }
+    public string? First { get; set; }
+    public string? After { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetPollsOpt object.
     /// </summary> 
-    public static TwitchGetPollsOpt FromObject(GodotObject data)
+    public static TwitchGetPollsOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetPollsOpt

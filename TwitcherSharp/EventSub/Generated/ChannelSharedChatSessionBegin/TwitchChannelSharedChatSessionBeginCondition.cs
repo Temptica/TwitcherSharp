@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelSharedChatSessionBegin;
 
 public partial class TwitchChannelSharedChatSessionBeginCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelSharedChatSessionBeginCondition>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     public string Name => nameof(TwitchChannelSharedChatSessionBeginCondition);
 
@@ -20,7 +20,7 @@ public partial class TwitchChannelSharedChatSessionBeginCondition(string broadca
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelSharedChatSessionBeginCondition object.
     /// </summary> 
-    public static TwitchChannelSharedChatSessionBeginCondition FromObject(GodotObject data)
+    public static TwitchChannelSharedChatSessionBeginCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannelSharedChatSessionBeginCondition(data.Get("broadcaster_user_id").AsString());

@@ -8,57 +8,57 @@ namespace TwitcherSharp.EventSub.Generated.ChannelUnban;
 
 public partial class TwitchChannelUnbanEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelUnbanEvent>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     /// <summary> 
     /// The user id for the user who was unbanned on the specified channel.
     /// </summary>
-    public string UserId { get; set; }
+    public string? UserId { get; set; }
 
     /// <summary> 
     /// The user login for the user who was unbanned on the specified channel.
     /// </summary>
-    public string UserLogin { get; set; }
+    public string? UserLogin { get; set; }
 
     /// <summary> 
     /// The user display name for the user who was unbanned on the specified channel.
     /// </summary>
-    public string UserName { get; set; }
+    public string? UserName { get; set; }
 
     /// <summary> 
     /// The requested broadcaster ID.
     /// </summary>
-    public string BroadcasterUserId { get; set; }
+    public string? BroadcasterUserId { get; set; }
 
     /// <summary> 
     /// The requested broadcaster login.
     /// </summary>
-    public string BroadcasterUserLogin { get; set; }
+    public string? BroadcasterUserLogin { get; set; }
 
     /// <summary> 
     /// The requested broadcaster display name.
     /// </summary>
-    public string BroadcasterUserName { get; set; }
+    public string? BroadcasterUserName { get; set; }
 
     /// <summary> 
     /// The user ID of the issuer of the unban.
     /// </summary>
-    public string ModeratorUserId { get; set; }
+    public string? ModeratorUserId { get; set; }
 
     /// <summary> 
     /// The user login of the issuer of the unban.
     /// </summary>
-    public string ModeratorUserLogin { get; set; }
+    public string? ModeratorUserLogin { get; set; }
 
     /// <summary> 
     /// The user name of the issuer of the unban.
     /// </summary>
-    public string ModeratorUserName { get; set; }
+    public string? ModeratorUserName { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelUnbanEvent object.
     /// </summary> 
-    public static TwitchChannelUnbanEvent FromObject(GodotObject data)
+    public static TwitchChannelUnbanEvent? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannelUnbanEvent
@@ -83,15 +83,15 @@ public partial class TwitchChannelUnbanEvent : RefCounted, ITwitcherSharpEventSu
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_unban.gd");
         var eventClass = script.Get("Event").As<GDScript>();
         var request = eventClass.New().AsGodotObject();
-        request.Set("user_id", UserId);
-        request.Set("user_login", UserLogin);
-        request.Set("user_name", UserName);
-        request.Set("broadcaster_user_id", BroadcasterUserId);
-        request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        request.Set("broadcaster_user_name", BroadcasterUserName);
-        request.Set("moderator_user_id", ModeratorUserId);
-        request.Set("moderator_user_login", ModeratorUserLogin);
-        request.Set("moderator_user_name", ModeratorUserName);
+        if(UserId != null) request.Set("user_id", UserId);
+        if(UserLogin != null) request.Set("user_login", UserLogin);
+        if(UserName != null) request.Set("user_name", UserName);
+        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
+        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
+        if(ModeratorUserId != null) request.Set("moderator_user_id", ModeratorUserId);
+        if(ModeratorUserLogin != null) request.Set("moderator_user_login", ModeratorUserLogin);
+        if(ModeratorUserName != null) request.Set("moderator_user_name", ModeratorUserName);
         return request;
     }
 }

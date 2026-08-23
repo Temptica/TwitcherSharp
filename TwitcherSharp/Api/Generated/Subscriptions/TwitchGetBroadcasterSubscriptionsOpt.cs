@@ -10,16 +10,16 @@ namespace TwitcherSharp.Api.Generated.Subscriptions;
 /// </summary>
 public partial class TwitchGetBroadcasterSubscriptionsOpt : RefCounted, ITwitcherSharp<TwitchGetBroadcasterSubscriptionsOpt>
 {
-    private GodotObject _data;
-    public string[] UserId { get; set; }
-    public string First { get; set; }
-    public string After { get; set; }
-    public string Before { get; set; }
+    private GodotObject? _data;
+    public string[]? UserId { get; set; }
+    public string? First { get; set; }
+    public string? After { get; set; }
+    public string? Before { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetBroadcasterSubscriptionsOpt object.
     /// </summary> 
-    public static TwitchGetBroadcasterSubscriptionsOpt FromObject(GodotObject data)
+    public static TwitchGetBroadcasterSubscriptionsOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetBroadcasterSubscriptionsOpt

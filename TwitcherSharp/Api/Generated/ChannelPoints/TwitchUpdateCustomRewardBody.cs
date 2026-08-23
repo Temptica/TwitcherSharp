@@ -6,11 +6,11 @@ namespace TwitcherSharp.Api.Generated.ChannelPoints;
 
 public partial class TwitchUpdateCustomRewardBody : RefCounted, ITwitcherSharp<TwitchUpdateCustomRewardBody>
 {
-    private GodotObject _data;
-    public string Title { get; set; }
-    public string Prompt { get; set; }
+    private GodotObject? _data;
+    public string? Title { get; set; }
+    public string? Prompt { get; set; }
     public int? Cost { get; set; }
-    public string BackgroundColor { get; set; }
+    public string? BackgroundColor { get; set; }
     public bool? IsEnabled { get; set; }
     public bool? IsUserInputRequired { get; set; }
     public bool? IsMaxPerStreamEnabled { get; set; }
@@ -25,7 +25,7 @@ public partial class TwitchUpdateCustomRewardBody : RefCounted, ITwitcherSharp<T
     /// <summary> 
     /// Transforms the godot data into a TwitchUpdateCustomRewardBody object.
     /// </summary> 
-    public static TwitchUpdateCustomRewardBody FromObject(GodotObject data)
+    public static TwitchUpdateCustomRewardBody? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchUpdateCustomRewardBody

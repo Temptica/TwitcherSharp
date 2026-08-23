@@ -6,27 +6,27 @@ namespace TwitcherSharp.Api.Generated.Streams;
 
 public partial class TwitchStream : RefCounted, ITwitcherSharp<TwitchStream>
 {
-    private GodotObject _data;
-    public string Id { get; set; }
-    public string UserId { get; set; }
-    public string UserLogin { get; set; }
-    public string UserName { get; set; }
-    public string GameId { get; set; }
-    public string GameName { get; set; }
-    public string Type { get; set; }
-    public string Title { get; set; }
+    private GodotObject? _data;
+    public string Id { get; set; } = null!;
+    public string UserId { get; set; } = null!;
+    public string UserLogin { get; set; } = null!;
+    public string UserName { get; set; } = null!;
+    public string GameId { get; set; } = null!;
+    public string GameName { get; set; } = null!;
+    public string Type { get; set; } = null!;
+    public string Title { get; set; } = null!;
     public int ViewerCount { get; set; }
-    public string StartedAt { get; set; }
-    public string Language { get; set; }
-    public string ThumbnailUrl { get; set; }
-    public string[] TagIds { get; set; }
-    public string[] Tags { get; set; }
+    public string StartedAt { get; set; } = null!;
+    public string Language { get; set; } = null!;
+    public string ThumbnailUrl { get; set; } = null!;
+    public string[] TagIds { get; set; } = null!;
+    public string[] Tags { get; set; } = null!;
     public bool IsMature { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchStream object.
     /// </summary> 
-    public static TwitchStream FromObject(GodotObject data)
+    public static TwitchStream? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchStream
@@ -56,18 +56,18 @@ public partial class TwitchStream : RefCounted, ITwitcherSharp<TwitchStream>
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_stream.gd");
         var request = script.Call("new").AsGodotObject();
-        request.Set("id", Id);
-        request.Set("user_id", UserId);
-        request.Set("user_login", UserLogin);
-        request.Set("user_name", UserName);
-        request.Set("game_id", GameId);
-        request.Set("game_name", GameName);
-        request.Set("type", Type);
-        request.Set("title", Title);
+        if(Id != null) request.Set("id", Id);
+        if(UserId != null) request.Set("user_id", UserId);
+        if(UserLogin != null) request.Set("user_login", UserLogin);
+        if(UserName != null) request.Set("user_name", UserName);
+        if(GameId != null) request.Set("game_id", GameId);
+        if(GameName != null) request.Set("game_name", GameName);
+        if(Type != null) request.Set("type", Type);
+        if(Title != null) request.Set("title", Title);
         request.Set("viewer_count", ViewerCount);
-        request.Set("started_at", StartedAt);
-        request.Set("language", Language);
-        request.Set("thumbnail_url", ThumbnailUrl);
+        if(StartedAt != null) request.Set("started_at", StartedAt);
+        if(Language != null) request.Set("language", Language);
+        if(ThumbnailUrl != null) request.Set("thumbnail_url", ThumbnailUrl);
         if(TagIds != null) request.Set("tag_ids", new Godot.Collections.Array<string>(TagIds));
         if(Tags != null) request.Set("tags", new Godot.Collections.Array<string>(Tags));
         request.Set("is_mature", IsMature);

@@ -10,15 +10,15 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 /// </summary>
 public partial class TwitchGetVipsOpt : RefCounted, ITwitcherSharp<TwitchGetVipsOpt>
 {
-    private GodotObject _data;
-    public string[] UserId { get; set; }
+    private GodotObject? _data;
+    public string[]? UserId { get; set; }
     public int? First { get; set; }
-    public string After { get; set; }
+    public string? After { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetVipsOpt object.
     /// </summary> 
-    public static TwitchGetVipsOpt FromObject(GodotObject data)
+    public static TwitchGetVipsOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetVipsOpt

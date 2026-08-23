@@ -10,15 +10,15 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 /// </summary>
 public partial class TwitchGetModeratorsOpt : RefCounted, ITwitcherSharp<TwitchGetModeratorsOpt>
 {
-    private GodotObject _data;
-    public string[] UserId { get; set; }
-    public string First { get; set; }
-    public string After { get; set; }
+    private GodotObject? _data;
+    public string[]? UserId { get; set; }
+    public string? First { get; set; }
+    public string? After { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetModeratorsOpt object.
     /// </summary> 
-    public static TwitchGetModeratorsOpt FromObject(GodotObject data)
+    public static TwitchGetModeratorsOpt? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchGetModeratorsOpt

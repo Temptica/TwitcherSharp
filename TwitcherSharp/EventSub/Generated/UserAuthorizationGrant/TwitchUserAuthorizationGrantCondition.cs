@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.UserAuthorizationGrant;
 
 public partial class TwitchUserAuthorizationGrantCondition(string clientId) : RefCounted, ITwitcherSharpCondition<TwitchUserAuthorizationGrantCondition>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     public string Name => nameof(TwitchUserAuthorizationGrantCondition);
 
@@ -20,7 +20,7 @@ public partial class TwitchUserAuthorizationGrantCondition(string clientId) : Re
     /// <summary> 
     /// Transforms the godot data into a TwitchUserAuthorizationGrantCondition object.
     /// </summary> 
-    public static TwitchUserAuthorizationGrantCondition FromObject(GodotObject data)
+    public static TwitchUserAuthorizationGrantCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchUserAuthorizationGrantCondition(data.Get("client_id").AsString());

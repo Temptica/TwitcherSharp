@@ -18,18 +18,20 @@ public static class ApiCodeStrings
                                           ///<summary> Interaction with the Twitch REST API.</summary>
                                           public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
                                           {
-                                              private GodotObject _data;
+                                              private GodotObject? _data;
                                               
-                                              public bool IsLinked => _data is not null && !_data.IsQueuedForDeletion();
+                                              // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+                                              public bool IsLinked => _data is not null && !_data.IsQueuedForDeletion(); 
                                               public static string ScriptPath => "res://addons/twitcher/generated/twitch_api.gd";
                                               
-                                              public static TwitchApi Instance
+                                              public static TwitchApi? Instance
                                               {
                                                   get => ITwitcherSharpSingleton<TwitchApi>.Instance;
                                                   private set => ITwitcherSharpSingleton<TwitchApi>.Instance = value;
                                               }
                                               
-                                              public static TwitchApi CreateInstance(Action<TwitchApi> configure = null) =>
+                                              // ReSharper disable once UnusedParameter.Global
+                                              public static TwitchApi CreateInstance(Action<TwitchApi>? configure = null) =>
                                                   ITwitcherSharpSingleton<TwitchApi>.CreateInstance(configure);
                                               
                                               [Signal]
@@ -41,16 +43,16 @@ public static class ApiCodeStrings
                                               public async Task<ResponseData> Request(string path, int method, string body = "", string contentType = "",
                                                   int errorCount = 0)
                                               {
-                                                  return await _data.CallAsync<ResponseData>("request", this, path, method, body, contentType, errorCount);
+                                                  return await _data!.CallAsync<ResponseData>("request", this, path, method, body, contentType, errorCount);
                                               }
-                                              
+
                                               private void ConnectSignals()
                                               {
-                                                  _data.Connect("unauthenticated", Callable.From(EmitSignalUnauthenticated));
-                                                  _data.Connect("unauthorized", Callable.From(EmitSignalUnauthorized));
+                                                  _data!.Connect("unauthenticated", Callable.From(EmitSignalUnauthenticated));
+                                                  _data!.Connect("unauthorized", Callable.From(EmitSignalUnauthorized));
                                               }
                                               
-                                              public static TwitchApi FromObject(GodotObject data)
+                                              public static TwitchApi? FromObject(GodotObject? data)
                                               {
                                                   if (data is null) return null;
                                                   var twitchApi = new TwitchApi
@@ -104,20 +106,20 @@ public static class ApiCodeStrings
     public const string ComponentHeader = """
                                           public partial class {{className}} : RefCounted, ITwitcherSharp<{{className}}>{{interfaces}}
                                           {
-                                              private GodotObject _data;
+                                              private GodotObject? _data;
                                           """;
 
     public const string GenericComponentHeader = """
                                                  public partial class {{className}}<T> : RefCounted, ITwitcherSharp<{{className}}<T>>{{interfaces}} where T : {{type}}
                                                  {
-                                                     private GodotObject _data;
+                                                     private GodotObject? _data;
                                                  """;
 
     public const string ComponentFromBody = """
                                             /// <summary> 
                                             /// Transforms the godot data into a {{className}} object.
                                             /// </summary> 
-                                            public static {{className}} FromObject(GodotObject data)
+                                            public static {{className}}? FromObject(GodotObject? data)
                                             {
                                                 if(data == null) return null;
                                             """;
@@ -126,7 +128,7 @@ public static class ApiCodeStrings
                                                    /// <summary> 
                                                    /// Transforms the godot data into a {{className}} object.
                                                    /// </summary> 
-                                                   public static {{className}}<T> FromObject(GodotObject data)
+                                                   public static {{className}}<T>? FromObject(GodotObject? data)
                                                    {
                                                        if(data == null) return null;
                                                    """;
@@ -144,7 +146,7 @@ public static class ApiCodeStrings
     /// </summary>
     public const string NextPageCode = """
                                        public async Task<{{response}}> NextPage() =>
-                                           await _data.CallAsync<{{response}}>("next_page");
+                                           await _data!.CallAsync<{{response}}>("next_page");
                                        """;
     
 }

@@ -8,22 +8,22 @@ namespace TwitcherSharp.EventSub.Generated.Shared;
 
 public partial class TwitchTopPredictors : RefCounted, ITwitcherSharpEventSub<TwitchTopPredictors>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     /// <summary> 
     /// The ID of the user.
     /// </summary>
-    public string UserId { get; set; }
+    public string? UserId { get; set; }
 
     /// <summary> 
     /// The login of the user.
     /// </summary>
-    public string UserLogin { get; set; }
+    public string? UserLogin { get; set; }
 
     /// <summary> 
     /// The display name of the user.
     /// </summary>
-    public string UserName { get; set; }
+    public string? UserName { get; set; }
 
     /// <summary> 
     /// The number of Channel Points won. This value is always null in the event payload for Prediction progress and Prediction lock. This value is 0 if the outcome did not win or if the Prediction was canceled and Channel Points were refunded.
@@ -38,7 +38,7 @@ public partial class TwitchTopPredictors : RefCounted, ITwitcherSharpEventSub<Tw
     /// <summary> 
     /// Transforms the godot data into a TwitchTopPredictors object.
     /// </summary> 
-    public static TwitchTopPredictors FromObject(GodotObject data)
+    public static TwitchTopPredictors? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchTopPredictors
@@ -58,9 +58,9 @@ public partial class TwitchTopPredictors : RefCounted, ITwitcherSharpEventSub<Tw
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_top_predictors.gd");
         var request = script.New().AsGodotObject();
-        request.Set("user_id", UserId);
-        request.Set("user_login", UserLogin);
-        request.Set("user_name", UserName);
+        if(UserId != null) request.Set("user_id", UserId);
+        if(UserLogin != null) request.Set("user_login", UserLogin);
+        if(UserName != null) request.Set("user_name", UserName);
         request.Set("channel_points_won", ChannelPointsWon);
         request.Set("channel_points_used", ChannelPointsUsed);
         return request;

@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelPointsCustomRewardRedemptionAd
 
 public partial class TwitchChannelPointsCustomRewardRedemptionAddCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelPointsCustomRewardRedemptionAddCondition>
 {
-    private GodotObject _data;
+    private GodotObject? _data;
     
     public string Name => nameof(TwitchChannelPointsCustomRewardRedemptionAddCondition);
 
@@ -20,12 +20,12 @@ public partial class TwitchChannelPointsCustomRewardRedemptionAddCondition(strin
     /// <summary> 
     /// Optional. Specify a reward id to only receive notifications for a specific reward.
     /// </summary>
-    public string RewardId { get; set; }
+    public string? RewardId { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelPointsCustomRewardRedemptionAddCondition object.
     /// </summary> 
-    public static TwitchChannelPointsCustomRewardRedemptionAddCondition FromObject(GodotObject data)
+    public static TwitchChannelPointsCustomRewardRedemptionAddCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
         var instance = new TwitchChannelPointsCustomRewardRedemptionAddCondition(data.Get("broadcaster_user_id").AsString())
@@ -43,7 +43,7 @@ public partial class TwitchChannelPointsCustomRewardRedemptionAddCondition(strin
         var conditionClass = script.Get("Condition").As<GDScript>();
         var request = conditionClass.New().AsGodotObject();
         request.Set("broadcaster_user_id", BroadcasterUserId);
-        request.Set("reward_id", RewardId);
+        if(RewardId != null) request.Set("reward_id", RewardId);
         return request;
     }
 
@@ -60,7 +60,7 @@ public partial class TwitchChannelPointsCustomRewardRedemptionAddCondition(strin
         return new Dictionary
         {
             {"broadcaster_user_id", BroadcasterUserId},
-            {"reward_id", RewardId},
+            {"reward_id", RewardId!},
         };
     }
 }
