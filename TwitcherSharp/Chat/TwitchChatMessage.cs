@@ -151,7 +151,9 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
     {
         private GodotObject? _data;
         public string Text { get; set; } = null!;
-        public Fragment[] Fragments { get => field ??= _data?.GetArray<Fragment>("fragments") ?? []; set; } = [];
+        // `null!` (not `[]`) is deliberate: a non-null default would short-circuit the `field ??=` and the
+        // fragments would never be read out of _data. See TwitchGenField.DefaultInitializer.
+        public Fragment[] Fragments { get => field ??= _data?.GetArray<Fragment>("fragments") ?? []; set; } = null!;
 
         public static Message? FromObject(GodotObject? data)
         {

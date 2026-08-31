@@ -70,10 +70,15 @@ public static class EventSubCodeHelper
             var fieldType = field.Type;
             if (field.IsArray && !fieldType.Contains("[]")) fieldType += "[]";
 
-            if ((field.IsArray && field.TypedComponent != null) || field.IsTyped)
+            // Required fields are populated through the condition's primary constructor, so they must NOT get a lazy
+            // `field ??=` getter: the constructor argument is a non-null initializer, which would leave the backing
+            // field non-null before first access and stop the getter from ever reading _data - and dropping the
+            // argument instead (initializing to `null!`) would lose the value a caller passed to the constructor.
+            // Only optional fields, which have no initializer, can be lazy.
+            if (!field.IsRequired && ((field.IsArray && field.TypedComponent != null) || field.IsTyped))
             {
                 code.AppendIndentedLine(
-                    $"public {fieldType}{(field.IsRequired ? "" : "?")} {field.Name} {{ get => field ??= _data?.Get{(field.IsArray ? "Array" : "")}<{field.Type.Remove("[]")}>(\"{field.Name.ToSnakeCase()}\"); set; }}{(field.IsRequired ? $"= {field.Name.ToCamelCase()};" : "")}",
+                    $"public {fieldType}? {field.Name} {{ get => field ??= _data?.Get{(field.IsArray ? "Array" : "")}<{field.Type.Remove("[]")}>(\"{field.Name.ToSnakeCase()}\"); set; }}",
                     1);
             }
             else if (field.IsRequired)

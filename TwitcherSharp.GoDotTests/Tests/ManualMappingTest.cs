@@ -1,3 +1,4 @@
+using System;
 using Chickensoft.GoDotTest;
 using Chickensoft.Log;
 using Godot;
@@ -56,6 +57,45 @@ public class ManualMappingTest(Node testScene) : TestClass(testScene)
         var parsedTwitchChatMessage = TwitchChatMessage.FromObject(godotObject);
 
         AssertHelper.AssertTwitcherSharpProperties(twitchChatMessage, parsedTwitchChatMessage, _log);
+    }
+
+    // Regression test. AssertTwitcherSharpProperties skips class and array properties, and the test above assigns
+    // Fragments explicitly, so neither exercises the lazy getter. A non-null `= []` initializer on Fragments used to
+    // leave the `field ??=` backing field non-null before first access, so the getter never read _data and the
+    // property was permanently empty. This test goes through FromObject and reads Fragments without assigning it.
+    [Test]
+    public void TestTwitchChatMessageFragmentsAreLazyLoadedFromData()
+    {
+        var message = new TwitchChatMessage.Message
+        {
+            Text = "Hello world",
+            Fragments =
+            [
+                new TwitchChatMessage.Fragment
+                {
+                    Type = TwitchChatMessage.FragmentType.Text,
+                    Text = "Hello world"
+                }
+            ]
+        };
+
+        var parsed = TwitchChatMessage.Message.FromObject(message.ToGodotObject());
+
+        if (parsed == null)
+            throw new Exception("Message.FromObject returned null");
+
+        if (parsed.Fragments.Length != 1)
+            throw new Exception(
+                $"Expected 1 fragment to be read back from _data but got {parsed.Fragments.Length}. " +
+                "A non-null initializer on Fragments is short-circuiting the `field ??=` lazy getter.");
+
+        if (parsed.Fragments[0].Text != "Hello world")
+            throw new Exception($"Expected fragment text 'Hello world' but got '{parsed.Fragments[0].Text}'");
+
+        if (parsed.Fragments[0].Type != TwitchChatMessage.FragmentType.Text)
+            throw new Exception($"Expected fragment type Text but got {parsed.Fragments[0].Type}");
+
+        _log.Print("Fragments were lazy-loaded from _data as expected");
     }
 
     [Test]
