@@ -1,6 +1,7 @@
 using System.Xml;
 using Godot;
 using TwitcherSharp.Api.Generated.Users;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 // ReSharper disable ClassNeverInstantiated.Global
@@ -55,15 +56,15 @@ public partial class TwitchRedemption(
     /// <summary>
     /// Fullfill the redemption and remove the channel points
     /// </summary>
-    public void Fullfill()
+    public async Task Fullfill()
     {
-        _data!.Call("fullfill");
+        await _data!.CallAsync("fullfill");
     }
 
     /// <summary>
     /// When the redeem got fullfilled
     /// </summary>
-    public void NotifyFullfilled()
+    private void NotifyFullfilled()
     {
         EmitSignalFulfilled();
     }
@@ -71,9 +72,9 @@ public partial class TwitchRedemption(
     /// <summary>
     /// Cancel the redemption
     /// </summary>
-    public void Cancel()
+    public async Task Cancel()
     {
-        _data!.Call("cancel");
+        await _data!.CallAsync("cancel");
     }
 
     /// <summary>
@@ -81,7 +82,7 @@ public partial class TwitchRedemption(
     /// </summary>
     private void NotifyCancelled()
     {
-        EmitSignalFulfilled();
+        EmitSignalCancelled();
     }
 
     private void ConnectToSignals()
