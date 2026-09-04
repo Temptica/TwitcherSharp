@@ -6,7 +6,7 @@ using TwitcherSharp.Interfaces;
 // ReSharper disable MemberCanBePrivate.Global
 namespace TwitcherSharp.Reward;
 
-public partial class TwitchReward : RefCounted, ITwitcherSharp<TwitchReward>
+public partial class TwitchReward : Resource, ITwitcherSharp<TwitchReward>
 {
     /// <summary>
     /// The ID that uniquely identifies this custom reward.

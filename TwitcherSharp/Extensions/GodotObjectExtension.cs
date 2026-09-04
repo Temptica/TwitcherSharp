@@ -106,28 +106,22 @@ public static class GodotObjectExtension
         return T.FromObject(obj.Call(method, args).AsGodotObject())!;
     }
 
-    public static async Task<T> CallAsync<T>(this GodotObject obj, string method, params Variant[] args) where T : RefCounted, ITwitcherSharp<T>
-    {
-        var task = obj.Call(method, args).AsGodotObject();
-
-        if (task.HasSignal("completed"))
-        {
-            var result = await obj.ToSignal(task, "completed");
-            return T.FromObject(result[0].AsGodotObject())!;
-        }
-
-        return T.FromObject(task)!;
-    }
-
     public static async Task<Variant> CallAsync(this GodotObject obj, string methode, params Variant[] args)
     {
-        var task = obj.Call(methode, args);
-        if (task.AsGodotObject().HasSignal("completed"))
+        var result = obj.Call(methode, args);
+        if (result.VariantType != Variant.Type.Object) return result;
+        
+        var state = result.AsGodotObject();
+        if (state.GetClass() == "GDScriptFunctionState")
         {
-            return (await obj.ToSignal(task.AsGodotObject(), "completed"))[0];
+            return (await obj.ToSignal(state, "completed"))[0];
         }
-
-        return task;
+        return result;
+    }
+    
+    public static async Task<T?> CallAsync<T>(this GodotObject obj, string method, params Variant[] args) where T : RefCounted, ITwitcherSharp<T>
+    {
+        return T.FromObject((await obj.CallAsync(method, args)).AsGodotObject());
     }
 
     /// <summary>

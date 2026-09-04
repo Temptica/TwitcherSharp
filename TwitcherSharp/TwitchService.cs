@@ -50,7 +50,7 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
     /// <param name="userId">user's id to get the username for</param>
     /// <param name="forceRefresh">force to refresh the cache</param>
     /// <returns></returns>
-    public async Task<TwitchUser> GetUserById(string userId, bool forceRefresh = false)
+    public async Task<TwitchUser?> GetUserById(string userId, bool forceRefresh = false)
         => await _data!.CallAsync<TwitchUser>("get_user_by_id", userId, forceRefresh);
 
     /// <summary>
@@ -59,7 +59,7 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
     /// <param name="username">user's username to get</param>
     /// <param name="forceRefresh">force to refresh the cache</param>
     /// <returns></returns>
-    public async Task<TwitchUser> GetUser(string username, bool forceRefresh = false)
+    public async Task<TwitchUser?> GetUser(string username, bool forceRefresh = false)
         => await _data!.CallAsync<TwitchUser>("get_user", username, forceRefresh);
 
     /// <summary>
@@ -67,11 +67,16 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
     /// </summary>
     /// <param name="forceRefresh"></param>
     /// <returns></returns>
-    public async Task<TwitchUser> GetCurrentUser(bool forceRefresh = false)
+    public async Task<TwitchUser?> GetCurrentUser(bool forceRefresh = false)
         => await _data!.CallAsync<TwitchUser>("get_current_user", forceRefresh);
 
     public async Task<ImageTexture> GetProfileImage(TwitchUser user)
-        => (await _data!.CallAsync("load_profile_image", user.ToGodotObject())).As<ImageTexture>();
+    {
+        var result = await _data!.CallAsync("load_profile_image", user.ToGodotObject());
+        
+        return result.As<ImageTexture>();
+    }
+
 
     /// <summary>
     /// Refer to https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/ for details on which API versions are available and which conditions are required.
@@ -189,11 +194,11 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
     /// </summary>
     /// <param name="twitchReward"> The reward to save</param>
     /// <returns></returns>
-    public TwitchRewardService.SaveError SaveReward(TwitchReward twitchReward)
+    public async Task<TwitchRewardService.SaveError> SaveReward(TwitchReward twitchReward)
     {
         _data ??= ToGodotObject();
 
-        return _data.Call("save_reward", twitchReward).As<TwitchRewardService.SaveError>();
+        return (await _data.CallAsync("save_reward", twitchReward.ToGodotObject())).As<TwitchRewardService.SaveError>();
     }
 
     /// <summary>
@@ -201,11 +206,12 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
     /// </summary>
     /// <param name="twitchReward"> The reward to delete</param>
     /// <returns></returns>
-    public TwitchRewardService.DeleteError DeleteReward(TwitchReward twitchReward)
+    public async Task<TwitchRewardService.DeleteError> DeleteReward(TwitchReward twitchReward)
     {
         _data ??= ToGodotObject();
 
-        return _data.Call("delete_reward", twitchReward).As<TwitchRewardService.DeleteError>();
+        return (await _data.CallAsync("delete_reward", twitchReward.ToGodotObject()))
+            .As<TwitchRewardService.DeleteError>();
     }
 
     public async Task<Dictionary<string, ITwitchEmote>> GetEmotesData(string channelId = "global")

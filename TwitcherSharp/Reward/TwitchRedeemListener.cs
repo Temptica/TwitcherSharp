@@ -38,21 +38,30 @@ public partial class TwitchRedeemListener : RefCounted, ITwitcherSharp<TwitchRed
     [Signal]
     public delegate void RedeemedEventHandler(TwitchRedemption redemption);
 
-    public void EnsureSubscription()
+    public async Task EnsureSubscription()
     {
-        _data!.Call("ensure_subscription");
+        _data!.CallAsync("ensure_subscription");
     }
 
     public void AddReward(TwitchReward reward)
     {
         RewardsToListen.Add(reward);
-        _data!.Set("rewards_to_listen", RewardsToListen);
+        // Mutate the array Godot already owns: it is typed as Array[TwitchReward] on the
+        // GDScript side and rejects a freshly built Array[Object] without reporting an error.
+        var rewards = _data!.Get("rewards_to_listen").AsGodotArray();
+        rewards.Add(reward.ToGodotObject());
+        _data.Set("rewards_to_listen", rewards);
     }
 
     public void RemoveReward(TwitchReward reward)
     {
         RewardsToListen.Remove(reward);
-        _data!.Set("rewards_to_listen", RewardsToListen);
+        var rewards = _data!.Get("rewards_to_listen").AsGodotArray();
+        for (var i = rewards.Count - 1; i >= 0; i--)
+        {
+            if (rewards[i].AsGodotObject()?.Get("id").AsString() == reward.Id) rewards.RemoveAt(i);
+        }
+        _data.Set("rewards_to_listen", rewards);
     }
 
     public async Task FullFillRedemption(string redemptionId, TwitchReward reward, string broadcasterId)
