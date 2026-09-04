@@ -36,7 +36,7 @@ public static class NodeExtension
         public T? GetTwitcherSharp<T>() where T : RefCounted, ITwitcherSharp<T>
         {
             if (node.HasTwitcherSharp())
-            {
+            {   
                 return node.GetMeta(MetaKey).Obj as T;
             }
 
@@ -93,6 +93,51 @@ public static class NodeExtension
             if (twitcherSharp != null) twitcherNode.SetTwitcherSharp(twitcherSharp);
 
             return twitcherSharp;
+        }
+
+        /// <summary>
+        /// Returns the Parent of this node, and parses it to a TwitcherSharp Class. Typed version of <see cref="Node.GetParent()"/>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public T? GetTwitcherParent<T>() where T : RefCounted, ITwitcherSharp<T>
+        {
+            var parent = node.GetParent();
+
+            if (parent is null) return null;
+            
+            if (parent.TryGetTwitcherSharp(out T? twitcherSharp))
+            {
+                return twitcherSharp;
+            }
+            
+            twitcherSharp = T.FromObject(parent);
+            if (twitcherSharp != null) parent.SetTwitcherSharp(twitcherSharp);
+
+            return twitcherSharp;
+        }
+        
+        /// <summary>
+        /// Gets the child and parses it to the TwitcherSharp Class. Typed version of <see cref="Node.GetChild"/>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns>The typed object. Can be null if incorrectly typed</returns>
+        public T? GetTwitcherChild<T>(int idx) where T : RefCounted, ITwitcherSharp<T>
+        {
+            var child = node.GetChild<GodotObject>(idx);
+            return T.FromObject(child);
+        }
+        
+        /// <summary>
+        /// Gets the child and parses it to the TwitcherSharp Class, or Null if not found. Typed version of <see cref="Node.GetChildOrNull"/>
+        /// </summary>
+        /// <param name="idx"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns>The typed object or null</returns>
+        public T? GetTwitcherChildOrNull<T>(int idx) where T : RefCounted, ITwitcherSharp<T>
+        {
+            var child = node.GetChildOrNull<GodotObject>(idx);
+            return T.FromObject(child);
         }
     }
 }
