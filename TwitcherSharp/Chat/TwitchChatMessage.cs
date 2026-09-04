@@ -151,7 +151,7 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
     {
         private GodotObject? _data;
         public string Text { get; set; } = null!;
-        public Fragment[] Fragments { get => field ??= _data?.GetArray<Fragment>("fragments") ?? []; set; } = [];
+        public Fragment[] Fragments { get => field ??= _data?.GetArray<Fragment>("fragments") ?? []; set; } = null!;
 
         public static Message? FromObject(GodotObject? data)
         {
@@ -185,9 +185,9 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
         /// <summary>
         /// Exactly one of Cheermote/Emote/Mention is present, matching Type.
         /// </summary>
-        public Cheermote? Cheermote { get => field ??= _data?.Call<Cheermote>("cheermote"); set; }
-        public Emote? Emote { get => field ??= _data?.Call<Emote>("emote"); set; }
-        public Mention? Mention { get => field ??= _data?.Call<Mention>("mention"); set; }
+        public Cheermote? Cheermote { get => field ??= _data?.Get<Cheermote>("cheermote"); set; }
+        public Emote? Emote { get => field ??= _data?.Get<Emote>("emote"); set; }
+        public Mention? Mention { get => field ??= _data?.Get<Mention>("mention"); set; }
 
         public static Fragment? FromObject(GodotObject? data)
         {
