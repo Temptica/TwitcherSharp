@@ -20,12 +20,21 @@ public partial class TwitchAuth : RefCounted, ITwitcherSharp<TwitchAuth>
 	
 	public bool IsAuthenticated() => _data?.Get("is_authenticated").AsBool() ?? false;
 	
-	public bool Authorize(bool force = false) => _data?.CallAsync("authorize",force).Result.AsBool() ?? false;
-	
+	public async Task<bool> Authorize(bool force = false)
+	{
+		if (_data is null) return false;
+		var result = await _data.CallAsync("authorize", force);
+		return result.AsBool();
+	}
+
 	public void DoUnSetup() => _data?.Call("do_unsetup");
 	
-	public void RefreshToken() => _data?.Call("refresh_token");
-	
+	public async Task RefreshToken()
+	{
+		if(_data is null) return;
+		await _data.CallAsync("refresh_token");
+	}
+
 	public bool IsConfigured() => _data?.Call("is_configured").AsBool() ?? false;
 	
 
