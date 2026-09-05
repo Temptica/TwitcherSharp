@@ -1,5 +1,6 @@
 using Godot;
 using TwitcherSharp.Api.Generated;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 using TwitcherSharp.Media;
 
@@ -77,11 +78,11 @@ public partial class TwitchRewardService(TwitchApi api, TwitchMediaLoader twitch
     /// </summary>
     /// <param name="twitchReward"></param>
     /// <returns></returns>
-    public LoadError LoadReward(TwitchReward twitchReward)
+    public async Task<LoadError> LoadReward(TwitchReward twitchReward)
     {
         _data ??= ToGodotObject();
 
-        return _data.Call("load_reward", twitchReward).As<LoadError>();
+        return (await _data.CallAsync("load_reward", twitchReward)).As<LoadError>();
     }
 
     /// <summary>
@@ -89,11 +90,11 @@ public partial class TwitchRewardService(TwitchApi api, TwitchMediaLoader twitch
     /// </summary>
     /// <param name="twitchReward"> The reward to save</param>
     /// <returns></returns>
-    public SaveError SaveReward(TwitchReward twitchReward)
+    public async Task<SaveError> SaveReward(TwitchReward twitchReward)
     {
         _data ??= ToGodotObject();
 
-        return _data.Call("save_reward", twitchReward).As<SaveError>();
+        return (await _data.CallAsync("save_reward", twitchReward)).As<SaveError>();
     }
 
     /// <summary>
@@ -101,11 +102,11 @@ public partial class TwitchRewardService(TwitchApi api, TwitchMediaLoader twitch
     /// </summary>
     /// <param name="twitchReward"> The reward to delete</param>
     /// <returns></returns>
-    public DeleteError DeleteReward(TwitchReward twitchReward)
+    public async Task<DeleteError> DeleteReward(TwitchReward twitchReward)
     {
         _data ??= ToGodotObject();
 
-        return _data.Call("delete_reward", twitchReward).As<DeleteError>();
+        return (await _data.CallAsync("delete_reward", twitchReward)).As<DeleteError>();
     }
     
     /// <summary>

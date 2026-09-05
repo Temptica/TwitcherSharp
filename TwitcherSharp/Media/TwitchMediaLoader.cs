@@ -140,17 +140,17 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
 
     #region Emotes
 
-    public void PreloadEmotes(string channelId = "global")
-        => _data!.Call("preload_emotes", channelId);
+    public async Task PreloadEmotes(string channelId = "global")
+        => await _data!.CallAsync("preload_emotes", channelId);
 
-    public Godot.Collections.Dictionary<string, SpriteFrames> GetEmotes(string[] emoteIds)
-        => _data!.Call("get_emotes", emoteIds).AsGodotDictionary<string, SpriteFrames>();
+    public async Task<Godot.Collections.Dictionary<string, SpriteFrames>> GetEmotes(string[] emoteIds)
+        => (await _data!.CallAsync("get_emotes", emoteIds)).AsGodotDictionary<string, SpriteFrames>();
 
-    public Godot.Collections.Dictionary<TwitchEmoteDefinition, SpriteFrames> GetEmotesByDefinition(
+    public async Task<Godot.Collections.Dictionary<TwitchEmoteDefinition, SpriteFrames>> GetEmotesByDefinition(
         TwitchEmoteDefinition[] emoteDefinitions)
     {
         var param = emoteDefinitions.Select(ed => ed.ToGodotObject()).ToArray();
-        return _data!.CallDictionaryKey<TwitchEmoteDefinition, SpriteFrames>("get_emotes_by_definition", param);
+        return await _data!.CallDictionaryKeyAsync<TwitchEmoteDefinition, SpriteFrames>("get_emotes_by_definition", param);
     }
 
     public async Task<Dictionary<string, ITwitchEmote>> GetCachedEmotes(string channelId)
@@ -207,7 +207,7 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
 
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_media_loader.gd");
+            var script = GD.Load<GDScript>(ScriptPath);
             var mainClass = script.Get("CheerResult").AsGodotObject();
             var request = mainClass.Call("new").AsGodotObject();
             request.Set("cheermote", Cheermote);

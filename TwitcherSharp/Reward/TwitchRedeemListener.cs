@@ -40,7 +40,7 @@ public partial class TwitchRedeemListener : RefCounted, ITwitcherSharp<TwitchRed
 
     public async Task EnsureSubscriptions()
     {
-        _data!.CallAsync("ensure_subscriptions");
+        await _data!.CallAsync("ensure_subscriptions");
     }
 
     public void AddReward(TwitchReward reward)

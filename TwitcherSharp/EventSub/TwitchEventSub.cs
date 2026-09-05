@@ -45,7 +45,7 @@ public partial class TwitchEventSub : RefCounted, ITwitcherSharpSingleton<Twitch
     /// <summary>
     /// Propergated call from twitch service
     /// </summary>
-    public async Task DoUnSetup() => await _data!.CallAsync("do_unsetup");
+    public void DoUnSetup() => _data!.Call("do_unsetup");
 
     public async Task WaitSetup() => await _data!.CallAsync("wait_setup");
 

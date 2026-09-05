@@ -84,10 +84,10 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
     /// <param name="definition">The definition of the event subscription</param>
     /// <param name="condition">The condition (parameters) for the event subscription</param>
     /// <returns></returns>
-    public TwitchEventSubConfig SubscribeEvent(TwitchEventSubDefinition definition,
+    public async Task<TwitchEventSubConfig?> SubscribeEvent(TwitchEventSubDefinition definition,
         ITwitcherSharpCondition condition)
     {
-        return _data!.Call<TwitchEventSubConfig>("subscribe_event", definition.ToGodotObject(),
+        return await _data!.CallAsync<TwitchEventSubConfig>("subscribe_event", definition.ToGodotObject(),
             condition.ToDictionary());
     }
 
@@ -103,9 +103,9 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
     /// Returns all of the eventsub subscriptions (variable is a copy so you can freely modify it)
     /// </summary>
     /// <returns></returns>
-    public async Task<List<TwitchEventSubConfig>> GetSubscriptions()
+    public List<TwitchEventSubConfig> GetSubscriptions()
     {
-        return await _data!.CallListAsync<TwitchEventSubConfig>("get_subscriptions");
+        return _data!.CallList<TwitchEventSubConfig>("get_subscriptions");
     }
 
     public void Chat(string message, string replyParentMessageId = "", TwitchUser? broadcaster = null,
@@ -120,9 +120,9 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
     /// <param name="user">The user to shoutout</param>
     /// <param name="broadcaster">The broadcaster's chat to send it in</param>
     /// <param name="moderator">The moderator that sends it</param>
-    public void Shoutout(TwitchUser user, TwitchUser? broadcaster = null, TwitchUser? moderator = null)
+    public async Task Shoutout(TwitchUser user, TwitchUser? broadcaster = null, TwitchUser? moderator = null)
     {
-        _data!.Call("send_shoutout", user.ToGodotObject(), broadcaster?.ToGodotObject() ?? new Variant(), moderator?.ToGodotObject() ?? new Variant());
+        await _data!.CallAsync("send_shoutout", user.ToGodotObject(), broadcaster?.ToGodotObject() ?? new Variant(), moderator?.ToGodotObject() ?? new Variant());
     }
 
     /// <summary>
@@ -132,11 +132,11 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
     /// <param name="color">The color of the message box</param>
     /// <param name="broadcaster">The broadcaster's chat to send it in</param>
     /// <param name="moderator">The moderator that sends it</param>
-    public void Announcement(string message, TwitchAnnouncementColor? color = null, TwitchUser? broadcaster = null,
+    public async Task Announcement(string message, TwitchAnnouncementColor? color = null, TwitchUser? broadcaster = null,
         TwitchUser? moderator = null)
     {
         color ??= TwitchAnnouncementColor.Primary;
-        _data!.Call("send_announcement", message, color.ToGodotObject(), broadcaster?.ToGodotObject() ?? new Variant(),
+        await _data!.CallAsync("send_announcement", message, color.ToGodotObject(), broadcaster?.ToGodotObject() ?? new Variant(),
             moderator?.ToGodotObject() ?? new Variant());
     }
 
@@ -184,9 +184,9 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
     /// </summary>
     /// <param name="message"></param>
     /// <param name="userId"></param>
-    public void Whisper(string message, string userId)
+    public async Task Whisper(string message, string userId)
     {
-        _data!.Call("whisper", message, userId);
+        await _data!.CallAsync("whisper", message, userId);
     }
 
     /// <summary>

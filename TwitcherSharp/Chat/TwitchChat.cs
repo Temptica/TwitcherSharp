@@ -63,7 +63,7 @@ public partial class TwitchChat : RefCounted, ITwitcherSharpSingleton<TwitchChat
     [Signal]
     public delegate void MessageReceivedEventHandler(TwitchChatMessage message);
 
-    public void Subscribe() => _data!.Call("subscribe");
+    public async Task Subscribe() => await _data!.CallAsync("subscribe");
 
     /// <summary>
     /// Sends a message to the chat. If twitchApi is connected and linked, it will use the c# code.

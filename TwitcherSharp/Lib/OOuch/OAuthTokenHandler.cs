@@ -49,7 +49,7 @@ public partial class OAuthTokenHandler : Resource, ITwitcherSharp<OAuthTokenHand
     public string GetTokenExpiration()
         => _data!.Call("get_token_expiration").AsString();
 
-    public bool TokenIsValid() => _data!.Call("token_is_valid").AsBool();
+    public bool TokenIsValid() => _data!.Call("is_token_valid").AsBool();
 
     public bool TokenNeedsRefresh() => _data!.Call("token_needs_refresh").AsBool();
 

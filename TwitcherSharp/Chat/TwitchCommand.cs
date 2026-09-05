@@ -32,7 +32,10 @@ public partial class TwitchCommand : TwitchCommandBase, ITwitcherSharp<TwitchCom
 
     public void RemoveAlias(string alias)
     {
-        Data.Call("remove_alias", alias);
+        // twitch_command.gd only exposes add_alias, so mutate the exported array directly.
+        var aliases = Data.Get("aliases").AsStringArray().ToList();
+        aliases.Remove(alias);
+        Data.Set("aliases", aliases.ToArray());
         Aliases = Data.Get("aliases").AsStringArray().ToList();
     }
 

@@ -133,7 +133,7 @@ public partial class TwitchCheermoteDefinition(string prefix, string tier)
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_cheermote_definition.gd");
+        var script = GD.Load<GDScript>("res://addons/twitcher/media/twitch_cheermote_definition.gd");
         var request = script.New().AsGodotObject();
         request.Set("prefix", Prefix);
         request.Set("tier", Tier);
