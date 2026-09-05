@@ -38,16 +38,14 @@ public partial class TwitchRedeemListener : RefCounted, ITwitcherSharp<TwitchRed
     [Signal]
     public delegate void RedeemedEventHandler(TwitchRedemption redemption);
 
-    public async Task EnsureSubscription()
+    public async Task EnsureSubscriptions()
     {
-        _data!.CallAsync("ensure_subscription");
+        _data!.CallAsync("ensure_subscriptions");
     }
 
     public void AddReward(TwitchReward reward)
     {
         RewardsToListen.Add(reward);
-        // Mutate the array Godot already owns: it is typed as Array[TwitchReward] on the
-        // GDScript side and rejects a freshly built Array[Object] without reporting an error.
         var rewards = _data!.Get("rewards_to_listen").AsGodotArray();
         rewards.Add(reward.ToGodotObject());
         _data.Set("rewards_to_listen", rewards);
@@ -87,9 +85,10 @@ public partial class TwitchRedeemListener : RefCounted, ITwitcherSharp<TwitchRed
     public static TwitchRedeemListener? FromObject(GodotObject? data)
     {
         if (data == null) return null;
+        var rewards = data.Get("rewards_to_listen").AsGodotArray<Resource>().ToList().Select(TwitchReward.FromObject).ToList();
         var listener = new TwitchRedeemListener
         {
-            RewardsToListen = data.Get("rewards_to_listen").As<Array<TwitchReward>>(),
+            RewardsToListen =  new Array<TwitchReward>(rewards!),
             TwitchEventSub = data.Get("twitch_event_sub").As<TwitchEventSub>(),
             TwitchApi = data.Get("twitch_api").As<TwitchApi>(),
             EnsureSubscriptionsOnReady = data.Get("ensure_subscriptions_on_ready").AsBool(),
