@@ -128,22 +128,48 @@ public static class GodotObjectExtension
         return T.FromObject(obj.Call(method, args).AsGodotObject())!;
     }
 
-    public static async Task<Variant> CallAsync(this GodotObject obj, string methode, params Variant[] args)
+    private static readonly StringName Completed = "completed";
+
+    /// <summary>
+    /// Calls a GDScript function that may await and returns its result, waiting for it when it is a coroutine.
+    /// </summary>
+    /// <remarks>
+    /// A GDScript function that awaits returns a function state at its first await when called from C#; its value
+    /// arrives through the state's <c>completed</c> signal. A function that returns without awaiting returns its value
+    /// directly. Both end up as the result here.
+    /// <para>
+    /// The caller owns the returned <see cref="Variant"/> and disposes it. The function state and any wrapper made here
+    /// are released before returning: a leftover handle to a GDScript RefCounted is released by Godot's disposables
+    /// tracker at shutdown, after GDScript freed the object, which crashes the process on exit.
+    /// </para>
+    /// </remarks>
+    public static async Task<Variant> CallAsync(this GodotObject obj, string method, params Variant[] args)
     {
-        var result = obj.Call(methode, args);
+        var result = obj.Call(method, args);
         if (result.VariantType != Variant.Type.Object) return result;
-        
-        var state = result.AsGodotObject();
-        if (state.GetClass() == "GDScriptFunctionState")
+
+        using (result)
         {
-            return (await obj.ToSignal(state, "completed"))[0];
+            using var state = result.AsGodotObject();
+            if (state is null || !GodotObject.IsInstanceValid(state) || !state.HasSignal(Completed))
+            {
+                return Variant.CreateFrom(state);
+            }
+
+            var completed = await obj.ToSignal(state, Completed);
+            for (var i = 1; i < completed.Length; i++)
+            {
+                completed[i].Dispose();
+            }
+
+            return completed.Length > 0 ? completed[0] : default;
         }
-        return result;
     }
-    
+
     public static async Task<T?> CallAsync<T>(this GodotObject obj, string method, params Variant[] args) where T : RefCounted, ITwitcherSharp<T>
     {
-        return T.FromObject((await obj.CallAsync(method, args)).AsGodotObject());
+        using var result = await obj.CallAsync(method, args);
+        return T.FromObject(result.AsGodotObject());
     }
 
     /// <summary>
@@ -160,7 +186,7 @@ public static class GodotObjectExtension
         where T : RefCounted, ITwitcherSharp<T>
     {
         var dictionary = new Godot.Collections.Dictionary<T, TVariant>();
-        var result = await obj.CallAsync(method, args);
+        using var result = await obj.CallAsync(method, args);
         var resultDictionary = result.AsGodotDictionary<GodotObject, TVariant>()
             .Select(x => (T.FromObject(x.Key)!, x.Value));
 
@@ -186,7 +212,7 @@ public static class GodotObjectExtension
         where T : RefCounted, ITwitcherSharp<T>
     {
         var dictionary = new Godot.Collections.Dictionary<TVariant, T>();
-        var result = await obj.CallAsync(method, args);
+        using var result = await obj.CallAsync(method, args);
         var resultDictionary = result.AsGodotDictionary<TVariant, GodotObject>()
             .Select(x => (x.Key, T.FromObject(x.Value)!));
 
@@ -279,7 +305,7 @@ public static class GodotObjectExtension
     public static async Task<List<T>> CallListAsync<T>(this GodotObject obj, string method, params Variant[] args)
         where T : RefCounted, ITwitcherSharp<T>
     {
-        var result = await obj.CallAsync(method, args);
+        using var result = await obj.CallAsync(method, args);
         return result.AsGodotArray<GodotObject>()
             .Select(T.FromObject)
             .OfType<T>()
