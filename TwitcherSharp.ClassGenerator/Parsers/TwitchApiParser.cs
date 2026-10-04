@@ -204,11 +204,6 @@ public class TwitchApiParser
                 field.TypedComponent = subComponent;
                 component.AddComponent(field.TypedComponent);
             }
-            else if (component.Ref.Contains("GetAdSchedule", StringComparison.CurrentCultureIgnoreCase) &&
-                     name.EndsWith("At", StringComparison.CurrentCultureIgnoreCase))
-            {
-                field.Type = "float"; //WHYYY TWITCH
-            }
 
             component.AddField(field);
 
@@ -400,6 +395,7 @@ public class TwitchApiParser
             "object" when schema.Items?.Reference?.Id is not null
                 => "Twitch" + schema.Items.Reference.Id,
             "string" => "string",
+            "integer" when format == "int64" => "long",
             "integer" => "int",
             "number" when format == "float" => "double",
             "number" => "int",

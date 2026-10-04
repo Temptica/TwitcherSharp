@@ -42,10 +42,10 @@ public partial class TwitchGetAdScheduleResponse : RefCounted, ITwitcherSharp<Tw
     {
         private Variant _data;
         public int SnoozeCount { get; set; }
-        public float SnoozeRefreshAt { get; set; }
-        public float NextAdAt { get; set; }
+        public long SnoozeRefreshAt { get; set; }
+        public long NextAdAt { get; set; }
         public int Duration { get; set; }
-        public float LastAdAt { get; set; }
+        public long LastAdAt { get; set; }
         public int PrerollFreeTime { get; set; }
     
         /// <summary> 
@@ -57,10 +57,10 @@ public partial class TwitchGetAdScheduleResponse : RefCounted, ITwitcherSharp<Tw
             var instance = new TwitchResponseData
             {
                 SnoozeCount = data.Read("snooze_count", static v => v.AsInt32()),
-                SnoozeRefreshAt = data.Read("snooze_refresh_at", static v => v.As<float>()),
-                NextAdAt = data.Read("next_ad_at", static v => v.As<float>()),
+                SnoozeRefreshAt = data.Read("snooze_refresh_at", static v => v.AsInt64()),
+                NextAdAt = data.Read("next_ad_at", static v => v.AsInt64()),
                 Duration = data.Read("duration", static v => v.AsInt32()),
-                LastAdAt = data.Read("last_ad_at", static v => v.As<float>()),
+                LastAdAt = data.Read("last_ad_at", static v => v.AsInt64()),
                 PrerollFreeTime = data.Read("preroll_free_time", static v => v.AsInt32()),
             };
             

@@ -13,7 +13,7 @@ public partial class TwitchCustomReward : RefCounted, ITwitcherSharp<TwitchCusto
     public string Id { get; set; } = null!;
     public string Title { get; set; } = null!;
     public string Prompt { get; set; } = null!;
-    public int Cost { get; set; }
+    public long Cost { get; set; }
     public TwitchImage Image { get => field ??= _data.Get<TwitchImage>("image")!; set; } = null!;
     public TwitchDefaultImage DefaultImage { get => field ??= _data.Get<TwitchDefaultImage>("default_image")!; set; } = null!;
     public string BackgroundColor { get; set; } = null!;
@@ -42,7 +42,7 @@ public partial class TwitchCustomReward : RefCounted, ITwitcherSharp<TwitchCusto
             Id = data.Read("id", static v => v.AsString()),
             Title = data.Read("title", static v => v.AsString()),
             Prompt = data.Read("prompt", static v => v.AsString()),
-            Cost = data.Read("cost", static v => v.AsInt32()),
+            Cost = data.Read("cost", static v => v.AsInt64()),
             BackgroundColor = data.Read("background_color", static v => v.AsString()),
             IsEnabled = data.Read("is_enabled", static v => v.AsBool()),
             IsUserInputRequired = data.Read("is_user_input_required", static v => v.AsBool()),
@@ -187,7 +187,7 @@ public partial class TwitchCustomReward : RefCounted, ITwitcherSharp<TwitchCusto
     {
         private Variant _data;
         public bool IsEnabled { get; set; }
-        public int MaxPerStream { get; set; }
+        public long MaxPerStream { get; set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchMaxPerStreamSetting object.
@@ -198,7 +198,7 @@ public partial class TwitchCustomReward : RefCounted, ITwitcherSharp<TwitchCusto
             var instance = new TwitchMaxPerStreamSetting
             {
                 IsEnabled = data.Read("is_enabled", static v => v.AsBool()),
-                MaxPerStream = data.Read("max_per_stream", static v => v.AsInt32()),
+                MaxPerStream = data.Read("max_per_stream", static v => v.AsInt64()),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -229,7 +229,7 @@ public partial class TwitchCustomReward : RefCounted, ITwitcherSharp<TwitchCusto
     {
         private Variant _data;
         public bool IsEnabled { get; set; }
-        public int MaxPerUserPerStream { get; set; }
+        public long MaxPerUserPerStream { get; set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchMaxPerUserPerStreamSetting object.
@@ -240,7 +240,7 @@ public partial class TwitchCustomReward : RefCounted, ITwitcherSharp<TwitchCusto
             var instance = new TwitchMaxPerUserPerStreamSetting
             {
                 IsEnabled = data.Read("is_enabled", static v => v.AsBool()),
-                MaxPerUserPerStream = data.Read("max_per_user_per_stream", static v => v.AsInt32()),
+                MaxPerUserPerStream = data.Read("max_per_user_per_stream", static v => v.AsInt64()),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -271,7 +271,7 @@ public partial class TwitchCustomReward : RefCounted, ITwitcherSharp<TwitchCusto
     {
         private Variant _data;
         public bool IsEnabled { get; set; }
-        public int GlobalCooldownSeconds { get; set; }
+        public long GlobalCooldownSeconds { get; set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchGlobalCooldownSetting object.
@@ -282,7 +282,7 @@ public partial class TwitchCustomReward : RefCounted, ITwitcherSharp<TwitchCusto
             var instance = new TwitchGlobalCooldownSetting
             {
                 IsEnabled = data.Read("is_enabled", static v => v.AsBool()),
-                GlobalCooldownSeconds = data.Read("global_cooldown_seconds", static v => v.AsInt32()),
+                GlobalCooldownSeconds = data.Read("global_cooldown_seconds", static v => v.AsInt64()),
             };
             
             instance._data = Variant.CreateFrom(data);

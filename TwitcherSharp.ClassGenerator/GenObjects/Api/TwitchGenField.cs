@@ -59,7 +59,7 @@ public class TwitchGenField : IEquatable<TwitchGenField>
     /// <summary>
     /// A scalar C# value type (non-array, non-class).
     /// </summary>
-    public bool IsValueType => !IsArray && !IsTyped && Type is "int" or "bool" or "double" or "float" or "Variant";
+    public bool IsValueType => !IsArray && !IsTyped && Type is "int" or "long" or "bool" or "double" or "float" or "Variant";
 
     /// <summary>
     /// The nullability suffix to append to a property type under <c>&lt;Nullable&gt;enable</c>.
@@ -91,6 +91,7 @@ public class TwitchGenField : IEquatable<TwitchGenField>
             "string" => "AsString()",
             "bool" => "AsBool()",
             "int" => "AsInt32()",
+            "long" => "AsInt64()",
             "double" => "AsDouble()",
             "string[]" => "AsStringArray()",
             "int[]" => "AsInt32Array()",

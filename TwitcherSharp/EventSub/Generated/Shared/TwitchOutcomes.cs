@@ -36,9 +36,9 @@ public partial class TwitchOutcomes : RefCounted, ITwitcherSharpEventSub<TwitchO
     public int ChannelPoints { get; set; }
 
     /// <summary> 
-    /// An array of up to 10 objects that describe users who participated in a Channel Points Prediction.
+    /// An array of users who used the most Channel Points on this outcome.
     /// </summary>
-    public TwitchTopPredictors? TopPredictors { get => field ??= _data.Get<TwitchTopPredictors>("top_predictors"); set; }
+    public TwitchTopPredictors[]? TopPredictors { get => field ??= _data.GetArray<TwitchTopPredictors>("top_predictors"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchOutcomes object.
@@ -67,7 +67,7 @@ public partial class TwitchOutcomes : RefCounted, ITwitcherSharpEventSub<TwitchO
         if(Color != null) request.SetValue("color", Color);
         request.SetValue("users", Users);
         request.SetValue("channel_points", ChannelPoints);
-        if(TopPredictors != null) request.SetObject("top_predictors", TopPredictors);
+        if(TopPredictors != null) request.SetArray("top_predictors", TopPredictors);
         return request;
     }
 

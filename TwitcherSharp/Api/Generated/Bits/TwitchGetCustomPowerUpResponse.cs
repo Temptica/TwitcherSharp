@@ -218,7 +218,7 @@ public partial class TwitchGetCustomPowerUpResponse : RefCounted, ITwitcherSharp
         {
             private Variant _data;
             public bool IsEnabled { get; set; }
-            public int MaxPerStream { get; set; }
+            public long MaxPerStream { get; set; }
         
             /// <summary> 
             /// Transforms the godot data into a TwitchResponseMaxPerStreamSetting object.
@@ -229,7 +229,7 @@ public partial class TwitchGetCustomPowerUpResponse : RefCounted, ITwitcherSharp
                 var instance = new TwitchResponseMaxPerStreamSetting
                 {
                     IsEnabled = data.Read("is_enabled", static v => v.AsBool()),
-                    MaxPerStream = data.Read("max_per_stream", static v => v.AsInt32()),
+                    MaxPerStream = data.Read("max_per_stream", static v => v.AsInt64()),
                 };
                 
                 instance._data = Variant.CreateFrom(data);
@@ -260,7 +260,7 @@ public partial class TwitchGetCustomPowerUpResponse : RefCounted, ITwitcherSharp
         {
             private Variant _data;
             public bool IsEnabled { get; set; }
-            public int MaxPerUserPerStream { get; set; }
+            public long MaxPerUserPerStream { get; set; }
         
             /// <summary> 
             /// Transforms the godot data into a TwitchResponseMaxPerUserPerStreamSetting object.
@@ -271,7 +271,7 @@ public partial class TwitchGetCustomPowerUpResponse : RefCounted, ITwitcherSharp
                 var instance = new TwitchResponseMaxPerUserPerStreamSetting
                 {
                     IsEnabled = data.Read("is_enabled", static v => v.AsBool()),
-                    MaxPerUserPerStream = data.Read("max_per_user_per_stream", static v => v.AsInt32()),
+                    MaxPerUserPerStream = data.Read("max_per_user_per_stream", static v => v.AsInt64()),
                 };
                 
                 instance._data = Variant.CreateFrom(data);
@@ -302,7 +302,7 @@ public partial class TwitchGetCustomPowerUpResponse : RefCounted, ITwitcherSharp
         {
             private Variant _data;
             public bool IsEnabled { get; set; }
-            public int GlobalCooldownSeconds { get; set; }
+            public long GlobalCooldownSeconds { get; set; }
         
             /// <summary> 
             /// Transforms the godot data into a TwitchResponseGlobalCooldownSetting object.
@@ -313,7 +313,7 @@ public partial class TwitchGetCustomPowerUpResponse : RefCounted, ITwitcherSharp
                 var instance = new TwitchResponseGlobalCooldownSetting
                 {
                     IsEnabled = data.Read("is_enabled", static v => v.AsBool()),
-                    GlobalCooldownSeconds = data.Read("global_cooldown_seconds", static v => v.AsInt32()),
+                    GlobalCooldownSeconds = data.Read("global_cooldown_seconds", static v => v.AsInt64()),
                 };
                 
                 instance._data = Variant.CreateFrom(data);

@@ -42,8 +42,8 @@ public partial class TwitchSnoozeNextAdResponse : RefCounted, ITwitcherSharp<Twi
     {
         private Variant _data;
         public int SnoozeCount { get; set; }
-        public int SnoozeRefreshAt { get; set; }
-        public int NextAdAt { get; set; }
+        public long SnoozeRefreshAt { get; set; }
+        public long NextAdAt { get; set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseData object.
@@ -54,8 +54,8 @@ public partial class TwitchSnoozeNextAdResponse : RefCounted, ITwitcherSharp<Twi
             var instance = new TwitchResponseData
             {
                 SnoozeCount = data.Read("snooze_count", static v => v.AsInt32()),
-                SnoozeRefreshAt = data.Read("snooze_refresh_at", static v => v.AsInt32()),
-                NextAdAt = data.Read("next_ad_at", static v => v.AsInt32()),
+                SnoozeRefreshAt = data.Read("snooze_refresh_at", static v => v.AsInt64()),
+                NextAdAt = data.Read("next_ad_at", static v => v.AsInt64()),
             };
             
             instance._data = Variant.CreateFrom(data);

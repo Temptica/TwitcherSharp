@@ -9,16 +9,16 @@ public partial class TwitchUpdateCustomRewardBody : RefCounted, ITwitcherSharp<T
     private Variant _data;
     public string? Title { get; set; }
     public string? Prompt { get; set; }
-    public int? Cost { get; set; }
+    public long? Cost { get; set; }
     public string? BackgroundColor { get; set; }
     public bool? IsEnabled { get; set; }
     public bool? IsUserInputRequired { get; set; }
     public bool? IsMaxPerStreamEnabled { get; set; }
-    public int? MaxPerStream { get; set; }
+    public long? MaxPerStream { get; set; }
     public bool? IsMaxPerUserPerStreamEnabled { get; set; }
-    public int? MaxPerUserPerStream { get; set; }
+    public long? MaxPerUserPerStream { get; set; }
     public bool? IsGlobalCooldownEnabled { get; set; }
-    public int? GlobalCooldownSeconds { get; set; }
+    public long? GlobalCooldownSeconds { get; set; }
     public bool? IsPaused { get; set; }
     public bool? ShouldRedemptionsSkipRequestQueue { get; set; }
 
@@ -32,16 +32,16 @@ public partial class TwitchUpdateCustomRewardBody : RefCounted, ITwitcherSharp<T
         {
             Title = data.Read("title", static v => v.AsString()),
             Prompt = data.Read("prompt", static v => v.AsString()),
-            Cost = data.Read("cost", static v => v.AsInt32()),
+            Cost = data.Read("cost", static v => v.AsInt64()),
             BackgroundColor = data.Read("background_color", static v => v.AsString()),
             IsEnabled = data.Read("is_enabled", static v => v.AsBool()),
             IsUserInputRequired = data.Read("is_user_input_required", static v => v.AsBool()),
             IsMaxPerStreamEnabled = data.Read("is_max_per_stream_enabled", static v => v.AsBool()),
-            MaxPerStream = data.Read("max_per_stream", static v => v.AsInt32()),
+            MaxPerStream = data.Read("max_per_stream", static v => v.AsInt64()),
             IsMaxPerUserPerStreamEnabled = data.Read("is_max_per_user_per_stream_enabled", static v => v.AsBool()),
-            MaxPerUserPerStream = data.Read("max_per_user_per_stream", static v => v.AsInt32()),
+            MaxPerUserPerStream = data.Read("max_per_user_per_stream", static v => v.AsInt64()),
             IsGlobalCooldownEnabled = data.Read("is_global_cooldown_enabled", static v => v.AsBool()),
-            GlobalCooldownSeconds = data.Read("global_cooldown_seconds", static v => v.AsInt32()),
+            GlobalCooldownSeconds = data.Read("global_cooldown_seconds", static v => v.AsInt64()),
             IsPaused = data.Read("is_paused", static v => v.AsBool()),
             ShouldRedemptionsSkipRequestQueue = data.Read("should_redemptions_skip_request_queue", static v => v.AsBool()),
         };

@@ -8,7 +8,7 @@ public partial class TwitchCreateCustomRewardsBody : RefCounted, ITwitcherSharp<
 {
     private Variant _data;
     public string Title { get; set; } = null!;
-    public int Cost { get; set; }
+    public long Cost { get; set; }
     public string? Prompt { get; set; }
     public bool? IsEnabled { get; set; }
     public string? BackgroundColor { get; set; }
@@ -30,7 +30,7 @@ public partial class TwitchCreateCustomRewardsBody : RefCounted, ITwitcherSharp<
         var instance = new TwitchCreateCustomRewardsBody
         {
             Title = data.Read("title", static v => v.AsString()),
-            Cost = data.Read("cost", static v => v.AsInt32()),
+            Cost = data.Read("cost", static v => v.AsInt64()),
             Prompt = data.Read("prompt", static v => v.AsString()),
             IsEnabled = data.Read("is_enabled", static v => v.AsBool()),
             BackgroundColor = data.Read("background_color", static v => v.AsString()),

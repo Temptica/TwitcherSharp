@@ -76,7 +76,7 @@ public partial class TwitchCustomRewardRedemption : RefCounted, ITwitcherSharp<T
         public string Id { get; set; } = null!;
         public string Title { get; set; } = null!;
         public string Prompt { get; set; } = null!;
-        public int Cost { get; set; }
+        public long Cost { get; set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchReward object.
@@ -89,7 +89,7 @@ public partial class TwitchCustomRewardRedemption : RefCounted, ITwitcherSharp<T
                 Id = data.Read("id", static v => v.AsString()),
                 Title = data.Read("title", static v => v.AsString()),
                 Prompt = data.Read("prompt", static v => v.AsString()),
-                Cost = data.Read("cost", static v => v.AsInt32()),
+                Cost = data.Read("cost", static v => v.AsInt64()),
             };
             
             instance._data = Variant.CreateFrom(data);

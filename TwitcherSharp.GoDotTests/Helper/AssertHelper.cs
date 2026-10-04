@@ -39,6 +39,11 @@ public static class AssertHelper
                     if ((int?)val1 == (int?)val2 || (val1 == null && (int?)val2 == 0)) continue;
                     throw new Exception(
                         $"property {property.Name} values do not match for {twitcherSharpObject.GetType().Name}. Expecting {val1} but got {val2}");
+                case nameof(Int64):
+                case "Nullable`1" when property.PropertyType.GetGenericArguments()[0].Name == nameof(Int64):
+                    if ((long?)val1 == (long?)val2 || (val1 == null && (long?)val2 == 0)) continue;
+                    throw new Exception(
+                        $"property {property.Name} values do not match for {twitcherSharpObject.GetType().Name}. Expecting {val1} but got {val2}");
                 case nameof(Boolean):
                 case "Nullable`1" when property.PropertyType.GetGenericArguments()[0].Name == nameof(Boolean):
                     if ((bool?)val1 == (bool?)val2 || (val1 == null && (bool?)val2 == false)) continue;

@@ -31,7 +31,7 @@ public partial class TwitchHypeTrainBeginEvent : RefCounted, ITwitcherSharpEvent
     public string? BroadcasterUserName { get; set; }
 
     /// <summary> 
-    /// The total amount contributed. If type is bits, total represents the amount of Bits used. If type is subscription, total is 500, 1000, or 2500 to represent tier 1, 2, or 3 subscriptions, respectively.
+    /// Total points contributed to the Hype Train.
     /// </summary>
     public int Total { get; set; }
 
@@ -46,29 +46,9 @@ public partial class TwitchHypeTrainBeginEvent : RefCounted, ITwitcherSharpEvent
     public int Goal { get; set; }
 
     /// <summary> 
-    /// The top contributor for a contribution type. For example, the top contributor using BITS (by aggregate) or the top contributor using subscriptions (by count).
+    /// The contributors with the most points contributed.
     /// </summary>
-    public TwitchTopContributions? TopContributions { get => field ??= _data.Get<TwitchTopContributions>("top_contributions"); set; }
-
-    /// <summary> 
-    /// The ID of the user that made the contribution.
-    /// </summary>
-    public string? UserId { get; set; }
-
-    /// <summary> 
-    /// The user’s login name.
-    /// </summary>
-    public string? UserLogin { get; set; }
-
-    /// <summary> 
-    /// The user’s display name.
-    /// </summary>
-    public string? UserName { get; set; }
-
-    /// <summary> 
-    /// The type of the Hype Train. Possible values are: treasure golden_kapparegular
-    /// </summary>
-    public string? Type { get; set; }
+    public TwitchTopContributions[]? TopContributions { get => field ??= _data.GetArray<TwitchTopContributions>("top_contributions"); set; }
 
     /// <summary> 
     /// The current level of the Hype Train.
@@ -101,6 +81,11 @@ public partial class TwitchHypeTrainBeginEvent : RefCounted, ITwitcherSharpEvent
     public string? ExpiresAt { get; set; }
 
     /// <summary> 
+    /// The type of the Hype Train. Possible values are: treasure golden_kapparegular
+    /// </summary>
+    public string? Type { get; set; }
+
+    /// <summary> 
     /// Indicates if the Hype Train is shared. When true, shared_train_participants will contain the list of broadcasters the train is shared with.
     /// </summary>
     public bool IsSharedTrain { get; set; }
@@ -120,15 +105,12 @@ public partial class TwitchHypeTrainBeginEvent : RefCounted, ITwitcherSharpEvent
             Total = data.Read("total", static v => v.AsInt32()),
             Progress = data.Read("progress", static v => v.AsInt32()),
             Goal = data.Read("goal", static v => v.AsInt32()),
-            UserId = data.Read("user_id", static v => v.AsString()),
-            UserLogin = data.Read("user_login", static v => v.AsString()),
-            UserName = data.Read("user_name", static v => v.AsString()),
-            Type = data.Read("type", static v => v.AsString()),
             Level = data.Read("level", static v => v.AsInt32()),
             AllTimeHighLevel = data.Read("all_time_high_level", static v => v.AsInt32()),
             AllTimeHighTotal = data.Read("all_time_high_total", static v => v.AsInt32()),
             StartedAt = data.Read("started_at", static v => v.AsString()),
             ExpiresAt = data.Read("expires_at", static v => v.AsString()),
+            Type = data.Read("type", static v => v.AsString()),
             IsSharedTrain = data.Read("is_shared_train", static v => v.AsBool()),
         };
         
@@ -146,17 +128,14 @@ public partial class TwitchHypeTrainBeginEvent : RefCounted, ITwitcherSharpEvent
         request.SetValue("total", Total);
         request.SetValue("progress", Progress);
         request.SetValue("goal", Goal);
-        if(TopContributions != null) request.SetObject("top_contributions", TopContributions);
-        if(UserId != null) request.SetValue("user_id", UserId);
-        if(UserLogin != null) request.SetValue("user_login", UserLogin);
-        if(UserName != null) request.SetValue("user_name", UserName);
-        if(Type != null) request.SetValue("type", Type);
+        if(TopContributions != null) request.SetArray("top_contributions", TopContributions);
         request.SetValue("level", Level);
         request.SetValue("all_time_high_level", AllTimeHighLevel);
         request.SetValue("all_time_high_total", AllTimeHighTotal);
         if(SharedTrainParticipants != null) request.SetArray("shared_train_participants", SharedTrainParticipants);
         if(StartedAt != null) request.SetValue("started_at", StartedAt);
         if(ExpiresAt != null) request.SetValue("expires_at", ExpiresAt);
+        if(Type != null) request.SetValue("type", Type);
         request.SetValue("is_shared_train", IsSharedTrain);
         return request;
     }

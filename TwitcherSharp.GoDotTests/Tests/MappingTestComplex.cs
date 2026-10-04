@@ -44,13 +44,12 @@ public class MappingTestComplex(Node testScene) : TestClass(testScene)
 
     /// <summary>
     /// Generated types that do not map against the twitcher the tests run against, because the two generators read
-    /// different sources: the drop.entitlement.grant data is untyped in twitcher's EventSub swagger, and the ad
-    /// schedule timestamps are int in twitcher but float here. They are listed so that any other failing type still
+    /// different sources: the drop.entitlement.grant data is untyped in twitcher's EventSub swagger (the EventSub
+    /// reference page does not define the entitlement object). They are listed so that any other failing type still
     /// fails this test, and a listed type that starts to map fails it too.
     /// </summary>
     private static readonly HashSet<string> KnownTwitcherMismatches =
     [
-        "TwitcherSharp.Api.Generated.Ads.TwitchGetAdScheduleResponse+TwitchResponseData",
         "TwitcherSharp.EventSub.Generated.DropEntitlementGrant.TwitchDropEntitlementGrantEvent+TwitchData",
     ];
 
