@@ -26,13 +26,11 @@ public partial class TwitchPollListener : RefCounted, ITwitcherSharp<TwitchPollL
 
     /// <summary>
     /// The <see cref="TwitchEventSub"/> for subscribing. If left empty, the Node attempts to fetch the <see cref="TwitchEventSub"/> itself.
-    /// If it doesn't exist, it will create a new one and add it to the root of the SceneTree.
     /// </summary>
     public TwitchEventSub? TwitchEventSub { get; set; }
 
     /// <summary>
     /// The <see cref="TwitchApi"/> for API calls. If left empty, the Node attempts to fetch the <see cref="TwitchApi"/> itself.
-    /// If it doesn't exist, it will create a new one and add it to the root of the SceneTree.'
     /// </summary>
     public TwitchApi? TwitchApi { get; set; }
 
@@ -122,7 +120,7 @@ public partial class TwitchPollListener : RefCounted, ITwitcherSharp<TwitchPollL
             EnsureSubscriptionsOnReady = data.Get("ensure_subscriptions_on_ready").AsBool(),
         };
 
-        pollListener.TwitchEventSub ??= TwitchEventSub.Instance ?? TwitchEventSub.CreateInstance();
+        pollListener.TwitchEventSub ??= TwitchEventSub.Instance;
         pollListener.TwitchApi ??= TwitchApi.Instance;
 
         pollListener.ConnectSignals();

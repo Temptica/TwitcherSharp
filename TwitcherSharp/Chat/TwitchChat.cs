@@ -26,9 +26,10 @@ public partial class TwitchChat : RefCounted, ITwitcherSharpSingleton<TwitchChat
     public static TwitchChat Required => ITwitcherSharpSingleton<TwitchChat>.Required;
 
     /// <summary>
-    /// Twitch API (Will automatically look for first TwitchApi (twitcher) in the scene tree. Else will create a new one and add it to the root)
+    /// Twitch API used to send messages. Defaults to <see cref="TwitchApi.Instance"/>, the TwitchAPI node in the tree;
+    /// no node is created for it.
     /// </summary>
-    public static TwitchApi Api { get; set; } = TwitchApi.Instance??TwitchApi.CreateInstance();
+    public static TwitchApi? Api { get => field ?? TwitchApi.Instance; set; }
 
     public TwitchUser? BroadcasterUser
     {
@@ -53,7 +54,7 @@ public partial class TwitchChat : RefCounted, ITwitcherSharpSingleton<TwitchChat
     /// <summary>
     /// Media loader it uses for emotes and badges. (Will automatically look for first TwitchMediaLoader (twitcher) in the scene tree)
     /// </summary>
-    public TwitchMediaLoader? MediaLoader { get; set; } = TwitchMediaLoader.Instance;
+    public TwitchMediaLoader? MediaLoader { get => field ?? TwitchMediaLoader.Instance; set; }
 
     /// <summary>
     /// Should it subscribe on ready
@@ -76,7 +77,8 @@ public partial class TwitchChat : RefCounted, ITwitcherSharpSingleton<TwitchChat
     public async Task<TwitchSendChatMessageResponse.TwitchResponseData[]> SendMessage(string message,
         string? replyParentMessageId = null)
     {
-        if (!Api.IsLinked)
+        var api = Api;
+        if (api is not { IsLinked: true })
         {
             if (!IsLinked) throw new Exception("TwitchChat is not linked to TwitchApi");
 
@@ -98,7 +100,7 @@ public partial class TwitchChat : RefCounted, ITwitcherSharpSingleton<TwitchChat
             ReplyParentMessageId = replyParentMessageId
         };
 
-        var response = await Api.SendChatMessage(request);
+        var response = await api.SendChatMessage(request);
         return response.Data ?? [];
     }
 
@@ -112,11 +114,11 @@ public partial class TwitchChat : RefCounted, ITwitcherSharpSingleton<TwitchChat
     {
         if (data == null) return null;
 
-        Instance = new TwitchChat();
-        Instance._data = data;
-        Instance.SetMeta("_twitcher_sharp_instance", Instance);
-        Instance.ConnectSignals();
-        return Instance;
+        var chat = new TwitchChat { _data = data };
+        chat.SetMeta("_twitcher_sharp_instance", chat);
+        chat.ConnectSignals();
+        Instance = chat;
+        return chat;
     }
 
     public GodotObject ToGodotObject()

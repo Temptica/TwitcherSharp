@@ -179,10 +179,10 @@ public partial class TwitchBot : RefCounted, ITwitcherSharpSingleton<TwitchBot>
             return null;
         }
 
-        Instance = new TwitchBot();
-        Instance._data = data;
-        Instance.SetMeta("_twitcher_sharp_instance", Instance);
-        return Instance;
+        var bot = new TwitchBot { _data = data };
+        bot.SetMeta("_twitcher_sharp_instance", bot);
+        Instance = bot;
+        return bot;
     }
 
     public GodotObject ToGodotObject()
