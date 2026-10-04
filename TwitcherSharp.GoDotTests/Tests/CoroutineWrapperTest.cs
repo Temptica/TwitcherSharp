@@ -5,11 +5,13 @@ using Chickensoft.GoDotTest;
 using Godot;
 using Shouldly;
 using TwitcherSharp.Api.Generated.Users;
+using TwitcherSharp.Auth;
 using TwitcherSharp.Chat;
 using TwitcherSharp.EventSub;
 using TwitcherSharp.EventSub.Generated.ChannelFollow;
 using TwitcherSharp.Interfaces;
 using TwitcherSharp.Media;
+using TwitcherSharp.Poll;
 using TwitcherSharp.Reward;
 
 namespace TwitcherSharp.GoDotTests.Tests;
@@ -132,6 +134,44 @@ public class CoroutineWrapperTest(Node testScene) : TestClass(testScene)
 
             chat.ToGodotObject().GetMeta("subscribed", false).AsBool().ShouldBeTrue();
         });
+    }
+
+    [Test]
+    public async Task AuthorizeAwaitsTheLogin()
+    {
+        using var fakes = GD.Load<GDScript>(FakesPath);
+        using var fakeClass = fakes.Get("FakeAuth");
+        var node = fakeClass.AsGodotObject().Call("new").AsGodotObject();
+        try
+        {
+            // Blocking on the result instead would wait on the main thread for a frame that never comes.
+            (await TwitchAuth.FromObject(node)!.Authorize(force: true)).ShouldBeTrue();
+        }
+        finally
+        {
+            node.Free();
+        }
+    }
+
+    [Test]
+    public void PollListenerReadsTheBroadcasterTwitcherResolves()
+    {
+        using var script = GD.Load<GDScript>("res://addons/twitcher/poll/twitch_poll_listener.gd");
+        var node = script.New().AsGodotObject();
+        try
+        {
+            // twitcher looks the broadcaster up in _ready; FromObject must not block on an API call for it.
+            var listener = TwitchPollListener.FromObject(node)!;
+            listener.Broadcaster.ShouldBeNull();
+
+            node.Set("broadcaster", new TwitchUser { Id = "1001", Login = "broadcaster" }.ToGodotObject());
+            listener.Broadcaster.ShouldNotBeNull();
+            listener.Broadcaster.Id.ShouldBe("1001");
+        }
+        finally
+        {
+            node.Free();
+        }
     }
 
     [Test]

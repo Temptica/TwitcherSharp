@@ -44,7 +44,23 @@ public partial class TwitchPollListener : RefCounted, ITwitcherSharp<TwitchPollL
     /// <summary>
     /// The broadcaster user. If left empty, the Node attempts to fetch it from the <see cref="TwitchApi"/>.
     /// </summary>
-    public TwitchUser? Broadcaster { get; set; }
+    /// <summary>
+    /// The broadcaster whose polls to listen to. twitcher uses the current user when it is not set.
+    /// </summary>
+    public TwitchUser? Broadcaster
+    {
+        get
+        {
+            if (_data is null) return field;
+            using var broadcaster = _data.Get("broadcaster");
+            return TwitchUser.FromObject(broadcaster.AsGodotObject());
+        }
+        set
+        {
+            _data?.Set("broadcaster", value?.ToGodotObject() ?? new Variant());
+            field = value;
+        }
+    }
 
     /// <summary>
     /// Emit the raw JSON response from the <see cref="TwitchEventSubDefinitionType.ChannelPollBegin"/>, <see cref="TwitchEventSubDefinitionType.ChannelPollProgress"/> and <see cref="TwitchEventSubDefinitionType.ChannelPollEnd"/>.
@@ -104,12 +120,10 @@ public partial class TwitchPollListener : RefCounted, ITwitcherSharp<TwitchPollL
         {
             _data = data,
             EnsureSubscriptionsOnReady = data.Get("ensure_subscriptions_on_ready").AsBool(),
-            Broadcaster = TwitchUser.FromObject(data.Get("broadcaster").As<GodotObject>()),
         };
 
         pollListener.TwitchEventSub ??= TwitchEventSub.Instance ?? TwitchEventSub.CreateInstance();
         pollListener.TwitchApi ??= TwitchApi.Instance;
-        pollListener.Broadcaster ??= TwitchApi.Instance!.GetUsers().GetAwaiter().GetResult().Data![0];
 
         pollListener.ConnectSignals();
 

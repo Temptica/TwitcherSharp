@@ -20,7 +20,16 @@ public partial class TwitchAuth : RefCounted, ITwitcherSharp<TwitchAuth>
 	
 	public bool IsAuthenticated() => _data?.Get("is_authenticated").AsBool() ?? false;
 	
-	public bool Authorize(bool force = false) => _data?.CallAsync("authorize",force).Result.AsBool() ?? false;
+	/// <summary>
+	/// Logs in unless already logged in (or always with <paramref name="force"/>). twitcher awaits the login, so
+	/// this must be awaited: blocking on it would wait on the main thread for frames that never come.
+	/// </summary>
+	public async Task<bool> Authorize(bool force = false)
+	{
+		if (_data is null) return false;
+		using var result = await _data.CallAsync("authorize", force);
+		return result.AsBool();
+	}
 	
 	public void DoUnSetup() => _data?.Call("do_unsetup");
 	

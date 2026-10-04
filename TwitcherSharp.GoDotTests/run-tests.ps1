@@ -36,7 +36,8 @@ $process = Start-Process -FilePath $Godot -ArgumentList '--headless', '--path', 
     -NoNewWindow -PassThru -RedirectStandardOutput $log -RedirectStandardError "$log.err"
 $null = $process.Handle # without a cached handle ExitCode stays empty
 if (-not $process.WaitForExit($TimeoutSec * 1000)) {
-    $process.Kill()
+    # The whole tree: Godot started the Twitch mock as a child.
+    taskkill /T /F /PID $process.Id | Out-Null
     throw "Timed out after $TimeoutSec s; see $log"
 }
 $exitCode = $process.ExitCode

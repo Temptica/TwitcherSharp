@@ -51,6 +51,12 @@ class FakeService extends TwitchService:
 		set_meta(&"whisper", "%s:%s" % [to_user_id, message])
 
 
+class FakeAuth extends TwitchAuth:
+	func authorize(force: bool = false, _cancellation_token: TwitchAuthCancellationToken = null) -> bool:
+		await (Engine.get_main_loop() as SceneTree).process_frame
+		return force
+
+
 class FakeChat extends TwitchChat:
 	func subscribe() -> void:
 		await (Engine.get_main_loop() as SceneTree).process_frame
