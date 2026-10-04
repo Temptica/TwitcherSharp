@@ -52,7 +52,7 @@ public static class EventSubCodeHelper
         code.AppendLine(header.Replace("{{ClassName}}", component.ClassName));
 
         code.AppendLine("{");
-        code.AppendIndentedLine("private GodotObject? _data;\n", 1);
+        code.AppendIndentedLine("private Variant _data;\n", 1);
 
         if (isCondition)
         {
@@ -73,7 +73,7 @@ public static class EventSubCodeHelper
             if ((field.IsArray && field.TypedComponent != null) || field.IsTyped)
             {
                 code.AppendIndentedLine(
-                    $"public {fieldType}{(field.IsRequired ? "" : "?")} {field.Name} {{ get => field ??= _data?.Get{(field.IsArray ? "Array" : "")}<{field.Type.Remove("[]")}>(\"{field.Name.ToSnakeCase()}\"); set; }}{(field.IsRequired ? $"= {field.Name.ToCamelCase()};" : "")}",
+                    $"public {fieldType}{(field.IsRequired ? "" : "?")} {field.Name} {{ get => field ??= _data.Get{(field.IsArray ? "Array" : "")}<{field.Type.Remove("[]")}>(\"{field.Name.ToSnakeCase()}\"); set; }}{(field.IsRequired ? $"= {field.Name.ToCamelCase()};" : "")}",
                     1);
             }
             else if (field.IsRequired)
@@ -96,7 +96,7 @@ public static class EventSubCodeHelper
             {
                 var requiredFields = string.Join(", ",
                     component.GetRequiredFields().Select(field =>
-                        $"""data.Get("{field.Name.ToSnakeCase()}").{field.GetAsType()}"""));
+                        $"""data.Read("{field.Name.ToSnakeCase()}", static v => v.{field.GetAsType()})"""));
 
                 var requiredCode = $"var instance = new {component.ClassName}({requiredFields})";
                 if (component.Fields.All(f => f.Value.IsRequired)) requiredCode += ";";
@@ -114,13 +114,13 @@ public static class EventSubCodeHelper
                 {
                     if (!field.IsArray && !field.IsTyped)
                         code.AppendIndentedLine(
-                            $"{field.Name} = data.Get(\"{field.Name.ToSnakeCase()}\").{field.GetAsType()},", 3);
+                            $"{field.Name} = data.Read(\"{field.Name.ToSnakeCase()}\", static v => v.{field.GetAsType()}),", 3);
                 }
 
                 code.AppendIndentedLine("};", 2);
             }
 
-            code.AppendIndentedLine("\ninstance._data = data;\nreturn instance;", 2);
+            code.AppendIndentedLine("\ninstance._data = Variant.CreateFrom(data);\nreturn instance;", 2);
 
             code.AppendIndentedLine("}", 1);
             code.Append(Environment.NewLine);
@@ -140,7 +140,6 @@ public static class EventSubCodeHelper
                     $"res://addons/twitcher/generated_eventsub/{type.ToSnakeCase().Replace("twitch", "twitch_es").Replace("image", "twitch_image")}.gd";
             }
 
-            code.AppendIndentedLine($"var script = GD.Load<GDScript>(\"{path}\");", 2);
 
             string typeToUse;
 
@@ -153,16 +152,9 @@ public static class EventSubCodeHelper
                     ? component.ClassName.Replace("Twitch", "TwitchES")
                     : component.ClassName.Remove(type).Remove("Twitch");
 
-            var scriptName = $"{typeToUse.ToCamelCase().Remove("Twitch")}Class";
-            if (component.IsShared)
-            {
-                code.AppendIndentedLine($"var request = script.New().AsGodotObject();", 2);
-            }
-            else
-            {
-                code.AppendIndentedLine($"var {scriptName} = script.Get(\"{typeToUse}\").As<GDScript>();", 2);
-                code.AppendIndentedLine($"var request = {scriptName}.New().AsGodotObject();", 2);
-            }
+            code.AppendIndentedLine(component.IsShared
+                ? $"var request = InteropExtension.NewObject(\"{path}\");"
+                : $"var request = InteropExtension.NewInner(\"{path}\", \"{typeToUse}\");", 2);
 
             foreach (var field in fields)
             {
@@ -171,20 +163,20 @@ public static class EventSubCodeHelper
                 if (field.IsArray && (field.IsTyped || field.Type == "Object"))
                 {
                     fieldCode =
-                        $"if({field.Name} != null) request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name}.ToGodotArray());";
+                        $"if({field.Name} != null) request.SetArray(\"{field.Name.ToSnakeCase()}\", {field.Name});";
                 }
                 else if (field.IsArray)
                 {
                     fieldCode =
-                        $"if({field.Name} != null) request.Set(\"{field.Name.ToSnakeCase()}\", new Godot.Collections.Array<{field.Type.Remove("[]")}>({field.Name}));";
+                        $"if({field.Name} != null) request.SetValue(\"{field.Name.ToSnakeCase()}\", new Godot.Collections.Array<{field.Type.Remove("[]")}>({field.Name}));";
                 }
                 else if (field.Type == "Object" || field.IsTyped)
                 {
-                    fieldCode = $"if({field.Name} != null) request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name}.ToGodotObject());";
+                    fieldCode = $"if({field.Name} != null) request.SetObject(\"{field.Name.ToSnakeCase()}\", {field.Name});";
                 }
                 else if (field.IsValueType || field.IsRequired)
-                    fieldCode = $"request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name});";
-                else fieldCode = $"if({field.Name} != null) request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name});";
+                    fieldCode = $"request.SetValue(\"{field.Name.ToSnakeCase()}\", {field.Name});";
+                else fieldCode = $"if({field.Name} != null) request.SetValue(\"{field.Name.ToSnakeCase()}\", {field.Name});";
 
                 code.AppendIndentedLine(fieldCode, 2);
             }
@@ -192,6 +184,16 @@ public static class EventSubCodeHelper
             code.AppendIndentedLine("return request;", 2);
         }
 
+        code.AppendIndentedLine("}", 1);
+
+        code.AppendLine();
+        code.AppendIndentedLine("/// <summary> Releases the twitcher object this instance was mapped from. </summary>", 1);
+        code.AppendIndentedLine("protected override void Dispose(bool disposing)", 1);
+        code.AppendIndentedLine("{", 1);
+        // Only when disposed explicitly: when finalized, the Variant is finalized on its own, and disposing it again
+        // throws on the finalizer thread, which ends the process.
+        code.AppendIndentedLine("if (disposing) _data.Dispose();", 2);
+        code.AppendIndentedLine("base.Dispose(disposing);", 2);
         code.AppendIndentedLine("}", 1);
         code.AppendLine();
 

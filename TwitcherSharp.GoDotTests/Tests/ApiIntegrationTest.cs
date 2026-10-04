@@ -38,10 +38,4 @@ public class ApiIntegrationTest(Main testScene) : TestClass(testScene)
         var user = await TwitchService.Required.GetCurrentUser();
         user.ShouldNotBeNull();
     }
-
-    [CleanupAll]
-    public void Cleanup()
-    {
-        TwitchMockupHelper.Stop();
-    }
 }

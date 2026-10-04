@@ -42,9 +42,11 @@ public static class EnumerableExtension
     internal static Godot.Collections.Array ToTypedArray<T>(this IEnumerable<T> enumerable, string scriptPath)
         where T : RefCounted, ITwitcherSharp<T>
     {
+        // The items first: creating them loads the same script, and Godot shares one wrapper per object, so a script
+        // wrapper held across that would be disposed under our feet.
+        var items = enumerable.Select(item => GodotObjectExtension.ToVariant(item)).ToList();
         using var script = GD.Load<GDScript>(scriptPath);
         using var nativeBase = new StringName(script.GetInstanceBaseType());
-        var items = enumerable.Select(item => Variant.CreateFrom(item.ToGodotObject())).ToList();
         try
         {
             using var untyped = new Godot.Collections.Array(items);

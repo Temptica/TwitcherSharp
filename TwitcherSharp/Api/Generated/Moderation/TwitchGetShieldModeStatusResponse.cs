@@ -6,8 +6,8 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 
 public partial class TwitchGetShieldModeStatusResponse : RefCounted, ITwitcherSharp<TwitchGetShieldModeStatusResponse>
 {
-    private GodotObject? _data;
-    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data")!; set; } = null!;
+    private Variant _data;
+    public TwitchResponseData[] Data { get => field ??= _data.GetArray<TwitchResponseData>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetShieldModeStatusResponse object.
@@ -17,17 +17,22 @@ public partial class TwitchGetShieldModeStatusResponse : RefCounted, ITwitcherSh
         if(data == null) return null;
         var instance = new TwitchGetShieldModeStatusResponse();
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_shield_mode_status.gd");
-        var responseClass = script.Get("Response").AsGodotObject();
-        var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data.ToGodotArray());
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_shield_mode_status.gd", "Response");
+        if(Data != null) request.SetArray("data", Data);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
     
     /// <summary> 
@@ -35,7 +40,7 @@ public partial class TwitchGetShieldModeStatusResponse : RefCounted, ITwitcherSh
     /// </summary>
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
-        private GodotObject? _data;
+        private Variant _data;
         public bool IsActive { get; set; }
         public string ModeratorId { get; set; } = null!;
         public string ModeratorLogin { get; set; } = null!;
@@ -50,28 +55,33 @@ public partial class TwitchGetShieldModeStatusResponse : RefCounted, ITwitcherSh
             if(data == null) return null;
             var instance = new TwitchResponseData
             {
-                IsActive = data.Get("is_active").AsBool(),
-                ModeratorId = data.Get("moderator_id").AsString(),
-                ModeratorLogin = data.Get("moderator_login").AsString(),
-                ModeratorName = data.Get("moderator_name").AsString(),
-                LastActivatedAt = data.Get("last_activated_at").AsString(),
+                IsActive = data.Read("is_active", static v => v.AsBool()),
+                ModeratorId = data.Read("moderator_id", static v => v.AsString()),
+                ModeratorLogin = data.Read("moderator_login", static v => v.AsString()),
+                ModeratorName = data.Read("moderator_name", static v => v.AsString()),
+                LastActivatedAt = data.Read("last_activated_at", static v => v.AsString()),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_shield_mode_status.gd");
-            var twitchResponseDataClass = script.Get("ResponseData").AsGodotObject();
-            var request = twitchResponseDataClass.Call("new").AsGodotObject();
-            request.Set("is_active", IsActive);
-            if(ModeratorId != null) request.Set("moderator_id", ModeratorId);
-            if(ModeratorLogin != null) request.Set("moderator_login", ModeratorLogin);
-            if(ModeratorName != null) request.Set("moderator_name", ModeratorName);
-            if(LastActivatedAt != null) request.Set("last_activated_at", LastActivatedAt);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_shield_mode_status.gd", "ResponseData");
+            request.SetValue("is_active", IsActive);
+            if(ModeratorId != null) request.SetValue("moderator_id", ModeratorId);
+            if(ModeratorLogin != null) request.SetValue("moderator_login", ModeratorLogin);
+            if(ModeratorName != null) request.SetValue("moderator_name", ModeratorName);
+            if(LastActivatedAt != null) request.SetValue("last_activated_at", LastActivatedAt);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     
     }

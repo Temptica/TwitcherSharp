@@ -6,8 +6,8 @@ namespace TwitcherSharp.Api.Generated.Extensions;
 
 public partial class TwitchGetExtensionLiveChannelsResponse : RefCounted, ITwitcherSharp<TwitchGetExtensionLiveChannelsResponse>
 {
-    private GodotObject? _data;
-    public TwitchExtensionLiveChannel[] Data { get => field ??= _data?.GetArray<TwitchExtensionLiveChannel>("data")!; set; } = null!;
+    private Variant _data;
+    public TwitchExtensionLiveChannel[] Data { get => field ??= _data.GetArray<TwitchExtensionLiveChannel>("data")!; set; } = null!;
     public string? Pagination { get; set; }
 
     /// <summary> 
@@ -18,21 +18,26 @@ public partial class TwitchGetExtensionLiveChannelsResponse : RefCounted, ITwitc
         if(data == null) return null;
         var instance = new TwitchGetExtensionLiveChannelsResponse
         {
-            Pagination = data.Get("pagination").AsString(),
+            Pagination = data.Read("pagination", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_extension_live_channels.gd");
-        var responseClass = script.Get("Response").AsGodotObject();
-        var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data.ToGodotArray());
-        if(Pagination != null) request.Set("pagination", Pagination);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_extension_live_channels.gd", "Response");
+        if(Data != null) request.SetArray("data", Data);
+        if(Pagination != null) request.SetValue("pagination", Pagination);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

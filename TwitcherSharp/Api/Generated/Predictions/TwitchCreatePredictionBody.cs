@@ -6,10 +6,10 @@ namespace TwitcherSharp.Api.Generated.Predictions;
 
 public partial class TwitchCreatePredictionBody : RefCounted, ITwitcherSharp<TwitchCreatePredictionBody>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string BroadcasterId { get; set; } = null!;
     public string Title { get; set; } = null!;
-    public TwitchBodyOutcomes[] Outcomes { get => field ??= _data?.GetArray<TwitchBodyOutcomes>("outcomes")!; set; } = null!;
+    public TwitchBodyOutcomes[] Outcomes { get => field ??= _data.GetArray<TwitchBodyOutcomes>("outcomes")!; set; } = null!;
     public int PredictionWindow { get; set; }
 
     /// <summary> 
@@ -20,25 +20,30 @@ public partial class TwitchCreatePredictionBody : RefCounted, ITwitcherSharp<Twi
         if(data == null) return null;
         var instance = new TwitchCreatePredictionBody
         {
-            BroadcasterId = data.Get("broadcaster_id").AsString(),
-            Title = data.Get("title").AsString(),
-            PredictionWindow = data.Get("prediction_window").AsInt32(),
+            BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
+            Title = data.Read("title", static v => v.AsString()),
+            PredictionWindow = data.Read("prediction_window", static v => v.AsInt32()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_create_prediction.gd");
-        var bodyClass = script.Get("Body").AsGodotObject();
-        var request = bodyClass.Call("new").AsGodotObject();
-        if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
-        if(Title != null) request.Set("title", Title);
-        if(Outcomes != null) request.Set("outcomes", Outcomes.ToGodotArray());
-        request.Set("prediction_window", PredictionWindow);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_create_prediction.gd", "Body");
+        if(BroadcasterId != null) request.SetValue("broadcaster_id", BroadcasterId);
+        if(Title != null) request.SetValue("title", Title);
+        if(Outcomes != null) request.SetArray("outcomes", Outcomes);
+        request.SetValue("prediction_window", PredictionWindow);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
     
     /// <summary> 
@@ -46,7 +51,7 @@ public partial class TwitchCreatePredictionBody : RefCounted, ITwitcherSharp<Twi
     /// </summary>
     public partial class TwitchBodyOutcomes : RefCounted, ITwitcherSharp<TwitchBodyOutcomes>
     {
-        private GodotObject? _data;
+        private Variant _data;
         public string Title { get; set; } = null!;
     
         /// <summary> 
@@ -57,20 +62,25 @@ public partial class TwitchCreatePredictionBody : RefCounted, ITwitcherSharp<Twi
             if(data == null) return null;
             var instance = new TwitchBodyOutcomes
             {
-                Title = data.Get("title").AsString(),
+                Title = data.Read("title", static v => v.AsString()),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_create_prediction.gd");
-            var twitchBodyOutcomesClass = script.Get("BodyOutcomes").AsGodotObject();
-            var request = twitchBodyOutcomesClass.Call("new").AsGodotObject();
-            if(Title != null) request.Set("title", Title);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_create_prediction.gd", "BodyOutcomes");
+            if(Title != null) request.SetValue("title", Title);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     
     }

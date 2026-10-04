@@ -6,8 +6,8 @@ namespace TwitcherSharp.Api.Generated.Chat;
 
 public partial class TwitchGetPinnedChatMessageResponse : RefCounted, ITwitcherSharp<TwitchGetPinnedChatMessageResponse>
 {
-    private GodotObject? _data;
-    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data")!; set; } = null!;
+    private Variant _data;
+    public TwitchResponseData[] Data { get => field ??= _data.GetArray<TwitchResponseData>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetPinnedChatMessageResponse object.
@@ -17,17 +17,22 @@ public partial class TwitchGetPinnedChatMessageResponse : RefCounted, ITwitcherS
         if(data == null) return null;
         var instance = new TwitchGetPinnedChatMessageResponse();
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_pinned_chat_message.gd");
-        var responseClass = script.Get("Response").AsGodotObject();
-        var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data.ToGodotArray());
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_pinned_chat_message.gd", "Response");
+        if(Data != null) request.SetArray("data", Data);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
     
     /// <summary> 
@@ -35,7 +40,7 @@ public partial class TwitchGetPinnedChatMessageResponse : RefCounted, ITwitcherS
     /// </summary>
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
-        private GodotObject? _data;
+        private Variant _data;
         public string MessageId { get; set; } = null!;
         public string BroadcasterId { get; set; } = null!;
         public string SenderUserId { get; set; } = null!;
@@ -44,7 +49,7 @@ public partial class TwitchGetPinnedChatMessageResponse : RefCounted, ITwitcherS
         public string PinnedByUserId { get; set; } = null!;
         public string PinnedByUserLogin { get; set; } = null!;
         public string PinnedByUserName { get; set; } = null!;
-        public TwitchResponseMessage Message { get => field ??= _data?.Get<TwitchResponseMessage>("message")!; set; } = null!;
+        public TwitchResponseMessage Message { get => field ??= _data.Get<TwitchResponseMessage>("message")!; set; } = null!;
         public string StartsAt { get; set; } = null!;
         public string EndsAt { get; set; } = null!;
         public string UpdatedAt { get; set; } = null!;
@@ -57,41 +62,46 @@ public partial class TwitchGetPinnedChatMessageResponse : RefCounted, ITwitcherS
             if(data == null) return null;
             var instance = new TwitchResponseData
             {
-                MessageId = data.Get("message_id").AsString(),
-                BroadcasterId = data.Get("broadcaster_id").AsString(),
-                SenderUserId = data.Get("sender_user_id").AsString(),
-                SenderUserLogin = data.Get("sender_user_login").AsString(),
-                SenderUserName = data.Get("sender_user_name").AsString(),
-                PinnedByUserId = data.Get("pinned_by_user_id").AsString(),
-                PinnedByUserLogin = data.Get("pinned_by_user_login").AsString(),
-                PinnedByUserName = data.Get("pinned_by_user_name").AsString(),
-                StartsAt = data.Get("starts_at").AsString(),
-                EndsAt = data.Get("ends_at").AsString(),
-                UpdatedAt = data.Get("updated_at").AsString(),
+                MessageId = data.Read("message_id", static v => v.AsString()),
+                BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
+                SenderUserId = data.Read("sender_user_id", static v => v.AsString()),
+                SenderUserLogin = data.Read("sender_user_login", static v => v.AsString()),
+                SenderUserName = data.Read("sender_user_name", static v => v.AsString()),
+                PinnedByUserId = data.Read("pinned_by_user_id", static v => v.AsString()),
+                PinnedByUserLogin = data.Read("pinned_by_user_login", static v => v.AsString()),
+                PinnedByUserName = data.Read("pinned_by_user_name", static v => v.AsString()),
+                StartsAt = data.Read("starts_at", static v => v.AsString()),
+                EndsAt = data.Read("ends_at", static v => v.AsString()),
+                UpdatedAt = data.Read("updated_at", static v => v.AsString()),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_pinned_chat_message.gd");
-            var twitchResponseDataClass = script.Get("ResponseData").AsGodotObject();
-            var request = twitchResponseDataClass.Call("new").AsGodotObject();
-            if(MessageId != null) request.Set("message_id", MessageId);
-            if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
-            if(SenderUserId != null) request.Set("sender_user_id", SenderUserId);
-            if(SenderUserLogin != null) request.Set("sender_user_login", SenderUserLogin);
-            if(SenderUserName != null) request.Set("sender_user_name", SenderUserName);
-            if(PinnedByUserId != null) request.Set("pinned_by_user_id", PinnedByUserId);
-            if(PinnedByUserLogin != null) request.Set("pinned_by_user_login", PinnedByUserLogin);
-            if(PinnedByUserName != null) request.Set("pinned_by_user_name", PinnedByUserName);
-            if(Message != null) request.Set("message", Message.ToGodotObject());
-            if(StartsAt != null) request.Set("starts_at", StartsAt);
-            if(EndsAt != null) request.Set("ends_at", EndsAt);
-            if(UpdatedAt != null) request.Set("updated_at", UpdatedAt);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_pinned_chat_message.gd", "ResponseData");
+            if(MessageId != null) request.SetValue("message_id", MessageId);
+            if(BroadcasterId != null) request.SetValue("broadcaster_id", BroadcasterId);
+            if(SenderUserId != null) request.SetValue("sender_user_id", SenderUserId);
+            if(SenderUserLogin != null) request.SetValue("sender_user_login", SenderUserLogin);
+            if(SenderUserName != null) request.SetValue("sender_user_name", SenderUserName);
+            if(PinnedByUserId != null) request.SetValue("pinned_by_user_id", PinnedByUserId);
+            if(PinnedByUserLogin != null) request.SetValue("pinned_by_user_login", PinnedByUserLogin);
+            if(PinnedByUserName != null) request.SetValue("pinned_by_user_name", PinnedByUserName);
+            if(Message != null) request.SetObject("message", Message);
+            if(StartsAt != null) request.SetValue("starts_at", StartsAt);
+            if(EndsAt != null) request.SetValue("ends_at", EndsAt);
+            if(UpdatedAt != null) request.SetValue("updated_at", UpdatedAt);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
         
         /// <summary> 
@@ -99,9 +109,9 @@ public partial class TwitchGetPinnedChatMessageResponse : RefCounted, ITwitcherS
         /// </summary>
         public partial class TwitchResponseMessage : RefCounted, ITwitcherSharp<TwitchResponseMessage>
         {
-            private GodotObject? _data;
+            private Variant _data;
             public string Text { get; set; } = null!;
-            public TwitchResponseFragments[] Fragments { get => field ??= _data?.GetArray<TwitchResponseFragments>("fragments")!; set; } = null!;
+            public TwitchResponseFragments[] Fragments { get => field ??= _data.GetArray<TwitchResponseFragments>("fragments")!; set; } = null!;
         
             /// <summary> 
             /// Transforms the godot data into a TwitchResponseMessage object.
@@ -111,21 +121,26 @@ public partial class TwitchGetPinnedChatMessageResponse : RefCounted, ITwitcherS
                 if(data == null) return null;
                 var instance = new TwitchResponseMessage
                 {
-                    Text = data.Get("text").AsString(),
+                    Text = data.Read("text", static v => v.AsString()),
                 };
                 
-                instance._data = data;
+                instance._data = Variant.CreateFrom(data);
                 return instance;
             }
         
             public GodotObject ToGodotObject()
             {
-                var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_pinned_chat_message.gd");
-                var twitchResponseMessageClass = script.Get("ResponseMessage").AsGodotObject();
-                var request = twitchResponseMessageClass.Call("new").AsGodotObject();
-                if(Text != null) request.Set("text", Text);
-                if(Fragments != null) request.Set("fragments", Fragments.ToGodotArray());
+                var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_pinned_chat_message.gd", "ResponseMessage");
+                if(Text != null) request.SetValue("text", Text);
+                if(Fragments != null) request.SetArray("fragments", Fragments);
                 return request;
+            }
+        
+            /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+            protected override void Dispose(bool disposing)
+            {
+                if (disposing) _data.Dispose();
+                base.Dispose(disposing);
             }
             
             /// <summary> 
@@ -133,7 +148,7 @@ public partial class TwitchGetPinnedChatMessageResponse : RefCounted, ITwitcherS
             /// </summary>
             public partial class TwitchResponseFragments : RefCounted, ITwitcherSharp<TwitchResponseFragments>
             {
-                private GodotObject? _data;
+                private Variant _data;
                 public string Type { get; set; } = null!;
                 public string Text { get; set; } = null!;
                 public Variant Cheermote { get; set; }
@@ -158,48 +173,53 @@ public partial class TwitchGetPinnedChatMessageResponse : RefCounted, ITwitcherS
                     if(data == null) return null;
                     var instance = new TwitchResponseFragments
                     {
-                        Type = data.Get("type").AsString(),
-                        Text = data.Get("text").AsString(),
-                        Cheermote = data.Get("cheermote").As<Variant>(),
-                        Prefix = data.Get("prefix").AsString(),
-                        Bits = data.Get("bits").AsInt32(),
-                        Tier = data.Get("tier").AsInt32(),
-                        Emote = data.Get("emote").As<Variant>(),
-                        Id = data.Get("id").AsString(),
-                        EmoteSetId = data.Get("emote_set_id").AsString(),
-                        OwnerId = data.Get("owner_id").AsString(),
-                        Format = data.Get("format").AsStringArray(),
-                        Mention = data.Get("mention").As<Variant>(),
-                        UserId = data.Get("user_id").AsString(),
-                        UserLogin = data.Get("user_login").AsString(),
-                        UserName = data.Get("user_name").AsString(),
+                        Type = data.Read("type", static v => v.AsString()),
+                        Text = data.Read("text", static v => v.AsString()),
+                        Cheermote = data.Read("cheermote", static v => v.As<Variant>()),
+                        Prefix = data.Read("prefix", static v => v.AsString()),
+                        Bits = data.Read("bits", static v => v.AsInt32()),
+                        Tier = data.Read("tier", static v => v.AsInt32()),
+                        Emote = data.Read("emote", static v => v.As<Variant>()),
+                        Id = data.Read("id", static v => v.AsString()),
+                        EmoteSetId = data.Read("emote_set_id", static v => v.AsString()),
+                        OwnerId = data.Read("owner_id", static v => v.AsString()),
+                        Format = data.Read("format", static v => v.AsStringArray()),
+                        Mention = data.Read("mention", static v => v.As<Variant>()),
+                        UserId = data.Read("user_id", static v => v.AsString()),
+                        UserLogin = data.Read("user_login", static v => v.AsString()),
+                        UserName = data.Read("user_name", static v => v.AsString()),
                     };
                     
-                    instance._data = data;
+                    instance._data = Variant.CreateFrom(data);
                     return instance;
                 }
             
                 public GodotObject ToGodotObject()
                 {
-                    var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_pinned_chat_message.gd");
-                    var twitchResponseFragmentsClass = script.Get("ResponseFragments").AsGodotObject();
-                    var request = twitchResponseFragmentsClass.Call("new").AsGodotObject();
-                    if(Type != null) request.Set("type", Type);
-                    if(Text != null) request.Set("text", Text);
-                    request.Set("cheermote", Cheermote);
-                    if(Prefix != null) request.Set("prefix", Prefix);
-                    request.Set("bits", Bits);
-                    request.Set("tier", Tier);
-                    request.Set("emote", Emote);
-                    if(Id != null) request.Set("id", Id);
-                    if(EmoteSetId != null) request.Set("emote_set_id", EmoteSetId);
-                    if(OwnerId != null) request.Set("owner_id", OwnerId);
-                    if(Format != null) request.Set("format", new Godot.Collections.Array<string>(Format));
-                    request.Set("mention", Mention);
-                    if(UserId != null) request.Set("user_id", UserId);
-                    if(UserLogin != null) request.Set("user_login", UserLogin);
-                    if(UserName != null) request.Set("user_name", UserName);
+                    var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_pinned_chat_message.gd", "ResponseFragments");
+                    if(Type != null) request.SetValue("type", Type);
+                    if(Text != null) request.SetValue("text", Text);
+                    request.SetValue("cheermote", Cheermote);
+                    if(Prefix != null) request.SetValue("prefix", Prefix);
+                    request.SetValue("bits", Bits);
+                    request.SetValue("tier", Tier);
+                    request.SetValue("emote", Emote);
+                    if(Id != null) request.SetValue("id", Id);
+                    if(EmoteSetId != null) request.SetValue("emote_set_id", EmoteSetId);
+                    if(OwnerId != null) request.SetValue("owner_id", OwnerId);
+                    if(Format != null) request.SetValue("format", new Godot.Collections.Array<string>(Format));
+                    request.SetValue("mention", Mention);
+                    if(UserId != null) request.SetValue("user_id", UserId);
+                    if(UserLogin != null) request.SetValue("user_login", UserLogin);
+                    if(UserName != null) request.SetValue("user_name", UserName);
                     return request;
+                }
+            
+                /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+                protected override void Dispose(bool disposing)
+                {
+                    if (disposing) _data.Dispose();
+                    base.Dispose(disposing);
                 }
             
             }

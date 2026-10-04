@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.Shared;
 
 public partial class TwitchBitsVoting : RefCounted, ITwitcherSharpEventSub<TwitchBitsVoting>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// Not used; will be set to false.
@@ -28,20 +28,26 @@ public partial class TwitchBitsVoting : RefCounted, ITwitcherSharpEventSub<Twitc
         if(data == null) return null;
         var instance = new TwitchBitsVoting
         {
-            IsEnabled = data.Get("is_enabled").AsBool(),
-            AmountPerVote = data.Get("amount_per_vote").AsInt32(),
+            IsEnabled = data.Read("is_enabled", static v => v.AsBool()),
+            AmountPerVote = data.Read("amount_per_vote", static v => v.AsInt32()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_bits_voting.gd");
-        var request = script.New().AsGodotObject();
-        request.Set("is_enabled", IsEnabled);
-        request.Set("amount_per_vote", AmountPerVote);
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated_eventsub/twitch_es_bits_voting.gd");
+        request.SetValue("is_enabled", IsEnabled);
+        request.SetValue("amount_per_vote", AmountPerVote);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 }

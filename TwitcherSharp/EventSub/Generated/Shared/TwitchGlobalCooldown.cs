@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.Shared;
 
 public partial class TwitchGlobalCooldown : RefCounted, ITwitcherSharpEventSub<TwitchGlobalCooldown>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// Is the setting enabled.
@@ -28,20 +28,26 @@ public partial class TwitchGlobalCooldown : RefCounted, ITwitcherSharpEventSub<T
         if(data == null) return null;
         var instance = new TwitchGlobalCooldown
         {
-            IsEnabled = data.Get("is_enabled").AsBool(),
-            Seconds = data.Get("seconds").AsInt32(),
+            IsEnabled = data.Read("is_enabled", static v => v.AsBool()),
+            Seconds = data.Read("seconds", static v => v.AsInt32()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_global_cooldown.gd");
-        var request = script.New().AsGodotObject();
-        request.Set("is_enabled", IsEnabled);
-        request.Set("seconds", Seconds);
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated_eventsub/twitch_es_global_cooldown.gd");
+        request.SetValue("is_enabled", IsEnabled);
+        request.SetValue("seconds", Seconds);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 }

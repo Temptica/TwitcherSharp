@@ -7,8 +7,8 @@ namespace TwitcherSharp.Api.Generated.Chat;
 
 public partial class TwitchGetEmoteSetsResponse : RefCounted, ITwitcherSharp<TwitchGetEmoteSetsResponse>
 {
-    private GodotObject? _data;
-    public TwitchEmote[] Data { get => field ??= _data?.GetArray<TwitchEmote>("data")!; set; } = null!;
+    private Variant _data;
+    public TwitchEmote[] Data { get => field ??= _data.GetArray<TwitchEmote>("data")!; set; } = null!;
     public string Template { get; set; } = null!;
 
     /// <summary> 
@@ -19,21 +19,26 @@ public partial class TwitchGetEmoteSetsResponse : RefCounted, ITwitcherSharp<Twi
         if(data == null) return null;
         var instance = new TwitchGetEmoteSetsResponse
         {
-            Template = data.Get("template").AsString(),
+            Template = data.Read("template", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_emote_sets.gd");
-        var responseClass = script.Get("Response").AsGodotObject();
-        var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data.ToGodotArray());
-        if(Template != null) request.Set("template", Template);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_emote_sets.gd", "Response");
+        if(Data != null) request.SetArray("data", Data);
+        if(Template != null) request.SetValue("template", Template);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

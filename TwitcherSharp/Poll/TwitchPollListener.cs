@@ -49,13 +49,11 @@ public partial class TwitchPollListener : RefCounted, ITwitcherSharp<TwitchPollL
     {
         get
         {
-            if (_data is null) return field;
-            using var broadcaster = _data.Get("broadcaster");
-            return TwitchUser.FromObject(broadcaster.AsGodotObject());
+            return _data is null ? field : _data.Get<TwitchUser>("broadcaster");
         }
         set
         {
-            _data?.Set("broadcaster", value?.ToGodotObject() ?? new Variant());
+            _data?.SetObject("broadcaster", value);
             field = value;
         }
     }
@@ -98,7 +96,7 @@ public partial class TwitchPollListener : RefCounted, ITwitcherSharp<TwitchPollL
 
     public void EnsureSubscriptions()
     {
-        _data!.Call("ensure_subscriptions");
+        _data!.Invoke("ensure_subscriptions");
     }
 
     public void ConnectSignals()
@@ -117,7 +115,7 @@ public partial class TwitchPollListener : RefCounted, ITwitcherSharp<TwitchPollL
         var pollListener = new TwitchPollListener()
         {
             _data = data,
-            EnsureSubscriptionsOnReady = data.Get("ensure_subscriptions_on_ready").AsBool(),
+            EnsureSubscriptionsOnReady = data.Read("ensure_subscriptions_on_ready", static v => v.AsBool()),
         };
 
         pollListener.TwitchEventSub ??= TwitchEventSub.Instance;
@@ -130,10 +128,9 @@ public partial class TwitchPollListener : RefCounted, ITwitcherSharp<TwitchPollL
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/poll/twitch_poll_listener.gd");
-        var obj = script.New().AsGodotObject();
-        obj.Set("ensure_subscriptions_on_ready", EnsureSubscriptionsOnReady);
-        obj.Set("broadcaster", Broadcaster?.ToGodotObject() ?? new Variant());
+        var obj = InteropExtension.NewObject("res://addons/twitcher/poll/twitch_poll_listener.gd");
+        obj.SetValue("ensure_subscriptions_on_ready", EnsureSubscriptionsOnReady);
+        obj.SetObject("broadcaster", Broadcaster);
         return obj;
     }
 }

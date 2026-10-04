@@ -6,7 +6,7 @@ namespace TwitcherSharp.Api.Generated.Schedule;
 
 public partial class TwitchCreateChannelStreamScheduleSegmentBody : RefCounted, ITwitcherSharp<TwitchCreateChannelStreamScheduleSegmentBody>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string StartTime { get; set; } = null!;
     public string Timezone { get; set; } = null!;
     public string Duration { get; set; } = null!;
@@ -22,30 +22,35 @@ public partial class TwitchCreateChannelStreamScheduleSegmentBody : RefCounted, 
         if(data == null) return null;
         var instance = new TwitchCreateChannelStreamScheduleSegmentBody
         {
-            StartTime = data.Get("start_time").AsString(),
-            Timezone = data.Get("timezone").AsString(),
-            Duration = data.Get("duration").AsString(),
-            IsRecurring = data.Get("is_recurring").AsBool(),
-            CategoryId = data.Get("category_id").AsString(),
-            Title = data.Get("title").AsString(),
+            StartTime = data.Read("start_time", static v => v.AsString()),
+            Timezone = data.Read("timezone", static v => v.AsString()),
+            Duration = data.Read("duration", static v => v.AsString()),
+            IsRecurring = data.Read("is_recurring", static v => v.AsBool()),
+            CategoryId = data.Read("category_id", static v => v.AsString()),
+            Title = data.Read("title", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_create_channel_stream_schedule_segment.gd");
-        var bodyClass = script.Get("Body").AsGodotObject();
-        var request = bodyClass.Call("new").AsGodotObject();
-        if(StartTime != null) request.Set("start_time", StartTime);
-        if(Timezone != null) request.Set("timezone", Timezone);
-        if(Duration != null) request.Set("duration", Duration);
-        if(IsRecurring.HasValue) request.Set("is_recurring", IsRecurring.Value);
-        if(CategoryId != null) request.Set("category_id", CategoryId);
-        if(Title != null) request.Set("title", Title);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_create_channel_stream_schedule_segment.gd", "Body");
+        if(StartTime != null) request.SetValue("start_time", StartTime);
+        if(Timezone != null) request.SetValue("timezone", Timezone);
+        if(Duration != null) request.SetValue("duration", Duration);
+        if(IsRecurring.HasValue) request.SetValue("is_recurring", IsRecurring.Value);
+        if(CategoryId != null) request.SetValue("category_id", CategoryId);
+        if(Title != null) request.SetValue("title", Title);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

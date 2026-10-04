@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelChatSettingsUpdate;
 
 public partial class TwitchChannelChatSettingsUpdateEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelChatSettingsUpdateEvent>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// The ID of the broadcaster specified in the request.
@@ -68,37 +68,42 @@ public partial class TwitchChannelChatSettingsUpdateEvent : RefCounted, ITwitche
         if(data == null) return null;
         var instance = new TwitchChannelChatSettingsUpdateEvent
         {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-            BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
-            BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
-            EmoteMode = data.Get("emote_mode").AsBool(),
-            FollowerMode = data.Get("follower_mode").AsBool(),
-            FollowerModeDurationMinutes = data.Get("follower_mode_duration_minutes").AsInt32(),
-            SlowMode = data.Get("slow_mode").AsBool(),
-            SlowModeWaitTimeSeconds = data.Get("slow_mode_wait_time_seconds").AsInt32(),
-            SubscriberMode = data.Get("subscriber_mode").AsBool(),
-            UniqueChatMode = data.Get("unique_chat_mode").AsBool(),
+            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
+            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
+            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
+            EmoteMode = data.Read("emote_mode", static v => v.AsBool()),
+            FollowerMode = data.Read("follower_mode", static v => v.AsBool()),
+            FollowerModeDurationMinutes = data.Read("follower_mode_duration_minutes", static v => v.AsInt32()),
+            SlowMode = data.Read("slow_mode", static v => v.AsBool()),
+            SlowModeWaitTimeSeconds = data.Read("slow_mode_wait_time_seconds", static v => v.AsInt32()),
+            SubscriberMode = data.Read("subscriber_mode", static v => v.AsBool()),
+            UniqueChatMode = data.Read("unique_chat_mode", static v => v.AsBool()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_settings_update.gd");
-        var eventClass = script.Get("Event").As<GDScript>();
-        var request = eventClass.New().AsGodotObject();
-        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
-        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
-        request.Set("emote_mode", EmoteMode);
-        request.Set("follower_mode", FollowerMode);
-        request.Set("follower_mode_duration_minutes", FollowerModeDurationMinutes);
-        request.Set("slow_mode", SlowMode);
-        request.Set("slow_mode_wait_time_seconds", SlowModeWaitTimeSeconds);
-        request.Set("subscriber_mode", SubscriberMode);
-        request.Set("unique_chat_mode", UniqueChatMode);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_settings_update.gd", "Event");
+        if(BroadcasterUserId != null) request.SetValue("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserLogin != null) request.SetValue("broadcaster_user_login", BroadcasterUserLogin);
+        if(BroadcasterUserName != null) request.SetValue("broadcaster_user_name", BroadcasterUserName);
+        request.SetValue("emote_mode", EmoteMode);
+        request.SetValue("follower_mode", FollowerMode);
+        request.SetValue("follower_mode_duration_minutes", FollowerModeDurationMinutes);
+        request.SetValue("slow_mode", SlowMode);
+        request.SetValue("slow_mode_wait_time_seconds", SlowModeWaitTimeSeconds);
+        request.SetValue("subscriber_mode", SubscriberMode);
+        request.SetValue("unique_chat_mode", UniqueChatMode);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 }

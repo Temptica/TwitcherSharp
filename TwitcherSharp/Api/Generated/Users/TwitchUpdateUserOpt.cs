@@ -10,7 +10,7 @@ namespace TwitcherSharp.Api.Generated.Users;
 /// </summary>
 public partial class TwitchUpdateUserOpt : RefCounted, ITwitcherSharp<TwitchUpdateUserOpt>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string? Description { get; set; }
 
     /// <summary> 
@@ -21,20 +21,25 @@ public partial class TwitchUpdateUserOpt : RefCounted, ITwitcherSharp<TwitchUpda
         if(data == null) return null;
         var instance = new TwitchUpdateUserOpt
         {
-            Description = data.Get("description").AsString(),
+            Description = data.Read("description", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_update_user.gd");
-        var optClass = script.Get("Opt").AsGodotObject();
-        var request = optClass.Call("new").AsGodotObject();
-        if(Description != null) request.Set("description", Description);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_update_user.gd", "Opt");
+        if(Description != null) request.SetValue("description", Description);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

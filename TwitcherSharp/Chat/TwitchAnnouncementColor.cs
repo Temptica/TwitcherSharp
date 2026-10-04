@@ -1,11 +1,11 @@
 using Godot;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.Chat;
 
 public partial class TwitchAnnouncementColor(string color) : RefCounted, ITwitcherSharp<TwitchAnnouncementColor>
 {
-    private GodotObject? _data;
     public string Value { get; set; } = color;
 
     public static readonly TwitchAnnouncementColor Blue = new("blue");
@@ -16,13 +16,12 @@ public partial class TwitchAnnouncementColor(string color) : RefCounted, ITwitch
 
     public static TwitchAnnouncementColor? FromObject(GodotObject? data)
     {
-        return data == null ? null : new TwitchAnnouncementColor(data.Get("value").AsString());
+        return data == null ? null : new TwitchAnnouncementColor(data.Read("value", static v => v.AsString()));
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_announcement_color.gd");
-        return script.New(Value).AsGodotObject();
+        return InteropExtension.NewObject("res://addons/twitcher/chat/twitch_announcement_color.gd", Value);
     }
 
     public static implicit operator TwitchAnnouncementColor(string color)

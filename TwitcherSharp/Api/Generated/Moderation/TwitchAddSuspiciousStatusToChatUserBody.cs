@@ -6,7 +6,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 
 public partial class TwitchAddSuspiciousStatusToChatUserBody : RefCounted, ITwitcherSharp<TwitchAddSuspiciousStatusToChatUserBody>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string UserId { get; set; } = null!;
     public string Status { get; set; } = null!;
 
@@ -18,22 +18,27 @@ public partial class TwitchAddSuspiciousStatusToChatUserBody : RefCounted, ITwit
         if(data == null) return null;
         var instance = new TwitchAddSuspiciousStatusToChatUserBody
         {
-            UserId = data.Get("user_id").AsString(),
-            Status = data.Get("status").AsString(),
+            UserId = data.Read("user_id", static v => v.AsString()),
+            Status = data.Read("status", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_add_suspicious_status_to_chat_user.gd");
-        var bodyClass = script.Get("Body").AsGodotObject();
-        var request = bodyClass.Call("new").AsGodotObject();
-        if(UserId != null) request.Set("user_id", UserId);
-        if(Status != null) request.Set("status", Status);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_add_suspicious_status_to_chat_user.gd", "Body");
+        if(UserId != null) request.SetValue("user_id", UserId);
+        if(Status != null) request.SetValue("status", Status);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

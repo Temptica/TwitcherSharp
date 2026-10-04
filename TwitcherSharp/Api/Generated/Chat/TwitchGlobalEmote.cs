@@ -7,10 +7,10 @@ namespace TwitcherSharp.Api.Generated.Chat;
 
 public partial class TwitchGlobalEmote : RefCounted, ITwitcherSharp<TwitchGlobalEmote>, ITwitchEmote
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string Id { get; set; } = null!;
     public string Name { get; set; } = null!;
-    public ITwitchImages Images { get => field ??= _data?.Get<TwitchResponseImages>("images")!; set; } = null!;
+    public ITwitchImages Images { get => field ??= _data.Get<TwitchResponseImages>("images")!; set; } = null!;
     public string[] Format { get; set; } = null!;
     public string[] Scale { get; set; } = null!;
     public string[] ThemeMode { get; set; } = null!;
@@ -23,28 +23,34 @@ public partial class TwitchGlobalEmote : RefCounted, ITwitcherSharp<TwitchGlobal
         if(data == null) return null;
         var instance = new TwitchGlobalEmote
         {
-            Id = data.Get("id").AsString(),
-            Name = data.Get("name").AsString(),
-            Format = data.Get("format").AsStringArray(),
-            Scale = data.Get("scale").AsStringArray(),
-            ThemeMode = data.Get("theme_mode").AsStringArray(),
+            Id = data.Read("id", static v => v.AsString()),
+            Name = data.Read("name", static v => v.AsString()),
+            Format = data.Read("format", static v => v.AsStringArray()),
+            Scale = data.Read("scale", static v => v.AsStringArray()),
+            ThemeMode = data.Read("theme_mode", static v => v.AsStringArray()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_global_emote.gd");
-        var request = script.Call("new").AsGodotObject();
-        if(Id != null) request.Set("id", Id);
-        if(Name != null) request.Set("name", Name);
-        if(Images != null) request.Set("images", Images.ToGodotObject());
-        if(Format != null) request.Set("format", new Godot.Collections.Array<string>(Format));
-        if(Scale != null) request.Set("scale", new Godot.Collections.Array<string>(Scale));
-        if(ThemeMode != null) request.Set("theme_mode", new Godot.Collections.Array<string>(ThemeMode));
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated/twitch_global_emote.gd");
+        if(Id != null) request.SetValue("id", Id);
+        if(Name != null) request.SetValue("name", Name);
+        if(Images != null) request.SetObject("images", Images);
+        if(Format != null) request.SetValue("format", new Godot.Collections.Array<string>(Format));
+        if(Scale != null) request.SetValue("scale", new Godot.Collections.Array<string>(Scale));
+        if(ThemeMode != null) request.SetValue("theme_mode", new Godot.Collections.Array<string>(ThemeMode));
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
     
     /// <summary> 
@@ -54,7 +60,7 @@ public partial class TwitchGlobalEmote : RefCounted, ITwitcherSharp<TwitchGlobal
     /// </summary>
     public partial class TwitchResponseImages : RefCounted, ITwitcherSharp<TwitchResponseImages>, ITwitchImages
     {
-        private GodotObject? _data;
+        private Variant _data;
         public string Url1x { get; set; } = null!;
         public string Url2x { get; set; } = null!;
         public string Url4x { get; set; } = null!;
@@ -67,24 +73,29 @@ public partial class TwitchGlobalEmote : RefCounted, ITwitcherSharp<TwitchGlobal
             if(data == null) return null;
             var instance = new TwitchResponseImages
             {
-                Url1x = data.Get("url_1x").AsString(),
-                Url2x = data.Get("url_2x").AsString(),
-                Url4x = data.Get("url_4x").AsString(),
+                Url1x = data.Read("url_1x", static v => v.AsString()),
+                Url2x = data.Read("url_2x", static v => v.AsString()),
+                Url4x = data.Read("url_4x", static v => v.AsString()),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_response_images.gd");
-            var twitchResponseImagesClass = script.Get("ResponseImages").AsGodotObject();
-            var request = twitchResponseImagesClass.Call("new").AsGodotObject();
-            if(Url1x != null) request.Set("url_1x", Url1x);
-            if(Url2x != null) request.Set("url_2x", Url2x);
-            if(Url4x != null) request.Set("url_4x", Url4x);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_response_images.gd", "ResponseImages");
+            if(Url1x != null) request.SetValue("url_1x", Url1x);
+            if(Url2x != null) request.SetValue("url_2x", Url2x);
+            if(Url4x != null) request.SetValue("url_4x", Url4x);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     
     }

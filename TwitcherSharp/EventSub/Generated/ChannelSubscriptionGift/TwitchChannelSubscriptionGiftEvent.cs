@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelSubscriptionGift;
 
 public partial class TwitchChannelSubscriptionGiftEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelSubscriptionGiftEvent>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// The user ID of the user who sent the subscription gift. Set to null if it was an anonymous subscription gift.
@@ -68,37 +68,42 @@ public partial class TwitchChannelSubscriptionGiftEvent : RefCounted, ITwitcherS
         if(data == null) return null;
         var instance = new TwitchChannelSubscriptionGiftEvent
         {
-            UserId = data.Get("user_id").AsString(),
-            UserLogin = data.Get("user_login").AsString(),
-            UserName = data.Get("user_name").AsString(),
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-            BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
-            BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
-            Total = data.Get("total").AsInt32(),
-            Tier = data.Get("tier").AsString(),
-            CumulativeTotal = data.Get("cumulative_total").AsInt32(),
-            IsAnonymous = data.Get("is_anonymous").AsBool(),
+            UserId = data.Read("user_id", static v => v.AsString()),
+            UserLogin = data.Read("user_login", static v => v.AsString()),
+            UserName = data.Read("user_name", static v => v.AsString()),
+            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
+            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
+            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
+            Total = data.Read("total", static v => v.AsInt32()),
+            Tier = data.Read("tier", static v => v.AsString()),
+            CumulativeTotal = data.Read("cumulative_total", static v => v.AsInt32()),
+            IsAnonymous = data.Read("is_anonymous", static v => v.AsBool()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_subscription_gift.gd");
-        var eventClass = script.Get("Event").As<GDScript>();
-        var request = eventClass.New().AsGodotObject();
-        if(UserId != null) request.Set("user_id", UserId);
-        if(UserLogin != null) request.Set("user_login", UserLogin);
-        if(UserName != null) request.Set("user_name", UserName);
-        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
-        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
-        request.Set("total", Total);
-        if(Tier != null) request.Set("tier", Tier);
-        request.Set("cumulative_total", CumulativeTotal);
-        request.Set("is_anonymous", IsAnonymous);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_subscription_gift.gd", "Event");
+        if(UserId != null) request.SetValue("user_id", UserId);
+        if(UserLogin != null) request.SetValue("user_login", UserLogin);
+        if(UserName != null) request.SetValue("user_name", UserName);
+        if(BroadcasterUserId != null) request.SetValue("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserLogin != null) request.SetValue("broadcaster_user_login", BroadcasterUserLogin);
+        if(BroadcasterUserName != null) request.SetValue("broadcaster_user_name", BroadcasterUserName);
+        request.SetValue("total", Total);
+        if(Tier != null) request.SetValue("tier", Tier);
+        request.SetValue("cumulative_total", CumulativeTotal);
+        request.SetValue("is_anonymous", IsAnonymous);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 }

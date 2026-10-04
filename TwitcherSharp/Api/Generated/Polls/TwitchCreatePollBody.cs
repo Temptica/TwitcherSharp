@@ -6,10 +6,10 @@ namespace TwitcherSharp.Api.Generated.Polls;
 
 public partial class TwitchCreatePollBody : RefCounted, ITwitcherSharp<TwitchCreatePollBody>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string BroadcasterId { get; set; } = null!;
     public string Title { get; set; } = null!;
-    public TwitchBodyChoices[] Choices { get => field ??= _data?.GetArray<TwitchBodyChoices>("choices")!; set; } = null!;
+    public TwitchBodyChoices[] Choices { get => field ??= _data.GetArray<TwitchBodyChoices>("choices")!; set; } = null!;
     public int Duration { get; set; }
     public bool? ChannelPointsVotingEnabled { get; set; }
     public int? ChannelPointsPerVote { get; set; }
@@ -22,29 +22,34 @@ public partial class TwitchCreatePollBody : RefCounted, ITwitcherSharp<TwitchCre
         if(data == null) return null;
         var instance = new TwitchCreatePollBody
         {
-            BroadcasterId = data.Get("broadcaster_id").AsString(),
-            Title = data.Get("title").AsString(),
-            Duration = data.Get("duration").AsInt32(),
-            ChannelPointsVotingEnabled = data.Get("channel_points_voting_enabled").AsBool(),
-            ChannelPointsPerVote = data.Get("channel_points_per_vote").AsInt32(),
+            BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
+            Title = data.Read("title", static v => v.AsString()),
+            Duration = data.Read("duration", static v => v.AsInt32()),
+            ChannelPointsVotingEnabled = data.Read("channel_points_voting_enabled", static v => v.AsBool()),
+            ChannelPointsPerVote = data.Read("channel_points_per_vote", static v => v.AsInt32()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_create_poll.gd");
-        var bodyClass = script.Get("Body").AsGodotObject();
-        var request = bodyClass.Call("new").AsGodotObject();
-        if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
-        if(Title != null) request.Set("title", Title);
-        if(Choices != null) request.Set("choices", Choices.ToGodotArray());
-        request.Set("duration", Duration);
-        if(ChannelPointsVotingEnabled.HasValue) request.Set("channel_points_voting_enabled", ChannelPointsVotingEnabled.Value);
-        if(ChannelPointsPerVote.HasValue) request.Set("channel_points_per_vote", ChannelPointsPerVote.Value);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_create_poll.gd", "Body");
+        if(BroadcasterId != null) request.SetValue("broadcaster_id", BroadcasterId);
+        if(Title != null) request.SetValue("title", Title);
+        if(Choices != null) request.SetArray("choices", Choices);
+        request.SetValue("duration", Duration);
+        if(ChannelPointsVotingEnabled.HasValue) request.SetValue("channel_points_voting_enabled", ChannelPointsVotingEnabled.Value);
+        if(ChannelPointsPerVote.HasValue) request.SetValue("channel_points_per_vote", ChannelPointsPerVote.Value);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
     
     /// <summary> 
@@ -52,7 +57,7 @@ public partial class TwitchCreatePollBody : RefCounted, ITwitcherSharp<TwitchCre
     /// </summary>
     public partial class TwitchBodyChoices : RefCounted, ITwitcherSharp<TwitchBodyChoices>
     {
-        private GodotObject? _data;
+        private Variant _data;
         public string Title { get; set; } = null!;
     
         /// <summary> 
@@ -63,20 +68,25 @@ public partial class TwitchCreatePollBody : RefCounted, ITwitcherSharp<TwitchCre
             if(data == null) return null;
             var instance = new TwitchBodyChoices
             {
-                Title = data.Get("title").AsString(),
+                Title = data.Read("title", static v => v.AsString()),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_create_poll.gd");
-            var twitchBodyChoicesClass = script.Get("BodyChoices").AsGodotObject();
-            var request = twitchBodyChoicesClass.Call("new").AsGodotObject();
-            if(Title != null) request.Set("title", Title);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_create_poll.gd", "BodyChoices");
+            if(Title != null) request.SetValue("title", Title);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     
     }

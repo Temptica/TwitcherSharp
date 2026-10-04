@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.StreamOnline;
 
 public partial class TwitchStreamOnlineEvent : RefCounted, ITwitcherSharpEventSub<TwitchStreamOnlineEvent>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// The id of the stream.
@@ -48,29 +48,34 @@ public partial class TwitchStreamOnlineEvent : RefCounted, ITwitcherSharpEventSu
         if(data == null) return null;
         var instance = new TwitchStreamOnlineEvent
         {
-            Id = data.Get("id").AsString(),
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-            BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
-            BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
-            Type = data.Get("type").AsString(),
-            StartedAt = data.Get("started_at").AsString(),
+            Id = data.Read("id", static v => v.AsString()),
+            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
+            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
+            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
+            Type = data.Read("type", static v => v.AsString()),
+            StartedAt = data.Read("started_at", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_stream_online.gd");
-        var eventClass = script.Get("Event").As<GDScript>();
-        var request = eventClass.New().AsGodotObject();
-        if(Id != null) request.Set("id", Id);
-        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
-        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
-        if(Type != null) request.Set("type", Type);
-        if(StartedAt != null) request.Set("started_at", StartedAt);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_stream_online.gd", "Event");
+        if(Id != null) request.SetValue("id", Id);
+        if(BroadcasterUserId != null) request.SetValue("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserLogin != null) request.SetValue("broadcaster_user_login", BroadcasterUserLogin);
+        if(BroadcasterUserName != null) request.SetValue("broadcaster_user_name", BroadcasterUserName);
+        if(Type != null) request.SetValue("type", Type);
+        if(StartedAt != null) request.SetValue("started_at", StartedAt);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 }

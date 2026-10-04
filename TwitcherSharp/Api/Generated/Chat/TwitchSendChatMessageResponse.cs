@@ -6,8 +6,8 @@ namespace TwitcherSharp.Api.Generated.Chat;
 
 public partial class TwitchSendChatMessageResponse : RefCounted, ITwitcherSharp<TwitchSendChatMessageResponse>
 {
-    private GodotObject? _data;
-    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data")!; set; } = null!;
+    private Variant _data;
+    public TwitchResponseData[] Data { get => field ??= _data.GetArray<TwitchResponseData>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchSendChatMessageResponse object.
@@ -17,24 +17,29 @@ public partial class TwitchSendChatMessageResponse : RefCounted, ITwitcherSharp<
         if(data == null) return null;
         var instance = new TwitchSendChatMessageResponse();
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_send_chat_message.gd");
-        var responseClass = script.Get("Response").AsGodotObject();
-        var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data.ToGodotArray());
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_send_chat_message.gd", "Response");
+        if(Data != null) request.SetArray("data", Data);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
-        private GodotObject? _data;
+        private Variant _data;
         public string MessageId { get; set; } = null!;
         public bool IsSent { get; set; }
-        public TwitchResponseDropReason? DropReason { get => field ??= _data?.Get<TwitchResponseDropReason>("drop_reason"); set; }
+        public TwitchResponseDropReason? DropReason { get => field ??= _data.Get<TwitchResponseDropReason>("drop_reason"); set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseData object.
@@ -44,23 +49,28 @@ public partial class TwitchSendChatMessageResponse : RefCounted, ITwitcherSharp<
             if(data == null) return null;
             var instance = new TwitchResponseData
             {
-                MessageId = data.Get("message_id").AsString(),
-                IsSent = data.Get("is_sent").AsBool(),
+                MessageId = data.Read("message_id", static v => v.AsString()),
+                IsSent = data.Read("is_sent", static v => v.AsBool()),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_send_chat_message.gd");
-            var twitchResponseDataClass = script.Get("ResponseData").AsGodotObject();
-            var request = twitchResponseDataClass.Call("new").AsGodotObject();
-            if(MessageId != null) request.Set("message_id", MessageId);
-            request.Set("is_sent", IsSent);
-            if(DropReason != null) request.Set("drop_reason", DropReason);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_send_chat_message.gd", "ResponseData");
+            if(MessageId != null) request.SetValue("message_id", MessageId);
+            request.SetValue("is_sent", IsSent);
+            if(DropReason != null) request.SetValue("drop_reason", DropReason);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
         
         /// <summary> 
@@ -68,7 +78,7 @@ public partial class TwitchSendChatMessageResponse : RefCounted, ITwitcherSharp<
         /// </summary>
         public partial class TwitchResponseDropReason : RefCounted, ITwitcherSharp<TwitchResponseDropReason>
         {
-            private GodotObject? _data;
+            private Variant _data;
             public string Code { get; set; } = null!;
             public string Message { get; set; } = null!;
         
@@ -80,22 +90,27 @@ public partial class TwitchSendChatMessageResponse : RefCounted, ITwitcherSharp<
                 if(data == null) return null;
                 var instance = new TwitchResponseDropReason
                 {
-                    Code = data.Get("code").AsString(),
-                    Message = data.Get("message").AsString(),
+                    Code = data.Read("code", static v => v.AsString()),
+                    Message = data.Read("message", static v => v.AsString()),
                 };
                 
-                instance._data = data;
+                instance._data = Variant.CreateFrom(data);
                 return instance;
             }
         
             public GodotObject ToGodotObject()
             {
-                var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_send_chat_message.gd");
-                var twitchResponseDropReasonClass = script.Get("ResponseDropReason").AsGodotObject();
-                var request = twitchResponseDropReasonClass.Call("new").AsGodotObject();
-                if(Code != null) request.Set("code", Code);
-                if(Message != null) request.Set("message", Message);
+                var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_send_chat_message.gd", "ResponseDropReason");
+                if(Code != null) request.SetValue("code", Code);
+                if(Message != null) request.SetValue("message", Message);
                 return request;
+            }
+        
+            /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+            protected override void Dispose(bool disposing)
+            {
+                if (disposing) _data.Dispose();
+                base.Dispose(disposing);
             }
         
         }

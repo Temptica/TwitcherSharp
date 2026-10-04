@@ -6,9 +6,9 @@ namespace TwitcherSharp.Api.Generated.Bits;
 
 public partial class TwitchCheermoteImageTheme : RefCounted, ITwitcherSharp<TwitchCheermoteImageTheme>
 {
-    private GodotObject? _data;
-    public TwitchCheermoteImageFormat? Animated { get => field ??= _data?.Get<TwitchCheermoteImageFormat>("animated"); set; }
-    public TwitchCheermoteImageFormat? Static { get => field ??= _data?.Get<TwitchCheermoteImageFormat>("static"); set; }
+    private Variant _data;
+    public TwitchCheermoteImageFormat? Animated { get => field ??= _data.Get<TwitchCheermoteImageFormat>("animated"); set; }
+    public TwitchCheermoteImageFormat? Static { get => field ??= _data.Get<TwitchCheermoteImageFormat>("static"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCheermoteImageTheme object.
@@ -18,17 +18,23 @@ public partial class TwitchCheermoteImageTheme : RefCounted, ITwitcherSharp<Twit
         if(data == null) return null;
         var instance = new TwitchCheermoteImageTheme();
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_cheermote_image_theme.gd");
-        var request = script.Call("new").AsGodotObject();
-        if(Animated != null) request.Set("animated", Animated);
-        if(Static != null) request.Set("static", Static);
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated/twitch_cheermote_image_theme.gd");
+        if(Animated != null) request.SetValue("animated", Animated);
+        if(Static != null) request.SetValue("static", Static);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

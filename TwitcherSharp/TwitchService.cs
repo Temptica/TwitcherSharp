@@ -36,13 +36,13 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
     /// <returns></returns>
     public async Task<bool> Setup()
     {
-        var result = await _data!.CallAsync("setup");
+        using var result = await _data!.CallAsync("setup");
         return result.AsBool();
     }
 
-    public async Task UnSetup() => await _data!.CallAsync("unsetup");
+    public async Task UnSetup() => await _data!.InvokeAsync("unsetup");
 
-    public bool IsConfigured() => _data!.Call("is_configured").AsBool();
+    public bool IsConfigured() => _data!.Invoke("is_configured", static v => v.AsBool());
 
     /// <summary>
     /// Get data about a user by USER_ID
@@ -72,8 +72,8 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
 
     public async Task<ImageTexture> GetProfileImage(TwitchUser user)
     {
-        var result = await _data!.CallAsync("load_profile_image", user.ToGodotObject());
-        
+        using var userArg = GodotObjectExtension.ToVariant(user);
+        using var result = await _data!.CallAsync("load_profile_image", userArg);
         return result.As<ImageTexture>();
     }
 
@@ -87,8 +87,9 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
     public async Task<TwitchEventSubConfig?> SubscribeEvent(TwitchEventSubDefinition definition,
         ITwitcherSharpCondition condition)
     {
-        return await _data!.CallAsync<TwitchEventSubConfig>("subscribe_event", definition.ToGodotObject(),
-            condition.ToDictionary());
+        // twitcher's own definition object: a plain Object it keeps, so the wrapper is not disposed.
+        using var conditions = condition.ToDictionary();
+        return await _data!.CallAsync<TwitchEventSubConfig>("subscribe_event", definition.ToGodotObject(), conditions);
     }
 
     /// <summary>
@@ -96,7 +97,7 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
     /// </summary>
     public async Task WaitForEventSubConnection()
     {
-        await _data!.CallAsync("wait_for_eventsub_connection");
+        using var _ = await _data!.CallAsync("wait_for_eventsub_connection");
     }
 
     /// <summary>
@@ -111,7 +112,9 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
     public void Chat(string message, string replyParentMessageId = "", TwitchUser? broadcaster = null,
         TwitchUser? sender = null)
     {
-        _data!.Call("chat", message, replyParentMessageId, broadcaster?.ToGodotObject() ?? new Variant(), sender?.ToGodotObject() ?? new Variant());
+        using var broadcasterArg = GodotObjectExtension.ToVariant(broadcaster);
+        using var senderArg = GodotObjectExtension.ToVariant(sender);
+        _data!.Invoke("chat", message, replyParentMessageId, broadcasterArg, senderArg);
     }
 
     /// <summary>
@@ -122,7 +125,10 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
     /// <param name="moderator">The moderator that sends it</param>
     public async Task Shoutout(TwitchUser user, TwitchUser? broadcaster = null, TwitchUser? moderator = null)
     {
-        await _data!.CallAsync("send_shoutout", user.ToGodotObject(), broadcaster?.ToGodotObject() ?? new Variant(), moderator?.ToGodotObject() ?? new Variant());
+        using var userArg = GodotObjectExtension.ToVariant(user);
+        using var broadcasterArg = GodotObjectExtension.ToVariant(broadcaster);
+        using var moderatorArg = GodotObjectExtension.ToVariant(moderator);
+        using var _ = await _data!.CallAsync("send_shoutout", userArg, broadcasterArg, moderatorArg);
     }
 
     /// <summary>
@@ -136,8 +142,10 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
         TwitchUser? moderator = null)
     {
         color ??= TwitchAnnouncementColor.Primary;
-        await _data!.CallAsync("send_announcement", message, color.ToGodotObject(), broadcaster?.ToGodotObject() ?? new Variant(),
-            moderator?.ToGodotObject() ?? new Variant());
+        using var colorArg = GodotObjectExtension.ToVariant(color);
+        using var broadcasterArg = GodotObjectExtension.ToVariant(broadcaster);
+        using var moderatorArg = GodotObjectExtension.ToVariant(moderator);
+        using var _ = await _data!.CallAsync("send_announcement", message, colorArg, broadcasterArg, moderatorArg);
     }
 
     /// <summary>
@@ -160,10 +168,8 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
         TwitchCommandBase.WhereFlag where = TwitchCommandBase.WhereFlag.Chat, float userCooldown = 0,
         float globalCooldown = 0)
     {
-        var result = _data!.Call("add_command", command, callable, argsMin, argsMax, (int)permissionLevel, (int)where,
-            userCooldown,
-            globalCooldown);
-        return TwitchCommand.FromObject(result.AsGodotObject())!;
+        return _data!.Call<TwitchCommand>("add_command", command, callable, argsMin, argsMax, (int)permissionLevel,
+            (int)where, userCooldown, globalCooldown);
     }
 
     /// <summary>
@@ -177,7 +183,7 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
     }
 
     public void RemoveCommand(string command)
-        => _data!.Call("remove_command", command);
+        => _data!.Invoke("remove_command", command);
 
     /// <summary>
     /// Whispers to another user.
@@ -186,7 +192,7 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
     /// <param name="userId"></param>
     public async Task Whisper(string message, string userId)
     {
-        await _data!.CallAsync("whisper", message, userId);
+        await _data!.InvokeAsync("whisper", message, userId);
     }
 
     /// <summary>
@@ -198,7 +204,9 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
     {
         _data ??= ToGodotObject();
 
-        return (await _data.CallAsync("save_reward", twitchReward.ToGodotObject())).As<TwitchRewardService.SaveError>();
+        using var rewardArg = GodotObjectExtension.ToVariant(twitchReward);
+        using var result = await _data.CallAsync("save_reward", rewardArg);
+        return result.As<TwitchRewardService.SaveError>();
     }
 
     /// <summary>
@@ -210,27 +218,34 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
     {
         _data ??= ToGodotObject();
 
-        return (await _data.CallAsync("delete_reward", twitchReward.ToGodotObject()))
-            .As<TwitchRewardService.DeleteError>();
+        using var rewardArg = GodotObjectExtension.ToVariant(twitchReward);
+        using var result = await _data.CallAsync("delete_reward", rewardArg);
+        return result.As<TwitchRewardService.DeleteError>();
     }
 
     public async Task<Dictionary<string, ITwitchEmote>> GetEmotesData(string channelId = "global")
     {
-        var result = await _data!.CallAsync("get_emotes_data");
-        return result.AsGodotDictionary()
-            .Select(x =>
+        using var result = await _data!.CallAsync("get_emotes_data");
+        using var source = result.AsGodotDictionary();
+        var emotes = new Dictionary<string, ITwitchEmote>();
+        foreach (var (key, value) in source)
+        {
+            using (key)
+            using (value)
             {
-                var godotObject = x.Value.AsGodotObject();
-                ITwitchEmote? emote = godotObject.GetClass() switch
+                var godotObject = value.AsGodotObject();
+                ITwitchEmote? emote = godotObject?.GetClass() switch
                 {
                     "TwitchGlobalEmote" => TwitchGlobalEmote.FromObject(godotObject),
                     "TwitchChannelEmote" => TwitchChannelEmote.FromObject(godotObject),
                     _ => null
                 };
-                return (Key: x.Key.AsString(), Emote: emote);
-            })
-            .Where(x => x.Emote != null)
-            .ToDictionary(x => x.Key, x => x.Emote!);
+                godotObject.Release();
+                if (emote != null) emotes[key.AsString()] = emote;
+            }
+        }
+
+        return emotes;
     }
 
     /// <summary>
@@ -249,7 +264,7 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
     /// <param name="ids"></param>
     /// <returns>Key: EmoteID as String | Value: SpriteFrame</returns>
     public async Task<Godot.Collections.Dictionary<string, SpriteFrames>> GetEmotes(string[] ids) =>
-        (await _data!.CallAsync("get_emotes", ids)).AsGodotDictionary<string, SpriteFrames>();
+        await _data!.InvokeAsync("get_emotes", static v => v.AsGodotDictionary<string, SpriteFrames>(), ids);
 
     /// <summary>
     /// Gets the requested emotes in the specified theme, scale and type.
@@ -264,8 +279,8 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
 
     public async Task<Godot.Collections.Dictionary> Poll(string title, string[] choices, int duration = 60,
         bool channelPointsVotingEnabled = false, int channelPointsPerVote = 1000, string broadcasterId = "")
-        => (await _data!.CallAsync("poll", title, choices, duration, channelPointsVotingEnabled, channelPointsPerVote,
-            broadcasterId)).AsGodotDictionary();
+        => await _data!.InvokeAsync("poll", static v => v.AsGodotDictionary(), title, choices, duration, channelPointsVotingEnabled, channelPointsPerVote,
+            broadcasterId);
 
     public async Task<List<TwitchCheermote>> GetCheermoteData()
         => await _data!.CallListAsync<TwitchCheermote>("get_cheermote_data");
@@ -290,8 +305,7 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
     {
         if (_data is not null) return _data;
 
-        var script = GD.Load<GDScript>("res://addons/twitcher/twitch_service.gd");
-        _data = script.New().AsGodotObject();
+        _data = InteropExtension.NewObject("res://addons/twitcher/twitch_service.gd");
         _data.SetMeta("_twitcher_sharp_instance", this);
 
         return _data;

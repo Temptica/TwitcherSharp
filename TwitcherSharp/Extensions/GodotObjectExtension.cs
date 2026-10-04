@@ -82,17 +82,20 @@ public static class GodotObjectExtension
 
         internal List<T> GetList<T>(string propertyName) where T : RefCounted, ITwitcherSharp<T>
         {
-            return obj.Get(propertyName).AsGodotObjectArray<GodotObject>().Select(T.FromObject).OfType<T>().ToList();
+            using var value = obj.Get(propertyName);
+            return MapArray<T>(value);
         }
 
         internal T[] GetArray<T>(string propertyName) where T : RefCounted, ITwitcherSharp<T>
         {
-            return obj.Get(propertyName).AsGodotObjectArray<GodotObject>().Select(T.FromObject).OfType<T>().ToArray();
+            using var value = obj.Get(propertyName);
+            return MapArray<T>(value).ToArray();
         }
 
         internal T? Get<T>(string propertyName) where T : RefCounted, ITwitcherSharp<T>
         {
-            return T.FromObject(obj.Get(propertyName).AsGodotObject());
+            using var value = obj.Get(propertyName);
+            return Map<T>(value);
         }
 
         /// <summary>
@@ -112,10 +115,59 @@ public static class GodotObjectExtension
         }
 
         /// <inheritdoc cref="SetArray(GodotObject, string, IEnumerable{Variant})"/>
-        internal void SetArray<T>(string propertyName, IEnumerable<T>? items) where T : RefCounted, ITwitcherSharp<T>
+        internal void SetArray<T>(string propertyName, IEnumerable<T>? items) where T : ITwitcherSharp
         {
-            obj.SetArray(propertyName, (items ?? []).Select(item => Variant.CreateFrom(item.ToGodotObject())));
+            obj.SetArray(propertyName, (items ?? []).Select(item => ToVariant(item)));
         }
+    }
+
+    /// <summary>
+    /// Maps the twitcher object a Variant holds, disposing the wrapper it takes for that.
+    /// </summary>
+    internal static T? Map<T>(Variant value) where T : RefCounted, ITwitcherSharp<T>
+    {
+        if (value.VariantType != Variant.Type.Object) return null;
+        var gdObject = value.AsGodotObject();
+        try
+        {
+            return T.FromObject(gdObject);
+        }
+        finally
+        {
+            gdObject.Release();
+        }
+    }
+
+    /// <summary>
+    /// Maps the twitcher objects of an Array Variant, disposing every entry and wrapper it takes for that.
+    /// </summary>
+    internal static List<T> MapArray<T>(Variant value) where T : RefCounted, ITwitcherSharp<T>
+    {
+        if (value.VariantType != Variant.Type.Array) return [];
+        using var array = value.AsGodotArray();
+        var result = new List<T>(array.Count);
+        foreach (var item in array)
+        {
+            using (item)
+            {
+                if (Map<T>(item) is { } mapped) result.Add(mapped);
+            }
+        }
+
+        return result;
+    }
+
+    /// <summary>
+    /// A Variant holding the twitcher object of <paramref name="item"/> (or null), to pass it to twitcher; the caller
+    /// disposes it.
+    /// </summary>
+    internal static Variant ToVariant(ITwitcherSharp? item)
+    {
+        if (item is null) return default;
+        var gdObject = item.ToGodotObject();
+        var variant = Variant.CreateFrom(gdObject);
+        gdObject.Release();
+        return variant;
     }
 
     // The `params Variant[]` members below are kept as classic `this`-parameter extension methods rather than
@@ -125,7 +177,8 @@ public static class GodotObjectExtension
 
     public static T Call<T>(this GodotObject obj, string method, params Variant[] args) where T : RefCounted, ITwitcherSharp<T>
     {
-        return T.FromObject(obj.Call(method, args).AsGodotObject())!;
+        using var result = obj.Call(method, args);
+        return Map<T>(result)!;
     }
 
     private static readonly StringName Completed = "completed";
@@ -143,20 +196,68 @@ public static class GodotObjectExtension
     /// tracker at shutdown, after GDScript freed the object, which crashes the process on exit.
     /// </para>
     /// </remarks>
-    public static async Task<Variant> CallAsync(this GodotObject obj, string method, params Variant[] args)
+    public static Task<Variant> CallAsync(this GodotObject obj, string method, params Variant[] args) =>
+        AwaitResult(obj.Call(method, args));
+
+    /// <summary>
+    /// Calls a function of the twitcher object the Variant holds, see <see cref="CallAsync(GodotObject, string, Variant[])"/>.
+    /// The wrapper of the object is only taken for the call itself, not across the await.
+    /// </summary>
+    internal static Task<Variant> CallAsync(this Variant data, string method, params Variant[] args)
     {
+        var obj = data.AsGodotObject();
         var result = obj.Call(method, args);
+        obj.Release();
+        return AwaitResult(result);
+    }
+
+    /// <inheritdoc cref="CallAsync{T}(GodotObject, string, Variant[])"/>
+    internal static async Task<T?> CallAsync<T>(this Variant data, string method, params Variant[] args)
+        where T : RefCounted, ITwitcherSharp<T>
+    {
+        using var result = await data.CallAsync(method, args);
+        return Map<T>(result);
+    }
+
+    /// <inheritdoc cref="CallDictionaryKeyAsync{T, TVariant}(GodotObject, string, Variant[])"/>
+    internal static async Task<Godot.Collections.Dictionary<T, TVariant>> CallDictionaryKeyAsync<[MustBeVariant] T,
+        [MustBeVariant] TVariant>(this Variant data, string method, params Variant[] args)
+        where T : RefCounted, ITwitcherSharp<T>
+    {
+        using var result = await data.CallAsync(method, args);
+        return MapKeys<T, TVariant>(result);
+    }
+
+    /// <inheritdoc cref="CallListAsync{T}(GodotObject, string, Variant[])"/>
+    internal static async Task<List<T>> CallListAsync<T>(this Variant data, string method, params Variant[] args)
+        where T : RefCounted, ITwitcherSharp<T>
+    {
+        using var result = await data.CallAsync(method, args);
+        return MapArray<T>(result);
+    }
+
+    /// <summary>
+    /// The result of a call: the value itself, or what a function state delivers through <c>completed</c>.
+    /// </summary>
+    private static async Task<Variant> AwaitResult(Variant result)
+    {
         if (result.VariantType != Variant.Type.Object) return result;
 
         using (result)
         {
-            using var state = result.AsGodotObject();
+            var state = result.AsGodotObject();
             if (state is null || !GodotObject.IsInstanceValid(state) || !state.HasSignal(Completed))
             {
-                return Variant.CreateFrom(state);
+                // A plain object result, which may be a node someone else holds the wrapper of.
+                var value = Variant.CreateFrom(state);
+                state.Release();
+                return value;
             }
 
-            var completed = await obj.ToSignal(state, Completed);
+            using var _ = state;
+
+            // The state is its own signal target, so nothing but the state is held across the await.
+            var completed = await state.ToSignal(state, Completed);
             for (var i = 1; i < completed.Length; i++)
             {
                 completed[i].Dispose();
@@ -169,7 +270,7 @@ public static class GodotObjectExtension
     public static async Task<T?> CallAsync<T>(this GodotObject obj, string method, params Variant[] args) where T : RefCounted, ITwitcherSharp<T>
     {
         using var result = await obj.CallAsync(method, args);
-        return T.FromObject(result.AsGodotObject());
+        return Map<T>(result);
     }
 
     /// <summary>
@@ -185,17 +286,8 @@ public static class GodotObjectExtension
         [MustBeVariant] TVariant>(this GodotObject obj, string method, params Variant[] args)
         where T : RefCounted, ITwitcherSharp<T>
     {
-        var dictionary = new Godot.Collections.Dictionary<T, TVariant>();
         using var result = await obj.CallAsync(method, args);
-        var resultDictionary = result.AsGodotDictionary<GodotObject, TVariant>()
-            .Select(x => (T.FromObject(x.Key)!, x.Value));
-
-        foreach (var (key, value) in resultDictionary)
-        {
-            dictionary.Add(key, value);
-        }
-
-        return dictionary;
+        return MapKeys<T, TVariant>(result);
     }
 
     /// <summary>
@@ -211,17 +303,8 @@ public static class GodotObjectExtension
         [MustBeVariant] T>(this GodotObject obj, string method, params Variant[] args)
         where T : RefCounted, ITwitcherSharp<T>
     {
-        var dictionary = new Godot.Collections.Dictionary<TVariant, T>();
         using var result = await obj.CallAsync(method, args);
-        var resultDictionary = result.AsGodotDictionary<TVariant, GodotObject>()
-            .Select(x => (x.Key, T.FromObject(x.Value)!));
-
-        foreach (var (key, value) in resultDictionary)
-        {
-            dictionary.Add(key, value);
-        }
-
-        return dictionary;
+        return MapValues<TVariant, T>(result);
     }
 
     /// <summary>
@@ -237,17 +320,8 @@ public static class GodotObjectExtension
         this GodotObject obj, string method, params Variant[] args)
         where T : RefCounted, ITwitcherSharp<T>
     {
-        var dictionary = new Godot.Collections.Dictionary<T, TVariant>();
-        var result = obj.Call(method, args);
-        var resultDictionary = result.AsGodotDictionary<GodotObject, TVariant>()
-            .Select(x => (T.FromObject(x.Key)!, x.Value));
-
-        foreach (var (key, value) in resultDictionary)
-        {
-            dictionary.Add(key, value);
-        }
-
-        return dictionary;
+        using var result = obj.Call(method, args);
+        return MapKeys<T, TVariant>(result);
     }
 
     /// <summary>
@@ -263,17 +337,8 @@ public static class GodotObjectExtension
         [MustBeVariant] T>(this GodotObject obj, string method, params Variant[] args)
         where T : RefCounted, ITwitcherSharp<T>
     {
-        var dictionary = new Godot.Collections.Dictionary<TVariant, T>();
-        var result = obj.Call(method, args);
-        var resultDictionary = result.AsGodotDictionary<TVariant, GodotObject>()
-            .Select(x => (x.Key, T.FromObject(x.Value)!));
-
-        foreach (var (key, value) in resultDictionary)
-        {
-            dictionary.Add(key, value);
-        }
-
-        return dictionary;
+        using var result = obj.Call(method, args);
+        return MapValues<TVariant, T>(result);
     }
 
     /// <summary>
@@ -287,11 +352,8 @@ public static class GodotObjectExtension
     public static List<T> CallList<[MustBeVariant] T>(this GodotObject obj, string method, params Variant[] args)
         where T : RefCounted, ITwitcherSharp<T>
     {
-        var result = obj.Call(method, args);
-        return result.AsGodotArray<GodotObject>()
-            .Select(T.FromObject)
-            .OfType<T>()
-            .ToList();
+        using var result = obj.Call(method, args);
+        return MapArray<T>(result);
     }
 
     /// <summary>
@@ -306,9 +368,48 @@ public static class GodotObjectExtension
         where T : RefCounted, ITwitcherSharp<T>
     {
         using var result = await obj.CallAsync(method, args);
-        return result.AsGodotArray<GodotObject>()
-            .Select(T.FromObject)
-            .OfType<T>()
-            .ToList();
+        return MapArray<T>(result);
+    }
+
+    /// <summary>
+    /// Maps the twitcher object keys of a Dictionary Variant, disposing every entry and wrapper it takes for that.
+    /// </summary>
+    private static Godot.Collections.Dictionary<T, TVariant> MapKeys<[MustBeVariant] T, [MustBeVariant] TVariant>(
+        Variant value) where T : RefCounted, ITwitcherSharp<T>
+    {
+        var dictionary = new Godot.Collections.Dictionary<T, TVariant>();
+        if (value.VariantType != Variant.Type.Dictionary) return dictionary;
+        using var source = value.AsGodotDictionary();
+        foreach (var (key, entry) in source)
+        {
+            using (key)
+            using (entry)
+            {
+                if (Map<T>(key) is { } mapped) dictionary.Add(mapped, entry.As<TVariant>());
+            }
+        }
+
+        return dictionary;
+    }
+
+    /// <summary>
+    /// Maps the twitcher object values of a Dictionary Variant, disposing every entry and wrapper it takes for that.
+    /// </summary>
+    private static Godot.Collections.Dictionary<TVariant, T> MapValues<[MustBeVariant] TVariant, [MustBeVariant] T>(
+        Variant value) where T : RefCounted, ITwitcherSharp<T>
+    {
+        var dictionary = new Godot.Collections.Dictionary<TVariant, T>();
+        if (value.VariantType != Variant.Type.Dictionary) return dictionary;
+        using var source = value.AsGodotDictionary();
+        foreach (var (key, entry) in source)
+        {
+            using (key)
+            using (entry)
+            {
+                if (Map<T>(entry) is { } mapped) dictionary.Add(key.As<TVariant>(), mapped);
+            }
+        }
+
+        return dictionary;
     }
 }

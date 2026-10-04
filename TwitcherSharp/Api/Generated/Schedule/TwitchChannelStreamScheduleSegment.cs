@@ -6,13 +6,13 @@ namespace TwitcherSharp.Api.Generated.Schedule;
 
 public partial class TwitchChannelStreamScheduleSegment : RefCounted, ITwitcherSharp<TwitchChannelStreamScheduleSegment>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string Id { get; set; } = null!;
     public string StartTime { get; set; } = null!;
     public string EndTime { get; set; } = null!;
     public string Title { get; set; } = null!;
     public string CanceledUntil { get; set; } = null!;
-    public TwitchCategory Category { get => field ??= _data?.Get<TwitchCategory>("category")!; set; } = null!;
+    public TwitchCategory Category { get => field ??= _data.Get<TwitchCategory>("category")!; set; } = null!;
     public bool IsRecurring { get; set; }
 
     /// <summary> 
@@ -23,30 +23,36 @@ public partial class TwitchChannelStreamScheduleSegment : RefCounted, ITwitcherS
         if(data == null) return null;
         var instance = new TwitchChannelStreamScheduleSegment
         {
-            Id = data.Get("id").AsString(),
-            StartTime = data.Get("start_time").AsString(),
-            EndTime = data.Get("end_time").AsString(),
-            Title = data.Get("title").AsString(),
-            CanceledUntil = data.Get("canceled_until").AsString(),
-            IsRecurring = data.Get("is_recurring").AsBool(),
+            Id = data.Read("id", static v => v.AsString()),
+            StartTime = data.Read("start_time", static v => v.AsString()),
+            EndTime = data.Read("end_time", static v => v.AsString()),
+            Title = data.Read("title", static v => v.AsString()),
+            CanceledUntil = data.Read("canceled_until", static v => v.AsString()),
+            IsRecurring = data.Read("is_recurring", static v => v.AsBool()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_channel_stream_schedule_segment.gd");
-        var request = script.Call("new").AsGodotObject();
-        if(Id != null) request.Set("id", Id);
-        if(StartTime != null) request.Set("start_time", StartTime);
-        if(EndTime != null) request.Set("end_time", EndTime);
-        if(Title != null) request.Set("title", Title);
-        if(CanceledUntil != null) request.Set("canceled_until", CanceledUntil);
-        if(Category != null) request.Set("category", Category.ToGodotObject());
-        request.Set("is_recurring", IsRecurring);
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated/twitch_channel_stream_schedule_segment.gd");
+        if(Id != null) request.SetValue("id", Id);
+        if(StartTime != null) request.SetValue("start_time", StartTime);
+        if(EndTime != null) request.SetValue("end_time", EndTime);
+        if(Title != null) request.SetValue("title", Title);
+        if(CanceledUntil != null) request.SetValue("canceled_until", CanceledUntil);
+        if(Category != null) request.SetObject("category", Category);
+        request.SetValue("is_recurring", IsRecurring);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
     
     /// <summary> 
@@ -54,7 +60,7 @@ public partial class TwitchChannelStreamScheduleSegment : RefCounted, ITwitcherS
     /// </summary>
     public partial class TwitchCategory : RefCounted, ITwitcherSharp<TwitchCategory>
     {
-        private GodotObject? _data;
+        private Variant _data;
         public string Id { get; set; } = null!;
         public string Name { get; set; } = null!;
     
@@ -66,22 +72,27 @@ public partial class TwitchChannelStreamScheduleSegment : RefCounted, ITwitcherS
             if(data == null) return null;
             var instance = new TwitchCategory
             {
-                Id = data.Get("id").AsString(),
-                Name = data.Get("name").AsString(),
+                Id = data.Read("id", static v => v.AsString()),
+                Name = data.Read("name", static v => v.AsString()),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_channel_stream_schedule_segment.gd");
-            var twitchCategoryClass = script.Get("Category").AsGodotObject();
-            var request = twitchCategoryClass.Call("new").AsGodotObject();
-            if(Id != null) request.Set("id", Id);
-            if(Name != null) request.Set("name", Name);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_channel_stream_schedule_segment.gd", "Category");
+            if(Id != null) request.SetValue("id", Id);
+            if(Name != null) request.SetValue("name", Name);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     
     }

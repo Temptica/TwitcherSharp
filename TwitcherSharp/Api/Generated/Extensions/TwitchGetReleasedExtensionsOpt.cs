@@ -10,7 +10,7 @@ namespace TwitcherSharp.Api.Generated.Extensions;
 /// </summary>
 public partial class TwitchGetReleasedExtensionsOpt : RefCounted, ITwitcherSharp<TwitchGetReleasedExtensionsOpt>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string? ExtensionVersion { get; set; }
 
     /// <summary> 
@@ -21,20 +21,25 @@ public partial class TwitchGetReleasedExtensionsOpt : RefCounted, ITwitcherSharp
         if(data == null) return null;
         var instance = new TwitchGetReleasedExtensionsOpt
         {
-            ExtensionVersion = data.Get("extension_version").AsString(),
+            ExtensionVersion = data.Read("extension_version", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_released_extensions.gd");
-        var optClass = script.Get("Opt").AsGodotObject();
-        var request = optClass.Call("new").AsGodotObject();
-        if(ExtensionVersion != null) request.Set("extension_version", ExtensionVersion);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_released_extensions.gd", "Opt");
+        if(ExtensionVersion != null) request.SetValue("extension_version", ExtensionVersion);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

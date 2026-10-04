@@ -40,7 +40,7 @@ public partial class TwitchRedeemListener : RefCounted, ITwitcherSharp<TwitchRed
 
     public async Task EnsureSubscription()
     {
-        _data!.CallAsync("ensure_subscription");
+        using var _ = await _data!.CallAsync("ensure_subscription");
     }
 
     public void AddReward(TwitchReward reward)
@@ -48,24 +48,27 @@ public partial class TwitchRedeemListener : RefCounted, ITwitcherSharp<TwitchRed
         RewardsToListen.Add(reward);
         // Mutate the array Godot already owns: it is typed as Array[TwitchReward] on the
         // GDScript side and rejects a freshly built Array[Object] without reporting an error.
-        var rewards = _data!.Get("rewards_to_listen").AsGodotArray();
-        rewards.Add(reward.ToGodotObject());
-        _data.Set("rewards_to_listen", rewards);
+        using var rewards = _data!.Read("rewards_to_listen", static v => v.AsGodotArray());
+        using var rewardArg = GodotObjectExtension.ToVariant(reward);
+        rewards.Add(rewardArg);
     }
 
     public void RemoveReward(TwitchReward reward)
     {
         RewardsToListen.Remove(reward);
-        var rewards = _data!.Get("rewards_to_listen").AsGodotArray();
+        using var rewards = _data!.Read("rewards_to_listen", static v => v.AsGodotArray());
         for (var i = rewards.Count - 1; i >= 0; i--)
         {
-            if (rewards[i].AsGodotObject()?.Get("id").AsString() == reward.Id) rewards.RemoveAt(i);
+            using var item = rewards[i];
+            if (item.Read("id", static v => v.AsString()) == reward.Id) rewards.RemoveAt(i);
         }
-        _data.Set("rewards_to_listen", rewards);
     }
 
     public async Task FullFillRedemption(string redemptionId, TwitchReward reward, string broadcasterId)
-        => await _data!.CallAsync("fulfill_redemption", redemptionId, reward.ToGodotObject(), broadcasterId);
+    {
+        using var rewardArg = GodotObjectExtension.ToVariant(reward);
+        using var _ = await _data!.CallAsync("fulfill_redemption", redemptionId, rewardArg, broadcasterId);
+    }
 
     /// <summary>
     /// Cancels existing redemption for a specified reward and broadcaster.
@@ -76,8 +79,11 @@ public partial class TwitchRedeemListener : RefCounted, ITwitcherSharp<TwitchRed
     /// <returns>Returns the details of the canceled redemption as a <see cref="TwitchCustomRewardRedemption"/> object. Returns null on error</returns>
     public async Task<TwitchCustomRewardRedemption> CancelRedemption(string redemptionId, TwitchReward reward,
         string broadcasterId)
-        => await _data!.CallAsync<TwitchCustomRewardRedemption>("cancel_redemption", redemptionId,
-            reward.ToGodotObject(), broadcasterId);
+    {
+        using var rewardArg = GodotObjectExtension.ToVariant(reward);
+        return (await _data!.CallAsync<TwitchCustomRewardRedemption>("cancel_redemption", redemptionId, rewardArg,
+            broadcasterId))!;
+    }
 
     private void ConnectSignals()
     {
@@ -89,10 +95,10 @@ public partial class TwitchRedeemListener : RefCounted, ITwitcherSharp<TwitchRed
         if (data == null) return null;
         var listener = new TwitchRedeemListener
         {
-            RewardsToListen = data.Get("rewards_to_listen").As<Array<TwitchReward>>(),
-            TwitchEventSub = data.Get("twitch_event_sub").As<TwitchEventSub>(),
-            TwitchApi = data.Get("twitch_api").As<TwitchApi>(),
-            EnsureSubscriptionsOnReady = data.Get("ensure_subscriptions_on_ready").AsBool(),
+            RewardsToListen = new Array<TwitchReward>(data.GetArray<TwitchReward>("rewards_to_listen")),
+            TwitchEventSub = data.Get<TwitchEventSub>("twitch_event_sub"),
+            TwitchApi = data.Get<TwitchApi>("twitch_api"),
+            EnsureSubscriptionsOnReady = data.Read("ensure_subscriptions_on_ready", static v => v.AsBool()),
             _data = data,
         };
         listener.TwitchEventSub ??= TwitchEventSub.Instance;
@@ -105,12 +111,11 @@ public partial class TwitchRedeemListener : RefCounted, ITwitcherSharp<TwitchRed
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/reward/twitch_redeem_listener.gd");
-        var instance = script.New().AsGodotObject();
-        instance.Set("rewards_to_listen", RewardsToListen.ToGodotArray());
-        instance.Set("twitch_event_sub", TwitchEventSub?.ToGodotObject() ?? new Variant());
-        instance.Set("twitch_api", TwitchApi?.ToGodotObject() ?? new Variant());
-        instance.Set("ensure_subscriptions_on_ready", EnsureSubscriptionsOnReady);
+        var instance = InteropExtension.NewObject("res://addons/twitcher/reward/twitch_redeem_listener.gd");
+        instance.SetArray("rewards_to_listen", RewardsToListen);
+        instance.SetObject("twitch_event_sub", TwitchEventSub);
+        instance.SetObject("twitch_api", TwitchApi);
+        instance.SetValue("ensure_subscriptions_on_ready", EnsureSubscriptionsOnReady);
         return instance;
     }
 }

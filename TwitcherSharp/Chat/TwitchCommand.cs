@@ -26,8 +26,8 @@ public partial class TwitchCommand : TwitchCommandBase, ITwitcherSharp<TwitchCom
 
     public void AddAlias(string alias)
     {
-        Data.Call("add_alias", alias);
-        Aliases = Data.Get("aliases").AsStringArray().ToList();
+        Data.Invoke("add_alias", alias);
+        Aliases = Data.Read("aliases", static v => v.AsStringArray()).ToList();
     }
 
     public void RemoveAlias(string alias)
@@ -47,10 +47,10 @@ public partial class TwitchCommand : TwitchCommandBase, ITwitcherSharp<TwitchCom
         var command = new TwitchCommand
         {
             Data = data,
-            CommandPrefixes = data.Get("command_prefixes").AsStringArray().ToList(),
-            Aliases = data.Get("aliases").AsStringArray().ToList(),
-            ArgsMin = data.Get("args_min").AsInt32(),
-            ArgsMax = data.Get("args_max").AsInt32(),
+            CommandPrefixes = data.Read("command_prefixes", static v => v.AsStringArray()).ToList(),
+            Aliases = data.Read("aliases", static v => v.AsStringArray()).ToList(),
+            ArgsMin = data.Read("args_min", static v => v.AsInt32()),
+            ArgsMax = data.Read("args_max", static v => v.AsInt32()),
         };
 
         command.SetBaseProperties();
@@ -60,11 +60,11 @@ public partial class TwitchCommand : TwitchCommandBase, ITwitcherSharp<TwitchCom
 
     public override GodotObject ToGodotObject()
     {
-        var data = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_command.gd").New().AsGodotObject();
-        data.Set("command_prefixes", CommandPrefixes.ToVariantArray());
-        data.Set("aliases", Aliases.ToVariantArray());
-        data.Set("args_min", ArgsMin);
-        data.Set("args_max", ArgsMax);
+        var data = InteropExtension.NewObject("res://addons/twitcher/chat/twitch_command.gd");
+        data.SetValue("command_prefixes", CommandPrefixes.ToVariantArray());
+        data.SetValue("aliases", Aliases.ToVariantArray());
+        data.SetValue("args_min", ArgsMin);
+        data.SetValue("args_max", ArgsMax);
         GetBaseProperties(data);
         Data = data;
         ConnectSignals();

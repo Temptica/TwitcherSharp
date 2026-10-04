@@ -10,7 +10,7 @@ namespace TwitcherSharp.Api.Generated.EventSub;
 /// </summary>
 public partial class TwitchGetEventsubSubscriptionsOpt : RefCounted, ITwitcherSharp<TwitchGetEventsubSubscriptionsOpt>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string? Status { get; set; }
     public string? Type { get; set; }
     public string? UserId { get; set; }
@@ -26,30 +26,35 @@ public partial class TwitchGetEventsubSubscriptionsOpt : RefCounted, ITwitcherSh
         if(data == null) return null;
         var instance = new TwitchGetEventsubSubscriptionsOpt
         {
-            Status = data.Get("status").AsString(),
-            Type = data.Get("type").AsString(),
-            UserId = data.Get("user_id").AsString(),
-            SubscriptionId = data.Get("subscription_id").AsString(),
-            ConduitId = data.Get("conduit_id").AsString(),
-            After = data.Get("after").AsString(),
+            Status = data.Read("status", static v => v.AsString()),
+            Type = data.Read("type", static v => v.AsString()),
+            UserId = data.Read("user_id", static v => v.AsString()),
+            SubscriptionId = data.Read("subscription_id", static v => v.AsString()),
+            ConduitId = data.Read("conduit_id", static v => v.AsString()),
+            After = data.Read("after", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_eventsub_subscriptions.gd");
-        var optClass = script.Get("Opt").AsGodotObject();
-        var request = optClass.Call("new").AsGodotObject();
-        if(Status != null) request.Set("status", Status);
-        if(Type != null) request.Set("type", Type);
-        if(UserId != null) request.Set("user_id", UserId);
-        if(SubscriptionId != null) request.Set("subscription_id", SubscriptionId);
-        if(ConduitId != null) request.Set("conduit_id", ConduitId);
-        if(After != null) request.Set("after", After);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_eventsub_subscriptions.gd", "Opt");
+        if(Status != null) request.SetValue("status", Status);
+        if(Type != null) request.SetValue("type", Type);
+        if(UserId != null) request.SetValue("user_id", UserId);
+        if(SubscriptionId != null) request.SetValue("subscription_id", SubscriptionId);
+        if(ConduitId != null) request.SetValue("conduit_id", ConduitId);
+        if(After != null) request.SetValue("after", After);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

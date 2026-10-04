@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.AutomodMessageUpdate;
 
 public partial class TwitchAutomodMessageUpdateEvent : RefCounted, ITwitcherSharpEventSub<TwitchAutomodMessageUpdateEvent>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// The ID of the broadcaster specified in the request.
@@ -63,7 +63,7 @@ public partial class TwitchAutomodMessageUpdateEvent : RefCounted, ITwitcherShar
     /// <summary> 
     /// 
     /// </summary>
-    public TwitchMessage? Message { get => field ??= _data?.Get<TwitchMessage>("message"); set; }
+    public TwitchMessage? Message { get => field ??= _data.Get<TwitchMessage>("message"); set; }
 
     /// <summary> 
     /// The category of the message.
@@ -93,53 +93,58 @@ public partial class TwitchAutomodMessageUpdateEvent : RefCounted, ITwitcherShar
         if(data == null) return null;
         var instance = new TwitchAutomodMessageUpdateEvent
         {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-            BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
-            BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
-            UserId = data.Get("user_id").AsString(),
-            UserLogin = data.Get("user_login").AsString(),
-            UserName = data.Get("user_name").AsString(),
-            ModeratorUserId = data.Get("moderator_user_id").AsString(),
-            ModeratorUserName = data.Get("moderator_user_name").AsString(),
-            ModeratorUserLogin = data.Get("moderator_user_login").AsString(),
-            MessageId = data.Get("message_id").AsString(),
-            Category = data.Get("category").AsString(),
-            Level = data.Get("level").AsInt32(),
-            Status = data.Get("status").AsString(),
-            HeldAt = data.Get("held_at").AsString(),
+            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
+            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
+            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
+            UserId = data.Read("user_id", static v => v.AsString()),
+            UserLogin = data.Read("user_login", static v => v.AsString()),
+            UserName = data.Read("user_name", static v => v.AsString()),
+            ModeratorUserId = data.Read("moderator_user_id", static v => v.AsString()),
+            ModeratorUserName = data.Read("moderator_user_name", static v => v.AsString()),
+            ModeratorUserLogin = data.Read("moderator_user_login", static v => v.AsString()),
+            MessageId = data.Read("message_id", static v => v.AsString()),
+            Category = data.Read("category", static v => v.AsString()),
+            Level = data.Read("level", static v => v.AsInt32()),
+            Status = data.Read("status", static v => v.AsString()),
+            HeldAt = data.Read("held_at", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_automod_message_update.gd");
-        var eventClass = script.Get("Event").As<GDScript>();
-        var request = eventClass.New().AsGodotObject();
-        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
-        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
-        if(UserId != null) request.Set("user_id", UserId);
-        if(UserLogin != null) request.Set("user_login", UserLogin);
-        if(UserName != null) request.Set("user_name", UserName);
-        if(ModeratorUserId != null) request.Set("moderator_user_id", ModeratorUserId);
-        if(ModeratorUserName != null) request.Set("moderator_user_name", ModeratorUserName);
-        if(ModeratorUserLogin != null) request.Set("moderator_user_login", ModeratorUserLogin);
-        if(MessageId != null) request.Set("message_id", MessageId);
-        if(Message != null) request.Set("message", Message.ToGodotObject());
-        if(Category != null) request.Set("category", Category);
-        request.Set("level", Level);
-        if(Status != null) request.Set("status", Status);
-        if(HeldAt != null) request.Set("held_at", HeldAt);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_automod_message_update.gd", "Event");
+        if(BroadcasterUserId != null) request.SetValue("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserLogin != null) request.SetValue("broadcaster_user_login", BroadcasterUserLogin);
+        if(BroadcasterUserName != null) request.SetValue("broadcaster_user_name", BroadcasterUserName);
+        if(UserId != null) request.SetValue("user_id", UserId);
+        if(UserLogin != null) request.SetValue("user_login", UserLogin);
+        if(UserName != null) request.SetValue("user_name", UserName);
+        if(ModeratorUserId != null) request.SetValue("moderator_user_id", ModeratorUserId);
+        if(ModeratorUserName != null) request.SetValue("moderator_user_name", ModeratorUserName);
+        if(ModeratorUserLogin != null) request.SetValue("moderator_user_login", ModeratorUserLogin);
+        if(MessageId != null) request.SetValue("message_id", MessageId);
+        if(Message != null) request.SetObject("message", Message);
+        if(Category != null) request.SetValue("category", Category);
+        request.SetValue("level", Level);
+        if(Status != null) request.SetValue("status", Status);
+        if(HeldAt != null) request.SetValue("held_at", HeldAt);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 
     public partial class TwitchMessage : RefCounted, ITwitcherSharpEventSub<TwitchMessage>
     {
-        private GodotObject? _data;
+        private Variant _data;
         
         /// <summary> 
         /// The contents of the message caught by automod.
@@ -149,7 +154,7 @@ public partial class TwitchAutomodMessageUpdateEvent : RefCounted, ITwitcherShar
         /// <summary> 
         /// Metadata surrounding the potential inappropriate fragments of the message.
         /// </summary>
-        public TwitchFragments[]? Fragments { get => field ??= _data?.GetArray<TwitchFragments>("fragments"); set; }
+        public TwitchFragments[]? Fragments { get => field ??= _data.GetArray<TwitchFragments>("fragments"); set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchMessage object.
@@ -159,27 +164,32 @@ public partial class TwitchAutomodMessageUpdateEvent : RefCounted, ITwitcherShar
             if(data == null) return null;
             var instance = new TwitchMessage
             {
-                Text = data.Get("text").AsString(),
+                Text = data.Read("text", static v => v.AsString()),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_automod_message_update.gd");
-            var messageClass = script.Get("Message").As<GDScript>();
-            var request = messageClass.New().AsGodotObject();
-            if(Text != null) request.Set("text", Text);
-            if(Fragments != null) request.Set("fragments", Fragments.ToGodotArray());
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_automod_message_update.gd", "Message");
+            if(Text != null) request.SetValue("text", Text);
+            if(Fragments != null) request.SetArray("fragments", Fragments);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     
     
         public partial class TwitchFragments : RefCounted, ITwitcherSharpEventSub<TwitchFragments>
         {
-            private GodotObject? _data;
+            private Variant _data;
             
             /// <summary> 
             /// Message text in a fragment.
@@ -189,12 +199,12 @@ public partial class TwitchAutomodMessageUpdateEvent : RefCounted, ITwitcherShar
             /// <summary> 
             /// Optional. Metadata pertaining to the emote.
             /// </summary>
-            public TwitchEmote? Emote { get => field ??= _data?.Get<TwitchEmote>("emote"); set; }
+            public TwitchEmote? Emote { get => field ??= _data.Get<TwitchEmote>("emote"); set; }
         
             /// <summary> 
             /// Optional. Metadata pertaining to the cheermote.
             /// </summary>
-            public TwitchCheermote? Cheermote { get => field ??= _data?.Get<TwitchCheermote>("cheermote"); set; }
+            public TwitchCheermote? Cheermote { get => field ??= _data.Get<TwitchCheermote>("cheermote"); set; }
         
             /// <summary> 
             /// Transforms the godot data into a TwitchFragments object.
@@ -204,28 +214,33 @@ public partial class TwitchAutomodMessageUpdateEvent : RefCounted, ITwitcherShar
                 if(data == null) return null;
                 var instance = new TwitchFragments
                 {
-                    Text = data.Get("text").AsString(),
+                    Text = data.Read("text", static v => v.AsString()),
                 };
                 
-                instance._data = data;
+                instance._data = Variant.CreateFrom(data);
                 return instance;
             }
         
             public GodotObject ToGodotObject()
             {
-                var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_automod_message_update.gd");
-                var fragmentsClass = script.Get("Fragments").As<GDScript>();
-                var request = fragmentsClass.New().AsGodotObject();
-                if(Text != null) request.Set("text", Text);
-                if(Emote != null) request.Set("emote", Emote.ToGodotObject());
-                if(Cheermote != null) request.Set("cheermote", Cheermote.ToGodotObject());
+                var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_automod_message_update.gd", "Fragments");
+                if(Text != null) request.SetValue("text", Text);
+                if(Emote != null) request.SetObject("emote", Emote);
+                if(Cheermote != null) request.SetObject("cheermote", Cheermote);
                 return request;
+            }
+        
+            /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+            protected override void Dispose(bool disposing)
+            {
+                if (disposing) _data.Dispose();
+                base.Dispose(disposing);
             }
         
         
             public partial class TwitchEmote : RefCounted, ITwitcherSharpEventSub<TwitchEmote>
             {
-                private GodotObject? _data;
+                private Variant _data;
                 
                 /// <summary> 
                 /// An ID that uniquely identifies this emote.
@@ -245,28 +260,33 @@ public partial class TwitchAutomodMessageUpdateEvent : RefCounted, ITwitcherShar
                     if(data == null) return null;
                     var instance = new TwitchEmote
                     {
-                        Id = data.Get("id").AsString(),
-                        EmoteSetId = data.Get("emote_set_id").AsString(),
+                        Id = data.Read("id", static v => v.AsString()),
+                        EmoteSetId = data.Read("emote_set_id", static v => v.AsString()),
                     };
                     
-                    instance._data = data;
+                    instance._data = Variant.CreateFrom(data);
                     return instance;
                 }
             
                 public GodotObject ToGodotObject()
                 {
-                    var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_automod_message_update.gd");
-                    var emoteClass = script.Get("Emote").As<GDScript>();
-                    var request = emoteClass.New().AsGodotObject();
-                    if(Id != null) request.Set("id", Id);
-                    if(EmoteSetId != null) request.Set("emote_set_id", EmoteSetId);
+                    var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_automod_message_update.gd", "Emote");
+                    if(Id != null) request.SetValue("id", Id);
+                    if(EmoteSetId != null) request.SetValue("emote_set_id", EmoteSetId);
                     return request;
+                }
+            
+                /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+                protected override void Dispose(bool disposing)
+                {
+                    if (disposing) _data.Dispose();
+                    base.Dispose(disposing);
                 }
             }
         
             public partial class TwitchCheermote : RefCounted, ITwitcherSharpEventSub<TwitchCheermote>
             {
-                private GodotObject? _data;
+                private Variant _data;
                 
                 /// <summary> 
                 /// The name portion of the Cheermote string that you use in chat to cheer Bits, converted to lowercase. The full Cheermote string is the concatenation of {prefix} + {number of Bits}.For example, if the prefix is “cheer” and you want to cheer 100 Bits, the full Cheermote string is cheer100. When the Cheermote string is entered in chat, Twitch converts it to the image associated with the Bits tier that was cheered.
@@ -291,24 +311,29 @@ public partial class TwitchAutomodMessageUpdateEvent : RefCounted, ITwitcherShar
                     if(data == null) return null;
                     var instance = new TwitchCheermote
                     {
-                        Prefix = data.Get("prefix").AsString(),
-                        Bits = data.Get("bits").AsInt32(),
-                        Tier = data.Get("tier").AsInt32(),
+                        Prefix = data.Read("prefix", static v => v.AsString()),
+                        Bits = data.Read("bits", static v => v.AsInt32()),
+                        Tier = data.Read("tier", static v => v.AsInt32()),
                     };
                     
-                    instance._data = data;
+                    instance._data = Variant.CreateFrom(data);
                     return instance;
                 }
             
                 public GodotObject ToGodotObject()
                 {
-                    var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_automod_message_update.gd");
-                    var cheermoteClass = script.Get("Cheermote").As<GDScript>();
-                    var request = cheermoteClass.New().AsGodotObject();
-                    if(Prefix != null) request.Set("prefix", Prefix);
-                    request.Set("bits", Bits);
-                    request.Set("tier", Tier);
+                    var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_automod_message_update.gd", "Cheermote");
+                    if(Prefix != null) request.SetValue("prefix", Prefix);
+                    request.SetValue("bits", Bits);
+                    request.SetValue("tier", Tier);
                     return request;
+                }
+            
+                /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+                protected override void Dispose(bool disposing)
+                {
+                    if (disposing) _data.Dispose();
+                    base.Dispose(disposing);
                 }
             }
         }

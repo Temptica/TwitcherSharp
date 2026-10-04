@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.Shared;
 
 public partial class TwitchEmotes : RefCounted, ITwitcherSharpEventSub<TwitchEmotes>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// The index of where the Emote starts in the text.
@@ -33,22 +33,28 @@ public partial class TwitchEmotes : RefCounted, ITwitcherSharpEventSub<TwitchEmo
         if(data == null) return null;
         var instance = new TwitchEmotes
         {
-            Begin = data.Get("begin").AsInt32(),
-            End = data.Get("end").AsInt32(),
-            Id = data.Get("id").AsString(),
+            Begin = data.Read("begin", static v => v.AsInt32()),
+            End = data.Read("end", static v => v.AsInt32()),
+            Id = data.Read("id", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_emotes.gd");
-        var request = script.New().AsGodotObject();
-        request.Set("begin", Begin);
-        request.Set("end", End);
-        if(Id != null) request.Set("id", Id);
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated_eventsub/twitch_es_emotes.gd");
+        request.SetValue("begin", Begin);
+        request.SetValue("end", End);
+        if(Id != null) request.SetValue("id", Id);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 }

@@ -10,7 +10,7 @@ namespace TwitcherSharp.Api.Generated.Extensions;
 /// </summary>
 public partial class TwitchCreateExtensionSecretOpt : RefCounted, ITwitcherSharp<TwitchCreateExtensionSecretOpt>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public int? Delay { get; set; }
 
     /// <summary> 
@@ -21,20 +21,25 @@ public partial class TwitchCreateExtensionSecretOpt : RefCounted, ITwitcherSharp
         if(data == null) return null;
         var instance = new TwitchCreateExtensionSecretOpt
         {
-            Delay = data.Get("delay").AsInt32(),
+            Delay = data.Read("delay", static v => v.AsInt32()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_create_extension_secret.gd");
-        var optClass = script.Get("Opt").AsGodotObject();
-        var request = optClass.Call("new").AsGodotObject();
-        if(Delay.HasValue) request.Set("delay", Delay.Value);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_create_extension_secret.gd", "Opt");
+        if(Delay.HasValue) request.SetValue("delay", Delay.Value);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelSuspiciousUserUpdate;
 
 public partial class TwitchChannelSuspiciousUserUpdateEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelSuspiciousUserUpdateEvent>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// The ID of the channel where the treatment for a suspicious user was updated.
@@ -68,37 +68,42 @@ public partial class TwitchChannelSuspiciousUserUpdateEvent : RefCounted, ITwitc
         if(data == null) return null;
         var instance = new TwitchChannelSuspiciousUserUpdateEvent
         {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-            BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
-            BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
-            ModeratorUserId = data.Get("moderator_user_id").AsString(),
-            ModeratorUserName = data.Get("moderator_user_name").AsString(),
-            ModeratorUserLogin = data.Get("moderator_user_login").AsString(),
-            UserId = data.Get("user_id").AsString(),
-            UserName = data.Get("user_name").AsString(),
-            UserLogin = data.Get("user_login").AsString(),
-            LowTrustStatus = data.Get("low_trust_status").AsString(),
+            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
+            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
+            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
+            ModeratorUserId = data.Read("moderator_user_id", static v => v.AsString()),
+            ModeratorUserName = data.Read("moderator_user_name", static v => v.AsString()),
+            ModeratorUserLogin = data.Read("moderator_user_login", static v => v.AsString()),
+            UserId = data.Read("user_id", static v => v.AsString()),
+            UserName = data.Read("user_name", static v => v.AsString()),
+            UserLogin = data.Read("user_login", static v => v.AsString()),
+            LowTrustStatus = data.Read("low_trust_status", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_suspicious_user_update.gd");
-        var eventClass = script.Get("Event").As<GDScript>();
-        var request = eventClass.New().AsGodotObject();
-        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
-        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
-        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        if(ModeratorUserId != null) request.Set("moderator_user_id", ModeratorUserId);
-        if(ModeratorUserName != null) request.Set("moderator_user_name", ModeratorUserName);
-        if(ModeratorUserLogin != null) request.Set("moderator_user_login", ModeratorUserLogin);
-        if(UserId != null) request.Set("user_id", UserId);
-        if(UserName != null) request.Set("user_name", UserName);
-        if(UserLogin != null) request.Set("user_login", UserLogin);
-        if(LowTrustStatus != null) request.Set("low_trust_status", LowTrustStatus);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_suspicious_user_update.gd", "Event");
+        if(BroadcasterUserId != null) request.SetValue("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserName != null) request.SetValue("broadcaster_user_name", BroadcasterUserName);
+        if(BroadcasterUserLogin != null) request.SetValue("broadcaster_user_login", BroadcasterUserLogin);
+        if(ModeratorUserId != null) request.SetValue("moderator_user_id", ModeratorUserId);
+        if(ModeratorUserName != null) request.SetValue("moderator_user_name", ModeratorUserName);
+        if(ModeratorUserLogin != null) request.SetValue("moderator_user_login", ModeratorUserLogin);
+        if(UserId != null) request.SetValue("user_id", UserId);
+        if(UserName != null) request.SetValue("user_name", UserName);
+        if(UserLogin != null) request.SetValue("user_login", UserLogin);
+        if(LowTrustStatus != null) request.SetValue("low_trust_status", LowTrustStatus);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 }

@@ -1,12 +1,15 @@
 using Godot;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub;
 
 public partial class TwitchEventSubConfig() : RefCounted, ITwitcherSharp<TwitchEventSubConfig>
 {
-    private GodotObject? _data;
-    
+    private const string ScriptPath = "res://addons/twitcher/eventsub/twitch_eventsub_config.gd";
+
+    private Variant _data;
+
     private TwitchEventSubDefinitionType _type;
     public TwitchEventSubDefinitionType Type
     {
@@ -54,18 +57,50 @@ public partial class TwitchEventSubConfig() : RefCounted, ITwitcherSharp<TwitchE
     public static TwitchEventSubConfig? FromObject(GodotObject? data)
     {
         if (data == null) return null;
-        var config = new TwitchEventSubConfig();
-        config._data = data;
-        config.Type = (TwitchEventSubDefinitionType)data.Get("type").AsInt32();
+        var config = new TwitchEventSubConfig { _data = Variant.CreateFrom(data) };
+        // twitcher numbers its types in another order than TwitchEventSubDefinitionType: map through the definition.
+        var definition = data.Read("definition", static v => v.With(TwitchEventSubDefinition.FromObject));
+        if (definition is not null) config.Type = definition.Type;
+        config.Id = data.Read("id", static v => v.AsString());
         return config;
     }
 
+    /// <summary>
+    /// The twitcher config this was mapped from (twitcher tells subscriptions apart by object), or a new one.
+    /// The caller owns the returned wrapper.
+    /// </summary>
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/eventsub/twitch_eventsub_config.gd");
-        var data = script.New().AsGodotObject();
-        data.Set("type", (int)Type);
-        data.Set("condition", new Godot.Collections.Array(Condition.Select(x => x?.ToGodotObject() ?? new Variant()).ToArray()));
+        if (!_data.IsNil) return _data.AsGodotObject();
+
+        var data = InteropExtension.NewObject(ScriptPath);
+        data.SetValue("type", Definition.TwitcherType);
+
+        // twitcher keeps the conditions of all condition objects in one Dictionary.
+        using var condition = new Godot.Collections.Dictionary();
+        foreach (var part in Condition)
+        {
+            using var values = part.ToDictionary();
+            foreach (var (key, value) in values)
+            {
+                using (key)
+                using (value)
+                {
+                    condition[key] = value;
+                }
+            }
+        }
+
+        data.Set("condition", condition);
+        if (Id != null) data.SetValue("id", Id);
         return data;
+    }
+
+    /// <summary> Releases the twitcher object this config was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        // Only when disposed explicitly: when finalized, the Variant is finalized on its own.
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 }

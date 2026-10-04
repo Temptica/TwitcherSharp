@@ -6,7 +6,7 @@ namespace TwitcherSharp.Api.Generated.Goals;
 
 public partial class TwitchCreatorGoal : RefCounted, ITwitcherSharp<TwitchCreatorGoal>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string Id { get; set; } = null!;
     public string BroadcasterId { get; set; } = null!;
     public string BroadcasterName { get; set; } = null!;
@@ -25,35 +25,41 @@ public partial class TwitchCreatorGoal : RefCounted, ITwitcherSharp<TwitchCreato
         if(data == null) return null;
         var instance = new TwitchCreatorGoal
         {
-            Id = data.Get("id").AsString(),
-            BroadcasterId = data.Get("broadcaster_id").AsString(),
-            BroadcasterName = data.Get("broadcaster_name").AsString(),
-            BroadcasterLogin = data.Get("broadcaster_login").AsString(),
-            Type = data.Get("type").AsString(),
-            Description = data.Get("description").AsString(),
-            CurrentAmount = data.Get("current_amount").AsInt32(),
-            TargetAmount = data.Get("target_amount").AsInt32(),
-            CreatedAt = data.Get("created_at").AsString(),
+            Id = data.Read("id", static v => v.AsString()),
+            BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
+            BroadcasterName = data.Read("broadcaster_name", static v => v.AsString()),
+            BroadcasterLogin = data.Read("broadcaster_login", static v => v.AsString()),
+            Type = data.Read("type", static v => v.AsString()),
+            Description = data.Read("description", static v => v.AsString()),
+            CurrentAmount = data.Read("current_amount", static v => v.AsInt32()),
+            TargetAmount = data.Read("target_amount", static v => v.AsInt32()),
+            CreatedAt = data.Read("created_at", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_creator_goal.gd");
-        var request = script.Call("new").AsGodotObject();
-        if(Id != null) request.Set("id", Id);
-        if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
-        if(BroadcasterName != null) request.Set("broadcaster_name", BroadcasterName);
-        if(BroadcasterLogin != null) request.Set("broadcaster_login", BroadcasterLogin);
-        if(Type != null) request.Set("type", Type);
-        if(Description != null) request.Set("description", Description);
-        request.Set("current_amount", CurrentAmount);
-        request.Set("target_amount", TargetAmount);
-        if(CreatedAt != null) request.Set("created_at", CreatedAt);
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated/twitch_creator_goal.gd");
+        if(Id != null) request.SetValue("id", Id);
+        if(BroadcasterId != null) request.SetValue("broadcaster_id", BroadcasterId);
+        if(BroadcasterName != null) request.SetValue("broadcaster_name", BroadcasterName);
+        if(BroadcasterLogin != null) request.SetValue("broadcaster_login", BroadcasterLogin);
+        if(Type != null) request.SetValue("type", Type);
+        if(Description != null) request.SetValue("description", Description);
+        request.SetValue("current_amount", CurrentAmount);
+        request.SetValue("target_amount", TargetAmount);
+        if(CreatedAt != null) request.SetValue("created_at", CreatedAt);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

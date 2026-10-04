@@ -6,8 +6,8 @@ namespace TwitcherSharp.Api.Generated.Clips;
 
 public partial class TwitchCreateClipFromVODResponse : RefCounted, ITwitcherSharp<TwitchCreateClipFromVODResponse>
 {
-    private GodotObject? _data;
-    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data")!; set; } = null!;
+    private Variant _data;
+    public TwitchResponseData[] Data { get => field ??= _data.GetArray<TwitchResponseData>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCreateClipFromVODResponse object.
@@ -17,17 +17,22 @@ public partial class TwitchCreateClipFromVODResponse : RefCounted, ITwitcherShar
         if(data == null) return null;
         var instance = new TwitchCreateClipFromVODResponse();
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_create_clip_from_vod.gd");
-        var responseClass = script.Get("Response").AsGodotObject();
-        var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data.ToGodotArray());
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_create_clip_from_vod.gd", "Response");
+        if(Data != null) request.SetArray("data", Data);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
     
     /// <summary> 
@@ -35,7 +40,7 @@ public partial class TwitchCreateClipFromVODResponse : RefCounted, ITwitcherShar
     /// </summary>
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
-        private GodotObject? _data;
+        private Variant _data;
         public string Id { get; set; } = null!;
         public string EditUrl { get; set; } = null!;
     
@@ -47,22 +52,27 @@ public partial class TwitchCreateClipFromVODResponse : RefCounted, ITwitcherShar
             if(data == null) return null;
             var instance = new TwitchResponseData
             {
-                Id = data.Get("id").AsString(),
-                EditUrl = data.Get("edit_url").AsString(),
+                Id = data.Read("id", static v => v.AsString()),
+                EditUrl = data.Read("edit_url", static v => v.AsString()),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_create_clip_from_vod.gd");
-            var twitchResponseDataClass = script.Get("ResponseData").AsGodotObject();
-            var request = twitchResponseDataClass.Call("new").AsGodotObject();
-            if(Id != null) request.Set("id", Id);
-            if(EditUrl != null) request.Set("edit_url", EditUrl);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_create_clip_from_vod.gd", "ResponseData");
+            if(Id != null) request.SetValue("id", Id);
+            if(EditUrl != null) request.SetValue("edit_url", EditUrl);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     
     }

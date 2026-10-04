@@ -123,25 +123,25 @@ public abstract partial class TwitchCommandBase : RefCounted, ITwitcherSharp
         Data.Connect(GodotObject.Cooldown, Callable.FromTwitcherSharp<TwitchCommandInfo>(EmitSignalCooldown));
     }
 
-    public float GetUserCooldown(string fromUsername) => Data.Call("get_user_cooldown", fromUsername).AsSingle();
-    public bool IsOnCooldown(string fromUsername) => Data.Call("is_on_cooldown", fromUsername).AsBool();
-    public double GetGlobalCooldown() => Data.Call("get_globalcooldown").AsDouble();
-    public bool IsOnGlobalCooldown() => Data.Call("is_on_globalcooldown").AsBool();
+    public float GetUserCooldown(string fromUsername) => Data.Invoke("get_user_cooldown", static v => v.AsSingle(), fromUsername);
+    public bool IsOnCooldown(string fromUsername) => Data.Invoke("is_on_cooldown", static v => v.AsBool(), fromUsername);
+    public double GetGlobalCooldown() => Data.Invoke("get_globalcooldown", static v => v.AsDouble());
+    public bool IsOnGlobalCooldown() => Data.Invoke("is_on_globalcooldown", static v => v.AsBool());
 
     public abstract GodotObject ToGodotObject();
 
     protected void SetBaseProperties()
     {
-        Command = Data.Get("command").AsString();
-        Description = Data.Get("description").AsString();
-        PermissionLevel = (PermissionFlag)Data.Get("permission_level").AsInt32();
-        Where = (WhereFlag)Data.Get("where").AsInt32();
-        AllowedUsers = Data.Get("allowed_users").AsStringArray().ToList();
-        ListenToChatrooms = Data.Get("listen_to_chatrooms").AsStringArray().ToList();
-        CaseInsensitive = Data.Get("case_insensitive").AsBool();
-        UserCooldown = Data.Get("user_cooldown").AsInt32();
-        GlobalCooldown = Data.Get("global_cooldown").AsInt32();
-        AllCommands = Data.Get("all_commands").AsGodotArray<GodotObject>().Select(GetTypedCommand).ToList();
+        Command = Data.Read("command", static v => v.AsString());
+        Description = Data.Read("description", static v => v.AsString());
+        PermissionLevel = (PermissionFlag)Data.Read("permission_level", static v => v.AsInt32());
+        Where = (WhereFlag)Data.Read("where", static v => v.AsInt32());
+        AllowedUsers = Data.Read("allowed_users", static v => v.AsStringArray()).ToList();
+        ListenToChatrooms = Data.Read("listen_to_chatrooms", static v => v.AsStringArray()).ToList();
+        CaseInsensitive = Data.Read("case_insensitive", static v => v.AsBool());
+        UserCooldown = Data.Read("user_cooldown", static v => v.AsInt32());
+        GlobalCooldown = Data.Read("global_cooldown", static v => v.AsInt32());
+        AllCommands = Data.Read("all_commands", static v => v.AsGodotArray<GodotObject>()).Select(GetTypedCommand).ToList();
 
         ConnectSignals();
     }
@@ -160,15 +160,15 @@ public abstract partial class TwitchCommandBase : RefCounted, ITwitcherSharp
     protected void GetBaseProperties(GodotObject data)
     {
         Data = data;
-        data.Set("command", Command);
-        data.Set("description", Description);
-        data.Set("permission_level", (int)PermissionLevel);
-        data.Set("where", (int)Where);
-        data.Set("allowed_users", AllowedUsers.ToVariantArray());
-        data.Set("listen_to_chatrooms", ListenToChatrooms.ToVariantArray());
-        data.Set("case_insensitive", CaseInsensitive);
-        data.Set("user_cooldown", UserCooldown);
-        data.Set("global_cooldown", GlobalCooldown);
-        data.Set("all_commands", new Godot.Collections.Array(AllCommands.Select(c => c?.ToGodotObject() ?? new Variant()).ToArray()));
+        data.SetValue("command", Command);
+        data.SetValue("description", Description);
+        data.SetValue("permission_level", (int)PermissionLevel);
+        data.SetValue("where", (int)Where);
+        data.SetValue("allowed_users", AllowedUsers.ToVariantArray());
+        data.SetValue("listen_to_chatrooms", ListenToChatrooms.ToVariantArray());
+        data.SetValue("case_insensitive", CaseInsensitive);
+        data.SetValue("user_cooldown", UserCooldown);
+        data.SetValue("global_cooldown", GlobalCooldown);
+        data.SetValue("all_commands", new Godot.Collections.Array(AllCommands.Select(c => c?.ToGodotObject() ?? new Variant()).ToArray()));
     }
 }

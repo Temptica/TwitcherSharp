@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.Shared;
 
 public partial class TwitchOutcomes : RefCounted, ITwitcherSharpEventSub<TwitchOutcomes>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// The outcome ID.
@@ -38,7 +38,7 @@ public partial class TwitchOutcomes : RefCounted, ITwitcherSharpEventSub<TwitchO
     /// <summary> 
     /// An array of up to 10 objects that describe users who participated in a Channel Points Prediction.
     /// </summary>
-    public TwitchTopPredictors? TopPredictors { get => field ??= _data?.Get<TwitchTopPredictors>("top_predictors"); set; }
+    public TwitchTopPredictors? TopPredictors { get => field ??= _data.Get<TwitchTopPredictors>("top_predictors"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchOutcomes object.
@@ -48,27 +48,33 @@ public partial class TwitchOutcomes : RefCounted, ITwitcherSharpEventSub<TwitchO
         if(data == null) return null;
         var instance = new TwitchOutcomes
         {
-            Id = data.Get("id").AsString(),
-            Title = data.Get("title").AsString(),
-            Color = data.Get("color").AsString(),
-            Users = data.Get("users").AsInt32(),
-            ChannelPoints = data.Get("channel_points").AsInt32(),
+            Id = data.Read("id", static v => v.AsString()),
+            Title = data.Read("title", static v => v.AsString()),
+            Color = data.Read("color", static v => v.AsString()),
+            Users = data.Read("users", static v => v.AsInt32()),
+            ChannelPoints = data.Read("channel_points", static v => v.AsInt32()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_outcomes.gd");
-        var request = script.New().AsGodotObject();
-        if(Id != null) request.Set("id", Id);
-        if(Title != null) request.Set("title", Title);
-        if(Color != null) request.Set("color", Color);
-        request.Set("users", Users);
-        request.Set("channel_points", ChannelPoints);
-        if(TopPredictors != null) request.Set("top_predictors", TopPredictors.ToGodotObject());
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated_eventsub/twitch_es_outcomes.gd");
+        if(Id != null) request.SetValue("id", Id);
+        if(Title != null) request.SetValue("title", Title);
+        if(Color != null) request.SetValue("color", Color);
+        request.SetValue("users", Users);
+        request.SetValue("channel_points", ChannelPoints);
+        if(TopPredictors != null) request.SetObject("top_predictors", TopPredictors);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 }

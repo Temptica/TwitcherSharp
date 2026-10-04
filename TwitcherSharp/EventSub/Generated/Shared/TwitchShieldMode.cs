@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.Shared;
 
 public partial class TwitchShieldMode : RefCounted, ITwitcherSharpEventSub<TwitchShieldMode>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// An ID that identifies the broadcaster whose Shield Mode status was updated.
@@ -58,32 +58,38 @@ public partial class TwitchShieldMode : RefCounted, ITwitcherSharpEventSub<Twitc
         if(data == null) return null;
         var instance = new TwitchShieldMode
         {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-            BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
-            BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
-            ModeratorUserId = data.Get("moderator_user_id").AsString(),
-            ModeratorUserLogin = data.Get("moderator_user_login").AsString(),
-            ModeratorUserName = data.Get("moderator_user_name").AsString(),
-            StartedAt = data.Get("started_at").AsString(),
-            EndedAt = data.Get("ended_at").AsString(),
+            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
+            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
+            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
+            ModeratorUserId = data.Read("moderator_user_id", static v => v.AsString()),
+            ModeratorUserLogin = data.Read("moderator_user_login", static v => v.AsString()),
+            ModeratorUserName = data.Read("moderator_user_name", static v => v.AsString()),
+            StartedAt = data.Read("started_at", static v => v.AsString()),
+            EndedAt = data.Read("ended_at", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_shield_mode.gd");
-        var request = script.New().AsGodotObject();
-        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
-        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
-        if(ModeratorUserId != null) request.Set("moderator_user_id", ModeratorUserId);
-        if(ModeratorUserLogin != null) request.Set("moderator_user_login", ModeratorUserLogin);
-        if(ModeratorUserName != null) request.Set("moderator_user_name", ModeratorUserName);
-        if(StartedAt != null) request.Set("started_at", StartedAt);
-        if(EndedAt != null) request.Set("ended_at", EndedAt);
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated_eventsub/twitch_es_shield_mode.gd");
+        if(BroadcasterUserId != null) request.SetValue("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserLogin != null) request.SetValue("broadcaster_user_login", BroadcasterUserLogin);
+        if(BroadcasterUserName != null) request.SetValue("broadcaster_user_name", BroadcasterUserName);
+        if(ModeratorUserId != null) request.SetValue("moderator_user_id", ModeratorUserId);
+        if(ModeratorUserLogin != null) request.SetValue("moderator_user_login", ModeratorUserLogin);
+        if(ModeratorUserName != null) request.SetValue("moderator_user_name", ModeratorUserName);
+        if(StartedAt != null) request.SetValue("started_at", StartedAt);
+        if(EndedAt != null) request.SetValue("ended_at", EndedAt);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 }

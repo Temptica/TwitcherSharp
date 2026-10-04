@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.Shared;
 
 public partial class TwitchTopPredictors : RefCounted, ITwitcherSharpEventSub<TwitchTopPredictors>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// The ID of the user.
@@ -43,26 +43,32 @@ public partial class TwitchTopPredictors : RefCounted, ITwitcherSharpEventSub<Tw
         if(data == null) return null;
         var instance = new TwitchTopPredictors
         {
-            UserId = data.Get("user_id").AsString(),
-            UserLogin = data.Get("user_login").AsString(),
-            UserName = data.Get("user_name").AsString(),
-            ChannelPointsWon = data.Get("channel_points_won").AsInt32(),
-            ChannelPointsUsed = data.Get("channel_points_used").AsInt32(),
+            UserId = data.Read("user_id", static v => v.AsString()),
+            UserLogin = data.Read("user_login", static v => v.AsString()),
+            UserName = data.Read("user_name", static v => v.AsString()),
+            ChannelPointsWon = data.Read("channel_points_won", static v => v.AsInt32()),
+            ChannelPointsUsed = data.Read("channel_points_used", static v => v.AsInt32()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_top_predictors.gd");
-        var request = script.New().AsGodotObject();
-        if(UserId != null) request.Set("user_id", UserId);
-        if(UserLogin != null) request.Set("user_login", UserLogin);
-        if(UserName != null) request.Set("user_name", UserName);
-        request.Set("channel_points_won", ChannelPointsWon);
-        request.Set("channel_points_used", ChannelPointsUsed);
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated_eventsub/twitch_es_top_predictors.gd");
+        if(UserId != null) request.SetValue("user_id", UserId);
+        if(UserLogin != null) request.SetValue("user_login", UserLogin);
+        if(UserName != null) request.SetValue("user_name", UserName);
+        request.SetValue("channel_points_won", ChannelPointsWon);
+        request.SetValue("channel_points_used", ChannelPointsUsed);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 }

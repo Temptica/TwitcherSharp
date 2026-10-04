@@ -6,7 +6,7 @@ namespace TwitcherSharp.Api.Generated.Extensions;
 
 public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtension>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string AuthorName { get; set; } = null!;
     public bool BitsEnabled { get; set; }
     public bool CanInstall { get; set; }
@@ -15,7 +15,7 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
     public string EulaTosUrl { get; set; } = null!;
     public bool HasChatSupport { get; set; }
     public string IconUrl { get; set; } = null!;
-    public TwitchExtensionIconUrls IconUrls { get => field ??= _data?.Get<TwitchExtensionIconUrls>("icon_urls")!; set; } = null!;
+    public TwitchExtensionIconUrls IconUrls { get => field ??= _data.Get<TwitchExtensionIconUrls>("icon_urls")!; set; } = null!;
     public string Id { get; set; } = null!;
     public string Name { get; set; } = null!;
     public string PrivacyPolicyUrl { get; set; } = null!;
@@ -27,7 +27,7 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
     public string SupportEmail { get; set; } = null!;
     public string Version { get; set; } = null!;
     public string ViewerSummary { get; set; } = null!;
-    public TwitchViews Views { get => field ??= _data?.Get<TwitchViews>("views")!; set; } = null!;
+    public TwitchViews Views { get => field ??= _data.Get<TwitchViews>("views")!; set; } = null!;
     public string[] AllowlistedConfigUrls { get; set; } = null!;
     public string[] AllowlistedPanelUrls { get; set; } = null!;
 
@@ -39,61 +39,67 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
         if(data == null) return null;
         var instance = new TwitchExtension
         {
-            AuthorName = data.Get("author_name").AsString(),
-            BitsEnabled = data.Get("bits_enabled").AsBool(),
-            CanInstall = data.Get("can_install").AsBool(),
-            ConfigurationLocation = data.Get("configuration_location").AsString(),
-            Description = data.Get("description").AsString(),
-            EulaTosUrl = data.Get("eula_tos_url").AsString(),
-            HasChatSupport = data.Get("has_chat_support").AsBool(),
-            IconUrl = data.Get("icon_url").AsString(),
-            Id = data.Get("id").AsString(),
-            Name = data.Get("name").AsString(),
-            PrivacyPolicyUrl = data.Get("privacy_policy_url").AsString(),
-            RequestIdentityLink = data.Get("request_identity_link").AsBool(),
-            ScreenshotUrls = data.Get("screenshot_urls").AsStringArray(),
-            State = data.Get("state").AsString(),
-            SubscriptionsSupportLevel = data.Get("subscriptions_support_level").AsString(),
-            Summary = data.Get("summary").AsString(),
-            SupportEmail = data.Get("support_email").AsString(),
-            Version = data.Get("version").AsString(),
-            ViewerSummary = data.Get("viewer_summary").AsString(),
-            AllowlistedConfigUrls = data.Get("allowlisted_config_urls").AsStringArray(),
-            AllowlistedPanelUrls = data.Get("allowlisted_panel_urls").AsStringArray(),
+            AuthorName = data.Read("author_name", static v => v.AsString()),
+            BitsEnabled = data.Read("bits_enabled", static v => v.AsBool()),
+            CanInstall = data.Read("can_install", static v => v.AsBool()),
+            ConfigurationLocation = data.Read("configuration_location", static v => v.AsString()),
+            Description = data.Read("description", static v => v.AsString()),
+            EulaTosUrl = data.Read("eula_tos_url", static v => v.AsString()),
+            HasChatSupport = data.Read("has_chat_support", static v => v.AsBool()),
+            IconUrl = data.Read("icon_url", static v => v.AsString()),
+            Id = data.Read("id", static v => v.AsString()),
+            Name = data.Read("name", static v => v.AsString()),
+            PrivacyPolicyUrl = data.Read("privacy_policy_url", static v => v.AsString()),
+            RequestIdentityLink = data.Read("request_identity_link", static v => v.AsBool()),
+            ScreenshotUrls = data.Read("screenshot_urls", static v => v.AsStringArray()),
+            State = data.Read("state", static v => v.AsString()),
+            SubscriptionsSupportLevel = data.Read("subscriptions_support_level", static v => v.AsString()),
+            Summary = data.Read("summary", static v => v.AsString()),
+            SupportEmail = data.Read("support_email", static v => v.AsString()),
+            Version = data.Read("version", static v => v.AsString()),
+            ViewerSummary = data.Read("viewer_summary", static v => v.AsString()),
+            AllowlistedConfigUrls = data.Read("allowlisted_config_urls", static v => v.AsStringArray()),
+            AllowlistedPanelUrls = data.Read("allowlisted_panel_urls", static v => v.AsStringArray()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_extension.gd");
-        var request = script.Call("new").AsGodotObject();
-        if(AuthorName != null) request.Set("author_name", AuthorName);
-        request.Set("bits_enabled", BitsEnabled);
-        request.Set("can_install", CanInstall);
-        if(ConfigurationLocation != null) request.Set("configuration_location", ConfigurationLocation);
-        if(Description != null) request.Set("description", Description);
-        if(EulaTosUrl != null) request.Set("eula_tos_url", EulaTosUrl);
-        request.Set("has_chat_support", HasChatSupport);
-        if(IconUrl != null) request.Set("icon_url", IconUrl);
-        if(IconUrls != null) request.Set("icon_urls", IconUrls.ToGodotObject());
-        if(Id != null) request.Set("id", Id);
-        if(Name != null) request.Set("name", Name);
-        if(PrivacyPolicyUrl != null) request.Set("privacy_policy_url", PrivacyPolicyUrl);
-        request.Set("request_identity_link", RequestIdentityLink);
-        if(ScreenshotUrls != null) request.Set("screenshot_urls", new Godot.Collections.Array<string>(ScreenshotUrls));
-        if(State != null) request.Set("state", State);
-        if(SubscriptionsSupportLevel != null) request.Set("subscriptions_support_level", SubscriptionsSupportLevel);
-        if(Summary != null) request.Set("summary", Summary);
-        if(SupportEmail != null) request.Set("support_email", SupportEmail);
-        if(Version != null) request.Set("version", Version);
-        if(ViewerSummary != null) request.Set("viewer_summary", ViewerSummary);
-        if(Views != null) request.Set("views", Views.ToGodotObject());
-        if(AllowlistedConfigUrls != null) request.Set("allowlisted_config_urls", new Godot.Collections.Array<string>(AllowlistedConfigUrls));
-        if(AllowlistedPanelUrls != null) request.Set("allowlisted_panel_urls", new Godot.Collections.Array<string>(AllowlistedPanelUrls));
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated/twitch_extension.gd");
+        if(AuthorName != null) request.SetValue("author_name", AuthorName);
+        request.SetValue("bits_enabled", BitsEnabled);
+        request.SetValue("can_install", CanInstall);
+        if(ConfigurationLocation != null) request.SetValue("configuration_location", ConfigurationLocation);
+        if(Description != null) request.SetValue("description", Description);
+        if(EulaTosUrl != null) request.SetValue("eula_tos_url", EulaTosUrl);
+        request.SetValue("has_chat_support", HasChatSupport);
+        if(IconUrl != null) request.SetValue("icon_url", IconUrl);
+        if(IconUrls != null) request.SetObject("icon_urls", IconUrls);
+        if(Id != null) request.SetValue("id", Id);
+        if(Name != null) request.SetValue("name", Name);
+        if(PrivacyPolicyUrl != null) request.SetValue("privacy_policy_url", PrivacyPolicyUrl);
+        request.SetValue("request_identity_link", RequestIdentityLink);
+        if(ScreenshotUrls != null) request.SetValue("screenshot_urls", new Godot.Collections.Array<string>(ScreenshotUrls));
+        if(State != null) request.SetValue("state", State);
+        if(SubscriptionsSupportLevel != null) request.SetValue("subscriptions_support_level", SubscriptionsSupportLevel);
+        if(Summary != null) request.SetValue("summary", Summary);
+        if(SupportEmail != null) request.SetValue("support_email", SupportEmail);
+        if(Version != null) request.SetValue("version", Version);
+        if(ViewerSummary != null) request.SetValue("viewer_summary", ViewerSummary);
+        if(Views != null) request.SetObject("views", Views);
+        if(AllowlistedConfigUrls != null) request.SetValue("allowlisted_config_urls", new Godot.Collections.Array<string>(AllowlistedConfigUrls));
+        if(AllowlistedPanelUrls != null) request.SetValue("allowlisted_panel_urls", new Godot.Collections.Array<string>(AllowlistedPanelUrls));
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
     
     /// <summary> 
@@ -101,12 +107,12 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
     /// </summary>
     public partial class TwitchViews : RefCounted, ITwitcherSharp<TwitchViews>
     {
-        private GodotObject? _data;
-        public TwitchMobile Mobile { get => field ??= _data?.Get<TwitchMobile>("mobile")!; set; } = null!;
-        public TwitchPanel Panel { get => field ??= _data?.Get<TwitchPanel>("panel")!; set; } = null!;
-        public TwitchVideoOverlay VideoOverlay { get => field ??= _data?.Get<TwitchVideoOverlay>("video_overlay")!; set; } = null!;
-        public TwitchComponent Component { get => field ??= _data?.Get<TwitchComponent>("component")!; set; } = null!;
-        public TwitchConfig Config { get => field ??= _data?.Get<TwitchConfig>("config")!; set; } = null!;
+        private Variant _data;
+        public TwitchMobile Mobile { get => field ??= _data.Get<TwitchMobile>("mobile")!; set; } = null!;
+        public TwitchPanel Panel { get => field ??= _data.Get<TwitchPanel>("panel")!; set; } = null!;
+        public TwitchVideoOverlay VideoOverlay { get => field ??= _data.Get<TwitchVideoOverlay>("video_overlay")!; set; } = null!;
+        public TwitchComponent Component { get => field ??= _data.Get<TwitchComponent>("component")!; set; } = null!;
+        public TwitchConfig Config { get => field ??= _data.Get<TwitchConfig>("config")!; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchViews object.
@@ -116,21 +122,26 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
             if(data == null) return null;
             var instance = new TwitchViews();
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_extension.gd");
-            var twitchViewsClass = script.Get("Views").AsGodotObject();
-            var request = twitchViewsClass.Call("new").AsGodotObject();
-            if(Mobile != null) request.Set("mobile", Mobile.ToGodotObject());
-            if(Panel != null) request.Set("panel", Panel.ToGodotObject());
-            if(VideoOverlay != null) request.Set("video_overlay", VideoOverlay.ToGodotObject());
-            if(Component != null) request.Set("component", Component.ToGodotObject());
-            if(Config != null) request.Set("config", Config.ToGodotObject());
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_extension.gd", "Views");
+            if(Mobile != null) request.SetObject("mobile", Mobile);
+            if(Panel != null) request.SetObject("panel", Panel);
+            if(VideoOverlay != null) request.SetObject("video_overlay", VideoOverlay);
+            if(Component != null) request.SetObject("component", Component);
+            if(Config != null) request.SetObject("config", Config);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
         
         /// <summary> 
@@ -138,7 +149,7 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
         /// </summary>
         public partial class TwitchMobile : RefCounted, ITwitcherSharp<TwitchMobile>
         {
-            private GodotObject? _data;
+            private Variant _data;
             public string ViewerUrl { get; set; } = null!;
         
             /// <summary> 
@@ -149,20 +160,25 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
                 if(data == null) return null;
                 var instance = new TwitchMobile
                 {
-                    ViewerUrl = data.Get("viewer_url").AsString(),
+                    ViewerUrl = data.Read("viewer_url", static v => v.AsString()),
                 };
                 
-                instance._data = data;
+                instance._data = Variant.CreateFrom(data);
                 return instance;
             }
         
             public GodotObject ToGodotObject()
             {
-                var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_extension.gd");
-                var twitchMobileClass = script.Get("Mobile").AsGodotObject();
-                var request = twitchMobileClass.Call("new").AsGodotObject();
-                if(ViewerUrl != null) request.Set("viewer_url", ViewerUrl);
+                var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_extension.gd", "Mobile");
+                if(ViewerUrl != null) request.SetValue("viewer_url", ViewerUrl);
                 return request;
+            }
+        
+            /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+            protected override void Dispose(bool disposing)
+            {
+                if (disposing) _data.Dispose();
+                base.Dispose(disposing);
             }
         
         }
@@ -172,7 +188,7 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
         /// </summary>
         public partial class TwitchPanel : RefCounted, ITwitcherSharp<TwitchPanel>
         {
-            private GodotObject? _data;
+            private Variant _data;
             public string ViewerUrl { get; set; } = null!;
             public int Height { get; set; }
             public bool CanLinkExternalContent { get; set; }
@@ -185,24 +201,29 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
                 if(data == null) return null;
                 var instance = new TwitchPanel
                 {
-                    ViewerUrl = data.Get("viewer_url").AsString(),
-                    Height = data.Get("height").AsInt32(),
-                    CanLinkExternalContent = data.Get("can_link_external_content").AsBool(),
+                    ViewerUrl = data.Read("viewer_url", static v => v.AsString()),
+                    Height = data.Read("height", static v => v.AsInt32()),
+                    CanLinkExternalContent = data.Read("can_link_external_content", static v => v.AsBool()),
                 };
                 
-                instance._data = data;
+                instance._data = Variant.CreateFrom(data);
                 return instance;
             }
         
             public GodotObject ToGodotObject()
             {
-                var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_extension.gd");
-                var twitchPanelClass = script.Get("Panel").AsGodotObject();
-                var request = twitchPanelClass.Call("new").AsGodotObject();
-                if(ViewerUrl != null) request.Set("viewer_url", ViewerUrl);
-                request.Set("height", Height);
-                request.Set("can_link_external_content", CanLinkExternalContent);
+                var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_extension.gd", "Panel");
+                if(ViewerUrl != null) request.SetValue("viewer_url", ViewerUrl);
+                request.SetValue("height", Height);
+                request.SetValue("can_link_external_content", CanLinkExternalContent);
                 return request;
+            }
+        
+            /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+            protected override void Dispose(bool disposing)
+            {
+                if (disposing) _data.Dispose();
+                base.Dispose(disposing);
             }
         
         }
@@ -212,7 +233,7 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
         /// </summary>
         public partial class TwitchVideoOverlay : RefCounted, ITwitcherSharp<TwitchVideoOverlay>
         {
-            private GodotObject? _data;
+            private Variant _data;
             public string ViewerUrl { get; set; } = null!;
             public bool CanLinkExternalContent { get; set; }
         
@@ -224,22 +245,27 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
                 if(data == null) return null;
                 var instance = new TwitchVideoOverlay
                 {
-                    ViewerUrl = data.Get("viewer_url").AsString(),
-                    CanLinkExternalContent = data.Get("can_link_external_content").AsBool(),
+                    ViewerUrl = data.Read("viewer_url", static v => v.AsString()),
+                    CanLinkExternalContent = data.Read("can_link_external_content", static v => v.AsBool()),
                 };
                 
-                instance._data = data;
+                instance._data = Variant.CreateFrom(data);
                 return instance;
             }
         
             public GodotObject ToGodotObject()
             {
-                var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_extension.gd");
-                var twitchVideoOverlayClass = script.Get("VideoOverlay").AsGodotObject();
-                var request = twitchVideoOverlayClass.Call("new").AsGodotObject();
-                if(ViewerUrl != null) request.Set("viewer_url", ViewerUrl);
-                request.Set("can_link_external_content", CanLinkExternalContent);
+                var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_extension.gd", "VideoOverlay");
+                if(ViewerUrl != null) request.SetValue("viewer_url", ViewerUrl);
+                request.SetValue("can_link_external_content", CanLinkExternalContent);
                 return request;
+            }
+        
+            /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+            protected override void Dispose(bool disposing)
+            {
+                if (disposing) _data.Dispose();
+                base.Dispose(disposing);
             }
         
         }
@@ -249,7 +275,7 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
         /// </summary>
         public partial class TwitchComponent : RefCounted, ITwitcherSharp<TwitchComponent>
         {
-            private GodotObject? _data;
+            private Variant _data;
             public string ViewerUrl { get; set; } = null!;
             public int AspectRatioX { get; set; }
             public int AspectRatioY { get; set; }
@@ -266,32 +292,37 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
                 if(data == null) return null;
                 var instance = new TwitchComponent
                 {
-                    ViewerUrl = data.Get("viewer_url").AsString(),
-                    AspectRatioX = data.Get("aspect_ratio_x").AsInt32(),
-                    AspectRatioY = data.Get("aspect_ratio_y").AsInt32(),
-                    Autoscale = data.Get("autoscale").AsBool(),
-                    ScalePixels = data.Get("scale_pixels").AsInt32(),
-                    TargetHeight = data.Get("target_height").AsInt32(),
-                    CanLinkExternalContent = data.Get("can_link_external_content").AsBool(),
+                    ViewerUrl = data.Read("viewer_url", static v => v.AsString()),
+                    AspectRatioX = data.Read("aspect_ratio_x", static v => v.AsInt32()),
+                    AspectRatioY = data.Read("aspect_ratio_y", static v => v.AsInt32()),
+                    Autoscale = data.Read("autoscale", static v => v.AsBool()),
+                    ScalePixels = data.Read("scale_pixels", static v => v.AsInt32()),
+                    TargetHeight = data.Read("target_height", static v => v.AsInt32()),
+                    CanLinkExternalContent = data.Read("can_link_external_content", static v => v.AsBool()),
                 };
                 
-                instance._data = data;
+                instance._data = Variant.CreateFrom(data);
                 return instance;
             }
         
             public GodotObject ToGodotObject()
             {
-                var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_extension.gd");
-                var twitchComponentClass = script.Get("Component").AsGodotObject();
-                var request = twitchComponentClass.Call("new").AsGodotObject();
-                if(ViewerUrl != null) request.Set("viewer_url", ViewerUrl);
-                request.Set("aspect_ratio_x", AspectRatioX);
-                request.Set("aspect_ratio_y", AspectRatioY);
-                request.Set("autoscale", Autoscale);
-                request.Set("scale_pixels", ScalePixels);
-                request.Set("target_height", TargetHeight);
-                request.Set("can_link_external_content", CanLinkExternalContent);
+                var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_extension.gd", "Component");
+                if(ViewerUrl != null) request.SetValue("viewer_url", ViewerUrl);
+                request.SetValue("aspect_ratio_x", AspectRatioX);
+                request.SetValue("aspect_ratio_y", AspectRatioY);
+                request.SetValue("autoscale", Autoscale);
+                request.SetValue("scale_pixels", ScalePixels);
+                request.SetValue("target_height", TargetHeight);
+                request.SetValue("can_link_external_content", CanLinkExternalContent);
                 return request;
+            }
+        
+            /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+            protected override void Dispose(bool disposing)
+            {
+                if (disposing) _data.Dispose();
+                base.Dispose(disposing);
             }
         
         }
@@ -301,7 +332,7 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
         /// </summary>
         public partial class TwitchConfig : RefCounted, ITwitcherSharp<TwitchConfig>
         {
-            private GodotObject? _data;
+            private Variant _data;
             public string ViewerUrl { get; set; } = null!;
             public bool CanLinkExternalContent { get; set; }
         
@@ -313,22 +344,27 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
                 if(data == null) return null;
                 var instance = new TwitchConfig
                 {
-                    ViewerUrl = data.Get("viewer_url").AsString(),
-                    CanLinkExternalContent = data.Get("can_link_external_content").AsBool(),
+                    ViewerUrl = data.Read("viewer_url", static v => v.AsString()),
+                    CanLinkExternalContent = data.Read("can_link_external_content", static v => v.AsBool()),
                 };
                 
-                instance._data = data;
+                instance._data = Variant.CreateFrom(data);
                 return instance;
             }
         
             public GodotObject ToGodotObject()
             {
-                var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_extension.gd");
-                var twitchConfigClass = script.Get("Config").AsGodotObject();
-                var request = twitchConfigClass.Call("new").AsGodotObject();
-                if(ViewerUrl != null) request.Set("viewer_url", ViewerUrl);
-                request.Set("can_link_external_content", CanLinkExternalContent);
+                var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_extension.gd", "Config");
+                if(ViewerUrl != null) request.SetValue("viewer_url", ViewerUrl);
+                request.SetValue("can_link_external_content", CanLinkExternalContent);
                 return request;
+            }
+        
+            /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+            protected override void Dispose(bool disposing)
+            {
+                if (disposing) _data.Dispose();
+                base.Dispose(disposing);
             }
         
         }

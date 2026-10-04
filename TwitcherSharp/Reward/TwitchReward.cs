@@ -1,4 +1,5 @@
 using Godot;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Api.Generated.Users;
 using TwitcherSharp.Interfaces;
 
@@ -101,56 +102,55 @@ public partial class TwitchReward : Resource, ITwitcherSharp<TwitchReward>
     /// </summary>
     internal void ReadFrom(GodotObject data)
     {
-        Id = data.Get("id").AsString();
-        BroadcasterUser = TwitchUser.FromObject(data.Get("broadcaster_user").AsGodotObject())!;
-        Title = data.Get("title").AsString();
-        Description = data.Get("description").AsString();
-        Cost = data.Get("cost").AsInt32();
-        Image1 = data.Get("image_1").As<Image>();
-        Image2 = data.Get("image_2").As<Image>();
-        Image4 = data.Get("image_4").As<Image>();
-        BackgroundColor = data.Get("background_color").AsColor();
-        IsEnabled = data.Get("is_enabled").AsBool();
-        IsUserInputRequired = data.Get("is_user_input_required").AsBool();
-        IsPaused = data.Get("is_paused").AsBool();
-        ShouldRedemptionsSkipRequestQueue = data.Get("should_redemptions_skip_request_queue").AsBool();
-        IsMaxPerStreamEnabled = data.Get("is_max_per_stream_enabled").AsBool();
-        MaxPerStream = data.Get("max_per_stream").AsInt32();
-        IsMaxPerUserPerStreamEnabled = data.Get("is_max_per_user_per_stream_enabled").AsBool();
-        MaxPerUserPerStream = data.Get("max_per_user_per_stream").AsInt32();
-        IsGlobalCooldownEnabled = data.Get("is_global_cooldown_enabled").AsBool();
-        GlobalCooldownSeconds = data.Get("global_cooldown_seconds").AsInt32();
-        IsInStock = data.Get("is_in_stock").AsBool();
-        RedemptionsRedeemedCurrentStream = data.Get("redemptions_redeemed_current_stream").AsInt32();
-        CooldownExpiresAt = data.Get("cooldown_expires_at").AsString();
+        Id = data.Read("id", static v => v.AsString());
+        BroadcasterUser = data.Get<TwitchUser>("broadcaster_user")!;
+        Title = data.Read("title", static v => v.AsString());
+        Description = data.Read("description", static v => v.AsString());
+        Cost = data.Read("cost", static v => v.AsInt32());
+        Image1 = data.Read("image_1", static v => v.As<Image>());
+        Image2 = data.Read("image_2", static v => v.As<Image>());
+        Image4 = data.Read("image_4", static v => v.As<Image>());
+        BackgroundColor = data.Read("background_color", static v => v.AsColor());
+        IsEnabled = data.Read("is_enabled", static v => v.AsBool());
+        IsUserInputRequired = data.Read("is_user_input_required", static v => v.AsBool());
+        IsPaused = data.Read("is_paused", static v => v.AsBool());
+        ShouldRedemptionsSkipRequestQueue = data.Read("should_redemptions_skip_request_queue", static v => v.AsBool());
+        IsMaxPerStreamEnabled = data.Read("is_max_per_stream_enabled", static v => v.AsBool());
+        MaxPerStream = data.Read("max_per_stream", static v => v.AsInt32());
+        IsMaxPerUserPerStreamEnabled = data.Read("is_max_per_user_per_stream_enabled", static v => v.AsBool());
+        MaxPerUserPerStream = data.Read("max_per_user_per_stream", static v => v.AsInt32());
+        IsGlobalCooldownEnabled = data.Read("is_global_cooldown_enabled", static v => v.AsBool());
+        GlobalCooldownSeconds = data.Read("global_cooldown_seconds", static v => v.AsInt32());
+        IsInStock = data.Read("is_in_stock", static v => v.AsBool());
+        RedemptionsRedeemedCurrentStream = data.Read("redemptions_redeemed_current_stream", static v => v.AsInt32());
+        CooldownExpiresAt = data.Read("cooldown_expires_at", static v => v.AsString());
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/reward/twitch_reward.gd");
-        var reward = script.New().AsGodotObject();
-        reward.Set("id", Id);
-        reward.Set("broadcaster_user", BroadcasterUser?.ToGodotObject() ?? new Variant());
-        reward.Set("title", Title);
-        reward.Set("description", Description);
-        reward.Set("cost", Cost);
-        if (Image1 != null) reward.Set("image_1", Image1);
-        if (Image2 != null) reward.Set("image_2", Image2);
-        if (Image4 != null) reward.Set("image_4", Image4);
-        reward.Set("background_color", BackgroundColor);
-        reward.Set("is_enabled", IsEnabled);
-        reward.Set("is_user_input_required", IsUserInputRequired);
-        reward.Set("is_paused", IsPaused);
-        reward.Set("should_redemptions_skip_request_queue", ShouldRedemptionsSkipRequestQueue);
-        reward.Set("is_max_per_stream_enabled", IsMaxPerStreamEnabled);
-        reward.Set("max_per_stream", MaxPerStream);
-        reward.Set("is_max_per_user_per_stream_enabled", IsMaxPerUserPerStreamEnabled);
-        reward.Set("max_per_user_per_stream", MaxPerUserPerStream);
-        reward.Set("is_global_cooldown_enabled", IsGlobalCooldownEnabled);
-        reward.Set("global_cooldown_seconds", GlobalCooldownSeconds);
-        reward.Set("is_in_stock", IsInStock);
-        reward.Set("redemptions_redeemed_current_stream", RedemptionsRedeemedCurrentStream);
-        if (CooldownExpiresAt != null) reward.Set("cooldown_expires_at", CooldownExpiresAt);
+        var reward = InteropExtension.NewObject("res://addons/twitcher/reward/twitch_reward.gd");
+        reward.SetValue("id", Id);
+        reward.SetObject("broadcaster_user", BroadcasterUser);
+        reward.SetValue("title", Title);
+        reward.SetValue("description", Description);
+        reward.SetValue("cost", Cost);
+        if (Image1 != null) reward.SetValue("image_1", Image1);
+        if (Image2 != null) reward.SetValue("image_2", Image2);
+        if (Image4 != null) reward.SetValue("image_4", Image4);
+        reward.SetValue("background_color", BackgroundColor);
+        reward.SetValue("is_enabled", IsEnabled);
+        reward.SetValue("is_user_input_required", IsUserInputRequired);
+        reward.SetValue("is_paused", IsPaused);
+        reward.SetValue("should_redemptions_skip_request_queue", ShouldRedemptionsSkipRequestQueue);
+        reward.SetValue("is_max_per_stream_enabled", IsMaxPerStreamEnabled);
+        reward.SetValue("max_per_stream", MaxPerStream);
+        reward.SetValue("is_max_per_user_per_stream_enabled", IsMaxPerUserPerStreamEnabled);
+        reward.SetValue("max_per_user_per_stream", MaxPerUserPerStream);
+        reward.SetValue("is_global_cooldown_enabled", IsGlobalCooldownEnabled);
+        reward.SetValue("global_cooldown_seconds", GlobalCooldownSeconds);
+        reward.SetValue("is_in_stock", IsInStock);
+        reward.SetValue("redemptions_redeemed_current_stream", RedemptionsRedeemedCurrentStream);
+        if (CooldownExpiresAt != null) reward.SetValue("cooldown_expires_at", CooldownExpiresAt);
         
         return reward;
     }

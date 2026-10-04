@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelGuestStarSessionBegin;
 
 public partial class TwitchChannelGuestStarSessionBeginEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelGuestStarSessionBeginEvent>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// The broadcaster user ID.
@@ -43,27 +43,32 @@ public partial class TwitchChannelGuestStarSessionBeginEvent : RefCounted, ITwit
         if(data == null) return null;
         var instance = new TwitchChannelGuestStarSessionBeginEvent
         {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-            BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
-            BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
-            SessionId = data.Get("session_id").AsString(),
-            StartedAt = data.Get("started_at").AsString(),
+            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
+            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
+            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
+            SessionId = data.Read("session_id", static v => v.AsString()),
+            StartedAt = data.Read("started_at", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_guest_star_session_begin.gd");
-        var eventClass = script.Get("Event").As<GDScript>();
-        var request = eventClass.New().AsGodotObject();
-        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
-        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
-        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        if(SessionId != null) request.Set("session_id", SessionId);
-        if(StartedAt != null) request.Set("started_at", StartedAt);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_guest_star_session_begin.gd", "Event");
+        if(BroadcasterUserId != null) request.SetValue("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserName != null) request.SetValue("broadcaster_user_name", BroadcasterUserName);
+        if(BroadcasterUserLogin != null) request.SetValue("broadcaster_user_login", BroadcasterUserLogin);
+        if(SessionId != null) request.SetValue("session_id", SessionId);
+        if(StartedAt != null) request.SetValue("started_at", StartedAt);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 }

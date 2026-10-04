@@ -10,7 +10,7 @@ namespace TwitcherSharp.Api.Generated.GuestStar;
 /// </summary>
 public partial class TwitchDeleteGuestStarSlotOpt : RefCounted, ITwitcherSharp<TwitchDeleteGuestStarSlotOpt>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string? ShouldReinviteGuest { get; set; }
 
     /// <summary> 
@@ -21,20 +21,25 @@ public partial class TwitchDeleteGuestStarSlotOpt : RefCounted, ITwitcherSharp<T
         if(data == null) return null;
         var instance = new TwitchDeleteGuestStarSlotOpt
         {
-            ShouldReinviteGuest = data.Get("should_reinvite_guest").AsString(),
+            ShouldReinviteGuest = data.Read("should_reinvite_guest", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_delete_guest_star_slot.gd");
-        var optClass = script.Get("Opt").AsGodotObject();
-        var request = optClass.Call("new").AsGodotObject();
-        if(ShouldReinviteGuest != null) request.Set("should_reinvite_guest", ShouldReinviteGuest);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_delete_guest_star_slot.gd", "Opt");
+        if(ShouldReinviteGuest != null) request.SetValue("should_reinvite_guest", ShouldReinviteGuest);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

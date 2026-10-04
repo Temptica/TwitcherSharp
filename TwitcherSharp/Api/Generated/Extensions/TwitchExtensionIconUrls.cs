@@ -10,7 +10,7 @@ namespace TwitcherSharp.Api.Generated.Extensions;
 /// </summary>
 public partial class TwitchExtensionIconUrls : RefCounted, ITwitcherSharp<TwitchExtensionIconUrls>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string? _100x100 { get; set; }
     public string? _24x24 { get; set; }
     public string? _300x200 { get; set; }
@@ -23,23 +23,29 @@ public partial class TwitchExtensionIconUrls : RefCounted, ITwitcherSharp<Twitch
         if(data == null) return null;
         var instance = new TwitchExtensionIconUrls
         {
-            _100x100 = data.Get("100x_100").AsString(),
-            _24x24 = data.Get("24x_24").AsString(),
-            _300x200 = data.Get("300x_200").AsString(),
+            _100x100 = data.Read("100x_100", static v => v.AsString()),
+            _24x24 = data.Read("24x_24", static v => v.AsString()),
+            _300x200 = data.Read("300x_200", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_extension_icon_urls.gd");
-        var request = script.Call("new").AsGodotObject();
-        if(_100x100 != null) request.Set("100x_100", _100x100);
-        if(_24x24 != null) request.Set("24x_24", _24x24);
-        if(_300x200 != null) request.Set("300x_200", _300x200);
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated/twitch_extension_icon_urls.gd");
+        if(_100x100 != null) request.SetValue("100x_100", _100x100);
+        if(_24x24 != null) request.SetValue("24x_24", _24x24);
+        if(_300x200 != null) request.SetValue("300x_200", _300x200);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

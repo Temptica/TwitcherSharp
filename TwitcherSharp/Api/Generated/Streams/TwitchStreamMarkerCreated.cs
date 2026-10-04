@@ -6,7 +6,7 @@ namespace TwitcherSharp.Api.Generated.Streams;
 
 public partial class TwitchStreamMarkerCreated : RefCounted, ITwitcherSharp<TwitchStreamMarkerCreated>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string Id { get; set; } = null!;
     public string CreatedAt { get; set; } = null!;
     public int PositionSeconds { get; set; }
@@ -20,25 +20,31 @@ public partial class TwitchStreamMarkerCreated : RefCounted, ITwitcherSharp<Twit
         if(data == null) return null;
         var instance = new TwitchStreamMarkerCreated
         {
-            Id = data.Get("id").AsString(),
-            CreatedAt = data.Get("created_at").AsString(),
-            PositionSeconds = data.Get("position_seconds").AsInt32(),
-            Description = data.Get("description").AsString(),
+            Id = data.Read("id", static v => v.AsString()),
+            CreatedAt = data.Read("created_at", static v => v.AsString()),
+            PositionSeconds = data.Read("position_seconds", static v => v.AsInt32()),
+            Description = data.Read("description", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_stream_marker_created.gd");
-        var request = script.Call("new").AsGodotObject();
-        if(Id != null) request.Set("id", Id);
-        if(CreatedAt != null) request.Set("created_at", CreatedAt);
-        request.Set("position_seconds", PositionSeconds);
-        if(Description != null) request.Set("description", Description);
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated/twitch_stream_marker_created.gd");
+        if(Id != null) request.SetValue("id", Id);
+        if(CreatedAt != null) request.SetValue("created_at", CreatedAt);
+        request.SetValue("position_seconds", PositionSeconds);
+        if(Description != null) request.SetValue("description", Description);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

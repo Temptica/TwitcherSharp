@@ -10,7 +10,7 @@ namespace TwitcherSharp.Api.Generated.Bits;
 /// </summary>
 public partial class TwitchGetCustomPowerUpOpt : RefCounted, ITwitcherSharp<TwitchGetCustomPowerUpOpt>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string[]? Id { get; set; }
 
     /// <summary> 
@@ -21,20 +21,25 @@ public partial class TwitchGetCustomPowerUpOpt : RefCounted, ITwitcherSharp<Twit
         if(data == null) return null;
         var instance = new TwitchGetCustomPowerUpOpt
         {
-            Id = data.Get("id").AsStringArray(),
+            Id = data.Read("id", static v => v.AsStringArray()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_custom_power_up.gd");
-        var optClass = script.Get("Opt").AsGodotObject();
-        var request = optClass.Call("new").AsGodotObject();
-        if(Id != null) request.Set("id", new Godot.Collections.Array<string>(Id));
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_custom_power_up.gd", "Opt");
+        if(Id != null) request.SetValue("id", new Godot.Collections.Array<string>(Id));
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

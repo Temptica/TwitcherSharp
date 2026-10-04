@@ -27,9 +27,9 @@ public partial class TwitchCommandContains : TwitchCommandBase, ITwitcherSharp<T
         var command = new TwitchCommandContains
         {
             Data = data,
-            MatchAll = data.Get("match_all").AsBool(),
-            Contains = data.Get("contains").AsGodotArray<string>().ToList(),
-            MatchWord = data.Get("match_word").AsBool(),
+            MatchAll = data.Read("match_all", static v => v.AsBool()),
+            Contains = data.Read("contains", static v => v.AsGodotArray<string>()).ToList(),
+            MatchWord = data.Read("match_word", static v => v.AsBool()),
         };
 
         command.SetBaseProperties();
@@ -38,10 +38,10 @@ public partial class TwitchCommandContains : TwitchCommandBase, ITwitcherSharp<T
 
     public override GodotObject ToGodotObject()
     {
-        var data = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_command_contains.gd").New().AsGodotObject();
-        data.Set("contains", Contains.ToVariantArray());
-        data.Set("match_all", MatchAll);
-        data.Set("match_word", MatchWord);
+        var data = InteropExtension.NewObject("res://addons/twitcher/chat/twitch_command_contains.gd");
+        data.SetValue("contains", Contains.ToVariantArray());
+        data.SetValue("match_all", MatchAll);
+        data.SetValue("match_word", MatchWord);
         GetBaseProperties(data);
         return data;
     }

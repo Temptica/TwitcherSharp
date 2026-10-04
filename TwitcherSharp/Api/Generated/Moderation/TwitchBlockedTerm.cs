@@ -6,7 +6,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 
 public partial class TwitchBlockedTerm : RefCounted, ITwitcherSharp<TwitchBlockedTerm>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string BroadcasterId { get; set; } = null!;
     public string ModeratorId { get; set; } = null!;
     public string Id { get; set; } = null!;
@@ -23,31 +23,37 @@ public partial class TwitchBlockedTerm : RefCounted, ITwitcherSharp<TwitchBlocke
         if(data == null) return null;
         var instance = new TwitchBlockedTerm
         {
-            BroadcasterId = data.Get("broadcaster_id").AsString(),
-            ModeratorId = data.Get("moderator_id").AsString(),
-            Id = data.Get("id").AsString(),
-            Text = data.Get("text").AsString(),
-            CreatedAt = data.Get("created_at").AsString(),
-            UpdatedAt = data.Get("updated_at").AsString(),
-            ExpiresAt = data.Get("expires_at").AsString(),
+            BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
+            ModeratorId = data.Read("moderator_id", static v => v.AsString()),
+            Id = data.Read("id", static v => v.AsString()),
+            Text = data.Read("text", static v => v.AsString()),
+            CreatedAt = data.Read("created_at", static v => v.AsString()),
+            UpdatedAt = data.Read("updated_at", static v => v.AsString()),
+            ExpiresAt = data.Read("expires_at", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_blocked_term.gd");
-        var request = script.Call("new").AsGodotObject();
-        if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
-        if(ModeratorId != null) request.Set("moderator_id", ModeratorId);
-        if(Id != null) request.Set("id", Id);
-        if(Text != null) request.Set("text", Text);
-        if(CreatedAt != null) request.Set("created_at", CreatedAt);
-        if(UpdatedAt != null) request.Set("updated_at", UpdatedAt);
-        if(ExpiresAt != null) request.Set("expires_at", ExpiresAt);
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated/twitch_blocked_term.gd");
+        if(BroadcasterId != null) request.SetValue("broadcaster_id", BroadcasterId);
+        if(ModeratorId != null) request.SetValue("moderator_id", ModeratorId);
+        if(Id != null) request.SetValue("id", Id);
+        if(Text != null) request.SetValue("text", Text);
+        if(CreatedAt != null) request.SetValue("created_at", CreatedAt);
+        if(UpdatedAt != null) request.SetValue("updated_at", UpdatedAt);
+        if(ExpiresAt != null) request.SetValue("expires_at", ExpiresAt);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

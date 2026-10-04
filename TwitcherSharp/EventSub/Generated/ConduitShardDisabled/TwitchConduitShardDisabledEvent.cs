@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ConduitShardDisabled;
 
 public partial class TwitchConduitShardDisabledEvent : RefCounted, ITwitcherSharpEventSub<TwitchConduitShardDisabledEvent>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// The ID of the conduit.
@@ -28,7 +28,7 @@ public partial class TwitchConduitShardDisabledEvent : RefCounted, ITwitcherShar
     /// <summary> 
     /// Defines the transport details that you want Twitch to use when sending you event notifications.
     /// </summary>
-    public TwitchTransport? Transport { get => field ??= _data?.Get<TwitchTransport>("transport"); set; }
+    public TwitchTransport? Transport { get => field ??= _data.Get<TwitchTransport>("transport"); set; }
 
     /// <summary> 
     /// websocket or webhook
@@ -63,34 +63,39 @@ public partial class TwitchConduitShardDisabledEvent : RefCounted, ITwitcherShar
         if(data == null) return null;
         var instance = new TwitchConduitShardDisabledEvent
         {
-            ConduitId = data.Get("conduit_id").AsString(),
-            ShardId = data.Get("shard_id").AsString(),
-            Status = data.Get("status").AsString(),
-            Method = data.Get("method").AsString(),
-            Callback = data.Get("callback").AsString(),
-            SessionId = data.Get("session_id").AsString(),
-            ConnectedAt = data.Get("connected_at").AsString(),
-            DisconnectedAt = data.Get("disconnected_at").AsString(),
+            ConduitId = data.Read("conduit_id", static v => v.AsString()),
+            ShardId = data.Read("shard_id", static v => v.AsString()),
+            Status = data.Read("status", static v => v.AsString()),
+            Method = data.Read("method", static v => v.AsString()),
+            Callback = data.Read("callback", static v => v.AsString()),
+            SessionId = data.Read("session_id", static v => v.AsString()),
+            ConnectedAt = data.Read("connected_at", static v => v.AsString()),
+            DisconnectedAt = data.Read("disconnected_at", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_conduit_shard_disabled.gd");
-        var eventClass = script.Get("Event").As<GDScript>();
-        var request = eventClass.New().AsGodotObject();
-        if(ConduitId != null) request.Set("conduit_id", ConduitId);
-        if(ShardId != null) request.Set("shard_id", ShardId);
-        if(Status != null) request.Set("status", Status);
-        if(Transport != null) request.Set("transport", Transport.ToGodotObject());
-        if(Method != null) request.Set("method", Method);
-        if(Callback != null) request.Set("callback", Callback);
-        if(SessionId != null) request.Set("session_id", SessionId);
-        if(ConnectedAt != null) request.Set("connected_at", ConnectedAt);
-        if(DisconnectedAt != null) request.Set("disconnected_at", DisconnectedAt);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_conduit_shard_disabled.gd", "Event");
+        if(ConduitId != null) request.SetValue("conduit_id", ConduitId);
+        if(ShardId != null) request.SetValue("shard_id", ShardId);
+        if(Status != null) request.SetValue("status", Status);
+        if(Transport != null) request.SetObject("transport", Transport);
+        if(Method != null) request.SetValue("method", Method);
+        if(Callback != null) request.SetValue("callback", Callback);
+        if(SessionId != null) request.SetValue("session_id", SessionId);
+        if(ConnectedAt != null) request.SetValue("connected_at", ConnectedAt);
+        if(DisconnectedAt != null) request.SetValue("disconnected_at", DisconnectedAt);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 }

@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.Shared;
 
 public partial class TwitchReward : RefCounted, ITwitcherSharpEventSub<TwitchReward>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// The reward identifier.
@@ -38,24 +38,30 @@ public partial class TwitchReward : RefCounted, ITwitcherSharpEventSub<TwitchRew
         if(data == null) return null;
         var instance = new TwitchReward
         {
-            Id = data.Get("id").AsString(),
-            Title = data.Get("title").AsString(),
-            Cost = data.Get("cost").AsInt32(),
-            Prompt = data.Get("prompt").AsString(),
+            Id = data.Read("id", static v => v.AsString()),
+            Title = data.Read("title", static v => v.AsString()),
+            Cost = data.Read("cost", static v => v.AsInt32()),
+            Prompt = data.Read("prompt", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_reward.gd");
-        var request = script.New().AsGodotObject();
-        if(Id != null) request.Set("id", Id);
-        if(Title != null) request.Set("title", Title);
-        request.Set("cost", Cost);
-        if(Prompt != null) request.Set("prompt", Prompt);
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated_eventsub/twitch_es_reward.gd");
+        if(Id != null) request.SetValue("id", Id);
+        if(Title != null) request.SetValue("title", Title);
+        request.SetValue("cost", Cost);
+        if(Prompt != null) request.SetValue("prompt", Prompt);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 }

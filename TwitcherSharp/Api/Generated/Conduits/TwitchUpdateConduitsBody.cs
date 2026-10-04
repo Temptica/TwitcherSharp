@@ -6,7 +6,7 @@ namespace TwitcherSharp.Api.Generated.Conduits;
 
 public partial class TwitchUpdateConduitsBody : RefCounted, ITwitcherSharp<TwitchUpdateConduitsBody>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string Id { get; set; } = null!;
     public int ShardCount { get; set; }
 
@@ -18,22 +18,27 @@ public partial class TwitchUpdateConduitsBody : RefCounted, ITwitcherSharp<Twitc
         if(data == null) return null;
         var instance = new TwitchUpdateConduitsBody
         {
-            Id = data.Get("id").AsString(),
-            ShardCount = data.Get("shard_count").AsInt32(),
+            Id = data.Read("id", static v => v.AsString()),
+            ShardCount = data.Read("shard_count", static v => v.AsInt32()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_update_conduits.gd");
-        var bodyClass = script.Get("Body").AsGodotObject();
-        var request = bodyClass.Call("new").AsGodotObject();
-        if(Id != null) request.Set("id", Id);
-        request.Set("shard_count", ShardCount);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_update_conduits.gd", "Body");
+        if(Id != null) request.SetValue("id", Id);
+        request.SetValue("shard_count", ShardCount);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

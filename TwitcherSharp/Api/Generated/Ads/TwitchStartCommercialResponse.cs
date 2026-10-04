@@ -6,8 +6,8 @@ namespace TwitcherSharp.Api.Generated.Ads;
 
 public partial class TwitchStartCommercialResponse : RefCounted, ITwitcherSharp<TwitchStartCommercialResponse>
 {
-    private GodotObject? _data;
-    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data")!; set; } = null!;
+    private Variant _data;
+    public TwitchResponseData[] Data { get => field ??= _data.GetArray<TwitchResponseData>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchStartCommercialResponse object.
@@ -17,17 +17,22 @@ public partial class TwitchStartCommercialResponse : RefCounted, ITwitcherSharp<
         if(data == null) return null;
         var instance = new TwitchStartCommercialResponse();
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_start_commercial.gd");
-        var responseClass = script.Get("Response").AsGodotObject();
-        var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data.ToGodotArray());
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_start_commercial.gd", "Response");
+        if(Data != null) request.SetArray("data", Data);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
     
     /// <summary> 
@@ -35,7 +40,7 @@ public partial class TwitchStartCommercialResponse : RefCounted, ITwitcherSharp<
     /// </summary>
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
-        private GodotObject? _data;
+        private Variant _data;
         public int Length { get; set; }
         public string Message { get; set; } = null!;
         public int RetryAfter { get; set; }
@@ -48,24 +53,29 @@ public partial class TwitchStartCommercialResponse : RefCounted, ITwitcherSharp<
             if(data == null) return null;
             var instance = new TwitchResponseData
             {
-                Length = data.Get("length").AsInt32(),
-                Message = data.Get("message").AsString(),
-                RetryAfter = data.Get("retry_after").AsInt32(),
+                Length = data.Read("length", static v => v.AsInt32()),
+                Message = data.Read("message", static v => v.AsString()),
+                RetryAfter = data.Read("retry_after", static v => v.AsInt32()),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_start_commercial.gd");
-            var twitchResponseDataClass = script.Get("ResponseData").AsGodotObject();
-            var request = twitchResponseDataClass.Call("new").AsGodotObject();
-            request.Set("length", Length);
-            if(Message != null) request.Set("message", Message);
-            request.Set("retry_after", RetryAfter);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_start_commercial.gd", "ResponseData");
+            request.SetValue("length", Length);
+            if(Message != null) request.SetValue("message", Message);
+            request.SetValue("retry_after", RetryAfter);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     
     }

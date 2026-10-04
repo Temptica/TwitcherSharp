@@ -6,7 +6,7 @@ namespace TwitcherSharp.Api.Generated.Shared;
 
 public partial class TwitchUserExtensionComponentUpdate : RefCounted, ITwitcherSharp<TwitchUserExtensionComponentUpdate>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public bool Active { get; set; }
     public string? Id { get; set; }
     public string? Version { get; set; }
@@ -21,27 +21,33 @@ public partial class TwitchUserExtensionComponentUpdate : RefCounted, ITwitcherS
         if(data == null) return null;
         var instance = new TwitchUserExtensionComponentUpdate
         {
-            Active = data.Get("active").AsBool(),
-            Id = data.Get("id").AsString(),
-            Version = data.Get("version").AsString(),
-            X = data.Get("x").AsInt32(),
-            Y = data.Get("y").AsInt32(),
+            Active = data.Read("active", static v => v.AsBool()),
+            Id = data.Read("id", static v => v.AsString()),
+            Version = data.Read("version", static v => v.AsString()),
+            X = data.Read("x", static v => v.AsInt32()),
+            Y = data.Read("y", static v => v.AsInt32()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_user_extension_component_update.gd");
-        var request = script.Call("new").AsGodotObject();
-        request.Set("active", Active);
-        if(Id != null) request.Set("id", Id);
-        if(Version != null) request.Set("version", Version);
-        if(X.HasValue) request.Set("x", X.Value);
-        if(Y.HasValue) request.Set("y", Y.Value);
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated/twitch_user_extension_component_update.gd");
+        request.SetValue("active", Active);
+        if(Id != null) request.SetValue("id", Id);
+        if(Version != null) request.SetValue("version", Version);
+        if(X.HasValue) request.SetValue("x", X.Value);
+        if(Y.HasValue) request.SetValue("y", Y.Value);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

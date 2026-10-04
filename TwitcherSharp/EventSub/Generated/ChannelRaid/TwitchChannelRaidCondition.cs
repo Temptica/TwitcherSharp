@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelRaid;
 
 public partial class TwitchChannelRaidCondition() : RefCounted, ITwitcherSharpCondition<TwitchChannelRaidCondition>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     public string Name => nameof(TwitchChannelRaidCondition);
 
@@ -30,22 +30,27 @@ public partial class TwitchChannelRaidCondition() : RefCounted, ITwitcherSharpCo
         if(data == null) return null;
         var instance = new TwitchChannelRaidCondition
         {
-            FromBroadcasterUserId = data.Get("from_broadcaster_user_id").AsString(),
-            ToBroadcasterUserId = data.Get("to_broadcaster_user_id").AsString(),
+            FromBroadcasterUserId = data.Read("from_broadcaster_user_id", static v => v.AsString()),
+            ToBroadcasterUserId = data.Read("to_broadcaster_user_id", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_raid.gd");
-        var conditionClass = script.Get("Condition").As<GDScript>();
-        var request = conditionClass.New().AsGodotObject();
-        if(FromBroadcasterUserId != null) request.Set("from_broadcaster_user_id", FromBroadcasterUserId);
-        if(ToBroadcasterUserId != null) request.Set("to_broadcaster_user_id", ToBroadcasterUserId);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_raid.gd", "Condition");
+        if(FromBroadcasterUserId != null) request.SetValue("from_broadcaster_user_id", FromBroadcasterUserId);
+        if(ToBroadcasterUserId != null) request.SetValue("to_broadcaster_user_id", ToBroadcasterUserId);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
     public static TwitchChannelRaidCondition FromDictionary(Dictionary data)

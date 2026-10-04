@@ -1,5 +1,6 @@
 using System.Xml;
 using Godot;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.Media;
@@ -123,23 +124,22 @@ public partial class TwitchCheermoteDefinition(string prefix, string tier)
     public static TwitchCheermoteDefinition? FromObject(GodotObject? data)
     {
         if (data == null) return null;
-        return new TwitchCheermoteDefinition(data.Get("prefix").AsString(), data.Get("tier").AsString())
+        return new TwitchCheermoteDefinition(data.Read("prefix", static v => v.AsString()), data.Read("tier", static v => v.AsString()))
         {
-            Theme = data.Get("theme").AsString(),
-            Type = data.Get("type").AsString(),
-            Scale = data.Get("scale").AsString()
+            Theme = data.Read("theme", static v => v.AsString()),
+            Type = data.Read("type", static v => v.AsString()),
+            Scale = data.Read("scale", static v => v.AsString())
         };
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_cheermote_definition.gd");
-        var request = script.New().AsGodotObject();
-        request.Set("prefix", Prefix);
-        request.Set("tier", Tier);
-        if (Theme != null) request.Set("theme", Theme);
-        if (Type != null) request.Set("type", Type);
-        if (Scale != null) request.Set("scale", Scale);
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated/twitch_cheermote_definition.gd");
+        request.SetValue("prefix", Prefix);
+        request.SetValue("tier", Tier);
+        if (Theme != null) request.SetValue("theme", Theme);
+        if (Type != null) request.SetValue("type", Type);
+        if (Scale != null) request.SetValue("scale", Scale);
         return request;
     }
 }

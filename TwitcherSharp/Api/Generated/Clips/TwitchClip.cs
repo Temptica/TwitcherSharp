@@ -6,7 +6,7 @@ namespace TwitcherSharp.Api.Generated.Clips;
 
 public partial class TwitchClip : RefCounted, ITwitcherSharp<TwitchClip>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string Id { get; set; } = null!;
     public string Url { get; set; } = null!;
     public string EmbedUrl { get; set; } = null!;
@@ -33,51 +33,57 @@ public partial class TwitchClip : RefCounted, ITwitcherSharp<TwitchClip>
         if(data == null) return null;
         var instance = new TwitchClip
         {
-            Id = data.Get("id").AsString(),
-            Url = data.Get("url").AsString(),
-            EmbedUrl = data.Get("embed_url").AsString(),
-            BroadcasterId = data.Get("broadcaster_id").AsString(),
-            BroadcasterName = data.Get("broadcaster_name").AsString(),
-            CreatorId = data.Get("creator_id").AsString(),
-            CreatorName = data.Get("creator_name").AsString(),
-            VideoId = data.Get("video_id").AsString(),
-            GameId = data.Get("game_id").AsString(),
-            Language = data.Get("language").AsString(),
-            Title = data.Get("title").AsString(),
-            ViewCount = data.Get("view_count").AsInt32(),
-            CreatedAt = data.Get("created_at").AsString(),
-            ThumbnailUrl = data.Get("thumbnail_url").AsString(),
-            Duration = data.Get("duration").AsDouble(),
-            VodOffset = data.Get("vod_offset").AsInt32(),
-            IsFeatured = data.Get("is_featured").AsBool(),
+            Id = data.Read("id", static v => v.AsString()),
+            Url = data.Read("url", static v => v.AsString()),
+            EmbedUrl = data.Read("embed_url", static v => v.AsString()),
+            BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
+            BroadcasterName = data.Read("broadcaster_name", static v => v.AsString()),
+            CreatorId = data.Read("creator_id", static v => v.AsString()),
+            CreatorName = data.Read("creator_name", static v => v.AsString()),
+            VideoId = data.Read("video_id", static v => v.AsString()),
+            GameId = data.Read("game_id", static v => v.AsString()),
+            Language = data.Read("language", static v => v.AsString()),
+            Title = data.Read("title", static v => v.AsString()),
+            ViewCount = data.Read("view_count", static v => v.AsInt32()),
+            CreatedAt = data.Read("created_at", static v => v.AsString()),
+            ThumbnailUrl = data.Read("thumbnail_url", static v => v.AsString()),
+            Duration = data.Read("duration", static v => v.AsDouble()),
+            VodOffset = data.Read("vod_offset", static v => v.AsInt32()),
+            IsFeatured = data.Read("is_featured", static v => v.AsBool()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_clip.gd");
-        var request = script.Call("new").AsGodotObject();
-        if(Id != null) request.Set("id", Id);
-        if(Url != null) request.Set("url", Url);
-        if(EmbedUrl != null) request.Set("embed_url", EmbedUrl);
-        if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
-        if(BroadcasterName != null) request.Set("broadcaster_name", BroadcasterName);
-        if(CreatorId != null) request.Set("creator_id", CreatorId);
-        if(CreatorName != null) request.Set("creator_name", CreatorName);
-        if(VideoId != null) request.Set("video_id", VideoId);
-        if(GameId != null) request.Set("game_id", GameId);
-        if(Language != null) request.Set("language", Language);
-        if(Title != null) request.Set("title", Title);
-        request.Set("view_count", ViewCount);
-        if(CreatedAt != null) request.Set("created_at", CreatedAt);
-        if(ThumbnailUrl != null) request.Set("thumbnail_url", ThumbnailUrl);
-        request.Set("duration", Duration);
-        request.Set("vod_offset", VodOffset);
-        request.Set("is_featured", IsFeatured);
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated/twitch_clip.gd");
+        if(Id != null) request.SetValue("id", Id);
+        if(Url != null) request.SetValue("url", Url);
+        if(EmbedUrl != null) request.SetValue("embed_url", EmbedUrl);
+        if(BroadcasterId != null) request.SetValue("broadcaster_id", BroadcasterId);
+        if(BroadcasterName != null) request.SetValue("broadcaster_name", BroadcasterName);
+        if(CreatorId != null) request.SetValue("creator_id", CreatorId);
+        if(CreatorName != null) request.SetValue("creator_name", CreatorName);
+        if(VideoId != null) request.SetValue("video_id", VideoId);
+        if(GameId != null) request.SetValue("game_id", GameId);
+        if(Language != null) request.SetValue("language", Language);
+        if(Title != null) request.SetValue("title", Title);
+        request.SetValue("view_count", ViewCount);
+        if(CreatedAt != null) request.SetValue("created_at", CreatedAt);
+        if(ThumbnailUrl != null) request.SetValue("thumbnail_url", ThumbnailUrl);
+        request.SetValue("duration", Duration);
+        request.SetValue("vod_offset", VodOffset);
+        request.SetValue("is_featured", IsFeatured);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

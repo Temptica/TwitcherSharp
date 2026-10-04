@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelUnbanRequestResolve;
 
 public partial class TwitchChannelUnbanRequestResolveCondition(string moderatorUserId, string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelUnbanRequestResolveCondition>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     public string Name => nameof(TwitchChannelUnbanRequestResolveCondition);
 
@@ -28,20 +28,25 @@ public partial class TwitchChannelUnbanRequestResolveCondition(string moderatorU
     public static TwitchChannelUnbanRequestResolveCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchChannelUnbanRequestResolveCondition(data.Get("moderator_user_id").AsString(), data.Get("broadcaster_user_id").AsString());
+        var instance = new TwitchChannelUnbanRequestResolveCondition(data.Read("moderator_user_id", static v => v.AsString()), data.Read("broadcaster_user_id", static v => v.AsString()));
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_unban_request_resolve.gd");
-        var conditionClass = script.Get("Condition").As<GDScript>();
-        var request = conditionClass.New().AsGodotObject();
-        request.Set("moderator_user_id", ModeratorUserId);
-        request.Set("broadcaster_user_id", BroadcasterUserId);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_unban_request_resolve.gd", "Condition");
+        request.SetValue("moderator_user_id", ModeratorUserId);
+        request.SetValue("broadcaster_user_id", BroadcasterUserId);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
     public static TwitchChannelUnbanRequestResolveCondition FromDictionary(Dictionary data)

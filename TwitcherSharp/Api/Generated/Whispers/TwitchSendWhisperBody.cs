@@ -6,7 +6,7 @@ namespace TwitcherSharp.Api.Generated.Whispers;
 
 public partial class TwitchSendWhisperBody : RefCounted, ITwitcherSharp<TwitchSendWhisperBody>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string Message { get; set; } = null!;
 
     /// <summary> 
@@ -17,20 +17,25 @@ public partial class TwitchSendWhisperBody : RefCounted, ITwitcherSharp<TwitchSe
         if(data == null) return null;
         var instance = new TwitchSendWhisperBody
         {
-            Message = data.Get("message").AsString(),
+            Message = data.Read("message", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_send_whisper.gd");
-        var bodyClass = script.Get("Body").AsGodotObject();
-        var request = bodyClass.Call("new").AsGodotObject();
-        if(Message != null) request.Set("message", Message);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_send_whisper.gd", "Body");
+        if(Message != null) request.SetValue("message", Message);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

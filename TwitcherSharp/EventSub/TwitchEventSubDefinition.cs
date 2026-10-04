@@ -1,11 +1,12 @@
 using Godot;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.EventSub;
 
 public partial class TwitchEventSubDefinition() : RefCounted, ITwitcherSharp<TwitchEventSubDefinition>
 {
-    private GodotObject? _data;
+    private const string ScriptPath = "res://addons/twitcher/eventsub/twitch_eventsub_definition.gd";
 
     public TwitchEventSubDefinitionType Type { get; set; }
     public StringName Value { get; set; } = null!;
@@ -24,27 +25,66 @@ public partial class TwitchEventSubDefinition() : RefCounted, ITwitcherSharp<Twi
     public static TwitchEventSubDefinition? FromObject(GodotObject? data)
     {
         if (data == null) return null;
-        var definition = new TwitchEventSubDefinition();
-        definition._data = data;
-        definition.Type = (TwitchEventSubDefinitionType)data.Get("type").AsInt32();
-        definition.Value = data.Get("value").AsStringName();
-        definition.Version = data.Get("version").AsStringName();
-        definition.Conditions = data.Get("conditions").AsSystemArrayOfStringName().ToList();
-        definition.Scopes = data.Get("scopes").AsSystemArrayOfStringName().ToList();
-        definition.DocumentationLink = data.Get("documentation_link").AsString();
-        return definition;
+        var value = data.Read("value", static v => v.AsStringName());
+        var version = data.Read("version", static v => v.AsStringName());
+        return new TwitchEventSubDefinition
+        {
+            // twitcher numbers its types in another order: the type follows from the event.
+            Type = FindType(value, version) ?? default,
+            Value = value,
+            Version = version,
+            Conditions = data.Read("conditions", static v => v.AsSystemArrayOfStringName().ToList()),
+            Scopes = data.Read("scopes", static v => v.AsSystemArrayOfStringName().ToList()),
+            DocumentationLink = data.Read("documentation_link", static v => v.AsString()),
+        };
     }
 
+    /// <summary>
+    /// twitcher's own definition of this event (TwitchEventsubDefinition.ALL). Definitions are plain Objects
+    /// that nothing frees, so only a definition twitcher does not know is created, and the caller frees that.
+    /// </summary>
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/eventsub/twitch_eventsub_definition.gd");
+        if (FindTwitcherDefinition() is { } known) return known;
 
         var conditions = new Godot.Collections.Array<StringName>(Conditions ?? []);
         var scopes = new Godot.Collections.Array<StringName>(Scopes ?? []);
-        var data = script.New((int)Type, Value, Version, conditions, scopes, DocumentationLink, Script!)
-            .AsGodotObject();
-        return data;
+        return InteropExtension.NewObject(ScriptPath, (int)Type, Value, Version, conditions, scopes,
+            DocumentationLink, Script!);
     }
+
+    /// <summary>
+    /// twitcher's number for this event (TwitchEventsubDefinition.Type), which differs from <see cref="Type"/>;
+    /// -1 when twitcher does not know the event.
+    /// </summary>
+    public int TwitcherType => FindTwitcherDefinition()?.Read("type", static v => v.AsInt32()) ?? -1;
+
+    private GodotObject? FindTwitcherDefinition()
+    {
+        using var script = GD.Load<GDScript>(ScriptPath);
+        using var all = script.Get("ALL");
+        using var definitions = all.AsGodotDictionary();
+        foreach (var (key, definition) in definitions)
+        {
+            key.Dispose();
+            using (definition)
+            {
+                // Plain Objects: their wrappers hold no reference.
+                var known = definition.AsGodotObject();
+                if (known.Read("value", static v => v.AsStringName()) == Value
+                    && known.Read("version", static v => v.AsStringName()) == Version)
+                    return known;
+            }
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// The type of an event by its value and version; twitcher's own numbers differ from TwitchEventSubDefinitionType.
+    /// </summary>
+    public static TwitchEventSubDefinitionType? FindType(StringName value, StringName version) =>
+        All.FirstOrDefault(definition => definition.Value == value && definition.Version == version)?.Type;
 
     private const string basePath = "res://addons/twitcher/generated_eventsub/twitch_es_";
 

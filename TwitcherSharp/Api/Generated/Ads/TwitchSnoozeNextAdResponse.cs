@@ -6,8 +6,8 @@ namespace TwitcherSharp.Api.Generated.Ads;
 
 public partial class TwitchSnoozeNextAdResponse : RefCounted, ITwitcherSharp<TwitchSnoozeNextAdResponse>
 {
-    private GodotObject? _data;
-    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data")!; set; } = null!;
+    private Variant _data;
+    public TwitchResponseData[] Data { get => field ??= _data.GetArray<TwitchResponseData>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchSnoozeNextAdResponse object.
@@ -17,17 +17,22 @@ public partial class TwitchSnoozeNextAdResponse : RefCounted, ITwitcherSharp<Twi
         if(data == null) return null;
         var instance = new TwitchSnoozeNextAdResponse();
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_snooze_next_ad.gd");
-        var responseClass = script.Get("Response").AsGodotObject();
-        var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data.ToGodotArray());
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_snooze_next_ad.gd", "Response");
+        if(Data != null) request.SetArray("data", Data);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
     
     /// <summary> 
@@ -35,7 +40,7 @@ public partial class TwitchSnoozeNextAdResponse : RefCounted, ITwitcherSharp<Twi
     /// </summary>
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
-        private GodotObject? _data;
+        private Variant _data;
         public int SnoozeCount { get; set; }
         public int SnoozeRefreshAt { get; set; }
         public int NextAdAt { get; set; }
@@ -48,24 +53,29 @@ public partial class TwitchSnoozeNextAdResponse : RefCounted, ITwitcherSharp<Twi
             if(data == null) return null;
             var instance = new TwitchResponseData
             {
-                SnoozeCount = data.Get("snooze_count").AsInt32(),
-                SnoozeRefreshAt = data.Get("snooze_refresh_at").AsInt32(),
-                NextAdAt = data.Get("next_ad_at").AsInt32(),
+                SnoozeCount = data.Read("snooze_count", static v => v.AsInt32()),
+                SnoozeRefreshAt = data.Read("snooze_refresh_at", static v => v.AsInt32()),
+                NextAdAt = data.Read("next_ad_at", static v => v.AsInt32()),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_snooze_next_ad.gd");
-            var twitchResponseDataClass = script.Get("ResponseData").AsGodotObject();
-            var request = twitchResponseDataClass.Call("new").AsGodotObject();
-            request.Set("snooze_count", SnoozeCount);
-            request.Set("snooze_refresh_at", SnoozeRefreshAt);
-            request.Set("next_ad_at", NextAdAt);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_snooze_next_ad.gd", "ResponseData");
+            request.SetValue("snooze_count", SnoozeCount);
+            request.SetValue("snooze_refresh_at", SnoozeRefreshAt);
+            request.SetValue("next_ad_at", NextAdAt);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     
     }

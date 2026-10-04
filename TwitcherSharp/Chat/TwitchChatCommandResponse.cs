@@ -1,4 +1,5 @@
 using Godot;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.Chat;
@@ -11,17 +12,16 @@ public partial class TwitchChatCommandResponse: RefCounted, ITwitcherSharp<Twitc
     {
         if (data == null) return null;
         var response = new TwitchChatCommandResponse();
-        response.ResponseMessage = data.Get("respond_message").AsString();
-        response.UseBot = data.Get("use_bot").AsBool();
+        response.ResponseMessage = data.Read("respond_message", static v => v.AsString());
+        response.UseBot = data.Read("use_bot", static v => v.AsBool());
         return response;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_chat_command_respond.gd");
-        var instance = script.New().AsGodotObject();
-        if (ResponseMessage != null) instance.Set("respond_message", ResponseMessage);
-        instance.Set("use_bot", UseBot);
+        var instance = InteropExtension.NewObject("res://addons/twitcher/chat/twitch_chat_command_respond.gd");
+        if (ResponseMessage != null) instance.SetValue("respond_message", ResponseMessage);
+        instance.SetValue("use_bot", UseBot);
         return instance;
     }
 }

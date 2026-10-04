@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.UserAuthorizationRevoke;
 
 public partial class TwitchUserAuthorizationRevokeCondition(string clientId) : RefCounted, ITwitcherSharpCondition<TwitchUserAuthorizationRevokeCondition>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     public string Name => nameof(TwitchUserAuthorizationRevokeCondition);
 
@@ -23,19 +23,24 @@ public partial class TwitchUserAuthorizationRevokeCondition(string clientId) : R
     public static TwitchUserAuthorizationRevokeCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchUserAuthorizationRevokeCondition(data.Get("client_id").AsString());
+        var instance = new TwitchUserAuthorizationRevokeCondition(data.Read("client_id", static v => v.AsString()));
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_user_authorization_revoke.gd");
-        var conditionClass = script.Get("Condition").As<GDScript>();
-        var request = conditionClass.New().AsGodotObject();
-        request.Set("client_id", ClientId);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_user_authorization_revoke.gd", "Condition");
+        request.SetValue("client_id", ClientId);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
     public static TwitchUserAuthorizationRevokeCondition FromDictionary(Dictionary data)

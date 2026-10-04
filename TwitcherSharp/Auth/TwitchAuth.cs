@@ -13,12 +13,12 @@ public partial class TwitchAuth : RefCounted, ITwitcherSharp<TwitchAuth>
 		get;
 		set
 		{
-			_data?.Set("force_verify", value);
+			_data?.SetValue("force_verify", value);
 			field = value;
 		}
 	}
 	
-	public bool IsAuthenticated() => _data?.Get("is_authenticated").AsBool() ?? false;
+	public bool IsAuthenticated() => _data?.Read("is_authenticated", static v => v.AsBool()) ?? false;
 	
 	/// <summary>
 	/// Logs in unless already logged in (or always with <paramref name="force"/>). twitcher awaits the login, so
@@ -31,11 +31,11 @@ public partial class TwitchAuth : RefCounted, ITwitcherSharp<TwitchAuth>
 		return result.AsBool();
 	}
 	
-	public void DoUnSetup() => _data?.Call("do_unsetup");
+	public void DoUnSetup() => _data?.Invoke("do_unsetup");
 	
-	public void RefreshToken() => _data?.Call("refresh_token");
+	public void RefreshToken() => _data?.Invoke("refresh_token");
 	
-	public bool IsConfigured() => _data?.Call("is_configured").AsBool() ?? false;
+	public bool IsConfigured() => _data?.Invoke("is_configured", static v => v.AsBool()) ?? false;
 	
 
 	public static TwitchAuth? FromObject(GodotObject? data)
@@ -43,15 +43,14 @@ public partial class TwitchAuth : RefCounted, ITwitcherSharp<TwitchAuth>
 		if (data == null) return null;
 		var auth = new TwitchAuth();
 		auth._data = data;
-		auth.ForceVerify = data.Get("force_verify").AsBool();
+		auth.ForceVerify = data.Read("force_verify", static v => v.AsBool());
 		return auth;
 	}
 
 	public GodotObject ToGodotObject()
 	{
-		var script = GD.Load<GDScript>("res://addons/twitcher/auth/twitch_auth.gd");
-		var token = script.New().AsGodotObject();
-		token.Set("force_verify", ForceVerify);
+		var token = InteropExtension.NewObject("res://addons/twitcher/auth/twitch_auth.gd");
+		token.SetValue("force_verify", ForceVerify);
 		
 		return token;
 	}

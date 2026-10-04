@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.Shared;
 
 public partial class TwitchImage : RefCounted, ITwitcherSharpEventSub<TwitchImage>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// URL for the image at 1x size.
@@ -33,22 +33,28 @@ public partial class TwitchImage : RefCounted, ITwitcherSharpEventSub<TwitchImag
         if(data == null) return null;
         var instance = new TwitchImage
         {
-            Url1x = data.Get("url_1x").AsString(),
-            Url2x = data.Get("url_2x").AsString(),
-            Url4x = data.Get("url_4x").AsString(),
+            Url1x = data.Read("url_1x", static v => v.AsString()),
+            Url2x = data.Read("url_2x", static v => v.AsString()),
+            Url4x = data.Read("url_4x", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_twitch_image.gd");
-        var request = script.New().AsGodotObject();
-        if(Url1x != null) request.Set("url_1x", Url1x);
-        if(Url2x != null) request.Set("url_2x", Url2x);
-        if(Url4x != null) request.Set("url_4x", Url4x);
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated_eventsub/twitch_es_twitch_image.gd");
+        if(Url1x != null) request.SetValue("url_1x", Url1x);
+        if(Url2x != null) request.SetValue("url_2x", Url2x);
+        if(Url4x != null) request.SetValue("url_4x", Url4x);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 }

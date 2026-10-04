@@ -14,7 +14,7 @@ public partial class TwitchCommandHelp: TwitchCommand, ITwitcherSharp<TwitchComm
 
 	public TwitchUser? CurrentUser { get; set; }
 
-	public void CleanupRedundantCommands() => Data.Call("cleanup_redundant_commands");
+	public void CleanupRedundantCommands() => Data.Invoke("cleanup_redundant_commands");
 
 	public new static TwitchCommandHelp? FromObject(GodotObject? data)
 	{
@@ -22,12 +22,12 @@ public partial class TwitchCommandHelp: TwitchCommand, ITwitcherSharp<TwitchComm
 		var command = new TwitchCommandHelp
 		{
 			Data = data,
-			CommandPrefixes = data.Get("command_prefixes").AsStringArray().ToList(),
-			Aliases = data.Get("aliases").AsStringArray().ToList(),
-			ArgsMin = data.Get("args_min").AsInt32(),
-			ArgsMax = data.Get("args_max").AsInt32(),
-			SenderUser = TwitchUser.FromObject(data.Get("sender_user").AsGodotObject()),
-			CurrentUser = TwitchUser.FromObject(data.Get("current_user").AsGodotObject()),
+			CommandPrefixes = data.Read("command_prefixes", static v => v.AsStringArray()).ToList(),
+			Aliases = data.Read("aliases", static v => v.AsStringArray()).ToList(),
+			ArgsMin = data.Read("args_min", static v => v.AsInt32()),
+			ArgsMax = data.Read("args_max", static v => v.AsInt32()),
+			SenderUser = data.Get<TwitchUser>("sender_user"),
+			CurrentUser = data.Get<TwitchUser>("current_user"),
 		};
         
 		command.SetBaseProperties();
@@ -36,13 +36,13 @@ public partial class TwitchCommandHelp: TwitchCommand, ITwitcherSharp<TwitchComm
 
 	public new GodotObject ToGodotObject()
 	{
-		var data = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_command_help.gd").New().AsGodotObject();
-		data.Set("command_prefixes", CommandPrefixes.ToVariantArray());
-		data.Set("aliases", Aliases.ToVariantArray());
-		data.Set("args_min", ArgsMin);
-		data.Set("args_max", ArgsMax);
-		data.Set("sender_user", SenderUser?.ToGodotObject() ?? new Variant());
-		data.Set("current_user", CurrentUser?.ToGodotObject() ?? new Variant());
+		var data = InteropExtension.NewObject("res://addons/twitcher/chat/twitch_command_help.gd");
+		data.SetValue("command_prefixes", CommandPrefixes.ToVariantArray());
+		data.SetValue("aliases", Aliases.ToVariantArray());
+		data.SetValue("args_min", ArgsMin);
+		data.SetValue("args_max", ArgsMax);
+		data.SetObject("sender_user", SenderUser);
+		data.SetObject("current_user", CurrentUser);
 		GetBaseProperties(data);
 		return data;
 	}

@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelUpdate;
 
 public partial class TwitchChannelUpdateEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelUpdateEvent>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// The broadcaster’s user ID.
@@ -58,32 +58,37 @@ public partial class TwitchChannelUpdateEvent : RefCounted, ITwitcherSharpEventS
         if(data == null) return null;
         var instance = new TwitchChannelUpdateEvent
         {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-            BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
-            BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
-            Title = data.Get("title").AsString(),
-            Language = data.Get("language").AsString(),
-            CategoryId = data.Get("category_id").AsString(),
-            CategoryName = data.Get("category_name").AsString(),
+            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
+            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
+            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
+            Title = data.Read("title", static v => v.AsString()),
+            Language = data.Read("language", static v => v.AsString()),
+            CategoryId = data.Read("category_id", static v => v.AsString()),
+            CategoryName = data.Read("category_name", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_update.gd");
-        var eventClass = script.Get("Event").As<GDScript>();
-        var request = eventClass.New().AsGodotObject();
-        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
-        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
-        if(Title != null) request.Set("title", Title);
-        if(Language != null) request.Set("language", Language);
-        if(CategoryId != null) request.Set("category_id", CategoryId);
-        if(CategoryName != null) request.Set("category_name", CategoryName);
-        if(ContentClassificationLabels != null) request.Set("content_classification_labels", new Godot.Collections.Array<string>(ContentClassificationLabels));
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_update.gd", "Event");
+        if(BroadcasterUserId != null) request.SetValue("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserLogin != null) request.SetValue("broadcaster_user_login", BroadcasterUserLogin);
+        if(BroadcasterUserName != null) request.SetValue("broadcaster_user_name", BroadcasterUserName);
+        if(Title != null) request.SetValue("title", Title);
+        if(Language != null) request.SetValue("language", Language);
+        if(CategoryId != null) request.SetValue("category_id", CategoryId);
+        if(CategoryName != null) request.SetValue("category_name", CategoryName);
+        if(ContentClassificationLabels != null) request.SetValue("content_classification_labels", new Godot.Collections.Array<string>(ContentClassificationLabels));
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 }

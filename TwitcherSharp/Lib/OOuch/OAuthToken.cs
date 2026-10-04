@@ -1,4 +1,5 @@
 using Godot;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.Lib.OOuch;
@@ -11,7 +12,7 @@ namespace TwitcherSharp.Lib.OOuch;
 /// </summary>
 public partial class OAuthToken : Resource, ITwitcherSharp<OAuthToken>
 {
-    private GodotObject? _data;
+    private Variant _data;
 
     /// <summary>
     /// Returns if it's a user access token or app accessToken
@@ -25,40 +26,40 @@ public partial class OAuthToken : Resource, ITwitcherSharp<OAuthToken>
     public delegate void AuthorizedEventHandler();
 
     public void update_values(string accessToken, string refreshToken, int expireIn, string[] scopes, string tokenType)
-        => _data!.Call("update_values", accessToken, refreshToken, expireIn, scopes, tokenType);
+        => _data.Invoke("update_values", accessToken, refreshToken, expireIn, scopes, tokenType);
 
-    public bool LoadTokens() => _data!.Call("load_tokens").AsBool();
+    public bool LoadTokens() => _data.Invoke("load_tokens", static v => v.AsBool());
 
-    public void RemoveTokens() => _data!.Call("remove_tokens");
+    public void RemoveTokens() => _data.Invoke("remove_tokens");
 
-    public string GetRefreshToken() => _data!.Call("get_refresh_token").AsString();
+    public string GetRefreshToken() => _data.Invoke("get_refresh_token", static v => v.AsString()) ?? "";
 
-    public string GetAccessToken() => _data!.Call("get_access_token").AsString();
+    public string GetAccessToken() => _data.Invoke("get_access_token", static v => v.AsString()) ?? "";
 
 
-    public List<string> GetScopes() => _data!.Call("get_scopes").AsStringArray().ToList();
+    public List<string> GetScopes() => (_data.Invoke("get_scopes", static v => v.AsStringArray()) ?? []).ToList();
 
-    public int GetExpiration() => _data!.Call("get_expiration").AsInt32();
+    public int GetExpiration() => _data.Invoke("get_expiration", static v => v.AsInt32());
 
-    public string GetExpirationReadable() => _data!.Call("get_expiration_readable").AsString();
+    public string GetExpirationReadable() => _data.Invoke("get_expiration_readable", static v => v.AsString()) ?? "";
 
-    public void Invalidate() => _data!.Call("invalidate");
+    public void Invalidate() => _data.Invoke("invalidate");
     
-    public bool HasRefreshToken() => _data!.Call("has_refresh_token").AsBool();
+    public bool HasRefreshToken() => _data.Invoke("has_refresh_token", static v => v.AsBool());
     
-    public bool IsTokenValid() => _data!.Call("is_token_valid").AsBool();
+    public bool IsTokenValid() => _data.Invoke("is_token_valid", static v => v.AsBool());
     
-    public override string ToString() => _data!.Call("to_string").AsString();
+    public override string ToString() => _data.Invoke("to_string", static v => v.AsString()) ?? "";
 
     public static List<string> GetIdentifiers(string cacheFile) 
-        => GD.Load<GDScript>("res://addons/twitcher/lib/oOuch/oauth_token.gd")
-            .Call("get_identifiers",cacheFile)
-            .AsStringArray()
-            .ToList();
+    {
+        using var script = GD.Load<GDScript>("res://addons/twitcher/lib/oOuch/oauth_token.gd");
+        return script.Invoke("get_identifiers", static v => v.AsStringArray(), cacheFile).ToList();
+    }
 
     private void ConnectSignals()
     {
-        _data!.Connect("authorized", Callable.From(EmitSignalAuthorized));
+        _data.With(data => data.Connect("authorized", Callable.From(EmitSignalAuthorized)));
     }
 
     public static OAuthToken? FromObject(GodotObject? data)
@@ -67,8 +68,8 @@ public partial class OAuthToken : Resource, ITwitcherSharp<OAuthToken>
         
         var tokenHandler = new OAuthToken()
         {
-            _data = data,
-            Type = data.Get("type").AsString()
+            _data = Variant.CreateFrom(data),
+            Type = data.Read("type", static v => v.AsString())
         };
         
         tokenHandler.ConnectSignals();
@@ -77,9 +78,8 @@ public partial class OAuthToken : Resource, ITwitcherSharp<OAuthToken>
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/lib/oOuch/oauth_token.gd");
-        var instance = script.New().AsGodotObject();
-        if (Type != null) instance.Set("type", Type);
+        var instance = InteropExtension.NewObject("res://addons/twitcher/lib/oOuch/oauth_token.gd");
+        if (Type != null) instance.SetValue("type", Type);
         
         return instance;
     }

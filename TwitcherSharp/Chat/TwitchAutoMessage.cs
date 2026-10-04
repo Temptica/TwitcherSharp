@@ -30,35 +30,34 @@ public partial class TwitchAutoMessage : RefCounted, ITwitcherSharp<TwitchAutoMe
         return new TwitchAutoMessage
         {
             _data = data,
-            UseBot = data.Get("use_bot").AsBool(),
-            Announcement = data.Get("announcement").AsBool(),
-            AnnouncementColor = data.Get("announcement_color").AsTwitcherObject<TwitchAnnouncementColor>(),
-            Message = data.Get("message").AsString(),
-            SourceOnly = data.Get("source_only").AsBool(),
-            Weight = data.Get("weight").AsInt32(),
-            Broadcaster = data.Get("user").AsTwitcherObject<TwitchUser>(),
-            Sender = data.Get("sender").AsTwitcherObject<TwitchUser>(),
+            UseBot = data.Read("use_bot", static v => v.AsBool()),
+            Announcement = data.Read("announcement", static v => v.AsBool()),
+            AnnouncementColor = data.Read("announcement_color", static v => v.AsTwitcherObject<TwitchAnnouncementColor>()),
+            Message = data.Read("message", static v => v.AsString()),
+            SourceOnly = data.Read("source_only", static v => v.AsBool()),
+            Weight = data.Read("weight", static v => v.AsInt32()),
+            Broadcaster = data.Read("user", static v => v.AsTwitcherObject<TwitchUser>()),
+            Sender = data.Read("sender", static v => v.AsTwitcherObject<TwitchUser>()),
         };
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_auto_message.gd");
-        var instances = script.New().AsGodotObject();
-        instances.Set("use_bot", UseBot);
-        instances.Set("announcement", Announcement);
-        instances.Set("announcement_color", AnnouncementColor.ToGodotObject());
-        instances.Set("message", Message);
-        instances.Set("source_only", SourceOnly);
-        instances.Set("weight", Weight);
-        instances.Set("user", Broadcaster?.ToGodotObject() ?? new Variant());
-        instances.Set("sender", Sender?.ToGodotObject() ?? new Variant());
+        var instances = InteropExtension.NewObject("res://addons/twitcher/chat/twitch_auto_message.gd");
+        instances.SetValue("use_bot", UseBot);
+        instances.SetValue("announcement", Announcement);
+        instances.SetObject("announcement_color", AnnouncementColor);
+        instances.SetValue("message", Message);
+        instances.SetValue("source_only", SourceOnly);
+        instances.SetValue("weight", Weight);
+        instances.SetObject("user", Broadcaster);
+        instances.SetObject("sender", Sender);
 
         return instances;
     }
 
     public async Task Send()
     {
-        await _data!.CallAsync("send");
+        await _data!.InvokeAsync("send");
     }
 }

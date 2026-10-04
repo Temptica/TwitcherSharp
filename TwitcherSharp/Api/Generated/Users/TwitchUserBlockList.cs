@@ -6,7 +6,7 @@ namespace TwitcherSharp.Api.Generated.Users;
 
 public partial class TwitchUserBlockList : RefCounted, ITwitcherSharp<TwitchUserBlockList>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string UserId { get; set; } = null!;
     public string UserLogin { get; set; } = null!;
     public string DisplayName { get; set; } = null!;
@@ -19,23 +19,29 @@ public partial class TwitchUserBlockList : RefCounted, ITwitcherSharp<TwitchUser
         if(data == null) return null;
         var instance = new TwitchUserBlockList
         {
-            UserId = data.Get("user_id").AsString(),
-            UserLogin = data.Get("user_login").AsString(),
-            DisplayName = data.Get("display_name").AsString(),
+            UserId = data.Read("user_id", static v => v.AsString()),
+            UserLogin = data.Read("user_login", static v => v.AsString()),
+            DisplayName = data.Read("display_name", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_user_block_list.gd");
-        var request = script.Call("new").AsGodotObject();
-        if(UserId != null) request.Set("user_id", UserId);
-        if(UserLogin != null) request.Set("user_login", UserLogin);
-        if(DisplayName != null) request.Set("display_name", DisplayName);
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated/twitch_user_block_list.gd");
+        if(UserId != null) request.SetValue("user_id", UserId);
+        if(UserLogin != null) request.SetValue("user_login", UserLogin);
+        if(DisplayName != null) request.SetValue("display_name", DisplayName);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

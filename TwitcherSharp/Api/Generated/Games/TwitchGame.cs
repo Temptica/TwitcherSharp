@@ -6,7 +6,7 @@ namespace TwitcherSharp.Api.Generated.Games;
 
 public partial class TwitchGame : RefCounted, ITwitcherSharp<TwitchGame>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string Id { get; set; } = null!;
     public string Name { get; set; } = null!;
     public string BoxArtUrl { get; set; } = null!;
@@ -20,25 +20,31 @@ public partial class TwitchGame : RefCounted, ITwitcherSharp<TwitchGame>
         if(data == null) return null;
         var instance = new TwitchGame
         {
-            Id = data.Get("id").AsString(),
-            Name = data.Get("name").AsString(),
-            BoxArtUrl = data.Get("box_art_url").AsString(),
-            IgdbId = data.Get("igdb_id").AsString(),
+            Id = data.Read("id", static v => v.AsString()),
+            Name = data.Read("name", static v => v.AsString()),
+            BoxArtUrl = data.Read("box_art_url", static v => v.AsString()),
+            IgdbId = data.Read("igdb_id", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_game.gd");
-        var request = script.Call("new").AsGodotObject();
-        if(Id != null) request.Set("id", Id);
-        if(Name != null) request.Set("name", Name);
-        if(BoxArtUrl != null) request.Set("box_art_url", BoxArtUrl);
-        if(IgdbId != null) request.Set("igdb_id", IgdbId);
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated/twitch_game.gd");
+        if(Id != null) request.SetValue("id", Id);
+        if(Name != null) request.SetValue("name", Name);
+        if(BoxArtUrl != null) request.SetValue("box_art_url", BoxArtUrl);
+        if(IgdbId != null) request.SetValue("igdb_id", IgdbId);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

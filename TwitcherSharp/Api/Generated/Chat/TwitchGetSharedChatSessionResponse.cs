@@ -6,8 +6,8 @@ namespace TwitcherSharp.Api.Generated.Chat;
 
 public partial class TwitchGetSharedChatSessionResponse : RefCounted, ITwitcherSharp<TwitchGetSharedChatSessionResponse>
 {
-    private GodotObject? _data;
-    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data")!; set; } = null!;
+    private Variant _data;
+    public TwitchResponseData[] Data { get => field ??= _data.GetArray<TwitchResponseData>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetSharedChatSessionResponse object.
@@ -17,24 +17,29 @@ public partial class TwitchGetSharedChatSessionResponse : RefCounted, ITwitcherS
         if(data == null) return null;
         var instance = new TwitchGetSharedChatSessionResponse();
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_shared_chat_session.gd");
-        var responseClass = script.Get("Response").AsGodotObject();
-        var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data.ToGodotArray());
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_shared_chat_session.gd", "Response");
+        if(Data != null) request.SetArray("data", Data);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
-        private GodotObject? _data;
+        private Variant _data;
         public string SessionId { get; set; } = null!;
         public string HostBroadcasterId { get; set; } = null!;
-        public TwitchResponseParticipants[] Participants { get => field ??= _data?.GetArray<TwitchResponseParticipants>("participants")!; set; } = null!;
+        public TwitchResponseParticipants[] Participants { get => field ??= _data.GetArray<TwitchResponseParticipants>("participants")!; set; } = null!;
         public string CreatedAt { get; set; } = null!;
         public string UpdatedAt { get; set; } = null!;
     
@@ -46,27 +51,32 @@ public partial class TwitchGetSharedChatSessionResponse : RefCounted, ITwitcherS
             if(data == null) return null;
             var instance = new TwitchResponseData
             {
-                SessionId = data.Get("session_id").AsString(),
-                HostBroadcasterId = data.Get("host_broadcaster_id").AsString(),
-                CreatedAt = data.Get("created_at").AsString(),
-                UpdatedAt = data.Get("updated_at").AsString(),
+                SessionId = data.Read("session_id", static v => v.AsString()),
+                HostBroadcasterId = data.Read("host_broadcaster_id", static v => v.AsString()),
+                CreatedAt = data.Read("created_at", static v => v.AsString()),
+                UpdatedAt = data.Read("updated_at", static v => v.AsString()),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_shared_chat_session.gd");
-            var twitchResponseDataClass = script.Get("ResponseData").AsGodotObject();
-            var request = twitchResponseDataClass.Call("new").AsGodotObject();
-            if(SessionId != null) request.Set("session_id", SessionId);
-            if(HostBroadcasterId != null) request.Set("host_broadcaster_id", HostBroadcasterId);
-            if(Participants != null) request.Set("participants", Participants.ToGodotArray());
-            if(CreatedAt != null) request.Set("created_at", CreatedAt);
-            if(UpdatedAt != null) request.Set("updated_at", UpdatedAt);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_shared_chat_session.gd", "ResponseData");
+            if(SessionId != null) request.SetValue("session_id", SessionId);
+            if(HostBroadcasterId != null) request.SetValue("host_broadcaster_id", HostBroadcasterId);
+            if(Participants != null) request.SetArray("participants", Participants);
+            if(CreatedAt != null) request.SetValue("created_at", CreatedAt);
+            if(UpdatedAt != null) request.SetValue("updated_at", UpdatedAt);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
         
         /// <summary> 
@@ -74,7 +84,7 @@ public partial class TwitchGetSharedChatSessionResponse : RefCounted, ITwitcherS
         /// </summary>
         public partial class TwitchResponseParticipants : RefCounted, ITwitcherSharp<TwitchResponseParticipants>
         {
-            private GodotObject? _data;
+            private Variant _data;
             public string BroadcasterId { get; set; } = null!;
         
             /// <summary> 
@@ -85,20 +95,25 @@ public partial class TwitchGetSharedChatSessionResponse : RefCounted, ITwitcherS
                 if(data == null) return null;
                 var instance = new TwitchResponseParticipants
                 {
-                    BroadcasterId = data.Get("broadcaster_id").AsString(),
+                    BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
                 };
                 
-                instance._data = data;
+                instance._data = Variant.CreateFrom(data);
                 return instance;
             }
         
             public GodotObject ToGodotObject()
             {
-                var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_shared_chat_session.gd");
-                var twitchResponseParticipantsClass = script.Get("ResponseParticipants").AsGodotObject();
-                var request = twitchResponseParticipantsClass.Call("new").AsGodotObject();
-                if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
+                var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_shared_chat_session.gd", "ResponseParticipants");
+                if(BroadcasterId != null) request.SetValue("broadcaster_id", BroadcasterId);
                 return request;
+            }
+        
+            /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+            protected override void Dispose(bool disposing)
+            {
+                if (disposing) _data.Dispose();
+                base.Dispose(disposing);
             }
         
         }

@@ -10,7 +10,7 @@ namespace TwitcherSharp.Api.Generated.Bits;
 /// </summary>
 public partial class TwitchGetExtensionTransactionsOpt : RefCounted, ITwitcherSharp<TwitchGetExtensionTransactionsOpt>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string[]? Id { get; set; }
     public int? First { get; set; }
     public string? After { get; set; }
@@ -23,24 +23,29 @@ public partial class TwitchGetExtensionTransactionsOpt : RefCounted, ITwitcherSh
         if(data == null) return null;
         var instance = new TwitchGetExtensionTransactionsOpt
         {
-            Id = data.Get("id").AsStringArray(),
-            First = data.Get("first").AsInt32(),
-            After = data.Get("after").AsString(),
+            Id = data.Read("id", static v => v.AsStringArray()),
+            First = data.Read("first", static v => v.AsInt32()),
+            After = data.Read("after", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_extension_transactions.gd");
-        var optClass = script.Get("Opt").AsGodotObject();
-        var request = optClass.Call("new").AsGodotObject();
-        if(Id != null) request.Set("id", new Godot.Collections.Array<string>(Id));
-        if(First.HasValue) request.Set("first", First.Value);
-        if(After != null) request.Set("after", After);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_extension_transactions.gd", "Opt");
+        if(Id != null) request.SetValue("id", new Godot.Collections.Array<string>(Id));
+        if(First.HasValue) request.SetValue("first", First.Value);
+        if(After != null) request.SetValue("after", After);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

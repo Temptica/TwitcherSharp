@@ -6,7 +6,7 @@ namespace TwitcherSharp.Api.Generated.GuestStar;
 
 public partial class TwitchUpdateChannelGuestStarSettingsBody : RefCounted, ITwitcherSharp<TwitchUpdateChannelGuestStarSettingsBody>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public bool? IsModeratorSendLiveEnabled { get; set; }
     public int? SlotCount { get; set; }
     public bool? IsBrowserSourceAudioEnabled { get; set; }
@@ -21,28 +21,33 @@ public partial class TwitchUpdateChannelGuestStarSettingsBody : RefCounted, ITwi
         if(data == null) return null;
         var instance = new TwitchUpdateChannelGuestStarSettingsBody
         {
-            IsModeratorSendLiveEnabled = data.Get("is_moderator_send_live_enabled").AsBool(),
-            SlotCount = data.Get("slot_count").AsInt32(),
-            IsBrowserSourceAudioEnabled = data.Get("is_browser_source_audio_enabled").AsBool(),
-            GroupLayout = data.Get("group_layout").AsString(),
-            RegenerateBrowserSources = data.Get("regenerate_browser_sources").AsBool(),
+            IsModeratorSendLiveEnabled = data.Read("is_moderator_send_live_enabled", static v => v.AsBool()),
+            SlotCount = data.Read("slot_count", static v => v.AsInt32()),
+            IsBrowserSourceAudioEnabled = data.Read("is_browser_source_audio_enabled", static v => v.AsBool()),
+            GroupLayout = data.Read("group_layout", static v => v.AsString()),
+            RegenerateBrowserSources = data.Read("regenerate_browser_sources", static v => v.AsBool()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_update_channel_guest_star_settings.gd");
-        var bodyClass = script.Get("Body").AsGodotObject();
-        var request = bodyClass.Call("new").AsGodotObject();
-        if(IsModeratorSendLiveEnabled.HasValue) request.Set("is_moderator_send_live_enabled", IsModeratorSendLiveEnabled.Value);
-        if(SlotCount.HasValue) request.Set("slot_count", SlotCount.Value);
-        if(IsBrowserSourceAudioEnabled.HasValue) request.Set("is_browser_source_audio_enabled", IsBrowserSourceAudioEnabled.Value);
-        if(GroupLayout != null) request.Set("group_layout", GroupLayout);
-        if(RegenerateBrowserSources.HasValue) request.Set("regenerate_browser_sources", RegenerateBrowserSources.Value);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_update_channel_guest_star_settings.gd", "Body");
+        if(IsModeratorSendLiveEnabled.HasValue) request.SetValue("is_moderator_send_live_enabled", IsModeratorSendLiveEnabled.Value);
+        if(SlotCount.HasValue) request.SetValue("slot_count", SlotCount.Value);
+        if(IsBrowserSourceAudioEnabled.HasValue) request.SetValue("is_browser_source_audio_enabled", IsBrowserSourceAudioEnabled.Value);
+        if(GroupLayout != null) request.SetValue("group_layout", GroupLayout);
+        if(RegenerateBrowserSources.HasValue) request.SetValue("regenerate_browser_sources", RegenerateBrowserSources.Value);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

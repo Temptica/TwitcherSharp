@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.StreamOnline;
 
 public partial class TwitchStreamOnlineCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchStreamOnlineCondition>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     public string Name => nameof(TwitchStreamOnlineCondition);
 
@@ -23,19 +23,24 @@ public partial class TwitchStreamOnlineCondition(string broadcasterUserId) : Ref
     public static TwitchStreamOnlineCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchStreamOnlineCondition(data.Get("broadcaster_user_id").AsString());
+        var instance = new TwitchStreamOnlineCondition(data.Read("broadcaster_user_id", static v => v.AsString()));
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_stream_online.gd");
-        var conditionClass = script.Get("Condition").As<GDScript>();
-        var request = conditionClass.New().AsGodotObject();
-        request.Set("broadcaster_user_id", BroadcasterUserId);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_stream_online.gd", "Condition");
+        request.SetValue("broadcaster_user_id", BroadcasterUserId);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
     public static TwitchStreamOnlineCondition FromDictionary(Dictionary data)

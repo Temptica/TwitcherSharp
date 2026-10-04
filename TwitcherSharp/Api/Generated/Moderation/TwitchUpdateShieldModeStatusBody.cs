@@ -6,7 +6,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 
 public partial class TwitchUpdateShieldModeStatusBody : RefCounted, ITwitcherSharp<TwitchUpdateShieldModeStatusBody>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public bool IsActive { get; set; }
 
     /// <summary> 
@@ -17,20 +17,25 @@ public partial class TwitchUpdateShieldModeStatusBody : RefCounted, ITwitcherSha
         if(data == null) return null;
         var instance = new TwitchUpdateShieldModeStatusBody
         {
-            IsActive = data.Get("is_active").AsBool(),
+            IsActive = data.Read("is_active", static v => v.AsBool()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_update_shield_mode_status.gd");
-        var bodyClass = script.Get("Body").AsGodotObject();
-        var request = bodyClass.Call("new").AsGodotObject();
-        request.Set("is_active", IsActive);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_update_shield_mode_status.gd", "Body");
+        request.SetValue("is_active", IsActive);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

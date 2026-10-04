@@ -7,7 +7,9 @@ namespace TwitcherSharp.Chat;
 
 public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMessage>
 {
-    private GodotObject? _data;
+    private const string ScriptPath = "res://addons/twitcher/chat/twitch_chat_message.gd";
+
+    private Variant _data;
     public string BroadcasterUserId { get; set; } = null!;
     public string BroadcasterUserName { get; set; } = null!;
     public string BroadcasterUserLogin { get; set; } = null!;
@@ -18,7 +20,7 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
 
     public Message Content
     {
-        get => field ??= Message.FromObject(_data?.Get("message").AsGodotObject())!;
+        get => field ??= _data.Get<Message>("message")!;
         set;
     } = null!;
 
@@ -26,7 +28,7 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
 
     public Badge[] Badges
     {
-        get => field ??= _data?.Get("badges").AsGodotArray<GodotObject>().Select(Badge.FromObject).OfType<Badge>().ToArray()!;
+        get => field ??= _data.GetArray<Badge>("badges")!;
         set;
     } = null!;
 
@@ -35,7 +37,7 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
     /// </summary>
     public Cheer? CheerMetadata
     {
-        get => field ??= Cheer.FromObject(_data?.Get("cheer").AsGodotObject());
+        get => field ??= _data.Get<Cheer>("cheer");
         set;
     }
 
@@ -46,7 +48,7 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
     /// </summary>
     public Reply? ReplyMetadata
     {
-        get => field ??= Reply.FromObject(_data?.Get("reply").AsGodotObject());
+        get => field ??= _data.Get<Reply>("reply");
         set;
     }
 
@@ -70,147 +72,159 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
 
     public Badge[]? SourceBadges
     {
-        get => field ??= _data?.Get("source_badges").AsGodotArray<GodotObject>().Select(Badge.FromObject).OfType<Badge>().ToArray();
+        get => field ??= _data.GetArray<Badge>("source_badges");
         set;
     }
 
     public async Task<Godot.Collections.Dictionary<TwitchBadgeDefinition, SpriteFrames>> GetBadges(
         TwitchMediaLoader mediaLoader, int scale = TwitchBadgeDefinition.Scale1)
-        => await _data!.CallDictionaryKeyAsync<TwitchBadgeDefinition, SpriteFrames>("get_badges", mediaLoader.ToGodotObject(), scale);
+        => await _data.CallDictionaryKeyAsync<TwitchBadgeDefinition, SpriteFrames>("get_badges", mediaLoader.ToGodotObject(), scale);
 
     public async Task<Godot.Collections.Dictionary<TwitchBadgeDefinition, SpriteFrames>> GetSourceBadges(
         TwitchMediaLoader mediaLoader, int scale = TwitchBadgeDefinition.Scale1)
-        => await _data!.CallDictionaryKeyAsync<TwitchBadgeDefinition, SpriteFrames>("get_source_badges", mediaLoader.ToGodotObject(), scale);
+        => await _data.CallDictionaryKeyAsync<TwitchBadgeDefinition, SpriteFrames>("get_source_badges", mediaLoader.ToGodotObject(), scale);
 
     public string GetColor(string defaultColor = "#AAAAAA") => string.IsNullOrEmpty(Color) ? defaultColor : Color;
 
     public async Task<Godot.Collections.Dictionary<TwitchEmoteDefinition, SpriteFrames>> LoadEmotesFromFragment(
         TwitchMediaLoader mediaLoader, int scale = TwitchEmoteDefinition.Scale1,
         string theme = TwitchEmoteDefinition.ThemeDark, string type = TwitchEmoteDefinition.TypeDefault)
-        => await _data!.CallDictionaryKeyAsync<TwitchEmoteDefinition, SpriteFrames>("load_emotes_from_fragment", mediaLoader.ToGodotObject(), scale,
+        => await _data.CallDictionaryKeyAsync<TwitchEmoteDefinition, SpriteFrames>("load_emotes_from_fragment", mediaLoader.ToGodotObject(), scale,
             theme, type);
 
     public static TwitchChatMessage? FromObject(GodotObject? data)
     {
         if (data == null) return null;
 
-        var result = new TwitchChatMessage
+        return new TwitchChatMessage
         {
-            _data = data,
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-            BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
-            BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
-            ChatterUserId = data.Get("chatter_user_id").AsString(),
-            ChatterUserName = data.Get("chatter_user_name").AsString(),
-            ChatterUserLogin = data.Get("chatter_user_login").AsString(),
-            MessageId = data.Get("message_id").AsString(),
-            ChatMessageType = (MessageType)data.Get("message_type").AsInt32(),
-            Color = data.Get("color").AsString(),
-            ChannelPointsCustomRewardId = data.Get("channel_points_custom_reward_id").AsString(),
-            SourceBroadcasterUserId = data.Get("source_broadcaster_user_id").AsString(),
-            SourceBroadcasterUserName = data.Get("source_broadcaster_user_name").AsString(),
-            SourceBroadcasterUserLogin = data.Get("source_broadcaster_user_login").AsString(),
-            SourceMessageId = data.Get("source_message_id").AsString(),
-            IsSourceOnly = data.Get("is_source_only").AsBool(),
+            _data = Variant.CreateFrom(data),
+            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
+            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
+            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
+            ChatterUserId = data.Read("chatter_user_id", static v => v.AsString()),
+            ChatterUserName = data.Read("chatter_user_name", static v => v.AsString()),
+            ChatterUserLogin = data.Read("chatter_user_login", static v => v.AsString()),
+            MessageId = data.Read("message_id", static v => v.AsString()),
+            ChatMessageType = data.Read("message_type", static v => (MessageType)v.AsInt32()),
+            Color = data.Read("color", static v => v.AsString()),
+            ChannelPointsCustomRewardId = data.Read("channel_points_custom_reward_id", static v => v.AsString()),
+            SourceBroadcasterUserId = data.Read("source_broadcaster_user_id", static v => v.AsString()),
+            SourceBroadcasterUserName = data.Read("source_broadcaster_user_name", static v => v.AsString()),
+            SourceBroadcasterUserLogin = data.Read("source_broadcaster_user_login", static v => v.AsString()),
+            SourceMessageId = data.Read("source_message_id", static v => v.AsString()),
+            IsSourceOnly = data.Read("is_source_only", static v => v.AsBool()),
         };
-
-        result._data = data;
-
-        return result;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_chat_message.gd");
-        var instance = script.New().AsGodotObject();
-        instance.Set("broadcaster_user_id", BroadcasterUserId);
-        instance.Set("broadcaster_user_name", BroadcasterUserName);
-        instance.Set("broadcaster_user_login", BroadcasterUserLogin);
-        instance.Set("chatter_user_id", ChatterUserId);
-        instance.Set("chatter_user_name", ChatterUserName);
-        instance.Set("chatter_user_login", ChatterUserLogin);
-        instance.Set("message_id", MessageId);
-        if (Content != null) instance.Set("message", Content.ToGodotObject());
-        instance.Set("message_type", (int)ChatMessageType);
-        instance.Set("cheer", CheerMetadata?.ToGodotObject() ?? new Variant());
-        instance.Set("color", Color);
-        instance.Set("reply", ReplyMetadata?.ToGodotObject() ?? new Variant());
-        if (ChannelPointsCustomRewardId != null) instance.Set("channel_points_custom_reward_id", ChannelPointsCustomRewardId);
-        if (SourceBroadcasterUserId != null) instance.Set("source_broadcaster_user_id", SourceBroadcasterUserId);
-        if (SourceBroadcasterUserName != null) instance.Set("source_broadcaster_user_name", SourceBroadcasterUserName);
-        if (SourceBroadcasterUserLogin != null) instance.Set("source_broadcaster_user_login", SourceBroadcasterUserLogin);
-        if (SourceMessageId != null) instance.Set("source_message_id", SourceMessageId);
+        var instance = InteropExtension.NewObject(ScriptPath);
+        instance.SetValue("broadcaster_user_id", BroadcasterUserId);
+        instance.SetValue("broadcaster_user_name", BroadcasterUserName);
+        instance.SetValue("broadcaster_user_login", BroadcasterUserLogin);
+        instance.SetValue("chatter_user_id", ChatterUserId);
+        instance.SetValue("chatter_user_name", ChatterUserName);
+        instance.SetValue("chatter_user_login", ChatterUserLogin);
+        instance.SetValue("message_id", MessageId);
+        if (Content != null) instance.SetObject("message", Content);
+        instance.SetValue("message_type", (int)ChatMessageType);
+        instance.SetObject("cheer", CheerMetadata);
+        instance.SetValue("color", Color);
+        instance.SetObject("reply", ReplyMetadata);
+        if (ChannelPointsCustomRewardId != null) instance.SetValue("channel_points_custom_reward_id", ChannelPointsCustomRewardId);
+        if (SourceBroadcasterUserId != null) instance.SetValue("source_broadcaster_user_id", SourceBroadcasterUserId);
+        if (SourceBroadcasterUserName != null) instance.SetValue("source_broadcaster_user_name", SourceBroadcasterUserName);
+        if (SourceBroadcasterUserLogin != null) instance.SetValue("source_broadcaster_user_login", SourceBroadcasterUserLogin);
+        if (SourceMessageId != null) instance.SetValue("source_message_id", SourceMessageId);
         instance.SetArray("badges", Badges);
         instance.SetArray("source_badges", SourceBadges);
-        instance.Set("is_source_only", IsSourceOnly);
+        instance.SetValue("is_source_only", IsSourceOnly);
         return instance;
+    }
+
+    /// <summary> Releases the twitcher object this message was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        // Only when disposed explicitly: when finalized, the Variant is finalized on its own, and disposing it again
+        // throws on the finalizer thread, which ends the process.
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 
     public partial class Message : RefCounted, ITwitcherSharp<Message>
     {
-        private GodotObject? _data;
+        private Variant _data;
         public string Text { get; set; } = null!;
-        public Fragment[] Fragments { get => field ??= _data?.GetArray<Fragment>("fragments") ?? []; set; } = null!;
+        public Fragment[] Fragments { get => field ??= _data.GetArray<Fragment>("fragments") ?? []; set; } = null!;
 
         public static Message? FromObject(GodotObject? data)
         {
             if (data == null) return null;
-            var result = new Message
+            return new Message
             {
-                Text = data.Get("text").AsString()
+                _data = Variant.CreateFrom(data),
+                Text = data.Read("text", static v => v.AsString()),
             };
-
-            result._data = data;
-
-            return result;
         }
 
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_chat_message.gd");
-            var message = script.Get("Message").AsGodotObject().Call("new").AsGodotObject();
-            message.Set("text", Text);
+            var message = InteropExtension.NewInner(ScriptPath, "Message");
+            message.SetValue("text", Text);
             message.SetArray("fragments", Fragments);
             return message;
+        }
+
+        /// <summary> Releases the twitcher object this message was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     }
 
     public partial class Fragment : RefCounted, ITwitcherSharp<Fragment>
     {
-        private GodotObject? _data;
+        private Variant _data;
         public FragmentType Type { get; set; }
         public string Text { get; set; } = null!;
 
         /// <summary>
         /// Exactly one of Cheermote/Emote/Mention is present, matching Type.
         /// </summary>
-        public Cheermote? Cheermote { get => field ??= _data?.Get<Cheermote>("cheermote"); set; }
-        public Emote? Emote { get => field ??= _data?.Get<Emote>("emote"); set; }
-        public Mention? Mention { get => field ??= _data?.Get<Mention>("mention"); set; }
+        public Cheermote? Cheermote { get => field ??= _data.Get<Cheermote>("cheermote"); set; }
+        public Emote? Emote { get => field ??= _data.Get<Emote>("emote"); set; }
+        public Mention? Mention { get => field ??= _data.Get<Mention>("mention"); set; }
 
         public static Fragment? FromObject(GodotObject? data)
         {
             if (data == null) return null;
-            var result = new Fragment
+            return new Fragment
             {
-                Type = (FragmentType)data.Get("type").AsInt32(),
-                Text = data.Get("text").AsString()
+                _data = Variant.CreateFrom(data),
+                Type = data.Read("type", static v => (FragmentType)v.AsInt32()),
+                Text = data.Read("text", static v => v.AsString()),
             };
-            result._data = data;
-            return result;
         }
 
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_chat_message.gd");
-            var instance = script.Get("Fragment").AsGodotObject().Call("new").AsGodotObject();
-            instance.Set("type", (int)Type);
-            instance.Set("text", Text);
-            instance.Set("cheermote", Cheermote?.ToGodotObject() ?? new Variant());
-            instance.Set("emote", Emote?.ToGodotObject() ?? new Variant());
-            instance.Set("mention", Mention?.ToGodotObject() ?? new Variant());
+            var instance = InteropExtension.NewInner(ScriptPath, "Fragment");
+            instance.SetValue("type", (int)Type);
+            instance.SetValue("text", Text);
+            instance.SetObject("cheermote", Cheermote);
+            instance.SetObject("emote", Emote);
+            instance.SetObject("mention", Mention);
             return instance;
+        }
+
+        /// <summary> Releases the twitcher object this fragment was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     }
 
@@ -225,19 +239,18 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
             if (data == null) return null;
             return new Mention
             {
-                UserId = data.Get("user_id").AsString(),
-                UserName = data.Get("user_name").AsString(),
-                UserLogin = data.Get("user_login").AsString()
+                UserId = data.Read("user_id", static v => v.AsString()),
+                UserName = data.Read("user_name", static v => v.AsString()),
+                UserLogin = data.Read("user_login", static v => v.AsString())
             };
         }
 
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_chat_message.gd");
-            var instance = script.Get("Mention").AsGodotObject().Call("new").AsGodotObject();
-            instance.Set("user_id", UserId);
-            instance.Set("user_name", UserName);
-            instance.Set("user_login", UserLogin);
+            var instance = InteropExtension.NewInner(ScriptPath, "Mention");
+            instance.SetValue("user_id", UserId);
+            instance.SetValue("user_name", UserName);
+            instance.SetValue("user_login", UserLogin);
             return instance;
         }
     }
@@ -253,19 +266,18 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
             if (data == null) return null;
             return new Cheermote
             {
-                Prefix = data.Get("prefix").AsString(),
-                Bits = data.Get("bits").AsInt32(),
-                Tier = data.Get("tier").AsInt32()
+                Prefix = data.Read("prefix", static v => v.AsString()),
+                Bits = data.Read("bits", static v => v.AsInt32()),
+                Tier = data.Read("tier", static v => v.AsInt32())
             };
         }
 
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_chat_message.gd");
-            var instance = script.Get("Cheermote").AsGodotObject().Call("new").AsGodotObject();
-            instance.Set("prefix", Prefix);
-            instance.Set("bits", Bits);
-            instance.Set("tier", Tier);
+            var instance = InteropExtension.NewInner(ScriptPath, "Cheermote");
+            instance.SetValue("prefix", Prefix);
+            instance.SetValue("bits", Bits);
+            instance.SetValue("tier", Tier);
             return instance;
         }
     }
@@ -280,25 +292,22 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
         public static Emote? FromObject(GodotObject? data)
         {
             if (data == null) return null;
-            var result = new Emote
+            return new Emote
             {
-                Id = data.Get("id").AsString(),
-                EmoteSetId = data.Get("emote_set_id").AsString(),
-                OwnerId = data.Get("owner_id").AsString(),
+                Id = data.Read("id", static v => v.AsString()),
+                EmoteSetId = data.Read("emote_set_id", static v => v.AsString()),
+                OwnerId = data.Read("owner_id", static v => v.AsString()),
                 // Array[EmoteFormat] in twitcher: the enum values, not the "static"/"animated" strings of the API.
-                Format = data.Get("format").AsGodotArray<int>().Select(f => (EmoteFormat)f).ToArray()
+                Format = data.Read("format", static v => v.AsInt32Array().Select(f => (EmoteFormat)f).ToArray())
             };
-
-            return result;
         }
 
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_chat_message.gd");
-            var instance = script.Get("Emote").AsGodotObject().Call("new").AsGodotObject();
-            instance.Set("id", Id);
-            instance.Set("emote_set_id", EmoteSetId);
-            instance.Set("owner_id", OwnerId);
+            var instance = InteropExtension.NewInner(ScriptPath, "Emote");
+            instance.SetValue("id", Id);
+            instance.SetValue("emote_set_id", EmoteSetId);
+            instance.SetValue("owner_id", OwnerId);
             instance.SetArray("format", Format.Select(f => Variant.From((int)f)));
             return instance;
         }
@@ -319,19 +328,18 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
             if (data == null) return null;
             return new Badge
             {
-                SetId = data.Get("set_id").AsString(),
-                Id = data.Get("id").AsString(),
-                Info = data.Get("info").AsString()
+                SetId = data.Read("set_id", static v => v.AsString()),
+                Id = data.Read("id", static v => v.AsString()),
+                Info = data.Read("info", static v => v.AsString())
             };
         }
 
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_chat_message.gd");
-            var instance = script.Get("Badge").AsGodotObject().Call("new").AsGodotObject();
-            instance.Set("set_id", SetId);
-            instance.Set("id", Id);
-            if (Info != null) instance.Set("info", Info);
+            var instance = InteropExtension.NewInner(ScriptPath, "Badge");
+            instance.SetValue("set_id", SetId);
+            instance.SetValue("id", Id);
+            if (Info != null) instance.SetValue("info", Info);
             return instance;
         }
     }
@@ -341,13 +349,12 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
         public int Bits { get; set; }
 
         public static Cheer? FromObject(GodotObject? data) =>
-            data == null ? null : new Cheer { Bits = data.Get("bits").AsInt32() };
+            data == null ? null : new Cheer { Bits = data.Read("bits", static v => v.AsInt32()) };
 
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_chat_message.gd");
-            var instance = script.Get("Cheer").AsGodotObject().Call("new").AsGodotObject();
-            instance.Set("bits", Bits);
+            var instance = InteropExtension.NewInner(ScriptPath, "Cheer");
+            instance.SetValue("bits", Bits);
             return instance;
         }
     }
@@ -369,31 +376,30 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
             if (data == null) return null;
             return new Reply
             {
-                ParentMessageId = data.Get("parent_message_id").AsString(),
-                ParentMessageBody = data.Get("parent_message_body").AsString(),
-                ParentUserId = data.Get("parent_user_id").AsString(),
-                ParentUserName = data.Get("parent_user_name").AsString(),
-                ParentUserLogin = data.Get("parent_user_login").AsString(),
-                ThreadMessageId = data.Get("thread_message_id").AsString(),
-                ThreadUserId = data.Get("thread_user_id").AsString(),
-                ThreadUserName = data.Get("thread_user_name").AsString(),
-                ThreadUserLogin = data.Get("thread_user_login").AsString()
+                ParentMessageId = data.Read("parent_message_id", static v => v.AsString()),
+                ParentMessageBody = data.Read("parent_message_body", static v => v.AsString()),
+                ParentUserId = data.Read("parent_user_id", static v => v.AsString()),
+                ParentUserName = data.Read("parent_user_name", static v => v.AsString()),
+                ParentUserLogin = data.Read("parent_user_login", static v => v.AsString()),
+                ThreadMessageId = data.Read("thread_message_id", static v => v.AsString()),
+                ThreadUserId = data.Read("thread_user_id", static v => v.AsString()),
+                ThreadUserName = data.Read("thread_user_name", static v => v.AsString()),
+                ThreadUserLogin = data.Read("thread_user_login", static v => v.AsString())
             };
         }
 
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_chat_message.gd");
-            var instance = script.Get("Reply").AsGodotObject().Call("new").AsGodotObject();
-            instance.Set("parent_message_id", ParentMessageId);
-            instance.Set("parent_message_body", ParentMessageBody);
-            instance.Set("parent_user_id", ParentUserId);
-            instance.Set("parent_user_name", ParentUserName);
-            instance.Set("parent_user_login", ParentUserLogin);
-            instance.Set("thread_message_id", ThreadMessageId);
-            instance.Set("thread_user_id", ThreadUserId);
-            instance.Set("thread_user_name", ThreadUserName);
-            instance.Set("thread_user_login", ThreadUserLogin);
+            var instance = InteropExtension.NewInner(ScriptPath, "Reply");
+            instance.SetValue("parent_message_id", ParentMessageId);
+            instance.SetValue("parent_message_body", ParentMessageBody);
+            instance.SetValue("parent_user_id", ParentUserId);
+            instance.SetValue("parent_user_name", ParentUserName);
+            instance.SetValue("parent_user_login", ParentUserLogin);
+            instance.SetValue("thread_message_id", ThreadMessageId);
+            instance.SetValue("thread_user_id", ThreadUserId);
+            instance.SetValue("thread_user_name", ThreadUserName);
+            instance.SetValue("thread_user_login", ThreadUserLogin);
             return instance;
         }
     }

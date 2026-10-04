@@ -6,7 +6,7 @@ namespace TwitcherSharp.Api.Generated.Bits;
 
 public partial class TwitchExtensionTransaction : RefCounted, ITwitcherSharp<TwitchExtensionTransaction>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string Id { get; set; } = null!;
     public string Timestamp { get; set; } = null!;
     public string BroadcasterId { get; set; } = null!;
@@ -16,7 +16,7 @@ public partial class TwitchExtensionTransaction : RefCounted, ITwitcherSharp<Twi
     public string UserLogin { get; set; } = null!;
     public string UserName { get; set; } = null!;
     public string ProductType { get; set; } = null!;
-    public TwitchResponseProductData ProductData { get => field ??= _data?.Get<TwitchResponseProductData>("product_data")!; set; } = null!;
+    public TwitchResponseProductData ProductData { get => field ??= _data.Get<TwitchResponseProductData>("product_data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchExtensionTransaction object.
@@ -26,36 +26,42 @@ public partial class TwitchExtensionTransaction : RefCounted, ITwitcherSharp<Twi
         if(data == null) return null;
         var instance = new TwitchExtensionTransaction
         {
-            Id = data.Get("id").AsString(),
-            Timestamp = data.Get("timestamp").AsString(),
-            BroadcasterId = data.Get("broadcaster_id").AsString(),
-            BroadcasterLogin = data.Get("broadcaster_login").AsString(),
-            BroadcasterName = data.Get("broadcaster_name").AsString(),
-            UserId = data.Get("user_id").AsString(),
-            UserLogin = data.Get("user_login").AsString(),
-            UserName = data.Get("user_name").AsString(),
-            ProductType = data.Get("product_type").AsString(),
+            Id = data.Read("id", static v => v.AsString()),
+            Timestamp = data.Read("timestamp", static v => v.AsString()),
+            BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
+            BroadcasterLogin = data.Read("broadcaster_login", static v => v.AsString()),
+            BroadcasterName = data.Read("broadcaster_name", static v => v.AsString()),
+            UserId = data.Read("user_id", static v => v.AsString()),
+            UserLogin = data.Read("user_login", static v => v.AsString()),
+            UserName = data.Read("user_name", static v => v.AsString()),
+            ProductType = data.Read("product_type", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_extension_transaction.gd");
-        var request = script.Call("new").AsGodotObject();
-        if(Id != null) request.Set("id", Id);
-        if(Timestamp != null) request.Set("timestamp", Timestamp);
-        if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
-        if(BroadcasterLogin != null) request.Set("broadcaster_login", BroadcasterLogin);
-        if(BroadcasterName != null) request.Set("broadcaster_name", BroadcasterName);
-        if(UserId != null) request.Set("user_id", UserId);
-        if(UserLogin != null) request.Set("user_login", UserLogin);
-        if(UserName != null) request.Set("user_name", UserName);
-        if(ProductType != null) request.Set("product_type", ProductType);
-        if(ProductData != null) request.Set("product_data", ProductData.ToGodotObject());
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated/twitch_extension_transaction.gd");
+        if(Id != null) request.SetValue("id", Id);
+        if(Timestamp != null) request.SetValue("timestamp", Timestamp);
+        if(BroadcasterId != null) request.SetValue("broadcaster_id", BroadcasterId);
+        if(BroadcasterLogin != null) request.SetValue("broadcaster_login", BroadcasterLogin);
+        if(BroadcasterName != null) request.SetValue("broadcaster_name", BroadcasterName);
+        if(UserId != null) request.SetValue("user_id", UserId);
+        if(UserLogin != null) request.SetValue("user_login", UserLogin);
+        if(UserName != null) request.SetValue("user_name", UserName);
+        if(ProductType != null) request.SetValue("product_type", ProductType);
+        if(ProductData != null) request.SetObject("product_data", ProductData);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
     
     /// <summary> 
@@ -63,10 +69,10 @@ public partial class TwitchExtensionTransaction : RefCounted, ITwitcherSharp<Twi
     /// </summary>
     public partial class TwitchResponseProductData : RefCounted, ITwitcherSharp<TwitchResponseProductData>
     {
-        private GodotObject? _data;
+        private Variant _data;
         public string Sku { get; set; } = null!;
         public string Domain { get; set; } = null!;
-        public TwitchResponseCost Cost { get => field ??= _data?.Get<TwitchResponseCost>("cost")!; set; } = null!;
+        public TwitchResponseCost Cost { get => field ??= _data.Get<TwitchResponseCost>("cost")!; set; } = null!;
         public bool InDevelopment { get; set; }
         public string DisplayName { get; set; } = null!;
         public string Expiration { get; set; } = null!;
@@ -80,31 +86,36 @@ public partial class TwitchExtensionTransaction : RefCounted, ITwitcherSharp<Twi
             if(data == null) return null;
             var instance = new TwitchResponseProductData
             {
-                Sku = data.Get("sku").AsString(),
-                Domain = data.Get("domain").AsString(),
-                InDevelopment = data.Get("in_development").AsBool(),
-                DisplayName = data.Get("display_name").AsString(),
-                Expiration = data.Get("expiration").AsString(),
-                Broadcast = data.Get("broadcast").AsBool(),
+                Sku = data.Read("sku", static v => v.AsString()),
+                Domain = data.Read("domain", static v => v.AsString()),
+                InDevelopment = data.Read("in_development", static v => v.AsBool()),
+                DisplayName = data.Read("display_name", static v => v.AsString()),
+                Expiration = data.Read("expiration", static v => v.AsString()),
+                Broadcast = data.Read("broadcast", static v => v.AsBool()),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_extension_transaction.gd");
-            var twitchResponseProductDataClass = script.Get("ProductData").AsGodotObject();
-            var request = twitchResponseProductDataClass.Call("new").AsGodotObject();
-            if(Sku != null) request.Set("sku", Sku);
-            if(Domain != null) request.Set("domain", Domain);
-            if(Cost != null) request.Set("cost", Cost.ToGodotObject());
-            request.Set("in_development", InDevelopment);
-            if(DisplayName != null) request.Set("display_name", DisplayName);
-            if(Expiration != null) request.Set("expiration", Expiration);
-            request.Set("broadcast", Broadcast);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_extension_transaction.gd", "ProductData");
+            if(Sku != null) request.SetValue("sku", Sku);
+            if(Domain != null) request.SetValue("domain", Domain);
+            if(Cost != null) request.SetObject("cost", Cost);
+            request.SetValue("in_development", InDevelopment);
+            if(DisplayName != null) request.SetValue("display_name", DisplayName);
+            if(Expiration != null) request.SetValue("expiration", Expiration);
+            request.SetValue("broadcast", Broadcast);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
         
         /// <summary> 
@@ -112,7 +123,7 @@ public partial class TwitchExtensionTransaction : RefCounted, ITwitcherSharp<Twi
         /// </summary>
         public partial class TwitchResponseCost : RefCounted, ITwitcherSharp<TwitchResponseCost>
         {
-            private GodotObject? _data;
+            private Variant _data;
             public int Amount { get; set; }
             public string Type { get; set; } = null!;
         
@@ -124,22 +135,27 @@ public partial class TwitchExtensionTransaction : RefCounted, ITwitcherSharp<Twi
                 if(data == null) return null;
                 var instance = new TwitchResponseCost
                 {
-                    Amount = data.Get("amount").AsInt32(),
-                    Type = data.Get("type").AsString(),
+                    Amount = data.Read("amount", static v => v.AsInt32()),
+                    Type = data.Read("type", static v => v.AsString()),
                 };
                 
-                instance._data = data;
+                instance._data = Variant.CreateFrom(data);
                 return instance;
             }
         
             public GodotObject ToGodotObject()
             {
-                var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_extension_transaction.gd");
-                var twitchResponseCostClass = script.Get("Cost").AsGodotObject();
-                var request = twitchResponseCostClass.Call("new").AsGodotObject();
-                request.Set("amount", Amount);
-                if(Type != null) request.Set("type", Type);
+                var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_extension_transaction.gd", "Cost");
+                request.SetValue("amount", Amount);
+                if(Type != null) request.SetValue("type", Type);
                 return request;
+            }
+        
+            /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+            protected override void Dispose(bool disposing)
+            {
+                if (disposing) _data.Dispose();
+                base.Dispose(disposing);
             }
         
         }

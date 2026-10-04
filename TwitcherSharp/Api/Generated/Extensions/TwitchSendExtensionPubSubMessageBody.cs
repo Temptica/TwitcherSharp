@@ -6,7 +6,7 @@ namespace TwitcherSharp.Api.Generated.Extensions;
 
 public partial class TwitchSendExtensionPubSubMessageBody : RefCounted, ITwitcherSharp<TwitchSendExtensionPubSubMessageBody>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string[] Target { get; set; } = null!;
     public string BroadcasterId { get; set; } = null!;
     public bool? IsGlobalBroadcast { get; set; }
@@ -20,26 +20,31 @@ public partial class TwitchSendExtensionPubSubMessageBody : RefCounted, ITwitche
         if(data == null) return null;
         var instance = new TwitchSendExtensionPubSubMessageBody
         {
-            Target = data.Get("target").AsStringArray(),
-            BroadcasterId = data.Get("broadcaster_id").AsString(),
-            IsGlobalBroadcast = data.Get("is_global_broadcast").AsBool(),
-            Message = data.Get("message").AsString(),
+            Target = data.Read("target", static v => v.AsStringArray()),
+            BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
+            IsGlobalBroadcast = data.Read("is_global_broadcast", static v => v.AsBool()),
+            Message = data.Read("message", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_send_extension_pub_sub_message.gd");
-        var bodyClass = script.Get("Body").AsGodotObject();
-        var request = bodyClass.Call("new").AsGodotObject();
-        if(Target != null) request.Set("target", new Godot.Collections.Array<string>(Target));
-        if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
-        if(IsGlobalBroadcast.HasValue) request.Set("is_global_broadcast", IsGlobalBroadcast.Value);
-        if(Message != null) request.Set("message", Message);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_send_extension_pub_sub_message.gd", "Body");
+        if(Target != null) request.SetValue("target", new Godot.Collections.Array<string>(Target));
+        if(BroadcasterId != null) request.SetValue("broadcaster_id", BroadcasterId);
+        if(IsGlobalBroadcast.HasValue) request.SetValue("is_global_broadcast", IsGlobalBroadcast.Value);
+        if(Message != null) request.SetValue("message", Message);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

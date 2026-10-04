@@ -1,4 +1,5 @@
 using Godot;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.Media;
@@ -67,13 +68,12 @@ public partial class TwitchBadgeDefinition : RefCounted, ITwitcherSharp<TwitchBa
     {
         if (data == null) return null;
         // set_id, id, badge_scale and badge_channel are only the _init parameter names in twitcher.
-        return new TwitchBadgeDefinition(data.Get("badge_set").AsString(), data.Get("badge_id").AsString(),
-            data.Get("scale").AsInt32(), data.Get("channel").AsString());
+        return new TwitchBadgeDefinition(data.Read("badge_set", static v => v.AsString()), data.Read("badge_id", static v => v.AsString()),
+            data.Read("scale", static v => v.AsInt32()), data.Read("channel", static v => v.AsString()));
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/media/twitch_badge_definition.gd");
-        return script.New(BadgeSet, BadgeId, Scale, Channel).AsGodotObject();   
+        return InteropExtension.NewObject("res://addons/twitcher/media/twitch_badge_definition.gd", BadgeSet, BadgeId, Scale, Channel);   
     }
 }

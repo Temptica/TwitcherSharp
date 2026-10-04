@@ -6,8 +6,8 @@ namespace TwitcherSharp.Api.Generated.Raids;
 
 public partial class TwitchStartARaidResponse : RefCounted, ITwitcherSharp<TwitchStartARaidResponse>
 {
-    private GodotObject? _data;
-    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data")!; set; } = null!;
+    private Variant _data;
+    public TwitchResponseData[] Data { get => field ??= _data.GetArray<TwitchResponseData>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchStartARaidResponse object.
@@ -17,17 +17,22 @@ public partial class TwitchStartARaidResponse : RefCounted, ITwitcherSharp<Twitc
         if(data == null) return null;
         var instance = new TwitchStartARaidResponse();
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_start_a_raid.gd");
-        var responseClass = script.Get("Response").AsGodotObject();
-        var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data.ToGodotArray());
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_start_a_raid.gd", "Response");
+        if(Data != null) request.SetArray("data", Data);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
     
     /// <summary> 
@@ -35,7 +40,7 @@ public partial class TwitchStartARaidResponse : RefCounted, ITwitcherSharp<Twitc
     /// </summary>
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
-        private GodotObject? _data;
+        private Variant _data;
         public string CreatedAt { get; set; } = null!;
         public bool IsMature { get; set; }
     
@@ -47,22 +52,27 @@ public partial class TwitchStartARaidResponse : RefCounted, ITwitcherSharp<Twitc
             if(data == null) return null;
             var instance = new TwitchResponseData
             {
-                CreatedAt = data.Get("created_at").AsString(),
-                IsMature = data.Get("is_mature").AsBool(),
+                CreatedAt = data.Read("created_at", static v => v.AsString()),
+                IsMature = data.Read("is_mature", static v => v.AsBool()),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_start_a_raid.gd");
-            var twitchResponseDataClass = script.Get("ResponseData").AsGodotObject();
-            var request = twitchResponseDataClass.Call("new").AsGodotObject();
-            if(CreatedAt != null) request.Set("created_at", CreatedAt);
-            request.Set("is_mature", IsMature);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_start_a_raid.gd", "ResponseData");
+            if(CreatedAt != null) request.SetValue("created_at", CreatedAt);
+            request.SetValue("is_mature", IsMature);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     
     }

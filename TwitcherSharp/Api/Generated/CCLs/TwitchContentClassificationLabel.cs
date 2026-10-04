@@ -6,7 +6,7 @@ namespace TwitcherSharp.Api.Generated.CCLs;
 
 public partial class TwitchContentClassificationLabel : RefCounted, ITwitcherSharp<TwitchContentClassificationLabel>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string Id { get; set; } = null!;
     public string Description { get; set; } = null!;
     public string Name { get; set; } = null!;
@@ -19,23 +19,29 @@ public partial class TwitchContentClassificationLabel : RefCounted, ITwitcherSha
         if(data == null) return null;
         var instance = new TwitchContentClassificationLabel
         {
-            Id = data.Get("id").AsString(),
-            Description = data.Get("description").AsString(),
-            Name = data.Get("name").AsString(),
+            Id = data.Read("id", static v => v.AsString()),
+            Description = data.Read("description", static v => v.AsString()),
+            Name = data.Read("name", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_content_classification_label.gd");
-        var request = script.Call("new").AsGodotObject();
-        if(Id != null) request.Set("id", Id);
-        if(Description != null) request.Set("description", Description);
-        if(Name != null) request.Set("name", Name);
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated/twitch_content_classification_label.gd");
+        if(Id != null) request.SetValue("id", Id);
+        if(Description != null) request.SetValue("description", Description);
+        if(Name != null) request.SetValue("name", Name);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

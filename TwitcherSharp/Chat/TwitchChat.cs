@@ -33,20 +33,20 @@ public partial class TwitchChat : RefCounted, ITwitcherSharpSingleton<TwitchChat
 
     public TwitchUser? BroadcasterUser
     {
-        get => _data != null ? TwitchUser.FromObject(_data.Get("broadcaster_user").AsGodotObject()) : field;
+        get => _data != null ? _data.Get<TwitchUser>("broadcaster_user") : field;
         set
         {
-            _data?.Set("broadcaster_user", value?.ToGodotObject() ?? new Variant());
+            _data?.SetObject("broadcaster_user", value);
             field = value;
         }
     }
 
     public TwitchUser? SenderUser
     {
-        get => _data != null ? TwitchUser.FromObject(_data.Get("sender_user").AsGodotObject()) : field;
+        get => _data != null ? _data.Get<TwitchUser>("sender_user") : field;
         set
         {
-            _data?.Set("sender_user", value?.ToGodotObject() ?? new Variant());
+            _data?.SetObject("sender_user", value);
             field = value;
         }
     }
@@ -64,7 +64,7 @@ public partial class TwitchChat : RefCounted, ITwitcherSharpSingleton<TwitchChat
     [Signal]
     public delegate void MessageReceivedEventHandler(TwitchChatMessage message);
 
-    public async Task Subscribe() => await _data!.CallAsync("subscribe");
+    public async Task Subscribe() => await _data!.InvokeAsync("subscribe");
 
     /// <summary>
     /// Sends a message to the chat. If twitchApi is connected and linked, it will use the c# code.
@@ -128,10 +128,9 @@ public partial class TwitchChat : RefCounted, ITwitcherSharpSingleton<TwitchChat
             return _data;
         }
 
-        var script = GD.Load<GDScript>(ScriptPath);
-        var instance = script.New().AsGodotObject();
-        instance.Set("broadcaster_user", BroadcasterUser?.ToGodotObject() ?? new Variant());
-        instance.Set("sender_user", SenderUser?.ToGodotObject() ?? new Variant());
+        var instance = InteropExtension.NewObject(ScriptPath);
+        instance.SetObject("broadcaster_user", BroadcasterUser);
+        instance.SetObject("sender_user", SenderUser);
         instance.SetMeta("_twitcher_sharp_instance", this);
         _data = instance;
         ConnectSignals();

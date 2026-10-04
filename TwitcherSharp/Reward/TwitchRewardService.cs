@@ -15,7 +15,7 @@ namespace TwitcherSharp.Reward;
 public partial class TwitchRewardService(TwitchApi api, TwitchMediaLoader twitchMediaLoader)
     : RefCounted, ITwitcherSharp<TwitchRewardService>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public TwitchApi TwitchApi { get; set; } = api;
     public TwitchMediaLoader TwitchMediaLoader { get; set; } = twitchMediaLoader;
 
@@ -103,9 +103,10 @@ public partial class TwitchRewardService(TwitchApi api, TwitchMediaLoader twitch
     /// </summary>
     private async Task<int> CallWithReward(string method, TwitchReward twitchReward)
     {
-        _data ??= ToGodotObject();
-        var reward = twitchReward.ToGodotObject();
-        using var result = await _data.CallAsync(method, reward);
+        if (_data.IsNil) _data = GodotObjectExtension.ToVariant(this);
+        using var reward = twitchReward.ToGodotObject();
+        using var rewardArg = Variant.CreateFrom(reward);
+        using var result = await _data.CallAsync(method, rewardArg);
         twitchReward.ReadFrom(reward);
         return result.AsInt32();
     }
@@ -121,17 +122,25 @@ public partial class TwitchRewardService(TwitchApi api, TwitchMediaLoader twitch
     public static TwitchRewardService? FromObject(GodotObject? data)
     {
         if (data == null) return null;
-        var rewardService = new TwitchRewardService(TwitchApi.FromObject(data.Get("api").AsGodotObject())!
-            , TwitchMediaLoader.FromObject(data.Get("media_loader").AsGodotObject())!);
+        var rewardService = new TwitchRewardService(data.Get<TwitchApi>("api")!
+            , data.Get<TwitchMediaLoader>("media_loader")!);
 
-        rewardService._data = data;
+        rewardService._data = Variant.CreateFrom(data);
         return rewardService;
     }
     
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/reward/twitch_reward_service.gd");
-        return script.New(TwitchApi?.ToGodotObject() ?? new Variant(),
-            TwitchMediaLoader?.ToGodotObject() ?? new Variant()).AsGodotObject();
+        // The API and the media loader are nodes of the scene: passed as they are, not disposed.
+        return InteropExtension.NewObject("res://addons/twitcher/reward/twitch_reward_service.gd",
+            TwitchApi?.ToGodotObject() ?? new Variant(), TwitchMediaLoader?.ToGodotObject() ?? new Variant());
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        // Only when disposed explicitly: when finalized, the Variant is finalized on its own.
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 }

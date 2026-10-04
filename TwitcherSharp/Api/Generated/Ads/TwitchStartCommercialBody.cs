@@ -6,7 +6,7 @@ namespace TwitcherSharp.Api.Generated.Ads;
 
 public partial class TwitchStartCommercialBody : RefCounted, ITwitcherSharp<TwitchStartCommercialBody>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string BroadcasterId { get; set; } = null!;
     public int Length { get; set; }
 
@@ -18,22 +18,27 @@ public partial class TwitchStartCommercialBody : RefCounted, ITwitcherSharp<Twit
         if(data == null) return null;
         var instance = new TwitchStartCommercialBody
         {
-            BroadcasterId = data.Get("broadcaster_id").AsString(),
-            Length = data.Get("length").AsInt32(),
+            BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
+            Length = data.Read("length", static v => v.AsInt32()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_start_commercial.gd");
-        var bodyClass = script.Get("Body").AsGodotObject();
-        var request = bodyClass.Call("new").AsGodotObject();
-        if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
-        request.Set("length", Length);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_start_commercial.gd", "Body");
+        if(BroadcasterId != null) request.SetValue("broadcaster_id", BroadcasterId);
+        request.SetValue("length", Length);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

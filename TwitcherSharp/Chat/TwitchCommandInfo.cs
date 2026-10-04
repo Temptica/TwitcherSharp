@@ -7,11 +7,11 @@ namespace TwitcherSharp.Chat;
 
 public partial class TwitchCommandInfo : Resource, ITwitcherSharp<TwitchCommandInfo>
 {
-	private GodotObject? _data;
+	private Variant _data;
 
 	public TwitchCommand? Command
 	{
-		get => field ??= TwitchCommand.FromObject(_data?.Get("command").AsGodotObject());
+		get => field ??= _data.Get<TwitchCommand>("command");
 		set;
 	}
 
@@ -29,10 +29,11 @@ public partial class TwitchCommandInfo : Resource, ITwitcherSharp<TwitchCommandI
 	/// The message as twitcher passes it: a TwitchChatMessage object, or the whisper data as Dictionary.
 	/// The caller disposes the returned Variant.
 	/// </summary>
-	public Variant OriginalMessage => _data?.Get("original_message")
-		?? (MessageType == TwitchChatMessageType.WhisperMessage
+	public Variant OriginalMessage => !_data.IsNil
+		? _data.With(data => data.Get("original_message"))
+		: (MessageType == TwitchChatMessageType.WhisperMessage
 			? Variant.CreateFrom(WhisperMessage ?? [])
-			: Variant.CreateFrom(ChatMessage?.ToGodotObject()));
+			: GodotObjectExtension.ToVariant(ChatMessage));
 
 	public TwitchChatMessageType MessageType { get; set; }
 
@@ -44,9 +45,8 @@ public partial class TwitchCommandInfo : Resource, ITwitcherSharp<TwitchCommandI
 	{
 		get
 		{
-			if (field is not null || _data is null || MessageType != TwitchChatMessageType.ChatMessage) return field;
-			using var original = _data.Get("original_message");
-			return field = TwitchChatMessage.FromObject(original.AsGodotObject());
+			if (field is not null || _data.IsNil || MessageType != TwitchChatMessageType.ChatMessage) return field;
+			return field = _data.Get<TwitchChatMessage>("original_message");
 		}
 		set;
 	}
@@ -62,20 +62,20 @@ public partial class TwitchCommandInfo : Resource, ITwitcherSharp<TwitchCommandI
 
 		var info = new TwitchCommandInfo
 		{
-			ChannelName = data.Get("channel_name").AsString(),
-			Username = data.Get("username").AsString(),
-			UserId = data.Get("user_id").AsString(),
-			Arguments = data.Get("arguments").AsStringArray().ToList(),
-			TextMessage = data.Get("text_message").AsString(),
-			_data = data,
+			ChannelName = data.Read("channel_name", static v => v.AsString()),
+			Username = data.Read("username", static v => v.AsString()),
+			UserId = data.Read("user_id", static v => v.AsString()),
+			Arguments = data.Read("arguments", static v => v.AsStringArray()).ToList(),
+			TextMessage = data.Read("text_message", static v => v.AsString()),
+			_data = Variant.CreateFrom(data),
 		};
 
-		using var original = data.Get("original_message");
-		if (original.VariantType == Variant.Type.Dictionary)
+		var whisper = data.Read("original_message",
+			static v => v.VariantType == Variant.Type.Dictionary ? v.AsGodotDictionary() : null);
+		if (whisper is not null)
 		{
-			//whisper
 			info.MessageType = TwitchChatMessageType.WhisperMessage;
-			info.WhisperMessage = original.AsGodotDictionary();
+			info.WhisperMessage = whisper;
 		}
 
 		return info;
@@ -84,11 +84,20 @@ public partial class TwitchCommandInfo : Resource, ITwitcherSharp<TwitchCommandI
 
 	public GodotObject ToGodotObject()
 	{
-		var script = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_command_info.gd");
 		using var original = OriginalMessage;
-		var instance = script.New(Command?.ToGodotObject() ?? new Variant(), ChannelName ?? "", Username ?? "",
-			UserId ?? "", original, TextMessage ?? "").AsGodotObject();
-		if (Arguments != null) instance.Set("arguments", Arguments.ToArray());
+		// The command is a node of the scene: passed as it is.
+		var instance = InteropExtension.NewObject("res://addons/twitcher/chat/twitch_command_info.gd",
+			Command?.ToGodotObject() ?? new Variant(), ChannelName ?? "", Username ?? "", UserId ?? "", original,
+			TextMessage ?? "");
+		if (Arguments != null) instance.SetValue("arguments", Arguments.ToArray());
 		return instance;
+	}
+
+	/// <summary> Releases the twitcher object this instance was mapped from. </summary>
+	protected override void Dispose(bool disposing)
+	{
+		// Only when disposed explicitly: when finalized, the Variant is finalized on its own.
+		if (disposing) _data.Dispose();
+		base.Dispose(disposing);
 	}
 }

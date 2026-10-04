@@ -10,7 +10,7 @@ namespace TwitcherSharp.Api.Generated.GuestStar;
 /// </summary>
 public partial class TwitchUpdateGuestStarSlotOpt : RefCounted, ITwitcherSharp<TwitchUpdateGuestStarSlotOpt>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string? DestinationSlotId { get; set; }
 
     /// <summary> 
@@ -21,20 +21,25 @@ public partial class TwitchUpdateGuestStarSlotOpt : RefCounted, ITwitcherSharp<T
         if(data == null) return null;
         var instance = new TwitchUpdateGuestStarSlotOpt
         {
-            DestinationSlotId = data.Get("destination_slot_id").AsString(),
+            DestinationSlotId = data.Read("destination_slot_id", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_update_guest_star_slot.gd");
-        var optClass = script.Get("Opt").AsGodotObject();
-        var request = optClass.Call("new").AsGodotObject();
-        if(DestinationSlotId != null) request.Set("destination_slot_id", DestinationSlotId);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_update_guest_star_slot.gd", "Opt");
+        if(DestinationSlotId != null) request.SetValue("destination_slot_id", DestinationSlotId);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

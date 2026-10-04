@@ -1,4 +1,5 @@
 using Godot;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.Chat;
@@ -14,7 +15,7 @@ public partial class TwitchCommandRegex : TwitchCommandBase, ITwitcherSharp<Twit
     {
         if (data == null) return null;
         var regex = new TwitchCommandRegex();
-        regex.RegexToListen = data.Get("regex_to_listen").AsString();
+        regex.RegexToListen = data.Read("regex_to_listen", static v => v.AsString());
         regex.Data = data;
         regex.SetBaseProperties();
         
@@ -23,8 +24,8 @@ public partial class TwitchCommandRegex : TwitchCommandBase, ITwitcherSharp<Twit
 
     public override GodotObject ToGodotObject()
     {
-        var data = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_command_regex.gd").New().AsGodotObject();
-        data.Set("regex_to_listen", RegexToListen);
+        var data = InteropExtension.NewObject("res://addons/twitcher/chat/twitch_command_regex.gd");
+        data.SetValue("regex_to_listen", RegexToListen);
         GetBaseProperties(data);
         return data;
     }

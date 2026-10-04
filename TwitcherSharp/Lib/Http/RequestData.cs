@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.Lib.Http;
@@ -18,26 +19,24 @@ public partial class RequestData : RefCounted, ITwitcherSharp<RequestData>
         if (data == null) return null;
         return new RequestData
         {
-            HttpRequest = data.Get("http_request").As<HttpRequest>(),
-            Path = data.Get("path").AsString(),
-            Method = data.Get("method").AsInt32(),
-            Headers = data.Get("headers").As<Dictionary>(),
-            Body = data.Get("body").AsString(),
-            Retry = data.Get("retry").AsInt32()
+            HttpRequest = data.Read("http_request", static v => v.As<HttpRequest>()),
+            Path = data.Read("path", static v => v.AsString()),
+            Method = data.Read("method", static v => v.AsInt32()),
+            Headers = data.Read("headers", static v => v.As<Dictionary>()),
+            Body = data.Read("body", static v => v.AsString()),
+            Retry = data.Read("retry", static v => v.AsInt32())
         };
     }
 
     public GodotObject ToGodotObject()
     {
-		var script = GD.Load<GDScript>("res://addons/twitcher/lib/http/buffered_http_client.gd");
-        var requestData = script.Get("ResponseData").AsGodotObject();
-        var request = requestData.Call("new").AsGodotObject();
-        if (HttpRequest != null) request.Set("http_request", HttpRequest);
-        if (Path != null) request.Set("path", Path);
-        request.Set("method", Method);
-        request.Set("headers", Headers);
-        request.Set("body", Body);
-        request.Set("retry", Retry);
+        var request = InteropExtension.NewInner("res://addons/twitcher/lib/http/buffered_http_client.gd", "RequestData");
+        if (HttpRequest != null) request.SetValue("http_request", HttpRequest);
+        if (Path != null) request.SetValue("path", Path);
+        request.SetValue("method", Method);
+        request.SetValue("headers", Headers);
+        request.SetValue("body", Body);
+        request.SetValue("retry", Retry);
         return request;
     }
 }

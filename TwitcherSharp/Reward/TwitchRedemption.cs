@@ -13,7 +13,7 @@ public partial class TwitchRedemption(
     TwitchUser broadcaster,
     TwitchUser user) : RefCounted, ITwitcherSharp<TwitchRedemption>
 {
-    private GodotObject? _data;
+    private Variant _data;
 
     public enum Status
     {
@@ -58,7 +58,7 @@ public partial class TwitchRedemption(
     /// </summary>
     public async Task Fullfill()
     {
-        await _data!.CallAsync("fullfill");
+        using var _ = await _data.CallAsync("fullfill");
     }
 
     /// <summary>
@@ -74,7 +74,7 @@ public partial class TwitchRedemption(
     /// </summary>
     public async Task Cancel()
     {
-        await _data!.CallAsync("cancel");
+        using var _ = await _data.CallAsync("cancel");
     }
 
     /// <summary>
@@ -87,23 +87,26 @@ public partial class TwitchRedemption(
 
     private void ConnectToSignals()
     {
-        _data!.Connect("fullfilled", Callable.From(NotifyFullfilled));
-        _data!.Connect("cancelled", Callable.From(NotifyCancelled));
+        _data.With(data =>
+        {
+            data.Connect("fullfilled", Callable.From(NotifyFullfilled));
+            return data.Connect("cancelled", Callable.From(NotifyCancelled));
+        });
     }
 
     public static TwitchRedemption? FromObject(GodotObject? data)
     {
         if (data == null) return null;
         var redemption = new TwitchRedemption(
-            data.Get("id").AsString(),
-            TwitchReward.FromObject(data.Get("reward").AsGodotObject())!,
-            TwitchUser.FromObject(data.Get("broadcaster").AsGodotObject())!,
-            TwitchUser.FromObject(data.Get("user").AsGodotObject())!)
+            data.Read("id", static v => v.AsString()),
+            data.Get<TwitchReward>("reward")!,
+            data.Get<TwitchUser>("broadcaster")!,
+            data.Get<TwitchUser>("user")!)
         {
-            _data = data,
-            UserInput = data.Get("user_input").AsString(),
-            CurrentStatus = data.Get("current_status").As<Status>(),
-            RedeemedAt = DateTime.Parse(data.Get("redeemed_at").AsString()),
+            _data = Variant.CreateFrom(data),
+            UserInput = data.Read("user_input", static v => v.AsString()),
+            CurrentStatus = data.Read("current_status", static v => v.As<Status>()),
+            RedeemedAt = DateTime.Parse(data.Read("redeemed_at", static v => v.AsString())),
         };
 
         redemption.ConnectToSignals();
@@ -112,15 +115,22 @@ public partial class TwitchRedemption(
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/reward/twitch_redemption.gd");
-        var instance = script.New().AsGodotObject();
-        instance.Set("id", Id);
-        instance.Set("reward", Reward.ToGodotObject());
-        instance.Set("broadcaster", Broadcaster.ToGodotObject());
-        instance.Set("user", User.ToGodotObject());
-        instance.Set("user_input", UserInput);
-        instance.Set("current_status", (int)CurrentStatus);
-        instance.Set("redeemed_at", XmlConvert.ToString(RedeemedAt, XmlDateTimeSerializationMode.Utc));
+        var instance = InteropExtension.NewObject("res://addons/twitcher/reward/twitch_redemption.gd");
+        instance.SetValue("id", Id);
+        instance.SetObject("reward", Reward);
+        instance.SetObject("broadcaster", Broadcaster);
+        instance.SetObject("user", User);
+        instance.SetValue("user_input", UserInput);
+        instance.SetValue("current_status", (int)CurrentStatus);
+        instance.SetValue("redeemed_at", XmlConvert.ToString(RedeemedAt, XmlDateTimeSerializationMode.Utc));
         return instance;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        // Only when disposed explicitly: when finalized, the Variant is finalized on its own.
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 }

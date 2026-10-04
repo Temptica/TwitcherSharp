@@ -25,9 +25,13 @@ public interface ITwitcherSharpSingleton<out TSelf> : ITwitcherSharpSingleton, I
         get
         {
             // The static is read from the script itself; instantiating the script to read it would create a node.
-            using var script = GD.Load<GDScript>(TSelf.ScriptPath);
-            using var current = script.Get("instance");
-            var node = current.AsGodotObject();
+            GodotObject? node;
+            using (var script = GD.Load<GDScript>(TSelf.ScriptPath))
+            using (var current = script.Get("instance"))
+            {
+                node = current.AsGodotObject();
+            }
+
             if (node is null || !GodotObject.IsInstanceValid(node)) return field = null;
 
             if (field is { IsLinked: true } && field.ToGodotObject().GetInstanceId() == node.GetInstanceId())
