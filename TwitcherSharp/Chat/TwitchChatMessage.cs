@@ -130,7 +130,7 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
         instance.Set("chatter_user_name", ChatterUserName);
         instance.Set("chatter_user_login", ChatterUserLogin);
         instance.Set("message_id", MessageId);
-        instance.Set("message", Content.ToGodotObject());
+        if (Content != null) instance.Set("message", Content.ToGodotObject());
         instance.Set("message_type", (int)ChatMessageType);
         instance.Set("cheer", CheerMetadata?.ToGodotObject() ?? new Variant());
         instance.Set("color", Color);
@@ -140,8 +140,8 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
         if (SourceBroadcasterUserName != null) instance.Set("source_broadcaster_user_name", SourceBroadcasterUserName);
         if (SourceBroadcasterUserLogin != null) instance.Set("source_broadcaster_user_login", SourceBroadcasterUserLogin);
         if (SourceMessageId != null) instance.Set("source_message_id", SourceMessageId);
-        instance.Set("badges", Badges.ToGodotArray());
-        if (SourceBadges != null) instance.Set("source_badges", SourceBadges.ToGodotArray());
+        instance.SetArray("badges", Badges);
+        instance.SetArray("source_badges", SourceBadges);
         instance.Set("is_source_only", IsSourceOnly);
         return instance;
     }
@@ -171,7 +171,7 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
             var script = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_chat_message.gd");
             var message = script.Get("Message").AsGodotObject().Call("new").AsGodotObject();
             message.Set("text", Text);
-            message.Set("fragments", Fragments.ToGodotArray());
+            message.SetArray("fragments", Fragments);
             return message;
         }
     }
@@ -285,8 +285,8 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
                 Id = data.Get("id").AsString(),
                 EmoteSetId = data.Get("emote_set_id").AsString(),
                 OwnerId = data.Get("owner_id").AsString(),
-                Format = data.Get("format").AsGodotArray<string>()
-                    .Select(f => f == "static" ? EmoteFormat.Static : EmoteFormat.Animated).ToArray()
+                // Array[EmoteFormat] in twitcher: the enum values, not the "static"/"animated" strings of the API.
+                Format = data.Get("format").AsGodotArray<int>().Select(f => (EmoteFormat)f).ToArray()
             };
 
             return result;
@@ -299,8 +299,7 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
             instance.Set("id", Id);
             instance.Set("emote_set_id", EmoteSetId);
             instance.Set("owner_id", OwnerId);
-            instance.Set("format",
-                Format.Select(f => f == EmoteFormat.Static ? "static" : "animated").ToVariantArray());
+            instance.SetArray("format", Format.Select(f => Variant.From((int)f)));
             return instance;
         }
     }

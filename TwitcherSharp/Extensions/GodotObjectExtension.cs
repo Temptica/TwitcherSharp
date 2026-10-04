@@ -94,6 +94,28 @@ public static class GodotObjectExtension
         {
             return T.FromObject(obj.Get(propertyName).AsGodotObject());
         }
+
+        /// <summary>
+        /// Fills the array a GDScript property holds with the given items, disposing each of them.
+        /// Assigning a new untyped Array to a typed property such as <c>Array[Badge]</c> fails silently, so the
+        /// items go into the (typed) array the property already holds.
+        /// </summary>
+        internal void SetArray(string propertyName, IEnumerable<Variant> items)
+        {
+            using var property = obj.Get(propertyName);
+            using var array = property.AsGodotArray();
+            array.Clear();
+            foreach (var item in items)
+            {
+                using (item) array.Add(item);
+            }
+        }
+
+        /// <inheritdoc cref="SetArray(GodotObject, string, IEnumerable{Variant})"/>
+        internal void SetArray<T>(string propertyName, IEnumerable<T>? items) where T : RefCounted, ITwitcherSharp<T>
+        {
+            obj.SetArray(propertyName, (items ?? []).Select(item => Variant.CreateFrom(item.ToGodotObject())));
+        }
     }
 
     // The `params Variant[]` members below are kept as classic `this`-parameter extension methods rather than

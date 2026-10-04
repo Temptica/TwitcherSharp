@@ -63,8 +63,18 @@ public class ManualMappingTest(Node testScene) : TestClass(testScene)
     {
         //this one is a bit weird
 
-        var definition = TwitchEventSubDefinition.AutomodMessageHold;
-        definition.Scopes = null;
+        // A copy without scopes: the static definitions are shared, so the test must not change them.
+        var source = TwitchEventSubDefinition.AutomodMessageHold;
+        var definition = new TwitchEventSubDefinition
+        {
+            Type = source.Type,
+            Value = source.Value,
+            Version = source.Version,
+            Conditions = source.Conditions,
+            Scopes = null,
+            DocumentationLink = source.DocumentationLink,
+            Script = source.Script,
+        };
         var godotObject = definition.ToGodotObject();
         var parsedDefinition = TwitchEventSubDefinition.FromObject(godotObject);
         AssertHelper.AssertTwitcherSharpProperties(definition, parsedDefinition, _log);

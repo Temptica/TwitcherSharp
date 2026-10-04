@@ -39,8 +39,8 @@ public partial class TwitchEventSubDefinition() : RefCounted, ITwitcherSharp<Twi
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/eventsub/twitch_eventsub_definition.gd");
 
-        var conditions = new Godot.Collections.Array<StringName>(Conditions);
-        var scopes = new Godot.Collections.Array<StringName>(Scopes);
+        var conditions = new Godot.Collections.Array<StringName>(Conditions ?? []);
+        var scopes = new Godot.Collections.Array<StringName>(Scopes ?? []);
         var data = script.New((int)Type, Value, Version, conditions, scopes, DocumentationLink, Script!)
             .AsGodotObject();
         return data;

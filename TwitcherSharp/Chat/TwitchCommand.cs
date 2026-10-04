@@ -32,8 +32,11 @@ public partial class TwitchCommand : TwitchCommandBase, ITwitcherSharp<TwitchCom
 
     public void RemoveAlias(string alias)
     {
-        Data.Call("remove_alias", alias);
-        Aliases = Data.Get("aliases").AsStringArray().ToList();
+        // twitcher has add_alias but no remove_alias: edit the aliases array it holds.
+        using var aliases = Data.Get("aliases");
+        using var array = aliases.AsGodotArray();
+        array.Remove(alias);
+        Aliases = aliases.AsStringArray().ToList();
     }
 
     public override string ToString() => $"{CommandPrefixes[0]}{Command}";
