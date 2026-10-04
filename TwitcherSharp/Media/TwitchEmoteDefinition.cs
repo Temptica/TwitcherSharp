@@ -83,8 +83,7 @@ public partial class TwitchEmoteDefinition(string emoteId) : RefCounted, ITwitch
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/media/twitch_emote_definition.gd");
-        var data = script.New().AsGodotObject();
-        data.Set("id", Id);
+        var data = script.New(Id).AsGodotObject();
         data.Set("scale", Scale);
         if (Type != null) data.Set("type", Type);
         if (Theme != null) data.Set("theme", Theme);

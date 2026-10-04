@@ -84,10 +84,10 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
 
     public string GetColor(string defaultColor = "#AAAAAA") => string.IsNullOrEmpty(Color) ? defaultColor : Color;
 
-    public async Task<Godot.Collections.Dictionary<TwitchBadgeDefinition, SpriteFrames>> LoadEmotesFromFragment(
-        TwitchMediaLoader mediaLoader, int scale = TwitchBadgeDefinition.Scale1,
+    public async Task<Godot.Collections.Dictionary<TwitchEmoteDefinition, SpriteFrames>> LoadEmotesFromFragment(
+        TwitchMediaLoader mediaLoader, int scale = TwitchEmoteDefinition.Scale1,
         string theme = TwitchEmoteDefinition.ThemeDark, string type = TwitchEmoteDefinition.TypeDefault)
-        => await _data!.CallDictionaryKeyAsync<TwitchBadgeDefinition, SpriteFrames>("load_emotes_from_fragment", mediaLoader.ToGodotObject(), scale,
+        => await _data!.CallDictionaryKeyAsync<TwitchEmoteDefinition, SpriteFrames>("load_emotes_from_fragment", mediaLoader.ToGodotObject(), scale,
             theme, type);
 
     public static TwitchChatMessage? FromObject(GodotObject? data)

@@ -31,4 +31,33 @@ public static class EnumerableExtension
     {
         return new Godot.Collections.Array<T>(enumerable.ToArray());
     }
+
+    /// <summary>
+    /// Builds an Array typed to a GDScript class, like <c>Array[TwitchEmoteDefinition]</c>, for a twitcher function
+    /// with a typed array parameter: it receives an untyped Array as an empty one, without an error. GodotSharp can
+    /// only type arrays to built-in types, so the typed array comes from Godot's own Array constructor.
+    /// </summary>
+    /// <param name="enumerable">The TwitcherSharp objects to put into the array</param>
+    /// <param name="scriptPath">Path of the GDScript class the array is typed to</param>
+    internal static Godot.Collections.Array ToTypedArray<T>(this IEnumerable<T> enumerable, string scriptPath)
+        where T : RefCounted, ITwitcherSharp<T>
+    {
+        using var script = GD.Load<GDScript>(scriptPath);
+        using var nativeBase = new StringName(script.GetInstanceBaseType());
+        var items = enumerable.Select(item => Variant.CreateFrom(item.ToGodotObject())).ToList();
+        try
+        {
+            using var untyped = new Godot.Collections.Array(items);
+            using var expression = new Expression();
+            expression.Parse("Array(items, type, native_base, script)", ["items", "type", "native_base", "script"]);
+            using var inputs = new Godot.Collections.Array
+                { untyped, (int)Variant.Type.Object, nativeBase, script };
+            using var typed = expression.Execute(inputs);
+            return typed.AsGodotArray();
+        }
+        finally
+        {
+            items.ForEach(item => item.Dispose());
+        }
+    }
 }

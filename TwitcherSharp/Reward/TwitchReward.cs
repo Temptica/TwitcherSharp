@@ -91,31 +91,38 @@ public partial class TwitchReward : Resource, ITwitcherSharp<TwitchReward>
     {
         if (data == null) return null;
 
-        return new TwitchReward
-        {
-            Id = data.Get("id").AsString(),
-            BroadcasterUser = TwitchUser.FromObject(data.Get("broadcaster_user").AsGodotObject())!,
-            Title = data.Get("title").AsString(),
-            Description = data.Get("description").AsString(),
-            Cost = data.Get("cost").AsInt32(),
-            Image1 = data.Get("image_1").As<Image>(),
-            Image2 = data.Get("image_2").As<Image>(),
-            Image4 = data.Get("image_4").As<Image>(),
-            BackgroundColor = data.Get("background_color").AsColor(),
-            IsEnabled = data.Get("is_enabled").AsBool(),
-            IsUserInputRequired = data.Get("is_user_input_required").AsBool(),
-            IsPaused = data.Get("is_paused").AsBool(),
-            ShouldRedemptionsSkipRequestQueue = data.Get("should_redemptions_skip_request_queue").AsBool(),
-            IsMaxPerStreamEnabled = data.Get("is_max_per_stream_enabled").AsBool(),
-            MaxPerStream = data.Get("max_per_stream").AsInt32(),
-            IsMaxPerUserPerStreamEnabled = data.Get("is_max_per_user_per_stream_enabled").AsBool(),
-            MaxPerUserPerStream = data.Get("max_per_user_per_stream").AsInt32(),
-            IsGlobalCooldownEnabled = data.Get("is_global_cooldown_enabled").AsBool(),
-            GlobalCooldownSeconds = data.Get("global_cooldown_seconds").AsInt32(),
-            IsInStock = data.Get("is_in_stock").AsBool(),
-            RedemptionsRedeemedCurrentStream = data.Get("redemptions_redeemed_current_stream").AsInt32(),
-            CooldownExpiresAt = data.Get("cooldown_expires_at").AsString(),
-        };
+        var reward = new TwitchReward();
+        reward.ReadFrom(data);
+        return reward;
+    }
+
+    /// <summary>
+    /// Copies the fields of a twitcher TwitchReward into this reward, e.g. after twitcher changed it in place.
+    /// </summary>
+    internal void ReadFrom(GodotObject data)
+    {
+        Id = data.Get("id").AsString();
+        BroadcasterUser = TwitchUser.FromObject(data.Get("broadcaster_user").AsGodotObject())!;
+        Title = data.Get("title").AsString();
+        Description = data.Get("description").AsString();
+        Cost = data.Get("cost").AsInt32();
+        Image1 = data.Get("image_1").As<Image>();
+        Image2 = data.Get("image_2").As<Image>();
+        Image4 = data.Get("image_4").As<Image>();
+        BackgroundColor = data.Get("background_color").AsColor();
+        IsEnabled = data.Get("is_enabled").AsBool();
+        IsUserInputRequired = data.Get("is_user_input_required").AsBool();
+        IsPaused = data.Get("is_paused").AsBool();
+        ShouldRedemptionsSkipRequestQueue = data.Get("should_redemptions_skip_request_queue").AsBool();
+        IsMaxPerStreamEnabled = data.Get("is_max_per_stream_enabled").AsBool();
+        MaxPerStream = data.Get("max_per_stream").AsInt32();
+        IsMaxPerUserPerStreamEnabled = data.Get("is_max_per_user_per_stream_enabled").AsBool();
+        MaxPerUserPerStream = data.Get("max_per_user_per_stream").AsInt32();
+        IsGlobalCooldownEnabled = data.Get("is_global_cooldown_enabled").AsBool();
+        GlobalCooldownSeconds = data.Get("global_cooldown_seconds").AsInt32();
+        IsInStock = data.Get("is_in_stock").AsBool();
+        RedemptionsRedeemedCurrentStream = data.Get("redemptions_redeemed_current_stream").AsInt32();
+        CooldownExpiresAt = data.Get("cooldown_expires_at").AsString();
     }
 
     public GodotObject ToGodotObject()
@@ -123,7 +130,7 @@ public partial class TwitchReward : Resource, ITwitcherSharp<TwitchReward>
         var script = GD.Load<GDScript>("res://addons/twitcher/reward/twitch_reward.gd");
         var reward = script.New().AsGodotObject();
         reward.Set("id", Id);
-        reward.Set("broadcaster_user", BroadcasterUser.ToGodotObject());
+        reward.Set("broadcaster_user", BroadcasterUser?.ToGodotObject() ?? new Variant());
         reward.Set("title", Title);
         reward.Set("description", Description);
         reward.Set("cost", Cost);

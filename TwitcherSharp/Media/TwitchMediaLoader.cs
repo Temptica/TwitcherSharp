@@ -140,17 +140,20 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
 
     #region Emotes
 
-    public void PreloadEmotes(string channelId = "global")
-        => _data!.Call("preload_emotes", channelId);
+    public async Task PreloadEmotes(string channelId = "global")
+        => await _data!.CallAsync("preload_emotes", channelId);
 
-    public Godot.Collections.Dictionary<string, SpriteFrames> GetEmotes(string[] emoteIds)
-        => _data!.Call("get_emotes", emoteIds).AsGodotDictionary<string, SpriteFrames>();
+    public async Task<Godot.Collections.Dictionary<string, SpriteFrames>> GetEmotes(string[] emoteIds)
+    {
+        var ids = new Godot.Collections.Array<string>(emoteIds);
+        return (await _data!.CallAsync("get_emotes", ids)).AsGodotDictionary<string, SpriteFrames>();
+    }
 
-    public Godot.Collections.Dictionary<TwitchEmoteDefinition, SpriteFrames> GetEmotesByDefinition(
+    public async Task<Godot.Collections.Dictionary<TwitchEmoteDefinition, SpriteFrames>> GetEmotesByDefinition(
         TwitchEmoteDefinition[] emoteDefinitions)
     {
-        var param = emoteDefinitions.Select(ed => ed.ToGodotObject()).ToArray();
-        return _data!.CallDictionaryKey<TwitchEmoteDefinition, SpriteFrames>("get_emotes_by_definition", param);
+        using var definitions = emoteDefinitions.ToTypedArray("res://addons/twitcher/media/twitch_emote_definition.gd");
+        return await _data!.CallDictionaryKeyAsync<TwitchEmoteDefinition, SpriteFrames>("get_emotes_by_definition", definitions);
     }
 
     public async Task<Dictionary<string, ITwitchEmote>> GetCachedEmotes(string channelId)
@@ -180,8 +183,10 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
 
     public async Task<Godot.Collections.Dictionary<TwitchBadgeDefinition, SpriteFrames>> GetBadges(
         TwitchBadgeDefinition[] badges)
-        => await _data!.CallDictionaryKeyAsync<TwitchBadgeDefinition, SpriteFrames>("get_badges",
-            badges.Select(badge => badge.ToGodotObject()).ToArray());
+    {
+        using var definitions = badges.ToTypedArray("res://addons/twitcher/media/twitch_badge_definition.gd");
+        return await _data!.CallDictionaryKeyAsync<TwitchBadgeDefinition, SpriteFrames>("get_badges", definitions);
+    }
 
     #endregion
 

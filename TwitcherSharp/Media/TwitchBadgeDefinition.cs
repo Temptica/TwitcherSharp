@@ -66,17 +66,14 @@ public partial class TwitchBadgeDefinition : RefCounted, ITwitcherSharp<TwitchBa
     public static TwitchBadgeDefinition? FromObject(GodotObject? data)
     {
         if (data == null) return null;
-        return new TwitchBadgeDefinition(data.Get("set_id").AsString(), data.Get("id").AsString(), data.Get("badge_scale").AsInt32(), data.Get("badge_channel").AsString());
+        // set_id, id, badge_scale and badge_channel are only the _init parameter names in twitcher.
+        return new TwitchBadgeDefinition(data.Get("badge_set").AsString(), data.Get("badge_id").AsString(),
+            data.Get("scale").AsInt32(), data.Get("channel").AsString());
     }
 
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/media/twitch_badge_definition.gd");
-        var data = script.New().AsGodotObject();
-        data.Set("set_id", BadgeSet);
-        data.Set("id", BadgeId);
-        data.Set("badge_scale", Scale);
-        data.Set("badge_channel", Channel);
-        return data;   
+        return script.New(BadgeSet, BadgeId, Scale, Channel).AsGodotObject();   
     }
 }
