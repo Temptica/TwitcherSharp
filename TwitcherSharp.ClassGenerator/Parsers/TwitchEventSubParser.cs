@@ -49,6 +49,7 @@ public class TwitchEventSubParser
         }
 
         ParseComponents(doc);
+        EventSubCorrections.Apply(Components);
         ParseConditions(doc);
 
 
@@ -210,6 +211,9 @@ public class TwitchEventSubParser
         var parentWhiteSpaces = -1;
         // Shared objects entered as a list via a plural type cell (see isListOfSharedObject).
         var listedShared = new HashSet<TwitchEventSubGenComponent>();
+        // The previous row when it was a primitive field: (field, its indentation, its parent, its class name if
+        // it turns out to be an object).
+        (TwitchEventSubGenField, int, TwitchEventSubGenComponent, string)? lastPrimitive = null;
         foreach (var row in rows)
         {
             var whiteSpaces = row.GetFirstElementChild().GetDirectInnerText().TakeWhile(char.IsWhiteSpace).Count();
@@ -222,6 +226,19 @@ public class TwitchEventSubParser
             // (the transport of conduit.shard.disabled), or repeated under a list of it (top_contributions of the hype
             // train events). Those rows belong neither to the event nor to a copy of the object. Indented rows under
             // other shared objects stay: there the event extends the object (message), which makes a copy of it.
+            // Rows indented under a field documented as a primitive make it an object (charity_donation of
+            // channel.chat.notification is typed "string" but has charity_name and amount below it).
+            if (lastPrimitive is var (primitive, primitiveWhiteSpaces, primitiveParent, className) &&
+                whiteSpaces > primitiveWhiteSpaces && currentParent == primitiveParent)
+            {
+                primitiveParent.Fields.Remove(primitive.Name);
+                var objectComponent = new TwitchEventSubGenComponent(className) { Description = primitive.Description };
+                primitiveParent.AddSubComponent(objectComponent);
+                currentParent = objectComponent;
+                parentWhiteSpaces = primitiveWhiteSpaces;
+            }
+            lastPrimitive = null;
+
             var rowName = row.SelectSingleNode("td[1]/code")?.InnerText.Trim();
             if (currentParent != eventSubComponent && SubComponents.Contains(currentParent) && rowName != null &&
                 (whiteSpaces == parentWhiteSpaces || (whiteSpaces > parentWhiteSpaces && listedShared.Contains(currentParent))) &&
@@ -345,6 +362,10 @@ public class TwitchEventSubParser
                 {
                     var field = new TwitchEventSubGenField(fieldName, description, type, required);
                     currentParent.AddField(field);
+                    if (field.Type is "string" or "int" or "bool")
+                    {
+                        lastPrimitive = (field, whiteSpaces, currentParent, fieldName + (isParentV2 ? "V2" : ""));
+                    }
                 }
                 else
                 {

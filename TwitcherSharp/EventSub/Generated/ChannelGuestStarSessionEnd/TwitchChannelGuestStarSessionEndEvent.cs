@@ -26,6 +26,21 @@ public partial class TwitchChannelGuestStarSessionEndEvent : RefCounted, ITwitch
     public string? BroadcasterUserLogin { get; set; }
 
     /// <summary> 
+    /// The user ID of the moderator who started or ended the session.
+    /// </summary>
+    public string? ModeratorUserId { get; set; }
+
+    /// <summary> 
+    /// The display name of the moderator.
+    /// </summary>
+    public string? ModeratorUserName { get; set; }
+
+    /// <summary> 
+    /// The login of the moderator.
+    /// </summary>
+    public string? ModeratorUserLogin { get; set; }
+
+    /// <summary> 
     /// ID representing the unique session that was started.
     /// </summary>
     public string? SessionId { get; set; }
@@ -66,6 +81,9 @@ public partial class TwitchChannelGuestStarSessionEndEvent : RefCounted, ITwitch
             BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
             BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
             BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
+            ModeratorUserId = data.Read("moderator_user_id", static v => v.AsString()),
+            ModeratorUserName = data.Read("moderator_user_name", static v => v.AsString()),
+            ModeratorUserLogin = data.Read("moderator_user_login", static v => v.AsString()),
             SessionId = data.Read("session_id", static v => v.AsString()),
             StartedAt = data.Read("started_at", static v => v.AsString()),
             EndedAt = data.Read("ended_at", static v => v.AsString()),
@@ -84,6 +102,9 @@ public partial class TwitchChannelGuestStarSessionEndEvent : RefCounted, ITwitch
         if(BroadcasterUserId != null) request.SetValue("broadcaster_user_id", BroadcasterUserId);
         if(BroadcasterUserName != null) request.SetValue("broadcaster_user_name", BroadcasterUserName);
         if(BroadcasterUserLogin != null) request.SetValue("broadcaster_user_login", BroadcasterUserLogin);
+        if(ModeratorUserId != null) request.SetValue("moderator_user_id", ModeratorUserId);
+        if(ModeratorUserName != null) request.SetValue("moderator_user_name", ModeratorUserName);
+        if(ModeratorUserLogin != null) request.SetValue("moderator_user_login", ModeratorUserLogin);
         if(SessionId != null) request.SetValue("session_id", SessionId);
         if(StartedAt != null) request.SetValue("started_at", StartedAt);
         if(EndedAt != null) request.SetValue("ended_at", EndedAt);

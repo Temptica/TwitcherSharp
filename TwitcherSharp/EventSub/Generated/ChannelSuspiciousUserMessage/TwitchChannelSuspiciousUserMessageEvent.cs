@@ -235,12 +235,12 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
                 /// <summary> 
                 /// The amount of Bits cheered.
                 /// </summary>
-                public string? Bits { get; set; }
+                public int Bits { get; set; }
             
                 /// <summary> 
                 /// The tier level of the cheermote.
                 /// </summary>
-                public string? Tier { get; set; }
+                public int Tier { get; set; }
             
                 /// <summary> 
                 /// Transforms the godot data into a TwitchCheermote object.
@@ -251,8 +251,8 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
                     var instance = new TwitchCheermote
                     {
                         Prefix = data.Read("prefix", static v => v.AsString()),
-                        Bits = data.Read("bits", static v => v.AsString()),
-                        Tier = data.Read("tier", static v => v.AsString()),
+                        Bits = data.Read("bits", static v => v.AsInt32()),
+                        Tier = data.Read("tier", static v => v.AsInt32()),
                     };
                     
                     instance._data = Variant.CreateFrom(data);
@@ -263,8 +263,8 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
                 {
                     var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_suspicious_user_message.gd", "Cheermote");
                     if(Prefix != null) request.SetValue("prefix", Prefix);
-                    if(Bits != null) request.SetValue("bits", Bits);
-                    if(Tier != null) request.SetValue("tier", Tier);
+                    request.SetValue("bits", Bits);
+                    request.SetValue("tier", Tier);
                     return request;
                 }
             

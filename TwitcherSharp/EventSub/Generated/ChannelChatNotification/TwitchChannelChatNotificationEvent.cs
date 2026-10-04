@@ -36,6 +36,11 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
     public string? ChatterUserName { get; set; }
 
     /// <summary> 
+    /// The chatter's login name.
+    /// </summary>
+    public string? ChatterUserLogin { get; set; }
+
+    /// <summary> 
     /// Whether or not the chatter is anonymous.
     /// </summary>
     public bool ChatterIsAnonymous { get; set; }
@@ -128,17 +133,7 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
     /// <summary> 
     /// Information about the announcement event. Null if notice_type is not charity_donation
     /// </summary>
-    public string? CharityDonation { get; set; }
-
-    /// <summary> 
-    /// Name of the charity.
-    /// </summary>
-    public string? CharityName { get; set; }
-
-    /// <summary> 
-    /// An object that contains the amount of money that the user paid.
-    /// </summary>
-    public TwitchAmount? Amount { get => field ??= _data.Get<TwitchAmount>("amount"); set; }
+    public TwitchCharityDonation? CharityDonation { get => field ??= _data.Get<TwitchCharityDonation>("charity_donation"); set; }
 
     /// <summary> 
     /// Information about the Watch Streak event. Null if notice_type is not watch_streak.
@@ -231,6 +226,21 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
     public TwitchModiversary? SharedChatModiversary { get => field ??= _data.Get<TwitchModiversary>("shared_chat_modiversary"); set; }
 
     /// <summary> 
+    /// This field has the same information as the unraid field but for a notification that happened in a channel in the shared chat session.
+    /// </summary>
+    public Dictionary? SharedChatUnraid { get; set; }
+
+    /// <summary> 
+    /// This field has the same information as the bits_badge_tier field but for a notification that happened in a channel in the shared chat session.
+    /// </summary>
+    public TwitchBitsBadgeTier? SharedChatBitsBadgeTier { get => field ??= _data.Get<TwitchBitsBadgeTier>("shared_chat_bits_badge_tier"); set; }
+
+    /// <summary> 
+    /// This field has the same information as the charity_donation field but for a notification that happened in a channel in the shared chat session.
+    /// </summary>
+    public TwitchCharityDonation? SharedChatCharityDonation { get => field ??= _data.Get<TwitchCharityDonation>("shared_chat_charity_donation"); set; }
+
+    /// <summary> 
     /// Transforms the godot data into a TwitchChannelChatNotificationEvent object.
     /// </summary> 
     public static TwitchChannelChatNotificationEvent? FromObject(GodotObject? data)
@@ -243,19 +253,19 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
             BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
             ChatterUserId = data.Read("chatter_user_id", static v => v.AsString()),
             ChatterUserName = data.Read("chatter_user_name", static v => v.AsString()),
+            ChatterUserLogin = data.Read("chatter_user_login", static v => v.AsString()),
             ChatterIsAnonymous = data.Read("chatter_is_anonymous", static v => v.AsBool()),
             Color = data.Read("color", static v => v.AsString()),
             SystemMessage = data.Read("system_message", static v => v.AsString()),
             MessageId = data.Read("message_id", static v => v.AsString()),
             NoticeType = data.Read("notice_type", static v => v.AsString()),
             Unraid = data.Read("unraid", static v => v.AsGodotDictionary()),
-            CharityDonation = data.Read("charity_donation", static v => v.AsString()),
-            CharityName = data.Read("charity_name", static v => v.AsString()),
             SourceBroadcasterUserId = data.Read("source_broadcaster_user_id", static v => v.AsString()),
             SourceBroadcasterUserName = data.Read("source_broadcaster_user_name", static v => v.AsString()),
             SourceBroadcasterUserLogin = data.Read("source_broadcaster_user_login", static v => v.AsString()),
             SourceMessageId = data.Read("source_message_id", static v => v.AsString()),
             IsSourceOnly = data.Read("is_source_only", static v => v.AsBool()),
+            SharedChatUnraid = data.Read("shared_chat_unraid", static v => v.AsGodotDictionary()),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -270,6 +280,7 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         if(BroadcasterUserLogin != null) request.SetValue("broadcaster_user_login", BroadcasterUserLogin);
         if(ChatterUserId != null) request.SetValue("chatter_user_id", ChatterUserId);
         if(ChatterUserName != null) request.SetValue("chatter_user_name", ChatterUserName);
+        if(ChatterUserLogin != null) request.SetValue("chatter_user_login", ChatterUserLogin);
         request.SetValue("chatter_is_anonymous", ChatterIsAnonymous);
         if(Color != null) request.SetValue("color", Color);
         if(Badges != null) request.SetArray("badges", Badges);
@@ -288,9 +299,7 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         if(Unraid != null) request.SetValue("unraid", Unraid);
         if(Announcement != null) request.SetObject("announcement", Announcement);
         if(BitsBadgeTier != null) request.SetObject("bits_badge_tier", BitsBadgeTier);
-        if(CharityDonation != null) request.SetValue("charity_donation", CharityDonation);
-        if(CharityName != null) request.SetValue("charity_name", CharityName);
-        if(Amount != null) request.SetObject("amount", Amount);
+        if(CharityDonation != null) request.SetObject("charity_donation", CharityDonation);
         if(WatchStreak != null) request.SetObject("watch_streak", WatchStreak);
         if(Modiversary != null) request.SetObject("modiversary", Modiversary);
         if(SourceBroadcasterUserId != null) request.SetValue("source_broadcaster_user_id", SourceBroadcasterUserId);
@@ -309,6 +318,9 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         if(SharedChatRaid != null) request.SetObject("shared_chat_raid", SharedChatRaid);
         if(SharedChatAnnouncement != null) request.SetObject("shared_chat_announcement", SharedChatAnnouncement);
         if(SharedChatModiversary != null) request.SetObject("shared_chat_modiversary", SharedChatModiversary);
+        if(SharedChatUnraid != null) request.SetValue("shared_chat_unraid", SharedChatUnraid);
+        if(SharedChatBitsBadgeTier != null) request.SetObject("shared_chat_bits_badge_tier", SharedChatBitsBadgeTier);
+        if(SharedChatCharityDonation != null) request.SetObject("shared_chat_charity_donation", SharedChatCharityDonation);
         return request;
     }
 
@@ -380,7 +392,7 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         /// <summary> 
         /// The chat message in plain text.
         /// </summary>
-        public Dictionary? Text { get; set; }
+        public string? Text { get; set; }
     
         /// <summary> 
         /// Ordered list of chat message fragments.
@@ -395,7 +407,7 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
             if(data == null) return null;
             var instance = new TwitchMessage
             {
-                Text = data.Read("text", static v => v.AsGodotDictionary()),
+                Text = data.Read("text", static v => v.AsString()),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -1242,36 +1254,29 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         }
     }
 
-    public partial class TwitchAmount : RefCounted, ITwitcherSharpEventSub<TwitchAmount>
+    public partial class TwitchCharityDonation : RefCounted, ITwitcherSharpEventSub<TwitchCharityDonation>
     {
         private Variant _data;
         
         /// <summary> 
-        /// The monetary amount. The amount is specified in the currency’s minor unit. For example, the minor units for USD is cents, so if the amount is $5.50 USD, value is set to 550.
+        /// Name of the charity.
         /// </summary>
-        public int Value { get; set; }
+        public string? CharityName { get; set; }
     
         /// <summary> 
-        /// The number of decimal places used by the currency. For example, USD uses two decimal places.
+        /// An object that contains the amount of money that the user paid.
         /// </summary>
-        public int DecimalPlace { get; set; }
+        public TwitchAmount? Amount { get => field ??= _data.Get<TwitchAmount>("amount"); set; }
     
         /// <summary> 
-        /// The ISO-4217 three-letter currency code that identifies the type of currency in value.
-        /// </summary>
-        public string? Currency { get; set; }
-    
-        /// <summary> 
-        /// Transforms the godot data into a TwitchAmount object.
+        /// Transforms the godot data into a TwitchCharityDonation object.
         /// </summary> 
-        public static TwitchAmount? FromObject(GodotObject? data)
+        public static TwitchCharityDonation? FromObject(GodotObject? data)
         {
             if(data == null) return null;
-            var instance = new TwitchAmount
+            var instance = new TwitchCharityDonation
             {
-                Value = data.Read("value", static v => v.AsInt32()),
-                DecimalPlace = data.Read("decimal_place", static v => v.AsInt32()),
-                Currency = data.Read("currency", static v => v.AsString()),
+                CharityName = data.Read("charity_name", static v => v.AsString()),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -1280,10 +1285,9 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
     
         public GodotObject ToGodotObject()
         {
-            var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_notification.gd", "Amount");
-            request.SetValue("value", Value);
-            request.SetValue("decimal_place", DecimalPlace);
-            if(Currency != null) request.SetValue("currency", Currency);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_notification.gd", "CharityDonation");
+            if(CharityName != null) request.SetValue("charity_name", CharityName);
+            if(Amount != null) request.SetObject("amount", Amount);
             return request;
         }
     
@@ -1292,6 +1296,60 @@ public partial class TwitchChannelChatNotificationEvent : RefCounted, ITwitcherS
         {
             if (disposing) _data.Dispose();
             base.Dispose(disposing);
+        }
+    
+    
+        public partial class TwitchAmount : RefCounted, ITwitcherSharpEventSub<TwitchAmount>
+        {
+            private Variant _data;
+            
+            /// <summary> 
+            /// The monetary amount. The amount is specified in the currency’s minor unit. For example, the minor units for USD is cents, so if the amount is $5.50 USD, value is set to 550.
+            /// </summary>
+            public int Value { get; set; }
+        
+            /// <summary> 
+            /// The number of decimal places used by the currency. For example, USD uses two decimal places.
+            /// </summary>
+            public int DecimalPlace { get; set; }
+        
+            /// <summary> 
+            /// The ISO-4217 three-letter currency code that identifies the type of currency in value.
+            /// </summary>
+            public string? Currency { get; set; }
+        
+            /// <summary> 
+            /// Transforms the godot data into a TwitchAmount object.
+            /// </summary> 
+            public static TwitchAmount? FromObject(GodotObject? data)
+            {
+                if(data == null) return null;
+                var instance = new TwitchAmount
+                {
+                    Value = data.Read("value", static v => v.AsInt32()),
+                    DecimalPlace = data.Read("decimal_place", static v => v.AsInt32()),
+                    Currency = data.Read("currency", static v => v.AsString()),
+                };
+                
+                instance._data = Variant.CreateFrom(data);
+                return instance;
+            }
+        
+            public GodotObject ToGodotObject()
+            {
+                var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_notification.gd", "Amount");
+                request.SetValue("value", Value);
+                request.SetValue("decimal_place", DecimalPlace);
+                if(Currency != null) request.SetValue("currency", Currency);
+                return request;
+            }
+        
+            /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+            protected override void Dispose(bool disposing)
+            {
+                if (disposing) _data.Dispose();
+                base.Dispose(disposing);
+            }
         }
     }
 

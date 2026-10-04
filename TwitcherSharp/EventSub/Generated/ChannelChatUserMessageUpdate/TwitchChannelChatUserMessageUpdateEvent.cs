@@ -150,6 +150,11 @@ public partial class TwitchChannelChatUserMessageUpdateEvent : RefCounted, ITwit
             private Variant _data;
             
             /// <summary> 
+            /// The type of message fragment. Possible values: text, emote, cheermote.
+            /// </summary>
+            public string? Type { get; set; }
+        
+            /// <summary> 
             /// Message text in a fragment.
             /// </summary>
             public string? Text { get; set; }
@@ -172,6 +177,7 @@ public partial class TwitchChannelChatUserMessageUpdateEvent : RefCounted, ITwit
                 if(data == null) return null;
                 var instance = new TwitchFragments
                 {
+                    Type = data.Read("type", static v => v.AsString()),
                     Text = data.Read("text", static v => v.AsString()),
                 };
                 
@@ -182,6 +188,7 @@ public partial class TwitchChannelChatUserMessageUpdateEvent : RefCounted, ITwit
             public GodotObject ToGodotObject()
             {
                 var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_user_message_update.gd", "Fragments");
+                if(Type != null) request.SetValue("type", Type);
                 if(Text != null) request.SetValue("text", Text);
                 if(Emote != null) request.SetObject("emote", Emote);
                 if(Cheermote != null) request.SetObject("cheermote", Cheermote);

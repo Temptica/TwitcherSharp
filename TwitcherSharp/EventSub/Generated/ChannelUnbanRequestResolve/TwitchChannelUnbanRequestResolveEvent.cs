@@ -33,17 +33,17 @@ public partial class TwitchChannelUnbanRequestResolveEvent : RefCounted, ITwitch
     /// <summary> 
     /// Optional. User ID of moderator who approved/denied the request.
     /// </summary>
-    public string? ModeratorId { get; set; }
+    public string? ModeratorUserId { get; set; }
 
     /// <summary> 
     /// Optional. The moderator’s login name
     /// </summary>
-    public string? ModeratorLogin { get; set; }
+    public string? ModeratorUserLogin { get; set; }
 
     /// <summary> 
     /// Optional. The moderator’s display name
     /// </summary>
-    public string? ModeratorName { get; set; }
+    public string? ModeratorUserName { get; set; }
 
     /// <summary> 
     /// User ID of user that requested to be unbanned.
@@ -82,9 +82,9 @@ public partial class TwitchChannelUnbanRequestResolveEvent : RefCounted, ITwitch
             BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
             BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
             BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
-            ModeratorId = data.Read("moderator_id", static v => v.AsString()),
-            ModeratorLogin = data.Read("moderator_login", static v => v.AsString()),
-            ModeratorName = data.Read("moderator_name", static v => v.AsString()),
+            ModeratorUserId = data.Read("moderator_user_id", static v => v.AsString()),
+            ModeratorUserLogin = data.Read("moderator_user_login", static v => v.AsString()),
+            ModeratorUserName = data.Read("moderator_user_name", static v => v.AsString()),
             UserId = data.Read("user_id", static v => v.AsString()),
             UserLogin = data.Read("user_login", static v => v.AsString()),
             UserName = data.Read("user_name", static v => v.AsString()),
@@ -103,9 +103,9 @@ public partial class TwitchChannelUnbanRequestResolveEvent : RefCounted, ITwitch
         if(BroadcasterUserId != null) request.SetValue("broadcaster_user_id", BroadcasterUserId);
         if(BroadcasterUserLogin != null) request.SetValue("broadcaster_user_login", BroadcasterUserLogin);
         if(BroadcasterUserName != null) request.SetValue("broadcaster_user_name", BroadcasterUserName);
-        if(ModeratorId != null) request.SetValue("moderator_id", ModeratorId);
-        if(ModeratorLogin != null) request.SetValue("moderator_login", ModeratorLogin);
-        if(ModeratorName != null) request.SetValue("moderator_name", ModeratorName);
+        if(ModeratorUserId != null) request.SetValue("moderator_user_id", ModeratorUserId);
+        if(ModeratorUserLogin != null) request.SetValue("moderator_user_login", ModeratorUserLogin);
+        if(ModeratorUserName != null) request.SetValue("moderator_user_name", ModeratorUserName);
         if(UserId != null) request.SetValue("user_id", UserId);
         if(UserLogin != null) request.SetValue("user_login", UserLogin);
         if(UserName != null) request.SetValue("user_name", UserName);
