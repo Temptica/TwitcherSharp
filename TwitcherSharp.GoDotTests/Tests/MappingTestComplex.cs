@@ -44,13 +44,14 @@ public class MappingTestComplex(Node testScene) : TestClass(testScene)
 
     /// <summary>
     /// Generated types that do not map against the twitcher the tests run against, because the two generators read
-    /// different sources: the drop.entitlement.grant data is untyped in twitcher's EventSub swagger (the EventSub
-    /// reference page does not define the entitlement object). They are listed so that any other failing type still
-    /// fails this test, and a listed type that starts to map fails it too.
+    /// different sources: twitcher's EventSub swagger leaves the drop.entitlement.grant data untyped and has no gif
+    /// fragment in chat messages (the EventSub reference page defines neither). They are listed so that any other
+    /// failing type still fails this test, and a listed type that starts to map fails it too.
     /// </summary>
     private static readonly HashSet<string> KnownTwitcherMismatches =
     [
         "TwitcherSharp.EventSub.Generated.DropEntitlementGrant.TwitchDropEntitlementGrantEvent+TwitchData",
+        "TwitcherSharp.EventSub.Generated.ChannelChatMessage.TwitchChannelChatMessageEvent+TwitchMessage+TwitchFragments+TwitchGif",
     ];
 
     [Test]

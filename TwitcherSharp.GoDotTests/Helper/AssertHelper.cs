@@ -14,7 +14,7 @@ public static class AssertHelper
         foreach (var property in twitcherSharpObject.GetType().GetProperties()
                      .Where(p => p.CanWrite)
                      .Where(p => !p.PropertyType.FullName?.Contains("Array") ?? false)
-                     .Where(p => !p.PropertyType.IsClass)
+                     .Where(p => !p.PropertyType.IsClass || p.PropertyType == typeof(string))
                      .Where(p => p.DeclaringType == twitcherSharpObject.GetType())
                 )
         {
@@ -31,7 +31,8 @@ public static class AssertHelper
             switch (property.PropertyType.Name)
             {
                 case nameof(String):
-                    if ((string)val1 == (string)val2) continue;
+                    // A Godot String has no null: an unset string reads back empty.
+                    if (((string?)val1 ?? "") == ((string?)val2 ?? "")) continue;
                     throw new Exception(
                         $"property {property.Name} values do not match for {twitcherSharpObject.GetType().Name}. Expecting {val1} but got {val2}");
                 case nameof(Int32):
