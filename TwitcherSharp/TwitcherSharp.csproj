@@ -24,7 +24,6 @@
     <ItemGroup>
         <PackageReference Include="Godot.SourceGenerators" Version="4.7.0"/>
         <PackageReference Include="GodotSharp" Version="4.7.0"/>
-        <PackageReference Include="GodotSharpEditor" Version="4.7.0"/>
     </ItemGroup>
 
     <ItemGroup>
