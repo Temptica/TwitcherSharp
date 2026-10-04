@@ -17,9 +17,25 @@ public static class TwitchMockupHelper
     public static string Url => "http://localhost:8080/mock";
     public static string ClientUrl => "http://localhost:8080/units/clients";
     public static string AuthUrl => "http://localhost:8080/auth/authorize";
+    public static string UsersUrl => "http://localhost:8080/units/users";
+
+    /// <summary>
+    /// The mock user the tests act as. The mock database is generated per machine, so it is read from the mock.
+    /// </summary>
+    public static string UserId { get; private set; }
     private static Process _process;
 
-    public static async Task<AccessResponse> AwaitForStart(string[] scopes)
+    /// <summary>
+    /// The scopes the test token carries. The mock rejects legacy scopes like chat:read, so this is not the scene's list.
+    /// </summary>
+    private static readonly string[] TestScopes = ["moderator:read:followers", "user:read:email"];
+
+    /// <summary>
+    /// The mock's client id; the scene's OAuth setting has to send it, because the mock database is generated per machine.
+    /// </summary>
+    public static string ClientId { get; private set; }
+
+    public static async Task<AccessResponse> AwaitForStart()
     {
         for (var i = 0; i < 60; i++)
         {
@@ -31,10 +47,12 @@ public static class TwitchMockupHelper
                 {
                     var json = await response.Content.ReadAsStringAsync();
                     var clientResponse = JsonConvert.DeserializeObject<ClientResponse>(json);
-                    scopes = [];
-                    var scopesString = string.Join("%20", scopes);
+                    ClientId = clientResponse.Data[0].Id;
+                    var usersJson = await client.GetStringAsync(UsersUrl);
+                    UserId = JsonConvert.DeserializeObject<ClientResponse>(usersJson).Data[0].Id;
+                    var scopesString = string.Join("%20", TestScopes);
                     var querystring =
-                        $"?client_id={clientResponse.Data[0].Id}&client_secret={clientResponse.Data[0].Secret}&grant_type=user_token&user_id=5539307&scope={scopesString}";
+                        $"?client_id={clientResponse.Data[0].Id}&client_secret={clientResponse.Data[0].Secret}&grant_type=user_token&user_id={UserId}&scope={scopesString}";
                     var accessResponse = await client.PostAsync(AuthUrl + querystring, null);
                     var accessJson = await accessResponse.Content.ReadAsStringAsync();
                     var accessResponseObject = JsonConvert.DeserializeObject<AccessResponse>(accessJson);
@@ -64,7 +82,8 @@ public static class TwitchMockupHelper
         {
             var startInfo = new ProcessStartInfo
             {
-                FileName = "/home/linuxbrew/.linuxbrew/bin/twitch",
+                // The Twitch CLI from PATH; TWITCH_CLI overrides it.
+                FileName = Environment.GetEnvironmentVariable("TWITCH_CLI") ?? "twitch",
                 Arguments = "mock-api start",
                 RedirectStandardOutput = true,
                 UseShellExecute = false,
