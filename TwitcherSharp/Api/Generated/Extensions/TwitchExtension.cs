@@ -212,7 +212,7 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
         
             public GodotObject ToGodotObject()
             {
-                var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_extension.gd", "Panel");
+                var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_extension.gd", "TwitchPanel");
                 if(ViewerUrl != null) request.SetValue("viewer_url", ViewerUrl);
                 request.SetValue("height", Height);
                 request.SetValue("can_link_external_content", CanLinkExternalContent);

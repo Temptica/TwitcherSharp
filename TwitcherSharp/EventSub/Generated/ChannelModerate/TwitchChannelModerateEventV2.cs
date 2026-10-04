@@ -63,82 +63,82 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
     /// <summary> 
     /// Optional. Metadata associated with the followers command.
     /// </summary>
-    public TwitchFollowersV2? FollowersV2 { get => field ??= _data.Get<TwitchFollowersV2>("followers_v_2"); set; }
+    public TwitchFollowersV2? FollowersV2 { get => field ??= _data.Get<TwitchFollowersV2>("followers"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with the slow command.
     /// </summary>
-    public TwitchSlowV2? SlowV2 { get => field ??= _data.Get<TwitchSlowV2>("slow_v_2"); set; }
+    public TwitchSlowV2? SlowV2 { get => field ??= _data.Get<TwitchSlowV2>("slow"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with the vip command.
     /// </summary>
-    public TwitchVipV2? VipV2 { get => field ??= _data.Get<TwitchVipV2>("vip_v_2"); set; }
+    public TwitchVipV2? VipV2 { get => field ??= _data.Get<TwitchVipV2>("vip"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with the unvip command.
     /// </summary>
-    public TwitchUnvipV2? UnvipV2 { get => field ??= _data.Get<TwitchUnvipV2>("unvip_v_2"); set; }
+    public TwitchUnvipV2? UnvipV2 { get => field ??= _data.Get<TwitchUnvipV2>("unvip"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with the mod command.
     /// </summary>
-    public TwitchModV2? ModV2 { get => field ??= _data.Get<TwitchModV2>("mod_v_2"); set; }
+    public TwitchModV2? ModV2 { get => field ??= _data.Get<TwitchModV2>("mod"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with the unmod command.
     /// </summary>
-    public TwitchUnmodV2? UnmodV2 { get => field ??= _data.Get<TwitchUnmodV2>("unmod_v_2"); set; }
+    public TwitchUnmodV2? UnmodV2 { get => field ??= _data.Get<TwitchUnmodV2>("unmod"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with the ban command.
     /// </summary>
-    public TwitchBanV2? BanV2 { get => field ??= _data.Get<TwitchBanV2>("ban_v_2"); set; }
+    public TwitchBanV2? BanV2 { get => field ??= _data.Get<TwitchBanV2>("ban"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with the unban command.
     /// </summary>
-    public TwitchUnbanV2? UnbanV2 { get => field ??= _data.Get<TwitchUnbanV2>("unban_v_2"); set; }
+    public TwitchUnbanV2? UnbanV2 { get => field ??= _data.Get<TwitchUnbanV2>("unban"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with the timeout command.
     /// </summary>
-    public TwitchTimeoutV2? TimeoutV2 { get => field ??= _data.Get<TwitchTimeoutV2>("timeout_v_2"); set; }
+    public TwitchTimeoutV2? TimeoutV2 { get => field ??= _data.Get<TwitchTimeoutV2>("timeout"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with the untimeout command.
     /// </summary>
-    public TwitchUntimeoutV2? UntimeoutV2 { get => field ??= _data.Get<TwitchUntimeoutV2>("untimeout_v_2"); set; }
+    public TwitchUntimeoutV2? UntimeoutV2 { get => field ??= _data.Get<TwitchUntimeoutV2>("untimeout"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with the raid command.
     /// </summary>
-    public TwitchRaidV2? RaidV2 { get => field ??= _data.Get<TwitchRaidV2>("raid_v_2"); set; }
+    public TwitchRaidV2? RaidV2 { get => field ??= _data.Get<TwitchRaidV2>("raid"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with the unraid command.
     /// </summary>
-    public TwitchUnraidV2? UnraidV2 { get => field ??= _data.Get<TwitchUnraidV2>("unraid_v_2"); set; }
+    public TwitchUnraidV2? UnraidV2 { get => field ??= _data.Get<TwitchUnraidV2>("unraid"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with the delete command.
     /// </summary>
-    public TwitchDeleteV2? DeleteV2 { get => field ??= _data.Get<TwitchDeleteV2>("delete_v_2"); set; }
+    public TwitchDeleteV2? DeleteV2 { get => field ??= _data.Get<TwitchDeleteV2>("delete"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with the automod terms changes.
     /// </summary>
-    public TwitchAutomodTermsV2? AutomodTermsV2 { get => field ??= _data.Get<TwitchAutomodTermsV2>("automod_terms_v_2"); set; }
+    public TwitchAutomodTermsV2? AutomodTermsV2 { get => field ??= _data.Get<TwitchAutomodTermsV2>("automod_terms"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with an unban request.
     /// </summary>
-    public TwitchUnbanRequestV2? UnbanRequestV2 { get => field ??= _data.Get<TwitchUnbanRequestV2>("unban_request_v_2"); set; }
+    public TwitchUnbanRequestV2? UnbanRequestV2 { get => field ??= _data.Get<TwitchUnbanRequestV2>("unban_request"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with the warn command.
     /// </summary>
-    public TwitchWarnV2? WarnV2 { get => field ??= _data.Get<TwitchWarnV2>("warn_v_2"); set; }
+    public TwitchWarnV2? WarnV2 { get => field ??= _data.Get<TwitchWarnV2>("warn"); set; }
 
     /// <summary> 
     /// Optional. Information about the shared_chat_ban event. Is null if action is not shared_chat_ban. This field has the same information as the ban field but for a action that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
@@ -202,22 +202,22 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
         if(ModeratorUserLogin != null) request.SetValue("moderator_user_login", ModeratorUserLogin);
         if(ModeratorUserName != null) request.SetValue("moderator_user_name", ModeratorUserName);
         if(Action != null) request.SetValue("action", Action);
-        if(FollowersV2 != null) request.SetObject("followers_v_2", FollowersV2);
-        if(SlowV2 != null) request.SetObject("slow_v_2", SlowV2);
-        if(VipV2 != null) request.SetObject("vip_v_2", VipV2);
-        if(UnvipV2 != null) request.SetObject("unvip_v_2", UnvipV2);
-        if(ModV2 != null) request.SetObject("mod_v_2", ModV2);
-        if(UnmodV2 != null) request.SetObject("unmod_v_2", UnmodV2);
-        if(BanV2 != null) request.SetObject("ban_v_2", BanV2);
-        if(UnbanV2 != null) request.SetObject("unban_v_2", UnbanV2);
-        if(TimeoutV2 != null) request.SetObject("timeout_v_2", TimeoutV2);
-        if(UntimeoutV2 != null) request.SetObject("untimeout_v_2", UntimeoutV2);
-        if(RaidV2 != null) request.SetObject("raid_v_2", RaidV2);
-        if(UnraidV2 != null) request.SetObject("unraid_v_2", UnraidV2);
-        if(DeleteV2 != null) request.SetObject("delete_v_2", DeleteV2);
-        if(AutomodTermsV2 != null) request.SetObject("automod_terms_v_2", AutomodTermsV2);
-        if(UnbanRequestV2 != null) request.SetObject("unban_request_v_2", UnbanRequestV2);
-        if(WarnV2 != null) request.SetObject("warn_v_2", WarnV2);
+        if(FollowersV2 != null) request.SetObject("followers", FollowersV2);
+        if(SlowV2 != null) request.SetObject("slow", SlowV2);
+        if(VipV2 != null) request.SetObject("vip", VipV2);
+        if(UnvipV2 != null) request.SetObject("unvip", UnvipV2);
+        if(ModV2 != null) request.SetObject("mod", ModV2);
+        if(UnmodV2 != null) request.SetObject("unmod", UnmodV2);
+        if(BanV2 != null) request.SetObject("ban", BanV2);
+        if(UnbanV2 != null) request.SetObject("unban", UnbanV2);
+        if(TimeoutV2 != null) request.SetObject("timeout", TimeoutV2);
+        if(UntimeoutV2 != null) request.SetObject("untimeout", UntimeoutV2);
+        if(RaidV2 != null) request.SetObject("raid", RaidV2);
+        if(UnraidV2 != null) request.SetObject("unraid", UnraidV2);
+        if(DeleteV2 != null) request.SetObject("delete", DeleteV2);
+        if(AutomodTermsV2 != null) request.SetObject("automod_terms", AutomodTermsV2);
+        if(UnbanRequestV2 != null) request.SetObject("unban_request", UnbanRequestV2);
+        if(WarnV2 != null) request.SetObject("warn", WarnV2);
         if(SharedChatBan != null) request.SetObject("shared_chat_ban", SharedChatBan);
         if(SharedChatUnban != null) request.SetObject("shared_chat_unban", SharedChatUnban);
         if(SharedChatTimeout != null) request.SetObject("shared_chat_timeout", SharedChatTimeout);

@@ -63,12 +63,12 @@ public partial class TwitchAutomodMessageHoldEventV2 : RefCounted, ITwitcherShar
     /// <summary> 
     /// Optional. If the message was caught by automod, this will be populated.
     /// </summary>
-    public TwitchAutomodV2? AutomodV2 { get => field ??= _data.Get<TwitchAutomodV2>("automod_v_2"); set; }
+    public TwitchAutomodV2? AutomodV2 { get => field ??= _data.Get<TwitchAutomodV2>("automod"); set; }
 
     /// <summary> 
     /// Optional. If the message was caught due to a blocked term, this will be populated.
     /// </summary>
-    public TwitchBlockedTermV2? BlockedTermV2 { get => field ??= _data.Get<TwitchBlockedTermV2>("blocked_term_v_2"); set; }
+    public TwitchBlockedTermV2? BlockedTermV2 { get => field ??= _data.Get<TwitchBlockedTermV2>("blocked_term"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchAutomodMessageHoldEventV2 object.
@@ -106,8 +106,8 @@ public partial class TwitchAutomodMessageHoldEventV2 : RefCounted, ITwitcherShar
         if(Message != null) request.SetObject("message", Message);
         if(HeldAt != null) request.SetValue("held_at", HeldAt);
         if(Reason != null) request.SetValue("reason", Reason);
-        if(AutomodV2 != null) request.SetObject("automod_v_2", AutomodV2);
-        if(BlockedTermV2 != null) request.SetObject("blocked_term_v_2", BlockedTermV2);
+        if(AutomodV2 != null) request.SetObject("automod", AutomodV2);
+        if(BlockedTermV2 != null) request.SetObject("blocked_term", BlockedTermV2);
         return request;
     }
 
@@ -150,7 +150,7 @@ public partial class TwitchAutomodMessageHoldEventV2 : RefCounted, ITwitcherShar
     
         public GodotObject ToGodotObject()
         {
-            var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_automod_message_hold.gd", "Message");
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_automod_message_hold.gd", "MessageV2");
             if(Text != null) request.SetValue("text", Text);
             if(Fragments != null) request.SetArray("fragments", Fragments);
             return request;
@@ -206,7 +206,7 @@ public partial class TwitchAutomodMessageHoldEventV2 : RefCounted, ITwitcherShar
         
             public GodotObject ToGodotObject()
             {
-                var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_automod_message_hold.gd", "Fragments");
+                var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_automod_message_hold.gd", "FragmentsV2");
                 if(Type != null) request.SetValue("type", Type);
                 if(Text != null) request.SetValue("text", Text);
                 if(Emote != null) request.SetObject("emote", Emote);
@@ -254,7 +254,7 @@ public partial class TwitchAutomodMessageHoldEventV2 : RefCounted, ITwitcherShar
             
                 public GodotObject ToGodotObject()
                 {
-                    var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_automod_message_hold.gd", "Emote");
+                    var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_automod_message_hold.gd", "EmoteV2");
                     if(Id != null) request.SetValue("id", Id);
                     if(EmoteSetId != null) request.SetValue("emote_set_id", EmoteSetId);
                     return request;
@@ -306,7 +306,7 @@ public partial class TwitchAutomodMessageHoldEventV2 : RefCounted, ITwitcherShar
             
                 public GodotObject ToGodotObject()
                 {
-                    var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_automod_message_hold.gd", "Cheermote");
+                    var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_automod_message_hold.gd", "CheermoteV2");
                     if(Prefix != null) request.SetValue("prefix", Prefix);
                     request.SetValue("bits", Bits);
                     request.SetValue("tier", Tier);
@@ -472,7 +472,7 @@ public partial class TwitchAutomodMessageHoldEventV2 : RefCounted, ITwitcherShar
             /// <summary> 
             /// The bounds of the text that caused the message to be caught.
             /// </summary>
-            public TwitchBoundaryV2? BoundaryV2 { get => field ??= _data.Get<TwitchBoundaryV2>("boundary_v_2"); set; }
+            public TwitchBoundaryV2? BoundaryV2 { get => field ??= _data.Get<TwitchBoundaryV2>("boundary"); set; }
         
             /// <summary> 
             /// The id of the broadcaster that owns the blocked term.
@@ -511,7 +511,7 @@ public partial class TwitchAutomodMessageHoldEventV2 : RefCounted, ITwitcherShar
             {
                 var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_automod_message_hold.gd", "TermsFoundV2");
                 if(TermId != null) request.SetValue("term_id", TermId);
-                if(BoundaryV2 != null) request.SetObject("boundary_v_2", BoundaryV2);
+                if(BoundaryV2 != null) request.SetObject("boundary", BoundaryV2);
                 if(OwnerBroadcasterUserId != null) request.SetValue("owner_broadcaster_user_id", OwnerBroadcasterUserId);
                 if(OwnerBroadcasterUserLogin != null) request.SetValue("owner_broadcaster_user_login", OwnerBroadcasterUserLogin);
                 if(OwnerBroadcasterUserName != null) request.SetValue("owner_broadcaster_user_name", OwnerBroadcasterUserName);

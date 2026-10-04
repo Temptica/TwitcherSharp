@@ -7,8 +7,8 @@ namespace TwitcherSharp.Api.Generated.Bits;
 public partial class TwitchCheermoteImageTheme : RefCounted, ITwitcherSharp<TwitchCheermoteImageTheme>
 {
     private Variant _data;
-    public TwitchCheermoteImageFormat? Animated { get => field ??= _data.Get<TwitchCheermoteImageFormat>("animated"); set; }
-    public TwitchCheermoteImageFormat? Static { get => field ??= _data.Get<TwitchCheermoteImageFormat>("static"); set; }
+    public TwitchCheermoteImageFormat? Animated { get => field ??= _data.Get<TwitchCheermoteImageFormat>("animated_format"); set; }
+    public TwitchCheermoteImageFormat? Static { get => field ??= _data.Get<TwitchCheermoteImageFormat>("static_format"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCheermoteImageTheme object.
@@ -25,8 +25,8 @@ public partial class TwitchCheermoteImageTheme : RefCounted, ITwitcherSharp<Twit
     public GodotObject ToGodotObject()
     {
         var request = InteropExtension.NewObject("res://addons/twitcher/generated/twitch_cheermote_image_theme.gd");
-        if(Animated != null) request.SetValue("animated", Animated);
-        if(Static != null) request.SetValue("static", Static);
+        if(Animated != null) request.SetValue("animated_format", Animated);
+        if(Static != null) request.SetValue("static_format", Static);
         return request;
     }
 

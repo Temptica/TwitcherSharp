@@ -23,9 +23,9 @@ public partial class TwitchExtensionIconUrls : RefCounted, ITwitcherSharp<Twitch
         if(data == null) return null;
         var instance = new TwitchExtensionIconUrls
         {
-            _100x100 = data.Read("100x_100", static v => v.AsString()),
-            _24x24 = data.Read("24x_24", static v => v.AsString()),
-            _300x200 = data.Read("300x_200", static v => v.AsString()),
+            _100x100 = data.Read("_100x100", static v => v.AsString()),
+            _24x24 = data.Read("_24x24", static v => v.AsString()),
+            _300x200 = data.Read("_300x200", static v => v.AsString()),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -35,9 +35,9 @@ public partial class TwitchExtensionIconUrls : RefCounted, ITwitcherSharp<Twitch
     public GodotObject ToGodotObject()
     {
         var request = InteropExtension.NewObject("res://addons/twitcher/generated/twitch_extension_icon_urls.gd");
-        if(_100x100 != null) request.SetValue("100x_100", _100x100);
-        if(_24x24 != null) request.SetValue("24x_24", _24x24);
-        if(_300x200 != null) request.SetValue("300x_200", _300x200);
+        if(_100x100 != null) request.SetValue("_100x100", _100x100);
+        if(_24x24 != null) request.SetValue("_24x24", _24x24);
+        if(_300x200 != null) request.SetValue("_300x200", _300x200);
         return request;
     }
 

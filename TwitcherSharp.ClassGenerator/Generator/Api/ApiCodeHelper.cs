@@ -194,7 +194,8 @@ public static class ApiCodeHelper
         return code.ToString();
     }
 
-    private static string ComponentCode(TwitchGenComponent component, out List<string> usings, string type = "")
+    private static string ComponentCode(TwitchGenComponent component, out List<string> usings, string type = "",
+        TwitcherTarget? target = null)
     {
         usings = [];
         var code = new StringBuilder();
@@ -240,7 +241,7 @@ public static class ApiCodeHelper
                 var @interface = field.TypedComponent?.InterfacesToImplement[0].InterfaceName;
                 // get => field ??= _data?.GetArray<TwitchResponseData>("data");
                 code.AppendIndentedLine(
-                    $"public {@interface}{(field.IsArray ? "[]" : "")}{field.NullableSuffix} {field.Name} {{ get => field ??= _data.{(field.IsArray ? $"GetArray<{field.Type}>" : $"Get<{field.Type}>")}(\"{field.Name.ToSnakeCase()}\"){field.RequiredBang}; set; }}{field.DefaultInitializer}",
+                    $"public {@interface}{(field.IsArray ? "[]" : "")}{field.NullableSuffix} {field.Name} {{ get => field ??= _data.{(field.IsArray ? $"GetArray<{field.Type}>" : $"Get<{field.Type}>")}(\"{field.GodotName}\"){field.RequiredBang}; set; }}{field.DefaultInitializer}",
                     1);
                 continue;
             }
@@ -259,13 +260,13 @@ public static class ApiCodeHelper
                     // non-nullable, so null-forgive the (possibly missing) godot data explicitly, and always supply
                     // the `= null!;` default since DefaultInitializer won't apply it for this field.
                     code.AppendIndentedLine(
-                        $"public {fieldType}{field.NullableSuffix} {field.Name} {{ get => field ??= {(field.IsArray ? $"_data.GetArray<{fieldType.Remove("[]")}>(\"data\"){field.RequiredBang}" : $"T.FromDictionary(_data.Read(\"{field.Name.ToSnakeCase()}\", static v => v.AsGodotDictionary())!)")}; set; }}{(field.IsRequired ? " = null!;" : "")}",
+                        $"public {fieldType}{field.NullableSuffix} {field.Name} {{ get => field ??= {(field.IsArray ? $"_data.GetArray<{fieldType.Remove("[]")}>(\"data\"){field.RequiredBang}" : $"T.FromDictionary(_data.Read(\"{field.GodotName}\", static v => v.AsGodotDictionary())!)")}; set; }}{(field.IsRequired ? " = null!;" : "")}",
                         1);
                     continue;
                 }
 
                 code.AppendIndentedLine(
-                    $"public {fieldType}{field.NullableSuffix} {field.Name} {{ get => field ??= _data.{(field.IsArray ? $"GetArray<{fieldType}>" : $"Get<{fieldType}>")}(\"{field.Name.ToSnakeCase()}\"){field.RequiredBang}; set; }}{field.DefaultInitializer}",
+                    $"public {fieldType}{field.NullableSuffix} {field.Name} {{ get => field ??= _data.{(field.IsArray ? $"GetArray<{fieldType}>" : $"Get<{fieldType}>")}(\"{field.GodotName}\"){field.RequiredBang}; set; }}{field.DefaultInitializer}",
                     1);
 
                 continue;
@@ -274,7 +275,7 @@ public static class ApiCodeHelper
             if (field.IsTyped)
             {
                 code.AppendIndentedLine(
-                    $"public {field.CleanedType}{field.NullableSuffix} {field.Name} {{ get => field ??= _data.{(field.IsArray ? $"GetArray<{field.Type}>" : $"Get<{field.Type}>")}(\"{field.Name.ToSnakeCase()}\"){field.RequiredBang}; set; }}{field.DefaultInitializer}",
+                    $"public {field.CleanedType}{field.NullableSuffix} {field.Name} {{ get => field ??= _data.{(field.IsArray ? $"GetArray<{field.Type}>" : $"Get<{field.Type}>")}(\"{field.GodotName}\"){field.RequiredBang}; set; }}{field.DefaultInitializer}",
                     1);
                 continue;
             }
@@ -305,7 +306,7 @@ public static class ApiCodeHelper
             foreach (var field in nonTypedFields)
             {
                 code.AppendIndentedLine(
-                    $"{field.Name} = data.Read(\"{field.Name.ToSnakeCase()}\", static v => v.{field.GetAsType()}),", 3);
+                    $"{field.Name} = data.Read(\"{field.GodotName}\", static v => v.{field.GetAsType()}),", 3);
             }
 
             code.AppendIndentedLine("};", 2);
@@ -319,15 +320,26 @@ public static class ApiCodeHelper
         //TO OBJECT
         code.AppendIndentedLine("public GodotObject ToGodotObject()", 1);
         code.AppendIndentedLine("{", 1);
-        var path = $"res://addons/twitcher/generated/{GetBaseName(component.ClassName).ToSnakeCase()}.gd";
+        var baseName = GetBaseName(component.ClassName);
+        baseName = TwitcherFileNames.GetValueOrDefault(baseName.ToLowerInvariant(), baseName);
+        var path = $"res://addons/twitcher/generated/{baseName.ToSnakeCase()}.gd";
 
         if (component.ParentCount > 0 && !component.IsGlobal)
             path =
                 $"res://addons/twitcher/generated/{GetBaseName(component.GetGlobalRootParent().ClassName).ToSnakeCase()}.gd";
 
-        if (!string.IsNullOrEmpty(type))
+        // Nested classes live where twitcher's generator puts them: in the file of the root component they are written
+        // under, named as twitcher names them (see TwitcherNestedName).
+        var nestedTarget = target ?? new TwitcherTarget(path, type);
+
+        if (target is not null && string.IsNullOrEmpty(type))
         {
-            code.AppendIndentedLine($"var request = InteropExtension.NewInner(\"{path}\", \"{type}\");", 2);
+            code.AppendIndentedLine(
+                $"var request = InteropExtension.NewInner(\"{target.Path}\", \"{target.Prefix + TwitcherNestedName(component)}\");", 2);
+        }
+        else if (!string.IsNullOrEmpty(type))
+        {
+            code.AppendIndentedLine($"var request = InteropExtension.NewInner(\"{nestedTarget.Path}\", \"{type}\");", 2);
         }
         else if (component.ParentCount > 0 && !component.IsGlobal)
         {
@@ -345,7 +357,7 @@ public static class ApiCodeHelper
             if (field.IsArray && field.IsTyped)
             {
                 code.AppendIndentedLine(
-                    $"if({field.Name} != null) request.SetArray(\"{field.Name.ToSnakeCase()}\", {field.Name});",
+                    $"if({field.Name} != null) request.SetArray(\"{field.GodotName}\", {field.Name});",
                     2);
                 continue;
             }
@@ -353,7 +365,7 @@ public static class ApiCodeHelper
             if (field.IsArray)
             {
                 code.AppendIndentedLine(
-                    $"if({field.Name} != null) request.SetValue(\"{field.Name.ToSnakeCase()}\", new Godot.Collections.Array<{field.CleanedArrayType}>({field.Name}));",
+                    $"if({field.Name} != null) request.SetValue(\"{field.GodotName}\", new Godot.Collections.Array<{field.CleanedArrayType}>({field.Name}));",
                     2);
                 continue;
             }
@@ -361,7 +373,7 @@ public static class ApiCodeHelper
             if (component.HasGeneric && field.Equals(component.GenericField))
             {
                 code.AppendIndentedLine(
-                    $"if({field.Name} != null) request.SetValue(\"{field.Name.ToSnakeCase()}\", new Godot.Collections.Dictionary<string,Variant>({field.Name}.ToDictionary()));",
+                    $"if({field.Name} != null) request.SetValue(\"{field.GodotName}\", new Godot.Collections.Dictionary<string,Variant>({field.Name}.ToDictionary()));",
                     2);
                 continue;
             }
@@ -373,15 +385,15 @@ public static class ApiCodeHelper
                     if (field.CleanedType.Contains("[]"))
                     {
                         code.AppendIndentedLine(
-                            $"if({field.Name} != null) request.SetValue(\"{field.Name.ToSnakeCase()}\", new Godot.Collections.Array<{field.CleanedArrayType.Remove("[]")}>({field.Name}));",
+                            $"if({field.Name} != null) request.SetValue(\"{field.GodotName}\", new Godot.Collections.Array<{field.CleanedArrayType.Remove("[]")}>({field.Name}));",
                             2);
                         continue;
                     }
 
                     code.AppendIndentedLine($"if({field.Name} != null) " + (
                             field.Type == "Object"
-                                ? $"request.SetObject(\"{field.Name.ToSnakeCase()}\", {field.Name});"
-                                : $"request.SetValue(\"{field.Name.ToSnakeCase()}\", {field.Name});"),
+                                ? $"request.SetObject(\"{field.GodotName}\", {field.Name});"
+                                : $"request.SetValue(\"{field.GodotName}\", {field.Name});"),
                         2);
 
                     continue;
@@ -389,18 +401,18 @@ public static class ApiCodeHelper
 
                 code.AppendIndentedLine(
                     $"if({field.Name}.HasValue) " + (field.Type == "Object"
-                        ? $"request.SetObject(\"{field.Name.ToSnakeCase()}\", {field.Name}.Value);"
-                        : $"request.SetValue(\"{field.Name.ToSnakeCase()}\", {field.Name}.Value);"),
+                        ? $"request.SetObject(\"{field.GodotName}\", {field.Name}.Value);"
+                        : $"request.SetValue(\"{field.GodotName}\", {field.Name}.Value);"),
                     2);
                 continue;
             }
 
             code.AppendIndentedLine(
                 field.IsTyped
-                    ? $"if({field.Name} != null) request.SetObject(\"{field.Name.ToSnakeCase()}\", {field.Name});"
+                    ? $"if({field.Name} != null) request.SetObject(\"{field.GodotName}\", {field.Name});"
                     : field.IsValueType
-                        ? $"request.SetValue(\"{field.Name.ToSnakeCase()}\", {field.Name});"
-                        : $"if({field.Name} != null) request.SetValue(\"{field.Name.ToSnakeCase()}\", {field.Name});",
+                        ? $"request.SetValue(\"{field.GodotName}\", {field.Name});"
+                        : $"if({field.Name} != null) request.SetValue(\"{field.GodotName}\", {field.Name});",
                 2);
         }
 
@@ -425,7 +437,7 @@ public static class ApiCodeHelper
             code.AppendLine();
             code.AppendIndentedLine(
                 ComponentCode(component.SubComponents.Single(c => c.IsPagination), out var subUsings,
-                    "ResponsePagination"),
+                    "ResponsePagination", nestedTarget),
                 1);
             usings.AddRange(subUsings);
             code.AppendIndentedLine("}", 1);
@@ -433,7 +445,7 @@ public static class ApiCodeHelper
 
         foreach (var subComponent in component.SubComponents.Where(c => !c.IsGlobal && !c.IsPagination))
         {
-            code.AppendIndentedLine(ComponentCode(subComponent, out var subUsings), 1);
+            code.AppendIndentedLine(ComponentCode(subComponent, out var subUsings, target: nestedTarget), 1);
             usings.AddRange(subUsings);
             code.AppendIndentedLine("}", 1);
         }
@@ -444,7 +456,7 @@ public static class ApiCodeHelper
             {
                 if (component.SubComponents.Any(c => c.Equals(subComponent))) continue;
 
-                code.AppendIndentedLine(ComponentCode(subComponent, out var subUsings), 1);
+                code.AppendIndentedLine(ComponentCode(subComponent, out var subUsings, target: nestedTarget), 1);
                 usings.AddRange(subUsings);
 
 
@@ -513,6 +525,41 @@ public static class ApiCodeHelper
     {
         return Suffixes.Aggregate(name,
             (current, suffix) => current.EndsWith(suffix) ? current.Replace(suffix, "") : current);
+    }
+
+    /// <summary>
+    /// twitcher groups the Response/Opt/Body classes of a method into one file by their base name, ignoring case, and
+    /// names the file after the spelling it saw last: the Opt class, which comes from the method's operationId. So
+    /// GetEventSubSubscriptionsResponse lives in twitch_get_eventsub_subscriptions.gd. Key: lowercase base name.
+    /// </summary>
+    internal static Dictionary<string, string> TwitcherFileNames { get; } = [];
+
+    /// <summary>
+    /// Where twitcher keeps the classes nested under a root component: the root's file, and the prefix twitcher's
+    /// generator puts before every nested class of a Response/Opt/Body root (root classname + nested classname).
+    /// </summary>
+    private sealed record TwitcherTarget(string Path, string Prefix);
+
+    /// <summary>
+    /// twitcher's name for a nested class: the name taken from its property, without the prefixes this generator adds,
+    /// and with Image/Panel renamed like twitcher's TwitchGenComponent does (they clash with Godot classes).
+    /// </summary>
+    private static string TwitcherNestedName(TwitchGenComponent component)
+    {
+        var name = component.ClassName;
+        foreach (var prefix in new[] { "TwitchResponse", "TwitchBody", "TwitchOpt", "Twitch" })
+        {
+            if (!name.StartsWith(prefix)) continue;
+            name = name[prefix.Length..];
+            break;
+        }
+
+        return name switch
+        {
+            "Image" => "TwitchImage",
+            "Panel" => "TwitchPanel",
+            _ => name,
+        };
     }
 
     #endregion

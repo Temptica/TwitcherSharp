@@ -84,7 +84,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
 
     public GodotObject ToGodotObject()
     {
-        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_points_automatic_reward_redemption_add.gd", "Event");
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_points_automatic_reward_redemption_add.gd", "V2Event");
         if(BroadcasterUserId != null) request.SetValue("broadcaster_user_id", BroadcasterUserId);
         if(BroadcasterUserLogin != null) request.SetValue("broadcaster_user_login", BroadcasterUserLogin);
         if(BroadcasterUserName != null) request.SetValue("broadcaster_user_name", BroadcasterUserName);
@@ -143,7 +143,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
     
         public GodotObject ToGodotObject()
         {
-            var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_points_automatic_reward_redemption_add.gd", "Reward");
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_points_automatic_reward_redemption_add.gd", "RewardV2");
             if(Type != null) request.SetValue("type", Type);
             request.SetValue("channel_points", ChannelPoints);
             if(Emote != null) request.SetObject("emote", Emote);
@@ -190,7 +190,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
         
             public GodotObject ToGodotObject()
             {
-                var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_points_automatic_reward_redemption_add.gd", "Emote");
+                var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_points_automatic_reward_redemption_add.gd", "EmoteV2");
                 if(Id != null) request.SetValue("id", Id);
                 if(Name != null) request.SetValue("name", Name);
                 return request;
@@ -236,7 +236,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
     
         public GodotObject ToGodotObject()
         {
-            var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_points_automatic_reward_redemption_add.gd", "Message");
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_points_automatic_reward_redemption_add.gd", "MessageV2");
             if(Text != null) request.SetValue("text", Text);
             if(Fragments != null) request.SetArray("fragments", Fragments);
             return request;
@@ -287,7 +287,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
         
             public GodotObject ToGodotObject()
             {
-                var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_points_automatic_reward_redemption_add.gd", "Fragments");
+                var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_points_automatic_reward_redemption_add.gd", "FragmentsV2");
                 if(Text != null) request.SetValue("text", Text);
                 if(Type != null) request.SetValue("type", Type);
                 if(Emote != null) request.SetObject("emote", Emote);
@@ -328,7 +328,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
             
                 public GodotObject ToGodotObject()
                 {
-                    var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_points_automatic_reward_redemption_add.gd", "Emote");
+                    var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_points_automatic_reward_redemption_add.gd", "Fragments_EmoteV2");
                     if(Id != null) request.SetValue("id", Id);
                     return request;
                 }

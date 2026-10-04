@@ -32,7 +32,7 @@ public partial class TwitchGetEventSubSubscriptionsResponse<T> : RefCounted, ITw
 
     public GodotObject ToGodotObject()
     {
-        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_event_sub_subscriptions.gd", "Response");
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_eventsub_subscriptions.gd", "Response");
         if(Data != null) request.SetArray("data", Data);
         request.SetValue("total", Total);
         request.SetValue("total_cost", TotalCost);
@@ -75,7 +75,7 @@ public partial class TwitchGetEventSubSubscriptionsResponse<T> : RefCounted, ITw
     
         public GodotObject ToGodotObject()
         {
-            var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_event_sub_subscriptions.gd", "ResponsePagination");
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_eventsub_subscriptions.gd", "ResponsePagination");
             if(Cursor != null) request.SetValue("cursor", Cursor);
             return request;
         }

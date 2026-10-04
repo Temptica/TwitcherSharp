@@ -126,6 +126,7 @@ public class TwitchApiParser
             var field = new TwitchGenField
             {
                 Name = name,
+                JsonName = name,
                 Description = property.Description,
                 Type = GetParamType(property),
                 IsRequired = schema.Required?.Contains(name) ?? false

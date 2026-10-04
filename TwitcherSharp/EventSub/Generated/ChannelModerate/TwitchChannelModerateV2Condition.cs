@@ -36,7 +36,7 @@ public partial class TwitchChannelModerateV2Condition(string broadcasterUserId, 
 
     public GodotObject ToGodotObject()
     {
-        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd", "Condition");
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd", "V2Condition");
         request.SetValue("broadcaster_user_id", BroadcasterUserId);
         request.SetValue("moderator_user_id", ModeratorUserId);
         return request;

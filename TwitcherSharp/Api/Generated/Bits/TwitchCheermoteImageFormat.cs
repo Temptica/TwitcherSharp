@@ -21,11 +21,11 @@ public partial class TwitchCheermoteImageFormat : RefCounted, ITwitcherSharp<Twi
         if(data == null) return null;
         var instance = new TwitchCheermoteImageFormat
         {
-            _1 = data.Read("1", static v => v.AsString()),
-            _2 = data.Read("2", static v => v.AsString()),
-            _3 = data.Read("3", static v => v.AsString()),
-            _4 = data.Read("4", static v => v.AsString()),
-            _1_5 = data.Read("1_5", static v => v.AsString()),
+            _1 = data.Read("_1", static v => v.AsString()),
+            _2 = data.Read("_2", static v => v.AsString()),
+            _3 = data.Read("_3", static v => v.AsString()),
+            _4 = data.Read("_4", static v => v.AsString()),
+            _1_5 = data.Read("_1_5", static v => v.AsString()),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -35,11 +35,11 @@ public partial class TwitchCheermoteImageFormat : RefCounted, ITwitcherSharp<Twi
     public GodotObject ToGodotObject()
     {
         var request = InteropExtension.NewObject("res://addons/twitcher/generated/twitch_cheermote_image_format.gd");
-        if(_1 != null) request.SetValue("1", _1);
-        if(_2 != null) request.SetValue("2", _2);
-        if(_3 != null) request.SetValue("3", _3);
-        if(_4 != null) request.SetValue("4", _4);
-        if(_1_5 != null) request.SetValue("1_5", _1_5);
+        if(_1 != null) request.SetValue("_1", _1);
+        if(_2 != null) request.SetValue("_2", _2);
+        if(_3 != null) request.SetValue("_3", _3);
+        if(_4 != null) request.SetValue("_4", _4);
+        if(_1_5 != null) request.SetValue("_1_5", _1_5);
         return request;
     }
 

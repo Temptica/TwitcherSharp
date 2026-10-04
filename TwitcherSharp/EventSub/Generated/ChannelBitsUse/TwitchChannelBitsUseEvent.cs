@@ -413,7 +413,7 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
         
             public GodotObject ToGodotObject()
             {
-                var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_bits_use.gd", "Emote");
+                var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_bits_use.gd", "PowerUp_Emote");
                 if(Id != null) request.SetValue("id", Id);
                 if(Name != null) request.SetValue("name", Name);
                 return request;

@@ -88,8 +88,8 @@ public partial class TwitchExtensionTransaction : RefCounted, ITwitcherSharp<Twi
             {
                 Sku = data.Read("sku", static v => v.AsString()),
                 Domain = data.Read("domain", static v => v.AsString()),
-                InDevelopment = data.Read("in_development", static v => v.AsBool()),
-                DisplayName = data.Read("display_name", static v => v.AsString()),
+                InDevelopment = data.Read("inDevelopment", static v => v.AsBool()),
+                DisplayName = data.Read("displayName", static v => v.AsString()),
                 Expiration = data.Read("expiration", static v => v.AsString()),
                 Broadcast = data.Read("broadcast", static v => v.AsBool()),
             };
@@ -104,8 +104,8 @@ public partial class TwitchExtensionTransaction : RefCounted, ITwitcherSharp<Twi
             if(Sku != null) request.SetValue("sku", Sku);
             if(Domain != null) request.SetValue("domain", Domain);
             if(Cost != null) request.SetObject("cost", Cost);
-            request.SetValue("in_development", InDevelopment);
-            if(DisplayName != null) request.SetValue("display_name", DisplayName);
+            request.SetValue("inDevelopment", InDevelopment);
+            if(DisplayName != null) request.SetValue("displayName", DisplayName);
             if(Expiration != null) request.SetValue("expiration", Expiration);
             request.SetValue("broadcast", Broadcast);
             return request;

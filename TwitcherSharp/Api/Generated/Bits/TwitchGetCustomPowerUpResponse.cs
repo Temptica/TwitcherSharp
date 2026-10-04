@@ -150,7 +150,7 @@ public partial class TwitchGetCustomPowerUpResponse : RefCounted, ITwitcherSharp
         
             public GodotObject ToGodotObject()
             {
-                var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_custom_power_up.gd", "ResponseImage");
+                var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_custom_power_up.gd", "ResponseTwitchImage");
                 if(Url1x != null) request.SetValue("url_1x", Url1x);
                 if(Url2x != null) request.SetValue("url_2x", Url2x);
                 if(Url4x != null) request.SetValue("url_4x", Url4x);

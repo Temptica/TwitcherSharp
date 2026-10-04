@@ -21,7 +21,7 @@ public partial class TwitchGameAnalytics : RefCounted, ITwitcherSharp<TwitchGame
         var instance = new TwitchGameAnalytics
         {
             GameId = data.Read("game_id", static v => v.AsString()),
-            URL = data.Read("url", static v => v.AsString()),
+            URL = data.Read("URL", static v => v.AsString()),
             Type = data.Read("type", static v => v.AsString()),
         };
         
@@ -33,7 +33,7 @@ public partial class TwitchGameAnalytics : RefCounted, ITwitcherSharp<TwitchGame
     {
         var request = InteropExtension.NewObject("res://addons/twitcher/generated/twitch_game_analytics.gd");
         if(GameId != null) request.SetValue("game_id", GameId);
-        if(URL != null) request.SetValue("url", URL);
+        if(URL != null) request.SetValue("URL", URL);
         if(Type != null) request.SetValue("type", Type);
         if(DateRange != null) request.SetObject("date_range", DateRange);
         return request;

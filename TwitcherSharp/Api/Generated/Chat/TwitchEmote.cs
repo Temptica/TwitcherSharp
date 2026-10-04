@@ -93,7 +93,7 @@ public partial class TwitchEmote : RefCounted, ITwitcherSharp<TwitchEmote>, ITwi
     
         public GodotObject ToGodotObject()
         {
-            var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_response_images.gd", "ResponseImages");
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_emote.gd", "Images");
             if(Url1x != null) request.SetValue("url_1x", Url1x);
             if(Url2x != null) request.SetValue("url_2x", Url2x);
             if(Url4x != null) request.SetValue("url_4x", Url4x);

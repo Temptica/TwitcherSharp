@@ -21,7 +21,7 @@ public partial class TwitchExtensionAnalytics : RefCounted, ITwitcherSharp<Twitc
         var instance = new TwitchExtensionAnalytics
         {
             ExtensionId = data.Read("extension_id", static v => v.AsString()),
-            URL = data.Read("url", static v => v.AsString()),
+            URL = data.Read("URL", static v => v.AsString()),
             Type = data.Read("type", static v => v.AsString()),
         };
         
@@ -33,7 +33,7 @@ public partial class TwitchExtensionAnalytics : RefCounted, ITwitcherSharp<Twitc
     {
         var request = InteropExtension.NewObject("res://addons/twitcher/generated/twitch_extension_analytics.gd");
         if(ExtensionId != null) request.SetValue("extension_id", ExtensionId);
-        if(URL != null) request.SetValue("url", URL);
+        if(URL != null) request.SetValue("URL", URL);
         if(Type != null) request.SetValue("type", Type);
         if(DateRange != null) request.SetObject("date_range", DateRange);
         return request;
