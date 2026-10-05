@@ -25,6 +25,8 @@ if [[ "$godot" == *.exe && -f "${godot%.exe}.console.exe" ]]; then godot="${godo
 
 fail() { echo "FAILED: $*" >&2; exit 1; }
 
+command -v "$godot" > /dev/null || fail "no Godot at '$godot'; set GODOT_BIN to a .NET build of Godot"
+
 if [[ ! -f addons/twitcher/plugin.cfg ]]; then ./fetch-twitcher.sh || fail "could not fetch twitcher"; fi
 
 dotnet build --nologo -v q -clp:ErrorsOnly || fail "build failed"
