@@ -15,7 +15,7 @@ namespace TwitcherSharp.GoDotTests.Tests;
 /// <summary>
 /// Maps a chat message, an API response and an EventSub event and keeps them until the engine shuts down, like a
 /// consumer that holds on to the last message. Whatever handle the mapping leaks is released by Godot's disposables
-/// tracker at shutdown; the run then crashes on exit (run-tests.ps1 fails on the exit code) or ends early (fewer tests
+/// tracker at shutdown; the run then crashes on exit (run-tests.sh fails on the exit code) or ends early (fewer tests
 /// run than discovered).
 /// </summary>
 public class DisposalTest(Node testScene) : TestClass(testScene)

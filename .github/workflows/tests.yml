@@ -1,0 +1,69 @@
+name: Tests
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      twitcher_branch:
+        description: twitcher branch to test against
+        default: master
+
+env:
+  GODOT_VERSION: "4.7.2"
+  TWITCH_CLI_VERSION: "1.1.24"
+
+jobs:
+  godot-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: TwitcherSharp.GoDotTests
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Install Godot .NET
+        run: |
+          name="Godot_v${GODOT_VERSION}-stable_mono_linux_x86_64"
+          curl -fsSLO "https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/$name.zip"
+          unzip -q "$name.zip" -d "$RUNNER_TEMP/godot"
+          rm "$name.zip"
+          echo "GODOT_BIN=$RUNNER_TEMP/godot/$name/$name.x86_64" >> "$GITHUB_ENV"
+
+      - name: Install Twitch CLI
+        run: |
+          archive="twitch-cli_${TWITCH_CLI_VERSION}_Linux_x86_64.tar.gz"
+          base="https://github.com/twitchdev/twitch-cli/releases/download/v${TWITCH_CLI_VERSION}"
+          curl -fsSLO "$base/$archive"
+          curl -fsSL "$base/checksums.txt" | grep " $archive\$" | sha256sum -c -
+          mkdir -p "$RUNNER_TEMP/twitch-cli"
+          tar -xzf "$archive" -C "$RUNNER_TEMP/twitch-cli"
+          dirname "$(find "$RUNNER_TEMP/twitch-cli" -type f -name twitch)" >> "$GITHUB_PATH"
+          rm "$archive"
+
+      - name: Fetch twitcher
+        env:
+          TWITCHER_BRANCH: ${{ inputs.twitcher_branch || 'master' }}
+        run: ./fetch-twitcher.sh
+
+      - name: Run tests
+        run: ./run-tests.sh
+
+      - name: Check the export output
+        run: ./check-export.sh
+
+      - name: Upload the test log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-log
+          path: /tmp/twitchersharp-tests.log
+          if-no-files-found: ignore
