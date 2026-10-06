@@ -6,8 +6,8 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 
 public partial class TwitchBanUserBody : RefCounted, ITwitcherSharp<TwitchBanUserBody>
 {
-    private GodotObject? _data;
-    public TwitchBodyData Data { get => field ??= _data?.Get<TwitchBodyData>("data")!; set; } = null!;
+    private Variant _data;
+    public TwitchBodyData Data { get => field ??= _data.Get<TwitchBodyData>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchBanUserBody object.
@@ -17,17 +17,22 @@ public partial class TwitchBanUserBody : RefCounted, ITwitcherSharp<TwitchBanUse
         if(data == null) return null;
         var instance = new TwitchBanUserBody();
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_ban_user.gd");
-        var bodyClass = script.Get("Body").AsGodotObject();
-        var request = bodyClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data.ToGodotObject());
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_ban_user.gd", "Body");
+        if(Data != null) request.SetObject("data", Data);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
     
     /// <summary> 
@@ -35,7 +40,7 @@ public partial class TwitchBanUserBody : RefCounted, ITwitcherSharp<TwitchBanUse
     /// </summary>
     public partial class TwitchBodyData : RefCounted, ITwitcherSharp<TwitchBodyData>
     {
-        private GodotObject? _data;
+        private Variant _data;
         public string UserId { get; set; } = null!;
         public int? Duration { get; set; }
         public string? Reason { get; set; }
@@ -48,24 +53,29 @@ public partial class TwitchBanUserBody : RefCounted, ITwitcherSharp<TwitchBanUse
             if(data == null) return null;
             var instance = new TwitchBodyData
             {
-                UserId = data.Get("user_id").AsString(),
-                Duration = data.Get("duration").AsInt32(),
-                Reason = data.Get("reason").AsString(),
+                UserId = data.Read("user_id", static v => v.AsString()),
+                Duration = data.Read("duration", static v => v.AsInt32()),
+                Reason = data.Read("reason", static v => v.AsString()),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_ban_user.gd");
-            var twitchBodyDataClass = script.Get("BodyData").AsGodotObject();
-            var request = twitchBodyDataClass.Call("new").AsGodotObject();
-            if(UserId != null) request.Set("user_id", UserId);
-            if(Duration.HasValue) request.Set("duration", Duration.Value);
-            if(Reason != null) request.Set("reason", Reason);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_ban_user.gd", "BodyData");
+            if(UserId != null) request.SetValue("user_id", UserId);
+            if(Duration.HasValue) request.SetValue("duration", Duration.Value);
+            if(Reason != null) request.SetValue("reason", Reason);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     
     }

@@ -6,8 +6,8 @@ namespace TwitcherSharp.Api.Generated.Schedule;
 
 public partial class TwitchCreateChannelStreamScheduleSegmentResponse : RefCounted, ITwitcherSharp<TwitchCreateChannelStreamScheduleSegmentResponse>
 {
-    private GodotObject? _data;
-    public TwitchResponseData Data { get => field ??= _data?.Get<TwitchResponseData>("data")!; set; } = null!;
+    private Variant _data;
+    public TwitchResponseData Data { get => field ??= _data.Get<TwitchResponseData>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCreateChannelStreamScheduleSegmentResponse object.
@@ -17,17 +17,22 @@ public partial class TwitchCreateChannelStreamScheduleSegmentResponse : RefCount
         if(data == null) return null;
         var instance = new TwitchCreateChannelStreamScheduleSegmentResponse();
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_create_channel_stream_schedule_segment.gd");
-        var responseClass = script.Get("Response").AsGodotObject();
-        var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data.ToGodotObject());
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_create_channel_stream_schedule_segment.gd", "Response");
+        if(Data != null) request.SetObject("data", Data);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
     
     /// <summary> 
@@ -35,12 +40,12 @@ public partial class TwitchCreateChannelStreamScheduleSegmentResponse : RefCount
     /// </summary>
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
-        private GodotObject? _data;
-        public TwitchChannelStreamScheduleSegment[] Segments { get => field ??= _data?.GetArray<TwitchChannelStreamScheduleSegment>("segments")!; set; } = null!;
+        private Variant _data;
+        public TwitchChannelStreamScheduleSegment[] Segments { get => field ??= _data.GetArray<TwitchChannelStreamScheduleSegment>("segments")!; set; } = null!;
         public string BroadcasterId { get; set; } = null!;
         public string BroadcasterName { get; set; } = null!;
         public string BroadcasterLogin { get; set; } = null!;
-        public TwitchResponseVacation Vacation { get => field ??= _data?.Get<TwitchResponseVacation>("vacation")!; set; } = null!;
+        public TwitchResponseVacation Vacation { get => field ??= _data.Get<TwitchResponseVacation>("vacation")!; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseData object.
@@ -50,26 +55,31 @@ public partial class TwitchCreateChannelStreamScheduleSegmentResponse : RefCount
             if(data == null) return null;
             var instance = new TwitchResponseData
             {
-                BroadcasterId = data.Get("broadcaster_id").AsString(),
-                BroadcasterName = data.Get("broadcaster_name").AsString(),
-                BroadcasterLogin = data.Get("broadcaster_login").AsString(),
+                BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
+                BroadcasterName = data.Read("broadcaster_name", static v => v.AsString()),
+                BroadcasterLogin = data.Read("broadcaster_login", static v => v.AsString()),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_create_channel_stream_schedule_segment.gd");
-            var twitchResponseDataClass = script.Get("ResponseData").AsGodotObject();
-            var request = twitchResponseDataClass.Call("new").AsGodotObject();
-            if(Segments != null) request.Set("segments", Segments.ToGodotArray());
-            if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
-            if(BroadcasterName != null) request.Set("broadcaster_name", BroadcasterName);
-            if(BroadcasterLogin != null) request.Set("broadcaster_login", BroadcasterLogin);
-            if(Vacation != null) request.Set("vacation", Vacation.ToGodotObject());
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_create_channel_stream_schedule_segment.gd", "ResponseData");
+            if(Segments != null) request.SetArray("segments", Segments);
+            if(BroadcasterId != null) request.SetValue("broadcaster_id", BroadcasterId);
+            if(BroadcasterName != null) request.SetValue("broadcaster_name", BroadcasterName);
+            if(BroadcasterLogin != null) request.SetValue("broadcaster_login", BroadcasterLogin);
+            if(Vacation != null) request.SetObject("vacation", Vacation);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
         
         /// <summary> 
@@ -77,7 +87,7 @@ public partial class TwitchCreateChannelStreamScheduleSegmentResponse : RefCount
         /// </summary>
         public partial class TwitchResponseVacation : RefCounted, ITwitcherSharp<TwitchResponseVacation>
         {
-            private GodotObject? _data;
+            private Variant _data;
             public string StartTime { get; set; } = null!;
             public string EndTime { get; set; } = null!;
         
@@ -89,22 +99,27 @@ public partial class TwitchCreateChannelStreamScheduleSegmentResponse : RefCount
                 if(data == null) return null;
                 var instance = new TwitchResponseVacation
                 {
-                    StartTime = data.Get("start_time").AsString(),
-                    EndTime = data.Get("end_time").AsString(),
+                    StartTime = data.Read("start_time", static v => v.AsString()),
+                    EndTime = data.Read("end_time", static v => v.AsString()),
                 };
                 
-                instance._data = data;
+                instance._data = Variant.CreateFrom(data);
                 return instance;
             }
         
             public GodotObject ToGodotObject()
             {
-                var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_create_channel_stream_schedule_segment.gd");
-                var twitchResponseVacationClass = script.Get("ResponseVacation").AsGodotObject();
-                var request = twitchResponseVacationClass.Call("new").AsGodotObject();
-                if(StartTime != null) request.Set("start_time", StartTime);
-                if(EndTime != null) request.Set("end_time", EndTime);
+                var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_create_channel_stream_schedule_segment.gd", "ResponseVacation");
+                if(StartTime != null) request.SetValue("start_time", StartTime);
+                if(EndTime != null) request.SetValue("end_time", EndTime);
                 return request;
+            }
+        
+            /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+            protected override void Dispose(bool disposing)
+            {
+                if (disposing) _data.Dispose();
+                base.Dispose(disposing);
             }
         
         }

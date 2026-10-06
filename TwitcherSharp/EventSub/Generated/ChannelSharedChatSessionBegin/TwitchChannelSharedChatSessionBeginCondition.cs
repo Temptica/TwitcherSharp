@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelSharedChatSessionBegin;
 
 public partial class TwitchChannelSharedChatSessionBeginCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelSharedChatSessionBeginCondition>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     public string Name => nameof(TwitchChannelSharedChatSessionBeginCondition);
 
@@ -23,19 +23,24 @@ public partial class TwitchChannelSharedChatSessionBeginCondition(string broadca
     public static TwitchChannelSharedChatSessionBeginCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchChannelSharedChatSessionBeginCondition(data.Get("broadcaster_user_id").AsString());
+        var instance = new TwitchChannelSharedChatSessionBeginCondition(data.Read("broadcaster_user_id", static v => v.AsString()));
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_shared_chat_session_begin.gd");
-        var conditionClass = script.Get("Condition").As<GDScript>();
-        var request = conditionClass.New().AsGodotObject();
-        request.Set("broadcaster_user_id", BroadcasterUserId);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_shared_chat_session_begin.gd", "Condition");
+        request.SetValue("broadcaster_user_id", BroadcasterUserId);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
     public static TwitchChannelSharedChatSessionBeginCondition FromDictionary(Dictionary data)

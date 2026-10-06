@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.Goals;
 
 public partial class TwitchGoalsEvent : RefCounted, ITwitcherSharpEventSub<TwitchGoalsEvent>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// An ID that identifies this event.
@@ -73,39 +73,44 @@ public partial class TwitchGoalsEvent : RefCounted, ITwitcherSharpEventSub<Twitc
         if(data == null) return null;
         var instance = new TwitchGoalsEvent
         {
-            Id = data.Get("id").AsString(),
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-            BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
-            BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
-            Type = data.Get("type").AsString(),
-            Description = data.Get("description").AsString(),
-            IsAchieved = data.Get("is_achieved").AsBool(),
-            CurrentAmount = data.Get("current_amount").AsInt32(),
-            TargetAmount = data.Get("target_amount").AsInt32(),
-            StartedAt = data.Get("started_at").AsString(),
-            EndedAt = data.Get("ended_at").AsString(),
+            Id = data.Read("id", static v => v.AsString()),
+            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
+            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
+            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
+            Type = data.Read("type", static v => v.AsString()),
+            Description = data.Read("description", static v => v.AsString()),
+            IsAchieved = data.Read("is_achieved", static v => v.AsBool()),
+            CurrentAmount = data.Read("current_amount", static v => v.AsInt32()),
+            TargetAmount = data.Read("target_amount", static v => v.AsInt32()),
+            StartedAt = data.Read("started_at", static v => v.AsString()),
+            EndedAt = data.Read("ended_at", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_goals.gd");
-        var eventClass = script.Get("Event").As<GDScript>();
-        var request = eventClass.New().AsGodotObject();
-        if(Id != null) request.Set("id", Id);
-        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
-        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
-        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        if(Type != null) request.Set("type", Type);
-        if(Description != null) request.Set("description", Description);
-        request.Set("is_achieved", IsAchieved);
-        request.Set("current_amount", CurrentAmount);
-        request.Set("target_amount", TargetAmount);
-        if(StartedAt != null) request.Set("started_at", StartedAt);
-        if(EndedAt != null) request.Set("ended_at", EndedAt);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_goals.gd", "Event");
+        if(Id != null) request.SetValue("id", Id);
+        if(BroadcasterUserId != null) request.SetValue("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserName != null) request.SetValue("broadcaster_user_name", BroadcasterUserName);
+        if(BroadcasterUserLogin != null) request.SetValue("broadcaster_user_login", BroadcasterUserLogin);
+        if(Type != null) request.SetValue("type", Type);
+        if(Description != null) request.SetValue("description", Description);
+        request.SetValue("is_achieved", IsAchieved);
+        request.SetValue("current_amount", CurrentAmount);
+        request.SetValue("target_amount", TargetAmount);
+        if(StartedAt != null) request.SetValue("started_at", StartedAt);
+        if(EndedAt != null) request.SetValue("ended_at", EndedAt);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 }

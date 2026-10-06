@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.WhisperReceived;
 
 public partial class TwitchWhisperReceivedEvent : RefCounted, ITwitcherSharpEventSub<TwitchWhisperReceivedEvent>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// The ID of the user sending the message.
@@ -48,7 +48,7 @@ public partial class TwitchWhisperReceivedEvent : RefCounted, ITwitcherSharpEven
     /// <summary> 
     /// Object containing whisper information.
     /// </summary>
-    public TwitchWhisper? Whisper { get => field ??= _data?.Get<TwitchWhisper>("whisper"); set; }
+    public TwitchWhisper? Whisper { get => field ??= _data.Get<TwitchWhisper>("whisper"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchWhisperReceivedEvent object.
@@ -58,39 +58,44 @@ public partial class TwitchWhisperReceivedEvent : RefCounted, ITwitcherSharpEven
         if(data == null) return null;
         var instance = new TwitchWhisperReceivedEvent
         {
-            FromUserId = data.Get("from_user_id").AsString(),
-            FromUserName = data.Get("from_user_name").AsString(),
-            FromUserLogin = data.Get("from_user_login").AsString(),
-            ToUserId = data.Get("to_user_id").AsString(),
-            ToUserName = data.Get("to_user_name").AsString(),
-            ToUserLogin = data.Get("to_user_login").AsString(),
-            WhisperId = data.Get("whisper_id").AsString(),
+            FromUserId = data.Read("from_user_id", static v => v.AsString()),
+            FromUserName = data.Read("from_user_name", static v => v.AsString()),
+            FromUserLogin = data.Read("from_user_login", static v => v.AsString()),
+            ToUserId = data.Read("to_user_id", static v => v.AsString()),
+            ToUserName = data.Read("to_user_name", static v => v.AsString()),
+            ToUserLogin = data.Read("to_user_login", static v => v.AsString()),
+            WhisperId = data.Read("whisper_id", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_whisper_received.gd");
-        var eventClass = script.Get("Event").As<GDScript>();
-        var request = eventClass.New().AsGodotObject();
-        if(FromUserId != null) request.Set("from_user_id", FromUserId);
-        if(FromUserName != null) request.Set("from_user_name", FromUserName);
-        if(FromUserLogin != null) request.Set("from_user_login", FromUserLogin);
-        if(ToUserId != null) request.Set("to_user_id", ToUserId);
-        if(ToUserName != null) request.Set("to_user_name", ToUserName);
-        if(ToUserLogin != null) request.Set("to_user_login", ToUserLogin);
-        if(WhisperId != null) request.Set("whisper_id", WhisperId);
-        if(Whisper != null) request.Set("whisper", Whisper.ToGodotObject());
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_whisper_received.gd", "Event");
+        if(FromUserId != null) request.SetValue("from_user_id", FromUserId);
+        if(FromUserName != null) request.SetValue("from_user_name", FromUserName);
+        if(FromUserLogin != null) request.SetValue("from_user_login", FromUserLogin);
+        if(ToUserId != null) request.SetValue("to_user_id", ToUserId);
+        if(ToUserName != null) request.SetValue("to_user_name", ToUserName);
+        if(ToUserLogin != null) request.SetValue("to_user_login", ToUserLogin);
+        if(WhisperId != null) request.SetValue("whisper_id", WhisperId);
+        if(Whisper != null) request.SetObject("whisper", Whisper);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 
     public partial class TwitchWhisper : RefCounted, ITwitcherSharpEventSub<TwitchWhisper>
     {
-        private GodotObject? _data;
+        private Variant _data;
         
         /// <summary> 
         /// The body of the whisper message.
@@ -105,20 +110,25 @@ public partial class TwitchWhisperReceivedEvent : RefCounted, ITwitcherSharpEven
             if(data == null) return null;
             var instance = new TwitchWhisper
             {
-                Text = data.Get("text").AsString(),
+                Text = data.Read("text", static v => v.AsString()),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_whisper_received.gd");
-            var whisperClass = script.Get("Whisper").As<GDScript>();
-            var request = whisperClass.New().AsGodotObject();
-            if(Text != null) request.Set("text", Text);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_whisper_received.gd", "Whisper");
+            if(Text != null) request.SetValue("text", Text);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

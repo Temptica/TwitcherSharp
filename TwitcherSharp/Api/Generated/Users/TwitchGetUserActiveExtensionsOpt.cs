@@ -10,7 +10,7 @@ namespace TwitcherSharp.Api.Generated.Users;
 /// </summary>
 public partial class TwitchGetUserActiveExtensionsOpt : RefCounted, ITwitcherSharp<TwitchGetUserActiveExtensionsOpt>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string? UserId { get; set; }
 
     /// <summary> 
@@ -21,20 +21,25 @@ public partial class TwitchGetUserActiveExtensionsOpt : RefCounted, ITwitcherSha
         if(data == null) return null;
         var instance = new TwitchGetUserActiveExtensionsOpt
         {
-            UserId = data.Get("user_id").AsString(),
+            UserId = data.Read("user_id", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_user_active_extensions.gd");
-        var optClass = script.Get("Opt").AsGodotObject();
-        var request = optClass.Call("new").AsGodotObject();
-        if(UserId != null) request.Set("user_id", UserId);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_user_active_extensions.gd", "Opt");
+        if(UserId != null) request.SetValue("user_id", UserId);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

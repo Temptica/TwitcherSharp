@@ -6,7 +6,7 @@ namespace TwitcherSharp.Api.Generated.Polls;
 
 public partial class TwitchEndPollBody : RefCounted, ITwitcherSharp<TwitchEndPollBody>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string BroadcasterId { get; set; } = null!;
     public string Id { get; set; } = null!;
     public string Status { get; set; } = null!;
@@ -19,24 +19,29 @@ public partial class TwitchEndPollBody : RefCounted, ITwitcherSharp<TwitchEndPol
         if(data == null) return null;
         var instance = new TwitchEndPollBody
         {
-            BroadcasterId = data.Get("broadcaster_id").AsString(),
-            Id = data.Get("id").AsString(),
-            Status = data.Get("status").AsString(),
+            BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
+            Id = data.Read("id", static v => v.AsString()),
+            Status = data.Read("status", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_end_poll.gd");
-        var bodyClass = script.Get("Body").AsGodotObject();
-        var request = bodyClass.Call("new").AsGodotObject();
-        if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
-        if(Id != null) request.Set("id", Id);
-        if(Status != null) request.Set("status", Status);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_end_poll.gd", "Body");
+        if(BroadcasterId != null) request.SetValue("broadcaster_id", BroadcasterId);
+        if(Id != null) request.SetValue("id", Id);
+        if(Status != null) request.SetValue("status", Status);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

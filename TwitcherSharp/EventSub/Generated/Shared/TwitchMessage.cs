@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.Shared;
 
 public partial class TwitchMessage : RefCounted, ITwitcherSharpEventSub<TwitchMessage>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// The text of the resubscription chat message.
@@ -18,7 +18,7 @@ public partial class TwitchMessage : RefCounted, ITwitcherSharpEventSub<TwitchMe
     /// <summary> 
     /// An array that includes the emote ID and start and end positions for where the emote appears in the text.
     /// </summary>
-    public TwitchEmotes[]? Emotes { get => field ??= _data?.GetArray<TwitchEmotes>("emotes"); set; }
+    public TwitchEmotes[]? Emotes { get => field ??= _data.GetArray<TwitchEmotes>("emotes"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchMessage object.
@@ -28,19 +28,25 @@ public partial class TwitchMessage : RefCounted, ITwitcherSharpEventSub<TwitchMe
         if(data == null) return null;
         var instance = new TwitchMessage
         {
-            Text = data.Get("text").AsString(),
+            Text = data.Read("text", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_message.gd");
-        var request = script.New().AsGodotObject();
-        if(Text != null) request.Set("text", Text);
-        if(Emotes != null) request.Set("emotes", Emotes.ToGodotArray());
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated_eventsub/twitch_es_message.gd");
+        if(Text != null) request.SetValue("text", Text);
+        if(Emotes != null) request.SetArray("emotes", Emotes);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 }

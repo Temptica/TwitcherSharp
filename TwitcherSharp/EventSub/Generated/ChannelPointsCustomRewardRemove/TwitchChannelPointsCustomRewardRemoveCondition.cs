@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelPointsCustomRewardRemove;
 
 public partial class TwitchChannelPointsCustomRewardRemoveCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelPointsCustomRewardRemoveCondition>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     public string Name => nameof(TwitchChannelPointsCustomRewardRemoveCondition);
 
@@ -28,23 +28,28 @@ public partial class TwitchChannelPointsCustomRewardRemoveCondition(string broad
     public static TwitchChannelPointsCustomRewardRemoveCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchChannelPointsCustomRewardRemoveCondition(data.Get("broadcaster_user_id").AsString())
+        var instance = new TwitchChannelPointsCustomRewardRemoveCondition(data.Read("broadcaster_user_id", static v => v.AsString()))
         {
-            RewardId = data.Get("reward_id").AsString(),
+            RewardId = data.Read("reward_id", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_points_custom_reward_remove.gd");
-        var conditionClass = script.Get("Condition").As<GDScript>();
-        var request = conditionClass.New().AsGodotObject();
-        request.Set("broadcaster_user_id", BroadcasterUserId);
-        if(RewardId != null) request.Set("reward_id", RewardId);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_points_custom_reward_remove.gd", "Condition");
+        request.SetValue("broadcaster_user_id", BroadcasterUserId);
+        if(RewardId != null) request.SetValue("reward_id", RewardId);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
     public static TwitchChannelPointsCustomRewardRemoveCondition FromDictionary(Dictionary data)

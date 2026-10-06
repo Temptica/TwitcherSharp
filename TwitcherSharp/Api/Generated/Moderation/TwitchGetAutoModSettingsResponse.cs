@@ -6,8 +6,8 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 
 public partial class TwitchGetAutoModSettingsResponse : RefCounted, ITwitcherSharp<TwitchGetAutoModSettingsResponse>
 {
-    private GodotObject? _data;
-    public TwitchAutoModSettings[] Data { get => field ??= _data?.GetArray<TwitchAutoModSettings>("data")!; set; } = null!;
+    private Variant _data;
+    public TwitchAutoModSettings[] Data { get => field ??= _data.GetArray<TwitchAutoModSettings>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetAutoModSettingsResponse object.
@@ -17,17 +17,22 @@ public partial class TwitchGetAutoModSettingsResponse : RefCounted, ITwitcherSha
         if(data == null) return null;
         var instance = new TwitchGetAutoModSettingsResponse();
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_auto_mod_settings.gd");
-        var responseClass = script.Get("Response").AsGodotObject();
-        var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data.ToGodotArray());
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_auto_mod_settings.gd", "Response");
+        if(Data != null) request.SetArray("data", Data);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

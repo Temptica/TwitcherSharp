@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelSubscribe;
 
 public partial class TwitchChannelSubscribeCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelSubscribeCondition>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     public string Name => nameof(TwitchChannelSubscribeCondition);
 
@@ -23,19 +23,24 @@ public partial class TwitchChannelSubscribeCondition(string broadcasterUserId) :
     public static TwitchChannelSubscribeCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchChannelSubscribeCondition(data.Get("broadcaster_user_id").AsString());
+        var instance = new TwitchChannelSubscribeCondition(data.Read("broadcaster_user_id", static v => v.AsString()));
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_subscribe.gd");
-        var conditionClass = script.Get("Condition").As<GDScript>();
-        var request = conditionClass.New().AsGodotObject();
-        request.Set("broadcaster_user_id", BroadcasterUserId);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_subscribe.gd", "Condition");
+        request.SetValue("broadcaster_user_id", BroadcasterUserId);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
     public static TwitchChannelSubscribeCondition FromDictionary(Dictionary data)

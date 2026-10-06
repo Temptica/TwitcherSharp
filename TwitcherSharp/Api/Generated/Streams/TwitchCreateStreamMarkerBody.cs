@@ -6,7 +6,7 @@ namespace TwitcherSharp.Api.Generated.Streams;
 
 public partial class TwitchCreateStreamMarkerBody : RefCounted, ITwitcherSharp<TwitchCreateStreamMarkerBody>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string UserId { get; set; } = null!;
     public string? Description { get; set; }
 
@@ -18,22 +18,27 @@ public partial class TwitchCreateStreamMarkerBody : RefCounted, ITwitcherSharp<T
         if(data == null) return null;
         var instance = new TwitchCreateStreamMarkerBody
         {
-            UserId = data.Get("user_id").AsString(),
-            Description = data.Get("description").AsString(),
+            UserId = data.Read("user_id", static v => v.AsString()),
+            Description = data.Read("description", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_create_stream_marker.gd");
-        var bodyClass = script.Get("Body").AsGodotObject();
-        var request = bodyClass.Call("new").AsGodotObject();
-        if(UserId != null) request.Set("user_id", UserId);
-        if(Description != null) request.Set("description", Description);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_create_stream_marker.gd", "Body");
+        if(UserId != null) request.SetValue("user_id", UserId);
+        if(Description != null) request.SetValue("description", Description);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

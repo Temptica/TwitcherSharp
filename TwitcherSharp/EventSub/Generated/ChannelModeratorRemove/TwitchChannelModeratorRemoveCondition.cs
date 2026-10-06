@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelModeratorRemove;
 
 public partial class TwitchChannelModeratorRemoveCondition(string broadcasterUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelModeratorRemoveCondition>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     public string Name => nameof(TwitchChannelModeratorRemoveCondition);
 
@@ -23,19 +23,24 @@ public partial class TwitchChannelModeratorRemoveCondition(string broadcasterUse
     public static TwitchChannelModeratorRemoveCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchChannelModeratorRemoveCondition(data.Get("broadcaster_user_id").AsString());
+        var instance = new TwitchChannelModeratorRemoveCondition(data.Read("broadcaster_user_id", static v => v.AsString()));
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderator_remove.gd");
-        var conditionClass = script.Get("Condition").As<GDScript>();
-        var request = conditionClass.New().AsGodotObject();
-        request.Set("broadcaster_user_id", BroadcasterUserId);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderator_remove.gd", "Condition");
+        request.SetValue("broadcaster_user_id", BroadcasterUserId);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
     public static TwitchChannelModeratorRemoveCondition FromDictionary(Dictionary data)

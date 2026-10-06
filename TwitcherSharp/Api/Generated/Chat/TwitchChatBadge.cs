@@ -6,9 +6,9 @@ namespace TwitcherSharp.Api.Generated.Chat;
 
 public partial class TwitchChatBadge : RefCounted, ITwitcherSharp<TwitchChatBadge>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string SetId { get; set; } = null!;
-    public TwitchVersions[] Versions { get => field ??= _data?.GetArray<TwitchVersions>("versions")!; set; } = null!;
+    public TwitchVersions[] Versions { get => field ??= _data.GetArray<TwitchVersions>("versions")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChatBadge object.
@@ -18,20 +18,26 @@ public partial class TwitchChatBadge : RefCounted, ITwitcherSharp<TwitchChatBadg
         if(data == null) return null;
         var instance = new TwitchChatBadge
         {
-            SetId = data.Get("set_id").AsString(),
+            SetId = data.Read("set_id", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_chat_badge.gd");
-        var request = script.Call("new").AsGodotObject();
-        if(SetId != null) request.Set("set_id", SetId);
-        if(Versions != null) request.Set("versions", Versions.ToGodotArray());
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated/twitch_chat_badge.gd");
+        if(SetId != null) request.SetValue("set_id", SetId);
+        if(Versions != null) request.SetArray("versions", Versions);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
     
     /// <summary> 
@@ -39,7 +45,7 @@ public partial class TwitchChatBadge : RefCounted, ITwitcherSharp<TwitchChatBadg
     /// </summary>
     public partial class TwitchVersions : RefCounted, ITwitcherSharp<TwitchVersions>
     {
-        private GodotObject? _data;
+        private Variant _data;
         public string Id { get; set; } = null!;
         public string ImageUrl1x { get; set; } = null!;
         public string ImageUrl2x { get; set; } = null!;
@@ -57,34 +63,39 @@ public partial class TwitchChatBadge : RefCounted, ITwitcherSharp<TwitchChatBadg
             if(data == null) return null;
             var instance = new TwitchVersions
             {
-                Id = data.Get("id").AsString(),
-                ImageUrl1x = data.Get("image_url_1x").AsString(),
-                ImageUrl2x = data.Get("image_url_2x").AsString(),
-                ImageUrl4x = data.Get("image_url_4x").AsString(),
-                Title = data.Get("title").AsString(),
-                Description = data.Get("description").AsString(),
-                ClickAction = data.Get("click_action").AsString(),
-                ClickUrl = data.Get("click_url").AsString(),
+                Id = data.Read("id", static v => v.AsString()),
+                ImageUrl1x = data.Read("image_url_1x", static v => v.AsString()),
+                ImageUrl2x = data.Read("image_url_2x", static v => v.AsString()),
+                ImageUrl4x = data.Read("image_url_4x", static v => v.AsString()),
+                Title = data.Read("title", static v => v.AsString()),
+                Description = data.Read("description", static v => v.AsString()),
+                ClickAction = data.Read("click_action", static v => v.AsString()),
+                ClickUrl = data.Read("click_url", static v => v.AsString()),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_chat_badge.gd");
-            var twitchVersionsClass = script.Get("Versions").AsGodotObject();
-            var request = twitchVersionsClass.Call("new").AsGodotObject();
-            if(Id != null) request.Set("id", Id);
-            if(ImageUrl1x != null) request.Set("image_url_1x", ImageUrl1x);
-            if(ImageUrl2x != null) request.Set("image_url_2x", ImageUrl2x);
-            if(ImageUrl4x != null) request.Set("image_url_4x", ImageUrl4x);
-            if(Title != null) request.Set("title", Title);
-            if(Description != null) request.Set("description", Description);
-            if(ClickAction != null) request.Set("click_action", ClickAction);
-            if(ClickUrl != null) request.Set("click_url", ClickUrl);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_chat_badge.gd", "Versions");
+            if(Id != null) request.SetValue("id", Id);
+            if(ImageUrl1x != null) request.SetValue("image_url_1x", ImageUrl1x);
+            if(ImageUrl2x != null) request.SetValue("image_url_2x", ImageUrl2x);
+            if(ImageUrl4x != null) request.SetValue("image_url_4x", ImageUrl4x);
+            if(Title != null) request.SetValue("title", Title);
+            if(Description != null) request.SetValue("description", Description);
+            if(ClickAction != null) request.SetValue("click_action", ClickAction);
+            if(ClickUrl != null) request.SetValue("click_url", ClickUrl);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     
     }

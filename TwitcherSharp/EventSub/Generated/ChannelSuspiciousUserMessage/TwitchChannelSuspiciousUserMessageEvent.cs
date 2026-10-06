@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelSuspiciousUserMessage;
 
 public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelSuspiciousUserMessageEvent>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// The ID of the channel where the treatment for a suspicious user was updated.
@@ -63,7 +63,7 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
     /// <summary> 
     /// 
     /// </summary>
-    public TwitchMessage? Message { get => field ??= _data?.Get<TwitchMessage>("message"); set; }
+    public TwitchMessage? Message { get => field ??= _data.Get<TwitchMessage>("message"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelSuspiciousUserMessageEvent object.
@@ -73,44 +73,49 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
         if(data == null) return null;
         var instance = new TwitchChannelSuspiciousUserMessageEvent
         {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-            BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
-            BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
-            UserId = data.Get("user_id").AsString(),
-            UserName = data.Get("user_name").AsString(),
-            UserLogin = data.Get("user_login").AsString(),
-            LowTrustStatus = data.Get("low_trust_status").AsString(),
-            Types = data.Get("types").AsStringArray(),
-            BanEvasionEvaluation = data.Get("ban_evasion_evaluation").AsString(),
+            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
+            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
+            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
+            UserId = data.Read("user_id", static v => v.AsString()),
+            UserName = data.Read("user_name", static v => v.AsString()),
+            UserLogin = data.Read("user_login", static v => v.AsString()),
+            LowTrustStatus = data.Read("low_trust_status", static v => v.AsString()),
+            Types = data.Read("types", static v => v.AsStringArray()),
+            BanEvasionEvaluation = data.Read("ban_evasion_evaluation", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_suspicious_user_message.gd");
-        var eventClass = script.Get("Event").As<GDScript>();
-        var request = eventClass.New().AsGodotObject();
-        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
-        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
-        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        if(UserId != null) request.Set("user_id", UserId);
-        if(UserName != null) request.Set("user_name", UserName);
-        if(UserLogin != null) request.Set("user_login", UserLogin);
-        if(LowTrustStatus != null) request.Set("low_trust_status", LowTrustStatus);
-        if(SharedBanChannelIds != null) request.Set("shared_ban_channel_ids", new Godot.Collections.Array<string>(SharedBanChannelIds));
-        if(Types != null) request.Set("types", Types);
-        if(BanEvasionEvaluation != null) request.Set("ban_evasion_evaluation", BanEvasionEvaluation);
-        if(Message != null) request.Set("message", Message.ToGodotObject());
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_suspicious_user_message.gd", "Event");
+        if(BroadcasterUserId != null) request.SetValue("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserName != null) request.SetValue("broadcaster_user_name", BroadcasterUserName);
+        if(BroadcasterUserLogin != null) request.SetValue("broadcaster_user_login", BroadcasterUserLogin);
+        if(UserId != null) request.SetValue("user_id", UserId);
+        if(UserName != null) request.SetValue("user_name", UserName);
+        if(UserLogin != null) request.SetValue("user_login", UserLogin);
+        if(LowTrustStatus != null) request.SetValue("low_trust_status", LowTrustStatus);
+        if(SharedBanChannelIds != null) request.SetValue("shared_ban_channel_ids", new Godot.Collections.Array<string>(SharedBanChannelIds));
+        if(Types != null) request.SetValue("types", Types);
+        if(BanEvasionEvaluation != null) request.SetValue("ban_evasion_evaluation", BanEvasionEvaluation);
+        if(Message != null) request.SetObject("message", Message);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 
     public partial class TwitchMessage : RefCounted, ITwitcherSharpEventSub<TwitchMessage>
     {
-        private GodotObject? _data;
+        private Variant _data;
         
         /// <summary> 
         /// The UUID that identifies the message.
@@ -125,7 +130,7 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
         /// <summary> 
         /// Ordered list of chat message fragments.
         /// </summary>
-        public TwitchFragments[]? Fragments { get => field ??= _data?.GetArray<TwitchFragments>("fragments"); set; }
+        public TwitchFragments[]? Fragments { get => field ??= _data.GetArray<TwitchFragments>("fragments"); set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchMessage object.
@@ -135,29 +140,34 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
             if(data == null) return null;
             var instance = new TwitchMessage
             {
-                MessageId = data.Get("message_id").AsString(),
-                Text = data.Get("text").AsString(),
+                MessageId = data.Read("message_id", static v => v.AsString()),
+                Text = data.Read("text", static v => v.AsString()),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_suspicious_user_message.gd");
-            var messageClass = script.Get("Message").As<GDScript>();
-            var request = messageClass.New().AsGodotObject();
-            if(MessageId != null) request.Set("message_id", MessageId);
-            if(Text != null) request.Set("text", Text);
-            if(Fragments != null) request.Set("fragments", Fragments.ToGodotArray());
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_suspicious_user_message.gd", "Message");
+            if(MessageId != null) request.SetValue("message_id", MessageId);
+            if(Text != null) request.SetValue("text", Text);
+            if(Fragments != null) request.SetArray("fragments", Fragments);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     
     
         public partial class TwitchFragments : RefCounted, ITwitcherSharpEventSub<TwitchFragments>
         {
-            private GodotObject? _data;
+            private Variant _data;
             
             /// <summary> 
             /// The type of message fragment. Possible values: -text -cheermote -emote
@@ -172,12 +182,12 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
             /// <summary> 
             /// Optional. Metadata pertaining to the cheermote.
             /// </summary>
-            public TwitchCheermote? Cheermote { get => field ??= _data?.Get<TwitchCheermote>("cheermote"); set; }
+            public TwitchCheermote? Cheermote { get => field ??= _data.Get<TwitchCheermote>("cheermote"); set; }
         
             /// <summary> 
             /// Optional. Metadata pertaining to the emote.
             /// </summary>
-            public TwitchEmote? Emote { get => field ??= _data?.Get<TwitchEmote>("emote"); set; }
+            public TwitchEmote? Emote { get => field ??= _data.Get<TwitchEmote>("emote"); set; }
         
             /// <summary> 
             /// Transforms the godot data into a TwitchFragments object.
@@ -187,30 +197,35 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
                 if(data == null) return null;
                 var instance = new TwitchFragments
                 {
-                    Type = data.Get("type").AsString(),
-                    Text = data.Get("text").AsString(),
+                    Type = data.Read("type", static v => v.AsString()),
+                    Text = data.Read("text", static v => v.AsString()),
                 };
                 
-                instance._data = data;
+                instance._data = Variant.CreateFrom(data);
                 return instance;
             }
         
             public GodotObject ToGodotObject()
             {
-                var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_suspicious_user_message.gd");
-                var fragmentsClass = script.Get("Fragments").As<GDScript>();
-                var request = fragmentsClass.New().AsGodotObject();
-                if(Type != null) request.Set("type", Type);
-                if(Text != null) request.Set("text", Text);
-                if(Cheermote != null) request.Set("cheermote", Cheermote.ToGodotObject());
-                if(Emote != null) request.Set("emote", Emote.ToGodotObject());
+                var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_suspicious_user_message.gd", "Fragments");
+                if(Type != null) request.SetValue("type", Type);
+                if(Text != null) request.SetValue("text", Text);
+                if(Cheermote != null) request.SetObject("cheermote", Cheermote);
+                if(Emote != null) request.SetObject("emote", Emote);
                 return request;
+            }
+        
+            /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+            protected override void Dispose(bool disposing)
+            {
+                if (disposing) _data.Dispose();
+                base.Dispose(disposing);
             }
         
         
             public partial class TwitchCheermote : RefCounted, ITwitcherSharpEventSub<TwitchCheermote>
             {
-                private GodotObject? _data;
+                private Variant _data;
                 
                 /// <summary> 
                 /// The name portion of the Cheermote string that you use in chat to cheer Bits. The full Cheermote string is the concatenation of {prefix} + {number of Bits}.   For example, if the prefix is “Cheer” and you want to cheer 100 Bits, the full Cheermote string is Cheer100. When the Cheermote string is entered in chat, Twitch converts it to the image associated with the Bits tier that was cheered.
@@ -220,12 +235,12 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
                 /// <summary> 
                 /// The amount of Bits cheered.
                 /// </summary>
-                public string? Bits { get; set; }
+                public int Bits { get; set; }
             
                 /// <summary> 
                 /// The tier level of the cheermote.
                 /// </summary>
-                public string? Tier { get; set; }
+                public int Tier { get; set; }
             
                 /// <summary> 
                 /// Transforms the godot data into a TwitchCheermote object.
@@ -235,30 +250,35 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
                     if(data == null) return null;
                     var instance = new TwitchCheermote
                     {
-                        Prefix = data.Get("prefix").AsString(),
-                        Bits = data.Get("bits").AsString(),
-                        Tier = data.Get("tier").AsString(),
+                        Prefix = data.Read("prefix", static v => v.AsString()),
+                        Bits = data.Read("bits", static v => v.AsInt32()),
+                        Tier = data.Read("tier", static v => v.AsInt32()),
                     };
                     
-                    instance._data = data;
+                    instance._data = Variant.CreateFrom(data);
                     return instance;
                 }
             
                 public GodotObject ToGodotObject()
                 {
-                    var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_suspicious_user_message.gd");
-                    var cheermoteClass = script.Get("Cheermote").As<GDScript>();
-                    var request = cheermoteClass.New().AsGodotObject();
-                    if(Prefix != null) request.Set("prefix", Prefix);
-                    if(Bits != null) request.Set("bits", Bits);
-                    if(Tier != null) request.Set("tier", Tier);
+                    var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_suspicious_user_message.gd", "Cheermote");
+                    if(Prefix != null) request.SetValue("prefix", Prefix);
+                    request.SetValue("bits", Bits);
+                    request.SetValue("tier", Tier);
                     return request;
+                }
+            
+                /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+                protected override void Dispose(bool disposing)
+                {
+                    if (disposing) _data.Dispose();
+                    base.Dispose(disposing);
                 }
             }
         
             public partial class TwitchEmote : RefCounted, ITwitcherSharpEventSub<TwitchEmote>
             {
-                private GodotObject? _data;
+                private Variant _data;
                 
                 /// <summary> 
                 /// An ID that uniquely identifies this emote.
@@ -278,22 +298,27 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
                     if(data == null) return null;
                     var instance = new TwitchEmote
                     {
-                        Id = data.Get("id").AsString(),
-                        EmoteSetId = data.Get("emote_set_id").AsString(),
+                        Id = data.Read("id", static v => v.AsString()),
+                        EmoteSetId = data.Read("emote_set_id", static v => v.AsString()),
                     };
                     
-                    instance._data = data;
+                    instance._data = Variant.CreateFrom(data);
                     return instance;
                 }
             
                 public GodotObject ToGodotObject()
                 {
-                    var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_suspicious_user_message.gd");
-                    var emoteClass = script.Get("Emote").As<GDScript>();
-                    var request = emoteClass.New().AsGodotObject();
-                    if(Id != null) request.Set("id", Id);
-                    if(EmoteSetId != null) request.Set("emote_set_id", EmoteSetId);
+                    var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_suspicious_user_message.gd", "Emote");
+                    if(Id != null) request.SetValue("id", Id);
+                    if(EmoteSetId != null) request.SetValue("emote_set_id", EmoteSetId);
                     return request;
+                }
+            
+                /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+                protected override void Dispose(bool disposing)
+                {
+                    if (disposing) _data.Dispose();
+                    base.Dispose(disposing);
                 }
             }
         }

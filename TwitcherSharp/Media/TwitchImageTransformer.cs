@@ -1,4 +1,5 @@
 using Godot;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.Media;
@@ -40,15 +41,14 @@ public partial class TwitchImageTransformer : RefCounted, ITwitcherSharp<TwitchI
 
         return new TwitchImageTransformer
         {
-            FallbackTexture = data.Get("fallback_texture").As<Texture2D>()
+            FallbackTexture = data.Read("fallback_texture", static v => v.As<Texture2D>())
         };
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/media/twitch_image_transformer.gd");
-        var data = script.New().AsGodotObject();
-        if (FallbackTexture != null) data.Set("fallback_texture", FallbackTexture);
+        var data = InteropExtension.NewObject("res://addons/twitcher/media/twitch_image_transformer.gd");
+        if (FallbackTexture != null) data.SetValue("fallback_texture", FallbackTexture);
 
         return data;
     }

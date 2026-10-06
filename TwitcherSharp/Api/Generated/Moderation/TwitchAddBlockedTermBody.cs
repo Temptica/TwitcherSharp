@@ -6,7 +6,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 
 public partial class TwitchAddBlockedTermBody : RefCounted, ITwitcherSharp<TwitchAddBlockedTermBody>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string Text { get; set; } = null!;
 
     /// <summary> 
@@ -17,20 +17,25 @@ public partial class TwitchAddBlockedTermBody : RefCounted, ITwitcherSharp<Twitc
         if(data == null) return null;
         var instance = new TwitchAddBlockedTermBody
         {
-            Text = data.Get("text").AsString(),
+            Text = data.Read("text", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_add_blocked_term.gd");
-        var bodyClass = script.Get("Body").AsGodotObject();
-        var request = bodyClass.Call("new").AsGodotObject();
-        if(Text != null) request.Set("text", Text);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_add_blocked_term.gd", "Body");
+        if(Text != null) request.SetValue("text", Text);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

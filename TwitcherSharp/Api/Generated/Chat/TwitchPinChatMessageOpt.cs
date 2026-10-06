@@ -10,7 +10,7 @@ namespace TwitcherSharp.Api.Generated.Chat;
 /// </summary>
 public partial class TwitchPinChatMessageOpt : RefCounted, ITwitcherSharp<TwitchPinChatMessageOpt>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public int? DurationSeconds { get; set; }
 
     /// <summary> 
@@ -21,20 +21,25 @@ public partial class TwitchPinChatMessageOpt : RefCounted, ITwitcherSharp<Twitch
         if(data == null) return null;
         var instance = new TwitchPinChatMessageOpt
         {
-            DurationSeconds = data.Get("duration_seconds").AsInt32(),
+            DurationSeconds = data.Read("duration_seconds", static v => v.AsInt32()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_pin_chat_message.gd");
-        var optClass = script.Get("Opt").AsGodotObject();
-        var request = optClass.Call("new").AsGodotObject();
-        if(DurationSeconds.HasValue) request.Set("duration_seconds", DurationSeconds.Value);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_pin_chat_message.gd", "Opt");
+        if(DurationSeconds.HasValue) request.SetValue("duration_seconds", DurationSeconds.Value);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.Shared;
 
 public partial class TwitchMaxPerStream : RefCounted, ITwitcherSharpEventSub<TwitchMaxPerStream>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// Is the setting enabled.
@@ -28,20 +28,26 @@ public partial class TwitchMaxPerStream : RefCounted, ITwitcherSharpEventSub<Twi
         if(data == null) return null;
         var instance = new TwitchMaxPerStream
         {
-            IsEnabled = data.Get("is_enabled").AsBool(),
-            Value = data.Get("value").AsInt32(),
+            IsEnabled = data.Read("is_enabled", static v => v.AsBool()),
+            Value = data.Read("value", static v => v.AsInt32()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_max_per_stream.gd");
-        var request = script.New().AsGodotObject();
-        request.Set("is_enabled", IsEnabled);
-        request.Set("value", Value);
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated_eventsub/twitch_es_max_per_stream.gd");
+        request.SetValue("is_enabled", IsEnabled);
+        request.SetValue("value", Value);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 }

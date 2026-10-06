@@ -6,7 +6,7 @@ namespace TwitcherSharp.Api.Generated.Search;
 
 public partial class TwitchCategory : RefCounted, ITwitcherSharp<TwitchCategory>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string BoxArtUrl { get; set; } = null!;
     public string Name { get; set; } = null!;
     public string Id { get; set; } = null!;
@@ -19,23 +19,29 @@ public partial class TwitchCategory : RefCounted, ITwitcherSharp<TwitchCategory>
         if(data == null) return null;
         var instance = new TwitchCategory
         {
-            BoxArtUrl = data.Get("box_art_url").AsString(),
-            Name = data.Get("name").AsString(),
-            Id = data.Get("id").AsString(),
+            BoxArtUrl = data.Read("box_art_url", static v => v.AsString()),
+            Name = data.Read("name", static v => v.AsString()),
+            Id = data.Read("id", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_category.gd");
-        var request = script.Call("new").AsGodotObject();
-        if(BoxArtUrl != null) request.Set("box_art_url", BoxArtUrl);
-        if(Name != null) request.Set("name", Name);
-        if(Id != null) request.Set("id", Id);
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated/twitch_category.gd");
+        if(BoxArtUrl != null) request.SetValue("box_art_url", BoxArtUrl);
+        if(Name != null) request.SetValue("name", Name);
+        if(Id != null) request.SetValue("id", Id);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

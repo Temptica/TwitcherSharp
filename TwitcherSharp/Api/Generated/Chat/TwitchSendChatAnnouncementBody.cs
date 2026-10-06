@@ -6,7 +6,7 @@ namespace TwitcherSharp.Api.Generated.Chat;
 
 public partial class TwitchSendChatAnnouncementBody : RefCounted, ITwitcherSharp<TwitchSendChatAnnouncementBody>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string Message { get; set; } = null!;
     public string? Color { get; set; }
     public bool? ForSourceOnly { get; set; }
@@ -19,24 +19,29 @@ public partial class TwitchSendChatAnnouncementBody : RefCounted, ITwitcherSharp
         if(data == null) return null;
         var instance = new TwitchSendChatAnnouncementBody
         {
-            Message = data.Get("message").AsString(),
-            Color = data.Get("color").AsString(),
-            ForSourceOnly = data.Get("for_source_only").AsBool(),
+            Message = data.Read("message", static v => v.AsString()),
+            Color = data.Read("color", static v => v.AsString()),
+            ForSourceOnly = data.Read("for_source_only", static v => v.AsBool()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_send_chat_announcement.gd");
-        var bodyClass = script.Get("Body").AsGodotObject();
-        var request = bodyClass.Call("new").AsGodotObject();
-        if(Message != null) request.Set("message", Message);
-        if(Color != null) request.Set("color", Color);
-        if(ForSourceOnly.HasValue) request.Set("for_source_only", ForSourceOnly.Value);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_send_chat_announcement.gd", "Body");
+        if(Message != null) request.SetValue("message", Message);
+        if(Color != null) request.SetValue("color", Color);
+        if(ForSourceOnly.HasValue) request.SetValue("for_source_only", ForSourceOnly.Value);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

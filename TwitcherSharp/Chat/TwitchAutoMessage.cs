@@ -5,60 +5,131 @@ using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.Chat;
 
+/// <summary>
+/// A message sent automatically. When linked to a twitcher node (from <see cref="FromObject"/>), the properties are
+/// read from the node and written to it.
+/// </summary>
 public partial class TwitchAutoMessage : RefCounted, ITwitcherSharp<TwitchAutoMessage>
 {
     private GodotObject? _data;
-    public bool UseBot { get; set; }
-    public bool Announcement { get; set; }
+
+    /// <summary>
+    /// The colors in the order of twitcher's <c>TwitchAnnouncementColor.Enum</c>, which the node stores.
+    /// </summary>
+    private static readonly string[] AnnouncementColors = ["blue", "green", "orange", "purple", "primary"];
+
+    public bool UseBot
+    {
+        get => _data?.Read("use_bot", static v => v.AsBool()) ?? field;
+        set
+        {
+            _data?.SetValue("use_bot", value);
+            field = value;
+        }
+    }
+
+    public bool Announcement
+    {
+        get => _data?.Read("announcement", static v => v.AsBool()) ?? field;
+        set
+        {
+            _data?.SetValue("announcement", value);
+            field = value;
+        }
+    }
 
     public TwitchAnnouncementColor AnnouncementColor
     {
-        get => field ??= _data?.Get<TwitchAnnouncementColor>("announcement_color") ?? TwitchAnnouncementColor.Primary ;
-        set;
+        get => _data?.Read("announcement_color", static v => ToColor(v.AsInt32())) ?? field;
+        set
+        {
+            _data?.SetValue("announcement_color", ToEnum(value));
+            field = value;
+        }
+    } = TwitchAnnouncementColor.Primary;
+
+    public string Message
+    {
+        get => _data?.Read("message", static v => v.AsString()) ?? field;
+        set
+        {
+            _data?.SetValue("message", value);
+            field = value;
+        }
+    } = "";
+
+    public bool SourceOnly
+    {
+        get => _data?.Read("source_only", static v => v.AsBool()) ?? field;
+        set
+        {
+            _data?.SetValue("source_only", value);
+            field = value;
+        }
+    } = true;
+
+    public int Weight
+    {
+        get => _data?.Read("weight", static v => v.AsInt32()) ?? field;
+        set
+        {
+            _data?.SetValue("weight", value);
+            field = value;
+        }
+    } = 1;
+
+    public TwitchUser? Broadcaster
+    {
+        get => _data is null ? field : _data.Get<TwitchUser>("broadcaster");
+        set
+        {
+            _data?.SetObject("broadcaster", value);
+            field = value;
+        }
     }
 
-    public string Message { get; set; } = "";
-    public bool SourceOnly { get; set; } = true;
-    public int Weight { get; set; } = 1;
+    public TwitchUser? Sender
+    {
+        get => _data is null ? field : _data.Get<TwitchUser>("sender");
+        set
+        {
+            _data?.SetObject("sender", value);
+            field = value;
+        }
+    }
 
-    public TwitchUser? Broadcaster { get => field ??= _data?.Get<TwitchUser>("broadcaster"); set; }
-    public TwitchUser? Sender { get => field ??= _data?.Get<TwitchUser>("sender"); set; }
+    private static TwitchAnnouncementColor ToColor(int index) =>
+        index >= 0 && index < AnnouncementColors.Length ? AnnouncementColors[index] : TwitchAnnouncementColor.Primary;
+
+    private static int ToEnum(TwitchAnnouncementColor? color)
+    {
+        var index = System.Array.IndexOf(AnnouncementColors, color?.Value);
+        return index < 0 ? System.Array.IndexOf(AnnouncementColors, "primary") : index;
+    }
 
     public static TwitchAutoMessage? FromObject(GodotObject? data)
     {
-        if (data == null) return null;
-        return new TwitchAutoMessage
-        {
-            _data = data,
-            UseBot = data.Get("use_bot").AsBool(),
-            Announcement = data.Get("announcement").AsBool(),
-            AnnouncementColor = data.Get("announcement_color").AsTwitcherObject<TwitchAnnouncementColor>(),
-            Message = data.Get("message").AsString(),
-            SourceOnly = data.Get("source_only").AsBool(),
-            Weight = data.Get("weight").AsInt32(),
-            Broadcaster = data.Get("user").AsTwitcherObject<TwitchUser>(),
-            Sender = data.Get("sender").AsTwitcherObject<TwitchUser>(),
-        };
+        // The properties are read from the node.
+        return data == null ? null : new TwitchAutoMessage { _data = data };
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_auto_message.gd");
-        var instances = script.New().AsGodotObject();
-        instances.Set("use_bot", UseBot);
-        instances.Set("announcement", Announcement);
-        instances.Set("announcement_color", AnnouncementColor.ToGodotObject());
-        instances.Set("message", Message);
-        instances.Set("source_only", SourceOnly);
-        instances.Set("weight", Weight);
-        instances.Set("user", Broadcaster?.ToGodotObject() ?? new Variant());
-        instances.Set("sender", Sender?.ToGodotObject() ?? new Variant());
+        var instances = InteropExtension.NewObject("res://addons/twitcher/chat/twitch_auto_message.gd");
+        instances.SetValue("use_bot", UseBot);
+        instances.SetValue("announcement", Announcement);
+        instances.SetValue("announcement_color", ToEnum(AnnouncementColor));
+        instances.SetValue("message", Message);
+        instances.SetValue("source_only", SourceOnly);
+        instances.SetValue("weight", Weight);
+        instances.SetObject("broadcaster", Broadcaster);
+        instances.SetObject("sender", Sender);
 
         return instances;
     }
 
     public async Task Send()
     {
-        await _data!.CallAsync("send");
+        await _data!.InvokeAsync("send");
     }
 }

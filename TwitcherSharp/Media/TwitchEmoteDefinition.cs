@@ -1,4 +1,5 @@
 using Godot;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.Media;
@@ -72,22 +73,20 @@ public partial class TwitchEmoteDefinition(string emoteId) : RefCounted, ITwitch
     public static TwitchEmoteDefinition? FromObject(GodotObject? data)
     {
         if (data == null) return null;
-        return new TwitchEmoteDefinition(data.Get("id").AsString())
+        return new TwitchEmoteDefinition(data.Read("id", static v => v.AsString()))
         {
-            Scale = data.Get("scale").AsInt32(),
-            Type = data.Get("type").AsString(),
-            Theme = data.Get("theme").AsString(),
+            Scale = data.Read("scale", static v => v.AsInt32()),
+            Type = data.Read("type", static v => v.AsString()),
+            Theme = data.Read("theme", static v => v.AsString()),
         };
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/media/twitch_emote_definition.gd");
-        var data = script.New().AsGodotObject();
-        data.Set("id", Id);
-        data.Set("scale", Scale);
-        if (Type != null) data.Set("type", Type);
-        if (Theme != null) data.Set("theme", Theme);
+        var data = InteropExtension.NewObject("res://addons/twitcher/media/twitch_emote_definition.gd", Id);
+        data.SetValue("scale", Scale);
+        if (Type != null) data.SetValue("type", Type);
+        if (Theme != null) data.SetValue("theme", Theme);
         return data;
     }
 }

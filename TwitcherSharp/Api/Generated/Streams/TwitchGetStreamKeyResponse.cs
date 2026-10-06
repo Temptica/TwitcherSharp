@@ -6,8 +6,8 @@ namespace TwitcherSharp.Api.Generated.Streams;
 
 public partial class TwitchGetStreamKeyResponse : RefCounted, ITwitcherSharp<TwitchGetStreamKeyResponse>
 {
-    private GodotObject? _data;
-    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data")!; set; } = null!;
+    private Variant _data;
+    public TwitchResponseData[] Data { get => field ??= _data.GetArray<TwitchResponseData>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetStreamKeyResponse object.
@@ -17,17 +17,22 @@ public partial class TwitchGetStreamKeyResponse : RefCounted, ITwitcherSharp<Twi
         if(data == null) return null;
         var instance = new TwitchGetStreamKeyResponse();
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_stream_key.gd");
-        var responseClass = script.Get("Response").AsGodotObject();
-        var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data.ToGodotArray());
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_stream_key.gd", "Response");
+        if(Data != null) request.SetArray("data", Data);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
     
     /// <summary> 
@@ -35,7 +40,7 @@ public partial class TwitchGetStreamKeyResponse : RefCounted, ITwitcherSharp<Twi
     /// </summary>
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
-        private GodotObject? _data;
+        private Variant _data;
         public string StreamKey { get; set; } = null!;
     
         /// <summary> 
@@ -46,20 +51,25 @@ public partial class TwitchGetStreamKeyResponse : RefCounted, ITwitcherSharp<Twi
             if(data == null) return null;
             var instance = new TwitchResponseData
             {
-                StreamKey = data.Get("stream_key").AsString(),
+                StreamKey = data.Read("stream_key", static v => v.AsString()),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_stream_key.gd");
-            var twitchResponseDataClass = script.Get("ResponseData").AsGodotObject();
-            var request = twitchResponseDataClass.Call("new").AsGodotObject();
-            if(StreamKey != null) request.Set("stream_key", StreamKey);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_stream_key.gd", "ResponseData");
+            if(StreamKey != null) request.SetValue("stream_key", StreamKey);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     
     }

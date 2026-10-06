@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelGuestStarSettingsUpdate;
 
 public partial class TwitchChannelGuestStarSettingsUpdateEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelGuestStarSettingsUpdateEvent>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// User ID of the host channel.
@@ -53,31 +53,36 @@ public partial class TwitchChannelGuestStarSettingsUpdateEvent : RefCounted, ITw
         if(data == null) return null;
         var instance = new TwitchChannelGuestStarSettingsUpdateEvent
         {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-            BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
-            BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
-            IsModeratorSendLiveEnabled = data.Get("is_moderator_send_live_enabled").AsBool(),
-            SlotCount = data.Get("slot_count").AsInt32(),
-            IsBrowserSourceAudioEnabled = data.Get("is_browser_source_audio_enabled").AsBool(),
-            GroupLayout = data.Get("group_layout").AsString(),
+            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
+            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
+            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
+            IsModeratorSendLiveEnabled = data.Read("is_moderator_send_live_enabled", static v => v.AsBool()),
+            SlotCount = data.Read("slot_count", static v => v.AsInt32()),
+            IsBrowserSourceAudioEnabled = data.Read("is_browser_source_audio_enabled", static v => v.AsBool()),
+            GroupLayout = data.Read("group_layout", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_guest_star_settings_update.gd");
-        var eventClass = script.Get("Event").As<GDScript>();
-        var request = eventClass.New().AsGodotObject();
-        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
-        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
-        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        request.Set("is_moderator_send_live_enabled", IsModeratorSendLiveEnabled);
-        request.Set("slot_count", SlotCount);
-        request.Set("is_browser_source_audio_enabled", IsBrowserSourceAudioEnabled);
-        if(GroupLayout != null) request.Set("group_layout", GroupLayout);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_guest_star_settings_update.gd", "Event");
+        if(BroadcasterUserId != null) request.SetValue("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserName != null) request.SetValue("broadcaster_user_name", BroadcasterUserName);
+        if(BroadcasterUserLogin != null) request.SetValue("broadcaster_user_login", BroadcasterUserLogin);
+        request.SetValue("is_moderator_send_live_enabled", IsModeratorSendLiveEnabled);
+        request.SetValue("slot_count", SlotCount);
+        request.SetValue("is_browser_source_audio_enabled", IsBrowserSourceAudioEnabled);
+        if(GroupLayout != null) request.SetValue("group_layout", GroupLayout);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 }

@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelPredictionProgress;
 
 public partial class TwitchChannelPredictionProgressEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelPredictionProgressEvent>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// Channel Points Prediction ID.
@@ -38,7 +38,7 @@ public partial class TwitchChannelPredictionProgressEvent : RefCounted, ITwitche
     /// <summary> 
     /// An array of outcomes for the Channel Points Prediction. Includes top_predictors.
     /// </summary>
-    public TwitchOutcomes[]? Outcomes { get => field ??= _data?.GetArray<TwitchOutcomes>("outcomes"); set; }
+    public TwitchOutcomes[]? Outcomes { get => field ??= _data.GetArray<TwitchOutcomes>("outcomes"); set; }
 
     /// <summary> 
     /// The time the Channel Points Prediction started.
@@ -58,32 +58,37 @@ public partial class TwitchChannelPredictionProgressEvent : RefCounted, ITwitche
         if(data == null) return null;
         var instance = new TwitchChannelPredictionProgressEvent
         {
-            Id = data.Get("id").AsString(),
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-            BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
-            BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
-            Title = data.Get("title").AsString(),
-            StartedAt = data.Get("started_at").AsString(),
-            LocksAt = data.Get("locks_at").AsString(),
+            Id = data.Read("id", static v => v.AsString()),
+            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
+            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
+            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
+            Title = data.Read("title", static v => v.AsString()),
+            StartedAt = data.Read("started_at", static v => v.AsString()),
+            LocksAt = data.Read("locks_at", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_prediction_progress.gd");
-        var eventClass = script.Get("Event").As<GDScript>();
-        var request = eventClass.New().AsGodotObject();
-        if(Id != null) request.Set("id", Id);
-        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
-        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
-        if(Title != null) request.Set("title", Title);
-        if(Outcomes != null) request.Set("outcomes", Outcomes.ToGodotArray());
-        if(StartedAt != null) request.Set("started_at", StartedAt);
-        if(LocksAt != null) request.Set("locks_at", LocksAt);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_prediction_progress.gd", "Event");
+        if(Id != null) request.SetValue("id", Id);
+        if(BroadcasterUserId != null) request.SetValue("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserLogin != null) request.SetValue("broadcaster_user_login", BroadcasterUserLogin);
+        if(BroadcasterUserName != null) request.SetValue("broadcaster_user_name", BroadcasterUserName);
+        if(Title != null) request.SetValue("title", Title);
+        if(Outcomes != null) request.SetArray("outcomes", Outcomes);
+        if(StartedAt != null) request.SetValue("started_at", StartedAt);
+        if(LocksAt != null) request.SetValue("locks_at", LocksAt);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 }

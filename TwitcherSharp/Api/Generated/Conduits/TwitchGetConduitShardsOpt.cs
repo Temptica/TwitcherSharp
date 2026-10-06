@@ -10,7 +10,7 @@ namespace TwitcherSharp.Api.Generated.Conduits;
 /// </summary>
 public partial class TwitchGetConduitShardsOpt : RefCounted, ITwitcherSharp<TwitchGetConduitShardsOpt>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string? Status { get; set; }
     public string? After { get; set; }
 
@@ -22,22 +22,27 @@ public partial class TwitchGetConduitShardsOpt : RefCounted, ITwitcherSharp<Twit
         if(data == null) return null;
         var instance = new TwitchGetConduitShardsOpt
         {
-            Status = data.Get("status").AsString(),
-            After = data.Get("after").AsString(),
+            Status = data.Read("status", static v => v.AsString()),
+            After = data.Read("after", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_conduit_shards.gd");
-        var optClass = script.Get("Opt").AsGodotObject();
-        var request = optClass.Call("new").AsGodotObject();
-        if(Status != null) request.Set("status", Status);
-        if(After != null) request.Set("after", After);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_conduit_shards.gd", "Opt");
+        if(Status != null) request.SetValue("status", Status);
+        if(After != null) request.SetValue("after", After);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

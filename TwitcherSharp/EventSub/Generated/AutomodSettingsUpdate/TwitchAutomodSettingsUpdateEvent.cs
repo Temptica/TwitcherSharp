@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.AutomodSettingsUpdate;
 
 public partial class TwitchAutomodSettingsUpdateEvent : RefCounted, ITwitcherSharpEventSub<TwitchAutomodSettingsUpdateEvent>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// The ID of the broadcaster specified in the request.
@@ -93,47 +93,52 @@ public partial class TwitchAutomodSettingsUpdateEvent : RefCounted, ITwitcherSha
         if(data == null) return null;
         var instance = new TwitchAutomodSettingsUpdateEvent
         {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-            BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
-            BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
-            ModeratorUserId = data.Get("moderator_user_id").AsString(),
-            ModeratorUserLogin = data.Get("moderator_user_login").AsString(),
-            ModeratorUserName = data.Get("moderator_user_name").AsString(),
-            Bullying = data.Get("bullying").AsInt32(),
-            OverallLevel = data.Get("overall_level").AsInt32(),
-            Disability = data.Get("disability").AsInt32(),
-            RaceEthnicityOrReligion = data.Get("race_ethnicity_or_religion").AsInt32(),
-            Misogyny = data.Get("misogyny").AsInt32(),
-            SexualitySexOrGender = data.Get("sexuality_sex_or_gender").AsInt32(),
-            Aggression = data.Get("aggression").AsInt32(),
-            SexBasedTerms = data.Get("sex_based_terms").AsInt32(),
-            Swearing = data.Get("swearing").AsInt32(),
+            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
+            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
+            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
+            ModeratorUserId = data.Read("moderator_user_id", static v => v.AsString()),
+            ModeratorUserLogin = data.Read("moderator_user_login", static v => v.AsString()),
+            ModeratorUserName = data.Read("moderator_user_name", static v => v.AsString()),
+            Bullying = data.Read("bullying", static v => v.AsInt32()),
+            OverallLevel = data.Read("overall_level", static v => v.AsInt32()),
+            Disability = data.Read("disability", static v => v.AsInt32()),
+            RaceEthnicityOrReligion = data.Read("race_ethnicity_or_religion", static v => v.AsInt32()),
+            Misogyny = data.Read("misogyny", static v => v.AsInt32()),
+            SexualitySexOrGender = data.Read("sexuality_sex_or_gender", static v => v.AsInt32()),
+            Aggression = data.Read("aggression", static v => v.AsInt32()),
+            SexBasedTerms = data.Read("sex_based_terms", static v => v.AsInt32()),
+            Swearing = data.Read("swearing", static v => v.AsInt32()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_automod_settings_update.gd");
-        var eventClass = script.Get("Event").As<GDScript>();
-        var request = eventClass.New().AsGodotObject();
-        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
-        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
-        if(ModeratorUserId != null) request.Set("moderator_user_id", ModeratorUserId);
-        if(ModeratorUserLogin != null) request.Set("moderator_user_login", ModeratorUserLogin);
-        if(ModeratorUserName != null) request.Set("moderator_user_name", ModeratorUserName);
-        request.Set("bullying", Bullying);
-        request.Set("overall_level", OverallLevel);
-        request.Set("disability", Disability);
-        request.Set("race_ethnicity_or_religion", RaceEthnicityOrReligion);
-        request.Set("misogyny", Misogyny);
-        request.Set("sexuality_sex_or_gender", SexualitySexOrGender);
-        request.Set("aggression", Aggression);
-        request.Set("sex_based_terms", SexBasedTerms);
-        request.Set("swearing", Swearing);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_automod_settings_update.gd", "Event");
+        if(BroadcasterUserId != null) request.SetValue("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserLogin != null) request.SetValue("broadcaster_user_login", BroadcasterUserLogin);
+        if(BroadcasterUserName != null) request.SetValue("broadcaster_user_name", BroadcasterUserName);
+        if(ModeratorUserId != null) request.SetValue("moderator_user_id", ModeratorUserId);
+        if(ModeratorUserLogin != null) request.SetValue("moderator_user_login", ModeratorUserLogin);
+        if(ModeratorUserName != null) request.SetValue("moderator_user_name", ModeratorUserName);
+        request.SetValue("bullying", Bullying);
+        request.SetValue("overall_level", OverallLevel);
+        request.SetValue("disability", Disability);
+        request.SetValue("race_ethnicity_or_religion", RaceEthnicityOrReligion);
+        request.SetValue("misogyny", Misogyny);
+        request.SetValue("sexuality_sex_or_gender", SexualitySexOrGender);
+        request.SetValue("aggression", Aggression);
+        request.SetValue("sex_based_terms", SexBasedTerms);
+        request.SetValue("swearing", Swearing);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 }

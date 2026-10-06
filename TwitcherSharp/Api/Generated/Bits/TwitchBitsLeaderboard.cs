@@ -6,7 +6,7 @@ namespace TwitcherSharp.Api.Generated.Bits;
 
 public partial class TwitchBitsLeaderboard : RefCounted, ITwitcherSharp<TwitchBitsLeaderboard>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string UserId { get; set; } = null!;
     public string UserLogin { get; set; } = null!;
     public string UserName { get; set; } = null!;
@@ -21,27 +21,33 @@ public partial class TwitchBitsLeaderboard : RefCounted, ITwitcherSharp<TwitchBi
         if(data == null) return null;
         var instance = new TwitchBitsLeaderboard
         {
-            UserId = data.Get("user_id").AsString(),
-            UserLogin = data.Get("user_login").AsString(),
-            UserName = data.Get("user_name").AsString(),
-            Rank = data.Get("rank").AsInt32(),
-            Score = data.Get("score").AsInt32(),
+            UserId = data.Read("user_id", static v => v.AsString()),
+            UserLogin = data.Read("user_login", static v => v.AsString()),
+            UserName = data.Read("user_name", static v => v.AsString()),
+            Rank = data.Read("rank", static v => v.AsInt32()),
+            Score = data.Read("score", static v => v.AsInt32()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_bits_leaderboard.gd");
-        var request = script.Call("new").AsGodotObject();
-        if(UserId != null) request.Set("user_id", UserId);
-        if(UserLogin != null) request.Set("user_login", UserLogin);
-        if(UserName != null) request.Set("user_name", UserName);
-        request.Set("rank", Rank);
-        request.Set("score", Score);
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated/twitch_bits_leaderboard.gd");
+        if(UserId != null) request.SetValue("user_id", UserId);
+        if(UserLogin != null) request.SetValue("user_login", UserLogin);
+        if(UserName != null) request.SetValue("user_name", UserName);
+        request.SetValue("rank", Rank);
+        request.SetValue("score", Score);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

@@ -6,9 +6,9 @@ namespace TwitcherSharp.Api.Generated.GuestStar;
 
 public partial class TwitchGuestStarSession : RefCounted, ITwitcherSharp<TwitchGuestStarSession>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string Id { get; set; } = null!;
-    public TwitchGuest[] Guests { get => field ??= _data?.GetArray<TwitchGuest>("guests")!; set; } = null!;
+    public TwitchGuest[] Guests { get => field ??= _data.GetArray<TwitchGuest>("guests")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGuestStarSession object.
@@ -18,20 +18,26 @@ public partial class TwitchGuestStarSession : RefCounted, ITwitcherSharp<TwitchG
         if(data == null) return null;
         var instance = new TwitchGuestStarSession
         {
-            Id = data.Get("id").AsString(),
+            Id = data.Read("id", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_guest_star_session.gd");
-        var request = script.Call("new").AsGodotObject();
-        if(Id != null) request.Set("id", Id);
-        if(Guests != null) request.Set("guests", Guests.ToGodotArray());
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated/twitch_guest_star_session.gd");
+        if(Id != null) request.SetValue("id", Id);
+        if(Guests != null) request.SetArray("guests", Guests);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

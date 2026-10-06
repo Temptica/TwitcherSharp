@@ -19,21 +19,28 @@ public partial class OAuthTokenHandler : Resource, ITwitcherSharp<OAuthTokenHand
         get;
         set
         {
-            _data?.Call("_update_token", value?.ToGodotObject() ?? new Variant());
+            using var token = GodotObjectExtension.ToVariant(value);
+            _data?.Invoke("_update_token", token);
             field = value;
         }
     }
 
-    public void UpdateExpirationCheck() => _data!.Call("update_expiration_check");
+    public void UpdateExpirationCheck() => _data!.Invoke("update_expiration_check");
 
     public async Task<OAuthToken> RequestToken(string grantType, string authCode = "")
         => await _data!.CallAsync<OAuthToken>("request_token", grantType, authCode);
 
     public async Task RequestDeviceToken(OAuthDeviceCodeResponse deviceCodeResponse, string scope,
         string grantType = "urn:ietf:params:oauth:grant-type:device_code")
-        => await _data!.CallAsync("request_device_token", deviceCodeResponse.ToGodotObject(), scope, grantType);
+    {
+        using var response = GodotObjectExtension.ToVariant(deviceCodeResponse);
+        using var _ = await _data!.CallAsync("request_device_token", response, scope, grantType);
+    }
 
-    public async Task RefreshTokens() => await _data!.CallAsync("refresh_tokens");
+    public async Task RefreshTokens()
+    {
+        using var _ = await _data!.CallAsync("refresh_tokens");
+    }
 
     /// <summary>
     /// Updates the token. The result is the response data of a token request.
@@ -44,20 +51,34 @@ public partial class OAuthTokenHandler : Resource, ITwitcherSharp<OAuthTokenHand
     /// <param name="scopes"></param>
     /// <param name="type"></param>
     public void UpdateTokens(string accessToken, string refreshToken, int expireIn, string[] scopes, string type)
-        => _data!.Call("update_tokens", accessToken, refreshToken, expireIn, scopes, type);
+        => _data!.Invoke("update_tokens", accessToken, refreshToken, expireIn, scopes, type);
 
     public string GetTokenExpiration()
-        => _data!.Call("get_token_expiration").AsString();
+        => _data!.Invoke("get_token_expiration", static v => v.AsString());
 
-    public bool TokenIsValid() => _data!.Call("token_is_valid").AsBool();
+    public bool TokenIsValid() => _data!.Invoke("is_token_valid", static v => v.AsBool());
 
-    public bool TokenNeedsRefresh() => _data!.Call("token_needs_refresh").AsBool();
+    public bool TokenNeedsRefresh() => _data!.Invoke("token_needs_refresh", static v => v.AsBool());
 
-    public async Task<string> GetAccessToken() => (await _data!.CallAsync("get_access_token")).AsString();
+    public async Task<string> GetAccessToken() => await _data!.InvokeAsync("get_access_token", static v => v.AsString());
 
-    public async Task<bool> HasRefreshToken() => (await _data!.CallAsync("has_refresh_token")).AsBool();
+    public async Task<bool> HasRefreshToken() => await _data!.InvokeAsync("has_refresh_token", static v => v.AsBool());
 
-    public List<string> GetScopes() => _data!.Call("get_scopes").AsStringArray().ToList();
+    public List<string> GetScopes() => _data!.Invoke("get_scopes", static v => v.AsStringArray()).ToList();
+
+    /// <summary>
+    /// The client id of the OAuth setting the handler authorizes with, or an empty string when it has none.
+    /// </summary>
+    public string ClientId => _data is null ? "" : ClientIdOf(_data);
+
+    /// <summary>
+    /// Reads <c>oauth_setting.client_id</c> of a token handler node.
+    /// </summary>
+    internal static string ClientIdOf(GodotObject handler)
+    {
+        using var setting = handler.Get("oauth_setting");
+        return setting.Read("client_id", static v => v.AsString()) ?? "";
+    }
 
     private void ConnectSignals()
     {
@@ -70,7 +91,7 @@ public partial class OAuthTokenHandler : Resource, ITwitcherSharp<OAuthTokenHand
         if (data == null) return null;
         var token = new OAuthTokenHandler();
         token._data = data;
-        token.Token = OAuthToken.FromObject(data.Get("token").AsGodotObject());
+        token.Token = data.Get<OAuthToken>("token");
         token.ConnectSignals();
 
         return token;
@@ -78,9 +99,8 @@ public partial class OAuthTokenHandler : Resource, ITwitcherSharp<OAuthTokenHand
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/lib/oOuch/oauth_token_handler.gd");
-        var token = script.New().AsGodotObject();
-        token.Set("token", Token?.ToGodotObject() ?? new Variant());
+        var token = InteropExtension.NewObject("res://addons/twitcher/lib/oOuch/oauth_token_handler.gd");
+        token.SetObject("token", Token);
         
         return token;
     }

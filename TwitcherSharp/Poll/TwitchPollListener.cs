@@ -26,25 +26,61 @@ public partial class TwitchPollListener : RefCounted, ITwitcherSharp<TwitchPollL
 
     /// <summary>
     /// The <see cref="TwitchEventSub"/> for subscribing. If left empty, the Node attempts to fetch the <see cref="TwitchEventSub"/> itself.
-    /// If it doesn't exist, it will create a new one and add it to the root of the SceneTree.
     /// </summary>
-    public TwitchEventSub? TwitchEventSub { get; set; }
+    public TwitchEventSub? TwitchEventSub
+    {
+        get;
+        set
+        {
+            _data?.SetObject("eventsub", value);
+            field = value;
+        }
+    }
 
     /// <summary>
     /// The <see cref="TwitchApi"/> for API calls. If left empty, the Node attempts to fetch the <see cref="TwitchApi"/> itself.
-    /// If it doesn't exist, it will create a new one and add it to the root of the SceneTree.'
     /// </summary>
-    public TwitchApi? TwitchApi { get; set; }
+    public TwitchApi? TwitchApi
+    {
+        get;
+        set
+        {
+            _data?.SetObject("api", value);
+            field = value;
+        }
+    }
 
     /// <summary>
     /// Should the node automatically subscribe to the necessary eventsubs in the ready function? 
     /// </summary>
-    public bool EnsureSubscriptionsOnReady { get; set; } = true;
+    public bool EnsureSubscriptionsOnReady
+    {
+        get => _data?.Read("ensure_subscriptions_on_ready", static v => v.AsBool()) ?? field;
+        set
+        {
+            _data?.SetValue("ensure_subscriptions_on_ready", value);
+            field = value;
+        }
+    } = true;
 
     /// <summary>
     /// The broadcaster user. If left empty, the Node attempts to fetch it from the <see cref="TwitchApi"/>.
     /// </summary>
-    public TwitchUser? Broadcaster { get; set; }
+    /// <summary>
+    /// The broadcaster whose polls to listen to. twitcher uses the current user when it is not set.
+    /// </summary>
+    public TwitchUser? Broadcaster
+    {
+        get
+        {
+            return _data is null ? field : _data.Get<TwitchUser>("broadcaster");
+        }
+        set
+        {
+            _data?.SetObject("broadcaster", value);
+            field = value;
+        }
+    }
 
     /// <summary>
     /// Emit the raw JSON response from the <see cref="TwitchEventSubDefinitionType.ChannelPollBegin"/>, <see cref="TwitchEventSubDefinitionType.ChannelPollProgress"/> and <see cref="TwitchEventSubDefinitionType.ChannelPollEnd"/>.
@@ -84,7 +120,7 @@ public partial class TwitchPollListener : RefCounted, ITwitcherSharp<TwitchPollL
 
     public void EnsureSubscriptions()
     {
-        _data!.Call("ensure_subscriptions");
+        _data!.Invoke("ensure_subscriptions");
     }
 
     public void ConnectSignals()
@@ -100,16 +136,13 @@ public partial class TwitchPollListener : RefCounted, ITwitcherSharp<TwitchPollL
     public static TwitchPollListener? FromObject(GodotObject? data)
     {
         if (data == null) return null;
-        var pollListener = new TwitchPollListener()
+        var pollListener = new TwitchPollListener
         {
+            // Set before linking, so nothing is written back to the node.
+            TwitchEventSub = data.GetNode<TwitchEventSub>("eventsub"),
+            TwitchApi = data.GetNode<TwitchApi>("api"),
             _data = data,
-            EnsureSubscriptionsOnReady = data.Get("ensure_subscriptions_on_ready").AsBool(),
-            Broadcaster = TwitchUser.FromObject(data.Get("broadcaster").As<GodotObject>()),
         };
-
-        pollListener.TwitchEventSub ??= TwitchEventSub.Instance ?? TwitchEventSub.CreateInstance();
-        pollListener.TwitchApi ??= TwitchApi.Instance;
-        pollListener.Broadcaster ??= TwitchApi.Instance!.GetUsers().GetAwaiter().GetResult().Data![0];
 
         pollListener.ConnectSignals();
 
@@ -118,10 +151,11 @@ public partial class TwitchPollListener : RefCounted, ITwitcherSharp<TwitchPollL
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/poll/twitch_poll_listener.gd");
-        var obj = script.New().AsGodotObject();
-        obj.Set("ensure_subscriptions_on_ready", EnsureSubscriptionsOnReady);
-        obj.Set("broadcaster", Broadcaster?.ToGodotObject() ?? new Variant());
+        var obj = InteropExtension.NewObject("res://addons/twitcher/poll/twitch_poll_listener.gd");
+        obj.SetValue("ensure_subscriptions_on_ready", EnsureSubscriptionsOnReady);
+        obj.SetObject("eventsub", TwitchEventSub);
+        obj.SetObject("api", TwitchApi);
+        obj.SetObject("broadcaster", Broadcaster);
         return obj;
     }
 }

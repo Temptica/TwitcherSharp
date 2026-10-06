@@ -10,7 +10,7 @@ namespace TwitcherSharp.Api.Generated.GuestStar;
 /// </summary>
 public partial class TwitchUpdateGuestStarSlotSettingsOpt : RefCounted, ITwitcherSharp<TwitchUpdateGuestStarSlotSettingsOpt>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public bool? IsAudioEnabled { get; set; }
     public bool? IsVideoEnabled { get; set; }
     public bool? IsLive { get; set; }
@@ -24,26 +24,31 @@ public partial class TwitchUpdateGuestStarSlotSettingsOpt : RefCounted, ITwitche
         if(data == null) return null;
         var instance = new TwitchUpdateGuestStarSlotSettingsOpt
         {
-            IsAudioEnabled = data.Get("is_audio_enabled").AsBool(),
-            IsVideoEnabled = data.Get("is_video_enabled").AsBool(),
-            IsLive = data.Get("is_live").AsBool(),
-            Volume = data.Get("volume").AsInt32(),
+            IsAudioEnabled = data.Read("is_audio_enabled", static v => v.AsBool()),
+            IsVideoEnabled = data.Read("is_video_enabled", static v => v.AsBool()),
+            IsLive = data.Read("is_live", static v => v.AsBool()),
+            Volume = data.Read("volume", static v => v.AsInt32()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_update_guest_star_slot_settings.gd");
-        var optClass = script.Get("Opt").AsGodotObject();
-        var request = optClass.Call("new").AsGodotObject();
-        if(IsAudioEnabled.HasValue) request.Set("is_audio_enabled", IsAudioEnabled.Value);
-        if(IsVideoEnabled.HasValue) request.Set("is_video_enabled", IsVideoEnabled.Value);
-        if(IsLive.HasValue) request.Set("is_live", IsLive.Value);
-        if(Volume.HasValue) request.Set("volume", Volume.Value);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_update_guest_star_slot_settings.gd", "Opt");
+        if(IsAudioEnabled.HasValue) request.SetValue("is_audio_enabled", IsAudioEnabled.Value);
+        if(IsVideoEnabled.HasValue) request.SetValue("is_video_enabled", IsVideoEnabled.Value);
+        if(IsLive.HasValue) request.SetValue("is_live", IsLive.Value);
+        if(Volume.HasValue) request.SetValue("volume", Volume.Value);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

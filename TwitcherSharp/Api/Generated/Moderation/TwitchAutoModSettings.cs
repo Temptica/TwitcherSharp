@@ -6,7 +6,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 
 public partial class TwitchAutoModSettings : RefCounted, ITwitcherSharp<TwitchAutoModSettings>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string BroadcasterId { get; set; } = null!;
     public string ModeratorId { get; set; } = null!;
     public int OverallLevel { get; set; }
@@ -27,39 +27,45 @@ public partial class TwitchAutoModSettings : RefCounted, ITwitcherSharp<TwitchAu
         if(data == null) return null;
         var instance = new TwitchAutoModSettings
         {
-            BroadcasterId = data.Get("broadcaster_id").AsString(),
-            ModeratorId = data.Get("moderator_id").AsString(),
-            OverallLevel = data.Get("overall_level").AsInt32(),
-            Disability = data.Get("disability").AsInt32(),
-            Aggression = data.Get("aggression").AsInt32(),
-            SexualitySexOrGender = data.Get("sexuality_sex_or_gender").AsInt32(),
-            Misogyny = data.Get("misogyny").AsInt32(),
-            Bullying = data.Get("bullying").AsInt32(),
-            Swearing = data.Get("swearing").AsInt32(),
-            RaceEthnicityOrReligion = data.Get("race_ethnicity_or_religion").AsInt32(),
-            SexBasedTerms = data.Get("sex_based_terms").AsInt32(),
+            BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
+            ModeratorId = data.Read("moderator_id", static v => v.AsString()),
+            OverallLevel = data.Read("overall_level", static v => v.AsInt32()),
+            Disability = data.Read("disability", static v => v.AsInt32()),
+            Aggression = data.Read("aggression", static v => v.AsInt32()),
+            SexualitySexOrGender = data.Read("sexuality_sex_or_gender", static v => v.AsInt32()),
+            Misogyny = data.Read("misogyny", static v => v.AsInt32()),
+            Bullying = data.Read("bullying", static v => v.AsInt32()),
+            Swearing = data.Read("swearing", static v => v.AsInt32()),
+            RaceEthnicityOrReligion = data.Read("race_ethnicity_or_religion", static v => v.AsInt32()),
+            SexBasedTerms = data.Read("sex_based_terms", static v => v.AsInt32()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_auto_mod_settings.gd");
-        var request = script.Call("new").AsGodotObject();
-        if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
-        if(ModeratorId != null) request.Set("moderator_id", ModeratorId);
-        request.Set("overall_level", OverallLevel);
-        request.Set("disability", Disability);
-        request.Set("aggression", Aggression);
-        request.Set("sexuality_sex_or_gender", SexualitySexOrGender);
-        request.Set("misogyny", Misogyny);
-        request.Set("bullying", Bullying);
-        request.Set("swearing", Swearing);
-        request.Set("race_ethnicity_or_religion", RaceEthnicityOrReligion);
-        request.Set("sex_based_terms", SexBasedTerms);
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated/twitch_auto_mod_settings.gd");
+        if(BroadcasterId != null) request.SetValue("broadcaster_id", BroadcasterId);
+        if(ModeratorId != null) request.SetValue("moderator_id", ModeratorId);
+        request.SetValue("overall_level", OverallLevel);
+        request.SetValue("disability", Disability);
+        request.SetValue("aggression", Aggression);
+        request.SetValue("sexuality_sex_or_gender", SexualitySexOrGender);
+        request.SetValue("misogyny", Misogyny);
+        request.SetValue("bullying", Bullying);
+        request.SetValue("swearing", Swearing);
+        request.SetValue("race_ethnicity_or_religion", RaceEthnicityOrReligion);
+        request.SetValue("sex_based_terms", SexBasedTerms);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

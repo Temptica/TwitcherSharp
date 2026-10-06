@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelPointsCustomRewardAdd;
 
 public partial class TwitchChannelPointsCustomRewardAddEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelPointsCustomRewardAddEvent>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// The reward identifier.
@@ -73,12 +73,12 @@ public partial class TwitchChannelPointsCustomRewardAddEvent : RefCounted, ITwit
     /// <summary> 
     /// 
     /// </summary>
-    public TwitchMaxPerStream? MaxPerStream { get => field ??= _data?.Get<TwitchMaxPerStream>("max_per_stream"); set; }
+    public TwitchMaxPerStream? MaxPerStream { get => field ??= _data.Get<TwitchMaxPerStream>("max_per_stream"); set; }
 
     /// <summary> 
     /// 
     /// </summary>
-    public TwitchMaxPerUserPerStream? MaxPerUserPerStream { get => field ??= _data?.Get<TwitchMaxPerUserPerStream>("max_per_user_per_stream"); set; }
+    public TwitchMaxPerUserPerStream? MaxPerUserPerStream { get => field ??= _data.Get<TwitchMaxPerUserPerStream>("max_per_user_per_stream"); set; }
 
     /// <summary> 
     /// Custom background color for the reward. Format: Hex with # prefix. Example: #FA1ED2.
@@ -88,12 +88,12 @@ public partial class TwitchChannelPointsCustomRewardAddEvent : RefCounted, ITwit
     /// <summary> 
     /// 
     /// </summary>
-    public TwitchImage? Image { get => field ??= _data?.Get<TwitchImage>("image"); set; }
+    public TwitchImage? Image { get => field ??= _data.Get<TwitchImage>("image"); set; }
 
     /// <summary> 
     /// 
     /// </summary>
-    public TwitchGlobalCooldown? GlobalCooldown { get => field ??= _data?.Get<TwitchGlobalCooldown>("global_cooldown"); set; }
+    public TwitchGlobalCooldown? GlobalCooldown { get => field ??= _data.Get<TwitchGlobalCooldown>("global_cooldown"); set; }
 
     /// <summary> 
     /// Timestamp of the cooldown expiration. null if the reward isn’t on cooldown.
@@ -113,51 +113,56 @@ public partial class TwitchChannelPointsCustomRewardAddEvent : RefCounted, ITwit
         if(data == null) return null;
         var instance = new TwitchChannelPointsCustomRewardAddEvent
         {
-            Id = data.Get("id").AsString(),
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-            BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
-            BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
-            IsEnabled = data.Get("is_enabled").AsBool(),
-            IsPaused = data.Get("is_paused").AsBool(),
-            IsInStock = data.Get("is_in_stock").AsBool(),
-            Title = data.Get("title").AsString(),
-            Cost = data.Get("cost").AsInt32(),
-            Prompt = data.Get("prompt").AsString(),
-            IsUserInputRequired = data.Get("is_user_input_required").AsBool(),
-            ShouldRedemptionsSkipRequestQueue = data.Get("should_redemptions_skip_request_queue").AsBool(),
-            BackgroundColor = data.Get("background_color").AsString(),
-            CooldownExpiresAt = data.Get("cooldown_expires_at").AsString(),
-            RedemptionsRedeemedCurrentStream = data.Get("redemptions_redeemed_current_stream").AsInt32(),
+            Id = data.Read("id", static v => v.AsString()),
+            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
+            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
+            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
+            IsEnabled = data.Read("is_enabled", static v => v.AsBool()),
+            IsPaused = data.Read("is_paused", static v => v.AsBool()),
+            IsInStock = data.Read("is_in_stock", static v => v.AsBool()),
+            Title = data.Read("title", static v => v.AsString()),
+            Cost = data.Read("cost", static v => v.AsInt32()),
+            Prompt = data.Read("prompt", static v => v.AsString()),
+            IsUserInputRequired = data.Read("is_user_input_required", static v => v.AsBool()),
+            ShouldRedemptionsSkipRequestQueue = data.Read("should_redemptions_skip_request_queue", static v => v.AsBool()),
+            BackgroundColor = data.Read("background_color", static v => v.AsString()),
+            CooldownExpiresAt = data.Read("cooldown_expires_at", static v => v.AsString()),
+            RedemptionsRedeemedCurrentStream = data.Read("redemptions_redeemed_current_stream", static v => v.AsInt32()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_points_custom_reward_add.gd");
-        var eventClass = script.Get("Event").As<GDScript>();
-        var request = eventClass.New().AsGodotObject();
-        if(Id != null) request.Set("id", Id);
-        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
-        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
-        request.Set("is_enabled", IsEnabled);
-        request.Set("is_paused", IsPaused);
-        request.Set("is_in_stock", IsInStock);
-        if(Title != null) request.Set("title", Title);
-        request.Set("cost", Cost);
-        if(Prompt != null) request.Set("prompt", Prompt);
-        request.Set("is_user_input_required", IsUserInputRequired);
-        request.Set("should_redemptions_skip_request_queue", ShouldRedemptionsSkipRequestQueue);
-        if(MaxPerStream != null) request.Set("max_per_stream", MaxPerStream.ToGodotObject());
-        if(MaxPerUserPerStream != null) request.Set("max_per_user_per_stream", MaxPerUserPerStream.ToGodotObject());
-        if(BackgroundColor != null) request.Set("background_color", BackgroundColor);
-        if(Image != null) request.Set("image", Image.ToGodotObject());
-        if(GlobalCooldown != null) request.Set("global_cooldown", GlobalCooldown.ToGodotObject());
-        if(CooldownExpiresAt != null) request.Set("cooldown_expires_at", CooldownExpiresAt);
-        request.Set("redemptions_redeemed_current_stream", RedemptionsRedeemedCurrentStream);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_points_custom_reward_add.gd", "Event");
+        if(Id != null) request.SetValue("id", Id);
+        if(BroadcasterUserId != null) request.SetValue("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserLogin != null) request.SetValue("broadcaster_user_login", BroadcasterUserLogin);
+        if(BroadcasterUserName != null) request.SetValue("broadcaster_user_name", BroadcasterUserName);
+        request.SetValue("is_enabled", IsEnabled);
+        request.SetValue("is_paused", IsPaused);
+        request.SetValue("is_in_stock", IsInStock);
+        if(Title != null) request.SetValue("title", Title);
+        request.SetValue("cost", Cost);
+        if(Prompt != null) request.SetValue("prompt", Prompt);
+        request.SetValue("is_user_input_required", IsUserInputRequired);
+        request.SetValue("should_redemptions_skip_request_queue", ShouldRedemptionsSkipRequestQueue);
+        if(MaxPerStream != null) request.SetObject("max_per_stream", MaxPerStream);
+        if(MaxPerUserPerStream != null) request.SetObject("max_per_user_per_stream", MaxPerUserPerStream);
+        if(BackgroundColor != null) request.SetValue("background_color", BackgroundColor);
+        if(Image != null) request.SetObject("image", Image);
+        if(GlobalCooldown != null) request.SetObject("global_cooldown", GlobalCooldown);
+        if(CooldownExpiresAt != null) request.SetValue("cooldown_expires_at", CooldownExpiresAt);
+        request.SetValue("redemptions_redeemed_current_stream", RedemptionsRedeemedCurrentStream);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 }

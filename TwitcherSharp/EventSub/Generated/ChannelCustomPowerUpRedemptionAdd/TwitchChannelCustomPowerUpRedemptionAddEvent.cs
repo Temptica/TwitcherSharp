@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelCustomPowerUpRedemptionAdd;
 
 public partial class TwitchChannelCustomPowerUpRedemptionAddEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelCustomPowerUpRedemptionAddEvent>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// The redemption identifier.
@@ -58,7 +58,7 @@ public partial class TwitchChannelCustomPowerUpRedemptionAddEvent : RefCounted, 
     /// <summary> 
     /// 
     /// </summary>
-    public TwitchCustomPowerUp? CustomPowerUp { get => field ??= _data?.Get<TwitchCustomPowerUp>("custom_power_up"); set; }
+    public TwitchCustomPowerUp? CustomPowerUp { get => field ??= _data.Get<TwitchCustomPowerUp>("custom_power_up"); set; }
 
     /// <summary> 
     /// RFC3339 timestamp of when the custom Power-up was redeemed.
@@ -73,38 +73,43 @@ public partial class TwitchChannelCustomPowerUpRedemptionAddEvent : RefCounted, 
         if(data == null) return null;
         var instance = new TwitchChannelCustomPowerUpRedemptionAddEvent
         {
-            Id = data.Get("id").AsString(),
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-            BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
-            BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
-            UserId = data.Get("user_id").AsString(),
-            UserLogin = data.Get("user_login").AsString(),
-            UserName = data.Get("user_name").AsString(),
-            UserInput = data.Get("user_input").AsString(),
-            Status = data.Get("status").AsString(),
-            RedeemedAt = data.Get("redeemed_at").AsString(),
+            Id = data.Read("id", static v => v.AsString()),
+            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
+            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
+            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
+            UserId = data.Read("user_id", static v => v.AsString()),
+            UserLogin = data.Read("user_login", static v => v.AsString()),
+            UserName = data.Read("user_name", static v => v.AsString()),
+            UserInput = data.Read("user_input", static v => v.AsString()),
+            Status = data.Read("status", static v => v.AsString()),
+            RedeemedAt = data.Read("redeemed_at", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_custom_power_up_redemption_add.gd");
-        var eventClass = script.Get("Event").As<GDScript>();
-        var request = eventClass.New().AsGodotObject();
-        if(Id != null) request.Set("id", Id);
-        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
-        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
-        if(UserId != null) request.Set("user_id", UserId);
-        if(UserLogin != null) request.Set("user_login", UserLogin);
-        if(UserName != null) request.Set("user_name", UserName);
-        if(UserInput != null) request.Set("user_input", UserInput);
-        if(Status != null) request.Set("status", Status);
-        if(CustomPowerUp != null) request.Set("custom_power_up", CustomPowerUp.ToGodotObject());
-        if(RedeemedAt != null) request.Set("redeemed_at", RedeemedAt);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_custom_power_up_redemption_add.gd", "Event");
+        if(Id != null) request.SetValue("id", Id);
+        if(BroadcasterUserId != null) request.SetValue("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserLogin != null) request.SetValue("broadcaster_user_login", BroadcasterUserLogin);
+        if(BroadcasterUserName != null) request.SetValue("broadcaster_user_name", BroadcasterUserName);
+        if(UserId != null) request.SetValue("user_id", UserId);
+        if(UserLogin != null) request.SetValue("user_login", UserLogin);
+        if(UserName != null) request.SetValue("user_name", UserName);
+        if(UserInput != null) request.SetValue("user_input", UserInput);
+        if(Status != null) request.SetValue("status", Status);
+        if(CustomPowerUp != null) request.SetObject("custom_power_up", CustomPowerUp);
+        if(RedeemedAt != null) request.SetValue("redeemed_at", RedeemedAt);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 }

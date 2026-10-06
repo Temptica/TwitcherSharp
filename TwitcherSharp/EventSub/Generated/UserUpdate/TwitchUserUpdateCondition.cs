@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.UserUpdate;
 
 public partial class TwitchUserUpdateCondition(string userId) : RefCounted, ITwitcherSharpCondition<TwitchUserUpdateCondition>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     public string Name => nameof(TwitchUserUpdateCondition);
 
@@ -23,19 +23,24 @@ public partial class TwitchUserUpdateCondition(string userId) : RefCounted, ITwi
     public static TwitchUserUpdateCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchUserUpdateCondition(data.Get("user_id").AsString());
+        var instance = new TwitchUserUpdateCondition(data.Read("user_id", static v => v.AsString()));
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_user_update.gd");
-        var conditionClass = script.Get("Condition").As<GDScript>();
-        var request = conditionClass.New().AsGodotObject();
-        request.Set("user_id", UserId);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_user_update.gd", "Condition");
+        request.SetValue("user_id", UserId);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
     public static TwitchUserUpdateCondition FromDictionary(Dictionary data)

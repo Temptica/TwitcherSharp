@@ -40,64 +40,68 @@ public partial class TwitchEventSub : RefCounted, ITwitcherSharpSingleton<Twitch
     /// <summary>
     /// Propergated call from twitch service
     /// </summary>
-    public async Task DoSetup() => await _data!.CallAsync("do_setup");
+    public async Task DoSetup() => await _data!.InvokeAsync("do_setup");
 
     /// <summary>
     /// Propergated call from twitch service
     /// </summary>
-    public async Task DoUnSetup() => await _data!.CallAsync("do_unsetup");
+    public async Task DoUnSetup() => await _data!.InvokeAsync("do_unsetup");
 
-    public async Task WaitSetup() => await _data!.CallAsync("wait_setup");
+    public async Task WaitSetup() => await _data!.InvokeAsync("wait_setup");
 
     /// <summary>
     /// Waits until the eventsub is fully established
     /// </summary>
-    public async Task WaitForSessionEstablished() => await _data!.CallAsync("wait_for_session_established");
+    public async Task WaitForSessionEstablished() => await _data!.InvokeAsync("wait_for_session_established");
 
-    public void OpenConnection() => _data!.Call("open_connection");
+    public void OpenConnection() => _data!.Invoke("open_connection");
 
-    public void CloseConnection() => _data!.Call("close_connection");
+    public void CloseConnection() => _data!.Invoke("close_connection");
 
     /// <summary>
     /// Add a new subscription
     /// </summary>
     /// <param name="config"></param>
-    public void Subscribe(TwitchEventSubConfig config) => _data!.Call("subscribe", config.ToGodotObject());
+    public void Subscribe(TwitchEventSubConfig config)
+    {
+        using var configArg = GodotObjectExtension.ToVariant(config);
+        _data!.Invoke("subscribe", configArg);
+    }
 
     public List<TwitchEventSubConfig> GetSubscriptionsByType(TwitchEventSubDefinitionType type)
-        => _data!.Call("get_subscription_by_type", (int)type)
-            .AsGodotArray<GodotObject>()
-            .Select(TwitchEventSubConfig.FromObject)
-            .OfType<TwitchEventSubConfig>()
-            .ToList();
+    {
+        // twitcher numbers its types in another order than TwitchEventSubDefinitionType.
+        var twitcherType = TwitchEventSubDefinition.All.First(definition => definition.Type == type).TwitcherType;
+        return _data!.CallList<TwitchEventSubConfig>("get_subscription_by_type", twitcherType);
+    }
 
     public bool HasSubscription(TwitchEventSubConfig config)
-        => _data!.Call("has_subscription", config.ToGodotObject()).AsBool();
+    {
+        using var configArg = GodotObjectExtension.ToVariant(config);
+        return _data!.Invoke("has_subscription", static v => v.AsBool(), configArg);
+    }
 
     public void Unsubscribe(TwitchEventSubConfig config)
-        => _data!.Call("unsubscribe", config.ToGodotObject());
+    {
+        using var configArg = GodotObjectExtension.ToVariant(config);
+        _data!.Invoke("unsubscribe", configArg);
+    }
 
-    public List<TwitchEventSubConfig> GetSubscriptions()
-        => _data!.Call("get_subscriptions")
-            .AsGodotArray<GodotObject>()
-            .Select(TwitchEventSubConfig.FromObject)
-            .OfType<TwitchEventSubConfig>()
-            .ToList();
+    public List<TwitchEventSubConfig> GetSubscriptions() => _data!.CallList<TwitchEventSubConfig>("get_subscriptions");
 
     public static TwitchEventSub? FromObject(GodotObject? data)
     {
         if (data == null) return null;
-        Instance = new TwitchEventSub();
-        Instance._data = data;
-        return Instance;
+        var eventSub = new TwitchEventSub { _data = data };
+        Instance = eventSub;
+        return eventSub;
     }
 
     public GodotObject ToGodotObject()
     {
         if (_data is not null) return _data;
 
-        var script = GD.Load<GDScript>("res://addons/twitcher/eventsub/twitch_eventsub.gd");
-        _data = script.New().AsGodotObject();
+        _data = InteropExtension.NewObject("res://addons/twitcher/eventsub/twitch_eventsub.gd");
         return _data;
     }
 

@@ -10,7 +10,7 @@ namespace TwitcherSharp.Api.Generated.Schedule;
 /// </summary>
 public partial class TwitchUpdateChannelStreamScheduleOpt : RefCounted, ITwitcherSharp<TwitchUpdateChannelStreamScheduleOpt>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public bool? IsVacationEnabled { get; set; }
     public string? VacationStartTime { get; set; }
     public string? VacationEndTime { get; set; }
@@ -24,26 +24,31 @@ public partial class TwitchUpdateChannelStreamScheduleOpt : RefCounted, ITwitche
         if(data == null) return null;
         var instance = new TwitchUpdateChannelStreamScheduleOpt
         {
-            IsVacationEnabled = data.Get("is_vacation_enabled").AsBool(),
-            VacationStartTime = data.Get("vacation_start_time").AsString(),
-            VacationEndTime = data.Get("vacation_end_time").AsString(),
-            Timezone = data.Get("timezone").AsString(),
+            IsVacationEnabled = data.Read("is_vacation_enabled", static v => v.AsBool()),
+            VacationStartTime = data.Read("vacation_start_time", static v => v.AsString()),
+            VacationEndTime = data.Read("vacation_end_time", static v => v.AsString()),
+            Timezone = data.Read("timezone", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_update_channel_stream_schedule.gd");
-        var optClass = script.Get("Opt").AsGodotObject();
-        var request = optClass.Call("new").AsGodotObject();
-        if(IsVacationEnabled.HasValue) request.Set("is_vacation_enabled", IsVacationEnabled.Value);
-        if(VacationStartTime != null) request.Set("vacation_start_time", VacationStartTime);
-        if(VacationEndTime != null) request.Set("vacation_end_time", VacationEndTime);
-        if(Timezone != null) request.Set("timezone", Timezone);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_update_channel_stream_schedule.gd", "Opt");
+        if(IsVacationEnabled.HasValue) request.SetValue("is_vacation_enabled", IsVacationEnabled.Value);
+        if(VacationStartTime != null) request.SetValue("vacation_start_time", VacationStartTime);
+        if(VacationEndTime != null) request.SetValue("vacation_end_time", VacationEndTime);
+        if(Timezone != null) request.SetValue("timezone", Timezone);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

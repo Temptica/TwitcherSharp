@@ -10,7 +10,7 @@ namespace TwitcherSharp.Api.Generated.Streams;
 /// </summary>
 public partial class TwitchGetStreamsOpt : RefCounted, ITwitcherSharp<TwitchGetStreamsOpt>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string[]? UserId { get; set; }
     public string[]? UserLogin { get; set; }
     public string[]? GameId { get; set; }
@@ -28,34 +28,39 @@ public partial class TwitchGetStreamsOpt : RefCounted, ITwitcherSharp<TwitchGetS
         if(data == null) return null;
         var instance = new TwitchGetStreamsOpt
         {
-            UserId = data.Get("user_id").AsStringArray(),
-            UserLogin = data.Get("user_login").AsStringArray(),
-            GameId = data.Get("game_id").AsStringArray(),
-            Type = data.Get("type").AsString(),
-            Language = data.Get("language").AsStringArray(),
-            First = data.Get("first").AsInt32(),
-            Before = data.Get("before").AsString(),
-            After = data.Get("after").AsString(),
+            UserId = data.Read("user_id", static v => v.AsStringArray()),
+            UserLogin = data.Read("user_login", static v => v.AsStringArray()),
+            GameId = data.Read("game_id", static v => v.AsStringArray()),
+            Type = data.Read("type", static v => v.AsString()),
+            Language = data.Read("language", static v => v.AsStringArray()),
+            First = data.Read("first", static v => v.AsInt32()),
+            Before = data.Read("before", static v => v.AsString()),
+            After = data.Read("after", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_streams.gd");
-        var optClass = script.Get("Opt").AsGodotObject();
-        var request = optClass.Call("new").AsGodotObject();
-        if(UserId != null) request.Set("user_id", new Godot.Collections.Array<string>(UserId));
-        if(UserLogin != null) request.Set("user_login", new Godot.Collections.Array<string>(UserLogin));
-        if(GameId != null) request.Set("game_id", new Godot.Collections.Array<string>(GameId));
-        if(Type != null) request.Set("type", Type);
-        if(Language != null) request.Set("language", new Godot.Collections.Array<string>(Language));
-        if(First.HasValue) request.Set("first", First.Value);
-        if(Before != null) request.Set("before", Before);
-        if(After != null) request.Set("after", After);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_streams.gd", "Opt");
+        if(UserId != null) request.SetValue("user_id", new Godot.Collections.Array<string>(UserId));
+        if(UserLogin != null) request.SetValue("user_login", new Godot.Collections.Array<string>(UserLogin));
+        if(GameId != null) request.SetValue("game_id", new Godot.Collections.Array<string>(GameId));
+        if(Type != null) request.SetValue("type", Type);
+        if(Language != null) request.SetValue("language", new Godot.Collections.Array<string>(Language));
+        if(First.HasValue) request.SetValue("first", First.Value);
+        if(Before != null) request.SetValue("before", Before);
+        if(After != null) request.SetValue("after", After);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

@@ -6,8 +6,8 @@ namespace TwitcherSharp.Api.Generated.EventSub;
 
 public partial class TwitchCreateEventSubSubscriptionResponse<T> : RefCounted, ITwitcherSharp<TwitchCreateEventSubSubscriptionResponse<T>> where T : RefCounted, ITwitcherSharpCondition<T>
 {
-    private GodotObject? _data;
-    public TwitchEventSubSubscription<T>[] Data { get => field ??= _data?.GetArray<TwitchEventSubSubscription<T>>("data")!; set; } = null!;
+    private Variant _data;
+    public TwitchEventSubSubscription<T>[] Data { get => field ??= _data.GetArray<TwitchEventSubSubscription<T>>("data")!; set; } = null!;
     public int Total { get; set; }
     public int TotalCost { get; set; }
     public int MaxTotalCost { get; set; }
@@ -20,25 +20,30 @@ public partial class TwitchCreateEventSubSubscriptionResponse<T> : RefCounted, I
         if(data == null) return null;
         var instance = new TwitchCreateEventSubSubscriptionResponse<T>
         {
-            Total = data.Get("total").AsInt32(),
-            TotalCost = data.Get("total_cost").AsInt32(),
-            MaxTotalCost = data.Get("max_total_cost").AsInt32(),
+            Total = data.Read("total", static v => v.AsInt32()),
+            TotalCost = data.Read("total_cost", static v => v.AsInt32()),
+            MaxTotalCost = data.Read("max_total_cost", static v => v.AsInt32()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_create_event_sub_subscription.gd");
-        var responseClass = script.Get("Response").AsGodotObject();
-        var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data.ToGodotArray());
-        request.Set("total", Total);
-        request.Set("total_cost", TotalCost);
-        request.Set("max_total_cost", MaxTotalCost);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_create_event_sub_subscription.gd", "Response");
+        if(Data != null) request.SetArray("data", Data);
+        request.SetValue("total", Total);
+        request.SetValue("total_cost", TotalCost);
+        request.SetValue("max_total_cost", MaxTotalCost);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

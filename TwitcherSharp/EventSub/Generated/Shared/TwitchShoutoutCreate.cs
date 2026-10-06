@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.Shared;
 
 public partial class TwitchShoutoutCreate : RefCounted, ITwitcherSharpEventSub<TwitchShoutoutCreate>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// An ID that identifies the broadcaster that sent the Shoutout.
@@ -83,42 +83,48 @@ public partial class TwitchShoutoutCreate : RefCounted, ITwitcherSharpEventSub<T
         if(data == null) return null;
         var instance = new TwitchShoutoutCreate
         {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-            BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
-            BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
-            ToBroadcasterUserId = data.Get("to_broadcaster_user_id").AsString(),
-            ToBroadcasterUserLogin = data.Get("to_broadcaster_user_login").AsString(),
-            ToBroadcasterUserName = data.Get("to_broadcaster_user_name").AsString(),
-            ModeratorUserId = data.Get("moderator_user_id").AsString(),
-            ModeratorUserLogin = data.Get("moderator_user_login").AsString(),
-            ModeratorUserName = data.Get("moderator_user_name").AsString(),
-            ViewerCount = data.Get("viewer_count").AsInt32(),
-            StartedAt = data.Get("started_at").AsString(),
-            CooldownEndsAt = data.Get("cooldown_ends_at").AsString(),
-            TargetCooldownEndsAt = data.Get("target_cooldown_ends_at").AsString(),
+            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
+            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
+            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
+            ToBroadcasterUserId = data.Read("to_broadcaster_user_id", static v => v.AsString()),
+            ToBroadcasterUserLogin = data.Read("to_broadcaster_user_login", static v => v.AsString()),
+            ToBroadcasterUserName = data.Read("to_broadcaster_user_name", static v => v.AsString()),
+            ModeratorUserId = data.Read("moderator_user_id", static v => v.AsString()),
+            ModeratorUserLogin = data.Read("moderator_user_login", static v => v.AsString()),
+            ModeratorUserName = data.Read("moderator_user_name", static v => v.AsString()),
+            ViewerCount = data.Read("viewer_count", static v => v.AsInt32()),
+            StartedAt = data.Read("started_at", static v => v.AsString()),
+            CooldownEndsAt = data.Read("cooldown_ends_at", static v => v.AsString()),
+            TargetCooldownEndsAt = data.Read("target_cooldown_ends_at", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_shoutout_create.gd");
-        var request = script.New().AsGodotObject();
-        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
-        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
-        if(ToBroadcasterUserId != null) request.Set("to_broadcaster_user_id", ToBroadcasterUserId);
-        if(ToBroadcasterUserLogin != null) request.Set("to_broadcaster_user_login", ToBroadcasterUserLogin);
-        if(ToBroadcasterUserName != null) request.Set("to_broadcaster_user_name", ToBroadcasterUserName);
-        if(ModeratorUserId != null) request.Set("moderator_user_id", ModeratorUserId);
-        if(ModeratorUserLogin != null) request.Set("moderator_user_login", ModeratorUserLogin);
-        if(ModeratorUserName != null) request.Set("moderator_user_name", ModeratorUserName);
-        request.Set("viewer_count", ViewerCount);
-        if(StartedAt != null) request.Set("started_at", StartedAt);
-        if(CooldownEndsAt != null) request.Set("cooldown_ends_at", CooldownEndsAt);
-        if(TargetCooldownEndsAt != null) request.Set("target_cooldown_ends_at", TargetCooldownEndsAt);
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated_eventsub/twitch_es_shoutout_create.gd");
+        if(BroadcasterUserId != null) request.SetValue("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserLogin != null) request.SetValue("broadcaster_user_login", BroadcasterUserLogin);
+        if(BroadcasterUserName != null) request.SetValue("broadcaster_user_name", BroadcasterUserName);
+        if(ToBroadcasterUserId != null) request.SetValue("to_broadcaster_user_id", ToBroadcasterUserId);
+        if(ToBroadcasterUserLogin != null) request.SetValue("to_broadcaster_user_login", ToBroadcasterUserLogin);
+        if(ToBroadcasterUserName != null) request.SetValue("to_broadcaster_user_name", ToBroadcasterUserName);
+        if(ModeratorUserId != null) request.SetValue("moderator_user_id", ModeratorUserId);
+        if(ModeratorUserLogin != null) request.SetValue("moderator_user_login", ModeratorUserLogin);
+        if(ModeratorUserName != null) request.SetValue("moderator_user_name", ModeratorUserName);
+        request.SetValue("viewer_count", ViewerCount);
+        if(StartedAt != null) request.SetValue("started_at", StartedAt);
+        if(CooldownEndsAt != null) request.SetValue("cooldown_ends_at", CooldownEndsAt);
+        if(TargetCooldownEndsAt != null) request.SetValue("target_cooldown_ends_at", TargetCooldownEndsAt);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 }

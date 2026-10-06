@@ -42,6 +42,18 @@ public class MappingTestComplex(Node testScene) : TestClass(testScene)
         nameof(TwitchChannelBitsUseEvent), // Broken on Twitcher's side. Awaiting Kani's implementation.
     ];
 
+    /// <summary>
+    /// Generated types that do not map against the twitcher the tests run against, because the two generators read
+    /// different sources: twitcher's EventSub swagger leaves the drop.entitlement.grant data untyped and has no gif
+    /// fragment in chat messages (the EventSub reference page defines neither). They are listed so that any other
+    /// failing type still fails this test, and a listed type that starts to map fails it too.
+    /// </summary>
+    private static readonly HashSet<string> KnownTwitcherMismatches =
+    [
+        "TwitcherSharp.EventSub.Generated.DropEntitlementGrant.TwitchDropEntitlementGrantEvent+TwitchData",
+        "TwitcherSharp.EventSub.Generated.ChannelChatMessage.TwitchChannelChatMessageEvent+TwitchMessage+TwitchFragments+TwitchGif",
+    ];
+
     [Test]
     public void TestParsing()
     {
@@ -59,6 +71,8 @@ public class MappingTestComplex(Node testScene) : TestClass(testScene)
             .Select(t => (ITwitcherSharp)Activator.CreateInstance(t)!)
             .ToList();
 
+        // Collect every failing type instead of stopping at the first one.
+        var failures = new List<string>();
         foreach (var twitcherSharpObject in TwitcherSharpObjects)
         {
             foreach (var property in twitcherSharpObject.GetType().GetProperties().Where(p => p.CanWrite))
@@ -67,11 +81,35 @@ public class MappingTestComplex(Node testScene) : TestClass(testScene)
             }
 
             _log.Print("testing " + twitcherSharpObject.GetType().Name);
-            var godotObject = twitcherSharpObject.ToGodotObject();
-            var parsedTwitcherSharpObject = FromGodotObject(twitcherSharpObject.GetType(), godotObject);
-            AssertHelper.AssertTwitcherSharpProperties(twitcherSharpObject, parsedTwitcherSharpObject, _log);
+            try
+            {
+                var godotObject = twitcherSharpObject.ToGodotObject();
+                var parsedTwitcherSharpObject = FromGodotObject(twitcherSharpObject.GetType(), godotObject);
+                AssertHelper.AssertTwitcherSharpProperties(twitcherSharpObject, parsedTwitcherSharpObject, _log);
+            }
+            catch (Exception e)
+            {
+                failures.Add($"{twitcherSharpObject.GetType().FullName}: {e.GetType().Name}: {e.Message}");
+                continue;
+            }
             TestCounter++;
             _log.Print($"test {TestCounter} successful {twitcherSharpObject.GetType().Name}");
+        }
+
+        var unexpected = failures.Where(f => !KnownTwitcherMismatches.Contains(f[..f.IndexOf(':')])).ToList();
+        var mapsNow = KnownTwitcherMismatches
+            .Where(name => !failures.Any(f => f.StartsWith(name + ":", StringComparison.Ordinal))).ToList();
+        _log.Print($"{TestCounter} of {TwitcherSharpObjects.Count} types mapped, "
+                   + $"{failures.Count - unexpected.Count} known twitcher mismatches");
+
+        if (unexpected.Count > 0 || mapsNow.Count > 0)
+        {
+            throw new Exception($"{unexpected.Count} of {TwitcherSharpObjects.Count} types failed to map:\n"
+                                + string.Join("\n", unexpected)
+                                + (mapsNow.Count > 0
+                                    ? "\nThese map now; remove them from KnownTwitcherMismatches:\n"
+                                      + string.Join("\n", mapsNow)
+                                    : ""));
         }
     }
 

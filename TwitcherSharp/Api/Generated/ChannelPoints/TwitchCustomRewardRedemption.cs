@@ -6,7 +6,7 @@ namespace TwitcherSharp.Api.Generated.ChannelPoints;
 
 public partial class TwitchCustomRewardRedemption : RefCounted, ITwitcherSharp<TwitchCustomRewardRedemption>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string BroadcasterId { get; set; } = null!;
     public string BroadcasterLogin { get; set; } = null!;
     public string BroadcasterName { get; set; } = null!;
@@ -14,7 +14,7 @@ public partial class TwitchCustomRewardRedemption : RefCounted, ITwitcherSharp<T
     public string UserId { get; set; } = null!;
     public string UserName { get; set; } = null!;
     public string UserLogin { get; set; } = null!;
-    public TwitchReward Reward { get => field ??= _data?.Get<TwitchReward>("reward")!; set; } = null!;
+    public TwitchReward Reward { get => field ??= _data.Get<TwitchReward>("reward")!; set; } = null!;
     public string UserInput { get; set; } = null!;
     public string Status { get; set; } = null!;
     public string RedeemedAt { get; set; } = null!;
@@ -27,38 +27,44 @@ public partial class TwitchCustomRewardRedemption : RefCounted, ITwitcherSharp<T
         if(data == null) return null;
         var instance = new TwitchCustomRewardRedemption
         {
-            BroadcasterId = data.Get("broadcaster_id").AsString(),
-            BroadcasterLogin = data.Get("broadcaster_login").AsString(),
-            BroadcasterName = data.Get("broadcaster_name").AsString(),
-            Id = data.Get("id").AsString(),
-            UserId = data.Get("user_id").AsString(),
-            UserName = data.Get("user_name").AsString(),
-            UserLogin = data.Get("user_login").AsString(),
-            UserInput = data.Get("user_input").AsString(),
-            Status = data.Get("status").AsString(),
-            RedeemedAt = data.Get("redeemed_at").AsString(),
+            BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
+            BroadcasterLogin = data.Read("broadcaster_login", static v => v.AsString()),
+            BroadcasterName = data.Read("broadcaster_name", static v => v.AsString()),
+            Id = data.Read("id", static v => v.AsString()),
+            UserId = data.Read("user_id", static v => v.AsString()),
+            UserName = data.Read("user_name", static v => v.AsString()),
+            UserLogin = data.Read("user_login", static v => v.AsString()),
+            UserInput = data.Read("user_input", static v => v.AsString()),
+            Status = data.Read("status", static v => v.AsString()),
+            RedeemedAt = data.Read("redeemed_at", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_custom_reward_redemption.gd");
-        var request = script.Call("new").AsGodotObject();
-        if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
-        if(BroadcasterLogin != null) request.Set("broadcaster_login", BroadcasterLogin);
-        if(BroadcasterName != null) request.Set("broadcaster_name", BroadcasterName);
-        if(Id != null) request.Set("id", Id);
-        if(UserId != null) request.Set("user_id", UserId);
-        if(UserName != null) request.Set("user_name", UserName);
-        if(UserLogin != null) request.Set("user_login", UserLogin);
-        if(Reward != null) request.Set("reward", Reward.ToGodotObject());
-        if(UserInput != null) request.Set("user_input", UserInput);
-        if(Status != null) request.Set("status", Status);
-        if(RedeemedAt != null) request.Set("redeemed_at", RedeemedAt);
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated/twitch_custom_reward_redemption.gd");
+        if(BroadcasterId != null) request.SetValue("broadcaster_id", BroadcasterId);
+        if(BroadcasterLogin != null) request.SetValue("broadcaster_login", BroadcasterLogin);
+        if(BroadcasterName != null) request.SetValue("broadcaster_name", BroadcasterName);
+        if(Id != null) request.SetValue("id", Id);
+        if(UserId != null) request.SetValue("user_id", UserId);
+        if(UserName != null) request.SetValue("user_name", UserName);
+        if(UserLogin != null) request.SetValue("user_login", UserLogin);
+        if(Reward != null) request.SetObject("reward", Reward);
+        if(UserInput != null) request.SetValue("user_input", UserInput);
+        if(Status != null) request.SetValue("status", Status);
+        if(RedeemedAt != null) request.SetValue("redeemed_at", RedeemedAt);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
     
     /// <summary> 
@@ -66,11 +72,11 @@ public partial class TwitchCustomRewardRedemption : RefCounted, ITwitcherSharp<T
     /// </summary>
     public partial class TwitchReward : RefCounted, ITwitcherSharp<TwitchReward>
     {
-        private GodotObject? _data;
+        private Variant _data;
         public string Id { get; set; } = null!;
         public string Title { get; set; } = null!;
         public string Prompt { get; set; } = null!;
-        public int Cost { get; set; }
+        public long Cost { get; set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchReward object.
@@ -80,26 +86,31 @@ public partial class TwitchCustomRewardRedemption : RefCounted, ITwitcherSharp<T
             if(data == null) return null;
             var instance = new TwitchReward
             {
-                Id = data.Get("id").AsString(),
-                Title = data.Get("title").AsString(),
-                Prompt = data.Get("prompt").AsString(),
-                Cost = data.Get("cost").AsInt32(),
+                Id = data.Read("id", static v => v.AsString()),
+                Title = data.Read("title", static v => v.AsString()),
+                Prompt = data.Read("prompt", static v => v.AsString()),
+                Cost = data.Read("cost", static v => v.AsInt64()),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_custom_reward_redemption.gd");
-            var twitchRewardClass = script.Get("Reward").AsGodotObject();
-            var request = twitchRewardClass.Call("new").AsGodotObject();
-            if(Id != null) request.Set("id", Id);
-            if(Title != null) request.Set("title", Title);
-            if(Prompt != null) request.Set("prompt", Prompt);
-            request.Set("cost", Cost);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_custom_reward_redemption.gd", "Reward");
+            if(Id != null) request.SetValue("id", Id);
+            if(Title != null) request.SetValue("title", Title);
+            if(Prompt != null) request.SetValue("prompt", Prompt);
+            request.SetValue("cost", Cost);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     
     }

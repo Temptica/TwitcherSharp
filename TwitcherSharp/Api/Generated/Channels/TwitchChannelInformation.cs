@@ -6,7 +6,7 @@ namespace TwitcherSharp.Api.Generated.Channels;
 
 public partial class TwitchChannelInformation : RefCounted, ITwitcherSharp<TwitchChannelInformation>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string BroadcasterId { get; set; } = null!;
     public string BroadcasterLogin { get; set; } = null!;
     public string BroadcasterName { get; set; } = null!;
@@ -27,39 +27,45 @@ public partial class TwitchChannelInformation : RefCounted, ITwitcherSharp<Twitc
         if(data == null) return null;
         var instance = new TwitchChannelInformation
         {
-            BroadcasterId = data.Get("broadcaster_id").AsString(),
-            BroadcasterLogin = data.Get("broadcaster_login").AsString(),
-            BroadcasterName = data.Get("broadcaster_name").AsString(),
-            BroadcasterLanguage = data.Get("broadcaster_language").AsString(),
-            GameName = data.Get("game_name").AsString(),
-            GameId = data.Get("game_id").AsString(),
-            Title = data.Get("title").AsString(),
-            Delay = data.Get("delay").AsInt32(),
-            Tags = data.Get("tags").AsStringArray(),
-            ContentClassificationLabels = data.Get("content_classification_labels").AsStringArray(),
-            IsBrandedContent = data.Get("is_branded_content").AsBool(),
+            BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
+            BroadcasterLogin = data.Read("broadcaster_login", static v => v.AsString()),
+            BroadcasterName = data.Read("broadcaster_name", static v => v.AsString()),
+            BroadcasterLanguage = data.Read("broadcaster_language", static v => v.AsString()),
+            GameName = data.Read("game_name", static v => v.AsString()),
+            GameId = data.Read("game_id", static v => v.AsString()),
+            Title = data.Read("title", static v => v.AsString()),
+            Delay = data.Read("delay", static v => v.AsInt32()),
+            Tags = data.Read("tags", static v => v.AsStringArray()),
+            ContentClassificationLabels = data.Read("content_classification_labels", static v => v.AsStringArray()),
+            IsBrandedContent = data.Read("is_branded_content", static v => v.AsBool()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_channel_information.gd");
-        var request = script.Call("new").AsGodotObject();
-        if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
-        if(BroadcasterLogin != null) request.Set("broadcaster_login", BroadcasterLogin);
-        if(BroadcasterName != null) request.Set("broadcaster_name", BroadcasterName);
-        if(BroadcasterLanguage != null) request.Set("broadcaster_language", BroadcasterLanguage);
-        if(GameName != null) request.Set("game_name", GameName);
-        if(GameId != null) request.Set("game_id", GameId);
-        if(Title != null) request.Set("title", Title);
-        request.Set("delay", Delay);
-        if(Tags != null) request.Set("tags", new Godot.Collections.Array<string>(Tags));
-        if(ContentClassificationLabels != null) request.Set("content_classification_labels", new Godot.Collections.Array<string>(ContentClassificationLabels));
-        request.Set("is_branded_content", IsBrandedContent);
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated/twitch_channel_information.gd");
+        if(BroadcasterId != null) request.SetValue("broadcaster_id", BroadcasterId);
+        if(BroadcasterLogin != null) request.SetValue("broadcaster_login", BroadcasterLogin);
+        if(BroadcasterName != null) request.SetValue("broadcaster_name", BroadcasterName);
+        if(BroadcasterLanguage != null) request.SetValue("broadcaster_language", BroadcasterLanguage);
+        if(GameName != null) request.SetValue("game_name", GameName);
+        if(GameId != null) request.SetValue("game_id", GameId);
+        if(Title != null) request.SetValue("title", Title);
+        request.SetValue("delay", Delay);
+        if(Tags != null) request.SetValue("tags", new Godot.Collections.Array<string>(Tags));
+        if(ContentClassificationLabels != null) request.SetValue("content_classification_labels", new Godot.Collections.Array<string>(ContentClassificationLabels));
+        request.SetValue("is_branded_content", IsBrandedContent);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

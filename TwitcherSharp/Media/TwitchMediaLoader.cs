@@ -31,10 +31,10 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
     {
         get => _data is null
             ? field
-            : TwitchImageTransformer.FromObject(_data.Get("image_transformer").AsGodotObject());
+            : _data.Get<TwitchImageTransformer>("image_transformer");
         set
         {
-            _data?.Set("image_transformer", value?.ToGodotObject() ?? new Variant());
+            _data?.SetObject("image_transformer", value);
             field = value;
         }
     } = new();
@@ -43,10 +43,10 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
     {
         get => _data is null
             ? field
-            : _data.Get("fallback_texture").As<Texture2D>();
+            : _data.Read("fallback_texture", static v => v.As<Texture2D>());
         set
         {
-            if (value != null) _data?.Set("fallback_texture", value);
+            if (value != null) _data?.SetValue("fallback_texture", value);
             field = value;
         }
     }
@@ -55,10 +55,10 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
     {
         get => _data is null
             ? field
-            : _data.Get("fallback_profile").As<Texture2D>();
+            : _data.Read("fallback_profile", static v => v.As<Texture2D>());
         set
         {
-            if (value != null) _data?.Set("fallback_profile", value);
+            if (value != null) _data?.SetValue("fallback_profile", value);
             field = value;
         }
     }
@@ -67,10 +67,10 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
     {
         get => _data is null
             ? field
-            : _data.Get("image_cdn_host").AsString();
+            : _data.Read("image_cdn_host", static v => v.AsString());
         set
         {
-            _data?.Set("image_cdn_host", value);
+            _data?.SetValue("image_cdn_host", value);
             field = value;
         }
     } = "https://static-cdn.jtvnw.net/";
@@ -82,10 +82,10 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
     {
         get => _data is null
             ? field
-            : _data.Get("load_cache_in_editor").AsBool();
+            : _data.Read("load_cache_in_editor", static v => v.AsBool());
         set
         {
-            _data?.Set("load_cache_in_editor", value);
+            _data?.SetValue("load_cache_in_editor", value);
             field = value;
         }
     }
@@ -94,10 +94,10 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
     {
         get => _data is null
             ? field
-            : _data.Get("cache_emote").AsString();
+            : _data.Read("cache_emote", static v => v.AsString());
         set
         {
-            _data?.Set("cache_emote", value);
+            _data?.SetValue("cache_emote", value);
             field = value;
         }
     } = "user://emotes";
@@ -106,10 +106,10 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
     {
         get => _data is null
             ? field
-            : _data.Get("cache_badge").AsString();
+            : _data.Read("cache_badge", static v => v.AsString());
         set
         {
-            _data?.Set("cache_badge", value);
+            _data?.SetValue("cache_badge", value);
             field = value;
         }
     } = "user://badges";
@@ -118,10 +118,10 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
     {
         get => _data is null
             ? field
-            : _data.Get("cache_cheermote").AsString();
+            : _data.Read("cache_cheermote", static v => v.AsString());
         set
         {
-            _data?.Set("cache_cheermote", value);
+            _data?.SetValue("cache_cheermote", value);
             field = value;
         }
     } = "user://cheermote";
@@ -130,58 +130,69 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
     {
         get => _data is null
             ? field
-            : _data.Get("cache_profile").AsString();
+            : _data.Read("cache_profile", static v => v.AsString());
         set
         {
-            _data?.Set("cache_profile", value);
+            _data?.SetValue("cache_profile", value);
             field = value;
         }
     } = "user://profiles";
 
     #region Emotes
 
-    public void PreloadEmotes(string channelId = "global")
-        => _data!.Call("preload_emotes", channelId);
+    public async Task PreloadEmotes(string channelId = "global")
+        => await _data!.InvokeAsync("preload_emotes", channelId);
 
-    public Godot.Collections.Dictionary<string, SpriteFrames> GetEmotes(string[] emoteIds)
-        => _data!.Call("get_emotes", emoteIds).AsGodotDictionary<string, SpriteFrames>();
+    public async Task<Godot.Collections.Dictionary<string, SpriteFrames>> GetEmotes(string[] emoteIds)
+    {
+        var ids = new Godot.Collections.Array<string>(emoteIds);
+        return await _data!.InvokeAsync("get_emotes", static v => v.AsGodotDictionary<string, SpriteFrames>(), ids);
+    }
 
-    public Godot.Collections.Dictionary<TwitchEmoteDefinition, SpriteFrames> GetEmotesByDefinition(
+    public async Task<Godot.Collections.Dictionary<TwitchEmoteDefinition, SpriteFrames>> GetEmotesByDefinition(
         TwitchEmoteDefinition[] emoteDefinitions)
     {
-        var param = emoteDefinitions.Select(ed => ed.ToGodotObject()).ToArray();
-        return _data!.CallDictionaryKey<TwitchEmoteDefinition, SpriteFrames>("get_emotes_by_definition", param);
+        using var definitions = emoteDefinitions.ToTypedArray("res://addons/twitcher/media/twitch_emote_definition.gd");
+        return await _data!.CallDictionaryKeyAsync<TwitchEmoteDefinition, SpriteFrames>("get_emotes_by_definition", definitions);
     }
 
     public async Task<Dictionary<string, ITwitchEmote>> GetCachedEmotes(string channelId)
     {
-        var result = await _data!.CallAsync("get_cached_emotes");
-        return result.AsGodotDictionary()
-            .Select(x =>
+        using var result = await _data!.CallAsync("get_cached_emotes");
+        using var source = result.AsGodotDictionary();
+        var emotes = new Dictionary<string, ITwitchEmote>();
+        foreach (var (key, value) in source)
+        {
+            using (key)
+            using (value)
             {
-                var godotObject = x.Value.AsGodotObject();
-                ITwitchEmote? emote = godotObject.GetClass() switch
+                var godotObject = value.AsGodotObject();
+                ITwitchEmote? emote = godotObject?.GetClass() switch
                 {
                     "TwitchGlobalEmote" => TwitchGlobalEmote.FromObject(godotObject),
                     "TwitchChannelEmote" => TwitchChannelEmote.FromObject(godotObject),
                     _ => null
                 };
-                return (Key: x.Key.AsString(), Emote: emote);
-            })
-            .Where(x => x.Emote != null)
-            .ToDictionary(x => x.Key, x => x.Emote!);
+                godotObject.Release();
+                if (emote != null) emotes[key.AsString()] = emote;
+            }
+        }
+
+        return emotes;
     }
 
     #endregion
 
     #region Badges
 
-    public async Task PreloadBadges(string channelId = "global") => await _data!.CallAsync("preload_badges", channelId);
+    public async Task PreloadBadges(string channelId = "global") => await _data!.InvokeAsync("preload_badges", channelId);
 
     public async Task<Godot.Collections.Dictionary<TwitchBadgeDefinition, SpriteFrames>> GetBadges(
         TwitchBadgeDefinition[] badges)
-        => await _data!.CallDictionaryKeyAsync<TwitchBadgeDefinition, SpriteFrames>("get_badges",
-            badges.Select(badge => badge.ToGodotObject()).ToArray());
+    {
+        using var definitions = badges.ToTypedArray("res://addons/twitcher/media/twitch_badge_definition.gd");
+        return await _data!.CallDictionaryKeyAsync<TwitchBadgeDefinition, SpriteFrames>("get_badges", definitions);
+    }
 
     #endregion
 
@@ -200,28 +211,20 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
         {
             if (data == null) return null;
             return new CheerResult(
-                TwitchCheermote.FromObject(data.Get("cheermote").AsGodotObject())!,
-                TwitchCheermote.TwitchResponseTiers.FromObject(data.Get("tier").AsGodotObject())!,
-                data.Get("sprite_frames").As<SpriteFrames>());
+                data.Get<TwitchCheermote>("cheermote")!,
+                data.Get<TwitchCheermote.TwitchResponseTiers>("tier")!,
+                data.Read("spriteframes", static v => v.As<SpriteFrames>()));
         }
 
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_media_loader.gd");
-            var mainClass = script.Get("CheerResult").AsGodotObject();
-            var request = mainClass.Call("new").AsGodotObject();
-            request.Set("cheermote", Cheermote);
-            request.Set("tier", Tier);
-            request.Set("sprite_frames", SpriteFrames);
-            return request;
+            using var cheermote = GodotObjectExtension.ToVariant(Cheermote);
+            using var tier = GodotObjectExtension.ToVariant(Tier);
+            return InteropExtension.NewInner(ScriptPath, "CheerResult", cheermote, tier, SpriteFrames);
         }
     }
 
-    public List<TwitchCheermote> AllCheermotes() => _data!.Call("all_cheermotes")
-        .AsGodotObjectArray<GodotObject>()
-        .Select(TwitchCheermote.FromObject)
-        .OfType<TwitchCheermote>()
-        .ToList();
+    public List<TwitchCheermote> AllCheermotes() => _data!.CallList<TwitchCheermote>("all_cheermotes");
 
     /// <summary>
     /// Resolves an info with spriteframes for a specific cheer definition contains also spriteframes for the given tier.
@@ -239,7 +242,10 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
     /// <param name="cheerData"></param>
     /// <returns></returns>
     public TwitchCheermote.TwitchResponseTiers FindCheerTier(int number, TwitchCheermote cheerData)
-        => _data!.Call("find_cheer_tier", number, cheerData.ToGodotObject()).As<TwitchCheermote.TwitchResponseTiers>();
+    {
+        using var cheerArg = GodotObjectExtension.ToVariant(cheerData);
+        return _data!.Call<TwitchCheermote.TwitchResponseTiers>("find_cheer_tier", number, cheerArg);
+    }
 
     /// <summary>
     /// 
@@ -248,22 +254,33 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
     /// <returns><see cref="SpriteFrames"/> mapped by <see cref="TwitchCheermote.TwitchResponseTiers"/> for a <see cref="TwitchCheermote"/></returns>
     public async Task<Godot.Collections.Dictionary<TwitchCheermote.TwitchResponseTiers, SpriteFrames>> GetCheermotes(
         TwitchCheermoteDefinition cheermoteDefinition)
-        => await _data!.CallDictionaryKeyAsync<TwitchCheermote.TwitchResponseTiers, SpriteFrames>("get_cheermotes",
-            cheermoteDefinition.ToGodotObject());
+    {
+        using var definition = GodotObjectExtension.ToVariant(cheermoteDefinition);
+        return await _data!.CallDictionaryKeyAsync<TwitchCheermote.TwitchResponseTiers, SpriteFrames>("get_cheermotes",
+            definition);
+    }
 
     #endregion
 
     #region Utils
 
-    public async Task<Image> LoadImage(string url) => (await _data!.CallAsync("load_image", url)).As<Image>();
+    public async Task<Image> LoadImage(string url)
+    {
+        using var result = await _data!.CallAsync("load_image", url);
+        return result.As<Image>();
+    }
 
     /// <summary>
     /// Get the image of a user
     /// </summary>
     /// <param name="user"></param>
     /// <returns></returns>
-    public async Task<ImageTexture> LoadProfileImage(TwitchUser user) =>
-        (await _data!.CallAsync("load_profile_image", user.ToGodotObject())).As<ImageTexture>();
+    public async Task<ImageTexture> LoadProfileImage(TwitchUser user)
+    {
+        using var userArg = GodotObjectExtension.ToVariant(user);
+        using var result = await _data!.CallAsync("load_profile_image", userArg);
+        return result.As<ImageTexture>();
+    }
 
     #endregion
 
@@ -273,15 +290,15 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
 
         var mediaLoader = new TwitchMediaLoader()
         {
-            ImageTransformer = TwitchImageTransformer.FromObject(data.Get("image_transformer").AsGodotObject()),
-            FallbackTexture = data.Get("fallback_texture").As<Texture2D>(),
-            FallbackProfile = data.Get("fallback_profile").As<Texture2D>(),
-            ImageCdnHost = data.Get("image_cdn_host").AsString(),
-            LoadCacheInEditor = data.Get("load_cache_in_editor").AsBool(),
-            CacheEmote = data.Get("cache_emote").AsString(),
-            CacheBadge = data.Get("cache_badge").AsString(),
-            CacheCheermote = data.Get("cache_cheermote").AsString(),
-            CacheProfile = data.Get("cache_profile").AsString(),
+            ImageTransformer = data.Get<TwitchImageTransformer>("image_transformer"),
+            FallbackTexture = data.Read("fallback_texture", static v => v.As<Texture2D>()),
+            FallbackProfile = data.Read("fallback_profile", static v => v.As<Texture2D>()),
+            ImageCdnHost = data.Read("image_cdn_host", static v => v.AsString()),
+            LoadCacheInEditor = data.Read("load_cache_in_editor", static v => v.AsBool()),
+            CacheEmote = data.Read("cache_emote", static v => v.AsString()),
+            CacheBadge = data.Read("cache_badge", static v => v.AsString()),
+            CacheCheermote = data.Read("cache_cheermote", static v => v.AsString()),
+            CacheProfile = data.Read("cache_profile", static v => v.AsString()),
             _data = data, //must be last to avoid setting itself (performance boost)
         };
         data.SetMeta("_twitcher_sharp_instance", mediaLoader);
@@ -296,17 +313,16 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
     {
         if (_data is not null) return _data;
 
-        var script = GD.Load<GDScript>(ScriptPath);
-        _data = script.New().AsGodotObject();
-        _data.Set("image_transformer", ImageTransformer?.ToGodotObject() ?? new Variant());
-        if (FallbackTexture != null) _data.Set("fallback_texture", FallbackTexture);
-        if (FallbackProfile != null) _data.Set("fallback_profile", FallbackProfile);
-        _data.Set("image_cdn_host", ImageCdnHost);
-        _data.Set("load_cache_in_editor", LoadCacheInEditor);
-        _data.Set("cache_emote", CacheEmote);
-        _data.Set("cache_badge", CacheBadge);
-        _data.Set("cache_cheermote", CacheCheermote);
-        _data.Set("cache_profile", CacheProfile);
+        _data = InteropExtension.NewObject(ScriptPath);
+        _data.SetObject("image_transformer", ImageTransformer);
+        if (FallbackTexture != null) _data.SetValue("fallback_texture", FallbackTexture);
+        if (FallbackProfile != null) _data.SetValue("fallback_profile", FallbackProfile);
+        _data.SetValue("image_cdn_host", ImageCdnHost);
+        _data.SetValue("load_cache_in_editor", LoadCacheInEditor);
+        _data.SetValue("cache_emote", CacheEmote);
+        _data.SetValue("cache_badge", CacheBadge);
+        _data.SetValue("cache_cheermote", CacheCheermote);
+        _data.SetValue("cache_profile", CacheProfile);
         return _data;
     }
 

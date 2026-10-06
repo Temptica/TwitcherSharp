@@ -6,7 +6,7 @@ namespace TwitcherSharp.Api.Generated.GuestStar;
 
 public partial class TwitchGetChannelGuestStarSettingsResponse : RefCounted, ITwitcherSharp<TwitchGetChannelGuestStarSettingsResponse>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public bool IsModeratorSendLiveEnabled { get; set; }
     public int SlotCount { get; set; }
     public bool IsBrowserSourceAudioEnabled { get; set; }
@@ -21,28 +21,33 @@ public partial class TwitchGetChannelGuestStarSettingsResponse : RefCounted, ITw
         if(data == null) return null;
         var instance = new TwitchGetChannelGuestStarSettingsResponse
         {
-            IsModeratorSendLiveEnabled = data.Get("is_moderator_send_live_enabled").AsBool(),
-            SlotCount = data.Get("slot_count").AsInt32(),
-            IsBrowserSourceAudioEnabled = data.Get("is_browser_source_audio_enabled").AsBool(),
-            GroupLayout = data.Get("group_layout").AsString(),
-            BrowserSourceToken = data.Get("browser_source_token").AsString(),
+            IsModeratorSendLiveEnabled = data.Read("is_moderator_send_live_enabled", static v => v.AsBool()),
+            SlotCount = data.Read("slot_count", static v => v.AsInt32()),
+            IsBrowserSourceAudioEnabled = data.Read("is_browser_source_audio_enabled", static v => v.AsBool()),
+            GroupLayout = data.Read("group_layout", static v => v.AsString()),
+            BrowserSourceToken = data.Read("browser_source_token", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_channel_guest_star_settings.gd");
-        var responseClass = script.Get("Response").AsGodotObject();
-        var request = responseClass.Call("new").AsGodotObject();
-        request.Set("is_moderator_send_live_enabled", IsModeratorSendLiveEnabled);
-        request.Set("slot_count", SlotCount);
-        request.Set("is_browser_source_audio_enabled", IsBrowserSourceAudioEnabled);
-        if(GroupLayout != null) request.Set("group_layout", GroupLayout);
-        if(BrowserSourceToken != null) request.Set("browser_source_token", BrowserSourceToken);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_channel_guest_star_settings.gd", "Response");
+        request.SetValue("is_moderator_send_live_enabled", IsModeratorSendLiveEnabled);
+        request.SetValue("slot_count", SlotCount);
+        request.SetValue("is_browser_source_audio_enabled", IsBrowserSourceAudioEnabled);
+        if(GroupLayout != null) request.SetValue("group_layout", GroupLayout);
+        if(BrowserSourceToken != null) request.SetValue("browser_source_token", BrowserSourceToken);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

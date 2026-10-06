@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.UserAuthorizationRevoke;
 
 public partial class TwitchUserAuthorizationRevokeEvent : RefCounted, ITwitcherSharpEventSub<TwitchUserAuthorizationRevokeEvent>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// The client_id of the application with revoked user access.
@@ -38,25 +38,30 @@ public partial class TwitchUserAuthorizationRevokeEvent : RefCounted, ITwitcherS
         if(data == null) return null;
         var instance = new TwitchUserAuthorizationRevokeEvent
         {
-            ClientId = data.Get("client_id").AsString(),
-            UserId = data.Get("user_id").AsString(),
-            UserLogin = data.Get("user_login").AsString(),
-            UserName = data.Get("user_name").AsString(),
+            ClientId = data.Read("client_id", static v => v.AsString()),
+            UserId = data.Read("user_id", static v => v.AsString()),
+            UserLogin = data.Read("user_login", static v => v.AsString()),
+            UserName = data.Read("user_name", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_user_authorization_revoke.gd");
-        var eventClass = script.Get("Event").As<GDScript>();
-        var request = eventClass.New().AsGodotObject();
-        if(ClientId != null) request.Set("client_id", ClientId);
-        if(UserId != null) request.Set("user_id", UserId);
-        if(UserLogin != null) request.Set("user_login", UserLogin);
-        if(UserName != null) request.Set("user_name", UserName);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_user_authorization_revoke.gd", "Event");
+        if(ClientId != null) request.SetValue("client_id", ClientId);
+        if(UserId != null) request.SetValue("user_id", UserId);
+        if(UserLogin != null) request.SetValue("user_login", UserLogin);
+        if(UserName != null) request.SetValue("user_name", UserName);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 }

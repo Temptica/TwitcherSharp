@@ -6,7 +6,7 @@ namespace TwitcherSharp.Api.Generated.Videos;
 
 public partial class TwitchDeleteVideosResponse : RefCounted, ITwitcherSharp<TwitchDeleteVideosResponse>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string[] Data { get; set; } = null!;
 
     /// <summary> 
@@ -17,20 +17,25 @@ public partial class TwitchDeleteVideosResponse : RefCounted, ITwitcherSharp<Twi
         if(data == null) return null;
         var instance = new TwitchDeleteVideosResponse
         {
-            Data = data.Get("data").AsStringArray(),
+            Data = data.Read("data", static v => v.AsStringArray()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_delete_videos.gd");
-        var responseClass = script.Get("Response").AsGodotObject();
-        var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", new Godot.Collections.Array<string>(Data));
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_delete_videos.gd", "Response");
+        if(Data != null) request.SetValue("data", new Godot.Collections.Array<string>(Data));
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

@@ -6,11 +6,11 @@ namespace TwitcherSharp.Api.Generated.Analytics;
 
 public partial class TwitchGameAnalytics : RefCounted, ITwitcherSharp<TwitchGameAnalytics>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string GameId { get; set; } = null!;
     public string URL { get; set; } = null!;
     public string Type { get; set; } = null!;
-    public TwitchResponseDateRange DateRange { get => field ??= _data?.Get<TwitchResponseDateRange>("date_range")!; set; } = null!;
+    public TwitchResponseDateRange DateRange { get => field ??= _data.Get<TwitchResponseDateRange>("date_range")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGameAnalytics object.
@@ -20,24 +20,30 @@ public partial class TwitchGameAnalytics : RefCounted, ITwitcherSharp<TwitchGame
         if(data == null) return null;
         var instance = new TwitchGameAnalytics
         {
-            GameId = data.Get("game_id").AsString(),
-            URL = data.Get("url").AsString(),
-            Type = data.Get("type").AsString(),
+            GameId = data.Read("game_id", static v => v.AsString()),
+            URL = data.Read("URL", static v => v.AsString()),
+            Type = data.Read("type", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_game_analytics.gd");
-        var request = script.Call("new").AsGodotObject();
-        if(GameId != null) request.Set("game_id", GameId);
-        if(URL != null) request.Set("url", URL);
-        if(Type != null) request.Set("type", Type);
-        if(DateRange != null) request.Set("date_range", DateRange.ToGodotObject());
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated/twitch_game_analytics.gd");
+        if(GameId != null) request.SetValue("game_id", GameId);
+        if(URL != null) request.SetValue("URL", URL);
+        if(Type != null) request.SetValue("type", Type);
+        if(DateRange != null) request.SetObject("date_range", DateRange);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
     
     /// <summary> 
@@ -45,7 +51,7 @@ public partial class TwitchGameAnalytics : RefCounted, ITwitcherSharp<TwitchGame
     /// </summary>
     public partial class TwitchResponseDateRange : RefCounted, ITwitcherSharp<TwitchResponseDateRange>
     {
-        private GodotObject? _data;
+        private Variant _data;
         public string StartedAt { get; set; } = null!;
         public string EndedAt { get; set; } = null!;
     
@@ -57,22 +63,27 @@ public partial class TwitchGameAnalytics : RefCounted, ITwitcherSharp<TwitchGame
             if(data == null) return null;
             var instance = new TwitchResponseDateRange
             {
-                StartedAt = data.Get("started_at").AsString(),
-                EndedAt = data.Get("ended_at").AsString(),
+                StartedAt = data.Read("started_at", static v => v.AsString()),
+                EndedAt = data.Read("ended_at", static v => v.AsString()),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_game_analytics.gd");
-            var twitchResponseDateRangeClass = script.Get("DateRange").AsGodotObject();
-            var request = twitchResponseDateRangeClass.Call("new").AsGodotObject();
-            if(StartedAt != null) request.Set("started_at", StartedAt);
-            if(EndedAt != null) request.Set("ended_at", EndedAt);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_game_analytics.gd", "DateRange");
+            if(StartedAt != null) request.SetValue("started_at", StartedAt);
+            if(EndedAt != null) request.SetValue("ended_at", EndedAt);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     
     }

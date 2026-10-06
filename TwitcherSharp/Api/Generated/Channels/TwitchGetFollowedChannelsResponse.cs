@@ -6,9 +6,9 @@ namespace TwitcherSharp.Api.Generated.Channels;
 
 public partial class TwitchGetFollowedChannelsResponse : RefCounted, ITwitcherSharp<TwitchGetFollowedChannelsResponse>
 {
-    private GodotObject? _data;
-    public TwitchResponseData[] Data { get => field ??= _data?.GetArray<TwitchResponseData>("data")!; set; } = null!;
-    public ResponsePagination? Pagination { get => field ??= _data?.Get<ResponsePagination>("pagination"); set; }
+    private Variant _data;
+    public TwitchResponseData[] Data { get => field ??= _data.GetArray<TwitchResponseData>("data")!; set; } = null!;
+    public ResponsePagination? Pagination { get => field ??= _data.Get<ResponsePagination>("pagination"); set; }
     public int Total { get; set; }
 
     /// <summary> 
@@ -19,32 +19,37 @@ public partial class TwitchGetFollowedChannelsResponse : RefCounted, ITwitcherSh
         if(data == null) return null;
         var instance = new TwitchGetFollowedChannelsResponse
         {
-            Total = data.Get("total").AsInt32(),
+            Total = data.Read("total", static v => v.AsInt32()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_followed_channels.gd");
-        var responseClass = script.Get("Response").AsGodotObject();
-        var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data.ToGodotArray());
-        if(Pagination != null) request.Set("pagination", Pagination);
-        request.Set("total", Total);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_followed_channels.gd", "Response");
+        if(Data != null) request.SetArray("data", Data);
+        if(Pagination != null) request.SetValue("pagination", Pagination);
+        request.SetValue("total", Total);
         return request;
     }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
+    }
     public async Task<TwitchGetFollowedChannelsResponse> NextPage() =>
-        await _data!.CallAsync<TwitchGetFollowedChannelsResponse>("next_page");
+        await _data.CallAsync<TwitchGetFollowedChannelsResponse>("next_page");
     
     /// <summary> 
     /// Contains the information used to page through the list of results. The object is empty if there are no more pages left to page through 
     /// </summary>
     public partial class ResponsePagination : RefCounted, ITwitcherSharp<ResponsePagination>
     {
-        private GodotObject? _data;
+        private Variant _data;
         public string? Cursor { get; set; }
     
         /// <summary> 
@@ -55,20 +60,25 @@ public partial class TwitchGetFollowedChannelsResponse : RefCounted, ITwitcherSh
             if(data == null) return null;
             var instance = new ResponsePagination
             {
-                Cursor = data.Get("cursor").AsString(),
+                Cursor = data.Read("cursor", static v => v.AsString()),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_followed_channels.gd");
-            var responsePaginationClass = script.Get("ResponsePagination").AsGodotObject();
-            var request = responsePaginationClass.Call("new").AsGodotObject();
-            if(Cursor != null) request.Set("cursor", Cursor);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_followed_channels.gd", "ResponsePagination");
+            if(Cursor != null) request.SetValue("cursor", Cursor);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     
     }
@@ -78,7 +88,7 @@ public partial class TwitchGetFollowedChannelsResponse : RefCounted, ITwitcherSh
     /// </summary>
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
-        private GodotObject? _data;
+        private Variant _data;
         public string BroadcasterId { get; set; } = null!;
         public string BroadcasterLogin { get; set; } = null!;
         public string BroadcasterName { get; set; } = null!;
@@ -92,26 +102,31 @@ public partial class TwitchGetFollowedChannelsResponse : RefCounted, ITwitcherSh
             if(data == null) return null;
             var instance = new TwitchResponseData
             {
-                BroadcasterId = data.Get("broadcaster_id").AsString(),
-                BroadcasterLogin = data.Get("broadcaster_login").AsString(),
-                BroadcasterName = data.Get("broadcaster_name").AsString(),
-                FollowedAt = data.Get("followed_at").AsString(),
+                BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
+                BroadcasterLogin = data.Read("broadcaster_login", static v => v.AsString()),
+                BroadcasterName = data.Read("broadcaster_name", static v => v.AsString()),
+                FollowedAt = data.Read("followed_at", static v => v.AsString()),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_followed_channels.gd");
-            var twitchResponseDataClass = script.Get("ResponseData").AsGodotObject();
-            var request = twitchResponseDataClass.Call("new").AsGodotObject();
-            if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
-            if(BroadcasterLogin != null) request.Set("broadcaster_login", BroadcasterLogin);
-            if(BroadcasterName != null) request.Set("broadcaster_name", BroadcasterName);
-            if(FollowedAt != null) request.Set("followed_at", FollowedAt);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_followed_channels.gd", "ResponseData");
+            if(BroadcasterId != null) request.SetValue("broadcaster_id", BroadcasterId);
+            if(BroadcasterLogin != null) request.SetValue("broadcaster_login", BroadcasterLogin);
+            if(BroadcasterName != null) request.SetValue("broadcaster_name", BroadcasterName);
+            if(FollowedAt != null) request.SetValue("followed_at", FollowedAt);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     
     }

@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelGuestStarSessionEnd;
 
 public partial class TwitchChannelGuestStarSessionEndEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelGuestStarSessionEndEvent>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// The non-host broadcaster user ID.
@@ -24,6 +24,21 @@ public partial class TwitchChannelGuestStarSessionEndEvent : RefCounted, ITwitch
     /// The non-host broadcaster login.
     /// </summary>
     public string? BroadcasterUserLogin { get; set; }
+
+    /// <summary> 
+    /// The user ID of the moderator who started or ended the session.
+    /// </summary>
+    public string? ModeratorUserId { get; set; }
+
+    /// <summary> 
+    /// The display name of the moderator.
+    /// </summary>
+    public string? ModeratorUserName { get; set; }
+
+    /// <summary> 
+    /// The login of the moderator.
+    /// </summary>
+    public string? ModeratorUserLogin { get; set; }
 
     /// <summary> 
     /// ID representing the unique session that was started.
@@ -63,35 +78,46 @@ public partial class TwitchChannelGuestStarSessionEndEvent : RefCounted, ITwitch
         if(data == null) return null;
         var instance = new TwitchChannelGuestStarSessionEndEvent
         {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-            BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
-            BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
-            SessionId = data.Get("session_id").AsString(),
-            StartedAt = data.Get("started_at").AsString(),
-            EndedAt = data.Get("ended_at").AsString(),
-            HostUserId = data.Get("host_user_id").AsString(),
-            HostUserName = data.Get("host_user_name").AsString(),
-            HostUserLogin = data.Get("host_user_login").AsString(),
+            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
+            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
+            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
+            ModeratorUserId = data.Read("moderator_user_id", static v => v.AsString()),
+            ModeratorUserName = data.Read("moderator_user_name", static v => v.AsString()),
+            ModeratorUserLogin = data.Read("moderator_user_login", static v => v.AsString()),
+            SessionId = data.Read("session_id", static v => v.AsString()),
+            StartedAt = data.Read("started_at", static v => v.AsString()),
+            EndedAt = data.Read("ended_at", static v => v.AsString()),
+            HostUserId = data.Read("host_user_id", static v => v.AsString()),
+            HostUserName = data.Read("host_user_name", static v => v.AsString()),
+            HostUserLogin = data.Read("host_user_login", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_guest_star_session_end.gd");
-        var eventClass = script.Get("Event").As<GDScript>();
-        var request = eventClass.New().AsGodotObject();
-        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
-        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
-        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        if(SessionId != null) request.Set("session_id", SessionId);
-        if(StartedAt != null) request.Set("started_at", StartedAt);
-        if(EndedAt != null) request.Set("ended_at", EndedAt);
-        if(HostUserId != null) request.Set("host_user_id", HostUserId);
-        if(HostUserName != null) request.Set("host_user_name", HostUserName);
-        if(HostUserLogin != null) request.Set("host_user_login", HostUserLogin);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_guest_star_session_end.gd", "Event");
+        if(BroadcasterUserId != null) request.SetValue("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserName != null) request.SetValue("broadcaster_user_name", BroadcasterUserName);
+        if(BroadcasterUserLogin != null) request.SetValue("broadcaster_user_login", BroadcasterUserLogin);
+        if(ModeratorUserId != null) request.SetValue("moderator_user_id", ModeratorUserId);
+        if(ModeratorUserName != null) request.SetValue("moderator_user_name", ModeratorUserName);
+        if(ModeratorUserLogin != null) request.SetValue("moderator_user_login", ModeratorUserLogin);
+        if(SessionId != null) request.SetValue("session_id", SessionId);
+        if(StartedAt != null) request.SetValue("started_at", StartedAt);
+        if(EndedAt != null) request.SetValue("ended_at", EndedAt);
+        if(HostUserId != null) request.SetValue("host_user_id", HostUserId);
+        if(HostUserName != null) request.SetValue("host_user_name", HostUserName);
+        if(HostUserLogin != null) request.SetValue("host_user_login", HostUserLogin);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 }

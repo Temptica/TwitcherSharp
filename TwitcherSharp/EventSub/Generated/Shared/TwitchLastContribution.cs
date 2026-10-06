@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.Shared;
 
 public partial class TwitchLastContribution : RefCounted, ITwitcherSharpEventSub<TwitchLastContribution>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// The ID of the user that made the contribution.
@@ -43,26 +43,32 @@ public partial class TwitchLastContribution : RefCounted, ITwitcherSharpEventSub
         if(data == null) return null;
         var instance = new TwitchLastContribution
         {
-            UserId = data.Get("user_id").AsString(),
-            UserLogin = data.Get("user_login").AsString(),
-            UserName = data.Get("user_name").AsString(),
-            Type = data.Get("type").AsString(),
-            Total = data.Get("total").AsInt32(),
+            UserId = data.Read("user_id", static v => v.AsString()),
+            UserLogin = data.Read("user_login", static v => v.AsString()),
+            UserName = data.Read("user_name", static v => v.AsString()),
+            Type = data.Read("type", static v => v.AsString()),
+            Total = data.Read("total", static v => v.AsInt32()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_last_contribution.gd");
-        var request = script.New().AsGodotObject();
-        if(UserId != null) request.Set("user_id", UserId);
-        if(UserLogin != null) request.Set("user_login", UserLogin);
-        if(UserName != null) request.Set("user_name", UserName);
-        if(Type != null) request.Set("type", Type);
-        request.Set("total", Total);
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated_eventsub/twitch_es_last_contribution.gd");
+        if(UserId != null) request.SetValue("user_id", UserId);
+        if(UserLogin != null) request.SetValue("user_login", UserLogin);
+        if(UserName != null) request.SetValue("user_name", UserName);
+        if(Type != null) request.SetValue("type", Type);
+        request.SetValue("total", Total);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 }

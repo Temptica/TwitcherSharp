@@ -10,7 +10,7 @@ namespace TwitcherSharp.Api.Generated.Schedule;
 /// </summary>
 public partial class TwitchGetChannelStreamScheduleOpt : RefCounted, ITwitcherSharp<TwitchGetChannelStreamScheduleOpt>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string[]? Id { get; set; }
     public string? StartTime { get; set; }
     public string? UtcOffset { get; set; }
@@ -25,28 +25,33 @@ public partial class TwitchGetChannelStreamScheduleOpt : RefCounted, ITwitcherSh
         if(data == null) return null;
         var instance = new TwitchGetChannelStreamScheduleOpt
         {
-            Id = data.Get("id").AsStringArray(),
-            StartTime = data.Get("start_time").AsString(),
-            UtcOffset = data.Get("utc_offset").AsString(),
-            First = data.Get("first").AsInt32(),
-            After = data.Get("after").AsString(),
+            Id = data.Read("id", static v => v.AsStringArray()),
+            StartTime = data.Read("start_time", static v => v.AsString()),
+            UtcOffset = data.Read("utc_offset", static v => v.AsString()),
+            First = data.Read("first", static v => v.AsInt32()),
+            After = data.Read("after", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_channel_stream_schedule.gd");
-        var optClass = script.Get("Opt").AsGodotObject();
-        var request = optClass.Call("new").AsGodotObject();
-        if(Id != null) request.Set("id", new Godot.Collections.Array<string>(Id));
-        if(StartTime != null) request.Set("start_time", StartTime);
-        if(UtcOffset != null) request.Set("utc_offset", UtcOffset);
-        if(First.HasValue) request.Set("first", First.Value);
-        if(After != null) request.Set("after", After);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_channel_stream_schedule.gd", "Opt");
+        if(Id != null) request.SetValue("id", new Godot.Collections.Array<string>(Id));
+        if(StartTime != null) request.SetValue("start_time", StartTime);
+        if(UtcOffset != null) request.SetValue("utc_offset", UtcOffset);
+        if(First.HasValue) request.SetValue("first", First.Value);
+        if(After != null) request.SetValue("after", After);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

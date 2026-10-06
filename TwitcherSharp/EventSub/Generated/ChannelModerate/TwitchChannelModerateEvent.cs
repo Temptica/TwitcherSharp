@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelModerate;
 
 public partial class TwitchChannelModerateEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelModerateEvent>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// The ID of the broadcaster.
@@ -63,102 +63,102 @@ public partial class TwitchChannelModerateEvent : RefCounted, ITwitcherSharpEven
     /// <summary> 
     /// Optional.. Metadata associated with the followers command.
     /// </summary>
-    public TwitchFollowers? Followers { get => field ??= _data?.Get<TwitchFollowers>("followers"); set; }
+    public TwitchFollowers? Followers { get => field ??= _data.Get<TwitchFollowers>("followers"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with the slow command.
     /// </summary>
-    public TwitchSlow? Slow { get => field ??= _data?.Get<TwitchSlow>("slow"); set; }
+    public TwitchSlow? Slow { get => field ??= _data.Get<TwitchSlow>("slow"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with the vip command.
     /// </summary>
-    public TwitchVip? Vip { get => field ??= _data?.Get<TwitchVip>("vip"); set; }
+    public TwitchVip? Vip { get => field ??= _data.Get<TwitchVip>("vip"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with the unvip command.
     /// </summary>
-    public TwitchUnvip? Unvip { get => field ??= _data?.Get<TwitchUnvip>("unvip"); set; }
+    public TwitchUnvip? Unvip { get => field ??= _data.Get<TwitchUnvip>("unvip"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with the mod command.
     /// </summary>
-    public TwitchMod? Mod { get => field ??= _data?.Get<TwitchMod>("mod"); set; }
+    public TwitchMod? Mod { get => field ??= _data.Get<TwitchMod>("mod"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with the unmod command.
     /// </summary>
-    public TwitchUnmod? Unmod { get => field ??= _data?.Get<TwitchUnmod>("unmod"); set; }
+    public TwitchUnmod? Unmod { get => field ??= _data.Get<TwitchUnmod>("unmod"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with the ban command.
     /// </summary>
-    public TwitchBan? Ban { get => field ??= _data?.Get<TwitchBan>("ban"); set; }
+    public TwitchBan? Ban { get => field ??= _data.Get<TwitchBan>("ban"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with the unban command.
     /// </summary>
-    public TwitchUnban? Unban { get => field ??= _data?.Get<TwitchUnban>("unban"); set; }
+    public TwitchUnban? Unban { get => field ??= _data.Get<TwitchUnban>("unban"); set; }
 
     /// <summary> 
     /// Optional.. Metadata associated with the timeout command.
     /// </summary>
-    public TwitchTimeout? Timeout { get => field ??= _data?.Get<TwitchTimeout>("timeout"); set; }
+    public TwitchTimeout? Timeout { get => field ??= _data.Get<TwitchTimeout>("timeout"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with the untimeout command.
     /// </summary>
-    public TwitchUntimeout? Untimeout { get => field ??= _data?.Get<TwitchUntimeout>("untimeout"); set; }
+    public TwitchUntimeout? Untimeout { get => field ??= _data.Get<TwitchUntimeout>("untimeout"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with the raid command.
     /// </summary>
-    public TwitchRaid? Raid { get => field ??= _data?.Get<TwitchRaid>("raid"); set; }
+    public TwitchRaid? Raid { get => field ??= _data.Get<TwitchRaid>("raid"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with the unraid command.
     /// </summary>
-    public TwitchUnraid? Unraid { get => field ??= _data?.Get<TwitchUnraid>("unraid"); set; }
+    public TwitchUnraid? Unraid { get => field ??= _data.Get<TwitchUnraid>("unraid"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with the delete command.
     /// </summary>
-    public TwitchDelete? Delete { get => field ??= _data?.Get<TwitchDelete>("delete"); set; }
+    public TwitchDelete? Delete { get => field ??= _data.Get<TwitchDelete>("delete"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with the automod terms changes.
     /// </summary>
-    public TwitchAutomodTerms? AutomodTerms { get => field ??= _data?.Get<TwitchAutomodTerms>("automod_terms"); set; }
+    public TwitchAutomodTerms? AutomodTerms { get => field ??= _data.Get<TwitchAutomodTerms>("automod_terms"); set; }
 
     /// <summary> 
     /// Optional. Metadata associated with an unban request.
     /// </summary>
-    public TwitchUnbanRequest? UnbanRequest { get => field ??= _data?.Get<TwitchUnbanRequest>("unban_request"); set; }
+    public TwitchUnbanRequest? UnbanRequest { get => field ??= _data.Get<TwitchUnbanRequest>("unban_request"); set; }
 
     /// <summary> 
     /// Optional. Information about the shared_chat_ban event. Is null if action is not shared_chat_ban. This field has the same information as the ban field but for a action that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
-    public TwitchBan? SharedChatBan { get => field ??= _data?.Get<TwitchBan>("shared_chat_ban"); set; }
+    public TwitchBan? SharedChatBan { get => field ??= _data.Get<TwitchBan>("shared_chat_ban"); set; }
 
     /// <summary> 
     /// Optional. Information about the shared_chat_unban event. Is null if action is not shared_chat_unban. This field has the same information as the unban field but for a action that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
-    public TwitchUnban? SharedChatUnban { get => field ??= _data?.Get<TwitchUnban>("shared_chat_unban"); set; }
+    public TwitchUnban? SharedChatUnban { get => field ??= _data.Get<TwitchUnban>("shared_chat_unban"); set; }
 
     /// <summary> 
     /// Optional. Information about the shared_chat_timeout event. Is null if action is not shared_chat_timeout. This field has the same information as the timeout field but for a action that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
-    public TwitchTimeout? SharedChatTimeout { get => field ??= _data?.Get<TwitchTimeout>("shared_chat_timeout"); set; }
+    public TwitchTimeout? SharedChatTimeout { get => field ??= _data.Get<TwitchTimeout>("shared_chat_timeout"); set; }
 
     /// <summary> 
     /// Optional. Information about the shared_chat_untimeout event. Is null if action is not shared_chat_untimeout. This field has the same information as the untimeout field but for a action that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
-    public TwitchUntimeout? SharedChatUntimeout { get => field ??= _data?.Get<TwitchUntimeout>("shared_chat_untimeout"); set; }
+    public TwitchUntimeout? SharedChatUntimeout { get => field ??= _data.Get<TwitchUntimeout>("shared_chat_untimeout"); set; }
 
     /// <summary> 
     /// Optional. Information about the shared_chat_delete event. Is null if action is not shared_chat_delete. This field has the same information as the delete field but for a action that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
-    public TwitchDelete? SharedChatDelete { get => field ??= _data?.Get<TwitchDelete>("shared_chat_delete"); set; }
+    public TwitchDelete? SharedChatDelete { get => field ??= _data.Get<TwitchDelete>("shared_chat_delete"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchChannelModerateEvent object.
@@ -168,64 +168,69 @@ public partial class TwitchChannelModerateEvent : RefCounted, ITwitcherSharpEven
         if(data == null) return null;
         var instance = new TwitchChannelModerateEvent
         {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-            BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
-            BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
-            SourceBroadcasterUserId = data.Get("source_broadcaster_user_id").AsString(),
-            SourceBroadcasterUserLogin = data.Get("source_broadcaster_user_login").AsString(),
-            SourceBroadcasterUserName = data.Get("source_broadcaster_user_name").AsString(),
-            ModeratorUserId = data.Get("moderator_user_id").AsString(),
-            ModeratorUserLogin = data.Get("moderator_user_login").AsString(),
-            ModeratorUserName = data.Get("moderator_user_name").AsString(),
-            Action = data.Get("action").AsString(),
+            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
+            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
+            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
+            SourceBroadcasterUserId = data.Read("source_broadcaster_user_id", static v => v.AsString()),
+            SourceBroadcasterUserLogin = data.Read("source_broadcaster_user_login", static v => v.AsString()),
+            SourceBroadcasterUserName = data.Read("source_broadcaster_user_name", static v => v.AsString()),
+            ModeratorUserId = data.Read("moderator_user_id", static v => v.AsString()),
+            ModeratorUserLogin = data.Read("moderator_user_login", static v => v.AsString()),
+            ModeratorUserName = data.Read("moderator_user_name", static v => v.AsString()),
+            Action = data.Read("action", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd");
-        var eventClass = script.Get("Event").As<GDScript>();
-        var request = eventClass.New().AsGodotObject();
-        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
-        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
-        if(SourceBroadcasterUserId != null) request.Set("source_broadcaster_user_id", SourceBroadcasterUserId);
-        if(SourceBroadcasterUserLogin != null) request.Set("source_broadcaster_user_login", SourceBroadcasterUserLogin);
-        if(SourceBroadcasterUserName != null) request.Set("source_broadcaster_user_name", SourceBroadcasterUserName);
-        if(ModeratorUserId != null) request.Set("moderator_user_id", ModeratorUserId);
-        if(ModeratorUserLogin != null) request.Set("moderator_user_login", ModeratorUserLogin);
-        if(ModeratorUserName != null) request.Set("moderator_user_name", ModeratorUserName);
-        if(Action != null) request.Set("action", Action);
-        if(Followers != null) request.Set("followers", Followers.ToGodotObject());
-        if(Slow != null) request.Set("slow", Slow.ToGodotObject());
-        if(Vip != null) request.Set("vip", Vip.ToGodotObject());
-        if(Unvip != null) request.Set("unvip", Unvip.ToGodotObject());
-        if(Mod != null) request.Set("mod", Mod.ToGodotObject());
-        if(Unmod != null) request.Set("unmod", Unmod.ToGodotObject());
-        if(Ban != null) request.Set("ban", Ban.ToGodotObject());
-        if(Unban != null) request.Set("unban", Unban.ToGodotObject());
-        if(Timeout != null) request.Set("timeout", Timeout.ToGodotObject());
-        if(Untimeout != null) request.Set("untimeout", Untimeout.ToGodotObject());
-        if(Raid != null) request.Set("raid", Raid.ToGodotObject());
-        if(Unraid != null) request.Set("unraid", Unraid.ToGodotObject());
-        if(Delete != null) request.Set("delete", Delete.ToGodotObject());
-        if(AutomodTerms != null) request.Set("automod_terms", AutomodTerms.ToGodotObject());
-        if(UnbanRequest != null) request.Set("unban_request", UnbanRequest.ToGodotObject());
-        if(SharedChatBan != null) request.Set("shared_chat_ban", SharedChatBan.ToGodotObject());
-        if(SharedChatUnban != null) request.Set("shared_chat_unban", SharedChatUnban.ToGodotObject());
-        if(SharedChatTimeout != null) request.Set("shared_chat_timeout", SharedChatTimeout.ToGodotObject());
-        if(SharedChatUntimeout != null) request.Set("shared_chat_untimeout", SharedChatUntimeout.ToGodotObject());
-        if(SharedChatDelete != null) request.Set("shared_chat_delete", SharedChatDelete.ToGodotObject());
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd", "Event");
+        if(BroadcasterUserId != null) request.SetValue("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserLogin != null) request.SetValue("broadcaster_user_login", BroadcasterUserLogin);
+        if(BroadcasterUserName != null) request.SetValue("broadcaster_user_name", BroadcasterUserName);
+        if(SourceBroadcasterUserId != null) request.SetValue("source_broadcaster_user_id", SourceBroadcasterUserId);
+        if(SourceBroadcasterUserLogin != null) request.SetValue("source_broadcaster_user_login", SourceBroadcasterUserLogin);
+        if(SourceBroadcasterUserName != null) request.SetValue("source_broadcaster_user_name", SourceBroadcasterUserName);
+        if(ModeratorUserId != null) request.SetValue("moderator_user_id", ModeratorUserId);
+        if(ModeratorUserLogin != null) request.SetValue("moderator_user_login", ModeratorUserLogin);
+        if(ModeratorUserName != null) request.SetValue("moderator_user_name", ModeratorUserName);
+        if(Action != null) request.SetValue("action", Action);
+        if(Followers != null) request.SetObject("followers", Followers);
+        if(Slow != null) request.SetObject("slow", Slow);
+        if(Vip != null) request.SetObject("vip", Vip);
+        if(Unvip != null) request.SetObject("unvip", Unvip);
+        if(Mod != null) request.SetObject("mod", Mod);
+        if(Unmod != null) request.SetObject("unmod", Unmod);
+        if(Ban != null) request.SetObject("ban", Ban);
+        if(Unban != null) request.SetObject("unban", Unban);
+        if(Timeout != null) request.SetObject("timeout", Timeout);
+        if(Untimeout != null) request.SetObject("untimeout", Untimeout);
+        if(Raid != null) request.SetObject("raid", Raid);
+        if(Unraid != null) request.SetObject("unraid", Unraid);
+        if(Delete != null) request.SetObject("delete", Delete);
+        if(AutomodTerms != null) request.SetObject("automod_terms", AutomodTerms);
+        if(UnbanRequest != null) request.SetObject("unban_request", UnbanRequest);
+        if(SharedChatBan != null) request.SetObject("shared_chat_ban", SharedChatBan);
+        if(SharedChatUnban != null) request.SetObject("shared_chat_unban", SharedChatUnban);
+        if(SharedChatTimeout != null) request.SetObject("shared_chat_timeout", SharedChatTimeout);
+        if(SharedChatUntimeout != null) request.SetObject("shared_chat_untimeout", SharedChatUntimeout);
+        if(SharedChatDelete != null) request.SetObject("shared_chat_delete", SharedChatDelete);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 
     public partial class TwitchFollowers : RefCounted, ITwitcherSharpEventSub<TwitchFollowers>
     {
-        private GodotObject? _data;
+        private Variant _data;
         
         /// <summary> 
         /// The length of time, in minutes, that the followers must have followed the broadcaster to participate in the chat room.
@@ -240,26 +245,31 @@ public partial class TwitchChannelModerateEvent : RefCounted, ITwitcherSharpEven
             if(data == null) return null;
             var instance = new TwitchFollowers
             {
-                FollowDurationMinutes = data.Get("follow_duration_minutes").AsInt32(),
+                FollowDurationMinutes = data.Read("follow_duration_minutes", static v => v.AsInt32()),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd");
-            var followersClass = script.Get("Followers").As<GDScript>();
-            var request = followersClass.New().AsGodotObject();
-            request.Set("follow_duration_minutes", FollowDurationMinutes);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd", "Followers");
+            request.SetValue("follow_duration_minutes", FollowDurationMinutes);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     }
 
     public partial class TwitchSlow : RefCounted, ITwitcherSharpEventSub<TwitchSlow>
     {
-        private GodotObject? _data;
+        private Variant _data;
         
         /// <summary> 
         /// The amount of time, in seconds, that users need to wait between sending messages.
@@ -274,26 +284,31 @@ public partial class TwitchChannelModerateEvent : RefCounted, ITwitcherSharpEven
             if(data == null) return null;
             var instance = new TwitchSlow
             {
-                WaitTimeSeconds = data.Get("wait_time_seconds").AsInt32(),
+                WaitTimeSeconds = data.Read("wait_time_seconds", static v => v.AsInt32()),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd");
-            var slowClass = script.Get("Slow").As<GDScript>();
-            var request = slowClass.New().AsGodotObject();
-            request.Set("wait_time_seconds", WaitTimeSeconds);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd", "Slow");
+            request.SetValue("wait_time_seconds", WaitTimeSeconds);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     }
 
     public partial class TwitchVip : RefCounted, ITwitcherSharpEventSub<TwitchVip>
     {
-        private GodotObject? _data;
+        private Variant _data;
         
         /// <summary> 
         /// The ID of the user gaining VIP status.
@@ -318,30 +333,35 @@ public partial class TwitchChannelModerateEvent : RefCounted, ITwitcherSharpEven
             if(data == null) return null;
             var instance = new TwitchVip
             {
-                UserId = data.Get("user_id").AsString(),
-                UserLogin = data.Get("user_login").AsString(),
-                UserName = data.Get("user_name").AsString(),
+                UserId = data.Read("user_id", static v => v.AsString()),
+                UserLogin = data.Read("user_login", static v => v.AsString()),
+                UserName = data.Read("user_name", static v => v.AsString()),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd");
-            var vipClass = script.Get("Vip").As<GDScript>();
-            var request = vipClass.New().AsGodotObject();
-            if(UserId != null) request.Set("user_id", UserId);
-            if(UserLogin != null) request.Set("user_login", UserLogin);
-            if(UserName != null) request.Set("user_name", UserName);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd", "Vip");
+            if(UserId != null) request.SetValue("user_id", UserId);
+            if(UserLogin != null) request.SetValue("user_login", UserLogin);
+            if(UserName != null) request.SetValue("user_name", UserName);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     }
 
     public partial class TwitchUnvip : RefCounted, ITwitcherSharpEventSub<TwitchUnvip>
     {
-        private GodotObject? _data;
+        private Variant _data;
         
         /// <summary> 
         /// The ID of the user losing VIP status.
@@ -366,30 +386,35 @@ public partial class TwitchChannelModerateEvent : RefCounted, ITwitcherSharpEven
             if(data == null) return null;
             var instance = new TwitchUnvip
             {
-                UserId = data.Get("user_id").AsString(),
-                UserLogin = data.Get("user_login").AsString(),
-                UserName = data.Get("user_name").AsString(),
+                UserId = data.Read("user_id", static v => v.AsString()),
+                UserLogin = data.Read("user_login", static v => v.AsString()),
+                UserName = data.Read("user_name", static v => v.AsString()),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd");
-            var unvipClass = script.Get("Unvip").As<GDScript>();
-            var request = unvipClass.New().AsGodotObject();
-            if(UserId != null) request.Set("user_id", UserId);
-            if(UserLogin != null) request.Set("user_login", UserLogin);
-            if(UserName != null) request.Set("user_name", UserName);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd", "Unvip");
+            if(UserId != null) request.SetValue("user_id", UserId);
+            if(UserLogin != null) request.SetValue("user_login", UserLogin);
+            if(UserName != null) request.SetValue("user_name", UserName);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     }
 
     public partial class TwitchMod : RefCounted, ITwitcherSharpEventSub<TwitchMod>
     {
-        private GodotObject? _data;
+        private Variant _data;
         
         /// <summary> 
         /// The ID of the user gaining mod status.
@@ -414,30 +439,35 @@ public partial class TwitchChannelModerateEvent : RefCounted, ITwitcherSharpEven
             if(data == null) return null;
             var instance = new TwitchMod
             {
-                UserId = data.Get("user_id").AsString(),
-                UserLogin = data.Get("user_login").AsString(),
-                UserName = data.Get("user_name").AsString(),
+                UserId = data.Read("user_id", static v => v.AsString()),
+                UserLogin = data.Read("user_login", static v => v.AsString()),
+                UserName = data.Read("user_name", static v => v.AsString()),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd");
-            var modClass = script.Get("Mod").As<GDScript>();
-            var request = modClass.New().AsGodotObject();
-            if(UserId != null) request.Set("user_id", UserId);
-            if(UserLogin != null) request.Set("user_login", UserLogin);
-            if(UserName != null) request.Set("user_name", UserName);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd", "Mod");
+            if(UserId != null) request.SetValue("user_id", UserId);
+            if(UserLogin != null) request.SetValue("user_login", UserLogin);
+            if(UserName != null) request.SetValue("user_name", UserName);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     }
 
     public partial class TwitchUnmod : RefCounted, ITwitcherSharpEventSub<TwitchUnmod>
     {
-        private GodotObject? _data;
+        private Variant _data;
         
         /// <summary> 
         /// The ID of the user losing mod status.
@@ -462,30 +492,35 @@ public partial class TwitchChannelModerateEvent : RefCounted, ITwitcherSharpEven
             if(data == null) return null;
             var instance = new TwitchUnmod
             {
-                UserId = data.Get("user_id").AsString(),
-                UserLogin = data.Get("user_login").AsString(),
-                UserName = data.Get("user_name").AsString(),
+                UserId = data.Read("user_id", static v => v.AsString()),
+                UserLogin = data.Read("user_login", static v => v.AsString()),
+                UserName = data.Read("user_name", static v => v.AsString()),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd");
-            var unmodClass = script.Get("Unmod").As<GDScript>();
-            var request = unmodClass.New().AsGodotObject();
-            if(UserId != null) request.Set("user_id", UserId);
-            if(UserLogin != null) request.Set("user_login", UserLogin);
-            if(UserName != null) request.Set("user_name", UserName);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd", "Unmod");
+            if(UserId != null) request.SetValue("user_id", UserId);
+            if(UserLogin != null) request.SetValue("user_login", UserLogin);
+            if(UserName != null) request.SetValue("user_name", UserName);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     }
 
     public partial class TwitchBan : RefCounted, ITwitcherSharpEventSub<TwitchBan>
     {
-        private GodotObject? _data;
+        private Variant _data;
         
         /// <summary> 
         /// The ID of the user being banned.
@@ -515,32 +550,37 @@ public partial class TwitchChannelModerateEvent : RefCounted, ITwitcherSharpEven
             if(data == null) return null;
             var instance = new TwitchBan
             {
-                UserId = data.Get("user_id").AsString(),
-                UserLogin = data.Get("user_login").AsString(),
-                UserName = data.Get("user_name").AsString(),
-                Reason = data.Get("reason").AsString(),
+                UserId = data.Read("user_id", static v => v.AsString()),
+                UserLogin = data.Read("user_login", static v => v.AsString()),
+                UserName = data.Read("user_name", static v => v.AsString()),
+                Reason = data.Read("reason", static v => v.AsString()),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd");
-            var banClass = script.Get("Ban").As<GDScript>();
-            var request = banClass.New().AsGodotObject();
-            if(UserId != null) request.Set("user_id", UserId);
-            if(UserLogin != null) request.Set("user_login", UserLogin);
-            if(UserName != null) request.Set("user_name", UserName);
-            if(Reason != null) request.Set("reason", Reason);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd", "Ban");
+            if(UserId != null) request.SetValue("user_id", UserId);
+            if(UserLogin != null) request.SetValue("user_login", UserLogin);
+            if(UserName != null) request.SetValue("user_name", UserName);
+            if(Reason != null) request.SetValue("reason", Reason);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     }
 
     public partial class TwitchUnban : RefCounted, ITwitcherSharpEventSub<TwitchUnban>
     {
-        private GodotObject? _data;
+        private Variant _data;
         
         /// <summary> 
         /// The ID of the user being unbanned.
@@ -565,30 +605,35 @@ public partial class TwitchChannelModerateEvent : RefCounted, ITwitcherSharpEven
             if(data == null) return null;
             var instance = new TwitchUnban
             {
-                UserId = data.Get("user_id").AsString(),
-                UserLogin = data.Get("user_login").AsString(),
-                UserName = data.Get("user_name").AsString(),
+                UserId = data.Read("user_id", static v => v.AsString()),
+                UserLogin = data.Read("user_login", static v => v.AsString()),
+                UserName = data.Read("user_name", static v => v.AsString()),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd");
-            var unbanClass = script.Get("Unban").As<GDScript>();
-            var request = unbanClass.New().AsGodotObject();
-            if(UserId != null) request.Set("user_id", UserId);
-            if(UserLogin != null) request.Set("user_login", UserLogin);
-            if(UserName != null) request.Set("user_name", UserName);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd", "Unban");
+            if(UserId != null) request.SetValue("user_id", UserId);
+            if(UserLogin != null) request.SetValue("user_login", UserLogin);
+            if(UserName != null) request.SetValue("user_name", UserName);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     }
 
     public partial class TwitchTimeout : RefCounted, ITwitcherSharpEventSub<TwitchTimeout>
     {
-        private GodotObject? _data;
+        private Variant _data;
         
         /// <summary> 
         /// The ID of the user being timed out.
@@ -623,34 +668,39 @@ public partial class TwitchChannelModerateEvent : RefCounted, ITwitcherSharpEven
             if(data == null) return null;
             var instance = new TwitchTimeout
             {
-                UserId = data.Get("user_id").AsString(),
-                UserLogin = data.Get("user_login").AsString(),
-                UserName = data.Get("user_name").AsString(),
-                Reason = data.Get("reason").AsString(),
-                ExpiresAt = data.Get("expires_at").AsString(),
+                UserId = data.Read("user_id", static v => v.AsString()),
+                UserLogin = data.Read("user_login", static v => v.AsString()),
+                UserName = data.Read("user_name", static v => v.AsString()),
+                Reason = data.Read("reason", static v => v.AsString()),
+                ExpiresAt = data.Read("expires_at", static v => v.AsString()),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd");
-            var timeoutClass = script.Get("Timeout").As<GDScript>();
-            var request = timeoutClass.New().AsGodotObject();
-            if(UserId != null) request.Set("user_id", UserId);
-            if(UserLogin != null) request.Set("user_login", UserLogin);
-            if(UserName != null) request.Set("user_name", UserName);
-            if(Reason != null) request.Set("reason", Reason);
-            if(ExpiresAt != null) request.Set("expires_at", ExpiresAt);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd", "Timeout");
+            if(UserId != null) request.SetValue("user_id", UserId);
+            if(UserLogin != null) request.SetValue("user_login", UserLogin);
+            if(UserName != null) request.SetValue("user_name", UserName);
+            if(Reason != null) request.SetValue("reason", Reason);
+            if(ExpiresAt != null) request.SetValue("expires_at", ExpiresAt);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     }
 
     public partial class TwitchUntimeout : RefCounted, ITwitcherSharpEventSub<TwitchUntimeout>
     {
-        private GodotObject? _data;
+        private Variant _data;
         
         /// <summary> 
         /// The ID of the user being untimed out.
@@ -675,30 +725,35 @@ public partial class TwitchChannelModerateEvent : RefCounted, ITwitcherSharpEven
             if(data == null) return null;
             var instance = new TwitchUntimeout
             {
-                UserId = data.Get("user_id").AsString(),
-                UserLogin = data.Get("user_login").AsString(),
-                UserName = data.Get("user_name").AsString(),
+                UserId = data.Read("user_id", static v => v.AsString()),
+                UserLogin = data.Read("user_login", static v => v.AsString()),
+                UserName = data.Read("user_name", static v => v.AsString()),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd");
-            var untimeoutClass = script.Get("Untimeout").As<GDScript>();
-            var request = untimeoutClass.New().AsGodotObject();
-            if(UserId != null) request.Set("user_id", UserId);
-            if(UserLogin != null) request.Set("user_login", UserLogin);
-            if(UserName != null) request.Set("user_name", UserName);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd", "Untimeout");
+            if(UserId != null) request.SetValue("user_id", UserId);
+            if(UserLogin != null) request.SetValue("user_login", UserLogin);
+            if(UserName != null) request.SetValue("user_name", UserName);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     }
 
     public partial class TwitchRaid : RefCounted, ITwitcherSharpEventSub<TwitchRaid>
     {
-        private GodotObject? _data;
+        private Variant _data;
         
         /// <summary> 
         /// The ID of the user being raided.
@@ -728,32 +783,37 @@ public partial class TwitchChannelModerateEvent : RefCounted, ITwitcherSharpEven
             if(data == null) return null;
             var instance = new TwitchRaid
             {
-                UserId = data.Get("user_id").AsString(),
-                UserLogin = data.Get("user_login").AsString(),
-                UserName = data.Get("user_name").AsString(),
-                ViewerCount = data.Get("viewer_count").AsInt32(),
+                UserId = data.Read("user_id", static v => v.AsString()),
+                UserLogin = data.Read("user_login", static v => v.AsString()),
+                UserName = data.Read("user_name", static v => v.AsString()),
+                ViewerCount = data.Read("viewer_count", static v => v.AsInt32()),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd");
-            var raidClass = script.Get("Raid").As<GDScript>();
-            var request = raidClass.New().AsGodotObject();
-            if(UserId != null) request.Set("user_id", UserId);
-            if(UserLogin != null) request.Set("user_login", UserLogin);
-            if(UserName != null) request.Set("user_name", UserName);
-            request.Set("viewer_count", ViewerCount);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd", "Raid");
+            if(UserId != null) request.SetValue("user_id", UserId);
+            if(UserLogin != null) request.SetValue("user_login", UserLogin);
+            if(UserName != null) request.SetValue("user_name", UserName);
+            request.SetValue("viewer_count", ViewerCount);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     }
 
     public partial class TwitchUnraid : RefCounted, ITwitcherSharpEventSub<TwitchUnraid>
     {
-        private GodotObject? _data;
+        private Variant _data;
         
         /// <summary> 
         /// The ID of the user no longer being raided.
@@ -778,30 +838,35 @@ public partial class TwitchChannelModerateEvent : RefCounted, ITwitcherSharpEven
             if(data == null) return null;
             var instance = new TwitchUnraid
             {
-                UserId = data.Get("user_id").AsString(),
-                UserLogin = data.Get("user_login").AsString(),
-                UserName = data.Get("user_name").AsString(),
+                UserId = data.Read("user_id", static v => v.AsString()),
+                UserLogin = data.Read("user_login", static v => v.AsString()),
+                UserName = data.Read("user_name", static v => v.AsString()),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd");
-            var unraidClass = script.Get("Unraid").As<GDScript>();
-            var request = unraidClass.New().AsGodotObject();
-            if(UserId != null) request.Set("user_id", UserId);
-            if(UserLogin != null) request.Set("user_login", UserLogin);
-            if(UserName != null) request.Set("user_name", UserName);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd", "Unraid");
+            if(UserId != null) request.SetValue("user_id", UserId);
+            if(UserLogin != null) request.SetValue("user_login", UserLogin);
+            if(UserName != null) request.SetValue("user_name", UserName);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     }
 
     public partial class TwitchDelete : RefCounted, ITwitcherSharpEventSub<TwitchDelete>
     {
-        private GodotObject? _data;
+        private Variant _data;
         
         /// <summary> 
         /// The ID of the user whose message is being deleted.
@@ -836,34 +901,39 @@ public partial class TwitchChannelModerateEvent : RefCounted, ITwitcherSharpEven
             if(data == null) return null;
             var instance = new TwitchDelete
             {
-                UserId = data.Get("user_id").AsString(),
-                UserLogin = data.Get("user_login").AsString(),
-                UserName = data.Get("user_name").AsString(),
-                MessageId = data.Get("message_id").AsString(),
-                MessageBody = data.Get("message_body").AsString(),
+                UserId = data.Read("user_id", static v => v.AsString()),
+                UserLogin = data.Read("user_login", static v => v.AsString()),
+                UserName = data.Read("user_name", static v => v.AsString()),
+                MessageId = data.Read("message_id", static v => v.AsString()),
+                MessageBody = data.Read("message_body", static v => v.AsString()),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd");
-            var deleteClass = script.Get("Delete").As<GDScript>();
-            var request = deleteClass.New().AsGodotObject();
-            if(UserId != null) request.Set("user_id", UserId);
-            if(UserLogin != null) request.Set("user_login", UserLogin);
-            if(UserName != null) request.Set("user_name", UserName);
-            if(MessageId != null) request.Set("message_id", MessageId);
-            if(MessageBody != null) request.Set("message_body", MessageBody);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd", "Delete");
+            if(UserId != null) request.SetValue("user_id", UserId);
+            if(UserLogin != null) request.SetValue("user_login", UserLogin);
+            if(UserName != null) request.SetValue("user_name", UserName);
+            if(MessageId != null) request.SetValue("message_id", MessageId);
+            if(MessageBody != null) request.SetValue("message_body", MessageBody);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     }
 
     public partial class TwitchAutomodTerms : RefCounted, ITwitcherSharpEventSub<TwitchAutomodTerms>
     {
-        private GodotObject? _data;
+        private Variant _data;
         
         /// <summary> 
         /// Either “add” or “remove”.
@@ -893,31 +963,36 @@ public partial class TwitchChannelModerateEvent : RefCounted, ITwitcherSharpEven
             if(data == null) return null;
             var instance = new TwitchAutomodTerms
             {
-                Action = data.Get("action").AsString(),
-                List = data.Get("list").AsString(),
-                FromAutomod = data.Get("from_automod").AsBool(),
+                Action = data.Read("action", static v => v.AsString()),
+                List = data.Read("list", static v => v.AsString()),
+                FromAutomod = data.Read("from_automod", static v => v.AsBool()),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd");
-            var automodTermsClass = script.Get("AutomodTerms").As<GDScript>();
-            var request = automodTermsClass.New().AsGodotObject();
-            if(Action != null) request.Set("action", Action);
-            if(List != null) request.Set("list", List);
-            if(Terms != null) request.Set("terms", new Godot.Collections.Array<string>(Terms));
-            request.Set("from_automod", FromAutomod);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd", "AutomodTerms");
+            if(Action != null) request.SetValue("action", Action);
+            if(List != null) request.SetValue("list", List);
+            if(Terms != null) request.SetValue("terms", new Godot.Collections.Array<string>(Terms));
+            request.SetValue("from_automod", FromAutomod);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     }
 
     public partial class TwitchUnbanRequest : RefCounted, ITwitcherSharpEventSub<TwitchUnbanRequest>
     {
-        private GodotObject? _data;
+        private Variant _data;
         
         /// <summary> 
         /// Whether or not the unban request was approved or denied.
@@ -952,28 +1027,33 @@ public partial class TwitchChannelModerateEvent : RefCounted, ITwitcherSharpEven
             if(data == null) return null;
             var instance = new TwitchUnbanRequest
             {
-                IsApproved = data.Get("is_approved").AsBool(),
-                UserId = data.Get("user_id").AsString(),
-                UserLogin = data.Get("user_login").AsString(),
-                UserName = data.Get("user_name").AsString(),
-                ModeratorMessage = data.Get("moderator_message").AsString(),
+                IsApproved = data.Read("is_approved", static v => v.AsBool()),
+                UserId = data.Read("user_id", static v => v.AsString()),
+                UserLogin = data.Read("user_login", static v => v.AsString()),
+                UserName = data.Read("user_name", static v => v.AsString()),
+                ModeratorMessage = data.Read("moderator_message", static v => v.AsString()),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd");
-            var unbanRequestClass = script.Get("UnbanRequest").As<GDScript>();
-            var request = unbanRequestClass.New().AsGodotObject();
-            request.Set("is_approved", IsApproved);
-            if(UserId != null) request.Set("user_id", UserId);
-            if(UserLogin != null) request.Set("user_login", UserLogin);
-            if(UserName != null) request.Set("user_name", UserName);
-            if(ModeratorMessage != null) request.Set("moderator_message", ModeratorMessage);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd", "UnbanRequest");
+            request.SetValue("is_approved", IsApproved);
+            if(UserId != null) request.SetValue("user_id", UserId);
+            if(UserLogin != null) request.SetValue("user_login", UserLogin);
+            if(UserName != null) request.SetValue("user_name", UserName);
+            if(ModeratorMessage != null) request.SetValue("moderator_message", ModeratorMessage);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

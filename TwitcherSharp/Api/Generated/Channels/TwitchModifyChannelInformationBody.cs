@@ -6,13 +6,13 @@ namespace TwitcherSharp.Api.Generated.Channels;
 
 public partial class TwitchModifyChannelInformationBody : RefCounted, ITwitcherSharp<TwitchModifyChannelInformationBody>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string? GameId { get; set; }
     public string? BroadcasterLanguage { get; set; }
     public string? Title { get; set; }
     public int? Delay { get; set; }
     public string[]? Tags { get; set; }
-    public TwitchBodyContentClassificationLabels[]? ContentClassificationLabels { get => field ??= _data?.GetArray<TwitchBodyContentClassificationLabels>("content_classification_labels"); set; }
+    public TwitchBodyContentClassificationLabels[]? ContentClassificationLabels { get => field ??= _data.GetArray<TwitchBodyContentClassificationLabels>("content_classification_labels"); set; }
     public bool? IsBrandedContent { get; set; }
 
     /// <summary> 
@@ -23,31 +23,36 @@ public partial class TwitchModifyChannelInformationBody : RefCounted, ITwitcherS
         if(data == null) return null;
         var instance = new TwitchModifyChannelInformationBody
         {
-            GameId = data.Get("game_id").AsString(),
-            BroadcasterLanguage = data.Get("broadcaster_language").AsString(),
-            Title = data.Get("title").AsString(),
-            Delay = data.Get("delay").AsInt32(),
-            Tags = data.Get("tags").AsStringArray(),
-            IsBrandedContent = data.Get("is_branded_content").AsBool(),
+            GameId = data.Read("game_id", static v => v.AsString()),
+            BroadcasterLanguage = data.Read("broadcaster_language", static v => v.AsString()),
+            Title = data.Read("title", static v => v.AsString()),
+            Delay = data.Read("delay", static v => v.AsInt32()),
+            Tags = data.Read("tags", static v => v.AsStringArray()),
+            IsBrandedContent = data.Read("is_branded_content", static v => v.AsBool()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_modify_channel_information.gd");
-        var bodyClass = script.Get("Body").AsGodotObject();
-        var request = bodyClass.Call("new").AsGodotObject();
-        if(GameId != null) request.Set("game_id", GameId);
-        if(BroadcasterLanguage != null) request.Set("broadcaster_language", BroadcasterLanguage);
-        if(Title != null) request.Set("title", Title);
-        if(Delay.HasValue) request.Set("delay", Delay.Value);
-        if(Tags != null) request.Set("tags", new Godot.Collections.Array<string>(Tags));
-        if(ContentClassificationLabels != null) request.Set("content_classification_labels", ContentClassificationLabels.ToGodotArray());
-        if(IsBrandedContent.HasValue) request.Set("is_branded_content", IsBrandedContent.Value);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_modify_channel_information.gd", "Body");
+        if(GameId != null) request.SetValue("game_id", GameId);
+        if(BroadcasterLanguage != null) request.SetValue("broadcaster_language", BroadcasterLanguage);
+        if(Title != null) request.SetValue("title", Title);
+        if(Delay.HasValue) request.SetValue("delay", Delay.Value);
+        if(Tags != null) request.SetValue("tags", new Godot.Collections.Array<string>(Tags));
+        if(ContentClassificationLabels != null) request.SetArray("content_classification_labels", ContentClassificationLabels);
+        if(IsBrandedContent.HasValue) request.SetValue("is_branded_content", IsBrandedContent.Value);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
     
     /// <summary> 
@@ -56,7 +61,7 @@ public partial class TwitchModifyChannelInformationBody : RefCounted, ITwitcherS
     /// </summary>
     public partial class TwitchBodyContentClassificationLabels : RefCounted, ITwitcherSharp<TwitchBodyContentClassificationLabels>
     {
-        private GodotObject? _data;
+        private Variant _data;
         public string Id { get; set; } = null!;
         public bool IsEnabled { get; set; }
     
@@ -68,22 +73,27 @@ public partial class TwitchModifyChannelInformationBody : RefCounted, ITwitcherS
             if(data == null) return null;
             var instance = new TwitchBodyContentClassificationLabels
             {
-                Id = data.Get("id").AsString(),
-                IsEnabled = data.Get("is_enabled").AsBool(),
+                Id = data.Read("id", static v => v.AsString()),
+                IsEnabled = data.Read("is_enabled", static v => v.AsBool()),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_modify_channel_information.gd");
-            var twitchBodyContentClassificationLabelsClass = script.Get("BodyContentClassificationLabels").AsGodotObject();
-            var request = twitchBodyContentClassificationLabelsClass.Call("new").AsGodotObject();
-            if(Id != null) request.Set("id", Id);
-            request.Set("is_enabled", IsEnabled);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_modify_channel_information.gd", "BodyContentClassificationLabels");
+            if(Id != null) request.SetValue("id", Id);
+            request.SetValue("is_enabled", IsEnabled);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     
     }

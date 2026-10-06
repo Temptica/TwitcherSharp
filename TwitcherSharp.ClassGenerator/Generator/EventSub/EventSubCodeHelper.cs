@@ -6,6 +6,47 @@ namespace ClassGenerator.Generator.EventSub;
 
 public static class EventSubCodeHelper
 {
+    /// <summary>
+    /// What twitcher's generator needs to name the classes nested under one root component: whether the root is a V2
+    /// event (its nested classes get a V2 suffix) and the names already given (a repeated name gets its parent's name
+    /// as prefix, like Fragments_Emote).
+    /// </summary>
+    private sealed class TwitcherNaming(bool isV2)
+    {
+        public bool IsV2 { get; } = isV2;
+        public HashSet<string> Used { get; } = [];
+    }
+
+    /// <summary>
+    /// twitcher's property name for a field: the JSON key. The fields of a V2 event carry a V2 suffix here (AutomodV2)
+    /// that the key does not have (automod).
+    /// </summary>
+    private static string GodotName(TwitchEventSubGenField field) =>
+        (field.Name.EndsWith("V2") ? field.Name[..^2] : field.Name).ToSnakeCase();
+
+    /// <summary>
+    /// twitcher's name for a nested class, following its TwitchAPIParser (_get_component_name), TwitchGenComponent
+    /// (Image/Panel renamed) and TwitchEventsubGenerator (V2 suffix).
+    /// </summary>
+    private static string TwitcherNestedName(TwitchEventSubGenComponent component, string type, TwitcherNaming naming,
+        string parentName)
+    {
+        var name = component.ClassName.Remove(type).Remove("Twitch");
+        if (!naming.Used.Add(name) && !string.IsNullOrEmpty(parentName))
+        {
+            name = parentName.Replace("V2", "") + "_" + name;
+            naming.Used.Add(name);
+        }
+
+        name = name switch
+        {
+            "Image" => "TwitchImage",
+            "Panel" => "TwitchPanel",
+            _ => name,
+        };
+        return naming.IsV2 ? name.Replace("V2", "").Replace("v2", "") + "V2" : name;
+    }
+
     private const bool UseTwitcherEventSubV2 = true;
 
     public static string MainEventSub(TwitchEventSubGenComponent component, string nameSpace, bool isCondition = false)
@@ -39,8 +80,11 @@ public static class EventSubCodeHelper
     }
 
     private static string GenerateComponent(TwitchEventSubGenComponent component, int level = 0, string type = null,
-        bool isCondition = false)
+        bool isCondition = false, TwitcherNaming naming = null, string parentName = null)
     {
+        // The names twitcher's generator gives the classes nested under this root (see TwitcherNestedName).
+        naming ??= new TwitcherNaming(component.ClassName.Contains("V2"));
+        var twitcherName = level == 0 && parentName == null ? null : TwitcherNestedName(component, type, naming, parentName);
         var code = new StringBuilder();
 
         var header = isCondition ? EventSubCodeStrings.ConditionSubHeader : EventSubCodeStrings.EventSubHeader;
@@ -52,7 +96,7 @@ public static class EventSubCodeHelper
         code.AppendLine(header.Replace("{{ClassName}}", component.ClassName));
 
         code.AppendLine("{");
-        code.AppendIndentedLine("private GodotObject? _data;\n", 1);
+        code.AppendIndentedLine("private Variant _data;\n", 1);
 
         if (isCondition)
         {
@@ -73,7 +117,7 @@ public static class EventSubCodeHelper
             if ((field.IsArray && field.TypedComponent != null) || field.IsTyped)
             {
                 code.AppendIndentedLine(
-                    $"public {fieldType}{(field.IsRequired ? "" : "?")} {field.Name} {{ get => field ??= _data?.Get{(field.IsArray ? "Array" : "")}<{field.Type.Remove("[]")}>(\"{field.Name.ToSnakeCase()}\"); set; }}{(field.IsRequired ? $"= {field.Name.ToCamelCase()};" : "")}",
+                    $"public {fieldType}{(field.IsRequired ? "" : "?")} {field.Name} {{ get => field ??= _data.Get{(field.IsArray ? "Array" : "")}<{field.Type.Remove("[]")}>(\"{GodotName(field)}\"); set; }}{(field.IsRequired ? $"= {field.Name.ToCamelCase()};" : "")}",
                     1);
             }
             else if (field.IsRequired)
@@ -96,7 +140,7 @@ public static class EventSubCodeHelper
             {
                 var requiredFields = string.Join(", ",
                     component.GetRequiredFields().Select(field =>
-                        $"""data.Get("{field.Name.ToSnakeCase()}").{field.GetAsType()}"""));
+                        $"""data.Read("{GodotName(field)}", static v => v.{field.GetAsType()})"""));
 
                 var requiredCode = $"var instance = new {component.ClassName}({requiredFields})";
                 if (component.Fields.All(f => f.Value.IsRequired)) requiredCode += ";";
@@ -114,13 +158,13 @@ public static class EventSubCodeHelper
                 {
                     if (!field.IsArray && !field.IsTyped)
                         code.AppendIndentedLine(
-                            $"{field.Name} = data.Get(\"{field.Name.ToSnakeCase()}\").{field.GetAsType()},", 3);
+                            $"{field.Name} = data.Read(\"{GodotName(field)}\", static v => v.{field.GetAsType()}),", 3);
                 }
 
                 code.AppendIndentedLine("};", 2);
             }
 
-            code.AppendIndentedLine("\ninstance._data = data;\nreturn instance;", 2);
+            code.AppendIndentedLine("\ninstance._data = Variant.CreateFrom(data);\nreturn instance;", 2);
 
             code.AppendIndentedLine("}", 1);
             code.Append(Environment.NewLine);
@@ -140,29 +184,24 @@ public static class EventSubCodeHelper
                     $"res://addons/twitcher/generated_eventsub/{type.ToSnakeCase().Replace("twitch", "twitch_es").Replace("image", "twitch_image")}.gd";
             }
 
-            code.AppendIndentedLine($"var script = GD.Load<GDScript>(\"{path}\");", 2);
 
             string typeToUse;
 
-            if (component.ClassName.EndsWith("Event")) typeToUse = "Event";
+            // twitcher keeps a V2 event in the file of the first version, as V2Event / V2Condition.
+            if (component.ClassName.EndsWith("V2Event")) typeToUse = "V2Event";
+            else if (component.ClassName.EndsWith("V2Condition")) typeToUse = "V2Condition";
+            else if (component.ClassName.EndsWith("Event")) typeToUse = "Event";
             else if (component.ClassName.EndsWith("EventV2")) typeToUse = "EventV2";
             else if (component.ClassName.EndsWith("Condition")) typeToUse = "Condition";
             else if (component.ClassName.EndsWith("ConditionV2")) typeToUse = "ConditionV2";
             else
                 typeToUse = component.IsShared
                     ? component.ClassName.Replace("Twitch", "TwitchES")
-                    : component.ClassName.Remove(type).Remove("Twitch");
+                    : twitcherName ?? component.ClassName.Remove(type).Remove("Twitch");
 
-            var scriptName = $"{typeToUse.ToCamelCase().Remove("Twitch")}Class";
-            if (component.IsShared)
-            {
-                code.AppendIndentedLine($"var request = script.New().AsGodotObject();", 2);
-            }
-            else
-            {
-                code.AppendIndentedLine($"var {scriptName} = script.Get(\"{typeToUse}\").As<GDScript>();", 2);
-                code.AppendIndentedLine($"var request = {scriptName}.New().AsGodotObject();", 2);
-            }
+            code.AppendIndentedLine(component.IsShared
+                ? $"var request = InteropExtension.NewObject(\"{path}\");"
+                : $"var request = InteropExtension.NewInner(\"{path}\", \"{typeToUse}\");", 2);
 
             foreach (var field in fields)
             {
@@ -171,20 +210,20 @@ public static class EventSubCodeHelper
                 if (field.IsArray && (field.IsTyped || field.Type == "Object"))
                 {
                     fieldCode =
-                        $"if({field.Name} != null) request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name}.ToGodotArray());";
+                        $"if({field.Name} != null) request.SetArray(\"{GodotName(field)}\", {field.Name});";
                 }
                 else if (field.IsArray)
                 {
                     fieldCode =
-                        $"if({field.Name} != null) request.Set(\"{field.Name.ToSnakeCase()}\", new Godot.Collections.Array<{field.Type.Remove("[]")}>({field.Name}));";
+                        $"if({field.Name} != null) request.SetValue(\"{GodotName(field)}\", new Godot.Collections.Array<{field.Type.Remove("[]")}>({field.Name}));";
                 }
                 else if (field.Type == "Object" || field.IsTyped)
                 {
-                    fieldCode = $"if({field.Name} != null) request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name}.ToGodotObject());";
+                    fieldCode = $"if({field.Name} != null) request.SetObject(\"{GodotName(field)}\", {field.Name});";
                 }
                 else if (field.IsValueType || field.IsRequired)
-                    fieldCode = $"request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name});";
-                else fieldCode = $"if({field.Name} != null) request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name});";
+                    fieldCode = $"request.SetValue(\"{GodotName(field)}\", {field.Name});";
+                else fieldCode = $"if({field.Name} != null) request.SetValue(\"{GodotName(field)}\", {field.Name});";
 
                 code.AppendIndentedLine(fieldCode, 2);
             }
@@ -192,6 +231,16 @@ public static class EventSubCodeHelper
             code.AppendIndentedLine("return request;", 2);
         }
 
+        code.AppendIndentedLine("}", 1);
+
+        code.AppendLine();
+        code.AppendIndentedLine("/// <summary> Releases the twitcher object this instance was mapped from. </summary>", 1);
+        code.AppendIndentedLine("protected override void Dispose(bool disposing)", 1);
+        code.AppendIndentedLine("{", 1);
+        // Only when disposed explicitly: when finalized, the Variant is finalized on its own, and disposing it again
+        // throws on the finalizer thread, which ends the process.
+        code.AppendIndentedLine("if (disposing) _data.Dispose();", 2);
+        code.AppendIndentedLine("base.Dispose(disposing);", 2);
         code.AppendIndentedLine("}", 1);
         code.AppendLine();
 
@@ -223,11 +272,11 @@ public static class EventSubCodeHelper
                 var fieldCode = field switch
                 {
                     //3 cases -> Normal/Array, TypedArray, Typed
-                    { IsTyped: false } => $"""{field.Name} = data["{field.Name.ToSnakeCase()}"].{field.GetAsType()},""",
+                    { IsTyped: false } => $"""{field.Name} = data["{GodotName(field)}"].{field.GetAsType()},""",
                     { IsArray: false } =>
-                        $"""{field.Name} = {field.Type}.FromData(data["{field.Name.ToSnakeCase()}"].AsGodotDictionary()),""",
+                        $"""{field.Name} = {field.Type}.FromData(data["{GodotName(field)}"].AsGodotDictionary()),""",
                     _ =>
-                        $"""{field.Name} = data["{field.Name.ToSnakeCase()}"].AsGodotArray().Select(x => {field.TypedComponent.ClassName}.FromData(x.AsGodotDictionary())).ToArray(),"""
+                        $"""{field.Name} = data["{GodotName(field)}"].AsGodotArray().Select(x => {field.TypedComponent.ClassName}.FromData(x.AsGodotDictionary())).ToArray(),"""
                 };
 
                 code.AppendIndentedLine(fieldCode, 3);
@@ -244,7 +293,7 @@ public static class EventSubCodeHelper
             {
                 // Nullable reference fields need the null-forgiving operator to satisfy the Variant conversion.
                 var bang = field.IsValueType || field.IsRequired ? "" : "!";
-                var fieldCode = $$"""{"{{field.Name.ToSnakeCase()}}", {{field.Name}}{{bang}}},""";
+                var fieldCode = $$"""{"{{GodotName(field)}}", {{field.Name}}{{bang}}},""";
 
                 code.AppendIndentedLine(fieldCode, 3);
             }
@@ -259,7 +308,8 @@ public static class EventSubCodeHelper
         foreach (var subComponent in nonSharedSubComponents)
         {
             code.AppendLine();
-            code.AppendIndentedLine(GenerateComponent(subComponent, level, type), level + 1);
+            code.AppendIndentedLine(GenerateComponent(subComponent, level, type, naming: naming,
+                parentName: twitcherName ?? ""), level + 1);
             code.AppendIndentedLine("}", level + 1);
         }
 

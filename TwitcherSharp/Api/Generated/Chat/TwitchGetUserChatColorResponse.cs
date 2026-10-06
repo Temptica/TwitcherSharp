@@ -6,8 +6,8 @@ namespace TwitcherSharp.Api.Generated.Chat;
 
 public partial class TwitchGetUserChatColorResponse : RefCounted, ITwitcherSharp<TwitchGetUserChatColorResponse>
 {
-    private GodotObject? _data;
-    public TwitchUserChatColor[] Data { get => field ??= _data?.GetArray<TwitchUserChatColor>("data")!; set; } = null!;
+    private Variant _data;
+    public TwitchUserChatColor[] Data { get => field ??= _data.GetArray<TwitchUserChatColor>("data")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetUserChatColorResponse object.
@@ -17,17 +17,22 @@ public partial class TwitchGetUserChatColorResponse : RefCounted, ITwitcherSharp
         if(data == null) return null;
         var instance = new TwitchGetUserChatColorResponse();
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_user_chat_color.gd");
-        var responseClass = script.Get("Response").AsGodotObject();
-        var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data.ToGodotArray());
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_user_chat_color.gd", "Response");
+        if(Data != null) request.SetArray("data", Data);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

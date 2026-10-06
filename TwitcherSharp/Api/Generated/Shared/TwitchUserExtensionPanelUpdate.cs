@@ -6,7 +6,7 @@ namespace TwitcherSharp.Api.Generated.Shared;
 
 public partial class TwitchUserExtensionPanelUpdate : RefCounted, ITwitcherSharp<TwitchUserExtensionPanelUpdate>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public bool Active { get; set; }
     public string? Id { get; set; }
     public string? Version { get; set; }
@@ -19,23 +19,29 @@ public partial class TwitchUserExtensionPanelUpdate : RefCounted, ITwitcherSharp
         if(data == null) return null;
         var instance = new TwitchUserExtensionPanelUpdate
         {
-            Active = data.Get("active").AsBool(),
-            Id = data.Get("id").AsString(),
-            Version = data.Get("version").AsString(),
+            Active = data.Read("active", static v => v.AsBool()),
+            Id = data.Read("id", static v => v.AsString()),
+            Version = data.Read("version", static v => v.AsString()),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_user_extension_panel_update.gd");
-        var request = script.Call("new").AsGodotObject();
-        request.Set("active", Active);
-        if(Id != null) request.Set("id", Id);
-        if(Version != null) request.Set("version", Version);
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated/twitch_user_extension_panel_update.gd");
+        request.SetValue("active", Active);
+        if(Id != null) request.SetValue("id", Id);
+        if(Version != null) request.SetValue("version", Version);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }
