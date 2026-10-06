@@ -82,3 +82,23 @@ class FakeRewardService extends TwitchRewardService:
 	func delete_reward(_twitch_reward: TwitchReward) -> DeleteError:
 		await (Engine.get_main_loop() as SceneTree).process_frame
 		return DeleteError.NO_BROADCASTER_USER
+
+
+## A token handler whose token has expired, so get_access_token awaits refresh_tokens. The refresh answers from
+## memory a frame later, like the real one answers after its HTTP request.
+class FakeTokenHandler extends TwitchTokenHandler:
+	func _init() -> void:
+		var expired := OAuthToken.new()
+		expired._access_token = "expired-token"
+		expired._refresh_token = "refresh-token"
+		expired._expire_date = 1
+		token = expired
+		oauth_setting = OAuthSetting.new()
+		oauth_setting.client_id = "fake-client-id"
+
+
+	func refresh_tokens() -> void:
+		await (Engine.get_main_loop() as SceneTree).process_frame
+		token._access_token = "refreshed-token"
+		token._expire_date = int(Time.get_unix_time_from_system()) + 3600
+		set_meta(&"refreshed", true)
