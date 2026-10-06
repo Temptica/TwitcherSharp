@@ -6,8 +6,58 @@ namespace TwitcherSharp.Chat;
 
 public abstract partial class TwitchCommandBase : RefCounted, ITwitcherSharp
 {
+    private const string BaseScriptPath = "res://addons/twitcher/chat/twitch_command_base.gd";
+
     protected GodotObject Data = null!;
-    public static List<TwitchCommandBase> AllCommands = [];
+
+    /// <summary>
+    /// The wrappers <see cref="AllCommands"/> handed out, by node, so each command is wrapped (and its signals are
+    /// connected) once.
+    /// </summary>
+    private static readonly Dictionary<ulong, TwitchCommandBase> CommandWrappers = [];
+
+    /// <summary>
+    /// The commands in the tree: twitcher's <c>ALL_COMMANDS</c>, which a <c>TwitchCommand</c> (or a help command)
+    /// joins when it enters the tree and leaves when it exits. Contains and regex commands do not register there.
+    /// </summary>
+    public static IReadOnlyList<TwitchCommandBase> AllCommands
+    {
+        get
+        {
+            var commands = new List<TwitchCommandBase>();
+            var seen = new HashSet<ulong>();
+            using (var script = GD.Load<GDScript>(BaseScriptPath))
+            using (var all = script.Get("ALL_COMMANDS"))
+            using (var array = all.AsGodotArray())
+            {
+                foreach (var item in array)
+                {
+                    using (item)
+                    {
+                        if (item.AsGodotObject() is not { } node || !IsInstanceValid(node)) continue;
+                        var id = node.GetInstanceId();
+                        if (!CommandWrappers.TryGetValue(id, out var command))
+                        {
+                            command = MapCommand(node);
+                            if (command is null) continue;
+                            CommandWrappers[id] = command;
+                        }
+
+                        seen.Add(id);
+                        commands.Add(command);
+                    }
+                }
+            }
+
+            // Drop the wrappers of commands that left the tree.
+            foreach (var id in CommandWrappers.Keys.Where(id => !seen.Contains(id)).ToList())
+            {
+                CommandWrappers.Remove(id);
+            }
+
+            return commands;
+        }
+    }
 
     #region Signals
 
@@ -193,22 +243,38 @@ public abstract partial class TwitchCommandBase : RefCounted, ITwitcherSharp
 
     public abstract GodotObject ToGodotObject();
 
-    protected void SetBaseProperties()
-    {
-        AllCommands = Data.Read("all_commands", static v => v.AsGodotArray<GodotObject>()).Select(GetTypedCommand).ToList();
+    protected void SetBaseProperties() => ConnectSignals();
 
-        ConnectSignals();
-    }
+    public TwitchCommandBase GetTypedCommand(GodotObject data) =>
+        MapCommand(data) ?? throw new ArgumentException("Invalid command type", nameof(data));
 
-    public TwitchCommandBase GetTypedCommand(GodotObject data)
+    /// <summary>
+    /// Wraps a command node in the wrapper of its twitcher class. A script extending a twitcher command (such as a
+    /// game's own command) gets the wrapper of the twitcher class it extends. Null for anything else.
+    /// </summary>
+    private static TwitchCommandBase? MapCommand(GodotObject node)
     {
-        return data.GetClass() switch
+        // GetClass names the native class (Node); the twitcher class is the script's global name.
+        Script? script;
+        using (var scriptValue = node.GetScript()) script = scriptValue.AsGodotObject() as Script;
+        while (script is not null)
         {
-            nameof(TwitchCommand) => (TwitchCommandBase?)TwitchCommand.FromObject(data),
-            nameof(TwitchCommandContains) => TwitchCommandContains.FromObject(data),
-            nameof(TwitchCommandHelp) => TwitchCommandHelp.FromObject(data),
-            _ => throw new ArgumentException("Invalid command type", nameof(data)),
-        } ?? throw new ArgumentException("Invalid command data", nameof(data));
+            string name = script.GetGlobalName();
+            TwitchCommandBase? command = name switch
+            {
+                nameof(TwitchCommandHelp) => TwitchCommandHelp.FromObject(node),
+                nameof(TwitchCommand) => TwitchCommand.FromObject(node),
+                nameof(TwitchCommandContains) => TwitchCommandContains.FromObject(node),
+                nameof(TwitchCommandRegex) => TwitchCommandRegex.FromObject(node),
+                _ => null,
+            };
+            var baseScript = command is null ? script.GetBaseScript() : null;
+            script.Dispose();
+            if (command is not null) return command;
+            script = baseScript;
+        }
+
+        return null;
     }
 
     /// <summary>
@@ -226,7 +292,6 @@ public abstract partial class TwitchCommandBase : RefCounted, ITwitcherSharp
         data.SetValue("case_insensitive", CaseInsensitive);
         data.SetValue("user_cooldown", UserCooldown);
         data.SetValue("global_cooldown", GlobalCooldown);
-        data.SetValue("all_commands", new Godot.Collections.Array(AllCommands.Select(c => c?.ToGodotObject() ?? new Variant()).ToArray()));
         Data = data;
     }
 }
