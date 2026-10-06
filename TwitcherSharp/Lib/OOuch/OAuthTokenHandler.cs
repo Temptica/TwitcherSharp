@@ -66,6 +66,20 @@ public partial class OAuthTokenHandler : Resource, ITwitcherSharp<OAuthTokenHand
 
     public List<string> GetScopes() => _data!.Invoke("get_scopes", static v => v.AsStringArray()).ToList();
 
+    /// <summary>
+    /// The client id of the OAuth setting the handler authorizes with, or an empty string when it has none.
+    /// </summary>
+    public string ClientId => _data is null ? "" : ClientIdOf(_data);
+
+    /// <summary>
+    /// Reads <c>oauth_setting.client_id</c> of a token handler node.
+    /// </summary>
+    internal static string ClientIdOf(GodotObject handler)
+    {
+        using var setting = handler.Get("oauth_setting");
+        return setting.Read("client_id", static v => v.AsString()) ?? "";
+    }
+
     private void ConnectSignals()
     {
         _data!.Connect("token_resolved", Callable.FromTwitcherSharp<OAuthToken>(EmitSignalTokenResolved));

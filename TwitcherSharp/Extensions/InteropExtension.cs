@@ -50,6 +50,21 @@ internal static class InteropExtension
         }
 
         /// <summary>
+        /// The wrapper of the twitcher node a property refers to, such as a listener's <c>eventsub</c>: the singleton's
+        /// <c>Instance</c> when it is that node (so no second wrapper connects to it), else a new wrapper. When the
+        /// property is empty, the <c>Instance</c>, which twitcher falls back to in <c>_ready</c>.
+        /// </summary>
+        internal T? GetNode<T>(string propertyName) where T : RefCounted, ITwitcherSharpSingleton<T>, new()
+        {
+            using var value = obj.Get(propertyName);
+            var instance = ITwitcherSharpSingleton<T>.Instance;
+            if (value.AsGodotObject() is not { } node) return instance;
+            if (instance is { IsLinked: true } && instance.ToGodotObject().GetInstanceId() == node.GetInstanceId())
+                return instance;
+            return T.FromObject(node);
+        }
+
+        /// <summary>
         /// Sets a property to the twitcher object of <paramref name="value"/> (or null), disposing what it creates.
         /// </summary>
         internal void SetObject<T>(string propertyName, T? value) where T : ITwitcherSharp

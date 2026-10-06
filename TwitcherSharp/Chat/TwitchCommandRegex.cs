@@ -9,14 +9,20 @@ namespace TwitcherSharp.Chat;
 /// </summary>
 public partial class TwitchCommandRegex : TwitchCommandBase, ITwitcherSharp<TwitchCommandRegex>
 {
-    public string RegexToListen { get; set; } = null!;
+    /// <summary>
+    /// Regex it listens for and triggers on
+    /// </summary>
+    public string RegexToListen
+    {
+        get => LinkedRead(field, "regex_to_listen", static v => v.AsString());
+        set => LinkedWrite(ref field, value, "regex_to_listen", value);
+    } = null!;
 
     public static TwitchCommandRegex? FromObject(GodotObject? data)
     {
         if (data == null) return null;
-        var regex = new TwitchCommandRegex();
-        regex.RegexToListen = data.Read("regex_to_listen", static v => v.AsString());
-        regex.Data = data;
+        // The properties are read from the node.
+        var regex = new TwitchCommandRegex { Data = data };
         regex.SetBaseProperties();
         
         return regex;
