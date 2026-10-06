@@ -20,17 +20,41 @@ public partial class TwitchRedeemListener : RefCounted, ITwitcherSharp<TwitchRed
     /// <summary>
     /// Eventsub to listen for the redemption's. Will try to look for it in the scene tree if not set. Else it will create one to the scene root.
     /// </summary>
-    public TwitchEventSub? TwitchEventSub { get; set; }
+    public TwitchEventSub? TwitchEventSub
+    {
+        get;
+        set
+        {
+            _data?.SetObject("eventsub", value);
+            field = value;
+        }
+    }
 
     /// <summary>
     /// Api to use for the redemption's. Will try to look for it in the scene tree if not set. Else it will create one to the scene root.'
     /// </summary>
-    public TwitchApi? TwitchApi { get; set; }
+    public TwitchApi? TwitchApi
+    {
+        get;
+        set
+        {
+            _data?.SetObject("api", value);
+            field = value;
+        }
+    }
 
     /// <summary>
     /// Should the node automatically subscribe to the necessary eventsubs in the ready function?
     /// </summary>
-    public bool EnsureSubscriptionsOnReady { get; set; } = true;
+    public bool EnsureSubscriptionsOnReady
+    {
+        get => _data?.Read("ensure_subscriptions_on_ready", static v => v.AsBool()) ?? field;
+        set
+        {
+            _data?.SetValue("ensure_subscriptions_on_ready", value);
+            field = value;
+        }
+    } = true;
 
     /// <summary>
     /// Called when one of the rewards that this node is listening is getting redeemed
@@ -96,13 +120,11 @@ public partial class TwitchRedeemListener : RefCounted, ITwitcherSharp<TwitchRed
         var listener = new TwitchRedeemListener
         {
             RewardsToListen = new Array<TwitchReward>(data.GetArray<TwitchReward>("rewards_to_listen")),
-            TwitchEventSub = data.Get<TwitchEventSub>("twitch_event_sub"),
-            TwitchApi = data.Get<TwitchApi>("twitch_api"),
-            EnsureSubscriptionsOnReady = data.Read("ensure_subscriptions_on_ready", static v => v.AsBool()),
+            // Set before linking, so nothing is written back to the node.
+            TwitchEventSub = data.GetNode<TwitchEventSub>("eventsub"),
+            TwitchApi = data.GetNode<TwitchApi>("api"),
             _data = data,
         };
-        listener.TwitchEventSub ??= TwitchEventSub.Instance;
-        listener.TwitchApi ??= TwitchApi.Instance;
 
         listener.ConnectSignals();
 
@@ -113,8 +135,8 @@ public partial class TwitchRedeemListener : RefCounted, ITwitcherSharp<TwitchRed
     {
         var instance = InteropExtension.NewObject("res://addons/twitcher/reward/twitch_redeem_listener.gd");
         instance.SetArray("rewards_to_listen", RewardsToListen);
-        instance.SetObject("twitch_event_sub", TwitchEventSub);
-        instance.SetObject("twitch_api", TwitchApi);
+        instance.SetObject("eventsub", TwitchEventSub);
+        instance.SetObject("api", TwitchApi);
         instance.SetValue("ensure_subscriptions_on_ready", EnsureSubscriptionsOnReady);
         return instance;
     }

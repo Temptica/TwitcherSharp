@@ -7,28 +7,45 @@ namespace TwitcherSharp.Chat;
 
 public partial class TwitchCommand : TwitchCommandBase, ITwitcherSharp<TwitchCommand>
 {
-    public List<string> CommandPrefixes { get; set; } = ["!"];
+    /// <summary>
+    /// Prefixes the command is called with. Assign a new list to change it: changing the returned list does not
+    /// reach the twitcher node.
+    /// </summary>
+    public List<string> CommandPrefixes
+    {
+        get => LinkedRead(field, "command_prefixes", ReadStrings);
+        set => LinkedWrite(ref field, value, "command_prefixes", value.ToVariantArray());
+    } = ["!"];
 
     /// <summary>
-    /// Optional names of commands
+    /// Optional names of commands. Use <see cref="AddAlias"/> and <see cref="RemoveAlias"/>, or assign a new list:
+    /// changing the returned list does not reach the twitcher node.
     /// </summary>
-    public List<string> Aliases { get; set; } = [];
+    public List<string> Aliases
+    {
+        get => LinkedRead(field, "aliases", ReadStrings);
+        set => LinkedWrite(ref field, value, "aliases", value.ToVariantArray());
+    } = [];
 
     /// <summary>
     /// Minimal amount of argument 0 means no argument needed
     /// </summary>
-    public int ArgsMin { get; set; }
+    public int ArgsMin
+    {
+        get => LinkedRead(field, "args_min", static v => v.AsInt32());
+        set => LinkedWrite(ref field, value, "args_min", value);
+    }
 
     /// <summary>
     /// Max amount of arguments -1 means infinite
     /// </summary>
-    public int ArgsMax { get; set; } = -1;
-
-    public void AddAlias(string alias)
+    public int ArgsMax
     {
-        Data.Invoke("add_alias", alias);
-        Aliases = Data.Read("aliases", static v => v.AsStringArray()).ToList();
-    }
+        get => LinkedRead(field, "args_max", static v => v.AsInt32());
+        set => LinkedWrite(ref field, value, "args_max", value);
+    } = -1;
+
+    public void AddAlias(string alias) => Data.Invoke("add_alias", alias);
 
     public void RemoveAlias(string alias)
     {
@@ -36,7 +53,6 @@ public partial class TwitchCommand : TwitchCommandBase, ITwitcherSharp<TwitchCom
         using var aliases = Data.Get("aliases");
         using var array = aliases.AsGodotArray();
         array.Remove(alias);
-        Aliases = aliases.AsStringArray().ToList();
     }
 
     public override string ToString() => $"{CommandPrefixes[0]}{Command}";
@@ -44,14 +60,8 @@ public partial class TwitchCommand : TwitchCommandBase, ITwitcherSharp<TwitchCom
     public static TwitchCommand? FromObject(GodotObject? data)
     {
         if (data == null) return null;
-        var command = new TwitchCommand
-        {
-            Data = data,
-            CommandPrefixes = data.Read("command_prefixes", static v => v.AsStringArray()).ToList(),
-            Aliases = data.Read("aliases", static v => v.AsStringArray()).ToList(),
-            ArgsMin = data.Read("args_min", static v => v.AsInt32()),
-            ArgsMax = data.Read("args_max", static v => v.AsInt32()),
-        };
+        // The properties are read from the node.
+        var command = new TwitchCommand { Data = data };
 
         command.SetBaseProperties();
         return command;
@@ -66,7 +76,6 @@ public partial class TwitchCommand : TwitchCommandBase, ITwitcherSharp<TwitchCom
         data.SetValue("args_min", ArgsMin);
         data.SetValue("args_max", ArgsMax);
         GetBaseProperties(data);
-        Data = data;
         ConnectSignals();
         return data;
     }

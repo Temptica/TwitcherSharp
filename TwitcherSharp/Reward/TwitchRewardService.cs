@@ -16,8 +16,31 @@ public partial class TwitchRewardService(TwitchApi api, TwitchMediaLoader twitch
     : RefCounted, ITwitcherSharp<TwitchRewardService>
 {
     private Variant _data;
-    public TwitchApi TwitchApi { get; set; } = api;
-    public TwitchMediaLoader TwitchMediaLoader { get; set; } = twitchMediaLoader;
+    public TwitchApi TwitchApi
+    {
+        get;
+        set
+        {
+            _data.With(obj => WriteNode(obj, "api", value));
+            field = value;
+        }
+    } = api;
+
+    public TwitchMediaLoader TwitchMediaLoader
+    {
+        get;
+        set
+        {
+            _data.With(obj => WriteNode(obj, "media_loader", value));
+            field = value;
+        }
+    } = twitchMediaLoader;
+
+    private static bool WriteNode(GodotObject obj, string property, ITwitcherSharp? node)
+    {
+        obj.SetObject(property, node);
+        return true;
+    }
 
     public enum LoadError
     {

@@ -68,49 +68,112 @@ public abstract partial class TwitchCommandBase : RefCounted, ITwitcherSharp
     #endregion
 
     /// <summary>
+    /// Whether this wrapper is linked to a twitcher node (it came from <c>FromObject</c> or <c>ToGodotObject</c>).
+    /// A linked wrapper reads its properties from the node and writes them to it; an unlinked one keeps them until
+    /// <c>ToGodotObject</c> creates the node.
+    /// </summary>
+    public bool IsLinked => Data is not null;
+
+    /// <summary>
     /// Command name
     /// </summary>
-    public string Command { get; set; } = null!;
+    public string Command
+    {
+        get => LinkedRead(field, "command", static v => v.AsString());
+        set => LinkedWrite(ref field, value, "command", value);
+    } = null!;
 
     /// <summary>
     /// Description for the user
     /// </summary>
-    public string Description { get; set; } = "";
+    public string Description
+    {
+        get => LinkedRead(field, "description", static v => v.AsString());
+        set => LinkedWrite(ref field, value, "description", value);
+    } = "";
 
     /// <summary>
     /// Wich role of user is allowed to use it
     /// </summary>
-    public PermissionFlag PermissionLevel { get; set; }
+    public PermissionFlag PermissionLevel
+    {
+        get => LinkedRead(field, "permission_level", static v => (PermissionFlag)v.AsInt32());
+        set => LinkedWrite(ref field, value, "permission_level", (int)value);
+    }
 
     /// <summary>
     /// Where the command should be accepted
     /// </summary>
-    public WhereFlag Where { get; set; } = WhereFlag.Chat;
+    public WhereFlag Where
+    {
+        get => LinkedRead(field, "where", static v => (WhereFlag)v.AsInt32());
+        set => LinkedWrite(ref field, value, "where", (int)value);
+    } = WhereFlag.Chat;
 
     /// <summary>
-    /// All allowed users empty array means everyone
+    /// All allowed users empty array means everyone. Assign a new list to change it: changing the returned list
+    /// does not reach the twitcher node.
     /// </summary>
-    public List<string> AllowedUsers { get; set; } = [];
+    public List<string> AllowedUsers
+    {
+        get => LinkedRead(field, "allowed_users", ReadStrings);
+        set => LinkedWrite(ref field, value, "allowed_users", value.ToVariantArray());
+    } = [];
 
     /// <summary>
-    /// All chatrooms where the command listens to
+    /// All chatrooms where the command listens to. Assign a new list to change it: changing the returned list does
+    /// not reach the twitcher node.
     /// </summary>
-    public List<string> ListenToChatrooms { get; set; } = [];
+    public List<string> ListenToChatrooms
+    {
+        get => LinkedRead(field, "listen_to_chatrooms", ReadStrings);
+        set => LinkedWrite(ref field, value, "listen_to_chatrooms", value.ToVariantArray());
+    } = [];
 
     /// <summary>
     /// Determines if the aliases and commands should be case-sensitive or not
     /// </summary>
-    public bool CaseInsensitive { get; set; } = true;
+    public bool CaseInsensitive
+    {
+        get => LinkedRead(field, "case_insensitive", static v => v.AsBool());
+        set => LinkedWrite(ref field, value, "case_insensitive", value);
+    } = true;
 
     /// <summary>
     /// Cooldown per user
     /// </summary>
-    public double UserCooldown { get; set; } = 0;
+    public double UserCooldown
+    {
+        get => LinkedRead(field, "user_cooldown", static v => v.AsDouble());
+        set => LinkedWrite(ref field, value, "user_cooldown", value);
+    }
 
     /// <summary>
     /// Global cooldown for the command
     /// </summary>
-    public double GlobalCooldown { get; set; } = 0;
+    public double GlobalCooldown
+    {
+        get => LinkedRead(field, "global_cooldown", static v => v.AsDouble());
+        set => LinkedWrite(ref field, value, "global_cooldown", value);
+    }
+
+    /// <summary>
+    /// The value of a property: read from the twitcher node when linked, else the one kept here.
+    /// </summary>
+    private protected T LinkedRead<T>(T unlinked, string property, Func<Variant, T> read) =>
+        IsLinked ? Data.Read(property, read) : unlinked;
+
+    /// <summary>
+    /// Keeps the value of a property and writes it to the twitcher node when linked.
+    /// </summary>
+    private protected void LinkedWrite<T>(ref T field, T value, string property, Variant godotValue)
+    {
+        field = value;
+        if (IsLinked) Data.SetValue(property, godotValue);
+        else godotValue.Dispose();
+    }
+
+    private protected static List<string> ReadStrings(Variant value) => value.AsStringArray().ToList();
 
     protected void ConnectSignals()
     {
@@ -132,15 +195,6 @@ public abstract partial class TwitchCommandBase : RefCounted, ITwitcherSharp
 
     protected void SetBaseProperties()
     {
-        Command = Data.Read("command", static v => v.AsString());
-        Description = Data.Read("description", static v => v.AsString());
-        PermissionLevel = (PermissionFlag)Data.Read("permission_level", static v => v.AsInt32());
-        Where = (WhereFlag)Data.Read("where", static v => v.AsInt32());
-        AllowedUsers = Data.Read("allowed_users", static v => v.AsStringArray()).ToList();
-        ListenToChatrooms = Data.Read("listen_to_chatrooms", static v => v.AsStringArray()).ToList();
-        CaseInsensitive = Data.Read("case_insensitive", static v => v.AsBool());
-        UserCooldown = Data.Read("user_cooldown", static v => v.AsInt32());
-        GlobalCooldown = Data.Read("global_cooldown", static v => v.AsInt32());
         AllCommands = Data.Read("all_commands", static v => v.AsGodotArray<GodotObject>()).Select(GetTypedCommand).ToList();
 
         ConnectSignals();
@@ -157,9 +211,12 @@ public abstract partial class TwitchCommandBase : RefCounted, ITwitcherSharp
         } ?? throw new ArgumentException("Invalid command data", nameof(data));
     }
 
+    /// <summary>
+    /// Writes the base properties to a new twitcher node and links this wrapper to it.
+    /// </summary>
     protected void GetBaseProperties(GodotObject data)
     {
-        Data = data;
+        // Read before linking: once linked, the getters read the new node.
         data.SetValue("command", Command);
         data.SetValue("description", Description);
         data.SetValue("permission_level", (int)PermissionLevel);
@@ -170,5 +227,6 @@ public abstract partial class TwitchCommandBase : RefCounted, ITwitcherSharp
         data.SetValue("user_cooldown", UserCooldown);
         data.SetValue("global_cooldown", GlobalCooldown);
         data.SetValue("all_commands", new Godot.Collections.Array(AllCommands.Select(c => c?.ToGodotObject() ?? new Variant()).ToArray()));
+        Data = data;
     }
 }
