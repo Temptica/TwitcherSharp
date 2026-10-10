@@ -22,11 +22,11 @@ public partial class TwitchPredictionOutcome : RefCounted, ITwitcherSharp<Twitch
         if(data == null) return null;
         var instance = new TwitchPredictionOutcome
         {
-            Id = data.Read("id", static v => v.AsString()),
-            Title = data.Read("title", static v => v.AsString()),
-            Users = data.Read("users", static v => v.AsInt32()),
-            ChannelPoints = data.Read("channel_points", static v => v.AsInt32()),
-            Color = data.Read("color", static v => v.AsString()),
+            Id = data.ReadAsString("id"),
+            Title = data.ReadAsString("title"),
+            Users = data.ReadAsInt32("users"),
+            ChannelPoints = data.ReadAsInt32("channel_points"),
+            Color = data.ReadAsString("color"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -72,11 +72,11 @@ public partial class TwitchPredictionOutcome : RefCounted, ITwitcherSharp<Twitch
             if(data == null) return null;
             var instance = new TwitchTopPredictors
             {
-                UserId = data.Read("user_id", static v => v.AsString()),
-                UserName = data.Read("user_name", static v => v.AsString()),
-                UserLogin = data.Read("user_login", static v => v.AsString()),
-                ChannelPointsUsed = data.Read("channel_points_used", static v => v.AsInt32()),
-                ChannelPointsWon = data.Read("channel_points_won", static v => v.AsInt32()),
+                UserId = data.ReadAsString("user_id"),
+                UserName = data.ReadAsString("user_name"),
+                UserLogin = data.ReadAsString("user_login"),
+                ChannelPointsUsed = data.ReadAsInt32("channel_points_used"),
+                ChannelPointsWon = data.ReadAsInt32("channel_points_won"),
             };
             
             instance._data = Variant.CreateFrom(data);

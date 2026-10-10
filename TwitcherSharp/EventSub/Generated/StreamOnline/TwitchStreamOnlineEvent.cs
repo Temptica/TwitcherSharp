@@ -48,12 +48,12 @@ public partial class TwitchStreamOnlineEvent : RefCounted, ITwitcherSharpEventSu
         if(data == null) return null;
         var instance = new TwitchStreamOnlineEvent
         {
-            Id = data.Read("id", static v => v.AsString()),
-            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
-            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
-            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
-            Type = data.Read("type", static v => v.AsString()),
-            StartedAt = data.Read("started_at", static v => v.AsString()),
+            Id = data.ReadAsString("id"),
+            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+            Type = data.ReadAsString("type"),
+            StartedAt = data.ReadAsString("started_at"),
         };
         
         instance._data = Variant.CreateFrom(data);

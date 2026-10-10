@@ -48,11 +48,11 @@ public partial class TwitchOutcomes : RefCounted, ITwitcherSharpEventSub<TwitchO
         if(data == null) return null;
         var instance = new TwitchOutcomes
         {
-            Id = data.Read("id", static v => v.AsString()),
-            Title = data.Read("title", static v => v.AsString()),
-            Color = data.Read("color", static v => v.AsString()),
-            Users = data.Read("users", static v => v.AsInt32()),
-            ChannelPoints = data.Read("channel_points", static v => v.AsInt32()),
+            Id = data.ReadAsString("id"),
+            Title = data.ReadAsString("title"),
+            Color = data.ReadAsString("color"),
+            Users = data.ReadAsInt32("users"),
+            ChannelPoints = data.ReadAsInt32("channel_points"),
         };
         
         instance._data = Variant.CreateFrom(data);

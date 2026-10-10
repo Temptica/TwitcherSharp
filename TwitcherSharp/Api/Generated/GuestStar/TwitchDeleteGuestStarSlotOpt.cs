@@ -21,7 +21,7 @@ public partial class TwitchDeleteGuestStarSlotOpt : RefCounted, ITwitcherSharp<T
         if(data == null) return null;
         var instance = new TwitchDeleteGuestStarSlotOpt
         {
-            ShouldReinviteGuest = data.Read("should_reinvite_guest", static v => v.AsString()),
+            ShouldReinviteGuest = data.ReadAsString("should_reinvite_guest"),
         };
         
         instance._data = Variant.CreateFrom(data);

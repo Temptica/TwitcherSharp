@@ -23,7 +23,7 @@ public partial class TwitchWhisperReceivedCondition(string userId) : RefCounted,
     public static TwitchWhisperReceivedCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchWhisperReceivedCondition(data.Read("user_id", static v => v.AsString()));
+        var instance = new TwitchWhisperReceivedCondition(data.ReadAsString("user_id"));
         
         instance._data = Variant.CreateFrom(data);
         return instance;

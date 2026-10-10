@@ -28,8 +28,8 @@ public partial class TwitchMaxPerUserPerStream : RefCounted, ITwitcherSharpEvent
         if(data == null) return null;
         var instance = new TwitchMaxPerUserPerStream
         {
-            IsEnabled = data.Read("is_enabled", static v => v.AsBool()),
-            Value = data.Read("value", static v => v.AsInt32()),
+            IsEnabled = data.ReadAsBool("is_enabled"),
+            Value = data.ReadAsInt32("value"),
         };
         
         instance._data = Variant.CreateFrom(data);

@@ -28,7 +28,7 @@ public partial class TwitchMessage : RefCounted, ITwitcherSharpEventSub<TwitchMe
         if(data == null) return null;
         var instance = new TwitchMessage
         {
-            Text = data.Read("text", static v => v.AsString()),
+            Text = data.ReadAsString("text"),
         };
         
         instance._data = Variant.CreateFrom(data);

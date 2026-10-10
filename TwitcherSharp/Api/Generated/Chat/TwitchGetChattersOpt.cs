@@ -22,8 +22,8 @@ public partial class TwitchGetChattersOpt : RefCounted, ITwitcherSharp<TwitchGet
         if(data == null) return null;
         var instance = new TwitchGetChattersOpt
         {
-            First = data.Read("first", static v => v.AsInt32()),
-            After = data.Read("after", static v => v.AsString()),
+            First = data.ReadAsInt32("first"),
+            After = data.ReadAsString("after"),
         };
         
         instance._data = Variant.CreateFrom(data);

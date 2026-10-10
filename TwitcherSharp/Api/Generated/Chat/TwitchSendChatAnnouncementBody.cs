@@ -19,9 +19,9 @@ public partial class TwitchSendChatAnnouncementBody : RefCounted, ITwitcherSharp
         if(data == null) return null;
         var instance = new TwitchSendChatAnnouncementBody
         {
-            Message = data.Read("message", static v => v.AsString()),
-            Color = data.Read("color", static v => v.AsString()),
-            ForSourceOnly = data.Read("for_source_only", static v => v.AsBool()),
+            Message = data.ReadAsString("message"),
+            Color = data.ReadAsString("color"),
+            ForSourceOnly = data.ReadAsBool("for_source_only"),
         };
         
         instance._data = Variant.CreateFrom(data);

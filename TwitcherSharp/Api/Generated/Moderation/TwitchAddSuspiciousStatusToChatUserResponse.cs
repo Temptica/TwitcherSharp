@@ -56,12 +56,12 @@ public partial class TwitchAddSuspiciousStatusToChatUserResponse : RefCounted, I
             if(data == null) return null;
             var instance = new TwitchResponseData
             {
-                UserId = data.Read("user_id", static v => v.AsString()),
-                BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
-                ModeratorId = data.Read("moderator_id", static v => v.AsString()),
-                UpdatedAt = data.Read("updated_at", static v => v.AsString()),
-                Status = data.Read("status", static v => v.AsString()),
-                Types = data.Read("types", static v => v.AsStringArray()),
+                UserId = data.ReadAsString("user_id"),
+                BroadcasterId = data.ReadAsString("broadcaster_id"),
+                ModeratorId = data.ReadAsString("moderator_id"),
+                UpdatedAt = data.ReadAsString("updated_at"),
+                Status = data.ReadAsString("status"),
+                Types = data.ReadAsStringArray("types"),
             };
             
             instance._data = Variant.CreateFrom(data);

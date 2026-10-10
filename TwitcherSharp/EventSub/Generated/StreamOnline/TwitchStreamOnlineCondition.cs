@@ -23,7 +23,7 @@ public partial class TwitchStreamOnlineCondition(string broadcasterUserId) : Ref
     public static TwitchStreamOnlineCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchStreamOnlineCondition(data.Read("broadcaster_user_id", static v => v.AsString()));
+        var instance = new TwitchStreamOnlineCondition(data.ReadAsString("broadcaster_user_id"));
         
         instance._data = Variant.CreateFrom(data);
         return instance;

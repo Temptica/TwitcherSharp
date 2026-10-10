@@ -58,13 +58,13 @@ public partial class TwitchChannelSharedChatSessionBeginEvent : RefCounted, ITwi
         if(data == null) return null;
         var instance = new TwitchChannelSharedChatSessionBeginEvent
         {
-            SessionId = data.Read("session_id", static v => v.AsString()),
-            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
-            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
-            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
-            HostBroadcasterUserId = data.Read("host_broadcaster_user_id", static v => v.AsString()),
-            HostBroadcasterUserName = data.Read("host_broadcaster_user_name", static v => v.AsString()),
-            HostBroadcasterUserLogin = data.Read("host_broadcaster_user_login", static v => v.AsString()),
+            SessionId = data.ReadAsString("session_id"),
+            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+            HostBroadcasterUserId = data.ReadAsString("host_broadcaster_user_id"),
+            HostBroadcasterUserName = data.ReadAsString("host_broadcaster_user_name"),
+            HostBroadcasterUserLogin = data.ReadAsString("host_broadcaster_user_login"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -120,9 +120,9 @@ public partial class TwitchChannelSharedChatSessionBeginEvent : RefCounted, ITwi
             if(data == null) return null;
             var instance = new TwitchParticipants
             {
-                BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
-                BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
-                BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
+                BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+                BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+                BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
             };
             
             instance._data = Variant.CreateFrom(data);

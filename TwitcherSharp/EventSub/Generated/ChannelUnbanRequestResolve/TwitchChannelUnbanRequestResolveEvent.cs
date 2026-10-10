@@ -78,18 +78,18 @@ public partial class TwitchChannelUnbanRequestResolveEvent : RefCounted, ITwitch
         if(data == null) return null;
         var instance = new TwitchChannelUnbanRequestResolveEvent
         {
-            Id = data.Read("id", static v => v.AsString()),
-            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
-            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
-            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
-            ModeratorUserId = data.Read("moderator_user_id", static v => v.AsString()),
-            ModeratorUserLogin = data.Read("moderator_user_login", static v => v.AsString()),
-            ModeratorUserName = data.Read("moderator_user_name", static v => v.AsString()),
-            UserId = data.Read("user_id", static v => v.AsString()),
-            UserLogin = data.Read("user_login", static v => v.AsString()),
-            UserName = data.Read("user_name", static v => v.AsString()),
-            ResolutionText = data.Read("resolution_text", static v => v.AsString()),
-            Status = data.Read("status", static v => v.AsString()),
+            Id = data.ReadAsString("id"),
+            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+            ModeratorUserId = data.ReadAsString("moderator_user_id"),
+            ModeratorUserLogin = data.ReadAsString("moderator_user_login"),
+            ModeratorUserName = data.ReadAsString("moderator_user_name"),
+            UserId = data.ReadAsString("user_id"),
+            UserLogin = data.ReadAsString("user_login"),
+            UserName = data.ReadAsString("user_name"),
+            ResolutionText = data.ReadAsString("resolution_text"),
+            Status = data.ReadAsString("status"),
         };
         
         instance._data = Variant.CreateFrom(data);

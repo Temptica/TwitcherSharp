@@ -19,7 +19,7 @@ public partial class TwitchGetChannelFollowersResponse : RefCounted, ITwitcherSh
         if(data == null) return null;
         var instance = new TwitchGetChannelFollowersResponse
         {
-            Total = data.Read("total", static v => v.AsInt32()),
+            Total = data.ReadAsInt32("total"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -60,7 +60,7 @@ public partial class TwitchGetChannelFollowersResponse : RefCounted, ITwitcherSh
             if(data == null) return null;
             var instance = new ResponsePagination
             {
-                Cursor = data.Read("cursor", static v => v.AsString()),
+                Cursor = data.ReadAsString("cursor"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -102,10 +102,10 @@ public partial class TwitchGetChannelFollowersResponse : RefCounted, ITwitcherSh
             if(data == null) return null;
             var instance = new TwitchResponseData
             {
-                FollowedAt = data.Read("followed_at", static v => v.AsString()),
-                UserId = data.Read("user_id", static v => v.AsString()),
-                UserLogin = data.Read("user_login", static v => v.AsString()),
-                UserName = data.Read("user_name", static v => v.AsString()),
+                FollowedAt = data.ReadAsString("followed_at"),
+                UserId = data.ReadAsString("user_id"),
+                UserLogin = data.ReadAsString("user_login"),
+                UserName = data.ReadAsString("user_name"),
             };
             
             instance._data = Variant.CreateFrom(data);

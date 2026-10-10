@@ -23,9 +23,9 @@ public partial class TwitchGetExtensionTransactionsOpt : RefCounted, ITwitcherSh
         if(data == null) return null;
         var instance = new TwitchGetExtensionTransactionsOpt
         {
-            Id = data.Read("id", static v => v.AsStringArray()),
-            First = data.Read("first", static v => v.AsInt32()),
-            After = data.Read("after", static v => v.AsString()),
+            Id = data.ReadAsStringArray("id"),
+            First = data.ReadAsInt32("first"),
+            After = data.ReadAsString("after"),
         };
         
         instance._data = Variant.CreateFrom(data);

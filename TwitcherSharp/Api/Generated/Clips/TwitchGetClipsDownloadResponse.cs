@@ -53,9 +53,9 @@ public partial class TwitchGetClipsDownloadResponse : RefCounted, ITwitcherSharp
             if(data == null) return null;
             var instance = new TwitchResponseData
             {
-                ClipId = data.Read("clip_id", static v => v.AsString()),
-                LandscapeDownloadUrl = data.Read("landscape_download_url", static v => v.AsString()),
-                PortraitDownloadUrl = data.Read("portrait_download_url", static v => v.AsString()),
+                ClipId = data.ReadAsString("clip_id"),
+                LandscapeDownloadUrl = data.ReadAsString("landscape_download_url"),
+                PortraitDownloadUrl = data.ReadAsString("portrait_download_url"),
             };
             
             instance._data = Variant.CreateFrom(data);

@@ -118,21 +118,21 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
         if(data == null) return null;
         var instance = new TwitchChannelChatMessageEvent
         {
-            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
-            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
-            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
-            ChatterUserId = data.Read("chatter_user_id", static v => v.AsString()),
-            ChatterUserName = data.Read("chatter_user_name", static v => v.AsString()),
-            ChatterUserLogin = data.Read("chatter_user_login", static v => v.AsString()),
-            MessageId = data.Read("message_id", static v => v.AsString()),
-            MessageType = data.Read("message_type", static v => v.AsString()),
-            Color = data.Read("color", static v => v.AsString()),
-            ChannelPointsCustomRewardId = data.Read("channel_points_custom_reward_id", static v => v.AsString()),
-            SourceBroadcasterUserId = data.Read("source_broadcaster_user_id", static v => v.AsString()),
-            SourceBroadcasterUserName = data.Read("source_broadcaster_user_name", static v => v.AsString()),
-            SourceBroadcasterUserLogin = data.Read("source_broadcaster_user_login", static v => v.AsString()),
-            SourceMessageId = data.Read("source_message_id", static v => v.AsString()),
-            IsSourceOnly = data.Read("is_source_only", static v => v.AsBool()),
+            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+            ChatterUserId = data.ReadAsString("chatter_user_id"),
+            ChatterUserName = data.ReadAsString("chatter_user_name"),
+            ChatterUserLogin = data.ReadAsString("chatter_user_login"),
+            MessageId = data.ReadAsString("message_id"),
+            MessageType = data.ReadAsString("message_type"),
+            Color = data.ReadAsString("color"),
+            ChannelPointsCustomRewardId = data.ReadAsString("channel_points_custom_reward_id"),
+            SourceBroadcasterUserId = data.ReadAsString("source_broadcaster_user_id"),
+            SourceBroadcasterUserName = data.ReadAsString("source_broadcaster_user_name"),
+            SourceBroadcasterUserLogin = data.ReadAsString("source_broadcaster_user_login"),
+            SourceMessageId = data.ReadAsString("source_message_id"),
+            IsSourceOnly = data.ReadAsBool("is_source_only"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -195,7 +195,7 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
             if(data == null) return null;
             var instance = new TwitchMessage
             {
-                Text = data.Read("text", static v => v.AsString()),
+                Text = data.ReadAsString("text"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -260,8 +260,8 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
                 if(data == null) return null;
                 var instance = new TwitchFragments
                 {
-                    Type = data.Read("type", static v => v.AsString()),
-                    Text = data.Read("text", static v => v.AsString()),
+                    Type = data.ReadAsString("type"),
+                    Text = data.ReadAsString("text"),
                 };
                 
                 instance._data = Variant.CreateFrom(data);
@@ -315,9 +315,9 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
                     if(data == null) return null;
                     var instance = new TwitchCheermote
                     {
-                        Prefix = data.Read("prefix", static v => v.AsString()),
-                        Bits = data.Read("bits", static v => v.AsInt32()),
-                        Tier = data.Read("tier", static v => v.AsInt32()),
+                        Prefix = data.ReadAsString("prefix"),
+                        Bits = data.ReadAsInt32("bits"),
+                        Tier = data.ReadAsInt32("tier"),
                     };
                     
                     instance._data = Variant.CreateFrom(data);
@@ -373,9 +373,9 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
                     if(data == null) return null;
                     var instance = new TwitchEmote
                     {
-                        Id = data.Read("id", static v => v.AsString()),
-                        EmoteSetId = data.Read("emote_set_id", static v => v.AsString()),
-                        OwnerId = data.Read("owner_id", static v => v.AsString()),
+                        Id = data.ReadAsString("id"),
+                        EmoteSetId = data.ReadAsString("emote_set_id"),
+                        OwnerId = data.ReadAsString("owner_id"),
                     };
                     
                     instance._data = Variant.CreateFrom(data);
@@ -427,9 +427,9 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
                     if(data == null) return null;
                     var instance = new TwitchMention
                     {
-                        UserId = data.Read("user_id", static v => v.AsString()),
-                        UserName = data.Read("user_name", static v => v.AsString()),
-                        UserLogin = data.Read("user_login", static v => v.AsString()),
+                        UserId = data.ReadAsString("user_id"),
+                        UserName = data.ReadAsString("user_name"),
+                        UserLogin = data.ReadAsString("user_login"),
                     };
                     
                     instance._data = Variant.CreateFrom(data);
@@ -475,8 +475,8 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
                     if(data == null) return null;
                     var instance = new TwitchGif
                     {
-                        GifId = data.Read("gif_id", static v => v.AsString()),
-                        Url = data.Read("url", static v => v.AsString()),
+                        GifId = data.ReadAsString("gif_id"),
+                        Url = data.ReadAsString("url"),
                     };
                     
                     instance._data = Variant.CreateFrom(data);
@@ -528,9 +528,9 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
             if(data == null) return null;
             var instance = new TwitchBadges
             {
-                SetId = data.Read("set_id", static v => v.AsString()),
-                Id = data.Read("id", static v => v.AsString()),
-                Info = data.Read("info", static v => v.AsString()),
+                SetId = data.ReadAsString("set_id"),
+                Id = data.ReadAsString("id"),
+                Info = data.ReadAsString("info"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -571,7 +571,7 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
             if(data == null) return null;
             var instance = new TwitchCheer
             {
-                Bits = data.Read("bits", static v => v.AsInt32()),
+                Bits = data.ReadAsInt32("bits"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -650,15 +650,15 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
             if(data == null) return null;
             var instance = new TwitchReply
             {
-                ParentMessageId = data.Read("parent_message_id", static v => v.AsString()),
-                ParentMessageBody = data.Read("parent_message_body", static v => v.AsString()),
-                ParentUserId = data.Read("parent_user_id", static v => v.AsString()),
-                ParentUserName = data.Read("parent_user_name", static v => v.AsString()),
-                ParentUserLogin = data.Read("parent_user_login", static v => v.AsString()),
-                ThreadMessageId = data.Read("thread_message_id", static v => v.AsString()),
-                ThreadUserId = data.Read("thread_user_id", static v => v.AsString()),
-                ThreadUserName = data.Read("thread_user_name", static v => v.AsString()),
-                ThreadUserLogin = data.Read("thread_user_login", static v => v.AsString()),
+                ParentMessageId = data.ReadAsString("parent_message_id"),
+                ParentMessageBody = data.ReadAsString("parent_message_body"),
+                ParentUserId = data.ReadAsString("parent_user_id"),
+                ParentUserName = data.ReadAsString("parent_user_name"),
+                ParentUserLogin = data.ReadAsString("parent_user_login"),
+                ThreadMessageId = data.ReadAsString("thread_message_id"),
+                ThreadUserId = data.ReadAsString("thread_user_id"),
+                ThreadUserName = data.ReadAsString("thread_user_name"),
+                ThreadUserLogin = data.ReadAsString("thread_user_login"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -715,9 +715,9 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
             if(data == null) return null;
             var instance = new TwitchSourceBadges
             {
-                SetId = data.Read("set_id", static v => v.AsString()),
-                Id = data.Read("id", static v => v.AsString()),
-                Info = data.Read("info", static v => v.AsString()),
+                SetId = data.ReadAsString("set_id"),
+                Id = data.ReadAsString("id"),
+                Info = data.ReadAsString("info"),
             };
             
             instance._data = Variant.CreateFrom(data);

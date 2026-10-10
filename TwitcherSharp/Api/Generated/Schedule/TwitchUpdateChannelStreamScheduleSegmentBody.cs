@@ -22,12 +22,12 @@ public partial class TwitchUpdateChannelStreamScheduleSegmentBody : RefCounted, 
         if(data == null) return null;
         var instance = new TwitchUpdateChannelStreamScheduleSegmentBody
         {
-            StartTime = data.Read("start_time", static v => v.AsString()),
-            Duration = data.Read("duration", static v => v.AsString()),
-            CategoryId = data.Read("category_id", static v => v.AsString()),
-            Title = data.Read("title", static v => v.AsString()),
-            IsCanceled = data.Read("is_canceled", static v => v.AsBool()),
-            Timezone = data.Read("timezone", static v => v.AsString()),
+            StartTime = data.ReadAsString("start_time"),
+            Duration = data.ReadAsString("duration"),
+            CategoryId = data.ReadAsString("category_id"),
+            Title = data.ReadAsString("title"),
+            IsCanceled = data.ReadAsBool("is_canceled"),
+            Timezone = data.ReadAsString("timezone"),
         };
         
         instance._data = Variant.CreateFrom(data);

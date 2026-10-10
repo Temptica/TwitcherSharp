@@ -29,15 +29,15 @@ public partial class TwitchGetClipsOpt : RefCounted, ITwitcherSharp<TwitchGetCli
         if(data == null) return null;
         var instance = new TwitchGetClipsOpt
         {
-            BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
-            GameId = data.Read("game_id", static v => v.AsString()),
-            Id = data.Read("id", static v => v.AsStringArray()),
-            StartedAt = data.Read("started_at", static v => v.AsString()),
-            EndedAt = data.Read("ended_at", static v => v.AsString()),
-            First = data.Read("first", static v => v.AsInt32()),
-            Before = data.Read("before", static v => v.AsString()),
-            After = data.Read("after", static v => v.AsString()),
-            IsFeatured = data.Read("is_featured", static v => v.AsBool()),
+            BroadcasterId = data.ReadAsString("broadcaster_id"),
+            GameId = data.ReadAsString("game_id"),
+            Id = data.ReadAsStringArray("id"),
+            StartedAt = data.ReadAsString("started_at"),
+            EndedAt = data.ReadAsString("ended_at"),
+            First = data.ReadAsInt32("first"),
+            Before = data.ReadAsString("before"),
+            After = data.ReadAsString("after"),
+            IsFeatured = data.ReadAsBool("is_featured"),
         };
         
         instance._data = Variant.CreateFrom(data);

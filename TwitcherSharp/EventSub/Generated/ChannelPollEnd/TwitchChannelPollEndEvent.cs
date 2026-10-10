@@ -73,14 +73,14 @@ public partial class TwitchChannelPollEndEvent : RefCounted, ITwitcherSharpEvent
         if(data == null) return null;
         var instance = new TwitchChannelPollEndEvent
         {
-            Id = data.Read("id", static v => v.AsString()),
-            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
-            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
-            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
-            Title = data.Read("title", static v => v.AsString()),
-            Status = data.Read("status", static v => v.AsString()),
-            StartedAt = data.Read("started_at", static v => v.AsString()),
-            EndedAt = data.Read("ended_at", static v => v.AsString()),
+            Id = data.ReadAsString("id"),
+            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+            Title = data.ReadAsString("title"),
+            Status = data.ReadAsString("status"),
+            StartedAt = data.ReadAsString("started_at"),
+            EndedAt = data.ReadAsString("ended_at"),
         };
         
         instance._data = Variant.CreateFrom(data);

@@ -33,9 +33,9 @@ public partial class TwitchEmotes : RefCounted, ITwitcherSharpEventSub<TwitchEmo
         if(data == null) return null;
         var instance = new TwitchEmotes
         {
-            Begin = data.Read("begin", static v => v.AsInt32()),
-            End = data.Read("end", static v => v.AsInt32()),
-            Id = data.Read("id", static v => v.AsString()),
+            Begin = data.ReadAsInt32("begin"),
+            End = data.ReadAsInt32("end"),
+            Id = data.ReadAsString("id"),
         };
         
         instance._data = Variant.CreateFrom(data);

@@ -19,9 +19,9 @@ public partial class TwitchSendExtensionChatMessageBody : RefCounted, ITwitcherS
         if(data == null) return null;
         var instance = new TwitchSendExtensionChatMessageBody
         {
-            Text = data.Read("text", static v => v.AsString()),
-            ExtensionId = data.Read("extension_id", static v => v.AsString()),
-            ExtensionVersion = data.Read("extension_version", static v => v.AsString()),
+            Text = data.ReadAsString("text"),
+            ExtensionId = data.ReadAsString("extension_id"),
+            ExtensionVersion = data.ReadAsString("extension_version"),
         };
         
         instance._data = Variant.CreateFrom(data);

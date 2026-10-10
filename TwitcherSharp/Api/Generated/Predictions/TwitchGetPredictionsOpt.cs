@@ -23,9 +23,9 @@ public partial class TwitchGetPredictionsOpt : RefCounted, ITwitcherSharp<Twitch
         if(data == null) return null;
         var instance = new TwitchGetPredictionsOpt
         {
-            Id = data.Read("id", static v => v.AsStringArray()),
-            First = data.Read("first", static v => v.AsString()),
-            After = data.Read("after", static v => v.AsString()),
+            Id = data.ReadAsStringArray("id"),
+            First = data.ReadAsString("first"),
+            After = data.ReadAsString("after"),
         };
         
         instance._data = Variant.CreateFrom(data);

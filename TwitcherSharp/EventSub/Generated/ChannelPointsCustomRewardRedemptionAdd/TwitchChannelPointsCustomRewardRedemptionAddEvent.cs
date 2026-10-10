@@ -73,16 +73,16 @@ public partial class TwitchChannelPointsCustomRewardRedemptionAddEvent : RefCoun
         if(data == null) return null;
         var instance = new TwitchChannelPointsCustomRewardRedemptionAddEvent
         {
-            Id = data.Read("id", static v => v.AsString()),
-            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
-            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
-            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
-            UserId = data.Read("user_id", static v => v.AsString()),
-            UserLogin = data.Read("user_login", static v => v.AsString()),
-            UserName = data.Read("user_name", static v => v.AsString()),
-            UserInput = data.Read("user_input", static v => v.AsString()),
-            Status = data.Read("status", static v => v.AsString()),
-            RedeemedAt = data.Read("redeemed_at", static v => v.AsString()),
+            Id = data.ReadAsString("id"),
+            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+            UserId = data.ReadAsString("user_id"),
+            UserLogin = data.ReadAsString("user_login"),
+            UserName = data.ReadAsString("user_name"),
+            UserInput = data.ReadAsString("user_input"),
+            Status = data.ReadAsString("status"),
+            RedeemedAt = data.ReadAsString("redeemed_at"),
         };
         
         instance._data = Variant.CreateFrom(data);

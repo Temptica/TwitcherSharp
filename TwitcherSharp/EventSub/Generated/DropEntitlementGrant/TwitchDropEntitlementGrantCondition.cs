@@ -33,10 +33,10 @@ public partial class TwitchDropEntitlementGrantCondition(string organizationId) 
     public static TwitchDropEntitlementGrantCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchDropEntitlementGrantCondition(data.Read("organization_id", static v => v.AsString()))
+        var instance = new TwitchDropEntitlementGrantCondition(data.ReadAsString("organization_id"))
         {
-            CategoryId = data.Read("category_id", static v => v.AsString()),
-            CampaignId = data.Read("campaign_id", static v => v.AsString()),
+            CategoryId = data.ReadAsString("category_id"),
+            CampaignId = data.ReadAsString("campaign_id"),
         };
         
         instance._data = Variant.CreateFrom(data);

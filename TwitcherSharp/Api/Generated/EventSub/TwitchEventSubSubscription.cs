@@ -24,12 +24,12 @@ public partial class TwitchEventSubSubscription<T> : RefCounted, ITwitcherSharp<
         if(data == null) return null;
         var instance = new TwitchEventSubSubscription<T>
         {
-            Id = data.Read("id", static v => v.AsString()),
-            Status = data.Read("status", static v => v.AsString()),
-            Type = data.Read("type", static v => v.AsString()),
-            Version = data.Read("version", static v => v.AsString()),
-            CreatedAt = data.Read("created_at", static v => v.AsString()),
-            Cost = data.Read("cost", static v => v.AsInt32()),
+            Id = data.ReadAsString("id"),
+            Status = data.ReadAsString("status"),
+            Type = data.ReadAsString("type"),
+            Version = data.ReadAsString("version"),
+            CreatedAt = data.ReadAsString("created_at"),
+            Cost = data.ReadAsInt32("cost"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -77,11 +77,11 @@ public partial class TwitchEventSubSubscription<T> : RefCounted, ITwitcherSharp<
             if(data == null) return null;
             var instance = new TwitchTransport
             {
-                Method = data.Read("method", static v => v.AsString()),
-                Callback = data.Read("callback", static v => v.AsString()),
-                SessionId = data.Read("session_id", static v => v.AsString()),
-                ConnectedAt = data.Read("connected_at", static v => v.AsString()),
-                DisconnectedAt = data.Read("disconnected_at", static v => v.AsString()),
+                Method = data.ReadAsString("method"),
+                Callback = data.ReadAsString("callback"),
+                SessionId = data.ReadAsString("session_id"),
+                ConnectedAt = data.ReadAsString("connected_at"),
+                DisconnectedAt = data.ReadAsString("disconnected_at"),
             };
             
             instance._data = Variant.CreateFrom(data);

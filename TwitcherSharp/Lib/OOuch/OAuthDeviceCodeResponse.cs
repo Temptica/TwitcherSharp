@@ -16,11 +16,11 @@ public partial class OAuthDeviceCodeResponse : RefCounted, ITwitcherSharp<OAuthD
     {
         if (data == null) return null;
         var response = new OAuthDeviceCodeResponse();
-        response.DeviceCode = data.Read("device_code", static v => v.AsString());
-        response.ExpiresIn = data.Read("expires_in", static v => v.AsInt32());
-        response.Interval = data.Read("interval", static v => v.AsInt32());
-        response.UserCode = data.Read("user_code", static v => v.AsString());
-        response.VerificationUri = data.Read("verification_uri", static v => v.AsString());
+        response.DeviceCode = data.ReadAsString("device_code");
+        response.ExpiresIn = data.ReadAsInt32("expires_in");
+        response.Interval = data.ReadAsInt32("interval");
+        response.UserCode = data.ReadAsString("user_code");
+        response.VerificationUri = data.ReadAsString("verification_uri");
         return response;
     }
 

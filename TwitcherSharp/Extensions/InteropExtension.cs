@@ -41,6 +41,27 @@ internal static class InteropExtension
             return read(value);
         }
 
+        // Read for the common types, named after the Variant conversions they use.
+
+        /// <inheritdoc cref="Read{T}(GodotObject, string, Func{Variant, T})"/>
+        internal string ReadAsString(string propertyName) => obj.Read(propertyName, static v => v.AsString());
+
+        /// <inheritdoc cref="Read{T}(GodotObject, string, Func{Variant, T})"/>
+        internal bool ReadAsBool(string propertyName) => obj.Read(propertyName, static v => v.AsBool());
+
+        /// <inheritdoc cref="Read{T}(GodotObject, string, Func{Variant, T})"/>
+        internal int ReadAsInt32(string propertyName) => obj.Read(propertyName, static v => v.AsInt32());
+
+        /// <inheritdoc cref="Read{T}(GodotObject, string, Func{Variant, T})"/>
+        internal long ReadAsInt64(string propertyName) => obj.Read(propertyName, static v => v.AsInt64());
+
+        /// <inheritdoc cref="Read{T}(GodotObject, string, Func{Variant, T})"/>
+        internal double ReadAsDouble(string propertyName) => obj.Read(propertyName, static v => v.AsDouble());
+
+        /// <inheritdoc cref="Read{T}(GodotObject, string, Func{Variant, T})"/>
+        internal string[] ReadAsStringArray(string propertyName) =>
+            obj.Read(propertyName, static v => v.AsStringArray());
+
         /// <summary>
         /// Sets a property and disposes the Variant afterwards, also one created by an implicit conversion.
         /// </summary>
@@ -109,6 +130,27 @@ internal static class InteropExtension
         /// <inheritdoc cref="Read{T}(GodotObject, string, Func{Variant, T})"/>
         internal T? Read<T>(string propertyName, Func<Variant, T> read) =>
             data.With(obj => obj.Read(propertyName, read));
+
+        // Read for the common types; when the Variant holds no object they return the type's default.
+
+        /// <inheritdoc cref="Read{T}(GodotObject, string, Func{Variant, T})"/>
+        internal string? ReadAsString(string propertyName) => data.Read(propertyName, static v => v.AsString());
+
+        /// <inheritdoc cref="Read{T}(GodotObject, string, Func{Variant, T})"/>
+        internal bool ReadAsBool(string propertyName) => data.Read(propertyName, static v => v.AsBool());
+
+        /// <inheritdoc cref="Read{T}(GodotObject, string, Func{Variant, T})"/>
+        internal int ReadAsInt32(string propertyName) => data.Read(propertyName, static v => v.AsInt32());
+
+        /// <inheritdoc cref="Read{T}(GodotObject, string, Func{Variant, T})"/>
+        internal long ReadAsInt64(string propertyName) => data.Read(propertyName, static v => v.AsInt64());
+
+        /// <inheritdoc cref="Read{T}(GodotObject, string, Func{Variant, T})"/>
+        internal double ReadAsDouble(string propertyName) => data.Read(propertyName, static v => v.AsDouble());
+
+        /// <inheritdoc cref="Read{T}(GodotObject, string, Func{Variant, T})"/>
+        internal string[]? ReadAsStringArray(string propertyName) =>
+            data.Read(propertyName, static v => v.AsStringArray());
 
         /// <summary>
         /// Maps the twitcher object a property of the held object holds.

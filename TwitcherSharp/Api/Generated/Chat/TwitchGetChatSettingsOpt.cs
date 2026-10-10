@@ -21,7 +21,7 @@ public partial class TwitchGetChatSettingsOpt : RefCounted, ITwitcherSharp<Twitc
         if(data == null) return null;
         var instance = new TwitchGetChatSettingsOpt
         {
-            ModeratorId = data.Read("moderator_id", static v => v.AsString()),
+            ModeratorId = data.ReadAsString("moderator_id"),
         };
         
         instance._data = Variant.CreateFrom(data);

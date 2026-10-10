@@ -19,9 +19,9 @@ public partial class TwitchEndPollBody : RefCounted, ITwitcherSharp<TwitchEndPol
         if(data == null) return null;
         var instance = new TwitchEndPollBody
         {
-            BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
-            Id = data.Read("id", static v => v.AsString()),
-            Status = data.Read("status", static v => v.AsString()),
+            BroadcasterId = data.ReadAsString("broadcaster_id"),
+            Id = data.ReadAsString("id"),
+            Status = data.ReadAsString("status"),
         };
         
         instance._data = Variant.CreateFrom(data);

@@ -23,9 +23,9 @@ public partial class TwitchGetAllStreamTagsOpt : RefCounted, ITwitcherSharp<Twit
         if(data == null) return null;
         var instance = new TwitchGetAllStreamTagsOpt
         {
-            TagId = data.Read("tag_id", static v => v.AsStringArray()),
-            First = data.Read("first", static v => v.AsInt32()),
-            After = data.Read("after", static v => v.AsString()),
+            TagId = data.ReadAsStringArray("tag_id"),
+            First = data.ReadAsInt32("first"),
+            After = data.ReadAsString("after"),
         };
         
         instance._data = Variant.CreateFrom(data);

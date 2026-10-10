@@ -55,7 +55,7 @@ public partial class TwitchGetUserBlockListResponse : RefCounted, ITwitcherSharp
             if(data == null) return null;
             var instance = new ResponsePagination
             {
-                Cursor = data.Read("cursor", static v => v.AsString()),
+                Cursor = data.ReadAsString("cursor"),
             };
             
             instance._data = Variant.CreateFrom(data);

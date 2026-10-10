@@ -83,19 +83,19 @@ public partial class TwitchShoutoutCreate : RefCounted, ITwitcherSharpEventSub<T
         if(data == null) return null;
         var instance = new TwitchShoutoutCreate
         {
-            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
-            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
-            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
-            ToBroadcasterUserId = data.Read("to_broadcaster_user_id", static v => v.AsString()),
-            ToBroadcasterUserLogin = data.Read("to_broadcaster_user_login", static v => v.AsString()),
-            ToBroadcasterUserName = data.Read("to_broadcaster_user_name", static v => v.AsString()),
-            ModeratorUserId = data.Read("moderator_user_id", static v => v.AsString()),
-            ModeratorUserLogin = data.Read("moderator_user_login", static v => v.AsString()),
-            ModeratorUserName = data.Read("moderator_user_name", static v => v.AsString()),
-            ViewerCount = data.Read("viewer_count", static v => v.AsInt32()),
-            StartedAt = data.Read("started_at", static v => v.AsString()),
-            CooldownEndsAt = data.Read("cooldown_ends_at", static v => v.AsString()),
-            TargetCooldownEndsAt = data.Read("target_cooldown_ends_at", static v => v.AsString()),
+            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+            ToBroadcasterUserId = data.ReadAsString("to_broadcaster_user_id"),
+            ToBroadcasterUserLogin = data.ReadAsString("to_broadcaster_user_login"),
+            ToBroadcasterUserName = data.ReadAsString("to_broadcaster_user_name"),
+            ModeratorUserId = data.ReadAsString("moderator_user_id"),
+            ModeratorUserLogin = data.ReadAsString("moderator_user_login"),
+            ModeratorUserName = data.ReadAsString("moderator_user_name"),
+            ViewerCount = data.ReadAsInt32("viewer_count"),
+            StartedAt = data.ReadAsString("started_at"),
+            CooldownEndsAt = data.ReadAsString("cooldown_ends_at"),
+            TargetCooldownEndsAt = data.ReadAsString("target_cooldown_ends_at"),
         };
         
         instance._data = Variant.CreateFrom(data);

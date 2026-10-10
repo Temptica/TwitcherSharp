@@ -93,20 +93,20 @@ public partial class TwitchAutomodMessageUpdateEvent : RefCounted, ITwitcherShar
         if(data == null) return null;
         var instance = new TwitchAutomodMessageUpdateEvent
         {
-            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
-            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
-            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
-            UserId = data.Read("user_id", static v => v.AsString()),
-            UserLogin = data.Read("user_login", static v => v.AsString()),
-            UserName = data.Read("user_name", static v => v.AsString()),
-            ModeratorUserId = data.Read("moderator_user_id", static v => v.AsString()),
-            ModeratorUserName = data.Read("moderator_user_name", static v => v.AsString()),
-            ModeratorUserLogin = data.Read("moderator_user_login", static v => v.AsString()),
-            MessageId = data.Read("message_id", static v => v.AsString()),
-            Category = data.Read("category", static v => v.AsString()),
-            Level = data.Read("level", static v => v.AsInt32()),
-            Status = data.Read("status", static v => v.AsString()),
-            HeldAt = data.Read("held_at", static v => v.AsString()),
+            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+            UserId = data.ReadAsString("user_id"),
+            UserLogin = data.ReadAsString("user_login"),
+            UserName = data.ReadAsString("user_name"),
+            ModeratorUserId = data.ReadAsString("moderator_user_id"),
+            ModeratorUserName = data.ReadAsString("moderator_user_name"),
+            ModeratorUserLogin = data.ReadAsString("moderator_user_login"),
+            MessageId = data.ReadAsString("message_id"),
+            Category = data.ReadAsString("category"),
+            Level = data.ReadAsInt32("level"),
+            Status = data.ReadAsString("status"),
+            HeldAt = data.ReadAsString("held_at"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -164,7 +164,7 @@ public partial class TwitchAutomodMessageUpdateEvent : RefCounted, ITwitcherShar
             if(data == null) return null;
             var instance = new TwitchMessage
             {
-                Text = data.Read("text", static v => v.AsString()),
+                Text = data.ReadAsString("text"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -214,7 +214,7 @@ public partial class TwitchAutomodMessageUpdateEvent : RefCounted, ITwitcherShar
                 if(data == null) return null;
                 var instance = new TwitchFragments
                 {
-                    Text = data.Read("text", static v => v.AsString()),
+                    Text = data.ReadAsString("text"),
                 };
                 
                 instance._data = Variant.CreateFrom(data);
@@ -260,8 +260,8 @@ public partial class TwitchAutomodMessageUpdateEvent : RefCounted, ITwitcherShar
                     if(data == null) return null;
                     var instance = new TwitchEmote
                     {
-                        Id = data.Read("id", static v => v.AsString()),
-                        EmoteSetId = data.Read("emote_set_id", static v => v.AsString()),
+                        Id = data.ReadAsString("id"),
+                        EmoteSetId = data.ReadAsString("emote_set_id"),
                     };
                     
                     instance._data = Variant.CreateFrom(data);
@@ -311,9 +311,9 @@ public partial class TwitchAutomodMessageUpdateEvent : RefCounted, ITwitcherShar
                     if(data == null) return null;
                     var instance = new TwitchCheermote
                     {
-                        Prefix = data.Read("prefix", static v => v.AsString()),
-                        Bits = data.Read("bits", static v => v.AsInt32()),
-                        Tier = data.Read("tier", static v => v.AsInt32()),
+                        Prefix = data.ReadAsString("prefix"),
+                        Bits = data.ReadAsInt32("bits"),
+                        Tier = data.ReadAsInt32("tier"),
                     };
                     
                     instance._data = Variant.CreateFrom(data);

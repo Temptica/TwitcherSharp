@@ -173,16 +173,16 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
         if(data == null) return null;
         var instance = new TwitchChannelModerateEventV2
         {
-            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
-            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
-            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
-            SourceBroadcasterUserId = data.Read("source_broadcaster_user_id", static v => v.AsString()),
-            SourceBroadcasterUserLogin = data.Read("source_broadcaster_user_login", static v => v.AsString()),
-            SourceBroadcasterUserName = data.Read("source_broadcaster_user_name", static v => v.AsString()),
-            ModeratorUserId = data.Read("moderator_user_id", static v => v.AsString()),
-            ModeratorUserLogin = data.Read("moderator_user_login", static v => v.AsString()),
-            ModeratorUserName = data.Read("moderator_user_name", static v => v.AsString()),
-            Action = data.Read("action", static v => v.AsString()),
+            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+            SourceBroadcasterUserId = data.ReadAsString("source_broadcaster_user_id"),
+            SourceBroadcasterUserLogin = data.ReadAsString("source_broadcaster_user_login"),
+            SourceBroadcasterUserName = data.ReadAsString("source_broadcaster_user_name"),
+            ModeratorUserId = data.ReadAsString("moderator_user_id"),
+            ModeratorUserLogin = data.ReadAsString("moderator_user_login"),
+            ModeratorUserName = data.ReadAsString("moderator_user_name"),
+            Action = data.ReadAsString("action"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -251,7 +251,7 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
             if(data == null) return null;
             var instance = new TwitchFollowersV2
             {
-                FollowDurationMinutes = data.Read("follow_duration_minutes", static v => v.AsInt32()),
+                FollowDurationMinutes = data.ReadAsInt32("follow_duration_minutes"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -290,7 +290,7 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
             if(data == null) return null;
             var instance = new TwitchSlowV2
             {
-                WaitTimeSeconds = data.Read("wait_time_seconds", static v => v.AsInt32()),
+                WaitTimeSeconds = data.ReadAsInt32("wait_time_seconds"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -339,9 +339,9 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
             if(data == null) return null;
             var instance = new TwitchVipV2
             {
-                UserId = data.Read("user_id", static v => v.AsString()),
-                UserLogin = data.Read("user_login", static v => v.AsString()),
-                UserName = data.Read("user_name", static v => v.AsString()),
+                UserId = data.ReadAsString("user_id"),
+                UserLogin = data.ReadAsString("user_login"),
+                UserName = data.ReadAsString("user_name"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -392,9 +392,9 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
             if(data == null) return null;
             var instance = new TwitchUnvipV2
             {
-                UserId = data.Read("user_id", static v => v.AsString()),
-                UserLogin = data.Read("user_login", static v => v.AsString()),
-                UserName = data.Read("user_name", static v => v.AsString()),
+                UserId = data.ReadAsString("user_id"),
+                UserLogin = data.ReadAsString("user_login"),
+                UserName = data.ReadAsString("user_name"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -445,9 +445,9 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
             if(data == null) return null;
             var instance = new TwitchModV2
             {
-                UserId = data.Read("user_id", static v => v.AsString()),
-                UserLogin = data.Read("user_login", static v => v.AsString()),
-                UserName = data.Read("user_name", static v => v.AsString()),
+                UserId = data.ReadAsString("user_id"),
+                UserLogin = data.ReadAsString("user_login"),
+                UserName = data.ReadAsString("user_name"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -498,9 +498,9 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
             if(data == null) return null;
             var instance = new TwitchUnmodV2
             {
-                UserId = data.Read("user_id", static v => v.AsString()),
-                UserLogin = data.Read("user_login", static v => v.AsString()),
-                UserName = data.Read("user_name", static v => v.AsString()),
+                UserId = data.ReadAsString("user_id"),
+                UserLogin = data.ReadAsString("user_login"),
+                UserName = data.ReadAsString("user_name"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -556,10 +556,10 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
             if(data == null) return null;
             var instance = new TwitchBanV2
             {
-                UserId = data.Read("user_id", static v => v.AsString()),
-                UserLogin = data.Read("user_login", static v => v.AsString()),
-                UserName = data.Read("user_name", static v => v.AsString()),
-                Reason = data.Read("reason", static v => v.AsString()),
+                UserId = data.ReadAsString("user_id"),
+                UserLogin = data.ReadAsString("user_login"),
+                UserName = data.ReadAsString("user_name"),
+                Reason = data.ReadAsString("reason"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -611,9 +611,9 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
             if(data == null) return null;
             var instance = new TwitchUnbanV2
             {
-                UserId = data.Read("user_id", static v => v.AsString()),
-                UserLogin = data.Read("user_login", static v => v.AsString()),
-                UserName = data.Read("user_name", static v => v.AsString()),
+                UserId = data.ReadAsString("user_id"),
+                UserLogin = data.ReadAsString("user_login"),
+                UserName = data.ReadAsString("user_name"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -674,11 +674,11 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
             if(data == null) return null;
             var instance = new TwitchTimeoutV2
             {
-                UserId = data.Read("user_id", static v => v.AsString()),
-                UserLogin = data.Read("user_login", static v => v.AsString()),
-                UserName = data.Read("user_name", static v => v.AsString()),
-                Reason = data.Read("reason", static v => v.AsString()),
-                ExpiresAt = data.Read("expires_at", static v => v.AsString()),
+                UserId = data.ReadAsString("user_id"),
+                UserLogin = data.ReadAsString("user_login"),
+                UserName = data.ReadAsString("user_name"),
+                Reason = data.ReadAsString("reason"),
+                ExpiresAt = data.ReadAsString("expires_at"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -731,9 +731,9 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
             if(data == null) return null;
             var instance = new TwitchUntimeoutV2
             {
-                UserId = data.Read("user_id", static v => v.AsString()),
-                UserLogin = data.Read("user_login", static v => v.AsString()),
-                UserName = data.Read("user_name", static v => v.AsString()),
+                UserId = data.ReadAsString("user_id"),
+                UserLogin = data.ReadAsString("user_login"),
+                UserName = data.ReadAsString("user_name"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -789,10 +789,10 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
             if(data == null) return null;
             var instance = new TwitchRaidV2
             {
-                UserId = data.Read("user_id", static v => v.AsString()),
-                UserLogin = data.Read("user_login", static v => v.AsString()),
-                UserName = data.Read("user_name", static v => v.AsString()),
-                ViewerCount = data.Read("viewer_count", static v => v.AsInt32()),
+                UserId = data.ReadAsString("user_id"),
+                UserLogin = data.ReadAsString("user_login"),
+                UserName = data.ReadAsString("user_name"),
+                ViewerCount = data.ReadAsInt32("viewer_count"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -844,9 +844,9 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
             if(data == null) return null;
             var instance = new TwitchUnraidV2
             {
-                UserId = data.Read("user_id", static v => v.AsString()),
-                UserLogin = data.Read("user_login", static v => v.AsString()),
-                UserName = data.Read("user_name", static v => v.AsString()),
+                UserId = data.ReadAsString("user_id"),
+                UserLogin = data.ReadAsString("user_login"),
+                UserName = data.ReadAsString("user_name"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -907,11 +907,11 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
             if(data == null) return null;
             var instance = new TwitchDeleteV2
             {
-                UserId = data.Read("user_id", static v => v.AsString()),
-                UserLogin = data.Read("user_login", static v => v.AsString()),
-                UserName = data.Read("user_name", static v => v.AsString()),
-                MessageId = data.Read("message_id", static v => v.AsString()),
-                MessageBody = data.Read("message_body", static v => v.AsString()),
+                UserId = data.ReadAsString("user_id"),
+                UserLogin = data.ReadAsString("user_login"),
+                UserName = data.ReadAsString("user_name"),
+                MessageId = data.ReadAsString("message_id"),
+                MessageBody = data.ReadAsString("message_body"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -969,9 +969,9 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
             if(data == null) return null;
             var instance = new TwitchAutomodTermsV2
             {
-                Action = data.Read("action", static v => v.AsString()),
-                List = data.Read("list", static v => v.AsString()),
-                FromAutomod = data.Read("from_automod", static v => v.AsBool()),
+                Action = data.ReadAsString("action"),
+                List = data.ReadAsString("list"),
+                FromAutomod = data.ReadAsBool("from_automod"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -1033,11 +1033,11 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
             if(data == null) return null;
             var instance = new TwitchUnbanRequestV2
             {
-                IsApproved = data.Read("is_approved", static v => v.AsBool()),
-                UserId = data.Read("user_id", static v => v.AsString()),
-                UserLogin = data.Read("user_login", static v => v.AsString()),
-                UserName = data.Read("user_name", static v => v.AsString()),
-                ModeratorMessage = data.Read("moderator_message", static v => v.AsString()),
+                IsApproved = data.ReadAsBool("is_approved"),
+                UserId = data.ReadAsString("user_id"),
+                UserLogin = data.ReadAsString("user_login"),
+                UserName = data.ReadAsString("user_name"),
+                ModeratorMessage = data.ReadAsString("moderator_message"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -1100,11 +1100,11 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
             if(data == null) return null;
             var instance = new TwitchWarnV2
             {
-                UserId = data.Read("user_id", static v => v.AsString()),
-                UserLogin = data.Read("user_login", static v => v.AsString()),
-                UserName = data.Read("user_name", static v => v.AsString()),
-                Reason = data.Read("reason", static v => v.AsString()),
-                ChatRulesCited = data.Read("chat_rules_cited", static v => v.AsStringArray()),
+                UserId = data.ReadAsString("user_id"),
+                UserLogin = data.ReadAsString("user_login"),
+                UserName = data.ReadAsString("user_name"),
+                Reason = data.ReadAsString("reason"),
+                ChatRulesCited = data.ReadAsStringArray("chat_rules_cited"),
             };
             
             instance._data = Variant.CreateFrom(data);

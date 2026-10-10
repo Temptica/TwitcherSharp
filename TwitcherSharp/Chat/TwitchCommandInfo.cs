@@ -62,11 +62,11 @@ public partial class TwitchCommandInfo : Resource, ITwitcherSharp<TwitchCommandI
 
 		var info = new TwitchCommandInfo
 		{
-			ChannelName = data.Read("channel_name", static v => v.AsString()),
-			Username = data.Read("username", static v => v.AsString()),
-			UserId = data.Read("user_id", static v => v.AsString()),
-			Arguments = data.Read("arguments", static v => v.AsStringArray()).ToList(),
-			TextMessage = data.Read("text_message", static v => v.AsString()),
+			ChannelName = data.ReadAsString("channel_name"),
+			Username = data.ReadAsString("username"),
+			UserId = data.ReadAsString("user_id"),
+			Arguments = data.ReadAsStringArray("arguments").ToList(),
+			TextMessage = data.ReadAsString("text_message"),
 			_data = Variant.CreateFrom(data),
 		};
 

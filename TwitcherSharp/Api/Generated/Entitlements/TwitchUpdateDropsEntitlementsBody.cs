@@ -18,8 +18,8 @@ public partial class TwitchUpdateDropsEntitlementsBody : RefCounted, ITwitcherSh
         if(data == null) return null;
         var instance = new TwitchUpdateDropsEntitlementsBody
         {
-            EntitlementIds = data.Read("entitlement_ids", static v => v.AsStringArray()),
-            FulfillmentStatus = data.Read("fulfillment_status", static v => v.AsString()),
+            EntitlementIds = data.ReadAsStringArray("entitlement_ids"),
+            FulfillmentStatus = data.ReadAsString("fulfillment_status"),
         };
         
         instance._data = Variant.CreateFrom(data);

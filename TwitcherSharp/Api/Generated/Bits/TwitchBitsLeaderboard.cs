@@ -21,11 +21,11 @@ public partial class TwitchBitsLeaderboard : RefCounted, ITwitcherSharp<TwitchBi
         if(data == null) return null;
         var instance = new TwitchBitsLeaderboard
         {
-            UserId = data.Read("user_id", static v => v.AsString()),
-            UserLogin = data.Read("user_login", static v => v.AsString()),
-            UserName = data.Read("user_name", static v => v.AsString()),
-            Rank = data.Read("rank", static v => v.AsInt32()),
-            Score = data.Read("score", static v => v.AsInt32()),
+            UserId = data.ReadAsString("user_id"),
+            UserLogin = data.ReadAsString("user_login"),
+            UserName = data.ReadAsString("user_name"),
+            Rank = data.ReadAsInt32("rank"),
+            Score = data.ReadAsInt32("score"),
         };
         
         instance._data = Variant.CreateFrom(data);

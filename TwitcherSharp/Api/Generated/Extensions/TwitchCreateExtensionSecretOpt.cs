@@ -21,7 +21,7 @@ public partial class TwitchCreateExtensionSecretOpt : RefCounted, ITwitcherSharp
         if(data == null) return null;
         var instance = new TwitchCreateExtensionSecretOpt
         {
-            Delay = data.Read("delay", static v => v.AsInt32()),
+            Delay = data.ReadAsInt32("delay"),
         };
         
         instance._data = Variant.CreateFrom(data);

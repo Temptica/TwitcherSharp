@@ -63,15 +63,15 @@ public partial class TwitchChannelAdBreakBeginEvent : RefCounted, ITwitcherSharp
         if(data == null) return null;
         var instance = new TwitchChannelAdBreakBeginEvent
         {
-            DurationSeconds = data.Read("duration_seconds", static v => v.AsInt32()),
-            StartedAt = data.Read("started_at", static v => v.AsString()),
-            IsAutomatic = data.Read("is_automatic", static v => v.AsBool()),
-            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
-            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
-            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
-            RequesterUserId = data.Read("requester_user_id", static v => v.AsString()),
-            RequesterUserLogin = data.Read("requester_user_login", static v => v.AsString()),
-            RequesterUserName = data.Read("requester_user_name", static v => v.AsString()),
+            DurationSeconds = data.ReadAsInt32("duration_seconds"),
+            StartedAt = data.ReadAsString("started_at"),
+            IsAutomatic = data.ReadAsBool("is_automatic"),
+            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+            RequesterUserId = data.ReadAsString("requester_user_id"),
+            RequesterUserLogin = data.ReadAsString("requester_user_login"),
+            RequesterUserName = data.ReadAsString("requester_user_name"),
         };
         
         instance._data = Variant.CreateFrom(data);

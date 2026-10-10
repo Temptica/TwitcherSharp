@@ -52,8 +52,8 @@ public partial class TwitchCheckAutoModStatusBody : RefCounted, ITwitcherSharp<T
             if(data == null) return null;
             var instance = new TwitchBodyData
             {
-                MsgId = data.Read("msg_id", static v => v.AsString()),
-                MsgText = data.Read("msg_text", static v => v.AsString()),
+                MsgId = data.ReadAsString("msg_id"),
+                MsgText = data.ReadAsString("msg_text"),
             };
             
             instance._data = Variant.CreateFrom(data);

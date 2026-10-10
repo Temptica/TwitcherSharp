@@ -22,11 +22,11 @@ public partial class TwitchUpdateExtensionBitsProductBody : RefCounted, ITwitche
         if(data == null) return null;
         var instance = new TwitchUpdateExtensionBitsProductBody
         {
-            Sku = data.Read("sku", static v => v.AsString()),
-            DisplayName = data.Read("display_name", static v => v.AsString()),
-            InDevelopment = data.Read("in_development", static v => v.AsBool()),
-            Expiration = data.Read("expiration", static v => v.AsString()),
-            IsBroadcast = data.Read("is_broadcast", static v => v.AsBool()),
+            Sku = data.ReadAsString("sku"),
+            DisplayName = data.ReadAsString("display_name"),
+            InDevelopment = data.ReadAsBool("in_development"),
+            Expiration = data.ReadAsString("expiration"),
+            IsBroadcast = data.ReadAsBool("is_broadcast"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -69,8 +69,8 @@ public partial class TwitchUpdateExtensionBitsProductBody : RefCounted, ITwitche
             if(data == null) return null;
             var instance = new TwitchBodyCost
             {
-                Amount = data.Read("amount", static v => v.AsInt32()),
-                Type = data.Read("type", static v => v.AsString()),
+                Amount = data.ReadAsInt32("amount"),
+                Type = data.ReadAsString("type"),
             };
             
             instance._data = Variant.CreateFrom(data);

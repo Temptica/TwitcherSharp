@@ -53,13 +53,13 @@ public partial class TwitchChannelRaidEvent : RefCounted, ITwitcherSharpEventSub
         if(data == null) return null;
         var instance = new TwitchChannelRaidEvent
         {
-            FromBroadcasterUserId = data.Read("from_broadcaster_user_id", static v => v.AsString()),
-            FromBroadcasterUserLogin = data.Read("from_broadcaster_user_login", static v => v.AsString()),
-            FromBroadcasterUserName = data.Read("from_broadcaster_user_name", static v => v.AsString()),
-            ToBroadcasterUserId = data.Read("to_broadcaster_user_id", static v => v.AsString()),
-            ToBroadcasterUserLogin = data.Read("to_broadcaster_user_login", static v => v.AsString()),
-            ToBroadcasterUserName = data.Read("to_broadcaster_user_name", static v => v.AsString()),
-            Viewers = data.Read("viewers", static v => v.AsInt32()),
+            FromBroadcasterUserId = data.ReadAsString("from_broadcaster_user_id"),
+            FromBroadcasterUserLogin = data.ReadAsString("from_broadcaster_user_login"),
+            FromBroadcasterUserName = data.ReadAsString("from_broadcaster_user_name"),
+            ToBroadcasterUserId = data.ReadAsString("to_broadcaster_user_id"),
+            ToBroadcasterUserLogin = data.ReadAsString("to_broadcaster_user_login"),
+            ToBroadcasterUserName = data.ReadAsString("to_broadcaster_user_name"),
+            Viewers = data.ReadAsInt32("viewers"),
         };
         
         instance._data = Variant.CreateFrom(data);

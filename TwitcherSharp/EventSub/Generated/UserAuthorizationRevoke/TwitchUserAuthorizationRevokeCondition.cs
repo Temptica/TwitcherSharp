@@ -23,7 +23,7 @@ public partial class TwitchUserAuthorizationRevokeCondition(string clientId) : R
     public static TwitchUserAuthorizationRevokeCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchUserAuthorizationRevokeCondition(data.Read("client_id", static v => v.AsString()));
+        var instance = new TwitchUserAuthorizationRevokeCondition(data.ReadAsString("client_id"));
         
         instance._data = Variant.CreateFrom(data);
         return instance;

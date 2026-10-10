@@ -26,12 +26,12 @@ public partial class TwitchGetExtensionAnalyticsOpt : RefCounted, ITwitcherSharp
         if(data == null) return null;
         var instance = new TwitchGetExtensionAnalyticsOpt
         {
-            ExtensionId = data.Read("extension_id", static v => v.AsString()),
-            Type = data.Read("type", static v => v.AsString()),
-            StartedAt = data.Read("started_at", static v => v.AsString()),
-            EndedAt = data.Read("ended_at", static v => v.AsString()),
-            First = data.Read("first", static v => v.AsInt32()),
-            After = data.Read("after", static v => v.AsString()),
+            ExtensionId = data.ReadAsString("extension_id"),
+            Type = data.ReadAsString("type"),
+            StartedAt = data.ReadAsString("started_at"),
+            EndedAt = data.ReadAsString("ended_at"),
+            First = data.ReadAsInt32("first"),
+            After = data.ReadAsString("after"),
         };
         
         instance._data = Variant.CreateFrom(data);

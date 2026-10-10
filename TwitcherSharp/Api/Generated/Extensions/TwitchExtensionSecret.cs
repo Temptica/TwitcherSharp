@@ -18,7 +18,7 @@ public partial class TwitchExtensionSecret : RefCounted, ITwitcherSharp<TwitchEx
         if(data == null) return null;
         var instance = new TwitchExtensionSecret
         {
-            FormatVersion = data.Read("format_version", static v => v.AsInt32()),
+            FormatVersion = data.ReadAsInt32("format_version"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -58,9 +58,9 @@ public partial class TwitchExtensionSecret : RefCounted, ITwitcherSharp<TwitchEx
             if(data == null) return null;
             var instance = new TwitchSecrets
             {
-                Content = data.Read("content", static v => v.AsString()),
-                ActiveAt = data.Read("active_at", static v => v.AsString()),
-                ExpiresAt = data.Read("expires_at", static v => v.AsString()),
+                Content = data.ReadAsString("content"),
+                ActiveAt = data.ReadAsString("active_at"),
+                ExpiresAt = data.ReadAsString("expires_at"),
             };
             
             instance._data = Variant.CreateFrom(data);

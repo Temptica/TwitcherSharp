@@ -48,12 +48,12 @@ public partial class TwitchChannelVIPAddEvent : RefCounted, ITwitcherSharpEventS
         if(data == null) return null;
         var instance = new TwitchChannelVIPAddEvent
         {
-            UserId = data.Read("user_id", static v => v.AsString()),
-            UserLogin = data.Read("user_login", static v => v.AsString()),
-            UserName = data.Read("user_name", static v => v.AsString()),
-            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
-            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
-            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
+            UserId = data.ReadAsString("user_id"),
+            UserLogin = data.ReadAsString("user_login"),
+            UserName = data.ReadAsString("user_name"),
+            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
         };
         
         instance._data = Variant.CreateFrom(data);

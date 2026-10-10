@@ -73,11 +73,11 @@ public partial class TwitchEmoteDefinition(string emoteId) : RefCounted, ITwitch
     public static TwitchEmoteDefinition? FromObject(GodotObject? data)
     {
         if (data == null) return null;
-        return new TwitchEmoteDefinition(data.Read("id", static v => v.AsString()))
+        return new TwitchEmoteDefinition(data.ReadAsString("id"))
         {
-            Scale = data.Read("scale", static v => v.AsInt32()),
-            Type = data.Read("type", static v => v.AsString()),
-            Theme = data.Read("theme", static v => v.AsString()),
+            Scale = data.ReadAsInt32("scale"),
+            Type = data.ReadAsString("type"),
+            Theme = data.ReadAsString("theme"),
         };
     }
 

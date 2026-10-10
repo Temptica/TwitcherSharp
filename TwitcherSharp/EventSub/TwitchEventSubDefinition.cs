@@ -35,7 +35,7 @@ public partial class TwitchEventSubDefinition() : RefCounted, ITwitcherSharp<Twi
             Version = version,
             Conditions = data.Read("conditions", static v => v.AsSystemArrayOfStringName().ToList()),
             Scopes = data.Read("scopes", static v => v.AsSystemArrayOfStringName().ToList()),
-            DocumentationLink = data.Read("documentation_link", static v => v.AsString()),
+            DocumentationLink = data.ReadAsString("documentation_link"),
         };
     }
 
@@ -57,7 +57,7 @@ public partial class TwitchEventSubDefinition() : RefCounted, ITwitcherSharp<Twi
     /// twitcher's number for this event (TwitchEventsubDefinition.Type), which differs from <see cref="Type"/>;
     /// -1 when twitcher does not know the event.
     /// </summary>
-    public int TwitcherType => FindTwitcherDefinition()?.Read("type", static v => v.AsInt32()) ?? -1;
+    public int TwitcherType => FindTwitcherDefinition()?.ReadAsInt32("type") ?? -1;
 
     private GodotObject? FindTwitcherDefinition()
     {

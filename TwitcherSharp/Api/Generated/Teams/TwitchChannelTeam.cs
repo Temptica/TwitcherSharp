@@ -28,18 +28,18 @@ public partial class TwitchChannelTeam : RefCounted, ITwitcherSharp<TwitchChanne
         if(data == null) return null;
         var instance = new TwitchChannelTeam
         {
-            BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
-            BroadcasterLogin = data.Read("broadcaster_login", static v => v.AsString()),
-            BroadcasterName = data.Read("broadcaster_name", static v => v.AsString()),
-            BackgroundImageUrl = data.Read("background_image_url", static v => v.AsString()),
-            Banner = data.Read("banner", static v => v.AsString()),
-            CreatedAt = data.Read("created_at", static v => v.AsString()),
-            UpdatedAt = data.Read("updated_at", static v => v.AsString()),
-            Info = data.Read("info", static v => v.AsString()),
-            ThumbnailUrl = data.Read("thumbnail_url", static v => v.AsString()),
-            TeamName = data.Read("team_name", static v => v.AsString()),
-            TeamDisplayName = data.Read("team_display_name", static v => v.AsString()),
-            Id = data.Read("id", static v => v.AsString()),
+            BroadcasterId = data.ReadAsString("broadcaster_id"),
+            BroadcasterLogin = data.ReadAsString("broadcaster_login"),
+            BroadcasterName = data.ReadAsString("broadcaster_name"),
+            BackgroundImageUrl = data.ReadAsString("background_image_url"),
+            Banner = data.ReadAsString("banner"),
+            CreatedAt = data.ReadAsString("created_at"),
+            UpdatedAt = data.ReadAsString("updated_at"),
+            Info = data.ReadAsString("info"),
+            ThumbnailUrl = data.ReadAsString("thumbnail_url"),
+            TeamName = data.ReadAsString("team_name"),
+            TeamDisplayName = data.ReadAsString("team_display_name"),
+            Id = data.ReadAsString("id"),
         };
         
         instance._data = Variant.CreateFrom(data);

@@ -102,28 +102,28 @@ public partial class TwitchReward : Resource, ITwitcherSharp<TwitchReward>
     /// </summary>
     internal void ReadFrom(GodotObject data)
     {
-        Id = data.Read("id", static v => v.AsString());
+        Id = data.ReadAsString("id");
         BroadcasterUser = data.Get<TwitchUser>("broadcaster_user")!;
-        Title = data.Read("title", static v => v.AsString());
-        Description = data.Read("description", static v => v.AsString());
-        Cost = data.Read("cost", static v => v.AsInt32());
+        Title = data.ReadAsString("title");
+        Description = data.ReadAsString("description");
+        Cost = data.ReadAsInt32("cost");
         Image1 = data.Read("image_1", static v => v.As<Image>());
         Image2 = data.Read("image_2", static v => v.As<Image>());
         Image4 = data.Read("image_4", static v => v.As<Image>());
         BackgroundColor = data.Read("background_color", static v => v.AsColor());
-        IsEnabled = data.Read("is_enabled", static v => v.AsBool());
-        IsUserInputRequired = data.Read("is_user_input_required", static v => v.AsBool());
-        IsPaused = data.Read("is_paused", static v => v.AsBool());
-        ShouldRedemptionsSkipRequestQueue = data.Read("should_redemptions_skip_request_queue", static v => v.AsBool());
-        IsMaxPerStreamEnabled = data.Read("is_max_per_stream_enabled", static v => v.AsBool());
-        MaxPerStream = data.Read("max_per_stream", static v => v.AsInt32());
-        IsMaxPerUserPerStreamEnabled = data.Read("is_max_per_user_per_stream_enabled", static v => v.AsBool());
-        MaxPerUserPerStream = data.Read("max_per_user_per_stream", static v => v.AsInt32());
-        IsGlobalCooldownEnabled = data.Read("is_global_cooldown_enabled", static v => v.AsBool());
-        GlobalCooldownSeconds = data.Read("global_cooldown_seconds", static v => v.AsInt32());
-        IsInStock = data.Read("is_in_stock", static v => v.AsBool());
-        RedemptionsRedeemedCurrentStream = data.Read("redemptions_redeemed_current_stream", static v => v.AsInt32());
-        CooldownExpiresAt = data.Read("cooldown_expires_at", static v => v.AsString());
+        IsEnabled = data.ReadAsBool("is_enabled");
+        IsUserInputRequired = data.ReadAsBool("is_user_input_required");
+        IsPaused = data.ReadAsBool("is_paused");
+        ShouldRedemptionsSkipRequestQueue = data.ReadAsBool("should_redemptions_skip_request_queue");
+        IsMaxPerStreamEnabled = data.ReadAsBool("is_max_per_stream_enabled");
+        MaxPerStream = data.ReadAsInt32("max_per_stream");
+        IsMaxPerUserPerStreamEnabled = data.ReadAsBool("is_max_per_user_per_stream_enabled");
+        MaxPerUserPerStream = data.ReadAsInt32("max_per_user_per_stream");
+        IsGlobalCooldownEnabled = data.ReadAsBool("is_global_cooldown_enabled");
+        GlobalCooldownSeconds = data.ReadAsInt32("global_cooldown_seconds");
+        IsInStock = data.ReadAsBool("is_in_stock");
+        RedemptionsRedeemedCurrentStream = data.ReadAsInt32("redemptions_redeemed_current_stream");
+        CooldownExpiresAt = data.ReadAsString("cooldown_expires_at");
     }
 
     public GodotObject ToGodotObject()

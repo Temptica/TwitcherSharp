@@ -21,7 +21,7 @@ public partial class TwitchGetCustomPowerUpOpt : RefCounted, ITwitcherSharp<Twit
         if(data == null) return null;
         var instance = new TwitchGetCustomPowerUpOpt
         {
-            Id = data.Read("id", static v => v.AsStringArray()),
+            Id = data.ReadAsStringArray("id"),
         };
         
         instance._data = Variant.CreateFrom(data);

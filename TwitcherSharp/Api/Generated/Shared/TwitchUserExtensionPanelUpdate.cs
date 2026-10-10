@@ -19,9 +19,9 @@ public partial class TwitchUserExtensionPanelUpdate : RefCounted, ITwitcherSharp
         if(data == null) return null;
         var instance = new TwitchUserExtensionPanelUpdate
         {
-            Active = data.Read("active", static v => v.AsBool()),
-            Id = data.Read("id", static v => v.AsString()),
-            Version = data.Read("version", static v => v.AsString()),
+            Active = data.ReadAsBool("active"),
+            Id = data.ReadAsString("id"),
+            Version = data.ReadAsString("version"),
         };
         
         instance._data = Variant.CreateFrom(data);

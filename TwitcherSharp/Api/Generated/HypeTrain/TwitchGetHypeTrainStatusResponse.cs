@@ -97,14 +97,14 @@ public partial class TwitchGetHypeTrainStatusResponse : RefCounted, ITwitcherSha
                 if(data == null) return null;
                 var instance = new TwitchResponseCurrent
                 {
-                    Id = data.Read("id", static v => v.AsString()),
-                    BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
-                    BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
-                    BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
-                    Level = data.Read("level", static v => v.AsInt32()),
-                    Total = data.Read("total", static v => v.AsInt32()),
-                    Progress = data.Read("progress", static v => v.AsInt32()),
-                    Goal = data.Read("goal", static v => v.AsInt32()),
+                    Id = data.ReadAsString("id"),
+                    BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+                    BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+                    BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+                    Level = data.ReadAsInt32("level"),
+                    Total = data.ReadAsInt32("total"),
+                    Progress = data.ReadAsInt32("progress"),
+                    Goal = data.ReadAsInt32("goal"),
                 };
                 
                 instance._data = Variant.CreateFrom(data);
@@ -157,14 +157,14 @@ public partial class TwitchGetHypeTrainStatusResponse : RefCounted, ITwitcherSha
                     if(data == null) return null;
                     var instance = new TwitchResponseTopContributions
                     {
-                        UserId = data.Read("user_id", static v => v.AsString()),
-                        UserLogin = data.Read("user_login", static v => v.AsString()),
-                        UserName = data.Read("user_name", static v => v.AsString()),
-                        Type = data.Read("type", static v => v.AsString()),
-                        Total = data.Read("total", static v => v.AsInt32()),
-                        StartedAt = data.Read("started_at", static v => v.AsString()),
-                        ExpiresAt = data.Read("expires_at", static v => v.AsString()),
-                        IsSharedTrain = data.Read("is_shared_train", static v => v.AsBool()),
+                        UserId = data.ReadAsString("user_id"),
+                        UserLogin = data.ReadAsString("user_login"),
+                        UserName = data.ReadAsString("user_name"),
+                        Type = data.ReadAsString("type"),
+                        Total = data.ReadAsInt32("total"),
+                        StartedAt = data.ReadAsString("started_at"),
+                        ExpiresAt = data.ReadAsString("expires_at"),
+                        IsSharedTrain = data.ReadAsBool("is_shared_train"),
                     };
                     
                     instance._data = Variant.CreateFrom(data);
@@ -211,9 +211,9 @@ public partial class TwitchGetHypeTrainStatusResponse : RefCounted, ITwitcherSha
                         if(data == null) return null;
                         var instance = new TwitchResponseSharedTrainParticipants
                         {
-                            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
-                            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
-                            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
+                            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+                            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+                            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
                         };
                         
                         instance._data = Variant.CreateFrom(data);
@@ -262,9 +262,9 @@ public partial class TwitchGetHypeTrainStatusResponse : RefCounted, ITwitcherSha
             if(data == null) return null;
             var instance = new TwitchResponseAllTimeHigh
             {
-                Level = data.Read("level", static v => v.AsInt32()),
-                Total = data.Read("total", static v => v.AsInt32()),
-                AchievedAt = data.Read("achieved_at", static v => v.AsString()),
+                Level = data.ReadAsInt32("level"),
+                Total = data.ReadAsInt32("total"),
+                AchievedAt = data.ReadAsString("achieved_at"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -307,9 +307,9 @@ public partial class TwitchGetHypeTrainStatusResponse : RefCounted, ITwitcherSha
             if(data == null) return null;
             var instance = new TwitchResponseSharedAllTimeHigh
             {
-                Level = data.Read("level", static v => v.AsInt32()),
-                Total = data.Read("total", static v => v.AsInt32()),
-                AchievedAt = data.Read("achieved_at", static v => v.AsString()),
+                Level = data.ReadAsInt32("level"),
+                Total = data.ReadAsInt32("total"),
+                AchievedAt = data.ReadAsString("achieved_at"),
             };
             
             instance._data = Variant.CreateFrom(data);

@@ -25,15 +25,15 @@ public partial class TwitchUpdateChatSettingsBody : RefCounted, ITwitcherSharp<T
         if(data == null) return null;
         var instance = new TwitchUpdateChatSettingsBody
         {
-            EmoteMode = data.Read("emote_mode", static v => v.AsBool()),
-            FollowerMode = data.Read("follower_mode", static v => v.AsBool()),
-            FollowerModeDuration = data.Read("follower_mode_duration", static v => v.AsInt32()),
-            NonModeratorChatDelay = data.Read("non_moderator_chat_delay", static v => v.AsBool()),
-            NonModeratorChatDelayDuration = data.Read("non_moderator_chat_delay_duration", static v => v.AsInt32()),
-            SlowMode = data.Read("slow_mode", static v => v.AsBool()),
-            SlowModeWaitTime = data.Read("slow_mode_wait_time", static v => v.AsInt32()),
-            SubscriberMode = data.Read("subscriber_mode", static v => v.AsBool()),
-            UniqueChatMode = data.Read("unique_chat_mode", static v => v.AsBool()),
+            EmoteMode = data.ReadAsBool("emote_mode"),
+            FollowerMode = data.ReadAsBool("follower_mode"),
+            FollowerModeDuration = data.ReadAsInt32("follower_mode_duration"),
+            NonModeratorChatDelay = data.ReadAsBool("non_moderator_chat_delay"),
+            NonModeratorChatDelayDuration = data.ReadAsInt32("non_moderator_chat_delay_duration"),
+            SlowMode = data.ReadAsBool("slow_mode"),
+            SlowModeWaitTime = data.ReadAsInt32("slow_mode_wait_time"),
+            SubscriberMode = data.ReadAsBool("subscriber_mode"),
+            UniqueChatMode = data.ReadAsBool("unique_chat_mode"),
         };
         
         instance._data = Variant.CreateFrom(data);

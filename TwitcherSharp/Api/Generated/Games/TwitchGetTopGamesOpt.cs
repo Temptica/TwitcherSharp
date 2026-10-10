@@ -23,9 +23,9 @@ public partial class TwitchGetTopGamesOpt : RefCounted, ITwitcherSharp<TwitchGet
         if(data == null) return null;
         var instance = new TwitchGetTopGamesOpt
         {
-            First = data.Read("first", static v => v.AsInt32()),
-            After = data.Read("after", static v => v.AsString()),
-            Before = data.Read("before", static v => v.AsString()),
+            First = data.ReadAsInt32("first"),
+            After = data.ReadAsString("after"),
+            Before = data.ReadAsString("before"),
         };
         
         instance._data = Variant.CreateFrom(data);

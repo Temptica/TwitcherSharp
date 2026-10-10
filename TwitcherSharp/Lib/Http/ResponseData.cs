@@ -21,12 +21,12 @@ public partial class ResponseData: RefCounted, ITwitcherSharp<ResponseData>
         return new ResponseData
         {
             _data = Variant.CreateFrom(data),
-            Result = data.Read("result", static v => v.AsInt32()),
-            ResponseCode = data.Read("response_code", static v => v.AsInt32()),
+            Result = data.ReadAsInt32("result"),
+            ResponseCode = data.ReadAsInt32("response_code"),
             RequestData = data.Get<RequestData>("request_data"),
             RawResponseData = data.Read("raw_response_data", static v => v.AsByteArray()),
             ResponseHeader = data.Read("response_header", static v => v.As<Dictionary>()),
-            Error = data.Read("error", static v => v.AsBool())
+            Error = data.ReadAsBool("error")
         };
     }
 

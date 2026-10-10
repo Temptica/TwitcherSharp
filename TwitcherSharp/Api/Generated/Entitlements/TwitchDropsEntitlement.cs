@@ -23,13 +23,13 @@ public partial class TwitchDropsEntitlement : RefCounted, ITwitcherSharp<TwitchD
         if(data == null) return null;
         var instance = new TwitchDropsEntitlement
         {
-            Id = data.Read("id", static v => v.AsString()),
-            BenefitId = data.Read("benefit_id", static v => v.AsString()),
-            Timestamp = data.Read("timestamp", static v => v.AsString()),
-            UserId = data.Read("user_id", static v => v.AsString()),
-            GameId = data.Read("game_id", static v => v.AsString()),
-            FulfillmentStatus = data.Read("fulfillment_status", static v => v.AsString()),
-            LastUpdated = data.Read("last_updated", static v => v.AsString()),
+            Id = data.ReadAsString("id"),
+            BenefitId = data.ReadAsString("benefit_id"),
+            Timestamp = data.ReadAsString("timestamp"),
+            UserId = data.ReadAsString("user_id"),
+            GameId = data.ReadAsString("game_id"),
+            FulfillmentStatus = data.ReadAsString("fulfillment_status"),
+            LastUpdated = data.ReadAsString("last_updated"),
         };
         
         instance._data = Variant.CreateFrom(data);

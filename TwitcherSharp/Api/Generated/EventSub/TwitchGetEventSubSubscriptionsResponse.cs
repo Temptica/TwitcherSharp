@@ -21,9 +21,9 @@ public partial class TwitchGetEventSubSubscriptionsResponse<T> : RefCounted, ITw
         if(data == null) return null;
         var instance = new TwitchGetEventSubSubscriptionsResponse<T>
         {
-            Total = data.Read("total", static v => v.AsInt32()),
-            TotalCost = data.Read("total_cost", static v => v.AsInt32()),
-            MaxTotalCost = data.Read("max_total_cost", static v => v.AsInt32()),
+            Total = data.ReadAsInt32("total"),
+            TotalCost = data.ReadAsInt32("total_cost"),
+            MaxTotalCost = data.ReadAsInt32("max_total_cost"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -66,7 +66,7 @@ public partial class TwitchGetEventSubSubscriptionsResponse<T> : RefCounted, ITw
             if(data == null) return null;
             var instance = new ResponsePagination
             {
-                Cursor = data.Read("cursor", static v => v.AsString()),
+                Cursor = data.ReadAsString("cursor"),
             };
             
             instance._data = Variant.CreateFrom(data);

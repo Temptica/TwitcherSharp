@@ -69,20 +69,20 @@ public partial class TwitchGetCustomPowerUpResponse : RefCounted, ITwitcherSharp
             if(data == null) return null;
             var instance = new TwitchResponseData
             {
-                BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
-                BroadcasterLogin = data.Read("broadcaster_login", static v => v.AsString()),
-                BroadcasterName = data.Read("broadcaster_name", static v => v.AsString()),
-                Id = data.Read("id", static v => v.AsString()),
-                Title = data.Read("title", static v => v.AsString()),
-                Prompt = data.Read("prompt", static v => v.AsString()),
-                Bits = data.Read("bits", static v => v.AsInt32()),
-                BackgroundColor = data.Read("background_color", static v => v.AsString()),
-                IsEnabled = data.Read("is_enabled", static v => v.AsBool()),
-                IsUserInputRequired = data.Read("is_user_input_required", static v => v.AsBool()),
-                IsPaused = data.Read("is_paused", static v => v.AsBool()),
-                IsInStock = data.Read("is_in_stock", static v => v.AsBool()),
-                RedemptionsRedeemedCurrentStream = data.Read("redemptions_redeemed_current_stream", static v => v.AsInt32()),
-                CooldownExpiresAt = data.Read("cooldown_expires_at", static v => v.AsString()),
+                BroadcasterId = data.ReadAsString("broadcaster_id"),
+                BroadcasterLogin = data.ReadAsString("broadcaster_login"),
+                BroadcasterName = data.ReadAsString("broadcaster_name"),
+                Id = data.ReadAsString("id"),
+                Title = data.ReadAsString("title"),
+                Prompt = data.ReadAsString("prompt"),
+                Bits = data.ReadAsInt32("bits"),
+                BackgroundColor = data.ReadAsString("background_color"),
+                IsEnabled = data.ReadAsBool("is_enabled"),
+                IsUserInputRequired = data.ReadAsBool("is_user_input_required"),
+                IsPaused = data.ReadAsBool("is_paused"),
+                IsInStock = data.ReadAsBool("is_in_stock"),
+                RedemptionsRedeemedCurrentStream = data.ReadAsInt32("redemptions_redeemed_current_stream"),
+                CooldownExpiresAt = data.ReadAsString("cooldown_expires_at"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -139,9 +139,9 @@ public partial class TwitchGetCustomPowerUpResponse : RefCounted, ITwitcherSharp
                 if(data == null) return null;
                 var instance = new TwitchResponseImage
                 {
-                    Url1x = data.Read("url_1x", static v => v.AsString()),
-                    Url2x = data.Read("url_2x", static v => v.AsString()),
-                    Url4x = data.Read("url_4x", static v => v.AsString()),
+                    Url1x = data.ReadAsString("url_1x"),
+                    Url2x = data.ReadAsString("url_2x"),
+                    Url4x = data.ReadAsString("url_4x"),
                 };
                 
                 instance._data = Variant.CreateFrom(data);
@@ -184,9 +184,9 @@ public partial class TwitchGetCustomPowerUpResponse : RefCounted, ITwitcherSharp
                 if(data == null) return null;
                 var instance = new TwitchResponseDefaultImage
                 {
-                    Url1x = data.Read("url_1x", static v => v.AsString()),
-                    Url2x = data.Read("url_2x", static v => v.AsString()),
-                    Url4x = data.Read("url_4x", static v => v.AsString()),
+                    Url1x = data.ReadAsString("url_1x"),
+                    Url2x = data.ReadAsString("url_2x"),
+                    Url4x = data.ReadAsString("url_4x"),
                 };
                 
                 instance._data = Variant.CreateFrom(data);
@@ -228,8 +228,8 @@ public partial class TwitchGetCustomPowerUpResponse : RefCounted, ITwitcherSharp
                 if(data == null) return null;
                 var instance = new TwitchResponseMaxPerStreamSetting
                 {
-                    IsEnabled = data.Read("is_enabled", static v => v.AsBool()),
-                    MaxPerStream = data.Read("max_per_stream", static v => v.AsInt64()),
+                    IsEnabled = data.ReadAsBool("is_enabled"),
+                    MaxPerStream = data.ReadAsInt64("max_per_stream"),
                 };
                 
                 instance._data = Variant.CreateFrom(data);
@@ -270,8 +270,8 @@ public partial class TwitchGetCustomPowerUpResponse : RefCounted, ITwitcherSharp
                 if(data == null) return null;
                 var instance = new TwitchResponseMaxPerUserPerStreamSetting
                 {
-                    IsEnabled = data.Read("is_enabled", static v => v.AsBool()),
-                    MaxPerUserPerStream = data.Read("max_per_user_per_stream", static v => v.AsInt64()),
+                    IsEnabled = data.ReadAsBool("is_enabled"),
+                    MaxPerUserPerStream = data.ReadAsInt64("max_per_user_per_stream"),
                 };
                 
                 instance._data = Variant.CreateFrom(data);
@@ -312,8 +312,8 @@ public partial class TwitchGetCustomPowerUpResponse : RefCounted, ITwitcherSharp
                 if(data == null) return null;
                 var instance = new TwitchResponseGlobalCooldownSetting
                 {
-                    IsEnabled = data.Read("is_enabled", static v => v.AsBool()),
-                    GlobalCooldownSeconds = data.Read("global_cooldown_seconds", static v => v.AsInt64()),
+                    IsEnabled = data.ReadAsBool("is_enabled"),
+                    GlobalCooldownSeconds = data.ReadAsInt64("global_cooldown_seconds"),
                 };
                 
                 instance._data = Variant.CreateFrom(data);

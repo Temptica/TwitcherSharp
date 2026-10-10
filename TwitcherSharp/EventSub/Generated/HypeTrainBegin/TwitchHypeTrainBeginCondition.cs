@@ -23,7 +23,7 @@ public partial class TwitchHypeTrainBeginCondition(string broadcasterUserId) : R
     public static TwitchHypeTrainBeginCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchHypeTrainBeginCondition(data.Read("broadcaster_user_id", static v => v.AsString()));
+        var instance = new TwitchHypeTrainBeginCondition(data.ReadAsString("broadcaster_user_id"));
         
         instance._data = Variant.CreateFrom(data);
         return instance;

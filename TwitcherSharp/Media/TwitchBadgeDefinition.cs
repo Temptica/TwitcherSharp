@@ -68,8 +68,8 @@ public partial class TwitchBadgeDefinition : RefCounted, ITwitcherSharp<TwitchBa
     {
         if (data == null) return null;
         // set_id, id, badge_scale and badge_channel are only the _init parameter names in twitcher.
-        return new TwitchBadgeDefinition(data.Read("badge_set", static v => v.AsString()), data.Read("badge_id", static v => v.AsString()),
-            data.Read("scale", static v => v.AsInt32()), data.Read("channel", static v => v.AsString()));
+        return new TwitchBadgeDefinition(data.ReadAsString("badge_set"), data.ReadAsString("badge_id"),
+            data.ReadAsInt32("scale"), data.ReadAsString("channel"));
     }
 
     public GodotObject ToGodotObject()

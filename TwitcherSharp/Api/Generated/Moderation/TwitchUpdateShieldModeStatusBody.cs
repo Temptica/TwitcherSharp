@@ -17,7 +17,7 @@ public partial class TwitchUpdateShieldModeStatusBody : RefCounted, ITwitcherSha
         if(data == null) return null;
         var instance = new TwitchUpdateShieldModeStatusBody
         {
-            IsActive = data.Read("is_active", static v => v.AsBool()),
+            IsActive = data.ReadAsBool("is_active"),
         };
         
         instance._data = Variant.CreateFrom(data);

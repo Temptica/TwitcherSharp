@@ -18,7 +18,7 @@ public partial class TwitchAuth : RefCounted, ITwitcherSharp<TwitchAuth>
 		}
 	}
 	
-	public bool IsAuthenticated() => _data?.Read("is_authenticated", static v => v.AsBool()) ?? false;
+	public bool IsAuthenticated() => _data?.ReadAsBool("is_authenticated") ?? false;
 	
 	/// <summary>
 	/// Logs in unless already logged in (or always with <paramref name="force"/>). twitcher awaits the login, so
@@ -43,7 +43,7 @@ public partial class TwitchAuth : RefCounted, ITwitcherSharp<TwitchAuth>
 		if (data == null) return null;
 		var auth = new TwitchAuth();
 		auth._data = data;
-		auth.ForceVerify = data.Read("force_verify", static v => v.AsBool());
+		auth.ForceVerify = data.ReadAsBool("force_verify");
 		return auth;
 	}
 

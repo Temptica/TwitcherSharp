@@ -48,12 +48,12 @@ public partial class TwitchTransport : RefCounted, ITwitcherSharpEventSub<Twitch
         if(data == null) return null;
         var instance = new TwitchTransport
         {
-            Method = data.Read("method", static v => v.AsString()),
-            Callback = data.Read("callback", static v => v.AsString()),
-            Secret = data.Read("secret", static v => v.AsString()),
-            SessionId = data.Read("session_id", static v => v.AsString()),
-            ConnectedAt = data.Read("connected_at", static v => v.AsString()),
-            DisconnectedAt = data.Read("disconnected_at", static v => v.AsString()),
+            Method = data.ReadAsString("method"),
+            Callback = data.ReadAsString("callback"),
+            Secret = data.ReadAsString("secret"),
+            SessionId = data.ReadAsString("session_id"),
+            ConnectedAt = data.ReadAsString("connected_at"),
+            DisconnectedAt = data.ReadAsString("disconnected_at"),
         };
         
         instance._data = Variant.CreateFrom(data);

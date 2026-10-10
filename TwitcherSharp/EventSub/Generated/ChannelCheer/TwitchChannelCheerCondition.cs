@@ -23,7 +23,7 @@ public partial class TwitchChannelCheerCondition(string broadcasterUserId) : Ref
     public static TwitchChannelCheerCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchChannelCheerCondition(data.Read("broadcaster_user_id", static v => v.AsString()));
+        var instance = new TwitchChannelCheerCondition(data.ReadAsString("broadcaster_user_id"));
         
         instance._data = Variant.CreateFrom(data);
         return instance;

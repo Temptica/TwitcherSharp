@@ -18,8 +18,8 @@ public partial class TwitchAddSuspiciousStatusToChatUserBody : RefCounted, ITwit
         if(data == null) return null;
         var instance = new TwitchAddSuspiciousStatusToChatUserBody
         {
-            UserId = data.Read("user_id", static v => v.AsString()),
-            Status = data.Read("status", static v => v.AsString()),
+            UserId = data.ReadAsString("user_id"),
+            Status = data.ReadAsString("status"),
         };
         
         instance._data = Variant.CreateFrom(data);

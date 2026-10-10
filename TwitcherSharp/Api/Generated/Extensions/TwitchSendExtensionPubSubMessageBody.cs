@@ -20,10 +20,10 @@ public partial class TwitchSendExtensionPubSubMessageBody : RefCounted, ITwitche
         if(data == null) return null;
         var instance = new TwitchSendExtensionPubSubMessageBody
         {
-            Target = data.Read("target", static v => v.AsStringArray()),
-            BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
-            IsGlobalBroadcast = data.Read("is_global_broadcast", static v => v.AsBool()),
-            Message = data.Read("message", static v => v.AsString()),
+            Target = data.ReadAsStringArray("target"),
+            BroadcasterId = data.ReadAsString("broadcaster_id"),
+            IsGlobalBroadcast = data.ReadAsBool("is_global_broadcast"),
+            Message = data.ReadAsString("message"),
         };
         
         instance._data = Variant.CreateFrom(data);

@@ -55,8 +55,8 @@ public partial class TwitchUpdateConduitShardsResponse : RefCounted, ITwitcherSh
             if(data == null) return null;
             var instance = new TwitchResponseData
             {
-                Id = data.Read("id", static v => v.AsString()),
-                Status = data.Read("status", static v => v.AsString()),
+                Id = data.ReadAsString("id"),
+                Status = data.ReadAsString("status"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -99,11 +99,11 @@ public partial class TwitchUpdateConduitShardsResponse : RefCounted, ITwitcherSh
                 if(data == null) return null;
                 var instance = new TwitchResponseTransport
                 {
-                    Method = data.Read("method", static v => v.AsString()),
-                    Callback = data.Read("callback", static v => v.AsString()),
-                    SessionId = data.Read("session_id", static v => v.AsString()),
-                    ConnectedAt = data.Read("connected_at", static v => v.AsString()),
-                    DisconnectedAt = data.Read("disconnected_at", static v => v.AsString()),
+                    Method = data.ReadAsString("method"),
+                    Callback = data.ReadAsString("callback"),
+                    SessionId = data.ReadAsString("session_id"),
+                    ConnectedAt = data.ReadAsString("connected_at"),
+                    DisconnectedAt = data.ReadAsString("disconnected_at"),
                 };
                 
                 instance._data = Variant.CreateFrom(data);
@@ -150,9 +150,9 @@ public partial class TwitchUpdateConduitShardsResponse : RefCounted, ITwitcherSh
             if(data == null) return null;
             var instance = new TwitchResponseErrors
             {
-                Id = data.Read("id", static v => v.AsString()),
-                Message = data.Read("message", static v => v.AsString()),
-                Code = data.Read("code", static v => v.AsString()),
+                Id = data.ReadAsString("id"),
+                Message = data.ReadAsString("message"),
+                Code = data.ReadAsString("code"),
             };
             
             instance._data = Variant.CreateFrom(data);

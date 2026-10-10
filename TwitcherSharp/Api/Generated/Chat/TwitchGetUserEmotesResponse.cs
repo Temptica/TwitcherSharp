@@ -19,7 +19,7 @@ public partial class TwitchGetUserEmotesResponse : RefCounted, ITwitcherSharp<Tw
         if(data == null) return null;
         var instance = new TwitchGetUserEmotesResponse
         {
-            Template = data.Read("template", static v => v.AsString()),
+            Template = data.ReadAsString("template"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -60,7 +60,7 @@ public partial class TwitchGetUserEmotesResponse : RefCounted, ITwitcherSharp<Tw
             if(data == null) return null;
             var instance = new ResponsePagination
             {
-                Cursor = data.Read("cursor", static v => v.AsString()),
+                Cursor = data.ReadAsString("cursor"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -102,14 +102,14 @@ public partial class TwitchGetUserEmotesResponse : RefCounted, ITwitcherSharp<Tw
             if(data == null) return null;
             var instance = new TwitchResponseData
             {
-                Id = data.Read("id", static v => v.AsString()),
-                Name = data.Read("name", static v => v.AsString()),
-                EmoteType = data.Read("emote_type", static v => v.AsString()),
-                EmoteSetId = data.Read("emote_set_id", static v => v.AsString()),
-                OwnerId = data.Read("owner_id", static v => v.AsString()),
-                Format = data.Read("format", static v => v.AsStringArray()),
-                Scale = data.Read("scale", static v => v.AsStringArray()),
-                ThemeMode = data.Read("theme_mode", static v => v.AsStringArray()),
+                Id = data.ReadAsString("id"),
+                Name = data.ReadAsString("name"),
+                EmoteType = data.ReadAsString("emote_type"),
+                EmoteSetId = data.ReadAsString("emote_set_id"),
+                OwnerId = data.ReadAsString("owner_id"),
+                Format = data.ReadAsStringArray("format"),
+                Scale = data.ReadAsStringArray("scale"),
+                ThemeMode = data.ReadAsStringArray("theme_mode"),
             };
             
             instance._data = Variant.CreateFrom(data);

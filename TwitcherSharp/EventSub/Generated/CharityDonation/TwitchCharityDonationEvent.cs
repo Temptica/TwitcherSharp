@@ -83,18 +83,18 @@ public partial class TwitchCharityDonationEvent : RefCounted, ITwitcherSharpEven
         if(data == null) return null;
         var instance = new TwitchCharityDonationEvent
         {
-            Id = data.Read("id", static v => v.AsString()),
-            CampaignId = data.Read("campaign_id", static v => v.AsString()),
-            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
-            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
-            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
-            UserId = data.Read("user_id", static v => v.AsString()),
-            UserLogin = data.Read("user_login", static v => v.AsString()),
-            UserName = data.Read("user_name", static v => v.AsString()),
-            CharityName = data.Read("charity_name", static v => v.AsString()),
-            CharityDescription = data.Read("charity_description", static v => v.AsString()),
-            CharityLogo = data.Read("charity_logo", static v => v.AsString()),
-            CharityWebsite = data.Read("charity_website", static v => v.AsString()),
+            Id = data.ReadAsString("id"),
+            CampaignId = data.ReadAsString("campaign_id"),
+            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+            UserId = data.ReadAsString("user_id"),
+            UserLogin = data.ReadAsString("user_login"),
+            UserName = data.ReadAsString("user_name"),
+            CharityName = data.ReadAsString("charity_name"),
+            CharityDescription = data.ReadAsString("charity_description"),
+            CharityLogo = data.ReadAsString("charity_logo"),
+            CharityWebsite = data.ReadAsString("charity_website"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -155,9 +155,9 @@ public partial class TwitchCharityDonationEvent : RefCounted, ITwitcherSharpEven
             if(data == null) return null;
             var instance = new TwitchAmount
             {
-                Value = data.Read("value", static v => v.AsInt32()),
-                DecimalPlaces = data.Read("decimal_places", static v => v.AsInt32()),
-                Currency = data.Read("currency", static v => v.AsString()),
+                Value = data.ReadAsInt32("value"),
+                DecimalPlaces = data.ReadAsInt32("decimal_places"),
+                Currency = data.ReadAsString("currency"),
             };
             
             instance._data = Variant.CreateFrom(data);

@@ -53,9 +53,9 @@ public partial class TwitchStartCommercialResponse : RefCounted, ITwitcherSharp<
             if(data == null) return null;
             var instance = new TwitchResponseData
             {
-                Length = data.Read("length", static v => v.AsInt32()),
-                Message = data.Read("message", static v => v.AsString()),
-                RetryAfter = data.Read("retry_after", static v => v.AsInt32()),
+                Length = data.ReadAsInt32("length"),
+                Message = data.ReadAsString("message"),
+                RetryAfter = data.ReadAsInt32("retry_after"),
             };
             
             instance._data = Variant.CreateFrom(data);

@@ -73,15 +73,15 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
         if(data == null) return null;
         var instance = new TwitchChannelSuspiciousUserMessageEvent
         {
-            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
-            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
-            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
-            UserId = data.Read("user_id", static v => v.AsString()),
-            UserName = data.Read("user_name", static v => v.AsString()),
-            UserLogin = data.Read("user_login", static v => v.AsString()),
-            LowTrustStatus = data.Read("low_trust_status", static v => v.AsString()),
-            Types = data.Read("types", static v => v.AsStringArray()),
-            BanEvasionEvaluation = data.Read("ban_evasion_evaluation", static v => v.AsString()),
+            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+            UserId = data.ReadAsString("user_id"),
+            UserName = data.ReadAsString("user_name"),
+            UserLogin = data.ReadAsString("user_login"),
+            LowTrustStatus = data.ReadAsString("low_trust_status"),
+            Types = data.ReadAsStringArray("types"),
+            BanEvasionEvaluation = data.ReadAsString("ban_evasion_evaluation"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -140,8 +140,8 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
             if(data == null) return null;
             var instance = new TwitchMessage
             {
-                MessageId = data.Read("message_id", static v => v.AsString()),
-                Text = data.Read("text", static v => v.AsString()),
+                MessageId = data.ReadAsString("message_id"),
+                Text = data.ReadAsString("text"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -197,8 +197,8 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
                 if(data == null) return null;
                 var instance = new TwitchFragments
                 {
-                    Type = data.Read("type", static v => v.AsString()),
-                    Text = data.Read("text", static v => v.AsString()),
+                    Type = data.ReadAsString("type"),
+                    Text = data.ReadAsString("text"),
                 };
                 
                 instance._data = Variant.CreateFrom(data);
@@ -250,9 +250,9 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
                     if(data == null) return null;
                     var instance = new TwitchCheermote
                     {
-                        Prefix = data.Read("prefix", static v => v.AsString()),
-                        Bits = data.Read("bits", static v => v.AsInt32()),
-                        Tier = data.Read("tier", static v => v.AsInt32()),
+                        Prefix = data.ReadAsString("prefix"),
+                        Bits = data.ReadAsInt32("bits"),
+                        Tier = data.ReadAsInt32("tier"),
                     };
                     
                     instance._data = Variant.CreateFrom(data);
@@ -298,8 +298,8 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
                     if(data == null) return null;
                     var instance = new TwitchEmote
                     {
-                        Id = data.Read("id", static v => v.AsString()),
-                        EmoteSetId = data.Read("emote_set_id", static v => v.AsString()),
+                        Id = data.ReadAsString("id"),
+                        EmoteSetId = data.ReadAsString("emote_set_id"),
                     };
                     
                     instance._data = Variant.CreateFrom(data);

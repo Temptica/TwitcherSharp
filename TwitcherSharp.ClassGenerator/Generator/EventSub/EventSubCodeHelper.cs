@@ -140,7 +140,7 @@ public static class EventSubCodeHelper
             {
                 var requiredFields = string.Join(", ",
                     component.GetRequiredFields().Select(field =>
-                        $"""data.Read("{GodotName(field)}", static v => v.{field.GetAsType()})"""));
+                        $"data.{ReadCall.For(GodotName(field), field.GetAsType())}"));
 
                 var requiredCode = $"var instance = new {component.ClassName}({requiredFields})";
                 if (component.Fields.All(f => f.Value.IsRequired)) requiredCode += ";";
@@ -158,7 +158,7 @@ public static class EventSubCodeHelper
                 {
                     if (!field.IsArray && !field.IsTyped)
                         code.AppendIndentedLine(
-                            $"{field.Name} = data.Read(\"{GodotName(field)}\", static v => v.{field.GetAsType()}),", 3);
+                            $"{field.Name} = data.{ReadCall.For(GodotName(field), field.GetAsType())},", 3);
                 }
 
                 code.AppendIndentedLine("};", 2);

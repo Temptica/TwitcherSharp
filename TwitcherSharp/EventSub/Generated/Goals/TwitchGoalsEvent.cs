@@ -73,17 +73,17 @@ public partial class TwitchGoalsEvent : RefCounted, ITwitcherSharpEventSub<Twitc
         if(data == null) return null;
         var instance = new TwitchGoalsEvent
         {
-            Id = data.Read("id", static v => v.AsString()),
-            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
-            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
-            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
-            Type = data.Read("type", static v => v.AsString()),
-            Description = data.Read("description", static v => v.AsString()),
-            IsAchieved = data.Read("is_achieved", static v => v.AsBool()),
-            CurrentAmount = data.Read("current_amount", static v => v.AsInt32()),
-            TargetAmount = data.Read("target_amount", static v => v.AsInt32()),
-            StartedAt = data.Read("started_at", static v => v.AsString()),
-            EndedAt = data.Read("ended_at", static v => v.AsString()),
+            Id = data.ReadAsString("id"),
+            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+            Type = data.ReadAsString("type"),
+            Description = data.ReadAsString("description"),
+            IsAchieved = data.ReadAsBool("is_achieved"),
+            CurrentAmount = data.ReadAsInt32("current_amount"),
+            TargetAmount = data.ReadAsInt32("target_amount"),
+            StartedAt = data.ReadAsString("started_at"),
+            EndedAt = data.ReadAsString("ended_at"),
         };
         
         instance._data = Variant.CreateFrom(data);

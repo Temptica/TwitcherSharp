@@ -19,7 +19,7 @@ public partial class TwitchGetEmoteSetsResponse : RefCounted, ITwitcherSharp<Twi
         if(data == null) return null;
         var instance = new TwitchGetEmoteSetsResponse
         {
-            Template = data.Read("template", static v => v.AsString()),
+            Template = data.ReadAsString("template"),
         };
         
         instance._data = Variant.CreateFrom(data);

@@ -21,7 +21,7 @@ public partial class TwitchGetExtensionBitsProductsOpt : RefCounted, ITwitcherSh
         if(data == null) return null;
         var instance = new TwitchGetExtensionBitsProductsOpt
         {
-            ShouldIncludeAll = data.Read("should_include_all", static v => v.AsBool()),
+            ShouldIncludeAll = data.ReadAsBool("should_include_all"),
         };
         
         instance._data = Variant.CreateFrom(data);

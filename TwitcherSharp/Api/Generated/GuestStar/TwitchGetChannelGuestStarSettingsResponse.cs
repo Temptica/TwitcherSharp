@@ -21,11 +21,11 @@ public partial class TwitchGetChannelGuestStarSettingsResponse : RefCounted, ITw
         if(data == null) return null;
         var instance = new TwitchGetChannelGuestStarSettingsResponse
         {
-            IsModeratorSendLiveEnabled = data.Read("is_moderator_send_live_enabled", static v => v.AsBool()),
-            SlotCount = data.Read("slot_count", static v => v.AsInt32()),
-            IsBrowserSourceAudioEnabled = data.Read("is_browser_source_audio_enabled", static v => v.AsBool()),
-            GroupLayout = data.Read("group_layout", static v => v.AsString()),
-            BrowserSourceToken = data.Read("browser_source_token", static v => v.AsString()),
+            IsModeratorSendLiveEnabled = data.ReadAsBool("is_moderator_send_live_enabled"),
+            SlotCount = data.ReadAsInt32("slot_count"),
+            IsBrowserSourceAudioEnabled = data.ReadAsBool("is_browser_source_audio_enabled"),
+            GroupLayout = data.ReadAsString("group_layout"),
+            BrowserSourceToken = data.ReadAsString("browser_source_token"),
         };
         
         instance._data = Variant.CreateFrom(data);

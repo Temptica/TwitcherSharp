@@ -21,11 +21,11 @@ public partial class TwitchSetExtensionConfigurationSegmentBody : RefCounted, IT
         if(data == null) return null;
         var instance = new TwitchSetExtensionConfigurationSegmentBody
         {
-            ExtensionId = data.Read("extension_id", static v => v.AsString()),
-            Segment = data.Read("segment", static v => v.AsString()),
-            BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
-            Content = data.Read("content", static v => v.AsString()),
-            Version = data.Read("version", static v => v.AsString()),
+            ExtensionId = data.ReadAsString("extension_id"),
+            Segment = data.ReadAsString("segment"),
+            BroadcasterId = data.ReadAsString("broadcaster_id"),
+            Content = data.ReadAsString("content"),
+            Version = data.ReadAsString("version"),
         };
         
         instance._data = Variant.CreateFrom(data);

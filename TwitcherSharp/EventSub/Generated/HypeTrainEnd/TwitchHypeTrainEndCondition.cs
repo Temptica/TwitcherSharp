@@ -23,7 +23,7 @@ public partial class TwitchHypeTrainEndCondition(string broadcasterUserId) : Ref
     public static TwitchHypeTrainEndCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchHypeTrainEndCondition(data.Read("broadcaster_user_id", static v => v.AsString()));
+        var instance = new TwitchHypeTrainEndCondition(data.ReadAsString("broadcaster_user_id"));
         
         instance._data = Variant.CreateFrom(data);
         return instance;

@@ -23,9 +23,9 @@ public partial class TwitchGetModeratorsOpt : RefCounted, ITwitcherSharp<TwitchG
         if(data == null) return null;
         var instance = new TwitchGetModeratorsOpt
         {
-            UserId = data.Read("user_id", static v => v.AsStringArray()),
-            First = data.Read("first", static v => v.AsString()),
-            After = data.Read("after", static v => v.AsString()),
+            UserId = data.ReadAsStringArray("user_id"),
+            First = data.ReadAsString("first"),
+            After = data.ReadAsString("after"),
         };
         
         instance._data = Variant.CreateFrom(data);

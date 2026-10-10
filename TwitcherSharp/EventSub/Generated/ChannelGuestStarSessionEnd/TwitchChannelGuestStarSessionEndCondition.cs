@@ -28,7 +28,7 @@ public partial class TwitchChannelGuestStarSessionEndCondition(string broadcaste
     public static TwitchChannelGuestStarSessionEndCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchChannelGuestStarSessionEndCondition(data.Read("broadcaster_user_id", static v => v.AsString()), data.Read("moderator_user_id", static v => v.AsString()));
+        var instance = new TwitchChannelGuestStarSessionEndCondition(data.ReadAsString("broadcaster_user_id"), data.ReadAsString("moderator_user_id"));
         
         instance._data = Variant.CreateFrom(data);
         return instance;

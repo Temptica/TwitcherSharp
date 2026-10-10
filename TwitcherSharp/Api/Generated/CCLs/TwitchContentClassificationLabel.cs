@@ -19,9 +19,9 @@ public partial class TwitchContentClassificationLabel : RefCounted, ITwitcherSha
         if(data == null) return null;
         var instance = new TwitchContentClassificationLabel
         {
-            Id = data.Read("id", static v => v.AsString()),
-            Description = data.Read("description", static v => v.AsString()),
-            Name = data.Read("name", static v => v.AsString()),
+            Id = data.ReadAsString("id"),
+            Description = data.ReadAsString("description"),
+            Name = data.ReadAsString("name"),
         };
         
         instance._data = Variant.CreateFrom(data);

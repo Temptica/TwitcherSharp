@@ -48,12 +48,12 @@ public partial class TwitchChannelChatClearUserMessagesEvent : RefCounted, ITwit
         if(data == null) return null;
         var instance = new TwitchChannelChatClearUserMessagesEvent
         {
-            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
-            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
-            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
-            TargetUserId = data.Read("target_user_id", static v => v.AsString()),
-            TargetUserName = data.Read("target_user_name", static v => v.AsString()),
-            TargetUserLogin = data.Read("target_user_login", static v => v.AsString()),
+            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+            TargetUserId = data.ReadAsString("target_user_id"),
+            TargetUserName = data.ReadAsString("target_user_name"),
+            TargetUserLogin = data.ReadAsString("target_user_login"),
         };
         
         instance._data = Variant.CreateFrom(data);

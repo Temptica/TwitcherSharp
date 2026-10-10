@@ -28,7 +28,7 @@ public partial class TwitchChannelModerateCondition(string broadcasterUserId, st
     public static TwitchChannelModerateCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchChannelModerateCondition(data.Read("broadcaster_user_id", static v => v.AsString()), data.Read("moderator_user_id", static v => v.AsString()));
+        var instance = new TwitchChannelModerateCondition(data.ReadAsString("broadcaster_user_id"), data.ReadAsString("moderator_user_id"));
         
         instance._data = Variant.CreateFrom(data);
         return instance;

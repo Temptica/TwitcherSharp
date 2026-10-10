@@ -21,11 +21,11 @@ public partial class TwitchExtensionLiveChannel : RefCounted, ITwitcherSharp<Twi
         if(data == null) return null;
         var instance = new TwitchExtensionLiveChannel
         {
-            BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
-            BroadcasterName = data.Read("broadcaster_name", static v => v.AsString()),
-            GameName = data.Read("game_name", static v => v.AsString()),
-            GameId = data.Read("game_id", static v => v.AsString()),
-            Title = data.Read("title", static v => v.AsString()),
+            BroadcasterId = data.ReadAsString("broadcaster_id"),
+            BroadcasterName = data.ReadAsString("broadcaster_name"),
+            GameName = data.ReadAsString("game_name"),
+            GameId = data.ReadAsString("game_id"),
+            Title = data.ReadAsString("title"),
         };
         
         instance._data = Variant.CreateFrom(data);

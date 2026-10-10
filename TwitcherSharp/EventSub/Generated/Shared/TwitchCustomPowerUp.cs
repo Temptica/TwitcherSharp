@@ -38,10 +38,10 @@ public partial class TwitchCustomPowerUp : RefCounted, ITwitcherSharpEventSub<Tw
         if(data == null) return null;
         var instance = new TwitchCustomPowerUp
         {
-            Id = data.Read("id", static v => v.AsString()),
-            Title = data.Read("title", static v => v.AsString()),
-            Bits = data.Read("bits", static v => v.AsInt32()),
-            Prompt = data.Read("prompt", static v => v.AsString()),
+            Id = data.ReadAsString("id"),
+            Title = data.ReadAsString("title"),
+            Bits = data.ReadAsInt32("bits"),
+            Prompt = data.ReadAsString("prompt"),
         };
         
         instance._data = Variant.CreateFrom(data);

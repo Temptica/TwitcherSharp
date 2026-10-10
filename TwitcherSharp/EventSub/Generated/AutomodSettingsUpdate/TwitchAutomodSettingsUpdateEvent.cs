@@ -93,21 +93,21 @@ public partial class TwitchAutomodSettingsUpdateEvent : RefCounted, ITwitcherSha
         if(data == null) return null;
         var instance = new TwitchAutomodSettingsUpdateEvent
         {
-            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
-            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
-            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
-            ModeratorUserId = data.Read("moderator_user_id", static v => v.AsString()),
-            ModeratorUserLogin = data.Read("moderator_user_login", static v => v.AsString()),
-            ModeratorUserName = data.Read("moderator_user_name", static v => v.AsString()),
-            Bullying = data.Read("bullying", static v => v.AsInt32()),
-            OverallLevel = data.Read("overall_level", static v => v.AsInt32()),
-            Disability = data.Read("disability", static v => v.AsInt32()),
-            RaceEthnicityOrReligion = data.Read("race_ethnicity_or_religion", static v => v.AsInt32()),
-            Misogyny = data.Read("misogyny", static v => v.AsInt32()),
-            SexualitySexOrGender = data.Read("sexuality_sex_or_gender", static v => v.AsInt32()),
-            Aggression = data.Read("aggression", static v => v.AsInt32()),
-            SexBasedTerms = data.Read("sex_based_terms", static v => v.AsInt32()),
-            Swearing = data.Read("swearing", static v => v.AsInt32()),
+            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+            ModeratorUserId = data.ReadAsString("moderator_user_id"),
+            ModeratorUserLogin = data.ReadAsString("moderator_user_login"),
+            ModeratorUserName = data.ReadAsString("moderator_user_name"),
+            Bullying = data.ReadAsInt32("bullying"),
+            OverallLevel = data.ReadAsInt32("overall_level"),
+            Disability = data.ReadAsInt32("disability"),
+            RaceEthnicityOrReligion = data.ReadAsInt32("race_ethnicity_or_religion"),
+            Misogyny = data.ReadAsInt32("misogyny"),
+            SexualitySexOrGender = data.ReadAsInt32("sexuality_sex_or_gender"),
+            Aggression = data.ReadAsInt32("aggression"),
+            SexBasedTerms = data.ReadAsInt32("sex_based_terms"),
+            Swearing = data.ReadAsInt32("swearing"),
         };
         
         instance._data = Variant.CreateFrom(data);

@@ -73,17 +73,17 @@ public partial class TwitchChannelWarningSendEvent : RefCounted, ITwitcherSharpE
         if(data == null) return null;
         var instance = new TwitchChannelWarningSendEvent
         {
-            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
-            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
-            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
-            ModeratorUserId = data.Read("moderator_user_id", static v => v.AsString()),
-            ModeratorUserLogin = data.Read("moderator_user_login", static v => v.AsString()),
-            ModeratorUserName = data.Read("moderator_user_name", static v => v.AsString()),
-            UserId = data.Read("user_id", static v => v.AsString()),
-            UserLogin = data.Read("user_login", static v => v.AsString()),
-            UserName = data.Read("user_name", static v => v.AsString()),
-            Reason = data.Read("reason", static v => v.AsString()),
-            ChatRulesCited = data.Read("chat_rules_cited", static v => v.AsStringArray()),
+            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+            ModeratorUserId = data.ReadAsString("moderator_user_id"),
+            ModeratorUserLogin = data.ReadAsString("moderator_user_login"),
+            ModeratorUserName = data.ReadAsString("moderator_user_name"),
+            UserId = data.ReadAsString("user_id"),
+            UserLogin = data.ReadAsString("user_login"),
+            UserName = data.ReadAsString("user_name"),
+            Reason = data.ReadAsString("reason"),
+            ChatRulesCited = data.ReadAsStringArray("chat_rules_cited"),
         };
         
         instance._data = Variant.CreateFrom(data);

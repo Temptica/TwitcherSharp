@@ -28,9 +28,9 @@ public partial class TwitchChannelCustomPowerUpRedemptionAddCondition(string bro
     public static TwitchChannelCustomPowerUpRedemptionAddCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchChannelCustomPowerUpRedemptionAddCondition(data.Read("broadcaster_user_id", static v => v.AsString()))
+        var instance = new TwitchChannelCustomPowerUpRedemptionAddCondition(data.ReadAsString("broadcaster_user_id"))
         {
-            RewardId = data.Read("reward_id", static v => v.AsString()),
+            RewardId = data.ReadAsString("reward_id"),
         };
         
         instance._data = Variant.CreateFrom(data);

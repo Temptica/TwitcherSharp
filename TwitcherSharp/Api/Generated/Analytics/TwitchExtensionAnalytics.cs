@@ -20,9 +20,9 @@ public partial class TwitchExtensionAnalytics : RefCounted, ITwitcherSharp<Twitc
         if(data == null) return null;
         var instance = new TwitchExtensionAnalytics
         {
-            ExtensionId = data.Read("extension_id", static v => v.AsString()),
-            URL = data.Read("URL", static v => v.AsString()),
-            Type = data.Read("type", static v => v.AsString()),
+            ExtensionId = data.ReadAsString("extension_id"),
+            URL = data.ReadAsString("URL"),
+            Type = data.ReadAsString("type"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -63,8 +63,8 @@ public partial class TwitchExtensionAnalytics : RefCounted, ITwitcherSharp<Twitc
             if(data == null) return null;
             var instance = new TwitchResponseDateRange
             {
-                StartedAt = data.Read("started_at", static v => v.AsString()),
-                EndedAt = data.Read("ended_at", static v => v.AsString()),
+                StartedAt = data.ReadAsString("started_at"),
+                EndedAt = data.ReadAsString("ended_at"),
             };
             
             instance._data = Variant.CreateFrom(data);

@@ -22,11 +22,11 @@ public partial class TwitchCharityCampaignDonation : RefCounted, ITwitcherSharp<
         if(data == null) return null;
         var instance = new TwitchCharityCampaignDonation
         {
-            Id = data.Read("id", static v => v.AsString()),
-            CampaignId = data.Read("campaign_id", static v => v.AsString()),
-            UserId = data.Read("user_id", static v => v.AsString()),
-            UserLogin = data.Read("user_login", static v => v.AsString()),
-            UserName = data.Read("user_name", static v => v.AsString()),
+            Id = data.ReadAsString("id"),
+            CampaignId = data.ReadAsString("campaign_id"),
+            UserId = data.ReadAsString("user_id"),
+            UserLogin = data.ReadAsString("user_login"),
+            UserName = data.ReadAsString("user_name"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -70,9 +70,9 @@ public partial class TwitchCharityCampaignDonation : RefCounted, ITwitcherSharp<
             if(data == null) return null;
             var instance = new TwitchResponseAmount
             {
-                Value = data.Read("value", static v => v.AsInt32()),
-                DecimalPlaces = data.Read("decimal_places", static v => v.AsInt32()),
-                Currency = data.Read("currency", static v => v.AsString()),
+                Value = data.ReadAsInt32("value"),
+                DecimalPlaces = data.ReadAsInt32("decimal_places"),
+                Currency = data.ReadAsString("currency"),
             };
             
             instance._data = Variant.CreateFrom(data);

@@ -30,19 +30,19 @@ public partial class TwitchPoll : RefCounted, ITwitcherSharp<TwitchPoll>
         if(data == null) return null;
         var instance = new TwitchPoll
         {
-            Id = data.Read("id", static v => v.AsString()),
-            BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
-            BroadcasterName = data.Read("broadcaster_name", static v => v.AsString()),
-            BroadcasterLogin = data.Read("broadcaster_login", static v => v.AsString()),
-            Title = data.Read("title", static v => v.AsString()),
-            BitsVotingEnabled = data.Read("bits_voting_enabled", static v => v.AsBool()),
-            BitsPerVote = data.Read("bits_per_vote", static v => v.AsInt32()),
-            ChannelPointsVotingEnabled = data.Read("channel_points_voting_enabled", static v => v.AsBool()),
-            ChannelPointsPerVote = data.Read("channel_points_per_vote", static v => v.AsInt32()),
-            Status = data.Read("status", static v => v.AsString()),
-            Duration = data.Read("duration", static v => v.AsInt32()),
-            StartedAt = data.Read("started_at", static v => v.AsString()),
-            EndedAt = data.Read("ended_at", static v => v.AsString()),
+            Id = data.ReadAsString("id"),
+            BroadcasterId = data.ReadAsString("broadcaster_id"),
+            BroadcasterName = data.ReadAsString("broadcaster_name"),
+            BroadcasterLogin = data.ReadAsString("broadcaster_login"),
+            Title = data.ReadAsString("title"),
+            BitsVotingEnabled = data.ReadAsBool("bits_voting_enabled"),
+            BitsPerVote = data.ReadAsInt32("bits_per_vote"),
+            ChannelPointsVotingEnabled = data.ReadAsBool("channel_points_voting_enabled"),
+            ChannelPointsPerVote = data.ReadAsInt32("channel_points_per_vote"),
+            Status = data.ReadAsString("status"),
+            Duration = data.ReadAsInt32("duration"),
+            StartedAt = data.ReadAsString("started_at"),
+            EndedAt = data.ReadAsString("ended_at"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -96,11 +96,11 @@ public partial class TwitchPoll : RefCounted, ITwitcherSharp<TwitchPoll>
             if(data == null) return null;
             var instance = new TwitchChoices
             {
-                Id = data.Read("id", static v => v.AsString()),
-                Title = data.Read("title", static v => v.AsString()),
-                Votes = data.Read("votes", static v => v.AsInt32()),
-                ChannelPointsVotes = data.Read("channel_points_votes", static v => v.AsInt32()),
-                BitsVotes = data.Read("bits_votes", static v => v.AsInt32()),
+                Id = data.ReadAsString("id"),
+                Title = data.ReadAsString("title"),
+                Votes = data.ReadAsInt32("votes"),
+                ChannelPointsVotes = data.ReadAsInt32("channel_points_votes"),
+                BitsVotes = data.ReadAsInt32("bits_votes"),
             };
             
             instance._data = Variant.CreateFrom(data);

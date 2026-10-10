@@ -21,7 +21,7 @@ public partial class TwitchUpdateUserOpt : RefCounted, ITwitcherSharp<TwitchUpda
         if(data == null) return null;
         var instance = new TwitchUpdateUserOpt
         {
-            Description = data.Read("description", static v => v.AsString()),
+            Description = data.ReadAsString("description"),
         };
         
         instance._data = Variant.CreateFrom(data);

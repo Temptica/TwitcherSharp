@@ -23,7 +23,7 @@ public partial class TwitchChannelSharedChatSessionEndCondition(string broadcast
     public static TwitchChannelSharedChatSessionEndCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchChannelSharedChatSessionEndCondition(data.Read("broadcaster_user_id", static v => v.AsString()));
+        var instance = new TwitchChannelSharedChatSessionEndCondition(data.ReadAsString("broadcaster_user_id"));
         
         instance._data = Variant.CreateFrom(data);
         return instance;

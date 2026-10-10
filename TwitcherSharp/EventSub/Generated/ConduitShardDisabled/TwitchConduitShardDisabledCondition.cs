@@ -28,9 +28,9 @@ public partial class TwitchConduitShardDisabledCondition(string clientId) : RefC
     public static TwitchConduitShardDisabledCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchConduitShardDisabledCondition(data.Read("client_id", static v => v.AsString()))
+        var instance = new TwitchConduitShardDisabledCondition(data.ReadAsString("client_id"))
         {
-            ConduitId = data.Read("conduit_id", static v => v.AsString()),
+            ConduitId = data.ReadAsString("conduit_id"),
         };
         
         instance._data = Variant.CreateFrom(data);

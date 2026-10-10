@@ -26,12 +26,12 @@ public partial class TwitchGetDropsEntitlementsOpt : RefCounted, ITwitcherSharp<
         if(data == null) return null;
         var instance = new TwitchGetDropsEntitlementsOpt
         {
-            Id = data.Read("id", static v => v.AsStringArray()),
-            UserId = data.Read("user_id", static v => v.AsString()),
-            GameId = data.Read("game_id", static v => v.AsString()),
-            FulfillmentStatus = data.Read("fulfillment_status", static v => v.AsString()),
-            After = data.Read("after", static v => v.AsString()),
-            First = data.Read("first", static v => v.AsInt32()),
+            Id = data.ReadAsStringArray("id"),
+            UserId = data.ReadAsString("user_id"),
+            GameId = data.ReadAsString("game_id"),
+            FulfillmentStatus = data.ReadAsString("fulfillment_status"),
+            After = data.ReadAsString("after"),
+            First = data.ReadAsInt32("first"),
         };
         
         instance._data = Variant.CreateFrom(data);

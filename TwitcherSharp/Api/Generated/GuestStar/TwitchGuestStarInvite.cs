@@ -23,13 +23,13 @@ public partial class TwitchGuestStarInvite : RefCounted, ITwitcherSharp<TwitchGu
         if(data == null) return null;
         var instance = new TwitchGuestStarInvite
         {
-            UserId = data.Read("user_id", static v => v.AsString()),
-            InvitedAt = data.Read("invited_at", static v => v.AsString()),
-            Status = data.Read("status", static v => v.AsString()),
-            IsVideoEnabled = data.Read("is_video_enabled", static v => v.AsBool()),
-            IsAudioEnabled = data.Read("is_audio_enabled", static v => v.AsBool()),
-            IsVideoAvailable = data.Read("is_video_available", static v => v.AsBool()),
-            IsAudioAvailable = data.Read("is_audio_available", static v => v.AsBool()),
+            UserId = data.ReadAsString("user_id"),
+            InvitedAt = data.ReadAsString("invited_at"),
+            Status = data.ReadAsString("status"),
+            IsVideoEnabled = data.ReadAsBool("is_video_enabled"),
+            IsAudioEnabled = data.ReadAsBool("is_audio_enabled"),
+            IsVideoAvailable = data.ReadAsBool("is_video_available"),
+            IsAudioAvailable = data.ReadAsBool("is_audio_available"),
         };
         
         instance._data = Variant.CreateFrom(data);

@@ -22,8 +22,8 @@ public partial class TwitchGetTeamsOpt : RefCounted, ITwitcherSharp<TwitchGetTea
         if(data == null) return null;
         var instance = new TwitchGetTeamsOpt
         {
-            Name = data.Read("name", static v => v.AsString()),
-            Id = data.Read("id", static v => v.AsString()),
+            Name = data.ReadAsString("name"),
+            Id = data.ReadAsString("id"),
         };
         
         instance._data = Variant.CreateFrom(data);

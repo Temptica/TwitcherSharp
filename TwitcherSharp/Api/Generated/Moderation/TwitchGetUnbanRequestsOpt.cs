@@ -23,9 +23,9 @@ public partial class TwitchGetUnbanRequestsOpt : RefCounted, ITwitcherSharp<Twit
         if(data == null) return null;
         var instance = new TwitchGetUnbanRequestsOpt
         {
-            UserId = data.Read("user_id", static v => v.AsString()),
-            After = data.Read("after", static v => v.AsString()),
-            First = data.Read("first", static v => v.AsInt32()),
+            UserId = data.ReadAsString("user_id"),
+            After = data.ReadAsString("after"),
+            First = data.ReadAsInt32("first"),
         };
         
         instance._data = Variant.CreateFrom(data);

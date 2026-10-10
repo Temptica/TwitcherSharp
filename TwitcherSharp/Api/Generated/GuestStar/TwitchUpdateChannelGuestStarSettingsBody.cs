@@ -21,11 +21,11 @@ public partial class TwitchUpdateChannelGuestStarSettingsBody : RefCounted, ITwi
         if(data == null) return null;
         var instance = new TwitchUpdateChannelGuestStarSettingsBody
         {
-            IsModeratorSendLiveEnabled = data.Read("is_moderator_send_live_enabled", static v => v.AsBool()),
-            SlotCount = data.Read("slot_count", static v => v.AsInt32()),
-            IsBrowserSourceAudioEnabled = data.Read("is_browser_source_audio_enabled", static v => v.AsBool()),
-            GroupLayout = data.Read("group_layout", static v => v.AsString()),
-            RegenerateBrowserSources = data.Read("regenerate_browser_sources", static v => v.AsBool()),
+            IsModeratorSendLiveEnabled = data.ReadAsBool("is_moderator_send_live_enabled"),
+            SlotCount = data.ReadAsInt32("slot_count"),
+            IsBrowserSourceAudioEnabled = data.ReadAsBool("is_browser_source_audio_enabled"),
+            GroupLayout = data.ReadAsString("group_layout"),
+            RegenerateBrowserSources = data.ReadAsBool("regenerate_browser_sources"),
         };
         
         instance._data = Variant.CreateFrom(data);

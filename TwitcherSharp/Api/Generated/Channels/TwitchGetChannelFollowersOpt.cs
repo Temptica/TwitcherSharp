@@ -23,9 +23,9 @@ public partial class TwitchGetChannelFollowersOpt : RefCounted, ITwitcherSharp<T
         if(data == null) return null;
         var instance = new TwitchGetChannelFollowersOpt
         {
-            UserId = data.Read("user_id", static v => v.AsString()),
-            First = data.Read("first", static v => v.AsInt32()),
-            After = data.Read("after", static v => v.AsString()),
+            UserId = data.ReadAsString("user_id"),
+            First = data.ReadAsInt32("first"),
+            After = data.ReadAsString("after"),
         };
         
         instance._data = Variant.CreateFrom(data);

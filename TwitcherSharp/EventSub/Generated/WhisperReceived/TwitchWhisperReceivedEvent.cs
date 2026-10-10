@@ -58,13 +58,13 @@ public partial class TwitchWhisperReceivedEvent : RefCounted, ITwitcherSharpEven
         if(data == null) return null;
         var instance = new TwitchWhisperReceivedEvent
         {
-            FromUserId = data.Read("from_user_id", static v => v.AsString()),
-            FromUserName = data.Read("from_user_name", static v => v.AsString()),
-            FromUserLogin = data.Read("from_user_login", static v => v.AsString()),
-            ToUserId = data.Read("to_user_id", static v => v.AsString()),
-            ToUserName = data.Read("to_user_name", static v => v.AsString()),
-            ToUserLogin = data.Read("to_user_login", static v => v.AsString()),
-            WhisperId = data.Read("whisper_id", static v => v.AsString()),
+            FromUserId = data.ReadAsString("from_user_id"),
+            FromUserName = data.ReadAsString("from_user_name"),
+            FromUserLogin = data.ReadAsString("from_user_login"),
+            ToUserId = data.ReadAsString("to_user_id"),
+            ToUserName = data.ReadAsString("to_user_name"),
+            ToUserLogin = data.ReadAsString("to_user_login"),
+            WhisperId = data.ReadAsString("whisper_id"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -110,7 +110,7 @@ public partial class TwitchWhisperReceivedEvent : RefCounted, ITwitcherSharpEven
             if(data == null) return null;
             var instance = new TwitchWhisper
             {
-                Text = data.Read("text", static v => v.AsString()),
+                Text = data.ReadAsString("text"),
             };
             
             instance._data = Variant.CreateFrom(data);

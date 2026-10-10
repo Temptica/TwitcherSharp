@@ -17,7 +17,7 @@ public partial class TwitchDeleteVideosResponse : RefCounted, ITwitcherSharp<Twi
         if(data == null) return null;
         var instance = new TwitchDeleteVideosResponse
         {
-            Data = data.Read("data", static v => v.AsStringArray()),
+            Data = data.ReadAsStringArray("data"),
         };
         
         instance._data = Variant.CreateFrom(data);

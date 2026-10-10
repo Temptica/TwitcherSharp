@@ -28,7 +28,7 @@ public partial class TwitchAutomodMessageUpdateCondition(string broadcasterUserI
     public static TwitchAutomodMessageUpdateCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchAutomodMessageUpdateCondition(data.Read("broadcaster_user_id", static v => v.AsString()), data.Read("moderator_user_id", static v => v.AsString()));
+        var instance = new TwitchAutomodMessageUpdateCondition(data.ReadAsString("broadcaster_user_id"), data.ReadAsString("moderator_user_id"));
         
         instance._data = Variant.CreateFrom(data);
         return instance;

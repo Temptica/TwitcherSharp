@@ -20,11 +20,11 @@ public partial class RequestData : RefCounted, ITwitcherSharp<RequestData>
         return new RequestData
         {
             HttpRequest = data.Read("http_request", static v => v.As<HttpRequest>()),
-            Path = data.Read("path", static v => v.AsString()),
-            Method = data.Read("method", static v => v.AsInt32()),
+            Path = data.ReadAsString("path"),
+            Method = data.ReadAsInt32("method"),
             Headers = data.Read("headers", static v => v.As<Dictionary>()),
-            Body = data.Read("body", static v => v.AsString()),
-            Retry = data.Read("retry", static v => v.AsInt32())
+            Body = data.ReadAsString("body"),
+            Retry = data.ReadAsInt32("retry")
         };
     }
 

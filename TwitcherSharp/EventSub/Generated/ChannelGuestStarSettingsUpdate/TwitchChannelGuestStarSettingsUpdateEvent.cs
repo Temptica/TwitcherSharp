@@ -53,13 +53,13 @@ public partial class TwitchChannelGuestStarSettingsUpdateEvent : RefCounted, ITw
         if(data == null) return null;
         var instance = new TwitchChannelGuestStarSettingsUpdateEvent
         {
-            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
-            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
-            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
-            IsModeratorSendLiveEnabled = data.Read("is_moderator_send_live_enabled", static v => v.AsBool()),
-            SlotCount = data.Read("slot_count", static v => v.AsInt32()),
-            IsBrowserSourceAudioEnabled = data.Read("is_browser_source_audio_enabled", static v => v.AsBool()),
-            GroupLayout = data.Read("group_layout", static v => v.AsString()),
+            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+            IsModeratorSendLiveEnabled = data.ReadAsBool("is_moderator_send_live_enabled"),
+            SlotCount = data.ReadAsInt32("slot_count"),
+            IsBrowserSourceAudioEnabled = data.ReadAsBool("is_browser_source_audio_enabled"),
+            GroupLayout = data.ReadAsString("group_layout"),
         };
         
         instance._data = Variant.CreateFrom(data);

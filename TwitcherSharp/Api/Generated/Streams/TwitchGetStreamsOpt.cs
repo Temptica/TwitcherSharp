@@ -28,14 +28,14 @@ public partial class TwitchGetStreamsOpt : RefCounted, ITwitcherSharp<TwitchGetS
         if(data == null) return null;
         var instance = new TwitchGetStreamsOpt
         {
-            UserId = data.Read("user_id", static v => v.AsStringArray()),
-            UserLogin = data.Read("user_login", static v => v.AsStringArray()),
-            GameId = data.Read("game_id", static v => v.AsStringArray()),
-            Type = data.Read("type", static v => v.AsString()),
-            Language = data.Read("language", static v => v.AsStringArray()),
-            First = data.Read("first", static v => v.AsInt32()),
-            Before = data.Read("before", static v => v.AsString()),
-            After = data.Read("after", static v => v.AsString()),
+            UserId = data.ReadAsStringArray("user_id"),
+            UserLogin = data.ReadAsStringArray("user_login"),
+            GameId = data.ReadAsStringArray("game_id"),
+            Type = data.ReadAsString("type"),
+            Language = data.ReadAsStringArray("language"),
+            First = data.ReadAsInt32("first"),
+            Before = data.ReadAsString("before"),
+            After = data.ReadAsString("after"),
         };
         
         instance._data = Variant.CreateFrom(data);

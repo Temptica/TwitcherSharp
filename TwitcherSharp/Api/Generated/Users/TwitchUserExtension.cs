@@ -21,11 +21,11 @@ public partial class TwitchUserExtension : RefCounted, ITwitcherSharp<TwitchUser
         if(data == null) return null;
         var instance = new TwitchUserExtension
         {
-            Id = data.Read("id", static v => v.AsString()),
-            Version = data.Read("version", static v => v.AsString()),
-            Name = data.Read("name", static v => v.AsString()),
-            CanActivate = data.Read("can_activate", static v => v.AsBool()),
-            Type = data.Read("type", static v => v.AsStringArray()),
+            Id = data.ReadAsString("id"),
+            Version = data.ReadAsString("version"),
+            Name = data.ReadAsString("name"),
+            CanActivate = data.ReadAsBool("can_activate"),
+            Type = data.ReadAsStringArray("type"),
         };
         
         instance._data = Variant.CreateFrom(data);

@@ -48,7 +48,7 @@ public partial class TwitchRedeemListener : RefCounted, ITwitcherSharp<TwitchRed
     /// </summary>
     public bool EnsureSubscriptionsOnReady
     {
-        get => _data?.Read("ensure_subscriptions_on_ready", static v => v.AsBool()) ?? field;
+        get => _data?.ReadAsBool("ensure_subscriptions_on_ready") ?? field;
         set
         {
             _data?.SetValue("ensure_subscriptions_on_ready", value);
@@ -84,7 +84,7 @@ public partial class TwitchRedeemListener : RefCounted, ITwitcherSharp<TwitchRed
         for (var i = rewards.Count - 1; i >= 0; i--)
         {
             using var item = rewards[i];
-            if (item.Read("id", static v => v.AsString()) == reward.Id) rewards.RemoveAt(i);
+            if (item.ReadAsString("id") == reward.Id) rewards.RemoveAt(i);
         }
     }
 

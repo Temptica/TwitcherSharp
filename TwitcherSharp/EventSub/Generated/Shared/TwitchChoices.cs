@@ -43,11 +43,11 @@ public partial class TwitchChoices : RefCounted, ITwitcherSharpEventSub<TwitchCh
         if(data == null) return null;
         var instance = new TwitchChoices
         {
-            Id = data.Read("id", static v => v.AsString()),
-            Title = data.Read("title", static v => v.AsString()),
-            BitsVotes = data.Read("bits_votes", static v => v.AsInt32()),
-            ChannelPointsVotes = data.Read("channel_points_votes", static v => v.AsInt32()),
-            Votes = data.Read("votes", static v => v.AsInt32()),
+            Id = data.ReadAsString("id"),
+            Title = data.ReadAsString("title"),
+            BitsVotes = data.ReadAsInt32("bits_votes"),
+            ChannelPointsVotes = data.ReadAsInt32("channel_points_votes"),
+            Votes = data.ReadAsInt32("votes"),
         };
         
         instance._data = Variant.CreateFrom(data);

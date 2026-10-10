@@ -31,21 +31,21 @@ public partial class TwitchStream : RefCounted, ITwitcherSharp<TwitchStream>
         if(data == null) return null;
         var instance = new TwitchStream
         {
-            Id = data.Read("id", static v => v.AsString()),
-            UserId = data.Read("user_id", static v => v.AsString()),
-            UserLogin = data.Read("user_login", static v => v.AsString()),
-            UserName = data.Read("user_name", static v => v.AsString()),
-            GameId = data.Read("game_id", static v => v.AsString()),
-            GameName = data.Read("game_name", static v => v.AsString()),
-            Type = data.Read("type", static v => v.AsString()),
-            Title = data.Read("title", static v => v.AsString()),
-            ViewerCount = data.Read("viewer_count", static v => v.AsInt32()),
-            StartedAt = data.Read("started_at", static v => v.AsString()),
-            Language = data.Read("language", static v => v.AsString()),
-            ThumbnailUrl = data.Read("thumbnail_url", static v => v.AsString()),
-            TagIds = data.Read("tag_ids", static v => v.AsStringArray()),
-            Tags = data.Read("tags", static v => v.AsStringArray()),
-            IsMature = data.Read("is_mature", static v => v.AsBool()),
+            Id = data.ReadAsString("id"),
+            UserId = data.ReadAsString("user_id"),
+            UserLogin = data.ReadAsString("user_login"),
+            UserName = data.ReadAsString("user_name"),
+            GameId = data.ReadAsString("game_id"),
+            GameName = data.ReadAsString("game_name"),
+            Type = data.ReadAsString("type"),
+            Title = data.ReadAsString("title"),
+            ViewerCount = data.ReadAsInt32("viewer_count"),
+            StartedAt = data.ReadAsString("started_at"),
+            Language = data.ReadAsString("language"),
+            ThumbnailUrl = data.ReadAsString("thumbnail_url"),
+            TagIds = data.ReadAsStringArray("tag_ids"),
+            Tags = data.ReadAsStringArray("tags"),
+            IsMature = data.ReadAsBool("is_mature"),
         };
         
         instance._data = Variant.CreateFrom(data);

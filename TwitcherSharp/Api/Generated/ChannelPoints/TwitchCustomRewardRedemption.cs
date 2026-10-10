@@ -27,16 +27,16 @@ public partial class TwitchCustomRewardRedemption : RefCounted, ITwitcherSharp<T
         if(data == null) return null;
         var instance = new TwitchCustomRewardRedemption
         {
-            BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
-            BroadcasterLogin = data.Read("broadcaster_login", static v => v.AsString()),
-            BroadcasterName = data.Read("broadcaster_name", static v => v.AsString()),
-            Id = data.Read("id", static v => v.AsString()),
-            UserId = data.Read("user_id", static v => v.AsString()),
-            UserName = data.Read("user_name", static v => v.AsString()),
-            UserLogin = data.Read("user_login", static v => v.AsString()),
-            UserInput = data.Read("user_input", static v => v.AsString()),
-            Status = data.Read("status", static v => v.AsString()),
-            RedeemedAt = data.Read("redeemed_at", static v => v.AsString()),
+            BroadcasterId = data.ReadAsString("broadcaster_id"),
+            BroadcasterLogin = data.ReadAsString("broadcaster_login"),
+            BroadcasterName = data.ReadAsString("broadcaster_name"),
+            Id = data.ReadAsString("id"),
+            UserId = data.ReadAsString("user_id"),
+            UserName = data.ReadAsString("user_name"),
+            UserLogin = data.ReadAsString("user_login"),
+            UserInput = data.ReadAsString("user_input"),
+            Status = data.ReadAsString("status"),
+            RedeemedAt = data.ReadAsString("redeemed_at"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -86,10 +86,10 @@ public partial class TwitchCustomRewardRedemption : RefCounted, ITwitcherSharp<T
             if(data == null) return null;
             var instance = new TwitchReward
             {
-                Id = data.Read("id", static v => v.AsString()),
-                Title = data.Read("title", static v => v.AsString()),
-                Prompt = data.Read("prompt", static v => v.AsString()),
-                Cost = data.Read("cost", static v => v.AsInt64()),
+                Id = data.ReadAsString("id"),
+                Title = data.ReadAsString("title"),
+                Prompt = data.ReadAsString("prompt"),
+                Cost = data.ReadAsInt64("cost"),
             };
             
             instance._data = Variant.CreateFrom(data);

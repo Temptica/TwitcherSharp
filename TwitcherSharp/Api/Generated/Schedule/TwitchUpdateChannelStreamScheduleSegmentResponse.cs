@@ -55,9 +55,9 @@ public partial class TwitchUpdateChannelStreamScheduleSegmentResponse : RefCount
             if(data == null) return null;
             var instance = new TwitchResponseData
             {
-                BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
-                BroadcasterName = data.Read("broadcaster_name", static v => v.AsString()),
-                BroadcasterLogin = data.Read("broadcaster_login", static v => v.AsString()),
+                BroadcasterId = data.ReadAsString("broadcaster_id"),
+                BroadcasterName = data.ReadAsString("broadcaster_name"),
+                BroadcasterLogin = data.ReadAsString("broadcaster_login"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -99,8 +99,8 @@ public partial class TwitchUpdateChannelStreamScheduleSegmentResponse : RefCount
                 if(data == null) return null;
                 var instance = new TwitchResponseVacation
                 {
-                    StartTime = data.Read("start_time", static v => v.AsString()),
-                    EndTime = data.Read("end_time", static v => v.AsString()),
+                    StartTime = data.ReadAsString("start_time"),
+                    EndTime = data.ReadAsString("end_time"),
                 };
                 
                 instance._data = Variant.CreateFrom(data);

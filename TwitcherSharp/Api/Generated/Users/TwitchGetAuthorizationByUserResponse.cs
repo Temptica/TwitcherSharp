@@ -55,11 +55,11 @@ public partial class TwitchGetAuthorizationByUserResponse : RefCounted, ITwitche
             if(data == null) return null;
             var instance = new TwitchResponseData
             {
-                UserId = data.Read("user_id", static v => v.AsString()),
-                UserName = data.Read("user_name", static v => v.AsString()),
-                UserLogin = data.Read("user_login", static v => v.AsString()),
-                Scopes = data.Read("scopes", static v => v.AsStringArray()),
-                HasAuthorized = data.Read("has_authorized", static v => v.AsBool()),
+                UserId = data.ReadAsString("user_id"),
+                UserName = data.ReadAsString("user_name"),
+                UserLogin = data.ReadAsString("user_login"),
+                Scopes = data.ReadAsStringArray("scopes"),
+                HasAuthorized = data.ReadAsBool("has_authorized"),
             };
             
             instance._data = Variant.CreateFrom(data);

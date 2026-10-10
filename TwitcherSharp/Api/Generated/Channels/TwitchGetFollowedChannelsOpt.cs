@@ -23,9 +23,9 @@ public partial class TwitchGetFollowedChannelsOpt : RefCounted, ITwitcherSharp<T
         if(data == null) return null;
         var instance = new TwitchGetFollowedChannelsOpt
         {
-            BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
-            First = data.Read("first", static v => v.AsInt32()),
-            After = data.Read("after", static v => v.AsString()),
+            BroadcasterId = data.ReadAsString("broadcaster_id"),
+            First = data.ReadAsInt32("first"),
+            After = data.ReadAsString("after"),
         };
         
         instance._data = Variant.CreateFrom(data);

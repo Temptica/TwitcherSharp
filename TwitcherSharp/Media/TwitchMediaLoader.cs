@@ -67,7 +67,7 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
     {
         get => _data is null
             ? field
-            : _data.Read("image_cdn_host", static v => v.AsString());
+            : _data.ReadAsString("image_cdn_host");
         set
         {
             _data?.SetValue("image_cdn_host", value);
@@ -82,7 +82,7 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
     {
         get => _data is null
             ? field
-            : _data.Read("load_cache_in_editor", static v => v.AsBool());
+            : _data.ReadAsBool("load_cache_in_editor");
         set
         {
             _data?.SetValue("load_cache_in_editor", value);
@@ -94,7 +94,7 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
     {
         get => _data is null
             ? field
-            : _data.Read("cache_emote", static v => v.AsString());
+            : _data.ReadAsString("cache_emote");
         set
         {
             _data?.SetValue("cache_emote", value);
@@ -106,7 +106,7 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
     {
         get => _data is null
             ? field
-            : _data.Read("cache_badge", static v => v.AsString());
+            : _data.ReadAsString("cache_badge");
         set
         {
             _data?.SetValue("cache_badge", value);
@@ -118,7 +118,7 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
     {
         get => _data is null
             ? field
-            : _data.Read("cache_cheermote", static v => v.AsString());
+            : _data.ReadAsString("cache_cheermote");
         set
         {
             _data?.SetValue("cache_cheermote", value);
@@ -130,7 +130,7 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
     {
         get => _data is null
             ? field
-            : _data.Read("cache_profile", static v => v.AsString());
+            : _data.ReadAsString("cache_profile");
         set
         {
             _data?.SetValue("cache_profile", value);
@@ -293,12 +293,12 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
             ImageTransformer = data.Get<TwitchImageTransformer>("image_transformer"),
             FallbackTexture = data.Read("fallback_texture", static v => v.As<Texture2D>()),
             FallbackProfile = data.Read("fallback_profile", static v => v.As<Texture2D>()),
-            ImageCdnHost = data.Read("image_cdn_host", static v => v.AsString()),
-            LoadCacheInEditor = data.Read("load_cache_in_editor", static v => v.AsBool()),
-            CacheEmote = data.Read("cache_emote", static v => v.AsString()),
-            CacheBadge = data.Read("cache_badge", static v => v.AsString()),
-            CacheCheermote = data.Read("cache_cheermote", static v => v.AsString()),
-            CacheProfile = data.Read("cache_profile", static v => v.AsString()),
+            ImageCdnHost = data.ReadAsString("image_cdn_host"),
+            LoadCacheInEditor = data.ReadAsBool("load_cache_in_editor"),
+            CacheEmote = data.ReadAsString("cache_emote"),
+            CacheBadge = data.ReadAsString("cache_badge"),
+            CacheCheermote = data.ReadAsString("cache_cheermote"),
+            CacheProfile = data.ReadAsString("cache_profile"),
             _data = data, //must be last to avoid setting itself (performance boost)
         };
         data.SetMeta("_twitcher_sharp_instance", mediaLoader);

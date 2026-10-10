@@ -28,7 +28,7 @@ public partial class TwitchChannelSuspiciousUserMessageCondition(string moderato
     public static TwitchChannelSuspiciousUserMessageCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchChannelSuspiciousUserMessageCondition(data.Read("moderator_user_id", static v => v.AsString()), data.Read("broadcaster_user_id", static v => v.AsString()));
+        var instance = new TwitchChannelSuspiciousUserMessageCondition(data.ReadAsString("moderator_user_id"), data.ReadAsString("broadcaster_user_id"));
         
         instance._data = Variant.CreateFrom(data);
         return instance;

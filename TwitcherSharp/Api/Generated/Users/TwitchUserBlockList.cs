@@ -19,9 +19,9 @@ public partial class TwitchUserBlockList : RefCounted, ITwitcherSharp<TwitchUser
         if(data == null) return null;
         var instance = new TwitchUserBlockList
         {
-            UserId = data.Read("user_id", static v => v.AsString()),
-            UserLogin = data.Read("user_login", static v => v.AsString()),
-            DisplayName = data.Read("display_name", static v => v.AsString()),
+            UserId = data.ReadAsString("user_id"),
+            UserLogin = data.ReadAsString("user_login"),
+            DisplayName = data.ReadAsString("display_name"),
         };
         
         instance._data = Variant.CreateFrom(data);

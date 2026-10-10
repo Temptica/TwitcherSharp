@@ -22,11 +22,11 @@ public partial class TwitchCreatePollBody : RefCounted, ITwitcherSharp<TwitchCre
         if(data == null) return null;
         var instance = new TwitchCreatePollBody
         {
-            BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
-            Title = data.Read("title", static v => v.AsString()),
-            Duration = data.Read("duration", static v => v.AsInt32()),
-            ChannelPointsVotingEnabled = data.Read("channel_points_voting_enabled", static v => v.AsBool()),
-            ChannelPointsPerVote = data.Read("channel_points_per_vote", static v => v.AsInt32()),
+            BroadcasterId = data.ReadAsString("broadcaster_id"),
+            Title = data.ReadAsString("title"),
+            Duration = data.ReadAsInt32("duration"),
+            ChannelPointsVotingEnabled = data.ReadAsBool("channel_points_voting_enabled"),
+            ChannelPointsPerVote = data.ReadAsInt32("channel_points_per_vote"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -68,7 +68,7 @@ public partial class TwitchCreatePollBody : RefCounted, ITwitcherSharp<TwitchCre
             if(data == null) return null;
             var instance = new TwitchBodyChoices
             {
-                Title = data.Read("title", static v => v.AsString()),
+                Title = data.ReadAsString("title"),
             };
             
             instance._data = Variant.CreateFrom(data);

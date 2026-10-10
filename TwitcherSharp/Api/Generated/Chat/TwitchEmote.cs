@@ -26,14 +26,14 @@ public partial class TwitchEmote : RefCounted, ITwitcherSharp<TwitchEmote>, ITwi
         if(data == null) return null;
         var instance = new TwitchEmote
         {
-            Id = data.Read("id", static v => v.AsString()),
-            Name = data.Read("name", static v => v.AsString()),
-            EmoteType = data.Read("emote_type", static v => v.AsString()),
-            EmoteSetId = data.Read("emote_set_id", static v => v.AsString()),
-            OwnerId = data.Read("owner_id", static v => v.AsString()),
-            Format = data.Read("format", static v => v.AsStringArray()),
-            Scale = data.Read("scale", static v => v.AsStringArray()),
-            ThemeMode = data.Read("theme_mode", static v => v.AsStringArray()),
+            Id = data.ReadAsString("id"),
+            Name = data.ReadAsString("name"),
+            EmoteType = data.ReadAsString("emote_type"),
+            EmoteSetId = data.ReadAsString("emote_set_id"),
+            OwnerId = data.ReadAsString("owner_id"),
+            Format = data.ReadAsStringArray("format"),
+            Scale = data.ReadAsStringArray("scale"),
+            ThemeMode = data.ReadAsStringArray("theme_mode"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -82,9 +82,9 @@ public partial class TwitchEmote : RefCounted, ITwitcherSharp<TwitchEmote>, ITwi
             if(data == null) return null;
             var instance = new TwitchResponseImages
             {
-                Url1x = data.Read("url_1x", static v => v.AsString()),
-                Url2x = data.Read("url_2x", static v => v.AsString()),
-                Url4x = data.Read("url_4x", static v => v.AsString()),
+                Url1x = data.ReadAsString("url_1x"),
+                Url2x = data.ReadAsString("url_2x"),
+                Url4x = data.ReadAsString("url_4x"),
             };
             
             instance._data = Variant.CreateFrom(data);

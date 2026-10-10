@@ -22,8 +22,8 @@ public partial class TwitchCreateClipOpt : RefCounted, ITwitcherSharp<TwitchCrea
         if(data == null) return null;
         var instance = new TwitchCreateClipOpt
         {
-            Title = data.Read("title", static v => v.AsString()),
-            Duration = data.Read("duration", static v => v.AsDouble()),
+            Title = data.ReadAsString("title"),
+            Duration = data.ReadAsDouble("duration"),
         };
         
         instance._data = Variant.CreateFrom(data);

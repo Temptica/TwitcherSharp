@@ -98,19 +98,19 @@ public partial class TwitchAutomodMessageUpdateEventV2 : RefCounted, ITwitcherSh
         if(data == null) return null;
         var instance = new TwitchAutomodMessageUpdateEventV2
         {
-            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
-            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
-            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
-            UserId = data.Read("user_id", static v => v.AsString()),
-            UserLogin = data.Read("user_login", static v => v.AsString()),
-            UserName = data.Read("user_name", static v => v.AsString()),
-            ModeratorUserId = data.Read("moderator_user_id", static v => v.AsString()),
-            ModeratorUserName = data.Read("moderator_user_name", static v => v.AsString()),
-            ModeratorUserLogin = data.Read("moderator_user_login", static v => v.AsString()),
-            MessageId = data.Read("message_id", static v => v.AsString()),
-            Status = data.Read("status", static v => v.AsString()),
-            HeldAt = data.Read("held_at", static v => v.AsString()),
-            Reason = data.Read("reason", static v => v.AsString()),
+            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+            UserId = data.ReadAsString("user_id"),
+            UserLogin = data.ReadAsString("user_login"),
+            UserName = data.ReadAsString("user_name"),
+            ModeratorUserId = data.ReadAsString("moderator_user_id"),
+            ModeratorUserName = data.ReadAsString("moderator_user_name"),
+            ModeratorUserLogin = data.ReadAsString("moderator_user_login"),
+            MessageId = data.ReadAsString("message_id"),
+            Status = data.ReadAsString("status"),
+            HeldAt = data.ReadAsString("held_at"),
+            Reason = data.ReadAsString("reason"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -169,7 +169,7 @@ public partial class TwitchAutomodMessageUpdateEventV2 : RefCounted, ITwitcherSh
             if(data == null) return null;
             var instance = new TwitchMessage
             {
-                Text = data.Read("text", static v => v.AsString()),
+                Text = data.ReadAsString("text"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -224,8 +224,8 @@ public partial class TwitchAutomodMessageUpdateEventV2 : RefCounted, ITwitcherSh
                 if(data == null) return null;
                 var instance = new TwitchFragments
                 {
-                    Text = data.Read("text", static v => v.AsString()),
-                    Type = data.Read("type", static v => v.AsString()),
+                    Text = data.ReadAsString("text"),
+                    Type = data.ReadAsString("type"),
                 };
                 
                 instance._data = Variant.CreateFrom(data);
@@ -272,8 +272,8 @@ public partial class TwitchAutomodMessageUpdateEventV2 : RefCounted, ITwitcherSh
                     if(data == null) return null;
                     var instance = new TwitchEmote
                     {
-                        Id = data.Read("id", static v => v.AsString()),
-                        EmoteSetId = data.Read("emote_set_id", static v => v.AsString()),
+                        Id = data.ReadAsString("id"),
+                        EmoteSetId = data.ReadAsString("emote_set_id"),
                     };
                     
                     instance._data = Variant.CreateFrom(data);
@@ -323,9 +323,9 @@ public partial class TwitchAutomodMessageUpdateEventV2 : RefCounted, ITwitcherSh
                     if(data == null) return null;
                     var instance = new TwitchCheermote
                     {
-                        Prefix = data.Read("prefix", static v => v.AsString()),
-                        Bits = data.Read("bits", static v => v.AsInt32()),
-                        Tier = data.Read("tier", static v => v.AsInt32()),
+                        Prefix = data.ReadAsString("prefix"),
+                        Bits = data.ReadAsInt32("bits"),
+                        Tier = data.ReadAsInt32("tier"),
                     };
                     
                     instance._data = Variant.CreateFrom(data);
@@ -378,8 +378,8 @@ public partial class TwitchAutomodMessageUpdateEventV2 : RefCounted, ITwitcherSh
             if(data == null) return null;
             var instance = new TwitchAutomodV2
             {
-                Category = data.Read("category", static v => v.AsString()),
-                Level = data.Read("level", static v => v.AsInt32()),
+                Category = data.ReadAsString("category"),
+                Level = data.ReadAsInt32("level"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -425,8 +425,8 @@ public partial class TwitchAutomodMessageUpdateEventV2 : RefCounted, ITwitcherSh
                 if(data == null) return null;
                 var instance = new TwitchBoundariesV2
                 {
-                    StartPos = data.Read("start_pos", static v => v.AsInt32()),
-                    EndPos = data.Read("end_pos", static v => v.AsInt32()),
+                    StartPos = data.ReadAsInt32("start_pos"),
+                    EndPos = data.ReadAsInt32("end_pos"),
                 };
                 
                 instance._data = Variant.CreateFrom(data);
@@ -525,10 +525,10 @@ public partial class TwitchAutomodMessageUpdateEventV2 : RefCounted, ITwitcherSh
                 if(data == null) return null;
                 var instance = new TwitchTermsFoundV2
                 {
-                    TermId = data.Read("term_id", static v => v.AsString()),
-                    OwnerBroadcasterUserId = data.Read("owner_broadcaster_user_id", static v => v.AsString()),
-                    OwnerBroadcasterUserLogin = data.Read("owner_broadcaster_user_login", static v => v.AsString()),
-                    OwnerBroadcasterUserName = data.Read("owner_broadcaster_user_name", static v => v.AsString()),
+                    TermId = data.ReadAsString("term_id"),
+                    OwnerBroadcasterUserId = data.ReadAsString("owner_broadcaster_user_id"),
+                    OwnerBroadcasterUserLogin = data.ReadAsString("owner_broadcaster_user_login"),
+                    OwnerBroadcasterUserName = data.ReadAsString("owner_broadcaster_user_name"),
                 };
                 
                 instance._data = Variant.CreateFrom(data);
@@ -576,8 +576,8 @@ public partial class TwitchAutomodMessageUpdateEventV2 : RefCounted, ITwitcherSh
                     if(data == null) return null;
                     var instance = new TwitchBoundaryV2
                     {
-                        StartPos = data.Read("start_pos", static v => v.AsInt32()),
-                        EndPos = data.Read("end_pos", static v => v.AsInt32()),
+                        StartPos = data.ReadAsInt32("start_pos"),
+                        EndPos = data.ReadAsInt32("end_pos"),
                     };
                     
                     instance._data = Variant.CreateFrom(data);

@@ -22,8 +22,8 @@ public partial class TwitchGetUsersOpt : RefCounted, ITwitcherSharp<TwitchGetUse
         if(data == null) return null;
         var instance = new TwitchGetUsersOpt
         {
-            Id = data.Read("id", static v => v.AsStringArray()),
-            Login = data.Read("login", static v => v.AsStringArray()),
+            Id = data.ReadAsStringArray("id"),
+            Login = data.ReadAsStringArray("login"),
         };
         
         instance._data = Variant.CreateFrom(data);

@@ -69,7 +69,7 @@ public partial class OAuthToken : Resource, ITwitcherSharp<OAuthToken>
         var tokenHandler = new OAuthToken()
         {
             _data = Variant.CreateFrom(data),
-            Type = data.Read("type", static v => v.AsString())
+            Type = data.ReadAsString("type")
         };
         
         tokenHandler.ConnectSignals();

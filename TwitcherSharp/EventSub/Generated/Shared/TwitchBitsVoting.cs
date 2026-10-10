@@ -28,8 +28,8 @@ public partial class TwitchBitsVoting : RefCounted, ITwitcherSharpEventSub<Twitc
         if(data == null) return null;
         var instance = new TwitchBitsVoting
         {
-            IsEnabled = data.Read("is_enabled", static v => v.AsBool()),
-            AmountPerVote = data.Read("amount_per_vote", static v => v.AsInt32()),
+            IsEnabled = data.ReadAsBool("is_enabled"),
+            AmountPerVote = data.ReadAsInt32("amount_per_vote"),
         };
         
         instance._data = Variant.CreateFrom(data);

@@ -20,10 +20,10 @@ public partial class TwitchGame : RefCounted, ITwitcherSharp<TwitchGame>
         if(data == null) return null;
         var instance = new TwitchGame
         {
-            Id = data.Read("id", static v => v.AsString()),
-            Name = data.Read("name", static v => v.AsString()),
-            BoxArtUrl = data.Read("box_art_url", static v => v.AsString()),
-            IgdbId = data.Read("igdb_id", static v => v.AsString()),
+            Id = data.ReadAsString("id"),
+            Name = data.ReadAsString("name"),
+            BoxArtUrl = data.ReadAsString("box_art_url"),
+            IgdbId = data.ReadAsString("igdb_id"),
         };
         
         instance._data = Variant.CreateFrom(data);

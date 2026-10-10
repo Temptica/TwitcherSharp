@@ -25,11 +25,11 @@ public partial class TwitchGetChannelStreamScheduleOpt : RefCounted, ITwitcherSh
         if(data == null) return null;
         var instance = new TwitchGetChannelStreamScheduleOpt
         {
-            Id = data.Read("id", static v => v.AsStringArray()),
-            StartTime = data.Read("start_time", static v => v.AsString()),
-            UtcOffset = data.Read("utc_offset", static v => v.AsString()),
-            First = data.Read("first", static v => v.AsInt32()),
-            After = data.Read("after", static v => v.AsString()),
+            Id = data.ReadAsStringArray("id"),
+            StartTime = data.ReadAsString("start_time"),
+            UtcOffset = data.ReadAsString("utc_offset"),
+            First = data.ReadAsInt32("first"),
+            After = data.ReadAsString("after"),
         };
         
         instance._data = Variant.CreateFrom(data);

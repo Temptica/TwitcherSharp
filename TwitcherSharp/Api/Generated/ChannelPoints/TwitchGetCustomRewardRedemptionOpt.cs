@@ -25,11 +25,11 @@ public partial class TwitchGetCustomRewardRedemptionOpt : RefCounted, ITwitcherS
         if(data == null) return null;
         var instance = new TwitchGetCustomRewardRedemptionOpt
         {
-            Status = data.Read("status", static v => v.AsString()),
-            Id = data.Read("id", static v => v.AsStringArray()),
-            Sort = data.Read("sort", static v => v.AsString()),
-            After = data.Read("after", static v => v.AsString()),
-            First = data.Read("first", static v => v.AsInt32()),
+            Status = data.ReadAsString("status"),
+            Id = data.ReadAsStringArray("id"),
+            Sort = data.ReadAsString("sort"),
+            After = data.ReadAsString("after"),
+            First = data.ReadAsInt32("first"),
         };
         
         instance._data = Variant.CreateFrom(data);

@@ -27,17 +27,17 @@ public partial class TwitchUser : RefCounted, ITwitcherSharp<TwitchUser>
         if(data == null) return null;
         var instance = new TwitchUser
         {
-            Id = data.Read("id", static v => v.AsString()),
-            Login = data.Read("login", static v => v.AsString()),
-            DisplayName = data.Read("display_name", static v => v.AsString()),
-            Type = data.Read("type", static v => v.AsString()),
-            BroadcasterType = data.Read("broadcaster_type", static v => v.AsString()),
-            Description = data.Read("description", static v => v.AsString()),
-            ProfileImageUrl = data.Read("profile_image_url", static v => v.AsString()),
-            OfflineImageUrl = data.Read("offline_image_url", static v => v.AsString()),
-            ViewCount = data.Read("view_count", static v => v.AsInt32()),
-            Email = data.Read("email", static v => v.AsString()),
-            CreatedAt = data.Read("created_at", static v => v.AsString()),
+            Id = data.ReadAsString("id"),
+            Login = data.ReadAsString("login"),
+            DisplayName = data.ReadAsString("display_name"),
+            Type = data.ReadAsString("type"),
+            BroadcasterType = data.ReadAsString("broadcaster_type"),
+            Description = data.ReadAsString("description"),
+            ProfileImageUrl = data.ReadAsString("profile_image_url"),
+            OfflineImageUrl = data.ReadAsString("offline_image_url"),
+            ViewCount = data.ReadAsInt32("view_count"),
+            Email = data.ReadAsString("email"),
+            CreatedAt = data.ReadAsString("created_at"),
         };
         
         instance._data = Variant.CreateFrom(data);

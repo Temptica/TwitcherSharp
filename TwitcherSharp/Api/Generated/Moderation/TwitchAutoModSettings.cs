@@ -27,17 +27,17 @@ public partial class TwitchAutoModSettings : RefCounted, ITwitcherSharp<TwitchAu
         if(data == null) return null;
         var instance = new TwitchAutoModSettings
         {
-            BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
-            ModeratorId = data.Read("moderator_id", static v => v.AsString()),
-            OverallLevel = data.Read("overall_level", static v => v.AsInt32()),
-            Disability = data.Read("disability", static v => v.AsInt32()),
-            Aggression = data.Read("aggression", static v => v.AsInt32()),
-            SexualitySexOrGender = data.Read("sexuality_sex_or_gender", static v => v.AsInt32()),
-            Misogyny = data.Read("misogyny", static v => v.AsInt32()),
-            Bullying = data.Read("bullying", static v => v.AsInt32()),
-            Swearing = data.Read("swearing", static v => v.AsInt32()),
-            RaceEthnicityOrReligion = data.Read("race_ethnicity_or_religion", static v => v.AsInt32()),
-            SexBasedTerms = data.Read("sex_based_terms", static v => v.AsInt32()),
+            BroadcasterId = data.ReadAsString("broadcaster_id"),
+            ModeratorId = data.ReadAsString("moderator_id"),
+            OverallLevel = data.ReadAsInt32("overall_level"),
+            Disability = data.ReadAsInt32("disability"),
+            Aggression = data.ReadAsInt32("aggression"),
+            SexualitySexOrGender = data.ReadAsInt32("sexuality_sex_or_gender"),
+            Misogyny = data.ReadAsInt32("misogyny"),
+            Bullying = data.ReadAsInt32("bullying"),
+            Swearing = data.ReadAsInt32("swearing"),
+            RaceEthnicityOrReligion = data.ReadAsInt32("race_ethnicity_or_religion"),
+            SexBasedTerms = data.ReadAsInt32("sex_based_terms"),
         };
         
         instance._data = Variant.CreateFrom(data);

@@ -12,8 +12,8 @@ public partial class TwitchChatCommandResponse: RefCounted, ITwitcherSharp<Twitc
     {
         if (data == null) return null;
         var response = new TwitchChatCommandResponse();
-        response.ResponseMessage = data.Read("respond_message", static v => v.AsString());
-        response.UseBot = data.Read("use_bot", static v => v.AsBool());
+        response.ResponseMessage = data.ReadAsString("respond_message");
+        response.UseBot = data.ReadAsBool("use_bot");
         return response;
     }
 

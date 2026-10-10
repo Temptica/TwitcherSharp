@@ -38,10 +38,10 @@ public partial class TwitchProduct : RefCounted, ITwitcherSharpEventSub<TwitchPr
         if(data == null) return null;
         var instance = new TwitchProduct
         {
-            Name = data.Read("name", static v => v.AsString()),
-            Bits = data.Read("bits", static v => v.AsInt32()),
-            Sku = data.Read("sku", static v => v.AsString()),
-            InDevelopment = data.Read("in_development", static v => v.AsBool()),
+            Name = data.ReadAsString("name"),
+            Bits = data.ReadAsInt32("bits"),
+            Sku = data.ReadAsString("sku"),
+            InDevelopment = data.ReadAsBool("in_development"),
         };
         
         instance._data = Variant.CreateFrom(data);

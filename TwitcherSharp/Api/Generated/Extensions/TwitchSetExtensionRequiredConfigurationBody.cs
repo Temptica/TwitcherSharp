@@ -19,9 +19,9 @@ public partial class TwitchSetExtensionRequiredConfigurationBody : RefCounted, I
         if(data == null) return null;
         var instance = new TwitchSetExtensionRequiredConfigurationBody
         {
-            ExtensionId = data.Read("extension_id", static v => v.AsString()),
-            ExtensionVersion = data.Read("extension_version", static v => v.AsString()),
-            RequiredConfiguration = data.Read("required_configuration", static v => v.AsString()),
+            ExtensionId = data.ReadAsString("extension_id"),
+            ExtensionVersion = data.ReadAsString("extension_version"),
+            RequiredConfiguration = data.ReadAsString("required_configuration"),
         };
         
         instance._data = Variant.CreateFrom(data);

@@ -52,8 +52,8 @@ public partial class TwitchStartARaidResponse : RefCounted, ITwitcherSharp<Twitc
             if(data == null) return null;
             var instance = new TwitchResponseData
             {
-                CreatedAt = data.Read("created_at", static v => v.AsString()),
-                IsMature = data.Read("is_mature", static v => v.AsBool()),
+                CreatedAt = data.ReadAsString("created_at"),
+                IsMature = data.ReadAsBool("is_mature"),
             };
             
             instance._data = Variant.CreateFrom(data);

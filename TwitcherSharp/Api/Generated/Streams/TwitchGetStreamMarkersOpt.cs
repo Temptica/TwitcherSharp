@@ -25,11 +25,11 @@ public partial class TwitchGetStreamMarkersOpt : RefCounted, ITwitcherSharp<Twit
         if(data == null) return null;
         var instance = new TwitchGetStreamMarkersOpt
         {
-            UserId = data.Read("user_id", static v => v.AsString()),
-            VideoId = data.Read("video_id", static v => v.AsString()),
-            First = data.Read("first", static v => v.AsString()),
-            Before = data.Read("before", static v => v.AsString()),
-            After = data.Read("after", static v => v.AsString()),
+            UserId = data.ReadAsString("user_id"),
+            VideoId = data.ReadAsString("video_id"),
+            First = data.ReadAsString("first"),
+            Before = data.ReadAsString("before"),
+            After = data.ReadAsString("after"),
         };
         
         instance._data = Variant.CreateFrom(data);

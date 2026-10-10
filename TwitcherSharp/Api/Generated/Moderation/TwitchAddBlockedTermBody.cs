@@ -17,7 +17,7 @@ public partial class TwitchAddBlockedTermBody : RefCounted, ITwitcherSharp<Twitc
         if(data == null) return null;
         var instance = new TwitchAddBlockedTermBody
         {
-            Text = data.Read("text", static v => v.AsString()),
+            Text = data.ReadAsString("text"),
         };
         
         instance._data = Variant.CreateFrom(data);

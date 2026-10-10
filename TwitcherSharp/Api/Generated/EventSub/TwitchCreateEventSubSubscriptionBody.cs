@@ -20,8 +20,8 @@ public partial class TwitchCreateEventSubSubscriptionBody<T> : RefCounted, ITwit
         if(data == null) return null;
         var instance = new TwitchCreateEventSubSubscriptionBody<T>
         {
-            Type = data.Read("type", static v => v.AsString()),
-            Version = data.Read("version", static v => v.AsString()),
+            Type = data.ReadAsString("type"),
+            Version = data.ReadAsString("version"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -65,11 +65,11 @@ public partial class TwitchCreateEventSubSubscriptionBody<T> : RefCounted, ITwit
             if(data == null) return null;
             var instance = new TwitchBodyTransport
             {
-                Method = data.Read("method", static v => v.AsString()),
-                Callback = data.Read("callback", static v => v.AsString()),
-                Secret = data.Read("secret", static v => v.AsString()),
-                SessionId = data.Read("session_id", static v => v.AsString()),
-                ConduitId = data.Read("conduit_id", static v => v.AsString()),
+                Method = data.ReadAsString("method"),
+                Callback = data.ReadAsString("callback"),
+                Secret = data.ReadAsString("secret"),
+                SessionId = data.ReadAsString("session_id"),
+                ConduitId = data.ReadAsString("conduit_id"),
             };
             
             instance._data = Variant.CreateFrom(data);

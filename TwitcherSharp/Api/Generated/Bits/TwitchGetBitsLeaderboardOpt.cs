@@ -24,10 +24,10 @@ public partial class TwitchGetBitsLeaderboardOpt : RefCounted, ITwitcherSharp<Tw
         if(data == null) return null;
         var instance = new TwitchGetBitsLeaderboardOpt
         {
-            Count = data.Read("count", static v => v.AsInt32()),
-            Period = data.Read("period", static v => v.AsString()),
-            StartedAt = data.Read("started_at", static v => v.AsString()),
-            UserId = data.Read("user_id", static v => v.AsString()),
+            Count = data.ReadAsInt32("count"),
+            Period = data.ReadAsString("period"),
+            StartedAt = data.ReadAsString("started_at"),
+            UserId = data.ReadAsString("user_id"),
         };
         
         instance._data = Variant.CreateFrom(data);

@@ -22,8 +22,8 @@ public partial class TwitchGetModeratedChannelsOpt : RefCounted, ITwitcherSharp<
         if(data == null) return null;
         var instance = new TwitchGetModeratedChannelsOpt
         {
-            After = data.Read("after", static v => v.AsString()),
-            First = data.Read("first", static v => v.AsInt32()),
+            After = data.ReadAsString("after"),
+            First = data.ReadAsInt32("first"),
         };
         
         instance._data = Variant.CreateFrom(data);

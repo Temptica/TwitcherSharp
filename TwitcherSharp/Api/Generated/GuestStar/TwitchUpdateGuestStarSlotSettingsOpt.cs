@@ -24,10 +24,10 @@ public partial class TwitchUpdateGuestStarSlotSettingsOpt : RefCounted, ITwitche
         if(data == null) return null;
         var instance = new TwitchUpdateGuestStarSlotSettingsOpt
         {
-            IsAudioEnabled = data.Read("is_audio_enabled", static v => v.AsBool()),
-            IsVideoEnabled = data.Read("is_video_enabled", static v => v.AsBool()),
-            IsLive = data.Read("is_live", static v => v.AsBool()),
-            Volume = data.Read("volume", static v => v.AsInt32()),
+            IsAudioEnabled = data.ReadAsBool("is_audio_enabled"),
+            IsVideoEnabled = data.ReadAsBool("is_video_enabled"),
+            IsLive = data.ReadAsBool("is_live"),
+            Volume = data.ReadAsInt32("volume"),
         };
         
         instance._data = Variant.CreateFrom(data);

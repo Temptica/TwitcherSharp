@@ -22,8 +22,8 @@ public partial class TwitchStartARaidOpt : RefCounted, ITwitcherSharp<TwitchStar
         if(data == null) return null;
         var instance = new TwitchStartARaidOpt
         {
-            FromBroadcasterId = data.Read("from_broadcaster_id", static v => v.AsString()),
-            ToBroadcasterId = data.Read("to_broadcaster_id", static v => v.AsString()),
+            FromBroadcasterId = data.ReadAsString("from_broadcaster_id"),
+            ToBroadcasterId = data.ReadAsString("to_broadcaster_id"),
         };
         
         instance._data = Variant.CreateFrom(data);

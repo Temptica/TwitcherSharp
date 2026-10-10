@@ -18,7 +18,7 @@ public partial class TwitchGetExtensionLiveChannelsResponse : RefCounted, ITwitc
         if(data == null) return null;
         var instance = new TwitchGetExtensionLiveChannelsResponse
         {
-            Pagination = data.Read("pagination", static v => v.AsString()),
+            Pagination = data.ReadAsString("pagination"),
         };
         
         instance._data = Variant.CreateFrom(data);

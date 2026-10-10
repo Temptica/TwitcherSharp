@@ -68,16 +68,16 @@ public partial class TwitchChannelSuspiciousUserUpdateEvent : RefCounted, ITwitc
         if(data == null) return null;
         var instance = new TwitchChannelSuspiciousUserUpdateEvent
         {
-            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
-            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
-            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
-            ModeratorUserId = data.Read("moderator_user_id", static v => v.AsString()),
-            ModeratorUserName = data.Read("moderator_user_name", static v => v.AsString()),
-            ModeratorUserLogin = data.Read("moderator_user_login", static v => v.AsString()),
-            UserId = data.Read("user_id", static v => v.AsString()),
-            UserName = data.Read("user_name", static v => v.AsString()),
-            UserLogin = data.Read("user_login", static v => v.AsString()),
-            LowTrustStatus = data.Read("low_trust_status", static v => v.AsString()),
+            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+            ModeratorUserId = data.ReadAsString("moderator_user_id"),
+            ModeratorUserName = data.ReadAsString("moderator_user_name"),
+            ModeratorUserLogin = data.ReadAsString("moderator_user_login"),
+            UserId = data.ReadAsString("user_id"),
+            UserName = data.ReadAsString("user_name"),
+            UserLogin = data.ReadAsString("user_login"),
+            LowTrustStatus = data.ReadAsString("low_trust_status"),
         };
         
         instance._data = Variant.CreateFrom(data);

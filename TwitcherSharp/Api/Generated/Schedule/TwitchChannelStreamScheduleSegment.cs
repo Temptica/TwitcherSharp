@@ -23,12 +23,12 @@ public partial class TwitchChannelStreamScheduleSegment : RefCounted, ITwitcherS
         if(data == null) return null;
         var instance = new TwitchChannelStreamScheduleSegment
         {
-            Id = data.Read("id", static v => v.AsString()),
-            StartTime = data.Read("start_time", static v => v.AsString()),
-            EndTime = data.Read("end_time", static v => v.AsString()),
-            Title = data.Read("title", static v => v.AsString()),
-            CanceledUntil = data.Read("canceled_until", static v => v.AsString()),
-            IsRecurring = data.Read("is_recurring", static v => v.AsBool()),
+            Id = data.ReadAsString("id"),
+            StartTime = data.ReadAsString("start_time"),
+            EndTime = data.ReadAsString("end_time"),
+            Title = data.ReadAsString("title"),
+            CanceledUntil = data.ReadAsString("canceled_until"),
+            IsRecurring = data.ReadAsBool("is_recurring"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -72,8 +72,8 @@ public partial class TwitchChannelStreamScheduleSegment : RefCounted, ITwitcherS
             if(data == null) return null;
             var instance = new TwitchCategory
             {
-                Id = data.Read("id", static v => v.AsString()),
-                Name = data.Read("name", static v => v.AsString()),
+                Id = data.ReadAsString("id"),
+                Name = data.ReadAsString("name"),
             };
             
             instance._data = Variant.CreateFrom(data);

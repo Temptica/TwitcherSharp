@@ -23,7 +23,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddCondition(st
     public static TwitchChannelPointsAutomaticRewardRedemptionAddCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchChannelPointsAutomaticRewardRedemptionAddCondition(data.Read("broadcaster_user_id", static v => v.AsString()));
+        var instance = new TwitchChannelPointsAutomaticRewardRedemptionAddCondition(data.ReadAsString("broadcaster_user_id"));
         
         instance._data = Variant.CreateFrom(data);
         return instance;

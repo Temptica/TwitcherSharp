@@ -28,7 +28,7 @@ public partial class TwitchChannelChatMessageCondition(string broadcasterUserId,
     public static TwitchChannelChatMessageCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchChannelChatMessageCondition(data.Read("broadcaster_user_id", static v => v.AsString()), data.Read("user_id", static v => v.AsString()));
+        var instance = new TwitchChannelChatMessageCondition(data.ReadAsString("broadcaster_user_id"), data.ReadAsString("user_id"));
         
         instance._data = Variant.CreateFrom(data);
         return instance;

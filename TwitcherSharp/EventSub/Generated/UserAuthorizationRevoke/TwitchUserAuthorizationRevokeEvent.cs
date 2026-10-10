@@ -38,10 +38,10 @@ public partial class TwitchUserAuthorizationRevokeEvent : RefCounted, ITwitcherS
         if(data == null) return null;
         var instance = new TwitchUserAuthorizationRevokeEvent
         {
-            ClientId = data.Read("client_id", static v => v.AsString()),
-            UserId = data.Read("user_id", static v => v.AsString()),
-            UserLogin = data.Read("user_login", static v => v.AsString()),
-            UserName = data.Read("user_name", static v => v.AsString()),
+            ClientId = data.ReadAsString("client_id"),
+            UserId = data.ReadAsString("user_id"),
+            UserLogin = data.ReadAsString("user_login"),
+            UserName = data.ReadAsString("user_name"),
         };
         
         instance._data = Variant.CreateFrom(data);

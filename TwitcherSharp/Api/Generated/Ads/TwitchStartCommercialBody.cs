@@ -18,8 +18,8 @@ public partial class TwitchStartCommercialBody : RefCounted, ITwitcherSharp<Twit
         if(data == null) return null;
         var instance = new TwitchStartCommercialBody
         {
-            BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
-            Length = data.Read("length", static v => v.AsInt32()),
+            BroadcasterId = data.ReadAsString("broadcaster_id"),
+            Length = data.ReadAsInt32("length"),
         };
         
         instance._data = Variant.CreateFrom(data);

@@ -23,7 +23,7 @@ public partial class TwitchUserAuthorizationGrantCondition(string clientId) : Re
     public static TwitchUserAuthorizationGrantCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchUserAuthorizationGrantCondition(data.Read("client_id", static v => v.AsString()));
+        var instance = new TwitchUserAuthorizationGrantCondition(data.ReadAsString("client_id"));
         
         instance._data = Variant.CreateFrom(data);
         return instance;

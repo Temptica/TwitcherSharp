@@ -55,11 +55,11 @@ public partial class TwitchGetShieldModeStatusResponse : RefCounted, ITwitcherSh
             if(data == null) return null;
             var instance = new TwitchResponseData
             {
-                IsActive = data.Read("is_active", static v => v.AsBool()),
-                ModeratorId = data.Read("moderator_id", static v => v.AsString()),
-                ModeratorLogin = data.Read("moderator_login", static v => v.AsString()),
-                ModeratorName = data.Read("moderator_name", static v => v.AsString()),
-                LastActivatedAt = data.Read("last_activated_at", static v => v.AsString()),
+                IsActive = data.ReadAsBool("is_active"),
+                ModeratorId = data.ReadAsString("moderator_id"),
+                ModeratorLogin = data.ReadAsString("moderator_login"),
+                ModeratorName = data.ReadAsString("moderator_name"),
+                LastActivatedAt = data.ReadAsString("last_activated_at"),
             };
             
             instance._data = Variant.CreateFrom(data);

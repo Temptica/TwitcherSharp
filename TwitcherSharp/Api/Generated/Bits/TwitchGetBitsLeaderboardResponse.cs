@@ -19,7 +19,7 @@ public partial class TwitchGetBitsLeaderboardResponse : RefCounted, ITwitcherSha
         if(data == null) return null;
         var instance = new TwitchGetBitsLeaderboardResponse
         {
-            Total = data.Read("total", static v => v.AsInt32()),
+            Total = data.ReadAsInt32("total"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -59,8 +59,8 @@ public partial class TwitchGetBitsLeaderboardResponse : RefCounted, ITwitcherSha
             if(data == null) return null;
             var instance = new TwitchResponseDateRange
             {
-                StartedAt = data.Read("started_at", static v => v.AsString()),
-                EndedAt = data.Read("ended_at", static v => v.AsString()),
+                StartedAt = data.ReadAsString("started_at"),
+                EndedAt = data.ReadAsString("ended_at"),
             };
             
             instance._data = Variant.CreateFrom(data);

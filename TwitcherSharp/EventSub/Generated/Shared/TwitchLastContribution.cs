@@ -43,11 +43,11 @@ public partial class TwitchLastContribution : RefCounted, ITwitcherSharpEventSub
         if(data == null) return null;
         var instance = new TwitchLastContribution
         {
-            UserId = data.Read("user_id", static v => v.AsString()),
-            UserLogin = data.Read("user_login", static v => v.AsString()),
-            UserName = data.Read("user_name", static v => v.AsString()),
-            Type = data.Read("type", static v => v.AsString()),
-            Total = data.Read("total", static v => v.AsInt32()),
+            UserId = data.ReadAsString("user_id"),
+            UserLogin = data.ReadAsString("user_login"),
+            UserName = data.ReadAsString("user_name"),
+            Type = data.ReadAsString("type"),
+            Total = data.ReadAsInt32("total"),
         };
         
         instance._data = Variant.CreateFrom(data);

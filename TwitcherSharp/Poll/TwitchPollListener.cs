@@ -55,7 +55,7 @@ public partial class TwitchPollListener : RefCounted, ITwitcherSharp<TwitchPollL
     /// </summary>
     public bool EnsureSubscriptionsOnReady
     {
-        get => _data?.Read("ensure_subscriptions_on_ready", static v => v.AsBool()) ?? field;
+        get => _data?.ReadAsBool("ensure_subscriptions_on_ready") ?? field;
         set
         {
             _data?.SetValue("ensure_subscriptions_on_ready", value);

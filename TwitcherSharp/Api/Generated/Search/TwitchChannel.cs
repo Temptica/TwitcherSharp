@@ -28,18 +28,18 @@ public partial class TwitchChannel : RefCounted, ITwitcherSharp<TwitchChannel>
         if(data == null) return null;
         var instance = new TwitchChannel
         {
-            BroadcasterLanguage = data.Read("broadcaster_language", static v => v.AsString()),
-            BroadcasterLogin = data.Read("broadcaster_login", static v => v.AsString()),
-            DisplayName = data.Read("display_name", static v => v.AsString()),
-            GameId = data.Read("game_id", static v => v.AsString()),
-            GameName = data.Read("game_name", static v => v.AsString()),
-            Id = data.Read("id", static v => v.AsString()),
-            IsLive = data.Read("is_live", static v => v.AsBool()),
-            TagIds = data.Read("tag_ids", static v => v.AsStringArray()),
-            Tags = data.Read("tags", static v => v.AsStringArray()),
-            ThumbnailUrl = data.Read("thumbnail_url", static v => v.AsString()),
-            Title = data.Read("title", static v => v.AsString()),
-            StartedAt = data.Read("started_at", static v => v.AsString()),
+            BroadcasterLanguage = data.ReadAsString("broadcaster_language"),
+            BroadcasterLogin = data.ReadAsString("broadcaster_login"),
+            DisplayName = data.ReadAsString("display_name"),
+            GameId = data.ReadAsString("game_id"),
+            GameName = data.ReadAsString("game_name"),
+            Id = data.ReadAsString("id"),
+            IsLive = data.ReadAsBool("is_live"),
+            TagIds = data.ReadAsStringArray("tag_ids"),
+            Tags = data.ReadAsStringArray("tags"),
+            ThumbnailUrl = data.ReadAsString("thumbnail_url"),
+            Title = data.ReadAsString("title"),
+            StartedAt = data.ReadAsString("started_at"),
         };
         
         instance._data = Variant.CreateFrom(data);

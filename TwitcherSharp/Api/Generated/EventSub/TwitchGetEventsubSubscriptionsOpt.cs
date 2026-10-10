@@ -26,12 +26,12 @@ public partial class TwitchGetEventsubSubscriptionsOpt : RefCounted, ITwitcherSh
         if(data == null) return null;
         var instance = new TwitchGetEventsubSubscriptionsOpt
         {
-            Status = data.Read("status", static v => v.AsString()),
-            Type = data.Read("type", static v => v.AsString()),
-            UserId = data.Read("user_id", static v => v.AsString()),
-            SubscriptionId = data.Read("subscription_id", static v => v.AsString()),
-            ConduitId = data.Read("conduit_id", static v => v.AsString()),
-            After = data.Read("after", static v => v.AsString()),
+            Status = data.ReadAsString("status"),
+            Type = data.ReadAsString("type"),
+            UserId = data.ReadAsString("user_id"),
+            SubscriptionId = data.ReadAsString("subscription_id"),
+            ConduitId = data.ReadAsString("conduit_id"),
+            After = data.ReadAsString("after"),
         };
         
         instance._data = Variant.CreateFrom(data);

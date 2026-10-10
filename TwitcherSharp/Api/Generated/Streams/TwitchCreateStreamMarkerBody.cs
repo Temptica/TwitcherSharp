@@ -18,8 +18,8 @@ public partial class TwitchCreateStreamMarkerBody : RefCounted, ITwitcherSharp<T
         if(data == null) return null;
         var instance = new TwitchCreateStreamMarkerBody
         {
-            UserId = data.Read("user_id", static v => v.AsString()),
-            Description = data.Read("description", static v => v.AsString()),
+            UserId = data.ReadAsString("user_id"),
+            Description = data.ReadAsString("description"),
         };
         
         instance._data = Variant.CreateFrom(data);

@@ -20,9 +20,9 @@ public partial class TwitchCreatePredictionBody : RefCounted, ITwitcherSharp<Twi
         if(data == null) return null;
         var instance = new TwitchCreatePredictionBody
         {
-            BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
-            Title = data.Read("title", static v => v.AsString()),
-            PredictionWindow = data.Read("prediction_window", static v => v.AsInt32()),
+            BroadcasterId = data.ReadAsString("broadcaster_id"),
+            Title = data.ReadAsString("title"),
+            PredictionWindow = data.ReadAsInt32("prediction_window"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -62,7 +62,7 @@ public partial class TwitchCreatePredictionBody : RefCounted, ITwitcherSharp<Twi
             if(data == null) return null;
             var instance = new TwitchBodyOutcomes
             {
-                Title = data.Read("title", static v => v.AsString()),
+                Title = data.ReadAsString("title"),
             };
             
             instance._data = Variant.CreateFrom(data);

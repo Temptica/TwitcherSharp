@@ -28,9 +28,9 @@ public partial class TwitchChannelPointsCustomRewardUpdateCondition(string broad
     public static TwitchChannelPointsCustomRewardUpdateCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchChannelPointsCustomRewardUpdateCondition(data.Read("broadcaster_user_id", static v => v.AsString()))
+        var instance = new TwitchChannelPointsCustomRewardUpdateCondition(data.ReadAsString("broadcaster_user_id"))
         {
-            RewardId = data.Read("reward_id", static v => v.AsString()),
+            RewardId = data.ReadAsString("reward_id"),
         };
         
         instance._data = Variant.CreateFrom(data);

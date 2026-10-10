@@ -21,7 +21,7 @@ public partial class TwitchUpdatePinnedChatMessageOpt : RefCounted, ITwitcherSha
         if(data == null) return null;
         var instance = new TwitchUpdatePinnedChatMessageOpt
         {
-            DurationSeconds = data.Read("duration_seconds", static v => v.AsInt32()),
+            DurationSeconds = data.ReadAsInt32("duration_seconds"),
         };
         
         instance._data = Variant.CreateFrom(data);

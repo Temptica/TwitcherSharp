@@ -28,7 +28,7 @@ public partial class TwitchChannelChatClearCondition(string broadcasterUserId, s
     public static TwitchChannelChatClearCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchChannelChatClearCondition(data.Read("broadcaster_user_id", static v => v.AsString()), data.Read("user_id", static v => v.AsString()));
+        var instance = new TwitchChannelChatClearCondition(data.ReadAsString("broadcaster_user_id"), data.ReadAsString("user_id"));
         
         instance._data = Variant.CreateFrom(data);
         return instance;

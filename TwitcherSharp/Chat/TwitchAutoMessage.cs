@@ -20,7 +20,7 @@ public partial class TwitchAutoMessage : RefCounted, ITwitcherSharp<TwitchAutoMe
 
     public bool UseBot
     {
-        get => _data?.Read("use_bot", static v => v.AsBool()) ?? field;
+        get => _data?.ReadAsBool("use_bot") ?? field;
         set
         {
             _data?.SetValue("use_bot", value);
@@ -30,7 +30,7 @@ public partial class TwitchAutoMessage : RefCounted, ITwitcherSharp<TwitchAutoMe
 
     public bool Announcement
     {
-        get => _data?.Read("announcement", static v => v.AsBool()) ?? field;
+        get => _data?.ReadAsBool("announcement") ?? field;
         set
         {
             _data?.SetValue("announcement", value);
@@ -50,7 +50,7 @@ public partial class TwitchAutoMessage : RefCounted, ITwitcherSharp<TwitchAutoMe
 
     public string Message
     {
-        get => _data?.Read("message", static v => v.AsString()) ?? field;
+        get => _data?.ReadAsString("message") ?? field;
         set
         {
             _data?.SetValue("message", value);
@@ -60,7 +60,7 @@ public partial class TwitchAutoMessage : RefCounted, ITwitcherSharp<TwitchAutoMe
 
     public bool SourceOnly
     {
-        get => _data?.Read("source_only", static v => v.AsBool()) ?? field;
+        get => _data?.ReadAsBool("source_only") ?? field;
         set
         {
             _data?.SetValue("source_only", value);
@@ -70,7 +70,7 @@ public partial class TwitchAutoMessage : RefCounted, ITwitcherSharp<TwitchAutoMe
 
     public int Weight
     {
-        get => _data?.Read("weight", static v => v.AsInt32()) ?? field;
+        get => _data?.ReadAsInt32("weight") ?? field;
         set
         {
             _data?.SetValue("weight", value);

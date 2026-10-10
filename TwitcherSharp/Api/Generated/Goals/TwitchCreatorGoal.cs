@@ -25,15 +25,15 @@ public partial class TwitchCreatorGoal : RefCounted, ITwitcherSharp<TwitchCreato
         if(data == null) return null;
         var instance = new TwitchCreatorGoal
         {
-            Id = data.Read("id", static v => v.AsString()),
-            BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
-            BroadcasterName = data.Read("broadcaster_name", static v => v.AsString()),
-            BroadcasterLogin = data.Read("broadcaster_login", static v => v.AsString()),
-            Type = data.Read("type", static v => v.AsString()),
-            Description = data.Read("description", static v => v.AsString()),
-            CurrentAmount = data.Read("current_amount", static v => v.AsInt32()),
-            TargetAmount = data.Read("target_amount", static v => v.AsInt32()),
-            CreatedAt = data.Read("created_at", static v => v.AsString()),
+            Id = data.ReadAsString("id"),
+            BroadcasterId = data.ReadAsString("broadcaster_id"),
+            BroadcasterName = data.ReadAsString("broadcaster_name"),
+            BroadcasterLogin = data.ReadAsString("broadcaster_login"),
+            Type = data.ReadAsString("type"),
+            Description = data.ReadAsString("description"),
+            CurrentAmount = data.ReadAsInt32("current_amount"),
+            TargetAmount = data.ReadAsInt32("target_amount"),
+            CreatedAt = data.ReadAsString("created_at"),
         };
         
         instance._data = Variant.CreateFrom(data);

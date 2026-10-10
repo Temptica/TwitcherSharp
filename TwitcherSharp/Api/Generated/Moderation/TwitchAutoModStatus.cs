@@ -18,8 +18,8 @@ public partial class TwitchAutoModStatus : RefCounted, ITwitcherSharp<TwitchAuto
         if(data == null) return null;
         var instance = new TwitchAutoModStatus
         {
-            MsgId = data.Read("msg_id", static v => v.AsString()),
-            IsPermitted = data.Read("is_permitted", static v => v.AsBool()),
+            MsgId = data.ReadAsString("msg_id"),
+            IsPermitted = data.ReadAsBool("is_permitted"),
         };
         
         instance._data = Variant.CreateFrom(data);

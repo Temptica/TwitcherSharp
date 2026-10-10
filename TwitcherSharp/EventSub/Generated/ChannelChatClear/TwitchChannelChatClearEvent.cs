@@ -33,9 +33,9 @@ public partial class TwitchChannelChatClearEvent : RefCounted, ITwitcherSharpEve
         if(data == null) return null;
         var instance = new TwitchChannelChatClearEvent
         {
-            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
-            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
-            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
+            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
         };
         
         instance._data = Variant.CreateFrom(data);

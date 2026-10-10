@@ -21,7 +21,7 @@ public partial class TwitchGetContentClassificationLabelsOpt : RefCounted, ITwit
         if(data == null) return null;
         var instance = new TwitchGetContentClassificationLabelsOpt
         {
-            Locale = data.Read("locale", static v => v.AsString()),
+            Locale = data.ReadAsString("locale"),
         };
         
         instance._data = Variant.CreateFrom(data);

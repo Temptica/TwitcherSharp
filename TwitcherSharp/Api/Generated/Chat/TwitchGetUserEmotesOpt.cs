@@ -22,8 +22,8 @@ public partial class TwitchGetUserEmotesOpt : RefCounted, ITwitcherSharp<TwitchG
         if(data == null) return null;
         var instance = new TwitchGetUserEmotesOpt
         {
-            After = data.Read("after", static v => v.AsString()),
-            BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
+            After = data.ReadAsString("after"),
+            BroadcasterId = data.ReadAsString("broadcaster_id"),
         };
         
         instance._data = Variant.CreateFrom(data);

@@ -22,12 +22,12 @@ public partial class TwitchUserExtensionComponent : RefCounted, ITwitcherSharp<T
         if(data == null) return null;
         var instance = new TwitchUserExtensionComponent
         {
-            Active = data.Read("active", static v => v.AsBool()),
-            Id = data.Read("id", static v => v.AsString()),
-            Version = data.Read("version", static v => v.AsString()),
-            Name = data.Read("name", static v => v.AsString()),
-            X = data.Read("x", static v => v.AsInt32()),
-            Y = data.Read("y", static v => v.AsInt32()),
+            Active = data.ReadAsBool("active"),
+            Id = data.ReadAsString("id"),
+            Version = data.ReadAsString("version"),
+            Name = data.ReadAsString("name"),
+            X = data.ReadAsInt32("x"),
+            Y = data.ReadAsInt32("y"),
         };
         
         instance._data = Variant.CreateFrom(data);

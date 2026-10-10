@@ -62,17 +62,17 @@ public partial class TwitchGetPinnedChatMessageResponse : RefCounted, ITwitcherS
             if(data == null) return null;
             var instance = new TwitchResponseData
             {
-                MessageId = data.Read("message_id", static v => v.AsString()),
-                BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
-                SenderUserId = data.Read("sender_user_id", static v => v.AsString()),
-                SenderUserLogin = data.Read("sender_user_login", static v => v.AsString()),
-                SenderUserName = data.Read("sender_user_name", static v => v.AsString()),
-                PinnedByUserId = data.Read("pinned_by_user_id", static v => v.AsString()),
-                PinnedByUserLogin = data.Read("pinned_by_user_login", static v => v.AsString()),
-                PinnedByUserName = data.Read("pinned_by_user_name", static v => v.AsString()),
-                StartsAt = data.Read("starts_at", static v => v.AsString()),
-                EndsAt = data.Read("ends_at", static v => v.AsString()),
-                UpdatedAt = data.Read("updated_at", static v => v.AsString()),
+                MessageId = data.ReadAsString("message_id"),
+                BroadcasterId = data.ReadAsString("broadcaster_id"),
+                SenderUserId = data.ReadAsString("sender_user_id"),
+                SenderUserLogin = data.ReadAsString("sender_user_login"),
+                SenderUserName = data.ReadAsString("sender_user_name"),
+                PinnedByUserId = data.ReadAsString("pinned_by_user_id"),
+                PinnedByUserLogin = data.ReadAsString("pinned_by_user_login"),
+                PinnedByUserName = data.ReadAsString("pinned_by_user_name"),
+                StartsAt = data.ReadAsString("starts_at"),
+                EndsAt = data.ReadAsString("ends_at"),
+                UpdatedAt = data.ReadAsString("updated_at"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -121,7 +121,7 @@ public partial class TwitchGetPinnedChatMessageResponse : RefCounted, ITwitcherS
                 if(data == null) return null;
                 var instance = new TwitchResponseMessage
                 {
-                    Text = data.Read("text", static v => v.AsString()),
+                    Text = data.ReadAsString("text"),
                 };
                 
                 instance._data = Variant.CreateFrom(data);
@@ -173,21 +173,21 @@ public partial class TwitchGetPinnedChatMessageResponse : RefCounted, ITwitcherS
                     if(data == null) return null;
                     var instance = new TwitchResponseFragments
                     {
-                        Type = data.Read("type", static v => v.AsString()),
-                        Text = data.Read("text", static v => v.AsString()),
+                        Type = data.ReadAsString("type"),
+                        Text = data.ReadAsString("text"),
                         Cheermote = data.Read("cheermote", static v => v.As<Variant>()),
-                        Prefix = data.Read("prefix", static v => v.AsString()),
-                        Bits = data.Read("bits", static v => v.AsInt32()),
-                        Tier = data.Read("tier", static v => v.AsInt32()),
+                        Prefix = data.ReadAsString("prefix"),
+                        Bits = data.ReadAsInt32("bits"),
+                        Tier = data.ReadAsInt32("tier"),
                         Emote = data.Read("emote", static v => v.As<Variant>()),
-                        Id = data.Read("id", static v => v.AsString()),
-                        EmoteSetId = data.Read("emote_set_id", static v => v.AsString()),
-                        OwnerId = data.Read("owner_id", static v => v.AsString()),
-                        Format = data.Read("format", static v => v.AsStringArray()),
+                        Id = data.ReadAsString("id"),
+                        EmoteSetId = data.ReadAsString("emote_set_id"),
+                        OwnerId = data.ReadAsString("owner_id"),
+                        Format = data.ReadAsStringArray("format"),
                         Mention = data.Read("mention", static v => v.As<Variant>()),
-                        UserId = data.Read("user_id", static v => v.AsString()),
-                        UserLogin = data.Read("user_login", static v => v.AsString()),
-                        UserName = data.Read("user_name", static v => v.AsString()),
+                        UserId = data.ReadAsString("user_id"),
+                        UserLogin = data.ReadAsString("user_login"),
+                        UserName = data.ReadAsString("user_name"),
                     };
                     
                     instance._data = Variant.CreateFrom(data);

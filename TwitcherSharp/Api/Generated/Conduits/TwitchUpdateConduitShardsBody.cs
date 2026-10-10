@@ -18,7 +18,7 @@ public partial class TwitchUpdateConduitShardsBody : RefCounted, ITwitcherSharp<
         if(data == null) return null;
         var instance = new TwitchUpdateConduitShardsBody
         {
-            ConduitId = data.Read("conduit_id", static v => v.AsString()),
+            ConduitId = data.ReadAsString("conduit_id"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -57,7 +57,7 @@ public partial class TwitchUpdateConduitShardsBody : RefCounted, ITwitcherSharp<
             if(data == null) return null;
             var instance = new TwitchBodyShards
             {
-                Id = data.Read("id", static v => v.AsString()),
+                Id = data.ReadAsString("id"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -98,10 +98,10 @@ public partial class TwitchUpdateConduitShardsBody : RefCounted, ITwitcherSharp<
                 if(data == null) return null;
                 var instance = new TwitchBodyTransport
                 {
-                    Method = data.Read("method", static v => v.AsString()),
-                    Callback = data.Read("callback", static v => v.AsString()),
-                    Secret = data.Read("secret", static v => v.AsString()),
-                    SessionId = data.Read("session_id", static v => v.AsString()),
+                    Method = data.ReadAsString("method"),
+                    Callback = data.ReadAsString("callback"),
+                    Secret = data.ReadAsString("secret"),
+                    SessionId = data.ReadAsString("session_id"),
                 };
                 
                 instance._data = Variant.CreateFrom(data);

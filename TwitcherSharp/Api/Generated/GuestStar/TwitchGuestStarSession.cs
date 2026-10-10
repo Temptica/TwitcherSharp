@@ -18,7 +18,7 @@ public partial class TwitchGuestStarSession : RefCounted, ITwitcherSharp<TwitchG
         if(data == null) return null;
         var instance = new TwitchGuestStarSession
         {
-            Id = data.Read("id", static v => v.AsString()),
+            Id = data.ReadAsString("id"),
         };
         
         instance._data = Variant.CreateFrom(data);

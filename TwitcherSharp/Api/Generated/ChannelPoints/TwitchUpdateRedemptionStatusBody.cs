@@ -17,7 +17,7 @@ public partial class TwitchUpdateRedemptionStatusBody : RefCounted, ITwitcherSha
         if(data == null) return null;
         var instance = new TwitchUpdateRedemptionStatusBody
         {
-            Status = data.Read("status", static v => v.AsString()),
+            Status = data.ReadAsString("status"),
         };
         
         instance._data = Variant.CreateFrom(data);

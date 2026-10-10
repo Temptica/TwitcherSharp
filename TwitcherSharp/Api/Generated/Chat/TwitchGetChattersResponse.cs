@@ -19,7 +19,7 @@ public partial class TwitchGetChattersResponse : RefCounted, ITwitcherSharp<Twit
         if(data == null) return null;
         var instance = new TwitchGetChattersResponse
         {
-            Total = data.Read("total", static v => v.AsInt32()),
+            Total = data.ReadAsInt32("total"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -60,7 +60,7 @@ public partial class TwitchGetChattersResponse : RefCounted, ITwitcherSharp<Twit
             if(data == null) return null;
             var instance = new ResponsePagination
             {
-                Cursor = data.Read("cursor", static v => v.AsString()),
+                Cursor = data.ReadAsString("cursor"),
             };
             
             instance._data = Variant.CreateFrom(data);

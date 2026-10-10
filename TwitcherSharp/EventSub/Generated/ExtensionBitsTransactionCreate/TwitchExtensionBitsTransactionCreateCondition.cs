@@ -23,7 +23,7 @@ public partial class TwitchExtensionBitsTransactionCreateCondition(string extens
     public static TwitchExtensionBitsTransactionCreateCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchExtensionBitsTransactionCreateCondition(data.Read("extension_client_id", static v => v.AsString()));
+        var instance = new TwitchExtensionBitsTransactionCreateCondition(data.ReadAsString("extension_client_id"));
         
         instance._data = Variant.CreateFrom(data);
         return instance;

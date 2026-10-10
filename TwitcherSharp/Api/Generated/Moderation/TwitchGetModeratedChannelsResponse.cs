@@ -55,7 +55,7 @@ public partial class TwitchGetModeratedChannelsResponse : RefCounted, ITwitcherS
             if(data == null) return null;
             var instance = new ResponsePagination
             {
-                Cursor = data.Read("cursor", static v => v.AsString()),
+                Cursor = data.ReadAsString("cursor"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -96,9 +96,9 @@ public partial class TwitchGetModeratedChannelsResponse : RefCounted, ITwitcherS
             if(data == null) return null;
             var instance = new TwitchResponseData
             {
-                BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
-                BroadcasterLogin = data.Read("broadcaster_login", static v => v.AsString()),
-                BroadcasterName = data.Read("broadcaster_name", static v => v.AsString()),
+                BroadcasterId = data.ReadAsString("broadcaster_id"),
+                BroadcasterLogin = data.ReadAsString("broadcaster_login"),
+                BroadcasterName = data.ReadAsString("broadcaster_name"),
             };
             
             instance._data = Variant.CreateFrom(data);

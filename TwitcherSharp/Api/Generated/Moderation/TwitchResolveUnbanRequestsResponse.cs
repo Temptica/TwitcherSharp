@@ -61,21 +61,21 @@ public partial class TwitchResolveUnbanRequestsResponse : RefCounted, ITwitcherS
             if(data == null) return null;
             var instance = new TwitchResponseData
             {
-                Id = data.Read("id", static v => v.AsString()),
-                BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
-                BroadcasterLogin = data.Read("broadcaster_login", static v => v.AsString()),
-                BroadcasterName = data.Read("broadcaster_name", static v => v.AsString()),
-                ModeratorId = data.Read("moderator_id", static v => v.AsString()),
-                ModeratorLogin = data.Read("moderator_login", static v => v.AsString()),
-                ModeratorName = data.Read("moderator_name", static v => v.AsString()),
-                UserId = data.Read("user_id", static v => v.AsString()),
-                UserLogin = data.Read("user_login", static v => v.AsString()),
-                UserName = data.Read("user_name", static v => v.AsString()),
-                Text = data.Read("text", static v => v.AsString()),
-                Status = data.Read("status", static v => v.AsString()),
-                CreatedAt = data.Read("created_at", static v => v.AsString()),
-                ResolvedAt = data.Read("resolved_at", static v => v.AsString()),
-                ResolutionText = data.Read("resolution_text", static v => v.AsString()),
+                Id = data.ReadAsString("id"),
+                BroadcasterId = data.ReadAsString("broadcaster_id"),
+                BroadcasterLogin = data.ReadAsString("broadcaster_login"),
+                BroadcasterName = data.ReadAsString("broadcaster_name"),
+                ModeratorId = data.ReadAsString("moderator_id"),
+                ModeratorLogin = data.ReadAsString("moderator_login"),
+                ModeratorName = data.ReadAsString("moderator_name"),
+                UserId = data.ReadAsString("user_id"),
+                UserLogin = data.ReadAsString("user_login"),
+                UserName = data.ReadAsString("user_name"),
+                Text = data.ReadAsString("text"),
+                Status = data.ReadAsString("status"),
+                CreatedAt = data.ReadAsString("created_at"),
+                ResolvedAt = data.ReadAsString("resolved_at"),
+                ResolutionText = data.ReadAsString("resolution_text"),
             };
             
             instance._data = Variant.CreateFrom(data);

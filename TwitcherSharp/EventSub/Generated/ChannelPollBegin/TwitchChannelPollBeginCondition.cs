@@ -23,7 +23,7 @@ public partial class TwitchChannelPollBeginCondition(string broadcasterUserId) :
     public static TwitchChannelPollBeginCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchChannelPollBeginCondition(data.Read("broadcaster_user_id", static v => v.AsString()));
+        var instance = new TwitchChannelPollBeginCondition(data.ReadAsString("broadcaster_user_id"));
         
         instance._data = Variant.CreateFrom(data);
         return instance;

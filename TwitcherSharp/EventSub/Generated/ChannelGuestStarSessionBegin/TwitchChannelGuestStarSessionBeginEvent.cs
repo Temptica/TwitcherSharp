@@ -58,14 +58,14 @@ public partial class TwitchChannelGuestStarSessionBeginEvent : RefCounted, ITwit
         if(data == null) return null;
         var instance = new TwitchChannelGuestStarSessionBeginEvent
         {
-            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
-            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
-            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
-            ModeratorUserId = data.Read("moderator_user_id", static v => v.AsString()),
-            ModeratorUserName = data.Read("moderator_user_name", static v => v.AsString()),
-            ModeratorUserLogin = data.Read("moderator_user_login", static v => v.AsString()),
-            SessionId = data.Read("session_id", static v => v.AsString()),
-            StartedAt = data.Read("started_at", static v => v.AsString()),
+            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+            ModeratorUserId = data.ReadAsString("moderator_user_id"),
+            ModeratorUserName = data.ReadAsString("moderator_user_name"),
+            ModeratorUserLogin = data.ReadAsString("moderator_user_login"),
+            SessionId = data.ReadAsString("session_id"),
+            StartedAt = data.ReadAsString("started_at"),
         };
         
         instance._data = Variant.CreateFrom(data);

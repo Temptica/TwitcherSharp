@@ -21,7 +21,7 @@ public partial class TwitchGetExtensionConfigurationSegmentOpt : RefCounted, ITw
         if(data == null) return null;
         var instance = new TwitchGetExtensionConfigurationSegmentOpt
         {
-            BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
+            BroadcasterId = data.ReadAsString("broadcaster_id"),
         };
         
         instance._data = Variant.CreateFrom(data);

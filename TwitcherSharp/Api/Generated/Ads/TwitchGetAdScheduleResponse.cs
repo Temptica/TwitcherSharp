@@ -56,12 +56,12 @@ public partial class TwitchGetAdScheduleResponse : RefCounted, ITwitcherSharp<Tw
             if(data == null) return null;
             var instance = new TwitchResponseData
             {
-                SnoozeCount = data.Read("snooze_count", static v => v.AsInt32()),
-                SnoozeRefreshAt = data.Read("snooze_refresh_at", static v => v.AsInt64()),
-                NextAdAt = data.Read("next_ad_at", static v => v.AsInt64()),
-                Duration = data.Read("duration", static v => v.AsInt32()),
-                LastAdAt = data.Read("last_ad_at", static v => v.AsInt64()),
-                PrerollFreeTime = data.Read("preroll_free_time", static v => v.AsInt32()),
+                SnoozeCount = data.ReadAsInt32("snooze_count"),
+                SnoozeRefreshAt = data.ReadAsInt64("snooze_refresh_at"),
+                NextAdAt = data.ReadAsInt64("next_ad_at"),
+                Duration = data.ReadAsInt32("duration"),
+                LastAdAt = data.ReadAsInt64("last_ad_at"),
+                PrerollFreeTime = data.ReadAsInt32("preroll_free_time"),
             };
             
             instance._data = Variant.CreateFrom(data);

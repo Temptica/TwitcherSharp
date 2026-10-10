@@ -23,9 +23,9 @@ public partial class TwitchSearchChannelsOpt : RefCounted, ITwitcherSharp<Twitch
         if(data == null) return null;
         var instance = new TwitchSearchChannelsOpt
         {
-            LiveOnly = data.Read("live_only", static v => v.AsBool()),
-            First = data.Read("first", static v => v.AsInt32()),
-            After = data.Read("after", static v => v.AsString()),
+            LiveOnly = data.ReadAsBool("live_only"),
+            First = data.ReadAsInt32("first"),
+            After = data.ReadAsString("after"),
         };
         
         instance._data = Variant.CreateFrom(data);

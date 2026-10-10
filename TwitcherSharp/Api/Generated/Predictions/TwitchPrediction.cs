@@ -28,17 +28,17 @@ public partial class TwitchPrediction : RefCounted, ITwitcherSharp<TwitchPredict
         if(data == null) return null;
         var instance = new TwitchPrediction
         {
-            Id = data.Read("id", static v => v.AsString()),
-            BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
-            BroadcasterName = data.Read("broadcaster_name", static v => v.AsString()),
-            BroadcasterLogin = data.Read("broadcaster_login", static v => v.AsString()),
-            Title = data.Read("title", static v => v.AsString()),
-            WinningOutcomeId = data.Read("winning_outcome_id", static v => v.AsString()),
-            PredictionWindow = data.Read("prediction_window", static v => v.AsInt32()),
-            Status = data.Read("status", static v => v.AsString()),
-            CreatedAt = data.Read("created_at", static v => v.AsString()),
-            EndedAt = data.Read("ended_at", static v => v.AsString()),
-            LockedAt = data.Read("locked_at", static v => v.AsString()),
+            Id = data.ReadAsString("id"),
+            BroadcasterId = data.ReadAsString("broadcaster_id"),
+            BroadcasterName = data.ReadAsString("broadcaster_name"),
+            BroadcasterLogin = data.ReadAsString("broadcaster_login"),
+            Title = data.ReadAsString("title"),
+            WinningOutcomeId = data.ReadAsString("winning_outcome_id"),
+            PredictionWindow = data.ReadAsInt32("prediction_window"),
+            Status = data.ReadAsString("status"),
+            CreatedAt = data.ReadAsString("created_at"),
+            EndedAt = data.ReadAsString("ended_at"),
+            LockedAt = data.ReadAsString("locked_at"),
         };
         
         instance._data = Variant.CreateFrom(data);

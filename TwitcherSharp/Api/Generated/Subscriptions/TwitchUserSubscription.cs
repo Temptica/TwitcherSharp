@@ -24,14 +24,14 @@ public partial class TwitchUserSubscription : RefCounted, ITwitcherSharp<TwitchU
         if(data == null) return null;
         var instance = new TwitchUserSubscription
         {
-            BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
-            BroadcasterLogin = data.Read("broadcaster_login", static v => v.AsString()),
-            BroadcasterName = data.Read("broadcaster_name", static v => v.AsString()),
-            GifterId = data.Read("gifter_id", static v => v.AsString()),
-            GifterLogin = data.Read("gifter_login", static v => v.AsString()),
-            GifterName = data.Read("gifter_name", static v => v.AsString()),
-            IsGift = data.Read("is_gift", static v => v.AsBool()),
-            Tier = data.Read("tier", static v => v.AsString()),
+            BroadcasterId = data.ReadAsString("broadcaster_id"),
+            BroadcasterLogin = data.ReadAsString("broadcaster_login"),
+            BroadcasterName = data.ReadAsString("broadcaster_name"),
+            GifterId = data.ReadAsString("gifter_id"),
+            GifterLogin = data.ReadAsString("gifter_login"),
+            GifterName = data.ReadAsString("gifter_name"),
+            IsGift = data.ReadAsBool("is_gift"),
+            Tier = data.ReadAsString("tier"),
         };
         
         instance._data = Variant.CreateFrom(data);

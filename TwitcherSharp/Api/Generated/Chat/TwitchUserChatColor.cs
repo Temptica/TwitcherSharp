@@ -20,10 +20,10 @@ public partial class TwitchUserChatColor : RefCounted, ITwitcherSharp<TwitchUser
         if(data == null) return null;
         var instance = new TwitchUserChatColor
         {
-            UserId = data.Read("user_id", static v => v.AsString()),
-            UserLogin = data.Read("user_login", static v => v.AsString()),
-            UserName = data.Read("user_name", static v => v.AsString()),
-            Color = data.Read("color", static v => v.AsString()),
+            UserId = data.ReadAsString("user_id"),
+            UserLogin = data.ReadAsString("user_login"),
+            UserName = data.ReadAsString("user_name"),
+            Color = data.ReadAsString("color"),
         };
         
         instance._data = Variant.CreateFrom(data);

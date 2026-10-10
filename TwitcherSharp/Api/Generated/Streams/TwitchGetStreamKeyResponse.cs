@@ -51,7 +51,7 @@ public partial class TwitchGetStreamKeyResponse : RefCounted, ITwitcherSharp<Twi
             if(data == null) return null;
             var instance = new TwitchResponseData
             {
-                StreamKey = data.Read("stream_key", static v => v.AsString()),
+                StreamKey = data.ReadAsString("stream_key"),
             };
             
             instance._data = Variant.CreateFrom(data);

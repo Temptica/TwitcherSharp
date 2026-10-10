@@ -23,7 +23,7 @@ public partial class TwitchChannelPredictionBeginCondition(string broadcasterUse
     public static TwitchChannelPredictionBeginCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchChannelPredictionBeginCondition(data.Read("broadcaster_user_id", static v => v.AsString()));
+        var instance = new TwitchChannelPredictionBeginCondition(data.ReadAsString("broadcaster_user_id"));
         
         instance._data = Variant.CreateFrom(data);
         return instance;

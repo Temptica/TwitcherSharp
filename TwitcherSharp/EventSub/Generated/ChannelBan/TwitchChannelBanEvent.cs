@@ -83,19 +83,19 @@ public partial class TwitchChannelBanEvent : RefCounted, ITwitcherSharpEventSub<
         if(data == null) return null;
         var instance = new TwitchChannelBanEvent
         {
-            UserId = data.Read("user_id", static v => v.AsString()),
-            UserLogin = data.Read("user_login", static v => v.AsString()),
-            UserName = data.Read("user_name", static v => v.AsString()),
-            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
-            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
-            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
-            ModeratorUserId = data.Read("moderator_user_id", static v => v.AsString()),
-            ModeratorUserLogin = data.Read("moderator_user_login", static v => v.AsString()),
-            ModeratorUserName = data.Read("moderator_user_name", static v => v.AsString()),
-            Reason = data.Read("reason", static v => v.AsString()),
-            BannedAt = data.Read("banned_at", static v => v.AsString()),
-            EndsAt = data.Read("ends_at", static v => v.AsString()),
-            IsPermanent = data.Read("is_permanent", static v => v.AsBool()),
+            UserId = data.ReadAsString("user_id"),
+            UserLogin = data.ReadAsString("user_login"),
+            UserName = data.ReadAsString("user_name"),
+            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+            ModeratorUserId = data.ReadAsString("moderator_user_id"),
+            ModeratorUserLogin = data.ReadAsString("moderator_user_login"),
+            ModeratorUserName = data.ReadAsString("moderator_user_name"),
+            Reason = data.ReadAsString("reason"),
+            BannedAt = data.ReadAsString("banned_at"),
+            EndsAt = data.ReadAsString("ends_at"),
+            IsPermanent = data.ReadAsBool("is_permanent"),
         };
         
         instance._data = Variant.CreateFrom(data);

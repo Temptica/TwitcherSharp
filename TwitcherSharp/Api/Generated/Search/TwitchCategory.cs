@@ -19,9 +19,9 @@ public partial class TwitchCategory : RefCounted, ITwitcherSharp<TwitchCategory>
         if(data == null) return null;
         var instance = new TwitchCategory
         {
-            BoxArtUrl = data.Read("box_art_url", static v => v.AsString()),
-            Name = data.Read("name", static v => v.AsString()),
-            Id = data.Read("id", static v => v.AsString()),
+            BoxArtUrl = data.ReadAsString("box_art_url"),
+            Name = data.ReadAsString("name"),
+            Id = data.ReadAsString("id"),
         };
         
         instance._data = Variant.CreateFrom(data);

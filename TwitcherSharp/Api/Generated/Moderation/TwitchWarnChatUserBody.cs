@@ -52,8 +52,8 @@ public partial class TwitchWarnChatUserBody : RefCounted, ITwitcherSharp<TwitchW
             if(data == null) return null;
             var instance = new TwitchBodyData
             {
-                UserId = data.Read("user_id", static v => v.AsString()),
-                Reason = data.Read("reason", static v => v.AsString()),
+                UserId = data.ReadAsString("user_id"),
+                Reason = data.ReadAsString("reason"),
             };
             
             instance._data = Variant.CreateFrom(data);

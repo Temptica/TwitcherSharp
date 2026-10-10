@@ -23,7 +23,7 @@ public partial class TwitchGoalsCondition(string broadcasterUserId) : RefCounted
     public static TwitchGoalsCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchGoalsCondition(data.Read("broadcaster_user_id", static v => v.AsString()));
+        var instance = new TwitchGoalsCondition(data.ReadAsString("broadcaster_user_id"));
         
         instance._data = Variant.CreateFrom(data);
         return instance;

@@ -20,10 +20,10 @@ public partial class TwitchStreamMarkerCreated : RefCounted, ITwitcherSharp<Twit
         if(data == null) return null;
         var instance = new TwitchStreamMarkerCreated
         {
-            Id = data.Read("id", static v => v.AsString()),
-            CreatedAt = data.Read("created_at", static v => v.AsString()),
-            PositionSeconds = data.Read("position_seconds", static v => v.AsInt32()),
-            Description = data.Read("description", static v => v.AsString()),
+            Id = data.ReadAsString("id"),
+            CreatedAt = data.ReadAsString("created_at"),
+            PositionSeconds = data.ReadAsInt32("position_seconds"),
+            Description = data.ReadAsString("description"),
         };
         
         instance._data = Variant.CreateFrom(data);

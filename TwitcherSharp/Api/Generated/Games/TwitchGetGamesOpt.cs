@@ -23,9 +23,9 @@ public partial class TwitchGetGamesOpt : RefCounted, ITwitcherSharp<TwitchGetGam
         if(data == null) return null;
         var instance = new TwitchGetGamesOpt
         {
-            Id = data.Read("id", static v => v.AsStringArray()),
-            Name = data.Read("name", static v => v.AsStringArray()),
-            IgdbId = data.Read("igdb_id", static v => v.AsStringArray()),
+            Id = data.ReadAsStringArray("id"),
+            Name = data.ReadAsStringArray("name"),
+            IgdbId = data.ReadAsStringArray("igdb_id"),
         };
         
         instance._data = Variant.CreateFrom(data);

@@ -54,10 +54,10 @@ public partial class TwitchWarnChatUserResponse : RefCounted, ITwitcherSharp<Twi
             if(data == null) return null;
             var instance = new TwitchResponseData
             {
-                BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
-                UserId = data.Read("user_id", static v => v.AsString()),
-                ModeratorId = data.Read("moderator_id", static v => v.AsString()),
-                Reason = data.Read("reason", static v => v.AsString()),
+                BroadcasterId = data.ReadAsString("broadcaster_id"),
+                UserId = data.ReadAsString("user_id"),
+                ModeratorId = data.ReadAsString("moderator_id"),
+                Reason = data.ReadAsString("reason"),
             };
             
             instance._data = Variant.CreateFrom(data);

@@ -73,15 +73,15 @@ public partial class TwitchCharityCampaignStartEvent : RefCounted, ITwitcherShar
         if(data == null) return null;
         var instance = new TwitchCharityCampaignStartEvent
         {
-            Id = data.Read("id", static v => v.AsString()),
-            BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
-            BroadcasterLogin = data.Read("broadcaster_login", static v => v.AsString()),
-            BroadcasterName = data.Read("broadcaster_name", static v => v.AsString()),
-            CharityName = data.Read("charity_name", static v => v.AsString()),
-            CharityDescription = data.Read("charity_description", static v => v.AsString()),
-            CharityLogo = data.Read("charity_logo", static v => v.AsString()),
-            CharityWebsite = data.Read("charity_website", static v => v.AsString()),
-            StartedAt = data.Read("started_at", static v => v.AsString()),
+            Id = data.ReadAsString("id"),
+            BroadcasterId = data.ReadAsString("broadcaster_id"),
+            BroadcasterLogin = data.ReadAsString("broadcaster_login"),
+            BroadcasterName = data.ReadAsString("broadcaster_name"),
+            CharityName = data.ReadAsString("charity_name"),
+            CharityDescription = data.ReadAsString("charity_description"),
+            CharityLogo = data.ReadAsString("charity_logo"),
+            CharityWebsite = data.ReadAsString("charity_website"),
+            StartedAt = data.ReadAsString("started_at"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -140,9 +140,9 @@ public partial class TwitchCharityCampaignStartEvent : RefCounted, ITwitcherShar
             if(data == null) return null;
             var instance = new TwitchCurrentAmount
             {
-                Value = data.Read("value", static v => v.AsInt32()),
-                DecimalPlaces = data.Read("decimal_places", static v => v.AsInt32()),
-                Currency = data.Read("currency", static v => v.AsString()),
+                Value = data.ReadAsInt32("value"),
+                DecimalPlaces = data.ReadAsInt32("decimal_places"),
+                Currency = data.ReadAsString("currency"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -193,9 +193,9 @@ public partial class TwitchCharityCampaignStartEvent : RefCounted, ITwitcherShar
             if(data == null) return null;
             var instance = new TwitchTargetAmount
             {
-                Value = data.Read("value", static v => v.AsInt32()),
-                DecimalPlaces = data.Read("decimal_places", static v => v.AsInt32()),
-                Currency = data.Read("currency", static v => v.AsString()),
+                Value = data.ReadAsInt32("value"),
+                DecimalPlaces = data.ReadAsInt32("decimal_places"),
+                Currency = data.ReadAsString("currency"),
             };
             
             instance._data = Variant.CreateFrom(data);

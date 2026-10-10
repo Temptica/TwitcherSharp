@@ -22,12 +22,12 @@ public partial class TwitchCreateChannelStreamScheduleSegmentBody : RefCounted, 
         if(data == null) return null;
         var instance = new TwitchCreateChannelStreamScheduleSegmentBody
         {
-            StartTime = data.Read("start_time", static v => v.AsString()),
-            Timezone = data.Read("timezone", static v => v.AsString()),
-            Duration = data.Read("duration", static v => v.AsString()),
-            IsRecurring = data.Read("is_recurring", static v => v.AsBool()),
-            CategoryId = data.Read("category_id", static v => v.AsString()),
-            Title = data.Read("title", static v => v.AsString()),
+            StartTime = data.ReadAsString("start_time"),
+            Timezone = data.ReadAsString("timezone"),
+            Duration = data.ReadAsString("duration"),
+            IsRecurring = data.ReadAsBool("is_recurring"),
+            CategoryId = data.ReadAsString("category_id"),
+            Title = data.ReadAsString("title"),
         };
         
         instance._data = Variant.CreateFrom(data);

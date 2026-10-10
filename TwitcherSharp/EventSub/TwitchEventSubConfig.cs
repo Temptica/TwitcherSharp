@@ -61,7 +61,7 @@ public partial class TwitchEventSubConfig() : RefCounted, ITwitcherSharp<TwitchE
         // twitcher numbers its types in another order than TwitchEventSubDefinitionType: map through the definition.
         var definition = data.Read("definition", static v => v.With(TwitchEventSubDefinition.FromObject));
         if (definition is not null) config.Type = definition.Type;
-        config.Id = data.Read("id", static v => v.AsString());
+        config.Id = data.ReadAsString("id");
         return config;
     }
 

@@ -98,15 +98,15 @@ public partial class TwitchRedemption(
     {
         if (data == null) return null;
         var redemption = new TwitchRedemption(
-            data.Read("id", static v => v.AsString()),
+            data.ReadAsString("id"),
             data.Get<TwitchReward>("reward")!,
             data.Get<TwitchUser>("broadcaster")!,
             data.Get<TwitchUser>("user")!)
         {
             _data = Variant.CreateFrom(data),
-            UserInput = data.Read("user_input", static v => v.AsString()),
+            UserInput = data.ReadAsString("user_input"),
             CurrentStatus = data.Read("current_status", static v => v.As<Status>()),
-            RedeemedAt = DateTime.Parse(data.Read("redeemed_at", static v => v.AsString())),
+            RedeemedAt = DateTime.Parse(data.ReadAsString("redeemed_at")),
         };
 
         redemption.ConnectToSignals();

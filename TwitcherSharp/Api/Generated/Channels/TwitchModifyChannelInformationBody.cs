@@ -23,12 +23,12 @@ public partial class TwitchModifyChannelInformationBody : RefCounted, ITwitcherS
         if(data == null) return null;
         var instance = new TwitchModifyChannelInformationBody
         {
-            GameId = data.Read("game_id", static v => v.AsString()),
-            BroadcasterLanguage = data.Read("broadcaster_language", static v => v.AsString()),
-            Title = data.Read("title", static v => v.AsString()),
-            Delay = data.Read("delay", static v => v.AsInt32()),
-            Tags = data.Read("tags", static v => v.AsStringArray()),
-            IsBrandedContent = data.Read("is_branded_content", static v => v.AsBool()),
+            GameId = data.ReadAsString("game_id"),
+            BroadcasterLanguage = data.ReadAsString("broadcaster_language"),
+            Title = data.ReadAsString("title"),
+            Delay = data.ReadAsInt32("delay"),
+            Tags = data.ReadAsStringArray("tags"),
+            IsBrandedContent = data.ReadAsBool("is_branded_content"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -73,8 +73,8 @@ public partial class TwitchModifyChannelInformationBody : RefCounted, ITwitcherS
             if(data == null) return null;
             var instance = new TwitchBodyContentClassificationLabels
             {
-                Id = data.Read("id", static v => v.AsString()),
-                IsEnabled = data.Read("is_enabled", static v => v.AsBool()),
+                Id = data.ReadAsString("id"),
+                IsEnabled = data.ReadAsBool("is_enabled"),
             };
             
             instance._data = Variant.CreateFrom(data);

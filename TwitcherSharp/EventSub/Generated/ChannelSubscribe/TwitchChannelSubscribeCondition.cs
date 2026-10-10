@@ -23,7 +23,7 @@ public partial class TwitchChannelSubscribeCondition(string broadcasterUserId) :
     public static TwitchChannelSubscribeCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchChannelSubscribeCondition(data.Read("broadcaster_user_id", static v => v.AsString()));
+        var instance = new TwitchChannelSubscribeCondition(data.ReadAsString("broadcaster_user_id"));
         
         instance._data = Variant.CreateFrom(data);
         return instance;

@@ -28,7 +28,7 @@ public partial class TwitchChannelGuestStarGuestUpdateCondition(string broadcast
     public static TwitchChannelGuestStarGuestUpdateCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchChannelGuestStarGuestUpdateCondition(data.Read("broadcaster_user_id", static v => v.AsString()), data.Read("moderator_user_id", static v => v.AsString()));
+        var instance = new TwitchChannelGuestStarGuestUpdateCondition(data.ReadAsString("broadcaster_user_id"), data.ReadAsString("moderator_user_id"));
         
         instance._data = Variant.CreateFrom(data);
         return instance;

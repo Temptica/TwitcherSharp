@@ -22,8 +22,8 @@ public partial class TwitchGetCustomRewardOpt : RefCounted, ITwitcherSharp<Twitc
         if(data == null) return null;
         var instance = new TwitchGetCustomRewardOpt
         {
-            Id = data.Read("id", static v => v.AsStringArray()),
-            OnlyManageableRewards = data.Read("only_manageable_rewards", static v => v.AsBool()),
+            Id = data.ReadAsStringArray("id"),
+            OnlyManageableRewards = data.ReadAsBool("only_manageable_rewards"),
         };
         
         instance._data = Variant.CreateFrom(data);

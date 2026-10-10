@@ -22,8 +22,8 @@ public partial class TwitchGetConduitShardsOpt : RefCounted, ITwitcherSharp<Twit
         if(data == null) return null;
         var instance = new TwitchGetConduitShardsOpt
         {
-            Status = data.Read("status", static v => v.AsString()),
-            After = data.Read("after", static v => v.AsString()),
+            Status = data.ReadAsString("status"),
+            After = data.ReadAsString("after"),
         };
         
         instance._data = Variant.CreateFrom(data);

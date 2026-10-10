@@ -20,9 +20,9 @@ public partial class TwitchCreateEventSubSubscriptionResponse<T> : RefCounted, I
         if(data == null) return null;
         var instance = new TwitchCreateEventSubSubscriptionResponse<T>
         {
-            Total = data.Read("total", static v => v.AsInt32()),
-            TotalCost = data.Read("total_cost", static v => v.AsInt32()),
-            MaxTotalCost = data.Read("max_total_cost", static v => v.AsInt32()),
+            Total = data.ReadAsInt32("total"),
+            TotalCost = data.ReadAsInt32("total_cost"),
+            MaxTotalCost = data.ReadAsInt32("max_total_cost"),
         };
         
         instance._data = Variant.CreateFrom(data);

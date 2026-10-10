@@ -43,11 +43,11 @@ public partial class TwitchTopPredictors : RefCounted, ITwitcherSharpEventSub<Tw
         if(data == null) return null;
         var instance = new TwitchTopPredictors
         {
-            UserId = data.Read("user_id", static v => v.AsString()),
-            UserLogin = data.Read("user_login", static v => v.AsString()),
-            UserName = data.Read("user_name", static v => v.AsString()),
-            ChannelPointsWon = data.Read("channel_points_won", static v => v.AsInt32()),
-            ChannelPointsUsed = data.Read("channel_points_used", static v => v.AsInt32()),
+            UserId = data.ReadAsString("user_id"),
+            UserLogin = data.ReadAsString("user_login"),
+            UserName = data.ReadAsString("user_name"),
+            ChannelPointsWon = data.ReadAsInt32("channel_points_won"),
+            ChannelPointsUsed = data.ReadAsInt32("channel_points_used"),
         };
         
         instance._data = Variant.CreateFrom(data);

@@ -26,15 +26,15 @@ public partial class TwitchExtensionTransaction : RefCounted, ITwitcherSharp<Twi
         if(data == null) return null;
         var instance = new TwitchExtensionTransaction
         {
-            Id = data.Read("id", static v => v.AsString()),
-            Timestamp = data.Read("timestamp", static v => v.AsString()),
-            BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
-            BroadcasterLogin = data.Read("broadcaster_login", static v => v.AsString()),
-            BroadcasterName = data.Read("broadcaster_name", static v => v.AsString()),
-            UserId = data.Read("user_id", static v => v.AsString()),
-            UserLogin = data.Read("user_login", static v => v.AsString()),
-            UserName = data.Read("user_name", static v => v.AsString()),
-            ProductType = data.Read("product_type", static v => v.AsString()),
+            Id = data.ReadAsString("id"),
+            Timestamp = data.ReadAsString("timestamp"),
+            BroadcasterId = data.ReadAsString("broadcaster_id"),
+            BroadcasterLogin = data.ReadAsString("broadcaster_login"),
+            BroadcasterName = data.ReadAsString("broadcaster_name"),
+            UserId = data.ReadAsString("user_id"),
+            UserLogin = data.ReadAsString("user_login"),
+            UserName = data.ReadAsString("user_name"),
+            ProductType = data.ReadAsString("product_type"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -86,12 +86,12 @@ public partial class TwitchExtensionTransaction : RefCounted, ITwitcherSharp<Twi
             if(data == null) return null;
             var instance = new TwitchResponseProductData
             {
-                Sku = data.Read("sku", static v => v.AsString()),
-                Domain = data.Read("domain", static v => v.AsString()),
-                InDevelopment = data.Read("inDevelopment", static v => v.AsBool()),
-                DisplayName = data.Read("displayName", static v => v.AsString()),
-                Expiration = data.Read("expiration", static v => v.AsString()),
-                Broadcast = data.Read("broadcast", static v => v.AsBool()),
+                Sku = data.ReadAsString("sku"),
+                Domain = data.ReadAsString("domain"),
+                InDevelopment = data.ReadAsBool("inDevelopment"),
+                DisplayName = data.ReadAsString("displayName"),
+                Expiration = data.ReadAsString("expiration"),
+                Broadcast = data.ReadAsBool("broadcast"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -135,8 +135,8 @@ public partial class TwitchExtensionTransaction : RefCounted, ITwitcherSharp<Twi
                 if(data == null) return null;
                 var instance = new TwitchResponseCost
                 {
-                    Amount = data.Read("amount", static v => v.AsInt32()),
-                    Type = data.Read("type", static v => v.AsString()),
+                    Amount = data.ReadAsInt32("amount"),
+                    Type = data.ReadAsString("type"),
                 };
                 
                 instance._data = Variant.CreateFrom(data);

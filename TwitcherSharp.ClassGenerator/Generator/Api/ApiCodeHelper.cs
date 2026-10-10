@@ -306,7 +306,7 @@ public static class ApiCodeHelper
             foreach (var field in nonTypedFields)
             {
                 code.AppendIndentedLine(
-                    $"{field.Name} = data.Read(\"{field.GodotName}\", static v => v.{field.GetAsType()}),", 3);
+                    $"{field.Name} = data.{ReadCall.For(field.GodotName, field.GetAsType())},", 3);
             }
 
             code.AppendIndentedLine("};", 2);

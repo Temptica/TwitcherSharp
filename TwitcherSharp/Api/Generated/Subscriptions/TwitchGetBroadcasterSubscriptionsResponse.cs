@@ -20,8 +20,8 @@ public partial class TwitchGetBroadcasterSubscriptionsResponse : RefCounted, ITw
         if(data == null) return null;
         var instance = new TwitchGetBroadcasterSubscriptionsResponse
         {
-            Points = data.Read("points", static v => v.AsInt32()),
-            Total = data.Read("total", static v => v.AsInt32()),
+            Points = data.ReadAsInt32("points"),
+            Total = data.ReadAsInt32("total"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -63,7 +63,7 @@ public partial class TwitchGetBroadcasterSubscriptionsResponse : RefCounted, ITw
             if(data == null) return null;
             var instance = new ResponsePagination
             {
-                Cursor = data.Read("cursor", static v => v.AsString()),
+                Cursor = data.ReadAsString("cursor"),
             };
             
             instance._data = Variant.CreateFrom(data);

@@ -58,13 +58,13 @@ public partial class TwitchChannelUpdateEvent : RefCounted, ITwitcherSharpEventS
         if(data == null) return null;
         var instance = new TwitchChannelUpdateEvent
         {
-            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
-            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
-            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
-            Title = data.Read("title", static v => v.AsString()),
-            Language = data.Read("language", static v => v.AsString()),
-            CategoryId = data.Read("category_id", static v => v.AsString()),
-            CategoryName = data.Read("category_name", static v => v.AsString()),
+            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+            Title = data.ReadAsString("title"),
+            Language = data.ReadAsString("language"),
+            CategoryId = data.ReadAsString("category_id"),
+            CategoryName = data.ReadAsString("category_name"),
         };
         
         instance._data = Variant.CreateFrom(data);

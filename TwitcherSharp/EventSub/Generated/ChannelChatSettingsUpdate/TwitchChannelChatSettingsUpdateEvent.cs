@@ -68,16 +68,16 @@ public partial class TwitchChannelChatSettingsUpdateEvent : RefCounted, ITwitche
         if(data == null) return null;
         var instance = new TwitchChannelChatSettingsUpdateEvent
         {
-            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
-            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
-            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
-            EmoteMode = data.Read("emote_mode", static v => v.AsBool()),
-            FollowerMode = data.Read("follower_mode", static v => v.AsBool()),
-            FollowerModeDurationMinutes = data.Read("follower_mode_duration_minutes", static v => v.AsInt32()),
-            SlowMode = data.Read("slow_mode", static v => v.AsBool()),
-            SlowModeWaitTimeSeconds = data.Read("slow_mode_wait_time_seconds", static v => v.AsInt32()),
-            SubscriberMode = data.Read("subscriber_mode", static v => v.AsBool()),
-            UniqueChatMode = data.Read("unique_chat_mode", static v => v.AsBool()),
+            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+            EmoteMode = data.ReadAsBool("emote_mode"),
+            FollowerMode = data.ReadAsBool("follower_mode"),
+            FollowerModeDurationMinutes = data.ReadAsInt32("follower_mode_duration_minutes"),
+            SlowMode = data.ReadAsBool("slow_mode"),
+            SlowModeWaitTimeSeconds = data.ReadAsInt32("slow_mode_wait_time_seconds"),
+            SubscriberMode = data.ReadAsBool("subscriber_mode"),
+            UniqueChatMode = data.ReadAsBool("unique_chat_mode"),
         };
         
         instance._data = Variant.CreateFrom(data);

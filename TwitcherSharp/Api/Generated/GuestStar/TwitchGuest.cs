@@ -25,13 +25,13 @@ public partial class TwitchGuest : RefCounted, ITwitcherSharp<TwitchGuest>
         if(data == null) return null;
         var instance = new TwitchGuest
         {
-            SlotId = data.Read("slot_id", static v => v.AsString()),
-            IsLive = data.Read("is_live", static v => v.AsBool()),
-            UserId = data.Read("user_id", static v => v.AsString()),
-            UserDisplayName = data.Read("user_display_name", static v => v.AsString()),
-            UserLogin = data.Read("user_login", static v => v.AsString()),
-            Volume = data.Read("volume", static v => v.AsInt32()),
-            AssignedAt = data.Read("assigned_at", static v => v.AsString()),
+            SlotId = data.ReadAsString("slot_id"),
+            IsLive = data.ReadAsBool("is_live"),
+            UserId = data.ReadAsString("user_id"),
+            UserDisplayName = data.ReadAsString("user_display_name"),
+            UserLogin = data.ReadAsString("user_login"),
+            Volume = data.ReadAsInt32("volume"),
+            AssignedAt = data.ReadAsString("assigned_at"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -78,9 +78,9 @@ public partial class TwitchGuest : RefCounted, ITwitcherSharp<TwitchGuest>
             if(data == null) return null;
             var instance = new TwitchAudioSettings
             {
-                IsHostEnabled = data.Read("is_host_enabled", static v => v.AsBool()),
-                IsGuestEnabled = data.Read("is_guest_enabled", static v => v.AsBool()),
-                IsAvailable = data.Read("is_available", static v => v.AsBool()),
+                IsHostEnabled = data.ReadAsBool("is_host_enabled"),
+                IsGuestEnabled = data.ReadAsBool("is_guest_enabled"),
+                IsAvailable = data.ReadAsBool("is_available"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -123,9 +123,9 @@ public partial class TwitchGuest : RefCounted, ITwitcherSharp<TwitchGuest>
             if(data == null) return null;
             var instance = new TwitchVideoSettings
             {
-                IsHostEnabled = data.Read("is_host_enabled", static v => v.AsBool()),
-                IsGuestEnabled = data.Read("is_guest_enabled", static v => v.AsBool()),
-                IsAvailable = data.Read("is_available", static v => v.AsBool()),
+                IsHostEnabled = data.ReadAsBool("is_host_enabled"),
+                IsGuestEnabled = data.ReadAsBool("is_guest_enabled"),
+                IsAvailable = data.ReadAsBool("is_available"),
             };
             
             instance._data = Variant.CreateFrom(data);

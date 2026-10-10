@@ -23,9 +23,9 @@ public partial class TwitchExtensionIconUrls : RefCounted, ITwitcherSharp<Twitch
         if(data == null) return null;
         var instance = new TwitchExtensionIconUrls
         {
-            _100x100 = data.Read("_100x100", static v => v.AsString()),
-            _24x24 = data.Read("_24x24", static v => v.AsString()),
-            _300x200 = data.Read("_300x200", static v => v.AsString()),
+            _100x100 = data.ReadAsString("_100x100"),
+            _24x24 = data.ReadAsString("_24x24"),
+            _300x200 = data.ReadAsString("_300x200"),
         };
         
         instance._data = Variant.CreateFrom(data);

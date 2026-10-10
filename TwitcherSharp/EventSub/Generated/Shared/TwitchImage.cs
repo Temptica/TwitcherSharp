@@ -33,9 +33,9 @@ public partial class TwitchImage : RefCounted, ITwitcherSharpEventSub<TwitchImag
         if(data == null) return null;
         var instance = new TwitchImage
         {
-            Url1x = data.Read("url_1x", static v => v.AsString()),
-            Url2x = data.Read("url_2x", static v => v.AsString()),
-            Url4x = data.Read("url_4x", static v => v.AsString()),
+            Url1x = data.ReadAsString("url_1x"),
+            Url2x = data.ReadAsString("url_2x"),
+            Url4x = data.ReadAsString("url_4x"),
         };
         
         instance._data = Variant.CreateFrom(data);

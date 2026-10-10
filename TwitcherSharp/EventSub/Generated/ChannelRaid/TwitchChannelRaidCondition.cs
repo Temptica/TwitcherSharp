@@ -30,8 +30,8 @@ public partial class TwitchChannelRaidCondition() : RefCounted, ITwitcherSharpCo
         if(data == null) return null;
         var instance = new TwitchChannelRaidCondition
         {
-            FromBroadcasterUserId = data.Read("from_broadcaster_user_id", static v => v.AsString()),
-            ToBroadcasterUserId = data.Read("to_broadcaster_user_id", static v => v.AsString()),
+            FromBroadcasterUserId = data.ReadAsString("from_broadcaster_user_id"),
+            ToBroadcasterUserId = data.ReadAsString("to_broadcaster_user_id"),
         };
         
         instance._data = Variant.CreateFrom(data);

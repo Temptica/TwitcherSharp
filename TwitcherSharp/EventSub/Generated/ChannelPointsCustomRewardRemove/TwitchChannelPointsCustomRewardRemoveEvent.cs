@@ -113,21 +113,21 @@ public partial class TwitchChannelPointsCustomRewardRemoveEvent : RefCounted, IT
         if(data == null) return null;
         var instance = new TwitchChannelPointsCustomRewardRemoveEvent
         {
-            Id = data.Read("id", static v => v.AsString()),
-            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
-            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
-            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
-            IsEnabled = data.Read("is_enabled", static v => v.AsBool()),
-            IsPaused = data.Read("is_paused", static v => v.AsBool()),
-            IsInStock = data.Read("is_in_stock", static v => v.AsBool()),
-            Title = data.Read("title", static v => v.AsString()),
-            Cost = data.Read("cost", static v => v.AsInt32()),
-            Prompt = data.Read("prompt", static v => v.AsString()),
-            IsUserInputRequired = data.Read("is_user_input_required", static v => v.AsBool()),
-            ShouldRedemptionsSkipRequestQueue = data.Read("should_redemptions_skip_request_queue", static v => v.AsBool()),
-            BackgroundColor = data.Read("background_color", static v => v.AsString()),
-            CooldownExpiresAt = data.Read("cooldown_expires_at", static v => v.AsString()),
-            RedemptionsRedeemedCurrentStream = data.Read("redemptions_redeemed_current_stream", static v => v.AsInt32()),
+            Id = data.ReadAsString("id"),
+            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+            IsEnabled = data.ReadAsBool("is_enabled"),
+            IsPaused = data.ReadAsBool("is_paused"),
+            IsInStock = data.ReadAsBool("is_in_stock"),
+            Title = data.ReadAsString("title"),
+            Cost = data.ReadAsInt32("cost"),
+            Prompt = data.ReadAsString("prompt"),
+            IsUserInputRequired = data.ReadAsBool("is_user_input_required"),
+            ShouldRedemptionsSkipRequestQueue = data.ReadAsBool("should_redemptions_skip_request_queue"),
+            BackgroundColor = data.ReadAsString("background_color"),
+            CooldownExpiresAt = data.ReadAsString("cooldown_expires_at"),
+            RedemptionsRedeemedCurrentStream = data.ReadAsInt32("redemptions_redeemed_current_stream"),
         };
         
         instance._data = Variant.CreateFrom(data);

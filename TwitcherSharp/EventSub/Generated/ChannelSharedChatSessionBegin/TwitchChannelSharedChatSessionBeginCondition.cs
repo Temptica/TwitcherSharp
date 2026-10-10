@@ -23,7 +23,7 @@ public partial class TwitchChannelSharedChatSessionBeginCondition(string broadca
     public static TwitchChannelSharedChatSessionBeginCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchChannelSharedChatSessionBeginCondition(data.Read("broadcaster_user_id", static v => v.AsString()));
+        var instance = new TwitchChannelSharedChatSessionBeginCondition(data.ReadAsString("broadcaster_user_id"));
         
         instance._data = Variant.CreateFrom(data);
         return instance;

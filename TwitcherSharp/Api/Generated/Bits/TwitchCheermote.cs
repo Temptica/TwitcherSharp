@@ -22,11 +22,11 @@ public partial class TwitchCheermote : RefCounted, ITwitcherSharp<TwitchCheermot
         if(data == null) return null;
         var instance = new TwitchCheermote
         {
-            Prefix = data.Read("prefix", static v => v.AsString()),
-            Type = data.Read("type", static v => v.AsString()),
-            Order = data.Read("order", static v => v.AsInt32()),
-            LastUpdated = data.Read("last_updated", static v => v.AsString()),
-            IsCharitable = data.Read("is_charitable", static v => v.AsBool()),
+            Prefix = data.ReadAsString("prefix"),
+            Type = data.ReadAsString("type"),
+            Order = data.ReadAsInt32("order"),
+            LastUpdated = data.ReadAsString("last_updated"),
+            IsCharitable = data.ReadAsBool("is_charitable"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -73,11 +73,11 @@ public partial class TwitchCheermote : RefCounted, ITwitcherSharp<TwitchCheermot
             if(data == null) return null;
             var instance = new TwitchResponseTiers
             {
-                MinBits = data.Read("min_bits", static v => v.AsInt32()),
-                Id = data.Read("id", static v => v.AsString()),
-                Color = data.Read("color", static v => v.AsString()),
-                CanCheer = data.Read("can_cheer", static v => v.AsBool()),
-                ShowInBitsCard = data.Read("show_in_bits_card", static v => v.AsBool()),
+                MinBits = data.ReadAsInt32("min_bits"),
+                Id = data.ReadAsString("id"),
+                Color = data.ReadAsString("color"),
+                CanCheer = data.ReadAsBool("can_cheer"),
+                ShowInBitsCard = data.ReadAsBool("show_in_bits_card"),
             };
             
             instance._data = Variant.CreateFrom(data);

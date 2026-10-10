@@ -55,7 +55,7 @@ public partial class TwitchGetConduitShardsResponse : RefCounted, ITwitcherSharp
             if(data == null) return null;
             var instance = new ResponsePagination
             {
-                Cursor = data.Read("cursor", static v => v.AsString()),
+                Cursor = data.ReadAsString("cursor"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -96,8 +96,8 @@ public partial class TwitchGetConduitShardsResponse : RefCounted, ITwitcherSharp
             if(data == null) return null;
             var instance = new TwitchResponseData
             {
-                Id = data.Read("id", static v => v.AsString()),
-                Status = data.Read("status", static v => v.AsString()),
+                Id = data.ReadAsString("id"),
+                Status = data.ReadAsString("status"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -140,11 +140,11 @@ public partial class TwitchGetConduitShardsResponse : RefCounted, ITwitcherSharp
                 if(data == null) return null;
                 var instance = new TwitchResponseTransport
                 {
-                    Method = data.Read("method", static v => v.AsString()),
-                    Callback = data.Read("callback", static v => v.AsString()),
-                    SessionId = data.Read("session_id", static v => v.AsString()),
-                    ConnectedAt = data.Read("connected_at", static v => v.AsString()),
-                    DisconnectedAt = data.Read("disconnected_at", static v => v.AsString()),
+                    Method = data.ReadAsString("method"),
+                    Callback = data.ReadAsString("callback"),
+                    SessionId = data.ReadAsString("session_id"),
+                    ConnectedAt = data.ReadAsString("connected_at"),
+                    DisconnectedAt = data.ReadAsString("disconnected_at"),
                 };
                 
                 instance._data = Variant.CreateFrom(data);

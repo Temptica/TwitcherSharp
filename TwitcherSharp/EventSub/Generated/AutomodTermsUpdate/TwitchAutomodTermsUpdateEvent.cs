@@ -63,14 +63,14 @@ public partial class TwitchAutomodTermsUpdateEvent : RefCounted, ITwitcherSharpE
         if(data == null) return null;
         var instance = new TwitchAutomodTermsUpdateEvent
         {
-            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
-            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
-            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
-            ModeratorUserId = data.Read("moderator_user_id", static v => v.AsString()),
-            ModeratorUserLogin = data.Read("moderator_user_login", static v => v.AsString()),
-            ModeratorUserName = data.Read("moderator_user_name", static v => v.AsString()),
-            Action = data.Read("action", static v => v.AsString()),
-            FromAutomod = data.Read("from_automod", static v => v.AsBool()),
+            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+            ModeratorUserId = data.ReadAsString("moderator_user_id"),
+            ModeratorUserLogin = data.ReadAsString("moderator_user_login"),
+            ModeratorUserName = data.ReadAsString("moderator_user_name"),
+            Action = data.ReadAsString("action"),
+            FromAutomod = data.ReadAsBool("from_automod"),
         };
         
         instance._data = Variant.CreateFrom(data);

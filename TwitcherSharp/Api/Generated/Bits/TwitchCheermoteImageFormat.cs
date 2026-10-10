@@ -21,11 +21,11 @@ public partial class TwitchCheermoteImageFormat : RefCounted, ITwitcherSharp<Twi
         if(data == null) return null;
         var instance = new TwitchCheermoteImageFormat
         {
-            _1 = data.Read("_1", static v => v.AsString()),
-            _2 = data.Read("_2", static v => v.AsString()),
-            _3 = data.Read("_3", static v => v.AsString()),
-            _4 = data.Read("_4", static v => v.AsString()),
-            _1_5 = data.Read("_1_5", static v => v.AsString()),
+            _1 = data.ReadAsString("_1"),
+            _2 = data.ReadAsString("_2"),
+            _3 = data.ReadAsString("_3"),
+            _4 = data.ReadAsString("_4"),
+            _1_5 = data.ReadAsString("_1_5"),
         };
         
         instance._data = Variant.CreateFrom(data);

@@ -73,14 +73,14 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
         if(data == null) return null;
         var instance = new TwitchChannelBitsUseEvent
         {
-            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
-            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
-            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
-            UserId = data.Read("user_id", static v => v.AsString()),
-            UserLogin = data.Read("user_login", static v => v.AsString()),
-            UserName = data.Read("user_name", static v => v.AsString()),
-            Bits = data.Read("bits", static v => v.AsInt32()),
-            Type = data.Read("type", static v => v.AsString()),
+            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+            UserId = data.ReadAsString("user_id"),
+            UserLogin = data.ReadAsString("user_login"),
+            UserName = data.ReadAsString("user_name"),
+            Bits = data.ReadAsInt32("bits"),
+            Type = data.ReadAsString("type"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -134,7 +134,7 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
             if(data == null) return null;
             var instance = new TwitchMessage
             {
-                Text = data.Read("text", static v => v.AsString()),
+                Text = data.ReadAsString("text"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -189,8 +189,8 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
                 if(data == null) return null;
                 var instance = new TwitchFragments
                 {
-                    Text = data.Read("text", static v => v.AsString()),
-                    Type = data.Read("type", static v => v.AsString()),
+                    Text = data.ReadAsString("text"),
+                    Type = data.ReadAsString("type"),
                 };
                 
                 instance._data = Variant.CreateFrom(data);
@@ -247,9 +247,9 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
                     if(data == null) return null;
                     var instance = new TwitchEmote
                     {
-                        Id = data.Read("id", static v => v.AsString()),
-                        EmoteSetId = data.Read("emote_set_id", static v => v.AsString()),
-                        OwnerId = data.Read("owner_id", static v => v.AsString()),
+                        Id = data.ReadAsString("id"),
+                        EmoteSetId = data.ReadAsString("emote_set_id"),
+                        OwnerId = data.ReadAsString("owner_id"),
                     };
                     
                     instance._data = Variant.CreateFrom(data);
@@ -301,9 +301,9 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
                     if(data == null) return null;
                     var instance = new TwitchCheermote
                     {
-                        Prefix = data.Read("prefix", static v => v.AsString()),
-                        Bits = data.Read("bits", static v => v.AsInt32()),
-                        Tier = data.Read("tier", static v => v.AsInt32()),
+                        Prefix = data.ReadAsString("prefix"),
+                        Bits = data.ReadAsInt32("bits"),
+                        Tier = data.ReadAsInt32("tier"),
                     };
                     
                     instance._data = Variant.CreateFrom(data);
@@ -356,8 +356,8 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
             if(data == null) return null;
             var instance = new TwitchPowerUp
             {
-                Type = data.Read("type", static v => v.AsString()),
-                MessageEffectId = data.Read("message_effect_id", static v => v.AsString()),
+                Type = data.ReadAsString("type"),
+                MessageEffectId = data.ReadAsString("message_effect_id"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -403,8 +403,8 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
                 if(data == null) return null;
                 var instance = new TwitchEmote
                 {
-                    Id = data.Read("id", static v => v.AsString()),
-                    Name = data.Read("name", static v => v.AsString()),
+                    Id = data.ReadAsString("id"),
+                    Name = data.ReadAsString("name"),
                 };
                 
                 instance._data = Variant.CreateFrom(data);
@@ -450,8 +450,8 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
             if(data == null) return null;
             var instance = new TwitchCustomPowerUp
             {
-                Title = data.Read("title", static v => v.AsString()),
-                RewardId = data.Read("reward_id", static v => v.AsString()),
+                Title = data.ReadAsString("title"),
+                RewardId = data.ReadAsString("reward_id"),
             };
             
             instance._data = Variant.CreateFrom(data);

@@ -24,10 +24,10 @@ public partial class TwitchUpdateChannelStreamScheduleOpt : RefCounted, ITwitche
         if(data == null) return null;
         var instance = new TwitchUpdateChannelStreamScheduleOpt
         {
-            IsVacationEnabled = data.Read("is_vacation_enabled", static v => v.AsBool()),
-            VacationStartTime = data.Read("vacation_start_time", static v => v.AsString()),
-            VacationEndTime = data.Read("vacation_end_time", static v => v.AsString()),
-            Timezone = data.Read("timezone", static v => v.AsString()),
+            IsVacationEnabled = data.ReadAsBool("is_vacation_enabled"),
+            VacationStartTime = data.ReadAsString("vacation_start_time"),
+            VacationEndTime = data.ReadAsString("vacation_end_time"),
+            Timezone = data.ReadAsString("timezone"),
         };
         
         instance._data = Variant.CreateFrom(data);

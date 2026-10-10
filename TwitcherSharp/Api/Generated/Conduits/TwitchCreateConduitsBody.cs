@@ -17,7 +17,7 @@ public partial class TwitchCreateConduitsBody : RefCounted, ITwitcherSharp<Twitc
         if(data == null) return null;
         var instance = new TwitchCreateConduitsBody
         {
-            ShardCount = data.Read("shard_count", static v => v.AsInt32()),
+            ShardCount = data.ReadAsInt32("shard_count"),
         };
         
         instance._data = Variant.CreateFrom(data);

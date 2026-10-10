@@ -19,9 +19,9 @@ public partial class TwitchChannelEditor : RefCounted, ITwitcherSharp<TwitchChan
         if(data == null) return null;
         var instance = new TwitchChannelEditor
         {
-            UserId = data.Read("user_id", static v => v.AsString()),
-            UserName = data.Read("user_name", static v => v.AsString()),
-            CreatedAt = data.Read("created_at", static v => v.AsString()),
+            UserId = data.ReadAsString("user_id"),
+            UserName = data.ReadAsString("user_name"),
+            CreatedAt = data.ReadAsString("created_at"),
         };
         
         instance._data = Variant.CreateFrom(data);

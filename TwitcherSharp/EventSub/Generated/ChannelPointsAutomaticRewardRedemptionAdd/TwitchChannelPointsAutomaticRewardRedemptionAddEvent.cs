@@ -83,16 +83,16 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddEvent : RefC
         if(data == null) return null;
         var instance = new TwitchChannelPointsAutomaticRewardRedemptionAddEvent
         {
-            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
-            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
-            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
-            UserId = data.Read("user_id", static v => v.AsString()),
-            UserLogin = data.Read("user_login", static v => v.AsString()),
-            UserName = data.Read("user_name", static v => v.AsString()),
-            Id = data.Read("id", static v => v.AsString()),
-            Text = data.Read("text", static v => v.AsString()),
-            UserInput = data.Read("user_input", static v => v.AsString()),
-            RedeemedAt = data.Read("redeemed_at", static v => v.AsString()),
+            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+            UserId = data.ReadAsString("user_id"),
+            UserLogin = data.ReadAsString("user_login"),
+            UserName = data.ReadAsString("user_name"),
+            Id = data.ReadAsString("id"),
+            Text = data.ReadAsString("text"),
+            UserInput = data.ReadAsString("user_input"),
+            RedeemedAt = data.ReadAsString("redeemed_at"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -153,8 +153,8 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddEvent : RefC
             if(data == null) return null;
             var instance = new TwitchReward
             {
-                Type = data.Read("type", static v => v.AsString()),
-                Cost = data.Read("cost", static v => v.AsInt32()),
+                Type = data.ReadAsString("type"),
+                Cost = data.ReadAsInt32("cost"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -200,8 +200,8 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddEvent : RefC
                 if(data == null) return null;
                 var instance = new TwitchUnlockedEmote
                 {
-                    Id = data.Read("id", static v => v.AsString()),
-                    Name = data.Read("name", static v => v.AsString()),
+                    Id = data.ReadAsString("id"),
+                    Name = data.ReadAsString("name"),
                 };
                 
                 instance._data = Variant.CreateFrom(data);
@@ -252,9 +252,9 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddEvent : RefC
             if(data == null) return null;
             var instance = new TwitchEmotes
             {
-                Id = data.Read("id", static v => v.AsString()),
-                Begin = data.Read("begin", static v => v.AsInt32()),
-                End = data.Read("end", static v => v.AsInt32()),
+                Id = data.ReadAsString("id"),
+                Begin = data.ReadAsInt32("begin"),
+                End = data.ReadAsInt32("end"),
             };
             
             instance._data = Variant.CreateFrom(data);

@@ -19,9 +19,9 @@ public partial class TwitchUserVip : RefCounted, ITwitcherSharp<TwitchUserVip>
         if(data == null) return null;
         var instance = new TwitchUserVip
         {
-            UserId = data.Read("user_id", static v => v.AsString()),
-            UserName = data.Read("user_name", static v => v.AsString()),
-            UserLogin = data.Read("user_login", static v => v.AsString()),
+            UserId = data.ReadAsString("user_id"),
+            UserName = data.ReadAsString("user_name"),
+            UserLogin = data.ReadAsString("user_login"),
         };
         
         instance._data = Variant.CreateFrom(data);

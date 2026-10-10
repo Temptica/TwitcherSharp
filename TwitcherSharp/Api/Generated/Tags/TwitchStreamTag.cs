@@ -20,8 +20,8 @@ public partial class TwitchStreamTag : RefCounted, ITwitcherSharp<TwitchStreamTa
         if(data == null) return null;
         var instance = new TwitchStreamTag
         {
-            TagId = data.Read("tag_id", static v => v.AsString()),
-            IsAuto = data.Read("is_auto", static v => v.AsBool()),
+            TagId = data.ReadAsString("tag_id"),
+            IsAuto = data.ReadAsBool("is_auto"),
             LocalizationNames = data.Read("localization_names", static v => v.AsGodotDictionary<string, string>()),
             LocalizationDescriptions = data.Read("localization_descriptions", static v => v.AsGodotDictionary<string, string>()),
         };

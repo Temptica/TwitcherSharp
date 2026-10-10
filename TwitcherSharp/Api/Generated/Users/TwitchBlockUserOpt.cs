@@ -22,8 +22,8 @@ public partial class TwitchBlockUserOpt : RefCounted, ITwitcherSharp<TwitchBlock
         if(data == null) return null;
         var instance = new TwitchBlockUserOpt
         {
-            SourceContext = data.Read("source_context", static v => v.AsString()),
-            Reason = data.Read("reason", static v => v.AsString()),
+            SourceContext = data.ReadAsString("source_context"),
+            Reason = data.ReadAsString("reason"),
         };
         
         instance._data = Variant.CreateFrom(data);

@@ -23,7 +23,7 @@ public partial class TwitchChannelModeratorRemoveCondition(string broadcasterUse
     public static TwitchChannelModeratorRemoveCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchChannelModeratorRemoveCondition(data.Read("broadcaster_user_id", static v => v.AsString()));
+        var instance = new TwitchChannelModeratorRemoveCondition(data.ReadAsString("broadcaster_user_id"));
         
         instance._data = Variant.CreateFrom(data);
         return instance;

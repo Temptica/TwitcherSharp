@@ -17,7 +17,7 @@ public partial class TwitchSendWhisperBody : RefCounted, ITwitcherSharp<TwitchSe
         if(data == null) return null;
         var instance = new TwitchSendWhisperBody
         {
-            Message = data.Read("message", static v => v.AsString()),
+            Message = data.ReadAsString("message"),
         };
         
         instance._data = Variant.CreateFrom(data);

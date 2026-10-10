@@ -23,7 +23,7 @@ public partial class TwitchChannelPollProgressCondition(string broadcasterUserId
     public static TwitchChannelPollProgressCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchChannelPollProgressCondition(data.Read("broadcaster_user_id", static v => v.AsString()));
+        var instance = new TwitchChannelPollProgressCondition(data.ReadAsString("broadcaster_user_id"));
         
         instance._data = Variant.CreateFrom(data);
         return instance;

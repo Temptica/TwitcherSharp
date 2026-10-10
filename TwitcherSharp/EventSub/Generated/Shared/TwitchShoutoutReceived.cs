@@ -58,14 +58,14 @@ public partial class TwitchShoutoutReceived : RefCounted, ITwitcherSharpEventSub
         if(data == null) return null;
         var instance = new TwitchShoutoutReceived
         {
-            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
-            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
-            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
-            FromBroadcasterUserId = data.Read("from_broadcaster_user_id", static v => v.AsString()),
-            FromBroadcasterUserLogin = data.Read("from_broadcaster_user_login", static v => v.AsString()),
-            FromBroadcasterUserName = data.Read("from_broadcaster_user_name", static v => v.AsString()),
-            ViewerCount = data.Read("viewer_count", static v => v.AsInt32()),
-            StartedAt = data.Read("started_at", static v => v.AsString()),
+            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+            FromBroadcasterUserId = data.ReadAsString("from_broadcaster_user_id"),
+            FromBroadcasterUserLogin = data.ReadAsString("from_broadcaster_user_login"),
+            FromBroadcasterUserName = data.ReadAsString("from_broadcaster_user_name"),
+            ViewerCount = data.ReadAsInt32("viewer_count"),
+            StartedAt = data.ReadAsString("started_at"),
         };
         
         instance._data = Variant.CreateFrom(data);

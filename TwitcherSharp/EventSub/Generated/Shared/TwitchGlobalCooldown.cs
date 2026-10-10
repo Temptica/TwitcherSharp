@@ -28,8 +28,8 @@ public partial class TwitchGlobalCooldown : RefCounted, ITwitcherSharpEventSub<T
         if(data == null) return null;
         var instance = new TwitchGlobalCooldown
         {
-            IsEnabled = data.Read("is_enabled", static v => v.AsBool()),
-            Seconds = data.Read("seconds", static v => v.AsInt32()),
+            IsEnabled = data.ReadAsBool("is_enabled"),
+            Seconds = data.ReadAsInt32("seconds"),
         };
         
         instance._data = Variant.CreateFrom(data);

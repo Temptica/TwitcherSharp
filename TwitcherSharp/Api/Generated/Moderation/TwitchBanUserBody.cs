@@ -53,9 +53,9 @@ public partial class TwitchBanUserBody : RefCounted, ITwitcherSharp<TwitchBanUse
             if(data == null) return null;
             var instance = new TwitchBodyData
             {
-                UserId = data.Read("user_id", static v => v.AsString()),
-                Duration = data.Read("duration", static v => v.AsInt32()),
-                Reason = data.Read("reason", static v => v.AsString()),
+                UserId = data.ReadAsString("user_id"),
+                Duration = data.ReadAsInt32("duration"),
+                Reason = data.ReadAsString("reason"),
             };
             
             instance._data = Variant.CreateFrom(data);

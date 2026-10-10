@@ -25,15 +25,15 @@ public partial class TwitchUpdateAutoModSettingsBody : RefCounted, ITwitcherShar
         if(data == null) return null;
         var instance = new TwitchUpdateAutoModSettingsBody
         {
-            Aggression = data.Read("aggression", static v => v.AsInt32()),
-            Bullying = data.Read("bullying", static v => v.AsInt32()),
-            Disability = data.Read("disability", static v => v.AsInt32()),
-            Misogyny = data.Read("misogyny", static v => v.AsInt32()),
-            OverallLevel = data.Read("overall_level", static v => v.AsInt32()),
-            RaceEthnicityOrReligion = data.Read("race_ethnicity_or_religion", static v => v.AsInt32()),
-            SexBasedTerms = data.Read("sex_based_terms", static v => v.AsInt32()),
-            SexualitySexOrGender = data.Read("sexuality_sex_or_gender", static v => v.AsInt32()),
-            Swearing = data.Read("swearing", static v => v.AsInt32()),
+            Aggression = data.ReadAsInt32("aggression"),
+            Bullying = data.ReadAsInt32("bullying"),
+            Disability = data.ReadAsInt32("disability"),
+            Misogyny = data.ReadAsInt32("misogyny"),
+            OverallLevel = data.ReadAsInt32("overall_level"),
+            RaceEthnicityOrReligion = data.ReadAsInt32("race_ethnicity_or_religion"),
+            SexBasedTerms = data.ReadAsInt32("sex_based_terms"),
+            SexualitySexOrGender = data.ReadAsInt32("sexuality_sex_or_gender"),
+            Swearing = data.ReadAsInt32("swearing"),
         };
         
         instance._data = Variant.CreateFrom(data);

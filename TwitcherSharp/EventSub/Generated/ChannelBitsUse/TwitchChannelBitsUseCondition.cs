@@ -23,7 +23,7 @@ public partial class TwitchChannelBitsUseCondition(string broadcasterUserId) : R
     public static TwitchChannelBitsUseCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchChannelBitsUseCondition(data.Read("broadcaster_user_id", static v => v.AsString()));
+        var instance = new TwitchChannelBitsUseCondition(data.ReadAsString("broadcaster_user_id"));
         
         instance._data = Variant.CreateFrom(data);
         return instance;

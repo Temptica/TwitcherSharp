@@ -18,7 +18,7 @@ public partial class TwitchChatBadge : RefCounted, ITwitcherSharp<TwitchChatBadg
         if(data == null) return null;
         var instance = new TwitchChatBadge
         {
-            SetId = data.Read("set_id", static v => v.AsString()),
+            SetId = data.ReadAsString("set_id"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -63,14 +63,14 @@ public partial class TwitchChatBadge : RefCounted, ITwitcherSharp<TwitchChatBadg
             if(data == null) return null;
             var instance = new TwitchVersions
             {
-                Id = data.Read("id", static v => v.AsString()),
-                ImageUrl1x = data.Read("image_url_1x", static v => v.AsString()),
-                ImageUrl2x = data.Read("image_url_2x", static v => v.AsString()),
-                ImageUrl4x = data.Read("image_url_4x", static v => v.AsString()),
-                Title = data.Read("title", static v => v.AsString()),
-                Description = data.Read("description", static v => v.AsString()),
-                ClickAction = data.Read("click_action", static v => v.AsString()),
-                ClickUrl = data.Read("click_url", static v => v.AsString()),
+                Id = data.ReadAsString("id"),
+                ImageUrl1x = data.ReadAsString("image_url_1x"),
+                ImageUrl2x = data.ReadAsString("image_url_2x"),
+                ImageUrl4x = data.ReadAsString("image_url_4x"),
+                Title = data.ReadAsString("title"),
+                Description = data.ReadAsString("description"),
+                ClickAction = data.ReadAsString("click_action"),
+                ClickUrl = data.ReadAsString("click_url"),
             };
             
             instance._data = Variant.CreateFrom(data);

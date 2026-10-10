@@ -21,7 +21,7 @@ public partial class TwitchCreateClipFromVodOpt : RefCounted, ITwitcherSharp<Twi
         if(data == null) return null;
         var instance = new TwitchCreateClipFromVodOpt
         {
-            Duration = data.Read("duration", static v => v.AsDouble()),
+            Duration = data.ReadAsDouble("duration"),
         };
         
         instance._data = Variant.CreateFrom(data);

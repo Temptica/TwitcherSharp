@@ -21,7 +21,7 @@ public partial class TwitchGetReleasedExtensionsOpt : RefCounted, ITwitcherSharp
         if(data == null) return null;
         var instance = new TwitchGetReleasedExtensionsOpt
         {
-            ExtensionVersion = data.Read("extension_version", static v => v.AsString()),
+            ExtensionVersion = data.ReadAsString("extension_version"),
         };
         
         instance._data = Variant.CreateFrom(data);

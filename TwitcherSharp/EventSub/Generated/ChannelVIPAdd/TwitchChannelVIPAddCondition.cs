@@ -23,7 +23,7 @@ public partial class TwitchChannelVIPAddCondition(string broadcasterUserId) : Re
     public static TwitchChannelVIPAddCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchChannelVIPAddCondition(data.Read("broadcaster_user_id", static v => v.AsString()));
+        var instance = new TwitchChannelVIPAddCondition(data.ReadAsString("broadcaster_user_id"));
         
         instance._data = Variant.CreateFrom(data);
         return instance;

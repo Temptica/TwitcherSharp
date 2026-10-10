@@ -22,12 +22,12 @@ public partial class TwitchSendChatMessageBody : RefCounted, ITwitcherSharp<Twit
         if(data == null) return null;
         var instance = new TwitchSendChatMessageBody
         {
-            BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
-            SenderId = data.Read("sender_id", static v => v.AsString()),
-            Message = data.Read("message", static v => v.AsString()),
-            ReplyParentMessageId = data.Read("reply_parent_message_id", static v => v.AsString()),
-            ForSourceOnly = data.Read("for_source_only", static v => v.AsBool()),
-            Pin = data.Read("pin", static v => v.AsBool()),
+            BroadcasterId = data.ReadAsString("broadcaster_id"),
+            SenderId = data.ReadAsString("sender_id"),
+            Message = data.ReadAsString("message"),
+            ReplyParentMessageId = data.ReadAsString("reply_parent_message_id"),
+            ForSourceOnly = data.ReadAsBool("for_source_only"),
+            Pin = data.ReadAsBool("pin"),
         };
         
         instance._data = Variant.CreateFrom(data);

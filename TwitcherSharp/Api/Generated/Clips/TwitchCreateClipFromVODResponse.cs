@@ -52,8 +52,8 @@ public partial class TwitchCreateClipFromVODResponse : RefCounted, ITwitcherShar
             if(data == null) return null;
             var instance = new TwitchResponseData
             {
-                Id = data.Read("id", static v => v.AsString()),
-                EditUrl = data.Read("edit_url", static v => v.AsString()),
+                Id = data.ReadAsString("id"),
+                EditUrl = data.ReadAsString("edit_url"),
             };
             
             instance._data = Variant.CreateFrom(data);

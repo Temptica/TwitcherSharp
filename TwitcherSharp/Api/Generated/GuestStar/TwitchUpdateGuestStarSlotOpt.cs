@@ -21,7 +21,7 @@ public partial class TwitchUpdateGuestStarSlotOpt : RefCounted, ITwitcherSharp<T
         if(data == null) return null;
         var instance = new TwitchUpdateGuestStarSlotOpt
         {
-            DestinationSlotId = data.Read("destination_slot_id", static v => v.AsString()),
+            DestinationSlotId = data.ReadAsString("destination_slot_id"),
         };
         
         instance._data = Variant.CreateFrom(data);

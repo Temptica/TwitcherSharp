@@ -68,14 +68,14 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
         if(data == null) return null;
         var instance = new TwitchChannelPointsAutomaticRewardRedemptionAddV2Event
         {
-            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
-            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
-            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
-            UserId = data.Read("user_id", static v => v.AsString()),
-            UserLogin = data.Read("user_login", static v => v.AsString()),
-            UserName = data.Read("user_name", static v => v.AsString()),
-            Id = data.Read("id", static v => v.AsString()),
-            RedeemedAt = data.Read("redeemed_at", static v => v.AsString()),
+            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+            UserId = data.ReadAsString("user_id"),
+            UserLogin = data.ReadAsString("user_login"),
+            UserName = data.ReadAsString("user_name"),
+            Id = data.ReadAsString("id"),
+            RedeemedAt = data.ReadAsString("redeemed_at"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -133,8 +133,8 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
             if(data == null) return null;
             var instance = new TwitchReward
             {
-                Type = data.Read("type", static v => v.AsString()),
-                ChannelPoints = data.Read("channel_points", static v => v.AsInt32()),
+                Type = data.ReadAsString("type"),
+                ChannelPoints = data.ReadAsInt32("channel_points"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -180,8 +180,8 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
                 if(data == null) return null;
                 var instance = new TwitchEmote
                 {
-                    Id = data.Read("id", static v => v.AsString()),
-                    Name = data.Read("name", static v => v.AsString()),
+                    Id = data.ReadAsString("id"),
+                    Name = data.ReadAsString("name"),
                 };
                 
                 instance._data = Variant.CreateFrom(data);
@@ -227,7 +227,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
             if(data == null) return null;
             var instance = new TwitchMessage
             {
-                Text = data.Read("text", static v => v.AsString()),
+                Text = data.ReadAsString("text"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -277,8 +277,8 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
                 if(data == null) return null;
                 var instance = new TwitchFragments
                 {
-                    Text = data.Read("text", static v => v.AsString()),
-                    Type = data.Read("type", static v => v.AsString()),
+                    Text = data.ReadAsString("text"),
+                    Type = data.ReadAsString("type"),
                 };
                 
                 instance._data = Variant.CreateFrom(data);
@@ -319,7 +319,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
                     if(data == null) return null;
                     var instance = new TwitchEmote
                     {
-                        Id = data.Read("id", static v => v.AsString()),
+                        Id = data.ReadAsString("id"),
                     };
                     
                     instance._data = Variant.CreateFrom(data);

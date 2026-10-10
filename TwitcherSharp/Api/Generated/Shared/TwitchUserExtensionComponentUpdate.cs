@@ -21,11 +21,11 @@ public partial class TwitchUserExtensionComponentUpdate : RefCounted, ITwitcherS
         if(data == null) return null;
         var instance = new TwitchUserExtensionComponentUpdate
         {
-            Active = data.Read("active", static v => v.AsBool()),
-            Id = data.Read("id", static v => v.AsString()),
-            Version = data.Read("version", static v => v.AsString()),
-            X = data.Read("x", static v => v.AsInt32()),
-            Y = data.Read("y", static v => v.AsInt32()),
+            Active = data.ReadAsBool("active"),
+            Id = data.ReadAsString("id"),
+            Version = data.ReadAsString("version"),
+            X = data.ReadAsInt32("x"),
+            Y = data.ReadAsInt32("y"),
         };
         
         instance._data = Variant.CreateFrom(data);

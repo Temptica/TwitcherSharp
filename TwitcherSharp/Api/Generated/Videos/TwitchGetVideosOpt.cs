@@ -30,16 +30,16 @@ public partial class TwitchGetVideosOpt : RefCounted, ITwitcherSharp<TwitchGetVi
         if(data == null) return null;
         var instance = new TwitchGetVideosOpt
         {
-            Id = data.Read("id", static v => v.AsStringArray()),
-            UserId = data.Read("user_id", static v => v.AsString()),
-            GameId = data.Read("game_id", static v => v.AsString()),
-            Language = data.Read("language", static v => v.AsString()),
-            Period = data.Read("period", static v => v.AsString()),
-            Sort = data.Read("sort", static v => v.AsString()),
-            Type = data.Read("type", static v => v.AsString()),
-            First = data.Read("first", static v => v.AsString()),
-            After = data.Read("after", static v => v.AsString()),
-            Before = data.Read("before", static v => v.AsString()),
+            Id = data.ReadAsStringArray("id"),
+            UserId = data.ReadAsString("user_id"),
+            GameId = data.ReadAsString("game_id"),
+            Language = data.ReadAsString("language"),
+            Period = data.ReadAsString("period"),
+            Sort = data.ReadAsString("sort"),
+            Type = data.ReadAsString("type"),
+            First = data.ReadAsString("first"),
+            After = data.ReadAsString("after"),
+            Before = data.ReadAsString("before"),
         };
         
         instance._data = Variant.CreateFrom(data);

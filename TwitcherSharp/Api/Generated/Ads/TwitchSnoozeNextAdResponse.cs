@@ -53,9 +53,9 @@ public partial class TwitchSnoozeNextAdResponse : RefCounted, ITwitcherSharp<Twi
             if(data == null) return null;
             var instance = new TwitchResponseData
             {
-                SnoozeCount = data.Read("snooze_count", static v => v.AsInt32()),
-                SnoozeRefreshAt = data.Read("snooze_refresh_at", static v => v.AsInt64()),
-                NextAdAt = data.Read("next_ad_at", static v => v.AsInt64()),
+                SnoozeCount = data.ReadAsInt32("snooze_count"),
+                SnoozeRefreshAt = data.ReadAsInt64("snooze_refresh_at"),
+                NextAdAt = data.ReadAsInt64("next_ad_at"),
             };
             
             instance._data = Variant.CreateFrom(data);

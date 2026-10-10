@@ -49,8 +49,8 @@ public partial class TwitchSendChatMessageResponse : RefCounted, ITwitcherSharp<
             if(data == null) return null;
             var instance = new TwitchResponseData
             {
-                MessageId = data.Read("message_id", static v => v.AsString()),
-                IsSent = data.Read("is_sent", static v => v.AsBool()),
+                MessageId = data.ReadAsString("message_id"),
+                IsSent = data.ReadAsBool("is_sent"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -90,8 +90,8 @@ public partial class TwitchSendChatMessageResponse : RefCounted, ITwitcherSharp<
                 if(data == null) return null;
                 var instance = new TwitchResponseDropReason
                 {
-                    Code = data.Read("code", static v => v.AsString()),
-                    Message = data.Read("message", static v => v.AsString()),
+                    Code = data.ReadAsString("code"),
+                    Message = data.ReadAsString("message"),
                 };
                 
                 instance._data = Variant.CreateFrom(data);

@@ -124,11 +124,11 @@ public partial class TwitchCheermoteDefinition(string prefix, string tier)
     public static TwitchCheermoteDefinition? FromObject(GodotObject? data)
     {
         if (data == null) return null;
-        return new TwitchCheermoteDefinition(data.Read("prefix", static v => v.AsString()), data.Read("tier", static v => v.AsString()))
+        return new TwitchCheermoteDefinition(data.ReadAsString("prefix"), data.ReadAsString("tier"))
         {
-            Theme = data.Read("theme", static v => v.AsString()),
-            Type = data.Read("type", static v => v.AsString()),
-            Scale = data.Read("scale", static v => v.AsString())
+            Theme = data.ReadAsString("theme"),
+            Type = data.ReadAsString("type"),
+            Scale = data.ReadAsString("scale")
         };
     }
 

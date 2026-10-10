@@ -16,7 +16,7 @@ public partial class TwitchAnnouncementColor(string color) : RefCounted, ITwitch
 
     public static TwitchAnnouncementColor? FromObject(GodotObject? data)
     {
-        return data == null ? null : new TwitchAnnouncementColor(data.Read("value", static v => v.AsString()));
+        return data == null ? null : new TwitchAnnouncementColor(data.ReadAsString("value"));
     }
 
     public GodotObject ToGodotObject()

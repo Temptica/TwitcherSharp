@@ -39,27 +39,27 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
         if(data == null) return null;
         var instance = new TwitchExtension
         {
-            AuthorName = data.Read("author_name", static v => v.AsString()),
-            BitsEnabled = data.Read("bits_enabled", static v => v.AsBool()),
-            CanInstall = data.Read("can_install", static v => v.AsBool()),
-            ConfigurationLocation = data.Read("configuration_location", static v => v.AsString()),
-            Description = data.Read("description", static v => v.AsString()),
-            EulaTosUrl = data.Read("eula_tos_url", static v => v.AsString()),
-            HasChatSupport = data.Read("has_chat_support", static v => v.AsBool()),
-            IconUrl = data.Read("icon_url", static v => v.AsString()),
-            Id = data.Read("id", static v => v.AsString()),
-            Name = data.Read("name", static v => v.AsString()),
-            PrivacyPolicyUrl = data.Read("privacy_policy_url", static v => v.AsString()),
-            RequestIdentityLink = data.Read("request_identity_link", static v => v.AsBool()),
-            ScreenshotUrls = data.Read("screenshot_urls", static v => v.AsStringArray()),
-            State = data.Read("state", static v => v.AsString()),
-            SubscriptionsSupportLevel = data.Read("subscriptions_support_level", static v => v.AsString()),
-            Summary = data.Read("summary", static v => v.AsString()),
-            SupportEmail = data.Read("support_email", static v => v.AsString()),
-            Version = data.Read("version", static v => v.AsString()),
-            ViewerSummary = data.Read("viewer_summary", static v => v.AsString()),
-            AllowlistedConfigUrls = data.Read("allowlisted_config_urls", static v => v.AsStringArray()),
-            AllowlistedPanelUrls = data.Read("allowlisted_panel_urls", static v => v.AsStringArray()),
+            AuthorName = data.ReadAsString("author_name"),
+            BitsEnabled = data.ReadAsBool("bits_enabled"),
+            CanInstall = data.ReadAsBool("can_install"),
+            ConfigurationLocation = data.ReadAsString("configuration_location"),
+            Description = data.ReadAsString("description"),
+            EulaTosUrl = data.ReadAsString("eula_tos_url"),
+            HasChatSupport = data.ReadAsBool("has_chat_support"),
+            IconUrl = data.ReadAsString("icon_url"),
+            Id = data.ReadAsString("id"),
+            Name = data.ReadAsString("name"),
+            PrivacyPolicyUrl = data.ReadAsString("privacy_policy_url"),
+            RequestIdentityLink = data.ReadAsBool("request_identity_link"),
+            ScreenshotUrls = data.ReadAsStringArray("screenshot_urls"),
+            State = data.ReadAsString("state"),
+            SubscriptionsSupportLevel = data.ReadAsString("subscriptions_support_level"),
+            Summary = data.ReadAsString("summary"),
+            SupportEmail = data.ReadAsString("support_email"),
+            Version = data.ReadAsString("version"),
+            ViewerSummary = data.ReadAsString("viewer_summary"),
+            AllowlistedConfigUrls = data.ReadAsStringArray("allowlisted_config_urls"),
+            AllowlistedPanelUrls = data.ReadAsStringArray("allowlisted_panel_urls"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -160,7 +160,7 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
                 if(data == null) return null;
                 var instance = new TwitchMobile
                 {
-                    ViewerUrl = data.Read("viewer_url", static v => v.AsString()),
+                    ViewerUrl = data.ReadAsString("viewer_url"),
                 };
                 
                 instance._data = Variant.CreateFrom(data);
@@ -201,9 +201,9 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
                 if(data == null) return null;
                 var instance = new TwitchPanel
                 {
-                    ViewerUrl = data.Read("viewer_url", static v => v.AsString()),
-                    Height = data.Read("height", static v => v.AsInt32()),
-                    CanLinkExternalContent = data.Read("can_link_external_content", static v => v.AsBool()),
+                    ViewerUrl = data.ReadAsString("viewer_url"),
+                    Height = data.ReadAsInt32("height"),
+                    CanLinkExternalContent = data.ReadAsBool("can_link_external_content"),
                 };
                 
                 instance._data = Variant.CreateFrom(data);
@@ -245,8 +245,8 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
                 if(data == null) return null;
                 var instance = new TwitchVideoOverlay
                 {
-                    ViewerUrl = data.Read("viewer_url", static v => v.AsString()),
-                    CanLinkExternalContent = data.Read("can_link_external_content", static v => v.AsBool()),
+                    ViewerUrl = data.ReadAsString("viewer_url"),
+                    CanLinkExternalContent = data.ReadAsBool("can_link_external_content"),
                 };
                 
                 instance._data = Variant.CreateFrom(data);
@@ -292,13 +292,13 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
                 if(data == null) return null;
                 var instance = new TwitchComponent
                 {
-                    ViewerUrl = data.Read("viewer_url", static v => v.AsString()),
-                    AspectRatioX = data.Read("aspect_ratio_x", static v => v.AsInt32()),
-                    AspectRatioY = data.Read("aspect_ratio_y", static v => v.AsInt32()),
-                    Autoscale = data.Read("autoscale", static v => v.AsBool()),
-                    ScalePixels = data.Read("scale_pixels", static v => v.AsInt32()),
-                    TargetHeight = data.Read("target_height", static v => v.AsInt32()),
-                    CanLinkExternalContent = data.Read("can_link_external_content", static v => v.AsBool()),
+                    ViewerUrl = data.ReadAsString("viewer_url"),
+                    AspectRatioX = data.ReadAsInt32("aspect_ratio_x"),
+                    AspectRatioY = data.ReadAsInt32("aspect_ratio_y"),
+                    Autoscale = data.ReadAsBool("autoscale"),
+                    ScalePixels = data.ReadAsInt32("scale_pixels"),
+                    TargetHeight = data.ReadAsInt32("target_height"),
+                    CanLinkExternalContent = data.ReadAsBool("can_link_external_content"),
                 };
                 
                 instance._data = Variant.CreateFrom(data);
@@ -344,8 +344,8 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
                 if(data == null) return null;
                 var instance = new TwitchConfig
                 {
-                    ViewerUrl = data.Read("viewer_url", static v => v.AsString()),
-                    CanLinkExternalContent = data.Read("can_link_external_content", static v => v.AsBool()),
+                    ViewerUrl = data.ReadAsString("viewer_url"),
+                    CanLinkExternalContent = data.ReadAsBool("can_link_external_content"),
                 };
                 
                 instance._data = Variant.CreateFrom(data);

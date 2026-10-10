@@ -19,9 +19,9 @@ public partial class TwitchManageHeldAutoModMessagesBody : RefCounted, ITwitcher
         if(data == null) return null;
         var instance = new TwitchManageHeldAutoModMessagesBody
         {
-            UserId = data.Read("user_id", static v => v.AsString()),
-            MsgId = data.Read("msg_id", static v => v.AsString()),
-            Action = data.Read("action", static v => v.AsString()),
+            UserId = data.ReadAsString("user_id"),
+            MsgId = data.ReadAsString("msg_id"),
+            Action = data.ReadAsString("action"),
         };
         
         instance._data = Variant.CreateFrom(data);

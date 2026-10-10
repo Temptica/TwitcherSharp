@@ -21,7 +21,7 @@ public partial class TwitchResolveUnbanRequestsOpt : RefCounted, ITwitcherSharp<
         if(data == null) return null;
         var instance = new TwitchResolveUnbanRequestsOpt
         {
-            ResolutionText = data.Read("resolution_text", static v => v.AsString()),
+            ResolutionText = data.ReadAsString("resolution_text"),
         };
         
         instance._data = Variant.CreateFrom(data);

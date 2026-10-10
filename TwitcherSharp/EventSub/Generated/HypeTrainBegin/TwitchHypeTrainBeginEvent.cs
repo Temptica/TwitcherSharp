@@ -98,20 +98,20 @@ public partial class TwitchHypeTrainBeginEvent : RefCounted, ITwitcherSharpEvent
         if(data == null) return null;
         var instance = new TwitchHypeTrainBeginEvent
         {
-            Id = data.Read("id", static v => v.AsString()),
-            BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
-            BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
-            BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
-            Total = data.Read("total", static v => v.AsInt32()),
-            Progress = data.Read("progress", static v => v.AsInt32()),
-            Goal = data.Read("goal", static v => v.AsInt32()),
-            Level = data.Read("level", static v => v.AsInt32()),
-            AllTimeHighLevel = data.Read("all_time_high_level", static v => v.AsInt32()),
-            AllTimeHighTotal = data.Read("all_time_high_total", static v => v.AsInt32()),
-            StartedAt = data.Read("started_at", static v => v.AsString()),
-            ExpiresAt = data.Read("expires_at", static v => v.AsString()),
-            Type = data.Read("type", static v => v.AsString()),
-            IsSharedTrain = data.Read("is_shared_train", static v => v.AsBool()),
+            Id = data.ReadAsString("id"),
+            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+            Total = data.ReadAsInt32("total"),
+            Progress = data.ReadAsInt32("progress"),
+            Goal = data.ReadAsInt32("goal"),
+            Level = data.ReadAsInt32("level"),
+            AllTimeHighLevel = data.ReadAsInt32("all_time_high_level"),
+            AllTimeHighTotal = data.ReadAsInt32("all_time_high_total"),
+            StartedAt = data.ReadAsString("started_at"),
+            ExpiresAt = data.ReadAsString("expires_at"),
+            Type = data.ReadAsString("type"),
+            IsSharedTrain = data.ReadAsBool("is_shared_train"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -175,9 +175,9 @@ public partial class TwitchHypeTrainBeginEvent : RefCounted, ITwitcherSharpEvent
             if(data == null) return null;
             var instance = new TwitchSharedTrainParticipants
             {
-                BroadcasterUserId = data.Read("broadcaster_user_id", static v => v.AsString()),
-                BroadcasterUserLogin = data.Read("broadcaster_user_login", static v => v.AsString()),
-                BroadcasterUserName = data.Read("broadcaster_user_name", static v => v.AsString()),
+                BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+                BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+                BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
             };
             
             instance._data = Variant.CreateFrom(data);

@@ -27,17 +27,17 @@ public partial class TwitchChannelInformation : RefCounted, ITwitcherSharp<Twitc
         if(data == null) return null;
         var instance = new TwitchChannelInformation
         {
-            BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
-            BroadcasterLogin = data.Read("broadcaster_login", static v => v.AsString()),
-            BroadcasterName = data.Read("broadcaster_name", static v => v.AsString()),
-            BroadcasterLanguage = data.Read("broadcaster_language", static v => v.AsString()),
-            GameName = data.Read("game_name", static v => v.AsString()),
-            GameId = data.Read("game_id", static v => v.AsString()),
-            Title = data.Read("title", static v => v.AsString()),
-            Delay = data.Read("delay", static v => v.AsInt32()),
-            Tags = data.Read("tags", static v => v.AsStringArray()),
-            ContentClassificationLabels = data.Read("content_classification_labels", static v => v.AsStringArray()),
-            IsBrandedContent = data.Read("is_branded_content", static v => v.AsBool()),
+            BroadcasterId = data.ReadAsString("broadcaster_id"),
+            BroadcasterLogin = data.ReadAsString("broadcaster_login"),
+            BroadcasterName = data.ReadAsString("broadcaster_name"),
+            BroadcasterLanguage = data.ReadAsString("broadcaster_language"),
+            GameName = data.ReadAsString("game_name"),
+            GameId = data.ReadAsString("game_id"),
+            Title = data.ReadAsString("title"),
+            Delay = data.ReadAsInt32("delay"),
+            Tags = data.ReadAsStringArray("tags"),
+            ContentClassificationLabels = data.ReadAsStringArray("content_classification_labels"),
+            IsBrandedContent = data.ReadAsBool("is_branded_content"),
         };
         
         instance._data = Variant.CreateFrom(data);

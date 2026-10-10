@@ -23,13 +23,13 @@ public partial class TwitchBlockedTerm : RefCounted, ITwitcherSharp<TwitchBlocke
         if(data == null) return null;
         var instance = new TwitchBlockedTerm
         {
-            BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
-            ModeratorId = data.Read("moderator_id", static v => v.AsString()),
-            Id = data.Read("id", static v => v.AsString()),
-            Text = data.Read("text", static v => v.AsString()),
-            CreatedAt = data.Read("created_at", static v => v.AsString()),
-            UpdatedAt = data.Read("updated_at", static v => v.AsString()),
-            ExpiresAt = data.Read("expires_at", static v => v.AsString()),
+            BroadcasterId = data.ReadAsString("broadcaster_id"),
+            ModeratorId = data.ReadAsString("moderator_id"),
+            Id = data.ReadAsString("id"),
+            Text = data.ReadAsString("text"),
+            CreatedAt = data.ReadAsString("created_at"),
+            UpdatedAt = data.ReadAsString("updated_at"),
+            ExpiresAt = data.ReadAsString("expires_at"),
         };
         
         instance._data = Variant.CreateFrom(data);

@@ -23,7 +23,7 @@ public partial class TwitchChannelUpdateCondition(string broadcasterUserId) : Re
     public static TwitchChannelUpdateCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchChannelUpdateCondition(data.Read("broadcaster_user_id", static v => v.AsString()));
+        var instance = new TwitchChannelUpdateCondition(data.ReadAsString("broadcaster_user_id"));
         
         instance._data = Variant.CreateFrom(data);
         return instance;

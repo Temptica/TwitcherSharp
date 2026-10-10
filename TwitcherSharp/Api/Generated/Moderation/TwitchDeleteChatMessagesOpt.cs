@@ -21,7 +21,7 @@ public partial class TwitchDeleteChatMessagesOpt : RefCounted, ITwitcherSharp<Tw
         if(data == null) return null;
         var instance = new TwitchDeleteChatMessagesOpt
         {
-            MessageId = data.Read("message_id", static v => v.AsString()),
+            MessageId = data.ReadAsString("message_id"),
         };
         
         instance._data = Variant.CreateFrom(data);

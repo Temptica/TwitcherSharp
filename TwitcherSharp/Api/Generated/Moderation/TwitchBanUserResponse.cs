@@ -55,11 +55,11 @@ public partial class TwitchBanUserResponse : RefCounted, ITwitcherSharp<TwitchBa
             if(data == null) return null;
             var instance = new TwitchResponseData
             {
-                BroadcasterId = data.Read("broadcaster_id", static v => v.AsString()),
-                ModeratorId = data.Read("moderator_id", static v => v.AsString()),
-                UserId = data.Read("user_id", static v => v.AsString()),
-                CreatedAt = data.Read("created_at", static v => v.AsString()),
-                EndTime = data.Read("end_time", static v => v.AsString()),
+                BroadcasterId = data.ReadAsString("broadcaster_id"),
+                ModeratorId = data.ReadAsString("moderator_id"),
+                UserId = data.ReadAsString("user_id"),
+                CreatedAt = data.ReadAsString("created_at"),
+                EndTime = data.ReadAsString("end_time"),
             };
             
             instance._data = Variant.CreateFrom(data);

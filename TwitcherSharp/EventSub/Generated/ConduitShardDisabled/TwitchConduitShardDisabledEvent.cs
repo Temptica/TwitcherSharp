@@ -38,9 +38,9 @@ public partial class TwitchConduitShardDisabledEvent : RefCounted, ITwitcherShar
         if(data == null) return null;
         var instance = new TwitchConduitShardDisabledEvent
         {
-            ConduitId = data.Read("conduit_id", static v => v.AsString()),
-            ShardId = data.Read("shard_id", static v => v.AsString()),
-            Status = data.Read("status", static v => v.AsString()),
+            ConduitId = data.ReadAsString("conduit_id"),
+            ShardId = data.ReadAsString("shard_id"),
+            Status = data.ReadAsString("status"),
         };
         
         instance._data = Variant.CreateFrom(data);

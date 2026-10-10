@@ -30,20 +30,20 @@ public partial class TwitchUpdateCustomRewardBody : RefCounted, ITwitcherSharp<T
         if(data == null) return null;
         var instance = new TwitchUpdateCustomRewardBody
         {
-            Title = data.Read("title", static v => v.AsString()),
-            Prompt = data.Read("prompt", static v => v.AsString()),
-            Cost = data.Read("cost", static v => v.AsInt64()),
-            BackgroundColor = data.Read("background_color", static v => v.AsString()),
-            IsEnabled = data.Read("is_enabled", static v => v.AsBool()),
-            IsUserInputRequired = data.Read("is_user_input_required", static v => v.AsBool()),
-            IsMaxPerStreamEnabled = data.Read("is_max_per_stream_enabled", static v => v.AsBool()),
-            MaxPerStream = data.Read("max_per_stream", static v => v.AsInt64()),
-            IsMaxPerUserPerStreamEnabled = data.Read("is_max_per_user_per_stream_enabled", static v => v.AsBool()),
-            MaxPerUserPerStream = data.Read("max_per_user_per_stream", static v => v.AsInt64()),
-            IsGlobalCooldownEnabled = data.Read("is_global_cooldown_enabled", static v => v.AsBool()),
-            GlobalCooldownSeconds = data.Read("global_cooldown_seconds", static v => v.AsInt64()),
-            IsPaused = data.Read("is_paused", static v => v.AsBool()),
-            ShouldRedemptionsSkipRequestQueue = data.Read("should_redemptions_skip_request_queue", static v => v.AsBool()),
+            Title = data.ReadAsString("title"),
+            Prompt = data.ReadAsString("prompt"),
+            Cost = data.ReadAsInt64("cost"),
+            BackgroundColor = data.ReadAsString("background_color"),
+            IsEnabled = data.ReadAsBool("is_enabled"),
+            IsUserInputRequired = data.ReadAsBool("is_user_input_required"),
+            IsMaxPerStreamEnabled = data.ReadAsBool("is_max_per_stream_enabled"),
+            MaxPerStream = data.ReadAsInt64("max_per_stream"),
+            IsMaxPerUserPerStreamEnabled = data.ReadAsBool("is_max_per_user_per_stream_enabled"),
+            MaxPerUserPerStream = data.ReadAsInt64("max_per_user_per_stream"),
+            IsGlobalCooldownEnabled = data.ReadAsBool("is_global_cooldown_enabled"),
+            GlobalCooldownSeconds = data.ReadAsInt64("global_cooldown_seconds"),
+            IsPaused = data.ReadAsBool("is_paused"),
+            ShouldRedemptionsSkipRequestQueue = data.ReadAsBool("should_redemptions_skip_request_queue"),
         };
         
         instance._data = Variant.CreateFrom(data);

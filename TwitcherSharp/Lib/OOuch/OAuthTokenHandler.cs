@@ -77,7 +77,7 @@ public partial class OAuthTokenHandler : Resource, ITwitcherSharp<OAuthTokenHand
     internal static string ClientIdOf(GodotObject handler)
     {
         using var setting = handler.Get("oauth_setting");
-        return setting.Read("client_id", static v => v.AsString()) ?? "";
+        return setting.ReadAsString("client_id") ?? "";
     }
 
     private void ConnectSignals()

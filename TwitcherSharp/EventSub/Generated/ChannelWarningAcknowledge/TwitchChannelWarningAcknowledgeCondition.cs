@@ -28,7 +28,7 @@ public partial class TwitchChannelWarningAcknowledgeCondition(string broadcaster
     public static TwitchChannelWarningAcknowledgeCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchChannelWarningAcknowledgeCondition(data.Read("broadcaster_user_id", static v => v.AsString()), data.Read("moderator_user_id", static v => v.AsString()));
+        var instance = new TwitchChannelWarningAcknowledgeCondition(data.ReadAsString("broadcaster_user_id"), data.ReadAsString("moderator_user_id"));
         
         instance._data = Variant.CreateFrom(data);
         return instance;
