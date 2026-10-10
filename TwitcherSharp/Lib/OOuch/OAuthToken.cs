@@ -25,7 +25,7 @@ public partial class OAuthToken : Resource, ITwitcherSharp<OAuthToken>
     [Signal]
     public delegate void AuthorizedEventHandler();
 
-    public void update_values(string accessToken, string refreshToken, int expireIn, string[] scopes, string tokenType)
+    public void update_values(string accessToken, string refreshToken, long expireIn, string[] scopes, string tokenType)
         => _data.Invoke("update_values", accessToken, refreshToken, expireIn, scopes, tokenType);
 
     public bool LoadTokens() => _data.Invoke("load_tokens", static v => v.AsBool());
@@ -39,7 +39,7 @@ public partial class OAuthToken : Resource, ITwitcherSharp<OAuthToken>
 
     public List<string> GetScopes() => (_data.Invoke("get_scopes", static v => v.AsStringArray()) ?? []).ToList();
 
-    public int GetExpiration() => _data.Invoke("get_expiration", static v => v.AsInt32());
+    public long GetExpiration() => _data.Invoke("get_expiration", static v => v.AsInt64());
 
     public string GetExpirationReadable() => _data.Invoke("get_expiration_readable", static v => v.AsString()) ?? "";
 

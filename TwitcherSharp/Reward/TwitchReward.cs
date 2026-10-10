@@ -32,7 +32,7 @@ public partial class TwitchReward : Resource, ITwitcherSharp<TwitchReward>
     /// <summary>
     /// The cost of the reward in Channel Points.
     /// </summary>
-    public int Cost { get; set; } = 1;
+    public long Cost { get; set; } = 1;
 
     // Custom Images
     public Image? Image1 { get; set; }
@@ -57,17 +57,17 @@ public partial class TwitchReward : Resource, ITwitcherSharp<TwitchReward>
     public bool ShouldRedemptionsSkipRequestQueue { get; set; }
 
     public bool IsMaxPerStreamEnabled { get; set; }
-    public int MaxPerStream { get; set; }
+    public long MaxPerStream { get; set; }
     public bool IsMaxPerUserPerStreamEnabled { get; set; }
-    public int MaxPerUserPerStream { get; set; }
+    public long MaxPerUserPerStream { get; set; }
     public bool IsGlobalCooldownEnabled { get; set; }
-    public int GlobalCooldownSeconds { get; set; }
+    public long GlobalCooldownSeconds { get; set; }
 
     #region Temporary
 
     public bool IsInStock { get; set; }
 
-    public int RedemptionsRedeemedCurrentStream { get; set; }
+    public long RedemptionsRedeemedCurrentStream { get; set; }
 
     public string? CooldownExpiresAt { get; set; }
 
@@ -106,7 +106,7 @@ public partial class TwitchReward : Resource, ITwitcherSharp<TwitchReward>
         BroadcasterUser = data.Get<TwitchUser>("broadcaster_user")!;
         Title = data.ReadAsString("title");
         Description = data.ReadAsString("description");
-        Cost = data.ReadAsInt32("cost");
+        Cost = data.ReadAsInt64("cost");
         Image1 = data.Read("image_1", static v => v.As<Image>());
         Image2 = data.Read("image_2", static v => v.As<Image>());
         Image4 = data.Read("image_4", static v => v.As<Image>());
@@ -116,13 +116,13 @@ public partial class TwitchReward : Resource, ITwitcherSharp<TwitchReward>
         IsPaused = data.ReadAsBool("is_paused");
         ShouldRedemptionsSkipRequestQueue = data.ReadAsBool("should_redemptions_skip_request_queue");
         IsMaxPerStreamEnabled = data.ReadAsBool("is_max_per_stream_enabled");
-        MaxPerStream = data.ReadAsInt32("max_per_stream");
+        MaxPerStream = data.ReadAsInt64("max_per_stream");
         IsMaxPerUserPerStreamEnabled = data.ReadAsBool("is_max_per_user_per_stream_enabled");
-        MaxPerUserPerStream = data.ReadAsInt32("max_per_user_per_stream");
+        MaxPerUserPerStream = data.ReadAsInt64("max_per_user_per_stream");
         IsGlobalCooldownEnabled = data.ReadAsBool("is_global_cooldown_enabled");
-        GlobalCooldownSeconds = data.ReadAsInt32("global_cooldown_seconds");
+        GlobalCooldownSeconds = data.ReadAsInt64("global_cooldown_seconds");
         IsInStock = data.ReadAsBool("is_in_stock");
-        RedemptionsRedeemedCurrentStream = data.ReadAsInt32("redemptions_redeemed_current_stream");
+        RedemptionsRedeemedCurrentStream = data.ReadAsInt64("redemptions_redeemed_current_stream");
         CooldownExpiresAt = data.ReadAsString("cooldown_expires_at");
     }
 

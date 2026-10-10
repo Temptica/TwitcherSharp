@@ -5,7 +5,7 @@ using TwitcherSharp.Interfaces;
 namespace TwitcherSharp.Media;
 public partial class TwitchBadgeDefinition : RefCounted, ITwitcherSharp<TwitchBadgeDefinition>
 {
-    public TwitchBadgeDefinition(string setId, string id, int badgeScale, string badgeChannel)
+    public TwitchBadgeDefinition(string setId, string id, long badgeScale, string badgeChannel)
     {
         BadgeSet = setId;
         BadgeId = id;
@@ -14,13 +14,13 @@ public partial class TwitchBadgeDefinition : RefCounted, ITwitcherSharp<TwitchBa
         _cacheId = $"{Channel}_{BadgeSet}_{BadgeId}_{Scale}";
     }
 
-    public const int Scale1 = 1;
-    public const int Scale2 = 2;
-    public const int Scale4 = 4;
+    public const long Scale1 = 1;
+    public const long Scale2 = 2;
+    public const long Scale4 = 4;
 
     public string BadgeSet { get; set; }
     public string BadgeId { get; set; }
-    public int Scale { get;
+    public long Scale { get;
         set => field = SetScale(value);
     }
     public string Channel { get; set; }
@@ -50,7 +50,7 @@ public partial class TwitchBadgeDefinition : RefCounted, ITwitcherSharp<TwitchBa
     /// </summary>
     /// <param name="scale"></param>
     /// <returns></returns>
-    public int SetScale(int scale)
+    public long SetScale(long scale)
     {
         //clamp to 1,2,4
         return scale switch
@@ -69,7 +69,7 @@ public partial class TwitchBadgeDefinition : RefCounted, ITwitcherSharp<TwitchBa
         if (data == null) return null;
         // set_id, id, badge_scale and badge_channel are only the _init parameter names in twitcher.
         return new TwitchBadgeDefinition(data.ReadAsString("badge_set"), data.ReadAsString("badge_id"),
-            data.ReadAsInt32("scale"), data.ReadAsString("channel"));
+            data.ReadAsInt64("scale"), data.ReadAsString("channel"));
     }
 
     public GodotObject ToGodotObject()

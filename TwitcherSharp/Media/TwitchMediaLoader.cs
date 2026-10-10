@@ -241,7 +241,7 @@ public partial class TwitchMediaLoader : RefCounted, ITwitcherSharpSingleton<Twi
     /// <param name="number"></param>
     /// <param name="cheerData"></param>
     /// <returns></returns>
-    public TwitchCheermote.TwitchResponseTiers FindCheerTier(int number, TwitchCheermote cheerData)
+    public TwitchCheermote.TwitchResponseTiers FindCheerTier(long number, TwitchCheermote cheerData)
     {
         using var cheerArg = GodotObjectExtension.ToVariant(cheerData);
         return _data!.Call<TwitchCheermote.TwitchResponseTiers>("find_cheer_tier", number, cheerArg);

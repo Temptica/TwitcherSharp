@@ -9,10 +9,10 @@ public partial class RequestData : RefCounted, ITwitcherSharp<RequestData>
 {
     public HttpRequest? HttpRequest { get; set; }
     public string? Path { get; set; }
-    public int Method { get; set; }
+    public long Method { get; set; }
     public Dictionary Headers { get; set; } = new();
     public string Body { get; set; } = "";
-    public int Retry { get; set; }
+    public long Retry { get; set; }
 
     public static RequestData? FromObject(GodotObject? data)
     {
@@ -21,10 +21,10 @@ public partial class RequestData : RefCounted, ITwitcherSharp<RequestData>
         {
             HttpRequest = data.Read("http_request", static v => v.As<HttpRequest>()),
             Path = data.ReadAsString("path"),
-            Method = data.ReadAsInt32("method"),
+            Method = data.ReadAsInt64("method"),
             Headers = data.Read("headers", static v => v.As<Dictionary>()),
             Body = data.ReadAsString("body"),
-            Retry = data.ReadAsInt32("retry")
+            Retry = data.ReadAsInt64("retry")
         };
     }
 

@@ -30,18 +30,18 @@ public partial class TwitchCommand : TwitchCommandBase, ITwitcherSharp<TwitchCom
     /// <summary>
     /// Minimal amount of argument 0 means no argument needed
     /// </summary>
-    public int ArgsMin
+    public long ArgsMin
     {
-        get => LinkedRead(field, "args_min", static v => v.AsInt32());
+        get => LinkedRead(field, "args_min", static v => v.AsInt64());
         set => LinkedWrite(ref field, value, "args_min", value);
     }
 
     /// <summary>
     /// Max amount of arguments -1 means infinite
     /// </summary>
-    public int ArgsMax
+    public long ArgsMax
     {
-        get => LinkedRead(field, "args_max", static v => v.AsInt32());
+        get => LinkedRead(field, "args_max", static v => v.AsInt64());
         set => LinkedWrite(ref field, value, "args_max", value);
     } = -1;
 

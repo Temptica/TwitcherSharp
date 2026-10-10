@@ -68,9 +68,9 @@ public partial class TwitchAutoMessage : RefCounted, ITwitcherSharp<TwitchAutoMe
         }
     } = true;
 
-    public int Weight
+    public long Weight
     {
-        get => _data?.ReadAsInt32("weight") ?? field;
+        get => _data?.ReadAsInt64("weight") ?? field;
         set
         {
             _data?.SetValue("weight", value);

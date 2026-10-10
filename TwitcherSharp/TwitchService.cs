@@ -163,7 +163,7 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
     /// <param name="userCooldown"></param>
     /// <param name="globalCooldown"></param>
     /// <returns></returns>
-    public TwitchCommand AddCommand(string command, Callable callable, int argsMin = 0, int argsMax = -1,
+    public TwitchCommand AddCommand(string command, Callable callable, long argsMin = 0, long argsMax = -1,
         TwitchCommandBase.PermissionFlag permissionLevel = TwitchCommandBase.PermissionFlag.Everyone,
         TwitchCommandBase.WhereFlag where = TwitchCommandBase.WhereFlag.Chat, float userCooldown = 0,
         float globalCooldown = 0)
@@ -277,8 +277,8 @@ public partial class TwitchService : RefCounted, ITwitcherSharpSingleton<TwitchS
         await _data!.CallDictionaryKeyAsync<TwitchEmoteDefinition, SpriteFrames>("get_emotes_by_definition",
             emotes);
 
-    public async Task<Godot.Collections.Dictionary> Poll(string title, string[] choices, int duration = 60,
-        bool channelPointsVotingEnabled = false, int channelPointsPerVote = 1000, string broadcasterId = "")
+    public async Task<Godot.Collections.Dictionary> Poll(string title, string[] choices, long duration = 60,
+        bool channelPointsVotingEnabled = false, long channelPointsPerVote = 1000, string broadcasterId = "")
         => await _data!.InvokeAsync("poll", static v => v.AsGodotDictionary(), title, choices, duration, channelPointsVotingEnabled, channelPointsPerVote,
             broadcasterId);
 

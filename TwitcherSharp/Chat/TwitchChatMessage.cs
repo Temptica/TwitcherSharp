@@ -77,17 +77,17 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
     }
 
     public async Task<Godot.Collections.Dictionary<TwitchBadgeDefinition, SpriteFrames>> GetBadges(
-        TwitchMediaLoader mediaLoader, int scale = TwitchBadgeDefinition.Scale1)
+        TwitchMediaLoader mediaLoader, long scale = TwitchBadgeDefinition.Scale1)
         => await _data.CallDictionaryKeyAsync<TwitchBadgeDefinition, SpriteFrames>("get_badges", mediaLoader.ToGodotObject(), scale);
 
     public async Task<Godot.Collections.Dictionary<TwitchBadgeDefinition, SpriteFrames>> GetSourceBadges(
-        TwitchMediaLoader mediaLoader, int scale = TwitchBadgeDefinition.Scale1)
+        TwitchMediaLoader mediaLoader, long scale = TwitchBadgeDefinition.Scale1)
         => await _data.CallDictionaryKeyAsync<TwitchBadgeDefinition, SpriteFrames>("get_source_badges", mediaLoader.ToGodotObject(), scale);
 
     public string GetColor(string defaultColor = "#AAAAAA") => string.IsNullOrEmpty(Color) ? defaultColor : Color;
 
     public async Task<Godot.Collections.Dictionary<TwitchEmoteDefinition, SpriteFrames>> LoadEmotesFromFragment(
-        TwitchMediaLoader mediaLoader, int scale = TwitchEmoteDefinition.Scale1,
+        TwitchMediaLoader mediaLoader, long scale = TwitchEmoteDefinition.Scale1,
         string theme = TwitchEmoteDefinition.ThemeDark, string type = TwitchEmoteDefinition.TypeDefault)
         => await _data.CallDictionaryKeyAsync<TwitchEmoteDefinition, SpriteFrames>("load_emotes_from_fragment", mediaLoader.ToGodotObject(), scale,
             theme, type);
@@ -258,8 +258,8 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
     public partial class Cheermote : RefCounted, ITwitcherSharp<Cheermote>
     {
         public string Prefix { get; set; } = null!;
-        public int Bits { get; set; }
-        public int Tier { get; set; }
+        public long Bits { get; set; }
+        public long Tier { get; set; }
 
         public static Cheermote? FromObject(GodotObject? data)
         {
@@ -267,8 +267,8 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
             return new Cheermote
             {
                 Prefix = data.ReadAsString("prefix"),
-                Bits = data.ReadAsInt32("bits"),
-                Tier = data.ReadAsInt32("tier")
+                Bits = data.ReadAsInt64("bits"),
+                Tier = data.ReadAsInt64("tier")
             };
         }
 
@@ -346,10 +346,10 @@ public partial class TwitchChatMessage : RefCounted, ITwitcherSharp<TwitchChatMe
 
     public partial class Cheer : RefCounted, ITwitcherSharp<Cheer>
     {
-        public int Bits { get; set; }
+        public long Bits { get; set; }
 
         public static Cheer? FromObject(GodotObject? data) =>
-            data == null ? null : new Cheer { Bits = data.ReadAsInt32("bits") };
+            data == null ? null : new Cheer { Bits = data.ReadAsInt64("bits") };
 
         public GodotObject ToGodotObject()
         {

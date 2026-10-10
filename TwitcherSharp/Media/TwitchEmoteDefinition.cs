@@ -7,13 +7,13 @@ namespace TwitcherSharp.Media;
 public partial class TwitchEmoteDefinition(string emoteId) : RefCounted, ITwitcherSharp<TwitchEmoteDefinition>
 {
     public string Id { get; set; } = emoteId;
-    public int Scale { get; set; }
+    public long Scale { get; set; }
     public StringName? Type { get; set; }
     public StringName? Theme { get; set; }
 
-    public const int Scale1 = 1;
-    public const int Scale2 = 2;
-    public const int Scale3 = 3;
+    public const long Scale1 = 1;
+    public const long Scale2 = 2;
+    public const long Scale3 = 3;
 
     public const string TypeDefault = "default";
     public const string TypeStatic = "static";
@@ -75,7 +75,7 @@ public partial class TwitchEmoteDefinition(string emoteId) : RefCounted, ITwitch
         if (data == null) return null;
         return new TwitchEmoteDefinition(data.ReadAsString("id"))
         {
-            Scale = data.ReadAsInt32("scale"),
+            Scale = data.ReadAsInt64("scale"),
             Type = data.ReadAsString("type"),
             Theme = data.ReadAsString("theme"),
         };

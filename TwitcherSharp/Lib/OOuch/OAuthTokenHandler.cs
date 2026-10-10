@@ -50,7 +50,7 @@ public partial class OAuthTokenHandler : Resource, ITwitcherSharp<OAuthTokenHand
     /// <param name="expireIn"></param>
     /// <param name="scopes"></param>
     /// <param name="type"></param>
-    public void UpdateTokens(string accessToken, string refreshToken, int expireIn, string[] scopes, string type)
+    public void UpdateTokens(string accessToken, string refreshToken, long expireIn, string[] scopes, string type)
         => _data!.Invoke("update_tokens", accessToken, refreshToken, expireIn, scopes, type);
 
     public string GetTokenExpiration()

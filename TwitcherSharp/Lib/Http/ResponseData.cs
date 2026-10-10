@@ -8,8 +8,8 @@ namespace TwitcherSharp.Lib.Http;
 public partial class ResponseData: RefCounted, ITwitcherSharp<ResponseData>
 {
     private Variant _data;
-    public int Result { get; set; }
-    public int ResponseCode { get; set; }
+    public long Result { get; set; }
+    public long ResponseCode { get; set; }
     public RequestData? RequestData { get; set; }
     public byte[]? RawResponseData { get; set; }
     public Dictionary? ResponseHeader { get; set; }
@@ -21,8 +21,8 @@ public partial class ResponseData: RefCounted, ITwitcherSharp<ResponseData>
         return new ResponseData
         {
             _data = Variant.CreateFrom(data),
-            Result = data.ReadAsInt32("result"),
-            ResponseCode = data.ReadAsInt32("response_code"),
+            Result = data.ReadAsInt64("result"),
+            ResponseCode = data.ReadAsInt64("response_code"),
             RequestData = data.Get<RequestData>("request_data"),
             RawResponseData = data.Read("raw_response_data", static v => v.AsByteArray()),
             ResponseHeader = data.Read("response_header", static v => v.As<Dictionary>()),

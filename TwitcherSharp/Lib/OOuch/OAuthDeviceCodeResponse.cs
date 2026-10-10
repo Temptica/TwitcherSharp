@@ -7,8 +7,8 @@ namespace TwitcherSharp.Lib.OOuch;
 public partial class OAuthDeviceCodeResponse : RefCounted, ITwitcherSharp<OAuthDeviceCodeResponse>
 {
     public string DeviceCode { get; set; } = null!;
-    public int ExpiresIn { get; set; }
-    public int Interval { get; set; }
+    public long ExpiresIn { get; set; }
+    public long Interval { get; set; }
     public string UserCode { get; set; } = null!;
     public string VerificationUri { get; set; } = null!;
 
@@ -17,8 +17,8 @@ public partial class OAuthDeviceCodeResponse : RefCounted, ITwitcherSharp<OAuthD
         if (data == null) return null;
         var response = new OAuthDeviceCodeResponse();
         response.DeviceCode = data.ReadAsString("device_code");
-        response.ExpiresIn = data.ReadAsInt32("expires_in");
-        response.Interval = data.ReadAsInt32("interval");
+        response.ExpiresIn = data.ReadAsInt64("expires_in");
+        response.Interval = data.ReadAsInt64("interval");
         response.UserCode = data.ReadAsString("user_code");
         response.VerificationUri = data.ReadAsString("verification_uri");
         return response;
