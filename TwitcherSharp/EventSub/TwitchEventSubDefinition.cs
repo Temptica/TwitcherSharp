@@ -84,7 +84,7 @@ public partial class TwitchEventSubDefinition() : RefCounted, ITwitcherSharp<Twi
     /// The type of an event by its value and version; twitcher's own numbers differ from TwitchEventSubDefinitionType.
     /// </summary>
     public static TwitchEventSubDefinitionType? FindType(StringName value, StringName version) =>
-        All.FirstOrDefault(definition => definition.Value == value && definition.Version == version)?.Type;
+        All.FirstOrDefault(definition => definition.Value.Value == value && definition.Value.Version == version).Key;
 
     private const string basePath = "res://addons/twitcher/generated_eventsub/twitch_es_";
 
@@ -602,7 +602,7 @@ public partial class TwitchEventSubDefinition() : RefCounted, ITwitcherSharp<Twi
 
     #endregion
 
-    public static readonly List<TwitchEventSubDefinition> All =
+    private static readonly List<TwitchEventSubDefinition> AllList =
     [
         AutomodMessageHold, AutomodMessageHoldV2, AutomodMessageUpdate, AutomodMessageUpdateV2, AutomodSettingsUpdate,
         AutomodTermsUpdate, ChannelBitsUse, ChannelUpdate, ChannelFollow, ChannelAdBreakBegin, ChannelChatClear,
@@ -626,4 +626,11 @@ public partial class TwitchEventSubDefinition() : RefCounted, ITwitcherSharp<Twi
         ChannelGoalProgress, ChannelGoalEnd, StreamOnline, StreamOffline, UserAuthorizationGrant,
         UserAuthorizationRevoke, UserUpdate, UserWhisperMessage
     ];
+
+    /// <summary>
+    /// All supported subscriptions, keyed by their <see cref="TwitchEventSubDefinitionType"/> to mirror
+    /// twitcher's <c>TwitchEventsubDefinition.ALL</c> dictionary.
+    /// </summary>
+    public static readonly Dictionary<TwitchEventSubDefinitionType, TwitchEventSubDefinition> All =
+        AllList.ToDictionary(x => x.Type);
 }

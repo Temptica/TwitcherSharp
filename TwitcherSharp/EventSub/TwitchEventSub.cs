@@ -71,7 +71,7 @@ public partial class TwitchEventSub : RefCounted, ITwitcherSharpSingleton<Twitch
     public List<TwitchEventSubConfig> GetSubscriptionsByType(TwitchEventSubDefinitionType type)
     {
         // twitcher numbers its types in another order than TwitchEventSubDefinitionType.
-        var twitcherType = TwitchEventSubDefinition.All.First(definition => definition.Type == type).TwitcherType;
+        var twitcherType = TwitchEventSubDefinition.All.First(definition => definition.Key == type).Value.TwitcherType;
         return _data!.CallList<TwitchEventSubConfig>("get_subscription_by_type", twitcherType);
     }
 

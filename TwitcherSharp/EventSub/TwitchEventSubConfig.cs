@@ -23,7 +23,7 @@ public partial class TwitchEventSubConfig() : RefCounted, ITwitcherSharp<TwitchE
     }
 
     public List<ITwitcherSharpCondition> Condition { get; set; } = [];
-    public TwitchEventSubDefinition Definition => TwitchEventSubDefinition.All.First(x => x.Type == Type);
+    public TwitchEventSubDefinition Definition => TwitchEventSubDefinition.All[Type];
 
     public string? Id { get; set; }
 
@@ -47,7 +47,7 @@ public partial class TwitchEventSubConfig() : RefCounted, ITwitcherSharp<TwitchE
     {
         if (type == Type) return Type;
 
-        var definition = TwitchEventSubDefinition.All.First(x => x.Type == type);
+        var definition = TwitchEventSubDefinition.All[type];
         Condition = Condition.Where(x => definition.Conditions?.Contains(x.Name) == true).ToList();
         _type = type;
         EmitSignalTypeChanged(type);

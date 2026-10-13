@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.RegularExpressions;
 using ClassGenerator.GenObjects.EventSub;
 
 namespace ClassGenerator.Generator.EventSub;
@@ -132,11 +133,37 @@ public class TwitchEventSubDefinitionGenerator
                                                 }
                                                 """;
 
-    public static void Generate(string eventSubDir, List<TwitchEventSubDefinitionInfo> definitions)
+    /// <param name="gdDefinitionScript">Path to Twitcher's twitch_eventsub_definition.gd. The enum gets passed to
+    /// GDScript as int, so its order has to match the GDScript <c>Type</c> enum.</param>
+    public static void Generate(string eventSubDir, List<TwitchEventSubDefinitionInfo> definitions,
+        string gdDefinitionScript)
     {
-        File.WriteAllText(Path.Combine(eventSubDir, "TwitchEventSubDefinitionType.cs"), GenerateTypeEnum(definitions) + "\n");
+        var enumOrder = ReadGdTypeOrder(gdDefinitionScript);
+        var ordered = definitions
+            .OrderBy(d => enumOrder.TryGetValue(NormalizeName(d.EnumName), out var index) ? index : int.MaxValue)
+            .ToList();
+        foreach (var missing in definitions.Where(d => !enumOrder.ContainsKey(NormalizeName(d.EnumName))))
+            Console.WriteLine($"Warning: '{missing.EnumName}' is not in the GDScript Type enum, its int value won't match");
+
+        File.WriteAllText(Path.Combine(eventSubDir, "TwitchEventSubDefinitionType.cs"), GenerateTypeEnum(ordered) + "\n");
         File.WriteAllText(Path.Combine(eventSubDir, "TwitchEventSubDefinition.cs"), GenerateDefinition(definitions) + "\n");
     }
+
+    /// <summary>Index of every value in the GDScript <c>enum Type { ... }</c>, keyed by <see cref="NormalizeName"/>.</summary>
+    private static Dictionary<string, int> ReadGdTypeOrder(string gdDefinitionScript)
+    {
+        var script = File.ReadAllText(gdDefinitionScript);
+        var match = Regex.Match(script, @"enum Type\s*\{(.*?)\}", RegexOptions.Singleline);
+        if (!match.Success) throw new InvalidOperationException($"No 'enum Type' found in {gdDefinitionScript}");
+
+        return match.Groups[1].Value
+            .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Select((name, index) => (name, index))
+            .ToDictionary(x => NormalizeName(x.name), x => x.index);
+    }
+
+    /// <summary>CHANNEL_AD_BREAK_BEGIN and ChannelAdBreakBegin both become channeladbreakbegin.</summary>
+    private static string NormalizeName(string name) => name.Replace("_", "").ToLowerInvariant();
 
     private static string GenerateTypeEnum(List<TwitchEventSubDefinitionInfo> definitions)
     {
