@@ -6,7 +6,7 @@ namespace TwitcherSharp.Api.Generated.Chat;
 
 public partial class TwitchChatSettings : RefCounted, ITwitcherSharp<TwitchChatSettings>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string BroadcasterId { get; set; } = null!;
     public bool EmoteMode { get; set; }
     public bool FollowerMode { get; set; }
@@ -27,39 +27,45 @@ public partial class TwitchChatSettings : RefCounted, ITwitcherSharp<TwitchChatS
         if(data == null) return null;
         var instance = new TwitchChatSettings
         {
-            BroadcasterId = data.Get("broadcaster_id").AsString(),
-            EmoteMode = data.Get("emote_mode").AsBool(),
-            FollowerMode = data.Get("follower_mode").AsBool(),
-            FollowerModeDuration = data.Get("follower_mode_duration").AsInt32(),
-            ModeratorId = data.Get("moderator_id").AsString(),
-            NonModeratorChatDelay = data.Get("non_moderator_chat_delay").AsBool(),
-            NonModeratorChatDelayDuration = data.Get("non_moderator_chat_delay_duration").AsInt32(),
-            SlowMode = data.Get("slow_mode").AsBool(),
-            SlowModeWaitTime = data.Get("slow_mode_wait_time").AsInt32(),
-            SubscriberMode = data.Get("subscriber_mode").AsBool(),
-            UniqueChatMode = data.Get("unique_chat_mode").AsBool(),
+            BroadcasterId = data.ReadAsString("broadcaster_id"),
+            EmoteMode = data.ReadAsBool("emote_mode"),
+            FollowerMode = data.ReadAsBool("follower_mode"),
+            FollowerModeDuration = data.ReadAsInt32("follower_mode_duration"),
+            ModeratorId = data.ReadAsString("moderator_id"),
+            NonModeratorChatDelay = data.ReadAsBool("non_moderator_chat_delay"),
+            NonModeratorChatDelayDuration = data.ReadAsInt32("non_moderator_chat_delay_duration"),
+            SlowMode = data.ReadAsBool("slow_mode"),
+            SlowModeWaitTime = data.ReadAsInt32("slow_mode_wait_time"),
+            SubscriberMode = data.ReadAsBool("subscriber_mode"),
+            UniqueChatMode = data.ReadAsBool("unique_chat_mode"),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_chat_settings.gd");
-        var request = script.Call("new").AsGodotObject();
-        if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
-        request.Set("emote_mode", EmoteMode);
-        request.Set("follower_mode", FollowerMode);
-        request.Set("follower_mode_duration", FollowerModeDuration);
-        if(ModeratorId != null) request.Set("moderator_id", ModeratorId);
-        if(NonModeratorChatDelay.HasValue) request.Set("non_moderator_chat_delay", NonModeratorChatDelay.Value);
-        if(NonModeratorChatDelayDuration.HasValue) request.Set("non_moderator_chat_delay_duration", NonModeratorChatDelayDuration.Value);
-        request.Set("slow_mode", SlowMode);
-        request.Set("slow_mode_wait_time", SlowModeWaitTime);
-        request.Set("subscriber_mode", SubscriberMode);
-        request.Set("unique_chat_mode", UniqueChatMode);
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated/twitch_chat_settings.gd");
+        if(BroadcasterId != null) request.SetValue("broadcaster_id", BroadcasterId);
+        request.SetValue("emote_mode", EmoteMode);
+        request.SetValue("follower_mode", FollowerMode);
+        request.SetValue("follower_mode_duration", FollowerModeDuration);
+        if(ModeratorId != null) request.SetValue("moderator_id", ModeratorId);
+        if(NonModeratorChatDelay.HasValue) request.SetValue("non_moderator_chat_delay", NonModeratorChatDelay.Value);
+        if(NonModeratorChatDelayDuration.HasValue) request.SetValue("non_moderator_chat_delay_duration", NonModeratorChatDelayDuration.Value);
+        request.SetValue("slow_mode", SlowMode);
+        request.SetValue("slow_mode_wait_time", SlowModeWaitTime);
+        request.SetValue("subscriber_mode", SubscriberMode);
+        request.SetValue("unique_chat_mode", UniqueChatMode);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

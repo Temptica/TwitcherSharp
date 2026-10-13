@@ -6,13 +6,13 @@ namespace TwitcherSharp.Api.Generated.Polls;
 
 public partial class TwitchPoll : RefCounted, ITwitcherSharp<TwitchPoll>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string Id { get; set; } = null!;
     public string BroadcasterId { get; set; } = null!;
     public string BroadcasterName { get; set; } = null!;
     public string BroadcasterLogin { get; set; } = null!;
     public string Title { get; set; } = null!;
-    public TwitchChoices[] Choices { get => field ??= _data?.GetArray<TwitchChoices>("choices")!; set; } = null!;
+    public TwitchChoices[] Choices { get => field ??= _data.GetArray<TwitchChoices>("choices")!; set; } = null!;
     public bool BitsVotingEnabled { get; set; }
     public int BitsPerVote { get; set; }
     public bool ChannelPointsVotingEnabled { get; set; }
@@ -30,44 +30,50 @@ public partial class TwitchPoll : RefCounted, ITwitcherSharp<TwitchPoll>
         if(data == null) return null;
         var instance = new TwitchPoll
         {
-            Id = data.Get("id").AsString(),
-            BroadcasterId = data.Get("broadcaster_id").AsString(),
-            BroadcasterName = data.Get("broadcaster_name").AsString(),
-            BroadcasterLogin = data.Get("broadcaster_login").AsString(),
-            Title = data.Get("title").AsString(),
-            BitsVotingEnabled = data.Get("bits_voting_enabled").AsBool(),
-            BitsPerVote = data.Get("bits_per_vote").AsInt32(),
-            ChannelPointsVotingEnabled = data.Get("channel_points_voting_enabled").AsBool(),
-            ChannelPointsPerVote = data.Get("channel_points_per_vote").AsInt32(),
-            Status = data.Get("status").AsString(),
-            Duration = data.Get("duration").AsInt32(),
-            StartedAt = data.Get("started_at").AsString(),
-            EndedAt = data.Get("ended_at").AsString(),
+            Id = data.ReadAsString("id"),
+            BroadcasterId = data.ReadAsString("broadcaster_id"),
+            BroadcasterName = data.ReadAsString("broadcaster_name"),
+            BroadcasterLogin = data.ReadAsString("broadcaster_login"),
+            Title = data.ReadAsString("title"),
+            BitsVotingEnabled = data.ReadAsBool("bits_voting_enabled"),
+            BitsPerVote = data.ReadAsInt32("bits_per_vote"),
+            ChannelPointsVotingEnabled = data.ReadAsBool("channel_points_voting_enabled"),
+            ChannelPointsPerVote = data.ReadAsInt32("channel_points_per_vote"),
+            Status = data.ReadAsString("status"),
+            Duration = data.ReadAsInt32("duration"),
+            StartedAt = data.ReadAsString("started_at"),
+            EndedAt = data.ReadAsString("ended_at"),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_poll.gd");
-        var request = script.Call("new").AsGodotObject();
-        if(Id != null) request.Set("id", Id);
-        if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
-        if(BroadcasterName != null) request.Set("broadcaster_name", BroadcasterName);
-        if(BroadcasterLogin != null) request.Set("broadcaster_login", BroadcasterLogin);
-        if(Title != null) request.Set("title", Title);
-        if(Choices != null) request.Set("choices", Choices.ToGodotArray());
-        request.Set("bits_voting_enabled", BitsVotingEnabled);
-        request.Set("bits_per_vote", BitsPerVote);
-        request.Set("channel_points_voting_enabled", ChannelPointsVotingEnabled);
-        request.Set("channel_points_per_vote", ChannelPointsPerVote);
-        if(Status != null) request.Set("status", Status);
-        request.Set("duration", Duration);
-        if(StartedAt != null) request.Set("started_at", StartedAt);
-        if(EndedAt != null) request.Set("ended_at", EndedAt);
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated/twitch_poll.gd");
+        if(Id != null) request.SetValue("id", Id);
+        if(BroadcasterId != null) request.SetValue("broadcaster_id", BroadcasterId);
+        if(BroadcasterName != null) request.SetValue("broadcaster_name", BroadcasterName);
+        if(BroadcasterLogin != null) request.SetValue("broadcaster_login", BroadcasterLogin);
+        if(Title != null) request.SetValue("title", Title);
+        if(Choices != null) request.SetArray("choices", Choices);
+        request.SetValue("bits_voting_enabled", BitsVotingEnabled);
+        request.SetValue("bits_per_vote", BitsPerVote);
+        request.SetValue("channel_points_voting_enabled", ChannelPointsVotingEnabled);
+        request.SetValue("channel_points_per_vote", ChannelPointsPerVote);
+        if(Status != null) request.SetValue("status", Status);
+        request.SetValue("duration", Duration);
+        if(StartedAt != null) request.SetValue("started_at", StartedAt);
+        if(EndedAt != null) request.SetValue("ended_at", EndedAt);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
     
     /// <summary> 
@@ -75,7 +81,7 @@ public partial class TwitchPoll : RefCounted, ITwitcherSharp<TwitchPoll>
     /// </summary>
     public partial class TwitchChoices : RefCounted, ITwitcherSharp<TwitchChoices>
     {
-        private GodotObject? _data;
+        private Variant _data;
         public string Id { get; set; } = null!;
         public string Title { get; set; } = null!;
         public int Votes { get; set; }
@@ -90,28 +96,33 @@ public partial class TwitchPoll : RefCounted, ITwitcherSharp<TwitchPoll>
             if(data == null) return null;
             var instance = new TwitchChoices
             {
-                Id = data.Get("id").AsString(),
-                Title = data.Get("title").AsString(),
-                Votes = data.Get("votes").AsInt32(),
-                ChannelPointsVotes = data.Get("channel_points_votes").AsInt32(),
-                BitsVotes = data.Get("bits_votes").AsInt32(),
+                Id = data.ReadAsString("id"),
+                Title = data.ReadAsString("title"),
+                Votes = data.ReadAsInt32("votes"),
+                ChannelPointsVotes = data.ReadAsInt32("channel_points_votes"),
+                BitsVotes = data.ReadAsInt32("bits_votes"),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_poll.gd");
-            var twitchChoicesClass = script.Get("Choices").AsGodotObject();
-            var request = twitchChoicesClass.Call("new").AsGodotObject();
-            if(Id != null) request.Set("id", Id);
-            if(Title != null) request.Set("title", Title);
-            request.Set("votes", Votes);
-            request.Set("channel_points_votes", ChannelPointsVotes);
-            request.Set("bits_votes", BitsVotes);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_poll.gd", "Choices");
+            if(Id != null) request.SetValue("id", Id);
+            if(Title != null) request.SetValue("title", Title);
+            request.SetValue("votes", Votes);
+            request.SetValue("channel_points_votes", ChannelPointsVotes);
+            request.SetValue("bits_votes", BitsVotes);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     
     }

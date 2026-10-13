@@ -21,6 +21,13 @@ public class TwitchApiGenerator
         {
             PrepareComponent(component);
         }
+
+        // twitcher's file name per group of Response/Opt/Body classes: the Opt spelling wins (see TwitcherFileNames).
+        foreach (var component in _components.Values.OrderBy(c => c.IsOpt))
+        {
+            var baseName = GetBaseName(component.ClassName);
+            ApiCodeHelper.TwitcherFileNames[baseName.ToLowerInvariant()] = baseName;
+        }
         
         foreach (var genInterface in apiParser.GetInterfaces())
         {

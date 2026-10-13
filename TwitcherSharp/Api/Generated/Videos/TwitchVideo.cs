@@ -6,7 +6,7 @@ namespace TwitcherSharp.Api.Generated.Videos;
 
 public partial class TwitchVideo : RefCounted, ITwitcherSharp<TwitchVideo>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string Id { get; set; } = null!;
     public string StreamId { get; set; } = null!;
     public string UserId { get; set; } = null!;
@@ -23,7 +23,7 @@ public partial class TwitchVideo : RefCounted, ITwitcherSharp<TwitchVideo>
     public string Language { get; set; } = null!;
     public string Type { get; set; } = null!;
     public string Duration { get; set; } = null!;
-    public TwitchResponseMutedSegments[] MutedSegments { get => field ??= _data?.GetArray<TwitchResponseMutedSegments>("muted_segments")!; set; } = null!;
+    public TwitchResponseMutedSegments[] MutedSegments { get => field ??= _data.GetArray<TwitchResponseMutedSegments>("muted_segments")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchVideo object.
@@ -33,50 +33,56 @@ public partial class TwitchVideo : RefCounted, ITwitcherSharp<TwitchVideo>
         if(data == null) return null;
         var instance = new TwitchVideo
         {
-            Id = data.Get("id").AsString(),
-            StreamId = data.Get("stream_id").AsString(),
-            UserId = data.Get("user_id").AsString(),
-            UserLogin = data.Get("user_login").AsString(),
-            UserName = data.Get("user_name").AsString(),
-            Title = data.Get("title").AsString(),
-            Description = data.Get("description").AsString(),
-            CreatedAt = data.Get("created_at").AsString(),
-            PublishedAt = data.Get("published_at").AsString(),
-            Url = data.Get("url").AsString(),
-            ThumbnailUrl = data.Get("thumbnail_url").AsString(),
-            Viewable = data.Get("viewable").AsString(),
-            ViewCount = data.Get("view_count").AsInt32(),
-            Language = data.Get("language").AsString(),
-            Type = data.Get("type").AsString(),
-            Duration = data.Get("duration").AsString(),
+            Id = data.ReadAsString("id"),
+            StreamId = data.ReadAsString("stream_id"),
+            UserId = data.ReadAsString("user_id"),
+            UserLogin = data.ReadAsString("user_login"),
+            UserName = data.ReadAsString("user_name"),
+            Title = data.ReadAsString("title"),
+            Description = data.ReadAsString("description"),
+            CreatedAt = data.ReadAsString("created_at"),
+            PublishedAt = data.ReadAsString("published_at"),
+            Url = data.ReadAsString("url"),
+            ThumbnailUrl = data.ReadAsString("thumbnail_url"),
+            Viewable = data.ReadAsString("viewable"),
+            ViewCount = data.ReadAsInt32("view_count"),
+            Language = data.ReadAsString("language"),
+            Type = data.ReadAsString("type"),
+            Duration = data.ReadAsString("duration"),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_video.gd");
-        var request = script.Call("new").AsGodotObject();
-        if(Id != null) request.Set("id", Id);
-        if(StreamId != null) request.Set("stream_id", StreamId);
-        if(UserId != null) request.Set("user_id", UserId);
-        if(UserLogin != null) request.Set("user_login", UserLogin);
-        if(UserName != null) request.Set("user_name", UserName);
-        if(Title != null) request.Set("title", Title);
-        if(Description != null) request.Set("description", Description);
-        if(CreatedAt != null) request.Set("created_at", CreatedAt);
-        if(PublishedAt != null) request.Set("published_at", PublishedAt);
-        if(Url != null) request.Set("url", Url);
-        if(ThumbnailUrl != null) request.Set("thumbnail_url", ThumbnailUrl);
-        if(Viewable != null) request.Set("viewable", Viewable);
-        request.Set("view_count", ViewCount);
-        if(Language != null) request.Set("language", Language);
-        if(Type != null) request.Set("type", Type);
-        if(Duration != null) request.Set("duration", Duration);
-        if(MutedSegments != null) request.Set("muted_segments", MutedSegments.ToGodotArray());
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated/twitch_video.gd");
+        if(Id != null) request.SetValue("id", Id);
+        if(StreamId != null) request.SetValue("stream_id", StreamId);
+        if(UserId != null) request.SetValue("user_id", UserId);
+        if(UserLogin != null) request.SetValue("user_login", UserLogin);
+        if(UserName != null) request.SetValue("user_name", UserName);
+        if(Title != null) request.SetValue("title", Title);
+        if(Description != null) request.SetValue("description", Description);
+        if(CreatedAt != null) request.SetValue("created_at", CreatedAt);
+        if(PublishedAt != null) request.SetValue("published_at", PublishedAt);
+        if(Url != null) request.SetValue("url", Url);
+        if(ThumbnailUrl != null) request.SetValue("thumbnail_url", ThumbnailUrl);
+        if(Viewable != null) request.SetValue("viewable", Viewable);
+        request.SetValue("view_count", ViewCount);
+        if(Language != null) request.SetValue("language", Language);
+        if(Type != null) request.SetValue("type", Type);
+        if(Duration != null) request.SetValue("duration", Duration);
+        if(MutedSegments != null) request.SetArray("muted_segments", MutedSegments);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
     
     /// <summary> 
@@ -84,7 +90,7 @@ public partial class TwitchVideo : RefCounted, ITwitcherSharp<TwitchVideo>
     /// </summary>
     public partial class TwitchResponseMutedSegments : RefCounted, ITwitcherSharp<TwitchResponseMutedSegments>
     {
-        private GodotObject? _data;
+        private Variant _data;
         public int Duration { get; set; }
         public int Offset { get; set; }
     
@@ -96,22 +102,27 @@ public partial class TwitchVideo : RefCounted, ITwitcherSharp<TwitchVideo>
             if(data == null) return null;
             var instance = new TwitchResponseMutedSegments
             {
-                Duration = data.Get("duration").AsInt32(),
-                Offset = data.Get("offset").AsInt32(),
+                Duration = data.ReadAsInt32("duration"),
+                Offset = data.ReadAsInt32("offset"),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_video.gd");
-            var twitchResponseMutedSegmentsClass = script.Get("MutedSegments").AsGodotObject();
-            var request = twitchResponseMutedSegmentsClass.Call("new").AsGodotObject();
-            request.Set("duration", Duration);
-            request.Set("offset", Offset);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_video.gd", "MutedSegments");
+            request.SetValue("duration", Duration);
+            request.SetValue("offset", Offset);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     
     }

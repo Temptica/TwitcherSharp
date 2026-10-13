@@ -6,8 +6,8 @@ namespace TwitcherSharp.Api.Generated.Users;
 
 public partial class TwitchGetUserActiveExtensionsResponse : RefCounted, ITwitcherSharp<TwitchGetUserActiveExtensionsResponse>
 {
-    private GodotObject? _data;
-    public TwitchResponseData? Data { get => field ??= _data?.Get<TwitchResponseData>("data"); set; }
+    private Variant _data;
+    public TwitchResponseData? Data { get => field ??= _data.Get<TwitchResponseData>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetUserActiveExtensionsResponse object.
@@ -17,17 +17,22 @@ public partial class TwitchGetUserActiveExtensionsResponse : RefCounted, ITwitch
         if(data == null) return null;
         var instance = new TwitchGetUserActiveExtensionsResponse();
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_user_active_extensions.gd");
-        var responseClass = script.Get("Response").AsGodotObject();
-        var request = responseClass.Call("new").AsGodotObject();
-        if(Data != null) request.Set("data", Data);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_user_active_extensions.gd", "Response");
+        if(Data != null) request.SetValue("data", Data);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
     
     /// <summary> 
@@ -35,7 +40,7 @@ public partial class TwitchGetUserActiveExtensionsResponse : RefCounted, ITwitch
     /// </summary>
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
-        private GodotObject? _data;
+        private Variant _data;
         public Variant? Panel { get; set; }
         public Variant? Overlay { get; set; }
         public Variant? Component { get; set; }
@@ -48,24 +53,29 @@ public partial class TwitchGetUserActiveExtensionsResponse : RefCounted, ITwitch
             if(data == null) return null;
             var instance = new TwitchResponseData
             {
-                Panel = data.Get("panel").As<Variant>(),
-                Overlay = data.Get("overlay").As<Variant>(),
-                Component = data.Get("component").As<Variant>(),
+                Panel = data.Read("panel", static v => v.As<Variant>()),
+                Overlay = data.Read("overlay", static v => v.As<Variant>()),
+                Component = data.Read("component", static v => v.As<Variant>()),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_user_active_extensions.gd");
-            var twitchResponseDataClass = script.Get("ResponseData").AsGodotObject();
-            var request = twitchResponseDataClass.Call("new").AsGodotObject();
-            if(Panel.HasValue) request.Set("panel", Panel.Value);
-            if(Overlay.HasValue) request.Set("overlay", Overlay.Value);
-            if(Component.HasValue) request.Set("component", Component.Value);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_user_active_extensions.gd", "ResponseData");
+            if(Panel.HasValue) request.SetValue("panel", Panel.Value);
+            if(Overlay.HasValue) request.SetValue("overlay", Overlay.Value);
+            if(Component.HasValue) request.SetValue("component", Component.Value);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     
     }

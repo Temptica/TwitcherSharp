@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelRaid;
 
 public partial class TwitchChannelRaidEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelRaidEvent>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// The broadcaster ID that created the raid.
@@ -53,31 +53,36 @@ public partial class TwitchChannelRaidEvent : RefCounted, ITwitcherSharpEventSub
         if(data == null) return null;
         var instance = new TwitchChannelRaidEvent
         {
-            FromBroadcasterUserId = data.Get("from_broadcaster_user_id").AsString(),
-            FromBroadcasterUserLogin = data.Get("from_broadcaster_user_login").AsString(),
-            FromBroadcasterUserName = data.Get("from_broadcaster_user_name").AsString(),
-            ToBroadcasterUserId = data.Get("to_broadcaster_user_id").AsString(),
-            ToBroadcasterUserLogin = data.Get("to_broadcaster_user_login").AsString(),
-            ToBroadcasterUserName = data.Get("to_broadcaster_user_name").AsString(),
-            Viewers = data.Get("viewers").AsInt32(),
+            FromBroadcasterUserId = data.ReadAsString("from_broadcaster_user_id"),
+            FromBroadcasterUserLogin = data.ReadAsString("from_broadcaster_user_login"),
+            FromBroadcasterUserName = data.ReadAsString("from_broadcaster_user_name"),
+            ToBroadcasterUserId = data.ReadAsString("to_broadcaster_user_id"),
+            ToBroadcasterUserLogin = data.ReadAsString("to_broadcaster_user_login"),
+            ToBroadcasterUserName = data.ReadAsString("to_broadcaster_user_name"),
+            Viewers = data.ReadAsInt32("viewers"),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_raid.gd");
-        var eventClass = script.Get("Event").As<GDScript>();
-        var request = eventClass.New().AsGodotObject();
-        if(FromBroadcasterUserId != null) request.Set("from_broadcaster_user_id", FromBroadcasterUserId);
-        if(FromBroadcasterUserLogin != null) request.Set("from_broadcaster_user_login", FromBroadcasterUserLogin);
-        if(FromBroadcasterUserName != null) request.Set("from_broadcaster_user_name", FromBroadcasterUserName);
-        if(ToBroadcasterUserId != null) request.Set("to_broadcaster_user_id", ToBroadcasterUserId);
-        if(ToBroadcasterUserLogin != null) request.Set("to_broadcaster_user_login", ToBroadcasterUserLogin);
-        if(ToBroadcasterUserName != null) request.Set("to_broadcaster_user_name", ToBroadcasterUserName);
-        request.Set("viewers", Viewers);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_raid.gd", "Event");
+        if(FromBroadcasterUserId != null) request.SetValue("from_broadcaster_user_id", FromBroadcasterUserId);
+        if(FromBroadcasterUserLogin != null) request.SetValue("from_broadcaster_user_login", FromBroadcasterUserLogin);
+        if(FromBroadcasterUserName != null) request.SetValue("from_broadcaster_user_name", FromBroadcasterUserName);
+        if(ToBroadcasterUserId != null) request.SetValue("to_broadcaster_user_id", ToBroadcasterUserId);
+        if(ToBroadcasterUserLogin != null) request.SetValue("to_broadcaster_user_login", ToBroadcasterUserLogin);
+        if(ToBroadcasterUserName != null) request.SetValue("to_broadcaster_user_name", ToBroadcasterUserName);
+        request.SetValue("viewers", Viewers);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 }

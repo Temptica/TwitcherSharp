@@ -36,11 +36,11 @@ public partial class TwitchBot : RefCounted, ITwitcherSharpSingleton<TwitchBot>
     public TwitchUser? Sender
     {
         get => _data != null
-            ? TwitchUser.FromObject(_data.Get("sender").AsGodotObject())
+            ? _data.Get<TwitchUser>("sender")
             : field;
         set
         {
-            _data?.Set("sender", value?.ToGodotObject() ?? new Variant()!);
+            _data?.SetObject("sender", value);
             field = value;
         }
     }
@@ -48,11 +48,11 @@ public partial class TwitchBot : RefCounted, ITwitcherSharpSingleton<TwitchBot>
     public TwitchUser? Receiver
     {
         get => _data != null
-            ? TwitchUser.FromObject(_data.Get("receiver").AsGodotObject())
+            ? _data.Get<TwitchUser>("receiver")
             : field;
         set
         {
-            _data?.Set("receiver", value?.ToGodotObject() ?? new Variant()!);
+            _data?.SetObject("receiver", value);
             field = value;
         }
     }
@@ -73,8 +73,9 @@ public partial class TwitchBot : RefCounted, ITwitcherSharpSingleton<TwitchBot>
 
         if (Instance.IsLinked)
         {
-            await Instance._data!.CallAsync("send_message", message, replyParentMessageId!, forSourceOnly,
-                broadcaster?.ToGodotObject() ?? new Variant()!);
+            using var broadcasterArg = GodotObjectExtension.ToVariant(broadcaster);
+            using var _ = await Instance._data!.CallAsync("send_message", message, replyParentMessageId!, forSourceOnly,
+                broadcasterArg);
             return;
         }
 
@@ -124,9 +125,10 @@ public partial class TwitchBot : RefCounted, ITwitcherSharpSingleton<TwitchBot>
 
         if (Instance.IsLinked)
         {
-            await Instance._data!.CallAsync("send_announcement", message, color.ToGodotObject()!,
-                forSourceOnly,
-                broadcaster?.ToGodotObject() ?? new Variant()!);
+            using var colorArg = GodotObjectExtension.ToVariant(color);
+            using var broadcasterArg = GodotObjectExtension.ToVariant(broadcaster);
+            using var _ = await Instance._data!.CallAsync("send_announcement", message, colorArg, forSourceOnly,
+                broadcasterArg);
             return;
         }
 
@@ -158,7 +160,9 @@ public partial class TwitchBot : RefCounted, ITwitcherSharpSingleton<TwitchBot>
 
         if (Instance.IsLinked)
         {
-            await Instance._data!.CallAsync("send_shoutout", fromUser.ToGodotObject(), targetUser.ToGodotObject());
+            using var fromArg = GodotObjectExtension.ToVariant(fromUser);
+            using var targetArg = GodotObjectExtension.ToVariant(targetUser);
+            using var _ = await Instance._data!.CallAsync("send_shoutout", fromArg, targetArg);
             return;
         }
 
@@ -179,10 +183,10 @@ public partial class TwitchBot : RefCounted, ITwitcherSharpSingleton<TwitchBot>
             return null;
         }
 
-        Instance = new TwitchBot();
-        Instance._data = data;
-        Instance.SetMeta("_twitcher_sharp_instance", Instance);
-        return Instance;
+        var bot = new TwitchBot { _data = data };
+        bot.SetMeta("_twitcher_sharp_instance", bot);
+        Instance = bot;
+        return bot;
     }
 
     public GodotObject ToGodotObject()
@@ -192,10 +196,9 @@ public partial class TwitchBot : RefCounted, ITwitcherSharpSingleton<TwitchBot>
             return _data;
         }
 
-        var script = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_bot.gd");
-        var instance = script.New().AsGodotObject();
-        instance.Set("sender", Sender?.ToGodotObject() ?? new Variant());
-        instance.Set("receiver", Receiver?.ToGodotObject() ?? new Variant());
+        var instance = InteropExtension.NewObject("res://addons/twitcher/chat/twitch_bot.gd");
+        instance.SetObject("sender", Sender);
+        instance.SetObject("receiver", Receiver);
         _data = instance;
         instance.SetMeta("_twitcher_sharp_instance", this);
         return instance;

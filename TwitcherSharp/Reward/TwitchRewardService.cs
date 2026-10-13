@@ -1,5 +1,6 @@
 using Godot;
 using TwitcherSharp.Api.Generated;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 using TwitcherSharp.Media;
 
@@ -14,9 +15,32 @@ namespace TwitcherSharp.Reward;
 public partial class TwitchRewardService(TwitchApi api, TwitchMediaLoader twitchMediaLoader)
     : RefCounted, ITwitcherSharp<TwitchRewardService>
 {
-    private GodotObject? _data;
-    public TwitchApi TwitchApi { get; set; } = api;
-    public TwitchMediaLoader TwitchMediaLoader { get; set; } = twitchMediaLoader;
+    private Variant _data;
+    public TwitchApi TwitchApi
+    {
+        get;
+        set
+        {
+            _data.With(obj => WriteNode(obj, "api", value));
+            field = value;
+        }
+    } = api;
+
+    public TwitchMediaLoader TwitchMediaLoader
+    {
+        get;
+        set
+        {
+            _data.With(obj => WriteNode(obj, "media_loader", value));
+            field = value;
+        }
+    } = twitchMediaLoader;
+
+    private static bool WriteNode(GodotObject obj, string property, ITwitcherSharp? node)
+    {
+        obj.SetObject(property, node);
+        return true;
+    }
 
     public enum LoadError
     {
@@ -77,35 +101,37 @@ public partial class TwitchRewardService(TwitchApi api, TwitchMediaLoader twitch
     /// </summary>
     /// <param name="twitchReward"></param>
     /// <returns></returns>
-    public LoadError LoadReward(TwitchReward twitchReward)
-    {
-        _data ??= ToGodotObject();
-
-        return _data.Call("load_reward", twitchReward).As<LoadError>();
-    }
+    public async Task<LoadError> LoadReward(TwitchReward twitchReward)
+        => (LoadError)await CallWithReward("load_reward", twitchReward);
 
     /// <summary>
     /// Tries to create or update an existing reward.
     /// </summary>
     /// <param name="twitchReward"> The reward to save</param>
     /// <returns></returns>
-    public SaveError SaveReward(TwitchReward twitchReward)
-    {
-        _data ??= ToGodotObject();
-
-        return _data.Call("save_reward", twitchReward).As<SaveError>();
-    }
+    public async Task<SaveError> SaveReward(TwitchReward twitchReward)
+        => (SaveError)await CallWithReward("save_reward", twitchReward);
 
     /// <summary>
     /// Deletes a reward on Twitch side. Will also remove the ID when succesfully.
     /// </summary>
     /// <param name="twitchReward"> The reward to delete</param>
     /// <returns></returns>
-    public DeleteError DeleteReward(TwitchReward twitchReward)
-    {
-        _data ??= ToGodotObject();
+    public async Task<DeleteError> DeleteReward(TwitchReward twitchReward)
+        => (DeleteError)await CallWithReward("delete_reward", twitchReward);
 
-        return _data.Call("delete_reward", twitchReward).As<DeleteError>();
+    /// <summary>
+    /// Calls a reward function of twitcher, which awaits Twitch and changes the reward in place, and copies the
+    /// changed reward back into <paramref name="twitchReward"/>.
+    /// </summary>
+    private async Task<int> CallWithReward(string method, TwitchReward twitchReward)
+    {
+        if (_data.IsNil) _data = GodotObjectExtension.ToVariant(this);
+        using var reward = twitchReward.ToGodotObject();
+        using var rewardArg = Variant.CreateFrom(reward);
+        using var result = await _data.CallAsync(method, rewardArg);
+        twitchReward.ReadFrom(reward);
+        return result.AsInt32();
     }
     
     /// <summary>
@@ -119,19 +145,25 @@ public partial class TwitchRewardService(TwitchApi api, TwitchMediaLoader twitch
     public static TwitchRewardService? FromObject(GodotObject? data)
     {
         if (data == null) return null;
-        var rewardService = new TwitchRewardService(TwitchApi.FromObject(data.Get("twitch_api").AsGodotObject())!
-            , TwitchMediaLoader.FromObject(data.Get("twitch_media_loader").AsGodotObject())!);
+        var rewardService = new TwitchRewardService(data.Get<TwitchApi>("api")!
+            , data.Get<TwitchMediaLoader>("media_loader")!);
 
-        rewardService._data = data;
+        rewardService._data = Variant.CreateFrom(data);
         return rewardService;
     }
     
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/reward/twitch_reward_service.gd");
-        var instance = script.New().AsGodotObject();
-        instance.Set("twitch_api", TwitchApi?.ToGodotObject() ?? new Variant());
-        instance.Set("twitch_media_loader", TwitchMediaLoader?.ToGodotObject() ?? new Variant());
-        return instance;
+        // The API and the media loader are nodes of the scene: passed as they are, not disposed.
+        return InteropExtension.NewObject("res://addons/twitcher/reward/twitch_reward_service.gd",
+            TwitchApi?.ToGodotObject() ?? new Variant(), TwitchMediaLoader?.ToGodotObject() ?? new Variant());
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        // Only when disposed explicitly: when finalized, the Variant is finalized on its own.
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 }

@@ -7,15 +7,9 @@ public static class VariantExtension
 {
     extension(Variant variant)
     {
-        internal async Task<T> ToResultAsync<T>(Node context) where T : RefCounted, ITwitcherSharp<T>
-        {
-            var result = await context.ToSignal(variant.AsGodotObject(), "completed");
-            return T.FromObject(result[0].AsGodotObject())!;
-        }
-
         internal T AsTwitcherObject<T>() where T : RefCounted, ITwitcherSharp<T>
         {
-            return T.FromObject(variant.AsGodotObject())!;
+            return GodotObjectExtension.Map<T>(variant)!;
         }
     }
 }

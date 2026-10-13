@@ -3,12 +3,9 @@ namespace TwitcherSharp.EventSub;
 public enum TwitchEventSubDefinitionType
 {
     AutomodMessageHold,
-    AutomodMessageHoldV2,
     AutomodMessageUpdate,
-    AutomodMessageUpdateV2,
     AutomodSettingsUpdate,
     AutomodTermsUpdate,
-    ChannelBitsUse,
     ChannelUpdate,
     ChannelFollow,
     ChannelAdBreakBegin,
@@ -39,13 +36,11 @@ public enum TwitchEventSubDefinitionType
     ChannelGuestStarGuestUpdate,
     ChannelGuestStarSettingsUpdate,
     ChannelChannelPointsAutomaticRewardRedemptionAdd,
-    ChannelChannelPointsAutomaticRewardRedemptionAddV2,
     ChannelChannelPointsCustomRewardAdd,
     ChannelChannelPointsCustomRewardUpdate,
     ChannelChannelPointsCustomRewardRemove,
     ChannelChannelPointsCustomRewardRedemptionAdd,
     ChannelChannelPointsCustomRewardRedemptionUpdate,
-    ChannelCustomPowerUpRedemptionAdd,
     ChannelPollBegin,
     ChannelPollProgress,
     ChannelPollEnd,
@@ -84,5 +79,10 @@ public enum TwitchEventSubDefinitionType
     UserAuthorizationGrant,
     UserAuthorizationRevoke,
     UserUpdate,
-    UserWhisperMessage
+    UserWhisperMessage,
+    AutomodMessageHoldV2,
+    AutomodMessageUpdateV2,
+    ChannelBitsUse,
+    ChannelChannelPointsAutomaticRewardRedemptionAddV2,
+    ChannelCustomPowerUpRedemptionAdd
 }

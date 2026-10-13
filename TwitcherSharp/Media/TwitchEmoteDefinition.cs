@@ -1,4 +1,5 @@
 using Godot;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.Media;
@@ -6,13 +7,13 @@ namespace TwitcherSharp.Media;
 public partial class TwitchEmoteDefinition(string emoteId) : RefCounted, ITwitcherSharp<TwitchEmoteDefinition>
 {
     public string Id { get; set; } = emoteId;
-    public int Scale { get; set; }
+    public long Scale { get; set; }
     public StringName? Type { get; set; }
     public StringName? Theme { get; set; }
 
-    public const int Scale1 = 1;
-    public const int Scale2 = 2;
-    public const int Scale3 = 3;
+    public const long Scale1 = 1;
+    public const long Scale2 = 2;
+    public const long Scale3 = 3;
 
     public const string TypeDefault = "default";
     public const string TypeStatic = "static";
@@ -72,22 +73,20 @@ public partial class TwitchEmoteDefinition(string emoteId) : RefCounted, ITwitch
     public static TwitchEmoteDefinition? FromObject(GodotObject? data)
     {
         if (data == null) return null;
-        return new TwitchEmoteDefinition(data.Get("id").AsString())
+        return new TwitchEmoteDefinition(data.ReadAsString("id"))
         {
-            Scale = data.Get("scale").AsInt32(),
-            Type = data.Get("type").AsString(),
-            Theme = data.Get("theme").AsString(),
+            Scale = data.ReadAsInt64("scale"),
+            Type = data.ReadAsString("type"),
+            Theme = data.ReadAsString("theme"),
         };
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/media/twitch_emote_definition.gd");
-        var data = script.New().AsGodotObject();
-        data.Set("id", Id);
-        data.Set("scale", Scale);
-        if (Type != null) data.Set("type", Type);
-        if (Theme != null) data.Set("theme", Theme);
+        var data = InteropExtension.NewObject("res://addons/twitcher/media/twitch_emote_definition.gd", Id);
+        data.SetValue("scale", Scale);
+        if (Type != null) data.SetValue("type", Type);
+        if (Theme != null) data.SetValue("theme", Theme);
         return data;
     }
 }

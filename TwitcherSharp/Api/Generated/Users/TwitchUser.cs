@@ -6,7 +6,7 @@ namespace TwitcherSharp.Api.Generated.Users;
 
 public partial class TwitchUser : RefCounted, ITwitcherSharp<TwitchUser>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string Id { get; set; } = null!;
     public string Login { get; set; } = null!;
     public string DisplayName { get; set; } = null!;
@@ -27,39 +27,45 @@ public partial class TwitchUser : RefCounted, ITwitcherSharp<TwitchUser>
         if(data == null) return null;
         var instance = new TwitchUser
         {
-            Id = data.Get("id").AsString(),
-            Login = data.Get("login").AsString(),
-            DisplayName = data.Get("display_name").AsString(),
-            Type = data.Get("type").AsString(),
-            BroadcasterType = data.Get("broadcaster_type").AsString(),
-            Description = data.Get("description").AsString(),
-            ProfileImageUrl = data.Get("profile_image_url").AsString(),
-            OfflineImageUrl = data.Get("offline_image_url").AsString(),
-            ViewCount = data.Get("view_count").AsInt32(),
-            Email = data.Get("email").AsString(),
-            CreatedAt = data.Get("created_at").AsString(),
+            Id = data.ReadAsString("id"),
+            Login = data.ReadAsString("login"),
+            DisplayName = data.ReadAsString("display_name"),
+            Type = data.ReadAsString("type"),
+            BroadcasterType = data.ReadAsString("broadcaster_type"),
+            Description = data.ReadAsString("description"),
+            ProfileImageUrl = data.ReadAsString("profile_image_url"),
+            OfflineImageUrl = data.ReadAsString("offline_image_url"),
+            ViewCount = data.ReadAsInt32("view_count"),
+            Email = data.ReadAsString("email"),
+            CreatedAt = data.ReadAsString("created_at"),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_user.gd");
-        var request = script.Call("new").AsGodotObject();
-        if(Id != null) request.Set("id", Id);
-        if(Login != null) request.Set("login", Login);
-        if(DisplayName != null) request.Set("display_name", DisplayName);
-        if(Type != null) request.Set("type", Type);
-        if(BroadcasterType != null) request.Set("broadcaster_type", BroadcasterType);
-        if(Description != null) request.Set("description", Description);
-        if(ProfileImageUrl != null) request.Set("profile_image_url", ProfileImageUrl);
-        if(OfflineImageUrl != null) request.Set("offline_image_url", OfflineImageUrl);
-        request.Set("view_count", ViewCount);
-        if(Email != null) request.Set("email", Email);
-        if(CreatedAt != null) request.Set("created_at", CreatedAt);
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated/twitch_user.gd");
+        if(Id != null) request.SetValue("id", Id);
+        if(Login != null) request.SetValue("login", Login);
+        if(DisplayName != null) request.SetValue("display_name", DisplayName);
+        if(Type != null) request.SetValue("type", Type);
+        if(BroadcasterType != null) request.SetValue("broadcaster_type", BroadcasterType);
+        if(Description != null) request.SetValue("description", Description);
+        if(ProfileImageUrl != null) request.SetValue("profile_image_url", ProfileImageUrl);
+        if(OfflineImageUrl != null) request.SetValue("offline_image_url", OfflineImageUrl);
+        request.SetValue("view_count", ViewCount);
+        if(Email != null) request.SetValue("email", Email);
+        if(CreatedAt != null) request.SetValue("created_at", CreatedAt);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }
