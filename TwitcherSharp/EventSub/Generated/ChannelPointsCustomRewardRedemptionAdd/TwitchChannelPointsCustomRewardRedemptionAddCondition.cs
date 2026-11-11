@@ -18,7 +18,7 @@ public partial class TwitchChannelPointsCustomRewardRedemptionAddCondition(strin
     public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
-    /// Optional. Specify a reward id to only receive notifications for a specific reward.
+    /// Specify a reward id to only receive notifications for a specific reward.
     /// </summary>
     public string? RewardId { get; set; }
 

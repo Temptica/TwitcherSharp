@@ -16,17 +16,17 @@ public partial class TwitchChannelCheerEvent : RefCounted, ITwitcherSharpEventSu
     public bool IsAnonymous { get; set; }
 
     /// <summary> 
-    /// The user ID for the user who cheered on the specified channel. This is null if is_anonymous is true.
+    /// The user ID for the user who cheered on the specified channel. This is null if `is_anonymous` is true.
     /// </summary>
     public string? UserId { get; set; }
 
     /// <summary> 
-    /// The user login for the user who cheered on the specified channel. This is null if is_anonymous is true.
+    /// The user login for the user who cheered on the specified channel. This is null if `is_anonymous` is true.
     /// </summary>
     public string? UserLogin { get; set; }
 
     /// <summary> 
-    /// The user display name for the user who cheered on the specified channel. This is null if is_anonymous is true.
+    /// The user display name for the user who cheered on the specified channel. This is null if `is_anonymous` is true.
     /// </summary>
     public string? UserName { get; set; }
 

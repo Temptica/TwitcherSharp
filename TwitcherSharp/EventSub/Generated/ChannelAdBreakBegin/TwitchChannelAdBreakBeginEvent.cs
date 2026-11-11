@@ -26,17 +26,17 @@ public partial class TwitchChannelAdBreakBeginEvent : RefCounted, ITwitcherSharp
     public bool IsAutomatic { get; set; }
 
     /// <summary> 
-    /// The broadcaster’s user ID for the channel the ad was run on.
+    /// The broadcaster's user ID for the channel the ad was run on.
     /// </summary>
     public string? BroadcasterUserId { get; set; }
 
     /// <summary> 
-    /// The broadcaster’s user login for the channel the ad was run on.
+    /// The broadcaster's user login for the channel the ad was run on.
     /// </summary>
     public string? BroadcasterUserLogin { get; set; }
 
     /// <summary> 
-    /// The broadcaster’s user display name for the channel the ad was run on.
+    /// The broadcaster's user display name for the channel the ad was run on.
     /// </summary>
     public string? BroadcasterUserName { get; set; }
 

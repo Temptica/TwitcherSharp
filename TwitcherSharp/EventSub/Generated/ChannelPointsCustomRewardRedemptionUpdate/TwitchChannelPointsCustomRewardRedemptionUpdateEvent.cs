@@ -51,12 +51,12 @@ public partial class TwitchChannelPointsCustomRewardRedemptionUpdateEvent : RefC
     public string? UserInput { get; set; }
 
     /// <summary> 
-    /// Will be fulfilled or canceled. Possible values are unknown, unfulfilled, fulfilled, and canceled.
+    /// Will be **fulfilled** or **canceled**. Possible values are **unknown**, **unfulfilled**, **fulfilled**, and **canceled**.
     /// </summary>
     public string? Status { get; set; }
 
     /// <summary> 
-    /// 
+    /// Basic information about the reward that was redeemed, at the time it was redeemed.
     /// </summary>
     public TwitchReward? Reward { get => field ??= _data?.Get<TwitchReward>("reward"); set; }
 

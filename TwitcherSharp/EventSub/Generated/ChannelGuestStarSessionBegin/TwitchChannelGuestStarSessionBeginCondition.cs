@@ -13,7 +13,7 @@ public partial class TwitchChannelGuestStarSessionBeginCondition(string broadcas
     public string Name => nameof(TwitchChannelGuestStarSessionBeginCondition);
 
     /// <summary> 
-    /// The broadcaster user ID of the channel hosting the Guest Star Session
+    /// The broadcaster user ID for the channel you want to receive Guest Star session begin notifications for.
     /// </summary>
     public string BroadcasterUserId { get; set; } = broadcasterUserId;
 

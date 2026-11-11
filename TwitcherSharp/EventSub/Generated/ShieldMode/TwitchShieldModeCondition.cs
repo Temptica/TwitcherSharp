@@ -4,31 +4,31 @@ using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
-namespace TwitcherSharp.EventSub.Generated.ChannelModerate;
+namespace TwitcherSharp.EventSub.Generated.ShieldMode;
 
-public partial class TwitchChannelModerateV2Condition(string broadcasterUserId, string moderatorUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelModerateV2Condition>
+public partial class TwitchShieldModeCondition(string broadcasterUserId, string moderatorUserId) : RefCounted, ITwitcherSharpCondition<TwitchShieldModeCondition>
 {
     private GodotObject? _data;
     
-    public string Name => nameof(TwitchChannelModerateV2Condition);
+    public string Name => nameof(TwitchShieldModeCondition);
 
     /// <summary> 
-    /// The user ID of the broadcaster.
+    /// The ID of the broadcaster that you want to receive notifications about when they activate Shield Mode.
     /// </summary>
     public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
-    /// The user ID of the moderator.
+    /// The ID of the broadcaster or one of the broadcaster's moderators.
     /// </summary>
     public string ModeratorUserId { get; set; } = moderatorUserId;
 
     /// <summary> 
-    /// Transforms the godot data into a TwitchChannelModerateV2Condition object.
+    /// Transforms the godot data into a TwitchShieldModeCondition object.
     /// </summary> 
-    public static TwitchChannelModerateV2Condition? FromObject(GodotObject? data)
+    public static TwitchShieldModeCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchChannelModerateV2Condition(data.Get("broadcaster_user_id").AsString(), data.Get("moderator_user_id").AsString());
+        var instance = new TwitchShieldModeCondition(data.Get("broadcaster_user_id").AsString(), data.Get("moderator_user_id").AsString());
         
         instance._data = data;
         return instance;
@@ -36,7 +36,7 @@ public partial class TwitchChannelModerateV2Condition(string broadcasterUserId, 
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_moderate.gd");
+        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_shield_mode.gd");
         var conditionClass = script.Get("Condition").As<GDScript>();
         var request = conditionClass.New().AsGodotObject();
         request.Set("broadcaster_user_id", BroadcasterUserId);
@@ -44,9 +44,9 @@ public partial class TwitchChannelModerateV2Condition(string broadcasterUserId, 
         return request;
     }
 
-    public static TwitchChannelModerateV2Condition FromDictionary(Dictionary data)
+    public static TwitchShieldModeCondition FromDictionary(Dictionary data)
     {
-        return new TwitchChannelModerateV2Condition(data["broadcaster_user_id"].AsString(), data["moderator_user_id"].AsString())
+        return new TwitchShieldModeCondition(data["broadcaster_user_id"].AsString(), data["moderator_user_id"].AsString())
         {
         };
     }

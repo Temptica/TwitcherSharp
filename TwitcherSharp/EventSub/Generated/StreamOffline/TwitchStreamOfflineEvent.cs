@@ -16,17 +16,17 @@ public partial class TwitchStreamOfflineEvent : RefCounted, ITwitcherSharpEventS
     public string? Id { get; set; }
 
     /// <summary> 
-    /// The broadcaster’s user id.
+    /// The broadcaster's user id.
     /// </summary>
     public string? BroadcasterUserId { get; set; }
 
     /// <summary> 
-    /// The broadcaster’s user login.
+    /// The broadcaster's user login.
     /// </summary>
     public string? BroadcasterUserLogin { get; set; }
 
     /// <summary> 
-    /// The broadcaster’s user display name.
+    /// The broadcaster's user display name.
     /// </summary>
     public string? BroadcasterUserName { get; set; }
 

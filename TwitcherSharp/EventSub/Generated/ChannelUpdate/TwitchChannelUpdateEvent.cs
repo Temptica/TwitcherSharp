@@ -11,32 +11,32 @@ public partial class TwitchChannelUpdateEvent : RefCounted, ITwitcherSharpEventS
     private GodotObject? _data;
     
     /// <summary> 
-    /// The broadcaster’s user ID.
+    /// The broadcaster's user ID.
     /// </summary>
     public string? BroadcasterUserId { get; set; }
 
     /// <summary> 
-    /// The broadcaster’s user login.
+    /// The broadcaster's user login.
     /// </summary>
     public string? BroadcasterUserLogin { get; set; }
 
     /// <summary> 
-    /// The broadcaster’s user display name.
+    /// The broadcaster's user display name.
     /// </summary>
     public string? BroadcasterUserName { get; set; }
 
     /// <summary> 
-    /// The channel’s stream title.
+    /// The channel's stream title.
     /// </summary>
     public string? Title { get; set; }
 
     /// <summary> 
-    /// The channel’s broadcast language.
+    /// The channel's broadcast language.
     /// </summary>
     public string? Language { get; set; }
 
     /// <summary> 
-    /// The channel’s category ID.
+    /// The channel's category ID.
     /// </summary>
     public string? CategoryId { get; set; }
 
@@ -46,7 +46,7 @@ public partial class TwitchChannelUpdateEvent : RefCounted, ITwitcherSharpEventS
     public string? CategoryName { get; set; }
 
     /// <summary> 
-    /// Array of content classification label IDs currently applied on the Channel. To retrieve a list of all possible IDs, use the Get Content Classification Labels API endpoint.
+    /// Array of content classification label IDs currently applied on the Channel. To retrieve a list of all possible IDs, use the [Get Content Classification Labels](https://dev.twitch.tv/docs/api/reference/ccls.md#get-content-classification-labels) API endpoint.
     /// </summary>
     public string[]? ContentClassificationLabels { get; set; }
 

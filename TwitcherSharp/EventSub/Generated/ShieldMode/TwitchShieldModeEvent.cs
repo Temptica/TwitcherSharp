@@ -4,9 +4,9 @@ using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
-namespace TwitcherSharp.EventSub.Generated.Shared;
+namespace TwitcherSharp.EventSub.Generated.ShieldMode;
 
-public partial class TwitchShieldMode : RefCounted, ITwitcherSharpEventSub<TwitchShieldMode>
+public partial class TwitchShieldModeEvent : RefCounted, ITwitcherSharpEventSub<TwitchShieldModeEvent>
 {
     private GodotObject? _data;
     
@@ -16,47 +16,47 @@ public partial class TwitchShieldMode : RefCounted, ITwitcherSharpEventSub<Twitc
     public string? BroadcasterUserId { get; set; }
 
     /// <summary> 
-    /// The broadcaster’s login name.
+    /// The broadcaster's login name.
     /// </summary>
     public string? BroadcasterUserLogin { get; set; }
 
     /// <summary> 
-    /// The broadcaster’s display name.
+    /// The broadcaster's display name.
     /// </summary>
     public string? BroadcasterUserName { get; set; }
 
     /// <summary> 
-    /// An ID that identifies the moderator that updated the Shield Mode’s status. If the broadcaster updated the status, this ID will be the same as broadcaster_user_id.
+    /// An ID that identifies the moderator that updated the Shield Mode's status. If the broadcaster updated the status, this ID will be the same as `broadcaster_user_id`.
     /// </summary>
     public string? ModeratorUserId { get; set; }
 
     /// <summary> 
-    /// The moderator’s login name.
+    /// The moderator's login name.
     /// </summary>
     public string? ModeratorUserLogin { get; set; }
 
     /// <summary> 
-    /// The moderator’s display name.
+    /// The moderator's display name.
     /// </summary>
     public string? ModeratorUserName { get; set; }
 
     /// <summary> 
-    /// The UTC timestamp (in RFC3339 format) of when the moderator activated Shield Mode. The object includes this field only for channel.shield_mode.begin events.
+    /// The UTC timestamp (in RFC3339 format) of when the moderator activated Shield Mode. The object includes this field only for **channel.shield_mode.begin** events.
     /// </summary>
     public string? StartedAt { get; set; }
 
     /// <summary> 
-    /// The UTC timestamp (in RFC3339 format) of when the moderator deactivated Shield Mode. The object includes this field only for channel.shield_mode.end events.
+    /// The UTC timestamp (in RFC3339 format) of when the moderator deactivated Shield Mode. The object includes this field only for **channel.shield_mode.end** events.
     /// </summary>
     public string? EndedAt { get; set; }
 
     /// <summary> 
-    /// Transforms the godot data into a TwitchShieldMode object.
+    /// Transforms the godot data into a TwitchShieldModeEvent object.
     /// </summary> 
-    public static TwitchShieldMode? FromObject(GodotObject? data)
+    public static TwitchShieldModeEvent? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchShieldMode
+        var instance = new TwitchShieldModeEvent
         {
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
             BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
@@ -75,7 +75,8 @@ public partial class TwitchShieldMode : RefCounted, ITwitcherSharpEventSub<Twitc
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_shield_mode.gd");
-        var request = script.New().AsGodotObject();
+        var eventClass = script.Get("Event").As<GDScript>();
+        var request = eventClass.New().AsGodotObject();
         if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
         if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
         if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);

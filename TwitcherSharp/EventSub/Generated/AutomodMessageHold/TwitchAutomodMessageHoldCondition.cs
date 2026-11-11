@@ -13,12 +13,12 @@ public partial class TwitchAutomodMessageHoldCondition(string broadcasterUserId,
     public string Name => nameof(TwitchAutomodMessageHoldCondition);
 
     /// <summary> 
-    /// User ID of the broadcaster (channel).
+    /// User ID of the broadcaster channel.
     /// </summary>
     public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
-    /// User ID of the moderator.
+    /// User ID of the moderator. This user must be have either moderator or broadcaster status for the channel specified in *broadcaster_user_id*.
     /// </summary>
     public string ModeratorUserId { get; set; } = moderatorUserId;
 

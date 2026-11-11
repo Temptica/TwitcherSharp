@@ -66,12 +66,12 @@ public partial class TwitchChannelBanEvent : RefCounted, ITwitcherSharpEventSub<
     public string? BannedAt { get; set; }
 
     /// <summary> 
-    /// The UTC date and time (in RFC3339 format) of when the timeout ends. Is null if the user was banned instead of put in a timeout.
+    /// The UTC date and time (in RFC3339 format) of when the timeout ends. Is **null** if the user was banned instead of put in a timeout.
     /// </summary>
     public string? EndsAt { get; set; }
 
     /// <summary> 
-    /// Indicates whether the ban is permanent (true) or a timeout (false). If true, ends_at will be null.
+    /// Indicates whether the ban is permanent (true) or a timeout (false). If true, `ends_at` will be null.
     /// </summary>
     public bool IsPermanent { get; set; }
 

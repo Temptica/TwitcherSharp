@@ -31,17 +31,17 @@ public partial class TwitchChannelPointsCustomRewardUpdateEvent : RefCounted, IT
     public string? BroadcasterUserName { get; set; }
 
     /// <summary> 
-    /// Is the reward currently enabled. If false, the reward won’t show up to viewers.
+    /// Is the reward currently enabled. If false, the reward won't show up to viewers.
     /// </summary>
     public bool IsEnabled { get; set; }
 
     /// <summary> 
-    /// Is the reward currently paused. If true, viewers can’t redeem.
+    /// Is the reward currently paused. If true, viewers can't redeem.
     /// </summary>
     public bool IsPaused { get; set; }
 
     /// <summary> 
-    /// Is the reward currently in stock. If false, viewers can’t redeem.
+    /// Is the reward currently in stock. If false, viewers can't redeem.
     /// </summary>
     public bool IsInStock { get; set; }
 
@@ -66,42 +66,47 @@ public partial class TwitchChannelPointsCustomRewardUpdateEvent : RefCounted, IT
     public bool IsUserInputRequired { get; set; }
 
     /// <summary> 
-    /// Should redemptions be set to fulfilled status immediately when redeemed and skip the request queue instead of the normal unfulfilled status.
+    /// Should redemptions be set to **fulfilled** status immediately when redeemed and skip the request queue instead of the normal **unfulfilled** status.
     /// </summary>
     public bool ShouldRedemptionsSkipRequestQueue { get; set; }
 
     /// <summary> 
-    /// 
+    /// Whether a maximum per stream is enabled and what the maximum is.
     /// </summary>
     public TwitchMaxPerStream? MaxPerStream { get => field ??= _data?.Get<TwitchMaxPerStream>("max_per_stream"); set; }
 
     /// <summary> 
-    /// 
+    /// Whether a maximum per user per stream is enabled and what the maximum is.
     /// </summary>
     public TwitchMaxPerUserPerStream? MaxPerUserPerStream { get => field ??= _data?.Get<TwitchMaxPerUserPerStream>("max_per_user_per_stream"); set; }
 
     /// <summary> 
-    /// Custom background color for the reward. Format: Hex with # prefix. Example: #FA1ED2.
+    /// Custom background color for the reward. Format: Hex with \# prefix. Example: `#FA1ED2`.
     /// </summary>
     public string? BackgroundColor { get; set; }
 
     /// <summary> 
-    /// 
+    /// Set of custom images of 1x, 2x and 4x sizes for the reward. Can be **null** if no images have been uploaded.
     /// </summary>
     public TwitchImage? Image { get => field ??= _data?.Get<TwitchImage>("image"); set; }
 
     /// <summary> 
-    /// 
+    /// Set of default images of 1x, 2x and 4x sizes for the reward.
+    /// </summary>
+    public TwitchDefaultImage? DefaultImage { get => field ??= _data?.Get<TwitchDefaultImage>("default_image"); set; }
+
+    /// <summary> 
+    /// Whether a cooldown is enabled and what the cooldown is in seconds.
     /// </summary>
     public TwitchGlobalCooldown? GlobalCooldown { get => field ??= _data?.Get<TwitchGlobalCooldown>("global_cooldown"); set; }
 
     /// <summary> 
-    /// Timestamp of the cooldown expiration. null if the reward isn’t on cooldown.
+    /// Timestamp of the cooldown expiration. **null** if the reward isn't on cooldown.
     /// </summary>
     public string? CooldownExpiresAt { get; set; }
 
     /// <summary> 
-    /// The number of redemptions redeemed during the current live stream. Counts against the max_per_stream limit. null if the broadcasters stream isn’t live or max_per_stream isn’t enabled.
+    /// The number of redemptions redeemed during the current live stream. Counts against the `max_per_stream` limit. **null** if the broadcasters stream isn't live or `max_per_stream` isn't enabled.
     /// </summary>
     public int RedemptionsRedeemedCurrentStream { get; set; }
 
@@ -155,9 +160,59 @@ public partial class TwitchChannelPointsCustomRewardUpdateEvent : RefCounted, IT
         if(MaxPerUserPerStream != null) request.Set("max_per_user_per_stream", MaxPerUserPerStream.ToGodotObject());
         if(BackgroundColor != null) request.Set("background_color", BackgroundColor);
         if(Image != null) request.Set("image", Image.ToGodotObject());
+        if(DefaultImage != null) request.Set("default_image", DefaultImage.ToGodotObject());
         if(GlobalCooldown != null) request.Set("global_cooldown", GlobalCooldown.ToGodotObject());
         if(CooldownExpiresAt != null) request.Set("cooldown_expires_at", CooldownExpiresAt);
         request.Set("redemptions_redeemed_current_stream", RedemptionsRedeemedCurrentStream);
         return request;
+    }
+
+
+    public partial class TwitchDefaultImage : RefCounted, ITwitcherSharpEventSub<TwitchDefaultImage>
+    {
+        private GodotObject? _data;
+        
+        /// <summary> 
+        /// URL for the image at 1x size.
+        /// </summary>
+        public string? Url1x { get; set; }
+    
+        /// <summary> 
+        /// URL for the image at 2x size.
+        /// </summary>
+        public string? Url2x { get; set; }
+    
+        /// <summary> 
+        /// URL for the image at 4x size.
+        /// </summary>
+        public string? Url4x { get; set; }
+    
+        /// <summary> 
+        /// Transforms the godot data into a TwitchDefaultImage object.
+        /// </summary> 
+        public static TwitchDefaultImage? FromObject(GodotObject? data)
+        {
+            if(data == null) return null;
+            var instance = new TwitchDefaultImage
+            {
+                Url1x = data.Get("url_1x").AsString(),
+                Url2x = data.Get("url_2x").AsString(),
+                Url4x = data.Get("url_4x").AsString(),
+            };
+            
+            instance._data = data;
+            return instance;
+        }
+    
+        public GodotObject ToGodotObject()
+        {
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_points_custom_reward_update.gd");
+            var defaultImageClass = script.Get("DefaultImage").As<GDScript>();
+            var request = defaultImageClass.New().AsGodotObject();
+            if(Url1x != null) request.Set("url_1x", Url1x);
+            if(Url2x != null) request.Set("url_2x", Url2x);
+            if(Url4x != null) request.Set("url_4x", Url4x);
+            return request;
+        }
     }
 }

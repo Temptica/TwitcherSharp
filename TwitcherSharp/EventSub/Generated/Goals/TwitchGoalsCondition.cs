@@ -13,7 +13,7 @@ public partial class TwitchGoalsCondition(string broadcasterUserId) : RefCounted
     public string Name => nameof(TwitchGoalsCondition);
 
     /// <summary> 
-    /// The ID of the broadcaster to get notified about. The ID must match the user_id in the OAuth access token.
+    /// The ID of the broadcaster to get notified about. The ID must match the `user_id` in the OAuth access token.
     /// </summary>
     public string BroadcasterUserId { get; set; } = broadcasterUserId;
 

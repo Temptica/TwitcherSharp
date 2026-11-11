@@ -16,34 +16,34 @@ public partial class TwitchChannelUnbanRequestResolveEvent : RefCounted, ITwitch
     public string? Id { get; set; }
 
     /// <summary> 
-    /// The broadcaster’s user ID for the channel the unban request was updated for.
+    /// The broadcaster's user ID for the channel the unban request was updated for.
     /// </summary>
     public string? BroadcasterUserId { get; set; }
 
     /// <summary> 
-    /// The broadcaster’s login name.
+    /// The broadcaster's login name.
     /// </summary>
     public string? BroadcasterUserLogin { get; set; }
 
     /// <summary> 
-    /// The broadcaster’s display name.
+    /// The broadcaster's display name.
     /// </summary>
     public string? BroadcasterUserName { get; set; }
 
     /// <summary> 
-    /// Optional. User ID of moderator who approved/denied the request.
+    /// User ID of moderator who approved/denied the request.
     /// </summary>
-    public string? ModeratorId { get; set; }
+    public string? ModeratorUserId { get; set; }
 
     /// <summary> 
-    /// Optional. The moderator’s login name
+    /// The moderator's login name
     /// </summary>
-    public string? ModeratorLogin { get; set; }
+    public string? ModeratorUserLogin { get; set; }
 
     /// <summary> 
-    /// Optional. The moderator’s display name
+    /// The moderator's display name
     /// </summary>
-    public string? ModeratorName { get; set; }
+    public string? ModeratorUserName { get; set; }
 
     /// <summary> 
     /// User ID of user that requested to be unbanned.
@@ -51,22 +51,25 @@ public partial class TwitchChannelUnbanRequestResolveEvent : RefCounted, ITwitch
     public string? UserId { get; set; }
 
     /// <summary> 
-    /// The user’s login name.
+    /// The user's login name.
     /// </summary>
     public string? UserLogin { get; set; }
 
     /// <summary> 
-    /// The user’s display name.
+    /// The user's display name.
     /// </summary>
     public string? UserName { get; set; }
 
     /// <summary> 
-    /// Optional. Resolution text supplied by the mod/broadcaster upon approval/denial of the request.
+    /// Resolution text supplied by the mod/broadcaster upon approval/denial of the request.
     /// </summary>
     public string? ResolutionText { get; set; }
 
     /// <summary> 
-    /// Dictates whether the unban request was approved or denied. Can be the following: approvedcanceleddenied
+    /// Dictates whether the unban request was approved or denied. Can be the following. Possible values:
+    /// - `approved`
+    /// - `canceled`
+    /// - `denied`
     /// </summary>
     public string? Status { get; set; }
 
@@ -82,9 +85,9 @@ public partial class TwitchChannelUnbanRequestResolveEvent : RefCounted, ITwitch
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
             BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
             BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
-            ModeratorId = data.Get("moderator_id").AsString(),
-            ModeratorLogin = data.Get("moderator_login").AsString(),
-            ModeratorName = data.Get("moderator_name").AsString(),
+            ModeratorUserId = data.Get("moderator_user_id").AsString(),
+            ModeratorUserLogin = data.Get("moderator_user_login").AsString(),
+            ModeratorUserName = data.Get("moderator_user_name").AsString(),
             UserId = data.Get("user_id").AsString(),
             UserLogin = data.Get("user_login").AsString(),
             UserName = data.Get("user_name").AsString(),
@@ -105,9 +108,9 @@ public partial class TwitchChannelUnbanRequestResolveEvent : RefCounted, ITwitch
         if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
         if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
         if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
-        if(ModeratorId != null) request.Set("moderator_id", ModeratorId);
-        if(ModeratorLogin != null) request.Set("moderator_login", ModeratorLogin);
-        if(ModeratorName != null) request.Set("moderator_name", ModeratorName);
+        if(ModeratorUserId != null) request.Set("moderator_user_id", ModeratorUserId);
+        if(ModeratorUserLogin != null) request.Set("moderator_user_login", ModeratorUserLogin);
+        if(ModeratorUserName != null) request.Set("moderator_user_name", ModeratorUserName);
         if(UserId != null) request.Set("user_id", UserId);
         if(UserLogin != null) request.Set("user_login", UserLogin);
         if(UserName != null) request.Set("user_name", UserName);

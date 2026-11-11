@@ -16,9 +16,9 @@ public partial class TwitchDropEntitlementGrantEvent : RefCounted, ITwitcherShar
     public string? Id { get; set; }
 
     /// <summary> 
-    /// Entitlement object.
+    /// The granted entitlement.
     /// </summary>
-    public TwitchData[]? Data { get => field ??= _data?.GetArray<TwitchData>("data"); set; }
+    public TwitchData? Data { get => field ??= _data?.Get<TwitchData>("data"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchDropEntitlementGrantEvent object.
@@ -41,7 +41,7 @@ public partial class TwitchDropEntitlementGrantEvent : RefCounted, ITwitcherShar
         var eventClass = script.Get("Event").As<GDScript>();
         var request = eventClass.New().AsGodotObject();
         if(Id != null) request.Set("id", Id);
-        if(Data != null) request.Set("data", Data.ToGodotArray());
+        if(Data != null) request.Set("data", Data.ToGodotObject());
         return request;
     }
 

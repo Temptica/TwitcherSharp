@@ -11,17 +11,17 @@ public partial class TwitchChannelSubscriptionGiftEvent : RefCounted, ITwitcherS
     private GodotObject? _data;
     
     /// <summary> 
-    /// The user ID of the user who sent the subscription gift. Set to null if it was an anonymous subscription gift.
+    /// The user ID of the user who sent the subscription gift. Set to **null** if it was an anonymous subscription gift.
     /// </summary>
     public string? UserId { get; set; }
 
     /// <summary> 
-    /// The user login of the user who sent the gift. Set to null if it was an anonymous subscription gift.
+    /// The user login of the user who sent the gift. Set to **null** if it was an anonymous subscription gift.
     /// </summary>
     public string? UserLogin { get; set; }
 
     /// <summary> 
-    /// The user display name of the user who sent the gift. Set to null if it was an anonymous subscription gift.
+    /// The user display name of the user who sent the gift. Set to **null** if it was an anonymous subscription gift.
     /// </summary>
     public string? UserName { get; set; }
 
@@ -51,7 +51,7 @@ public partial class TwitchChannelSubscriptionGiftEvent : RefCounted, ITwitcherS
     public string? Tier { get; set; }
 
     /// <summary> 
-    /// The number of subscriptions gifted by this user in the channel. This value is null for anonymous gifts or if the gifter has opted out of sharing this information.
+    /// The number of subscriptions gifted by this user in the channel. This value is **null** for anonymous gifts or if the gifter has opted out of sharing this information.
     /// </summary>
     public int CumulativeTotal { get; set; }
 

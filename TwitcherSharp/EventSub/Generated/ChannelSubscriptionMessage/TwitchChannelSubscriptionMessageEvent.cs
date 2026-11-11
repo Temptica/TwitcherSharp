@@ -41,12 +41,12 @@ public partial class TwitchChannelSubscriptionMessageEvent : RefCounted, ITwitch
     public string? BroadcasterUserName { get; set; }
 
     /// <summary> 
-    /// The tier of the user’s subscription.
+    /// The tier of the user's subscription.
     /// </summary>
     public string? Tier { get; set; }
 
     /// <summary> 
-    /// 
+    /// An object that contains the resubscription message and emote information needed to recreate the message.
     /// </summary>
     public TwitchMessage? Message { get => field ??= _data?.Get<TwitchMessage>("message"); set; }
 
@@ -56,7 +56,7 @@ public partial class TwitchChannelSubscriptionMessageEvent : RefCounted, ITwitch
     public int CumulativeMonths { get; set; }
 
     /// <summary> 
-    /// The number of consecutive months the user’s current subscription has been active. This value is null if the user has opted out of sharing this information.
+    /// The number of consecutive months the user's current subscription has been active. This value is **null** if the user has opted out of sharing this information.
     /// </summary>
     public int StreakMonths { get; set; }
 
@@ -106,5 +106,46 @@ public partial class TwitchChannelSubscriptionMessageEvent : RefCounted, ITwitch
         request.Set("streak_months", StreakMonths);
         request.Set("duration_months", DurationMonths);
         return request;
+    }
+
+
+    public partial class TwitchMessage : RefCounted, ITwitcherSharpEventSub<TwitchMessage>
+    {
+        private GodotObject? _data;
+        
+        /// <summary> 
+        /// The text of the resubscription chat message.
+        /// </summary>
+        public string? Text { get; set; }
+    
+        /// <summary> 
+        /// An array that includes the emote ID and start and end positions for where the emote appears in the text.
+        /// </summary>
+        public TwitchEmotes[]? Emotes { get => field ??= _data?.GetArray<TwitchEmotes>("emotes"); set; }
+    
+        /// <summary> 
+        /// Transforms the godot data into a TwitchMessage object.
+        /// </summary> 
+        public static TwitchMessage? FromObject(GodotObject? data)
+        {
+            if(data == null) return null;
+            var instance = new TwitchMessage
+            {
+                Text = data.Get("text").AsString(),
+            };
+            
+            instance._data = data;
+            return instance;
+        }
+    
+        public GodotObject ToGodotObject()
+        {
+            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_subscription_message.gd");
+            var messageClass = script.Get("Message").As<GDScript>();
+            var request = messageClass.New().AsGodotObject();
+            if(Text != null) request.Set("text", Text);
+            if(Emotes != null) request.Set("emotes", Emotes.ToGodotArray());
+            return request;
+        }
     }
 }

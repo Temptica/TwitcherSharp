@@ -11,32 +11,34 @@ public partial class TwitchUserUpdateEvent : RefCounted, ITwitcherSharpEventSub<
     private GodotObject? _data;
     
     /// <summary> 
-    /// The user’s user id.
+    /// The user's user id.
     /// </summary>
     public string? UserId { get; set; }
 
     /// <summary> 
-    /// The user’s user login.
+    /// The user's user login.
     /// </summary>
     public string? UserLogin { get; set; }
 
     /// <summary> 
-    /// The user’s user display name.
+    /// The user's user display name.
     /// </summary>
     public string? UserName { get; set; }
 
     /// <summary> 
-    /// The user’s email address. The event includes the user’s email address only if the app used to request this event type includes the user:read:email scope for the user; otherwise, the field is set to an empty string. See Create EventSub Subscription.
+    /// The user's email address. The event includes the user's email address only if the app used to request this event type includes the `user:read:email` scope for the user; otherwise, the field is set to an empty string. See [Create EventSub Subscription](https://dev.twitch.tv/docs/api/reference/eventsub.md#create-eventsub-subscription).
     /// </summary>
     public string? Email { get; set; }
 
     /// <summary> 
-    /// A Boolean value that determines whether Twitch has verified the user’s email address. Is true if Twitch has verified the email address; otherwise, false.NOTE: Ignore this field if the email field contains an empty string.
+    /// A Boolean value that determines whether Twitch has verified the user's email address. Is **true** if Twitch has verified the email address; otherwise, false.
+    /// 
+    /// NOTE: Ignore this field if the `email` field contains an empty string.
     /// </summary>
     public bool EmailVerified { get; set; }
 
     /// <summary> 
-    /// The user’s description.
+    /// The user's description.
     /// </summary>
     public string? Description { get; set; }
 

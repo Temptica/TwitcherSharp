@@ -41,12 +41,12 @@ public partial class TwitchChannelPredictionEndEvent : RefCounted, ITwitcherShar
     public string? WinningOutcomeId { get; set; }
 
     /// <summary> 
-    /// An array of outcomes for the Channel Points Prediction. Includes top_predictors.
+    /// An array of outcomes for the Channel Points Prediction. Includes `top_predictors`.
     /// </summary>
     public TwitchOutcomes[]? Outcomes { get => field ??= _data?.GetArray<TwitchOutcomes>("outcomes"); set; }
 
     /// <summary> 
-    /// The status of the Channel Points Prediction. Valid values are resolved and canceled.
+    /// The status of the Channel Points Prediction. Valid values are **resolved** and **canceled**.
     /// </summary>
     public string? Status { get; set; }
 

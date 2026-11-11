@@ -26,7 +26,7 @@ public partial class TwitchProduct : RefCounted, ITwitcherSharpEventSub<TwitchPr
     public string? Sku { get; set; }
 
     /// <summary> 
-    /// Flag indicating if the product is in development. If in_development is true, bits will be 0.
+    /// Flag indicating if the product is in development. If `in_development` is true, `bits` will be 0.
     /// </summary>
     public bool InDevelopment { get; set; }
 

@@ -4,9 +4,9 @@ using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 
-namespace TwitcherSharp.EventSub.Generated.Shared;
+namespace TwitcherSharp.EventSub.Generated.ShoutoutReceived;
 
-public partial class TwitchShoutoutReceived : RefCounted, ITwitcherSharpEventSub<TwitchShoutoutReceived>
+public partial class TwitchShoutoutReceivedEvent : RefCounted, ITwitcherSharpEventSub<TwitchShoutoutReceivedEvent>
 {
     private GodotObject? _data;
     
@@ -16,12 +16,12 @@ public partial class TwitchShoutoutReceived : RefCounted, ITwitcherSharpEventSub
     public string? BroadcasterUserId { get; set; }
 
     /// <summary> 
-    /// The broadcaster’s login name.
+    /// The broadcaster's login name.
     /// </summary>
     public string? BroadcasterUserLogin { get; set; }
 
     /// <summary> 
-    /// The broadcaster’s display name.
+    /// The broadcaster's display name.
     /// </summary>
     public string? BroadcasterUserName { get; set; }
 
@@ -31,17 +31,17 @@ public partial class TwitchShoutoutReceived : RefCounted, ITwitcherSharpEventSub
     public string? FromBroadcasterUserId { get; set; }
 
     /// <summary> 
-    /// The broadcaster’s login name.
+    /// The broadcaster's login name.
     /// </summary>
     public string? FromBroadcasterUserLogin { get; set; }
 
     /// <summary> 
-    /// The broadcaster’s display name.
+    /// The broadcaster's display name.
     /// </summary>
     public string? FromBroadcasterUserName { get; set; }
 
     /// <summary> 
-    /// The number of users that were watching the from-broadcaster’s stream at the time of the Shoutout.
+    /// The number of users that were watching the from-broadcaster's stream at the time of the Shoutout.
     /// </summary>
     public int ViewerCount { get; set; }
 
@@ -51,12 +51,12 @@ public partial class TwitchShoutoutReceived : RefCounted, ITwitcherSharpEventSub
     public string? StartedAt { get; set; }
 
     /// <summary> 
-    /// Transforms the godot data into a TwitchShoutoutReceived object.
+    /// Transforms the godot data into a TwitchShoutoutReceivedEvent object.
     /// </summary> 
-    public static TwitchShoutoutReceived? FromObject(GodotObject? data)
+    public static TwitchShoutoutReceivedEvent? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchShoutoutReceived
+        var instance = new TwitchShoutoutReceivedEvent
         {
             BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
             BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
@@ -75,7 +75,8 @@ public partial class TwitchShoutoutReceived : RefCounted, ITwitcherSharpEventSub
     public GodotObject ToGodotObject()
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_shoutout_received.gd");
-        var request = script.New().AsGodotObject();
+        var eventClass = script.Get("Event").As<GDScript>();
+        var request = eventClass.New().AsGodotObject();
         if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
         if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
         if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);

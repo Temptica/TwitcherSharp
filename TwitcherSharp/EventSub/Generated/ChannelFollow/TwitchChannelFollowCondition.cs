@@ -18,7 +18,7 @@ public partial class TwitchChannelFollowCondition(string broadcasterUserId, stri
     public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
-    /// The ID of the moderator of the channel you want to get follow notifications for. If you have authorization from the broadcaster rather than a moderator, specify the broadcaster’s user ID here.
+    /// The ID of the moderator of the channel you want to get follow notifications for. If you have authorization from the broadcaster rather than a moderator, specify the broadcaster's user ID here.
     /// </summary>
     public string ModeratorUserId { get; set; } = moderatorUserId;
 

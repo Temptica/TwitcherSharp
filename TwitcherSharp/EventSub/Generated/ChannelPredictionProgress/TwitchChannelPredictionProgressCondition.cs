@@ -13,7 +13,7 @@ public partial class TwitchChannelPredictionProgressCondition(string broadcaster
     public string Name => nameof(TwitchChannelPredictionProgressCondition);
 
     /// <summary> 
-    /// The broadcaster user ID of the channel for which “prediction progress” notifications will be received.
+    /// The broadcaster user ID of the channel for which "prediction progress" notifications will be received.
     /// </summary>
     public string BroadcasterUserId { get; set; } = broadcasterUserId;
 

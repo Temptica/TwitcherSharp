@@ -13,7 +13,7 @@ public partial class TwitchUserAuthorizationGrantCondition(string clientId) : Re
     public string Name => nameof(TwitchUserAuthorizationGrantCondition);
 
     /// <summary> 
-    /// Your application’s client id. The provided client_id must match the client id in the application access token.
+    /// Your application's client id. The provided *client_id* must match the client id in the application access token.
     /// </summary>
     public string ClientId { get; set; } = clientId;
 

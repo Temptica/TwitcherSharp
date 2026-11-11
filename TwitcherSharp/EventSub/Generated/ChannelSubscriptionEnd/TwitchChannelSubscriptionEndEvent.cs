@@ -41,7 +41,7 @@ public partial class TwitchChannelSubscriptionEndEvent : RefCounted, ITwitcherSh
     public string? BroadcasterUserName { get; set; }
 
     /// <summary> 
-    /// The tier of the subscription that ended. Valid values are 1000, 2000, and 3000.
+    /// The tier of the subscription that ended. Valid values are `1000`, `2000`, and `3000`.
     /// </summary>
     public string? Tier { get; set; }
 

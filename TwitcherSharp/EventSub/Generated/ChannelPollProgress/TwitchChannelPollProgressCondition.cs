@@ -13,7 +13,7 @@ public partial class TwitchChannelPollProgressCondition(string broadcasterUserId
     public string Name => nameof(TwitchChannelPollProgressCondition);
 
     /// <summary> 
-    /// The broadcaster user ID of the channel for which “poll progress” notifications will be received.
+    /// The broadcaster user ID of the channel for which "poll progress" notifications will be received.
     /// </summary>
     public string BroadcasterUserId { get; set; } = broadcasterUserId;
 

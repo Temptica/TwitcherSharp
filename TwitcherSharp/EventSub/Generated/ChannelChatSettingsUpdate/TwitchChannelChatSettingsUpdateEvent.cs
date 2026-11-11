@@ -31,32 +31,48 @@ public partial class TwitchChannelChatSettingsUpdateEvent : RefCounted, ITwitche
     public bool EmoteMode { get; set; }
 
     /// <summary> 
-    /// A Boolean value that determines whether the broadcaster restricts the chat room to followers only, based on how long they’ve followed.True if the broadcaster restricts the chat room to followers only; otherwise false.See follower_mode_duration_minutes for how long the followers must have followed the broadcaster to participate in the chat room.
+    /// A Boolean value that determines whether the broadcaster restricts the chat room to followers only, based on how long they've followed.
+    /// 
+    /// True if the broadcaster restricts the chat room to followers only; otherwise false.
+    /// 
+    /// See `follower_mode_duration_minutes` for how long the followers must have followed the broadcaster to participate in the chat room.
     /// </summary>
     public bool FollowerMode { get; set; }
 
     /// <summary> 
-    /// The length of time, in minutes, that the followers must have followed the broadcaster to participate in the chat room. See follower_mode.Null if follower_mode is false.
+    /// The length of time, in minutes, that the followers must have followed the broadcaster to participate in the chat room. See `follower_mode`.
+    /// 
+    /// Null if `follower_mode` is false.
     /// </summary>
     public int FollowerModeDurationMinutes { get; set; }
 
     /// <summary> 
-    /// A Boolean value that determines whether the broadcaster limits how often users in the chat room are allowed to send messages.Is true, if the broadcaster applies a delay; otherwise, false.See slow_mode_wait_time_seconds for the delay.
+    /// A Boolean value that determines whether the broadcaster limits how often users in the chat room are allowed to send messages.
+    /// 
+    /// Is true, if the broadcaster applies a delay; otherwise, false.
+    /// 
+    /// See `slow_mode_wait_time_seconds` for the delay.
     /// </summary>
     public bool SlowMode { get; set; }
 
     /// <summary> 
-    /// The amount of time, in seconds, that users need to wait between sending messages. See slow_mode.Null if slow_mode is false.
+    /// The amount of time, in seconds, that users need to wait between sending messages. See `slow_mode`.
+    /// 
+    /// Null if `slow_mode` is false.
     /// </summary>
     public int SlowModeWaitTimeSeconds { get; set; }
 
     /// <summary> 
-    /// A Boolean value that determines whether only users that subscribe to the broadcaster’s channel can talk in the chat room.True if the broadcaster restricts the chat room to subscribers only; otherwise false.
+    /// A Boolean value that determines whether only users that subscribe to the broadcaster's channel can talk in the chat room.
+    /// 
+    /// True if the broadcaster restricts the chat room to subscribers only; otherwise false.
     /// </summary>
     public bool SubscriberMode { get; set; }
 
     /// <summary> 
-    /// A Boolean value that determines whether the broadcaster requires users to post only unique messages in the chat room.True if the broadcaster requires unique messages only; otherwise false.
+    /// A Boolean value that determines whether the broadcaster requires users to post only unique messages in the chat room.
+    /// 
+    /// True if the broadcaster requires unique messages only; otherwise false.
     /// </summary>
     public bool UniqueChatMode { get; set; }
 

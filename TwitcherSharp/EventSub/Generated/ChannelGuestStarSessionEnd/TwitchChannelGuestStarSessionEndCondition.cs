@@ -13,7 +13,7 @@ public partial class TwitchChannelGuestStarSessionEndCondition(string broadcaste
     public string Name => nameof(TwitchChannelGuestStarSessionEndCondition);
 
     /// <summary> 
-    /// The broadcaster user ID of the channel hosting the Guest Star Session
+    /// The broadcaster user ID for the channel you want to receive Guest Star session end notifications for.
     /// </summary>
     public string BroadcasterUserId { get; set; } = broadcasterUserId;
 

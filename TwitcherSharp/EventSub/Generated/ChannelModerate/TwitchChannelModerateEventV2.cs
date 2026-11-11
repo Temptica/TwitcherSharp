@@ -36,7 +36,7 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
     public string? SourceBroadcasterUserLogin { get; set; }
 
     /// <summary> 
-    /// The channel in which the action originally occurred. Is null when the moderator action happens in the same channel as the broadcaster. Is not null when in a shared chat session, and the action happens in the channel of a participant other than the broadcaster.
+    /// The channel in which the action originally occurred. Is **null** when the moderator action happens in the same channel as the broadcaster. Is not **null** when in a shared chat session, and the action happens in the channel of a participant other than the broadcaster.
     /// </summary>
     public string? SourceBroadcasterUserName { get; set; }
 
@@ -56,112 +56,146 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
     public string? ModeratorUserName { get; set; }
 
     /// <summary> 
-    /// The action performed. Possible values are: bantimeoutunbanuntimeoutclearemoteonlyemoteonlyofffollowersfollowersoffuniquechatuniquechatoffslowslowoffsubscriberssubscribersoffunraiddeleteunvipvipraidadd_blocked_termadd_permitted_termremove_blocked_termremove_permitted_termmodunmodapprove_unban_requestdeny_unban_requestwarnshared_chat_banshared_chat_timeoutshared_chat_unbanshared_chat_untimeoutshared_chat_delete
+    /// The action performed. Possible values:
+    /// - `ban`
+    /// - `timeout`
+    /// - `unban`
+    /// - `untimeout`
+    /// - `clear`
+    /// - `emoteonly`
+    /// - `emoteonlyoff`
+    /// - `followers`
+    /// - `followersoff`
+    /// - `uniquechat`
+    /// - `uniquechatoff`
+    /// - `slow`
+    /// - `slowoff`
+    /// - `subscribers`
+    /// - `subscribersoff`
+    /// - `unraid`
+    /// - `delete`
+    /// - `unvip`
+    /// - `vip`
+    /// - `raid`
+    /// - `add_blocked_term`
+    /// - `add_permitted_term`
+    /// - `remove_blocked_term`
+    /// - `remove_permitted_term`
+    /// - `mod`
+    /// - `unmod`
+    /// - `approve_unban_request`
+    /// - `deny_unban_request`
+    /// - `warn`
+    /// - `shared_chat_ban`
+    /// - `shared_chat_timeout`
+    /// - `shared_chat_unban`
+    /// - `shared_chat_untimeout`
+    /// - `shared_chat_delete`
     /// </summary>
     public string? Action { get; set; }
 
     /// <summary> 
-    /// Optional. Metadata associated with the followers command.
+    /// Metadata associated with the followers command.
     /// </summary>
-    public TwitchFollowersV2? FollowersV2 { get => field ??= _data?.Get<TwitchFollowersV2>("followers_v_2"); set; }
+    public TwitchFollowersV2? Followers { get => field ??= _data?.Get<TwitchFollowersV2>("followers"); set; }
 
     /// <summary> 
-    /// Optional. Metadata associated with the slow command.
+    /// Metadata associated with the slow command.
     /// </summary>
-    public TwitchSlowV2? SlowV2 { get => field ??= _data?.Get<TwitchSlowV2>("slow_v_2"); set; }
+    public TwitchSlowV2? Slow { get => field ??= _data?.Get<TwitchSlowV2>("slow"); set; }
 
     /// <summary> 
-    /// Optional. Metadata associated with the vip command.
+    /// Metadata associated with the vip command.
     /// </summary>
-    public TwitchVipV2? VipV2 { get => field ??= _data?.Get<TwitchVipV2>("vip_v_2"); set; }
+    public TwitchVipV2? Vip { get => field ??= _data?.Get<TwitchVipV2>("vip"); set; }
 
     /// <summary> 
-    /// Optional. Metadata associated with the unvip command.
+    /// Metadata associated with the unvip command.
     /// </summary>
-    public TwitchUnvipV2? UnvipV2 { get => field ??= _data?.Get<TwitchUnvipV2>("unvip_v_2"); set; }
+    public TwitchUnvipV2? Unvip { get => field ??= _data?.Get<TwitchUnvipV2>("unvip"); set; }
 
     /// <summary> 
-    /// Optional. Metadata associated with the mod command.
+    /// Metadata associated with the mod command.
     /// </summary>
-    public TwitchModV2? ModV2 { get => field ??= _data?.Get<TwitchModV2>("mod_v_2"); set; }
+    public TwitchModV2? Mod { get => field ??= _data?.Get<TwitchModV2>("mod"); set; }
 
     /// <summary> 
-    /// Optional. Metadata associated with the unmod command.
+    /// Metadata associated with the unmod command.
     /// </summary>
-    public TwitchUnmodV2? UnmodV2 { get => field ??= _data?.Get<TwitchUnmodV2>("unmod_v_2"); set; }
+    public TwitchUnmodV2? Unmod { get => field ??= _data?.Get<TwitchUnmodV2>("unmod"); set; }
 
     /// <summary> 
-    /// Optional. Metadata associated with the ban command.
+    /// Metadata associated with the ban command.
     /// </summary>
-    public TwitchBanV2? BanV2 { get => field ??= _data?.Get<TwitchBanV2>("ban_v_2"); set; }
+    public TwitchBanV2? Ban { get => field ??= _data?.Get<TwitchBanV2>("ban"); set; }
 
     /// <summary> 
-    /// Optional. Metadata associated with the unban command.
+    /// Metadata associated with the unban command.
     /// </summary>
-    public TwitchUnbanV2? UnbanV2 { get => field ??= _data?.Get<TwitchUnbanV2>("unban_v_2"); set; }
+    public TwitchUnbanV2? Unban { get => field ??= _data?.Get<TwitchUnbanV2>("unban"); set; }
 
     /// <summary> 
-    /// Optional. Metadata associated with the timeout command.
+    /// Metadata associated with the timeout command.
     /// </summary>
-    public TwitchTimeoutV2? TimeoutV2 { get => field ??= _data?.Get<TwitchTimeoutV2>("timeout_v_2"); set; }
+    public TwitchTimeoutV2? Timeout { get => field ??= _data?.Get<TwitchTimeoutV2>("timeout"); set; }
 
     /// <summary> 
-    /// Optional. Metadata associated with the untimeout command.
+    /// Metadata associated with the untimeout command.
     /// </summary>
-    public TwitchUntimeoutV2? UntimeoutV2 { get => field ??= _data?.Get<TwitchUntimeoutV2>("untimeout_v_2"); set; }
+    public TwitchUntimeoutV2? Untimeout { get => field ??= _data?.Get<TwitchUntimeoutV2>("untimeout"); set; }
 
     /// <summary> 
-    /// Optional. Metadata associated with the raid command.
+    /// Metadata associated with the raid command.
     /// </summary>
-    public TwitchRaidV2? RaidV2 { get => field ??= _data?.Get<TwitchRaidV2>("raid_v_2"); set; }
+    public TwitchRaidV2? Raid { get => field ??= _data?.Get<TwitchRaidV2>("raid"); set; }
 
     /// <summary> 
-    /// Optional. Metadata associated with the unraid command.
+    /// Metadata associated with the unraid command.
     /// </summary>
-    public TwitchUnraidV2? UnraidV2 { get => field ??= _data?.Get<TwitchUnraidV2>("unraid_v_2"); set; }
+    public TwitchUnraidV2? Unraid { get => field ??= _data?.Get<TwitchUnraidV2>("unraid"); set; }
 
     /// <summary> 
-    /// Optional. Metadata associated with the delete command.
+    /// Metadata associated with the delete command.
     /// </summary>
-    public TwitchDeleteV2? DeleteV2 { get => field ??= _data?.Get<TwitchDeleteV2>("delete_v_2"); set; }
+    public TwitchDeleteV2? Delete { get => field ??= _data?.Get<TwitchDeleteV2>("delete"); set; }
 
     /// <summary> 
-    /// Optional. Metadata associated with the automod terms changes.
+    /// Metadata associated with the automod terms changes.
     /// </summary>
-    public TwitchAutomodTermsV2? AutomodTermsV2 { get => field ??= _data?.Get<TwitchAutomodTermsV2>("automod_terms_v_2"); set; }
+    public TwitchAutomodTermsV2? AutomodTerms { get => field ??= _data?.Get<TwitchAutomodTermsV2>("automod_terms"); set; }
 
     /// <summary> 
-    /// Optional. Metadata associated with an unban request.
+    /// Metadata associated with an unban request.
     /// </summary>
-    public TwitchUnbanRequestV2? UnbanRequestV2 { get => field ??= _data?.Get<TwitchUnbanRequestV2>("unban_request_v_2"); set; }
+    public TwitchUnbanRequestV2? UnbanRequest { get => field ??= _data?.Get<TwitchUnbanRequestV2>("unban_request"); set; }
 
     /// <summary> 
-    /// Optional. Metadata associated with the warn command.
+    /// Metadata associated with the warn command.
     /// </summary>
-    public TwitchWarnV2? WarnV2 { get => field ??= _data?.Get<TwitchWarnV2>("warn_v_2"); set; }
+    public TwitchWarnV2? Warn { get => field ??= _data?.Get<TwitchWarnV2>("warn"); set; }
 
     /// <summary> 
-    /// Optional. Information about the shared_chat_ban event. Is null if action is not shared_chat_ban. This field has the same information as the ban field but for a action that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
+    /// Information about the `shared_chat_ban` event. Is null if `action` is not `shared_chat_ban`. This field has the same information as the `ban` field but for a action that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
     public TwitchBanV2? SharedChatBan { get => field ??= _data?.Get<TwitchBanV2>("shared_chat_ban"); set; }
 
     /// <summary> 
-    /// Optional. Information about the shared_chat_unban event. Is null if action is not shared_chat_unban. This field has the same information as the unban field but for a action that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
+    /// Information about the `shared_chat_unban` event. Is null if `action` is not `shared_chat_unban`. This field has the same information as the `unban` field but for a action that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
     public TwitchUnbanV2? SharedChatUnban { get => field ??= _data?.Get<TwitchUnbanV2>("shared_chat_unban"); set; }
 
     /// <summary> 
-    /// Optional. Information about the shared_chat_timeout event. Is null if action is not shared_chat_timeout. This field has the same information as the timeout field but for a action that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
+    /// Information about the `shared_chat_timeout` event. Is null if `action` is not `shared_chat_timeout`. This field has the same information as the `timeout` field but for a action that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
     public TwitchTimeoutV2? SharedChatTimeout { get => field ??= _data?.Get<TwitchTimeoutV2>("shared_chat_timeout"); set; }
 
     /// <summary> 
-    /// Optional. Information about the shared_chat_untimeout event. Is null if action is not shared_chat_untimeout. This field has the same information as the untimeout field but for a action that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
+    /// Information about the `shared_chat_untimeout` event. Is null if `action` is not `shared_chat_untimeout`. This field has the same information as the `untimeout` field but for a action that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
     public TwitchUntimeoutV2? SharedChatUntimeout { get => field ??= _data?.Get<TwitchUntimeoutV2>("shared_chat_untimeout"); set; }
 
     /// <summary> 
-    /// Optional. Information about the shared_chat_delete event. Is null if action is not shared_chat_delete. This field has the same information as the delete field but for a action that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
+    /// Information about the `shared_chat_delete` event. Is null if `action` is not `shared_chat_delete`. This field has the same information as the `delete` field but for a action that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
     public TwitchDeleteV2? SharedChatDelete { get => field ??= _data?.Get<TwitchDeleteV2>("shared_chat_delete"); set; }
 
@@ -204,22 +238,22 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
         if(ModeratorUserLogin != null) request.Set("moderator_user_login", ModeratorUserLogin);
         if(ModeratorUserName != null) request.Set("moderator_user_name", ModeratorUserName);
         if(Action != null) request.Set("action", Action);
-        if(FollowersV2 != null) request.Set("followers_v_2", FollowersV2.ToGodotObject());
-        if(SlowV2 != null) request.Set("slow_v_2", SlowV2.ToGodotObject());
-        if(VipV2 != null) request.Set("vip_v_2", VipV2.ToGodotObject());
-        if(UnvipV2 != null) request.Set("unvip_v_2", UnvipV2.ToGodotObject());
-        if(ModV2 != null) request.Set("mod_v_2", ModV2.ToGodotObject());
-        if(UnmodV2 != null) request.Set("unmod_v_2", UnmodV2.ToGodotObject());
-        if(BanV2 != null) request.Set("ban_v_2", BanV2.ToGodotObject());
-        if(UnbanV2 != null) request.Set("unban_v_2", UnbanV2.ToGodotObject());
-        if(TimeoutV2 != null) request.Set("timeout_v_2", TimeoutV2.ToGodotObject());
-        if(UntimeoutV2 != null) request.Set("untimeout_v_2", UntimeoutV2.ToGodotObject());
-        if(RaidV2 != null) request.Set("raid_v_2", RaidV2.ToGodotObject());
-        if(UnraidV2 != null) request.Set("unraid_v_2", UnraidV2.ToGodotObject());
-        if(DeleteV2 != null) request.Set("delete_v_2", DeleteV2.ToGodotObject());
-        if(AutomodTermsV2 != null) request.Set("automod_terms_v_2", AutomodTermsV2.ToGodotObject());
-        if(UnbanRequestV2 != null) request.Set("unban_request_v_2", UnbanRequestV2.ToGodotObject());
-        if(WarnV2 != null) request.Set("warn_v_2", WarnV2.ToGodotObject());
+        if(Followers != null) request.Set("followers", Followers.ToGodotObject());
+        if(Slow != null) request.Set("slow", Slow.ToGodotObject());
+        if(Vip != null) request.Set("vip", Vip.ToGodotObject());
+        if(Unvip != null) request.Set("unvip", Unvip.ToGodotObject());
+        if(Mod != null) request.Set("mod", Mod.ToGodotObject());
+        if(Unmod != null) request.Set("unmod", Unmod.ToGodotObject());
+        if(Ban != null) request.Set("ban", Ban.ToGodotObject());
+        if(Unban != null) request.Set("unban", Unban.ToGodotObject());
+        if(Timeout != null) request.Set("timeout", Timeout.ToGodotObject());
+        if(Untimeout != null) request.Set("untimeout", Untimeout.ToGodotObject());
+        if(Raid != null) request.Set("raid", Raid.ToGodotObject());
+        if(Unraid != null) request.Set("unraid", Unraid.ToGodotObject());
+        if(Delete != null) request.Set("delete", Delete.ToGodotObject());
+        if(AutomodTerms != null) request.Set("automod_terms", AutomodTerms.ToGodotObject());
+        if(UnbanRequest != null) request.Set("unban_request", UnbanRequest.ToGodotObject());
+        if(Warn != null) request.Set("warn", Warn.ToGodotObject());
         if(SharedChatBan != null) request.Set("shared_chat_ban", SharedChatBan.ToGodotObject());
         if(SharedChatUnban != null) request.Set("shared_chat_unban", SharedChatUnban.ToGodotObject());
         if(SharedChatTimeout != null) request.Set("shared_chat_timeout", SharedChatTimeout.ToGodotObject());
@@ -509,7 +543,7 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
         public string? UserName { get; set; }
     
         /// <summary> 
-        /// Optional. Reason given for the ban.
+        /// Reason given for the ban.
         /// </summary>
         public string? Reason { get; set; }
     
@@ -612,7 +646,7 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
         public string? UserName { get; set; }
     
         /// <summary> 
-        /// Optional. The reason given for the timeout.
+        /// The reason given for the timeout.
         /// </summary>
         public string? Reason { get; set; }
     
@@ -1003,12 +1037,12 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
         public string? UserName { get; set; }
     
         /// <summary> 
-        /// Optional. Reason given for the warning.
+        /// Reason given for the warning.
         /// </summary>
         public string? Reason { get; set; }
     
         /// <summary> 
-        /// Optional. Chat rules cited for the warning.
+        /// Chat rules cited for the warning.
         /// </summary>
         public string[]? ChatRulesCited { get; set; }
     
@@ -1024,7 +1058,6 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
                 UserLogin = data.Get("user_login").AsString(),
                 UserName = data.Get("user_name").AsString(),
                 Reason = data.Get("reason").AsString(),
-                ChatRulesCited = data.Get("chat_rules_cited").AsStringArray(),
             };
             
             instance._data = data;
@@ -1040,7 +1073,7 @@ public partial class TwitchChannelModerateEventV2 : RefCounted, ITwitcherSharpEv
             if(UserLogin != null) request.Set("user_login", UserLogin);
             if(UserName != null) request.Set("user_name", UserName);
             if(Reason != null) request.Set("reason", Reason);
-            if(ChatRulesCited != null) request.Set("chat_rules_cited", ChatRulesCited);
+            if(ChatRulesCited != null) request.Set("chat_rules_cited", new Godot.Collections.Array<string>(ChatRulesCited));
             return request;
         }
     }

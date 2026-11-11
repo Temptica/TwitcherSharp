@@ -61,7 +61,7 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
     public string? BanEvasionEvaluation { get; set; }
 
     /// <summary> 
-    /// 
+    /// The structured chat message.
     /// </summary>
     public TwitchMessage? Message { get => field ??= _data?.Get<TwitchMessage>("message"); set; }
 
@@ -80,7 +80,6 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
             UserName = data.Get("user_name").AsString(),
             UserLogin = data.Get("user_login").AsString(),
             LowTrustStatus = data.Get("low_trust_status").AsString(),
-            Types = data.Get("types").AsStringArray(),
             BanEvasionEvaluation = data.Get("ban_evasion_evaluation").AsString(),
         };
         
@@ -101,7 +100,7 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
         if(UserLogin != null) request.Set("user_login", UserLogin);
         if(LowTrustStatus != null) request.Set("low_trust_status", LowTrustStatus);
         if(SharedBanChannelIds != null) request.Set("shared_ban_channel_ids", new Godot.Collections.Array<string>(SharedBanChannelIds));
-        if(Types != null) request.Set("types", Types);
+        if(Types != null) request.Set("types", new Godot.Collections.Array<string>(Types));
         if(BanEvasionEvaluation != null) request.Set("ban_evasion_evaluation", BanEvasionEvaluation);
         if(Message != null) request.Set("message", Message.ToGodotObject());
         return request;
@@ -160,7 +159,10 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
             private GodotObject? _data;
             
             /// <summary> 
-            /// The type of message fragment. Possible values: -text -cheermote -emote
+            /// The type of message fragment. Possible values:
+            /// - `text`
+            /// - `cheermote`
+            /// - `emote`
             /// </summary>
             public string? Type { get; set; }
         
@@ -170,12 +172,12 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
             public string? Text { get; set; }
         
             /// <summary> 
-            /// Optional. Metadata pertaining to the cheermote.
+            /// Metadata pertaining to the cheermote.
             /// </summary>
             public TwitchCheermote? Cheermote { get => field ??= _data?.Get<TwitchCheermote>("cheermote"); set; }
         
             /// <summary> 
-            /// Optional. Metadata pertaining to the emote.
+            /// Metadata pertaining to the emote.
             /// </summary>
             public TwitchEmote? Emote { get => field ??= _data?.Get<TwitchEmote>("emote"); set; }
         
@@ -213,19 +215,21 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
                 private GodotObject? _data;
                 
                 /// <summary> 
-                /// The name portion of the Cheermote string that you use in chat to cheer Bits. The full Cheermote string is the concatenation of {prefix} + {number of Bits}.   For example, if the prefix is “Cheer” and you want to cheer 100 Bits, the full Cheermote string is Cheer100. When the Cheermote string is entered in chat, Twitch converts it to the image associated with the Bits tier that was cheered.
+                /// The name portion of the Cheermote string that you use in chat to cheer Bits. The full Cheermote string is the concatenation of {prefix} + {number of Bits}.
+                /// 
+                /// **For example**, if the prefix is “Cheer” and you want to cheer 100 Bits, the full Cheermote string is Cheer100. When the Cheermote string is entered in chat, Twitch converts it to the image associated with the Bits tier that was cheered.
                 /// </summary>
                 public string? Prefix { get; set; }
             
                 /// <summary> 
                 /// The amount of Bits cheered.
                 /// </summary>
-                public string? Bits { get; set; }
+                public int Bits { get; set; }
             
                 /// <summary> 
                 /// The tier level of the cheermote.
                 /// </summary>
-                public string? Tier { get; set; }
+                public int Tier { get; set; }
             
                 /// <summary> 
                 /// Transforms the godot data into a TwitchCheermote object.
@@ -236,8 +240,8 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
                     var instance = new TwitchCheermote
                     {
                         Prefix = data.Get("prefix").AsString(),
-                        Bits = data.Get("bits").AsString(),
-                        Tier = data.Get("tier").AsString(),
+                        Bits = data.Get("bits").AsInt32(),
+                        Tier = data.Get("tier").AsInt32(),
                     };
                     
                     instance._data = data;
@@ -250,8 +254,8 @@ public partial class TwitchChannelSuspiciousUserMessageEvent : RefCounted, ITwit
                     var cheermoteClass = script.Get("Cheermote").As<GDScript>();
                     var request = cheermoteClass.New().AsGodotObject();
                     if(Prefix != null) request.Set("prefix", Prefix);
-                    if(Bits != null) request.Set("bits", Bits);
-                    if(Tier != null) request.Set("tier", Tier);
+                    request.Set("bits", Bits);
+                    request.Set("tier", Tier);
                     return request;
                 }
             }

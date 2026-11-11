@@ -41,12 +41,12 @@ public partial class TwitchChannelPollProgressEvent : RefCounted, ITwitcherSharp
     public TwitchChoices[]? Choices { get => field ??= _data?.GetArray<TwitchChoices>("choices"); set; }
 
     /// <summary> 
-    /// NOTE: Bits voting is not supported.
+    /// Not supported.
     /// </summary>
     public TwitchBitsVoting? BitsVoting { get => field ??= _data?.Get<TwitchBitsVoting>("bits_voting"); set; }
 
     /// <summary> 
-    /// 
+    /// The Channel Points voting settings for the poll.
     /// </summary>
     public TwitchChannelPointsVoting? ChannelPointsVoting { get => field ??= _data?.Get<TwitchChannelPointsVoting>("channel_points_voting"); set; }
 
