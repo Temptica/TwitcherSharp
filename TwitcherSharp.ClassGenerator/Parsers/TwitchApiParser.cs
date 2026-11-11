@@ -1,32 +1,19 @@
-using ClassGenerator.Extensions;
+﻿using ClassGenerator.Extensions;
 using ClassGenerator.GenObjects.Api;
 using Microsoft.OpenApi.Models;
-using Microsoft.OpenApi.Readers;
 
 namespace ClassGenerator.Parsers;
 
-// V2
 public class TwitchApiParser
 {
-    private const string Path =
-        "https://raw.githubusercontent.com/DmitryScaletta/twitch-api-swagger/refs/heads/main/openapi.json";
-
     private OpenApiDocument Definition { get; set; }
     private IDictionary<string, TwitchGenComponent> Components { get; } = new Dictionary<string, TwitchGenComponent>();
     private List<TwitchGenInterface> Interfaces { get; set; } = [];
     private List<TwitchGenMethod> Methods { get; } = [];
 
-    public async Task ParseApi()
+    public void ParseApi(OpenApiDocument definition)
     {
-        await using var stream = Path.StartsWith("https://")
-            ? await new HttpClient().GetStreamAsync(Path)
-            : File.OpenRead(Path);
-
-        var openApiDocument = new OpenApiStreamReader().Read(stream, out var diagnostic);
-
-        Definition = openApiDocument ??
-                     throw new Exception(
-                         $"Failed to parse OpenAPI document: {diagnostic.Errors.FirstOrDefault()?.Message}");
+        Definition = definition;
 
         CreateInterfaces();
         ParseComponents();
@@ -224,19 +211,14 @@ public class TwitchApiParser
     {
         var @ref = schema.Reference?.Id ?? $"{parentComponent.Ref}/{className}";
         var subComponent = new TwitchGenComponent(className, @ref, description);
-        foreach (var genInterface in Interfaces)
+        foreach (var genInterface in Interfaces.Where(i => !string.IsNullOrEmpty(i.DependsOnInterface)))
         {
             if (!genInterface.ComponentsToAdd.Any(c => c.Contains(subComponent.ClassName))) continue;
+
+            var interfaceToDependOn = Interfaces.First(i => i.InterfaceName == genInterface.DependsOnInterface);
+            if (interfaceToDependOn.ComponentsToAdd.Any(c => c.Contains(parentComponent.ClassName)))
             {
-                if (string.IsNullOrEmpty(genInterface.DependsOnInterface)) genInterface.AddSubComponent(subComponent);
-                else
-                {
-                    var interfaceToDependOn = Interfaces.First(i => i.InterfaceName == genInterface.DependsOnInterface);
-                    if (interfaceToDependOn.ComponentsToAdd.Any(c => c.Contains(parentComponent.ClassName)))
-                    {
-                        genInterface.AddSubComponent(subComponent);
-                    }
-                }
+                genInterface.AddSubComponent(subComponent);
             }
         }
 

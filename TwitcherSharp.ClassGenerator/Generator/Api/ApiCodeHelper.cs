@@ -1,4 +1,4 @@
-using System.Text;
+﻿using System.Text;
 using ClassGenerator.Extensions;
 using ClassGenerator.GenObjects.Api;
 
@@ -379,7 +379,7 @@ public static class ApiCodeHelper
                     }
 
                     code.AppendIndentedLine($"if({field.Name} != null) " + (
-                            field.Type == "Object"
+                            field.IsTyped
                                 ? $"request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name}.ToGodotObject());"
                                 : $"request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name});"),
                         2);
