@@ -1,4 +1,4 @@
-using ClassGenerator.Extensions;
+﻿using ClassGenerator.Extensions;
 
 namespace ClassGenerator.GenObjects.EventSub;
 
@@ -7,7 +7,7 @@ public class TwitchEventSubGenField(string fieldName, string description, string
     public string Name { get; } = fieldName.ToPascalCase();
     public string RawName { get; } = fieldName;
     public string Description { get; } = description;
-    public string Type { get; set; } = SanitizeType(type, fieldName);
+    public string Type { get; set; } = SanitizeType(type);
     public bool IsArray { get; set; }
     public bool IsTyped => Type.Contains("Twitch");
     public bool IsRequired { get; set; } = required;
@@ -35,21 +35,17 @@ public class TwitchEventSubGenField(string fieldName, string description, string
         };
     }
 
-    private static string SanitizeType(string type, string name) =>
-        type.ToLower() switch
+    private static string SanitizeType(string type) =>
+        type.ToLowerInvariant() switch
         {
-            "integer" => "int",
-            "int (or null)" => "int", //WHY TWITCH??
-            "int" => "int",
-            "number" => "double",
-            "boolean" => "bool",
-            "bool" => "bool",
-            "[]string" => "string[]", // cmn....
-            "string[]" => "string[]",
+            "integer" or "int" or "int64" => "int",
+            "integer[]" or "int[]" => "int[]",
+            "float" or "number" => "double",
+            "boolean" or "bool" => "bool",
             "string" => "string",
-            "dictionary" => "Dictionary",
-            "object" when name == "Text" => "string",
-            "object" when name == "Prefix" => "string",
-            _ => type.ToPascalCase()
+            "string[]" => "string[]",
+            "object" or "dictionary" => "Dictionary",
+            _ when type.StartsWith("map[") => "Dictionary",
+            _ => type,
         };
 }

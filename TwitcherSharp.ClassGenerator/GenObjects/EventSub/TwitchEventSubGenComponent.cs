@@ -6,17 +6,15 @@ public class TwitchEventSubGenComponent(string name)
 {
     public string ClassName { get; set; } = SanitizeName(name);
 
-    public string Description { get; set; }
+    public string NameSpace { get; set; }
 
-    public string Id { get; set; }
+    public string Description { get; set; }
 
     public TwitchEventSubGenComponent Parent { get; set; }
 
     public Dictionary<string, TwitchEventSubGenComponent> SubComponents { get; } = [];
 
     public Dictionary<string, TwitchEventSubGenField> Fields { get; } = [];
-
-    public bool IsRoot => Parent == null;
 
     public bool IsShared { get; set; }
     public bool HasRequiredFields => Fields.Any(f => f.Value.IsRequired);
@@ -29,30 +27,24 @@ public class TwitchEventSubGenComponent(string name)
     public void AddField(TwitchEventSubGenField field)
     {
         Fields[field.Name] = field;
-        if (field.IsArray && field.IsTyped)
+        if (field.IsTyped) AttachSubComponent(field.TypedComponent);
+    }
+
+    public void ReplaceSubComponent(TwitchEventSubGenComponent existing, TwitchEventSubGenComponent replacement)
+    {
+        SubComponents.Remove(existing.ClassName);
+        AttachSubComponent(replacement);
+
+        foreach (var field in Fields.Values.Where(f => f.TypedComponent == existing))
         {
-            AddFieldSubComponent(field.TypedComponent);
+            field.TypedComponent = replacement;
         }
     }
 
-    public void AddSubComponent(TwitchEventSubGenComponent component)
+    private void AttachSubComponent(TwitchEventSubGenComponent component)
     {
         SubComponents[component.ClassName] = component;
-        component.Parent = this;
-
-        var field = new TwitchEventSubGenField(component.ClassName.Replace("Twitch", ""), component.Description,
-            component.ClassName)
-        {
-            TypedComponent = component
-        };
-
-        Fields[field.Name] = field;
-    }
-
-    private void AddFieldSubComponent(TwitchEventSubGenComponent component)
-    {
-        SubComponents[component.ClassName] = component;
-        component.Parent = this;
+        if (!component.IsShared) component.Parent = this;
     }
 
     private static string SanitizeName(string name) =>

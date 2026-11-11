@@ -7,19 +7,9 @@
         <Nullable>disable</Nullable>
         <RootNamespace>ClassGenerator</RootNamespace>
     </PropertyGroup>
-    
-    <ItemGroup>
-        <None Update="EventSub.html">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
-        <None Update="SubscriptionTypes.html">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
-    </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="GodotSharp" Version="4.7.0" />
-      <PackageReference Include="HtmlAgilityPack" Version="1.12.4" />
       <PackageReference Include="Microsoft.OpenApi" Version="1.6.28" />
     </ItemGroup>
 

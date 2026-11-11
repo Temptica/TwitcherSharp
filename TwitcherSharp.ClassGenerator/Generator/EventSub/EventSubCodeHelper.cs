@@ -64,7 +64,7 @@ public static class EventSubCodeHelper
 
         foreach (var field in fields)
         {
-            code.AppendIndentedLine(EventSubCodeStrings.FieldDescription.Replace("{{Description}}", field.Description),
+            code.AppendIndentedLine(EventSubCodeStrings.FieldDescription.Replace("{{Description}}", field.Description?.Replace("\n", "\n/// ")),
                 1);
 
             var fieldType = field.Type;
@@ -73,7 +73,7 @@ public static class EventSubCodeHelper
             if ((field.IsArray && field.TypedComponent != null) || field.IsTyped)
             {
                 code.AppendIndentedLine(
-                    $"public {fieldType}{(field.IsRequired ? "" : "?")} {field.Name} {{ get => field ??= _data?.Get{(field.IsArray ? "Array" : "")}<{field.Type.Remove("[]")}>(\"{field.Name.ToSnakeCase()}\"); set; }}{(field.IsRequired ? $"= {field.Name.ToCamelCase()};" : "")}",
+                    $"public {fieldType}{(field.IsRequired ? "" : "?")} {field.Name} {{ get => field ??= _data?.Get{(field.IsArray ? "Array" : "")}<{field.Type.Remove("[]")}>(\"{field.RawName}\"); set; }}{(field.IsRequired ? $"= {field.Name.ToCamelCase()};" : "")}",
                     1);
             }
             else if (field.IsRequired)
@@ -96,7 +96,7 @@ public static class EventSubCodeHelper
             {
                 var requiredFields = string.Join(", ",
                     component.GetRequiredFields().Select(field =>
-                        $"""data.Get("{field.Name.ToSnakeCase()}").{field.GetAsType()}"""));
+                        $"""data.Get("{field.RawName}").{field.GetAsType()}"""));
 
                 var requiredCode = $"var instance = new {component.ClassName}({requiredFields})";
                 if (component.Fields.All(f => f.Value.IsRequired)) requiredCode += ";";
@@ -114,7 +114,7 @@ public static class EventSubCodeHelper
                 {
                     if (!field.IsArray && !field.IsTyped)
                         code.AppendIndentedLine(
-                            $"{field.Name} = data.Get(\"{field.Name.ToSnakeCase()}\").{field.GetAsType()},", 3);
+                            $"{field.Name} = data.Get(\"{field.RawName}\").{field.GetAsType()},", 3);
                 }
 
                 code.AppendIndentedLine("};", 2);
@@ -171,20 +171,20 @@ public static class EventSubCodeHelper
                 if (field.IsArray && (field.IsTyped || field.Type == "Object"))
                 {
                     fieldCode =
-                        $"if({field.Name} != null) request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name}.ToGodotArray());";
+                        $"if({field.Name} != null) request.Set(\"{field.RawName}\", {field.Name}.ToGodotArray());";
                 }
                 else if (field.IsArray)
                 {
                     fieldCode =
-                        $"if({field.Name} != null) request.Set(\"{field.Name.ToSnakeCase()}\", new Godot.Collections.Array<{field.Type.Remove("[]")}>({field.Name}));";
+                        $"if({field.Name} != null) request.Set(\"{field.RawName}\", new Godot.Collections.Array<{field.Type.Remove("[]")}>({field.Name}));";
                 }
                 else if (field.Type == "Object" || field.IsTyped)
                 {
-                    fieldCode = $"if({field.Name} != null) request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name}.ToGodotObject());";
+                    fieldCode = $"if({field.Name} != null) request.Set(\"{field.RawName}\", {field.Name}.ToGodotObject());";
                 }
                 else if (field.IsValueType || field.IsRequired)
-                    fieldCode = $"request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name});";
-                else fieldCode = $"if({field.Name} != null) request.Set(\"{field.Name.ToSnakeCase()}\", {field.Name});";
+                    fieldCode = $"request.Set(\"{field.RawName}\", {field.Name});";
+                else fieldCode = $"if({field.Name} != null) request.Set(\"{field.RawName}\", {field.Name});";
 
                 code.AppendIndentedLine(fieldCode, 2);
             }
@@ -203,7 +203,7 @@ public static class EventSubCodeHelper
             if (component.HasRequiredFields)
             {
                 var requiredFields = string.Join(", ",
-                    component.GetRequiredFields().Select(f => $"""data["{f.Name.ToSnakeCase()}"].{f.GetAsType()}"""));
+                    component.GetRequiredFields().Select(f => $"""data["{f.RawName}"].{f.GetAsType()}"""));
                 fromDictionaryCode = fromDictionaryCode.Replace("{{RequiredProperties}}", $"({requiredFields})");
 
                 // var requiredCode = $"return new {component.ClassName}({requiredFields})";
@@ -223,11 +223,11 @@ public static class EventSubCodeHelper
                 var fieldCode = field switch
                 {
                     //3 cases -> Normal/Array, TypedArray, Typed
-                    { IsTyped: false } => $"""{field.Name} = data["{field.Name.ToSnakeCase()}"].{field.GetAsType()},""",
+                    { IsTyped: false } => $"""{field.Name} = data["{field.RawName}"].{field.GetAsType()},""",
                     { IsArray: false } =>
-                        $"""{field.Name} = {field.Type}.FromData(data["{field.Name.ToSnakeCase()}"].AsGodotDictionary()),""",
+                        $"""{field.Name} = {field.Type}.FromData(data["{field.RawName}"].AsGodotDictionary()),""",
                     _ =>
-                        $"""{field.Name} = data["{field.Name.ToSnakeCase()}"].AsGodotArray().Select(x => {field.TypedComponent.ClassName}.FromData(x.AsGodotDictionary())).ToArray(),"""
+                        $"""{field.Name} = data["{field.RawName}"].AsGodotArray().Select(x => {field.TypedComponent.ClassName}.FromData(x.AsGodotDictionary())).ToArray(),"""
                 };
 
                 code.AppendIndentedLine(fieldCode, 3);
@@ -244,7 +244,7 @@ public static class EventSubCodeHelper
             {
                 // Nullable reference fields need the null-forgiving operator to satisfy the Variant conversion.
                 var bang = field.IsValueType || field.IsRequired ? "" : "!";
-                var fieldCode = $$"""{"{{field.Name.ToSnakeCase()}}", {{field.Name}}{{bang}}},""";
+                var fieldCode = $$"""{"{{field.RawName}}", {{field.Name}}{{bang}}},""";
 
                 code.AppendIndentedLine(fieldCode, 3);
             }
