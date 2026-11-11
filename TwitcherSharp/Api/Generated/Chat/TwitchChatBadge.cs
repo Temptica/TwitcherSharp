@@ -46,8 +46,8 @@ public partial class TwitchChatBadge : RefCounted, ITwitcherSharp<TwitchChatBadg
         public string ImageUrl4x { get; set; } = null!;
         public string Title { get; set; } = null!;
         public string Description { get; set; } = null!;
-        public string ClickAction { get; set; } = null!;
-        public string ClickUrl { get; set; } = null!;
+        public string? ClickAction { get; set; }
+        public string? ClickUrl { get; set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchVersions object.

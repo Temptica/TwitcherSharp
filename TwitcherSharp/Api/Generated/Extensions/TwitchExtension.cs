@@ -97,7 +97,7 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
     }
     
     /// <summary> 
-    /// Describes all views-related information such as how the extension is displayed on mobile devices. 
+    /// Describes all views-related information such as how the extension is displayed on mobile devices. The object includes only the views that the extension supports. 
     /// </summary>
     public partial class TwitchViews : RefCounted, ITwitcherSharp<TwitchViews>
     {
@@ -107,6 +107,7 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
         public TwitchVideoOverlay VideoOverlay { get => field ??= _data?.Get<TwitchVideoOverlay>("video_overlay")!; set; } = null!;
         public TwitchComponent Component { get => field ??= _data?.Get<TwitchComponent>("component")!; set; } = null!;
         public TwitchConfig Config { get => field ??= _data?.Get<TwitchConfig>("config")!; set; } = null!;
+        public TwitchLiveConfig LiveConfig { get => field ??= _data?.Get<TwitchLiveConfig>("live_config")!; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchViews object.
@@ -130,6 +131,7 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
             if(VideoOverlay != null) request.Set("video_overlay", VideoOverlay.ToGodotObject());
             if(Component != null) request.Set("component", Component.ToGodotObject());
             if(Config != null) request.Set("config", Config.ToGodotObject());
+            if(LiveConfig != null) request.Set("live_config", LiveConfig.ToGodotObject());
             return request;
         }
         
@@ -251,11 +253,16 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
         {
             private GodotObject? _data;
             public string ViewerUrl { get; set; } = null!;
+            public int AspectWidth { get; set; }
+            public int AspectHeight { get; set; }
             public int AspectRatioX { get; set; }
             public int AspectRatioY { get; set; }
             public bool Autoscale { get; set; }
             public int ScalePixels { get; set; }
             public int TargetHeight { get; set; }
+            public double Size { get; set; }
+            public bool Zoom { get; set; }
+            public int ZoomPixels { get; set; }
             public bool CanLinkExternalContent { get; set; }
         
             /// <summary> 
@@ -267,11 +274,16 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
                 var instance = new TwitchComponent
                 {
                     ViewerUrl = data.Get("viewer_url").AsString(),
+                    AspectWidth = data.Get("aspect_width").AsInt32(),
+                    AspectHeight = data.Get("aspect_height").AsInt32(),
                     AspectRatioX = data.Get("aspect_ratio_x").AsInt32(),
                     AspectRatioY = data.Get("aspect_ratio_y").AsInt32(),
                     Autoscale = data.Get("autoscale").AsBool(),
                     ScalePixels = data.Get("scale_pixels").AsInt32(),
                     TargetHeight = data.Get("target_height").AsInt32(),
+                    Size = data.Get("size").AsDouble(),
+                    Zoom = data.Get("zoom").AsBool(),
+                    ZoomPixels = data.Get("zoom_pixels").AsInt32(),
                     CanLinkExternalContent = data.Get("can_link_external_content").AsBool(),
                 };
                 
@@ -285,11 +297,16 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
                 var twitchComponentClass = script.Get("Component").AsGodotObject();
                 var request = twitchComponentClass.Call("new").AsGodotObject();
                 if(ViewerUrl != null) request.Set("viewer_url", ViewerUrl);
+                request.Set("aspect_width", AspectWidth);
+                request.Set("aspect_height", AspectHeight);
                 request.Set("aspect_ratio_x", AspectRatioX);
                 request.Set("aspect_ratio_y", AspectRatioY);
                 request.Set("autoscale", Autoscale);
                 request.Set("scale_pixels", ScalePixels);
                 request.Set("target_height", TargetHeight);
+                request.Set("size", Size);
+                request.Set("zoom", Zoom);
+                request.Set("zoom_pixels", ZoomPixels);
                 request.Set("can_link_external_content", CanLinkExternalContent);
                 return request;
             }
@@ -326,6 +343,43 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
                 var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_extension.gd");
                 var twitchConfigClass = script.Get("Config").AsGodotObject();
                 var request = twitchConfigClass.Call("new").AsGodotObject();
+                if(ViewerUrl != null) request.Set("viewer_url", ViewerUrl);
+                request.Set("can_link_external_content", CanLinkExternalContent);
+                return request;
+            }
+        
+        }
+        
+        /// <summary> 
+        /// Describes the view that is shown to broadcasters in the Live module of the dashboard. 
+        /// </summary>
+        public partial class TwitchLiveConfig : RefCounted, ITwitcherSharp<TwitchLiveConfig>
+        {
+            private GodotObject? _data;
+            public string ViewerUrl { get; set; } = null!;
+            public bool CanLinkExternalContent { get; set; }
+        
+            /// <summary> 
+            /// Transforms the godot data into a TwitchLiveConfig object.
+            /// </summary> 
+            public static TwitchLiveConfig? FromObject(GodotObject? data)
+            {
+                if(data == null) return null;
+                var instance = new TwitchLiveConfig
+                {
+                    ViewerUrl = data.Get("viewer_url").AsString(),
+                    CanLinkExternalContent = data.Get("can_link_external_content").AsBool(),
+                };
+                
+                instance._data = data;
+                return instance;
+            }
+        
+            public GodotObject ToGodotObject()
+            {
+                var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_extension.gd");
+                var twitchLiveConfigClass = script.Get("LiveConfig").AsGodotObject();
+                var request = twitchLiveConfigClass.Call("new").AsGodotObject();
                 if(ViewerUrl != null) request.Set("viewer_url", ViewerUrl);
                 request.Set("can_link_external_content", CanLinkExternalContent);
                 return request;

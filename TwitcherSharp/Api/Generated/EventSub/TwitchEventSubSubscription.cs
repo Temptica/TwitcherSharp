@@ -15,6 +15,7 @@ public partial class TwitchEventSubSubscription<T> : RefCounted, ITwitcherSharp<
     public string CreatedAt { get; set; } = null!;
     public TwitchTransport Transport { get => field ??= _data?.Get<TwitchTransport>("transport")!; set; } = null!;
     public int Cost { get; set; }
+    public bool? IsBatchingEnabled { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchEventSubSubscription object.
@@ -30,6 +31,7 @@ public partial class TwitchEventSubSubscription<T> : RefCounted, ITwitcherSharp<
             Version = data.Get("version").AsString(),
             CreatedAt = data.Get("created_at").AsString(),
             Cost = data.Get("cost").AsInt32(),
+            IsBatchingEnabled = data.Get("is_batching_enabled").AsBool(),
         };
         
         instance._data = data;
@@ -48,6 +50,7 @@ public partial class TwitchEventSubSubscription<T> : RefCounted, ITwitcherSharp<
         if(CreatedAt != null) request.Set("created_at", CreatedAt);
         if(Transport != null) request.Set("transport", Transport.ToGodotObject());
         request.Set("cost", Cost);
+        if(IsBatchingEnabled.HasValue) request.Set("is_batching_enabled", IsBatchingEnabled.Value);
         return request;
     }
     
@@ -61,7 +64,7 @@ public partial class TwitchEventSubSubscription<T> : RefCounted, ITwitcherSharp<
         public string? Callback { get; set; }
         public string? SessionId { get; set; }
         public string? ConnectedAt { get; set; }
-        public string? DisconnectedAt { get; set; }
+        public string? ConduitId { get; set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchTransport object.
@@ -75,7 +78,7 @@ public partial class TwitchEventSubSubscription<T> : RefCounted, ITwitcherSharp<
                 Callback = data.Get("callback").AsString(),
                 SessionId = data.Get("session_id").AsString(),
                 ConnectedAt = data.Get("connected_at").AsString(),
-                DisconnectedAt = data.Get("disconnected_at").AsString(),
+                ConduitId = data.Get("conduit_id").AsString(),
             };
             
             instance._data = data;
@@ -91,7 +94,7 @@ public partial class TwitchEventSubSubscription<T> : RefCounted, ITwitcherSharp<
             if(Callback != null) request.Set("callback", Callback);
             if(SessionId != null) request.Set("session_id", SessionId);
             if(ConnectedAt != null) request.Set("connected_at", ConnectedAt);
-            if(DisconnectedAt != null) request.Set("disconnected_at", DisconnectedAt);
+            if(ConduitId != null) request.Set("conduit_id", ConduitId);
             return request;
         }
     

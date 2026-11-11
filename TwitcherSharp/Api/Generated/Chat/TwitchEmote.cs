@@ -57,9 +57,7 @@ public partial class TwitchEmote : RefCounted, ITwitcherSharp<TwitchEmote>, ITwi
     }
     
     /// <summary> 
-    /// The image URLs for the emote. These image URLs always provide a static, non-animated emote image with a light background.  
-    ///   
-    /// **NOTE:** You should use the templated URL in the `template` field to fetch the image instead of using these URLs. 
+    /// The image URLs for the emote. These image URLs always provide a static, non-animated emote image with a light background. **NOTE:** You should use the templated URL in the `template` field to fetch the image instead of using these URLs. 
     /// </summary>
     public partial class TwitchResponseImages : RefCounted, ITwitcherSharp<TwitchResponseImages>, ITwitchImages
     {

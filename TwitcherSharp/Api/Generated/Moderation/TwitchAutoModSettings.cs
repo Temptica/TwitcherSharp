@@ -9,7 +9,7 @@ public partial class TwitchAutoModSettings : RefCounted, ITwitcherSharp<TwitchAu
     private GodotObject? _data;
     public string BroadcasterId { get; set; } = null!;
     public string ModeratorId { get; set; } = null!;
-    public int OverallLevel { get; set; }
+    public int? OverallLevel { get; set; }
     public int Disability { get; set; }
     public int Aggression { get; set; }
     public int SexualitySexOrGender { get; set; }
@@ -50,7 +50,7 @@ public partial class TwitchAutoModSettings : RefCounted, ITwitcherSharp<TwitchAu
         var request = script.Call("new").AsGodotObject();
         if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
         if(ModeratorId != null) request.Set("moderator_id", ModeratorId);
-        request.Set("overall_level", OverallLevel);
+        if(OverallLevel.HasValue) request.Set("overall_level", OverallLevel.Value);
         request.Set("disability", Disability);
         request.Set("aggression", Aggression);
         request.Set("sexuality_sex_or_gender", SexualitySexOrGender);

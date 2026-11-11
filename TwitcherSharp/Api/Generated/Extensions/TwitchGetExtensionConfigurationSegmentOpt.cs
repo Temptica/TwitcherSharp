@@ -12,6 +12,7 @@ public partial class TwitchGetExtensionConfigurationSegmentOpt : RefCounted, ITw
 {
     private GodotObject? _data;
     public string? BroadcasterId { get; set; }
+    public string[]? Segment { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetExtensionConfigurationSegmentOpt object.
@@ -22,6 +23,7 @@ public partial class TwitchGetExtensionConfigurationSegmentOpt : RefCounted, ITw
         var instance = new TwitchGetExtensionConfigurationSegmentOpt
         {
             BroadcasterId = data.Get("broadcaster_id").AsString(),
+            Segment = data.Get("segment").AsStringArray(),
         };
         
         instance._data = data;
@@ -34,6 +36,7 @@ public partial class TwitchGetExtensionConfigurationSegmentOpt : RefCounted, ITw
         var optClass = script.Get("Opt").AsGodotObject();
         var request = optClass.Call("new").AsGodotObject();
         if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
+        if(Segment != null) request.Set("segment", new Godot.Collections.Array<string>(Segment));
         return request;
     }
 

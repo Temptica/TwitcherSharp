@@ -17,7 +17,6 @@ public partial class TwitchGetClipsOpt : RefCounted, ITwitcherSharp<TwitchGetCli
     public string? StartedAt { get; set; }
     public string? EndedAt { get; set; }
     public int? First { get; set; }
-    public string? Before { get; set; }
     public string? After { get; set; }
     public bool? IsFeatured { get; set; }
 
@@ -35,7 +34,6 @@ public partial class TwitchGetClipsOpt : RefCounted, ITwitcherSharp<TwitchGetCli
             StartedAt = data.Get("started_at").AsString(),
             EndedAt = data.Get("ended_at").AsString(),
             First = data.Get("first").AsInt32(),
-            Before = data.Get("before").AsString(),
             After = data.Get("after").AsString(),
             IsFeatured = data.Get("is_featured").AsBool(),
         };
@@ -55,7 +53,6 @@ public partial class TwitchGetClipsOpt : RefCounted, ITwitcherSharp<TwitchGetCli
         if(StartedAt != null) request.Set("started_at", StartedAt);
         if(EndedAt != null) request.Set("ended_at", EndedAt);
         if(First.HasValue) request.Set("first", First.Value);
-        if(Before != null) request.Set("before", Before);
         if(After != null) request.Set("after", After);
         if(IsFeatured.HasValue) request.Set("is_featured", IsFeatured.Value);
         return request;

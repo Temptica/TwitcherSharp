@@ -12,7 +12,7 @@ public partial class TwitchGetPredictionsOpt : RefCounted, ITwitcherSharp<Twitch
 {
     private GodotObject? _data;
     public string[]? Id { get; set; }
-    public string? First { get; set; }
+    public int? First { get; set; }
     public string? After { get; set; }
 
     /// <summary> 
@@ -24,7 +24,7 @@ public partial class TwitchGetPredictionsOpt : RefCounted, ITwitcherSharp<Twitch
         var instance = new TwitchGetPredictionsOpt
         {
             Id = data.Get("id").AsStringArray(),
-            First = data.Get("first").AsString(),
+            First = data.Get("first").AsInt32(),
             After = data.Get("after").AsString(),
         };
         
@@ -38,7 +38,7 @@ public partial class TwitchGetPredictionsOpt : RefCounted, ITwitcherSharp<Twitch
         var optClass = script.Get("Opt").AsGodotObject();
         var request = optClass.Call("new").AsGodotObject();
         if(Id != null) request.Set("id", new Godot.Collections.Array<string>(Id));
-        if(First != null) request.Set("first", First);
+        if(First.HasValue) request.Set("first", First.Value);
         if(After != null) request.Set("after", After);
         return request;
     }

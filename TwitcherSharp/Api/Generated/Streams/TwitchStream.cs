@@ -20,7 +20,7 @@ public partial class TwitchStream : RefCounted, ITwitcherSharp<TwitchStream>
     public string Language { get; set; } = null!;
     public string ThumbnailUrl { get; set; } = null!;
     public string[] TagIds { get; set; } = null!;
-    public string[] Tags { get; set; } = null!;
+    public string[]? Tags { get; set; }
     public bool IsMature { get; set; }
 
     /// <summary> 

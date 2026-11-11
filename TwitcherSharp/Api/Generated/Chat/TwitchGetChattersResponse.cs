@@ -32,7 +32,7 @@ public partial class TwitchGetChattersResponse : RefCounted, ITwitcherSharp<Twit
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
         if(Data != null) request.Set("data", Data.ToGodotArray());
-        if(Pagination != null) request.Set("pagination", Pagination);
+        if(Pagination != null) request.Set("pagination", Pagination.ToGodotObject());
         request.Set("total", Total);
         return request;
     }

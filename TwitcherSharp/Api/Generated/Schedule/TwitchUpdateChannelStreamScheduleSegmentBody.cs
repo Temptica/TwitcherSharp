@@ -8,7 +8,7 @@ public partial class TwitchUpdateChannelStreamScheduleSegmentBody : RefCounted, 
 {
     private GodotObject? _data;
     public string? StartTime { get; set; }
-    public string? Duration { get; set; }
+    public int? Duration { get; set; }
     public string? CategoryId { get; set; }
     public string? Title { get; set; }
     public bool? IsCanceled { get; set; }
@@ -23,7 +23,7 @@ public partial class TwitchUpdateChannelStreamScheduleSegmentBody : RefCounted, 
         var instance = new TwitchUpdateChannelStreamScheduleSegmentBody
         {
             StartTime = data.Get("start_time").AsString(),
-            Duration = data.Get("duration").AsString(),
+            Duration = data.Get("duration").AsInt32(),
             CategoryId = data.Get("category_id").AsString(),
             Title = data.Get("title").AsString(),
             IsCanceled = data.Get("is_canceled").AsBool(),
@@ -40,7 +40,7 @@ public partial class TwitchUpdateChannelStreamScheduleSegmentBody : RefCounted, 
         var bodyClass = script.Get("Body").AsGodotObject();
         var request = bodyClass.Call("new").AsGodotObject();
         if(StartTime != null) request.Set("start_time", StartTime);
-        if(Duration != null) request.Set("duration", Duration);
+        if(Duration.HasValue) request.Set("duration", Duration.Value);
         if(CategoryId != null) request.Set("category_id", CategoryId);
         if(Title != null) request.Set("title", Title);
         if(IsCanceled.HasValue) request.Set("is_canceled", IsCanceled.Value);

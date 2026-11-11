@@ -15,7 +15,7 @@ public partial class TwitchVideo : RefCounted, ITwitcherSharp<TwitchVideo>
     public string Title { get; set; } = null!;
     public string Description { get; set; } = null!;
     public string CreatedAt { get; set; } = null!;
-    public string PublishedAt { get; set; } = null!;
+    public string? PublishedAt { get; set; }
     public string Url { get; set; } = null!;
     public string ThumbnailUrl { get; set; } = null!;
     public string Viewable { get; set; } = null!;
@@ -23,7 +23,7 @@ public partial class TwitchVideo : RefCounted, ITwitcherSharp<TwitchVideo>
     public string Language { get; set; } = null!;
     public string Type { get; set; } = null!;
     public string Duration { get; set; } = null!;
-    public TwitchResponseMutedSegments[] MutedSegments { get => field ??= _data?.GetArray<TwitchResponseMutedSegments>("muted_segments")!; set; } = null!;
+    public TwitchResponseMutedSegments[]? MutedSegments { get => field ??= _data?.GetArray<TwitchResponseMutedSegments>("muted_segments"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchVideo object.
@@ -80,7 +80,7 @@ public partial class TwitchVideo : RefCounted, ITwitcherSharp<TwitchVideo>
     }
     
     /// <summary> 
-    /// The segments that Twitch Audio Recognition muted; otherwise, **null**. 
+    /// The segments that Twitch Audio Recognition muted; otherwise, **null**. Always **null** if you use an app access token. 
     /// </summary>
     public partial class TwitchResponseMutedSegments : RefCounted, ITwitcherSharp<TwitchResponseMutedSegments>
     {

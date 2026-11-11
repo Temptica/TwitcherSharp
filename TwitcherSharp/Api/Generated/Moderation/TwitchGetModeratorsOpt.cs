@@ -12,7 +12,7 @@ public partial class TwitchGetModeratorsOpt : RefCounted, ITwitcherSharp<TwitchG
 {
     private GodotObject? _data;
     public string[]? UserId { get; set; }
-    public string? First { get; set; }
+    public int? First { get; set; }
     public string? After { get; set; }
 
     /// <summary> 
@@ -24,7 +24,7 @@ public partial class TwitchGetModeratorsOpt : RefCounted, ITwitcherSharp<TwitchG
         var instance = new TwitchGetModeratorsOpt
         {
             UserId = data.Get("user_id").AsStringArray(),
-            First = data.Get("first").AsString(),
+            First = data.Get("first").AsInt32(),
             After = data.Get("after").AsString(),
         };
         
@@ -38,7 +38,7 @@ public partial class TwitchGetModeratorsOpt : RefCounted, ITwitcherSharp<TwitchG
         var optClass = script.Get("Opt").AsGodotObject();
         var request = optClass.Call("new").AsGodotObject();
         if(UserId != null) request.Set("user_id", new Godot.Collections.Array<string>(UserId));
-        if(First != null) request.Set("first", First);
+        if(First.HasValue) request.Set("first", First.Value);
         if(After != null) request.Set("after", After);
         return request;
     }

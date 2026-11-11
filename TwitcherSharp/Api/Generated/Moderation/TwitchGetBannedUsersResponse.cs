@@ -28,7 +28,7 @@ public partial class TwitchGetBannedUsersResponse : RefCounted, ITwitcherSharp<T
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
         if(Data != null) request.Set("data", Data.ToGodotArray());
-        if(Pagination != null) request.Set("pagination", Pagination);
+        if(Pagination != null) request.Set("pagination", Pagination.ToGodotObject());
         return request;
     }
     public async Task<TwitchGetBannedUsersResponse> NextPage() =>

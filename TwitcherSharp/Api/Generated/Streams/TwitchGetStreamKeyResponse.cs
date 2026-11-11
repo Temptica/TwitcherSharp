@@ -31,7 +31,7 @@ public partial class TwitchGetStreamKeyResponse : RefCounted, ITwitcherSharp<Twi
     }
     
     /// <summary> 
-    /// A list that contains the channel’s stream key. 
+    /// A list that contains the channel's stream key. 
     /// </summary>
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {

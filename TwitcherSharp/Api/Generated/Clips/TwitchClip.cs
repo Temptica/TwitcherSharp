@@ -22,7 +22,7 @@ public partial class TwitchClip : RefCounted, ITwitcherSharp<TwitchClip>
     public string CreatedAt { get; set; } = null!;
     public string ThumbnailUrl { get; set; } = null!;
     public double Duration { get; set; }
-    public int VodOffset { get; set; }
+    public int? VodOffset { get; set; }
     public bool IsFeatured { get; set; }
 
     /// <summary> 
@@ -75,7 +75,7 @@ public partial class TwitchClip : RefCounted, ITwitcherSharp<TwitchClip>
         if(CreatedAt != null) request.Set("created_at", CreatedAt);
         if(ThumbnailUrl != null) request.Set("thumbnail_url", ThumbnailUrl);
         request.Set("duration", Duration);
-        request.Set("vod_offset", VodOffset);
+        if(VodOffset.HasValue) request.Set("vod_offset", VodOffset.Value);
         request.Set("is_featured", IsFeatured);
         return request;
     }

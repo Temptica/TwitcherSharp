@@ -9,7 +9,7 @@ public partial class TwitchCreateChannelStreamScheduleSegmentBody : RefCounted, 
     private GodotObject? _data;
     public string StartTime { get; set; } = null!;
     public string Timezone { get; set; } = null!;
-    public string Duration { get; set; } = null!;
+    public int Duration { get; set; }
     public bool? IsRecurring { get; set; }
     public string? CategoryId { get; set; }
     public string? Title { get; set; }
@@ -24,7 +24,7 @@ public partial class TwitchCreateChannelStreamScheduleSegmentBody : RefCounted, 
         {
             StartTime = data.Get("start_time").AsString(),
             Timezone = data.Get("timezone").AsString(),
-            Duration = data.Get("duration").AsString(),
+            Duration = data.Get("duration").AsInt32(),
             IsRecurring = data.Get("is_recurring").AsBool(),
             CategoryId = data.Get("category_id").AsString(),
             Title = data.Get("title").AsString(),
@@ -41,7 +41,7 @@ public partial class TwitchCreateChannelStreamScheduleSegmentBody : RefCounted, 
         var request = bodyClass.Call("new").AsGodotObject();
         if(StartTime != null) request.Set("start_time", StartTime);
         if(Timezone != null) request.Set("timezone", Timezone);
-        if(Duration != null) request.Set("duration", Duration);
+        request.Set("duration", Duration);
         if(IsRecurring.HasValue) request.Set("is_recurring", IsRecurring.Value);
         if(CategoryId != null) request.Set("category_id", CategoryId);
         if(Title != null) request.Set("title", Title);

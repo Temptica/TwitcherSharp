@@ -75,7 +75,7 @@ public partial class TwitchStreamMarkers : RefCounted, ITwitcherSharp<TwitchStre
         }
         
         /// <summary> 
-        /// The list of markers in this video. The list in ascending order by when the marker was created. 
+        /// The list of markers in this video. The list is in ascending order by the marker's position in the video (see `position_seconds`). 
         /// </summary>
         public partial class TwitchResponseMarkers : RefCounted, ITwitcherSharp<TwitchResponseMarkers>
         {
@@ -84,7 +84,7 @@ public partial class TwitchStreamMarkers : RefCounted, ITwitcherSharp<TwitchStre
             public string CreatedAt { get; set; } = null!;
             public string Description { get; set; } = null!;
             public int PositionSeconds { get; set; }
-            public string Url { get; set; } = null!;
+            public string URL { get; set; } = null!;
         
             /// <summary> 
             /// Transforms the godot data into a TwitchResponseMarkers object.
@@ -98,7 +98,7 @@ public partial class TwitchStreamMarkers : RefCounted, ITwitcherSharp<TwitchStre
                     CreatedAt = data.Get("created_at").AsString(),
                     Description = data.Get("description").AsString(),
                     PositionSeconds = data.Get("position_seconds").AsInt32(),
-                    Url = data.Get("url").AsString(),
+                    URL = data.Get("url").AsString(),
                 };
                 
                 instance._data = data;
@@ -114,7 +114,7 @@ public partial class TwitchStreamMarkers : RefCounted, ITwitcherSharp<TwitchStre
                 if(CreatedAt != null) request.Set("created_at", CreatedAt);
                 if(Description != null) request.Set("description", Description);
                 request.Set("position_seconds", PositionSeconds);
-                if(Url != null) request.Set("url", Url);
+                if(URL != null) request.Set("url", URL);
                 return request;
             }
         

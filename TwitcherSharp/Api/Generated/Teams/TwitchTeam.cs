@@ -8,12 +8,12 @@ public partial class TwitchTeam : RefCounted, ITwitcherSharp<TwitchTeam>
 {
     private GodotObject? _data;
     public TwitchResponseUsers[] Users { get => field ??= _data?.GetArray<TwitchResponseUsers>("users")!; set; } = null!;
-    public string BackgroundImageUrl { get; set; } = null!;
-    public string Banner { get; set; } = null!;
-    public string CreatedAt { get; set; } = null!;
-    public string UpdatedAt { get; set; } = null!;
+    public string? BackgroundImageUrl { get; set; }
+    public string? Banner { get; set; }
+    public string? CreatedAt { get; set; }
+    public string? UpdatedAt { get; set; }
     public string Info { get; set; } = null!;
-    public string ThumbnailUrl { get; set; } = null!;
+    public string? ThumbnailUrl { get; set; }
     public string TeamName { get; set; } = null!;
     public string TeamDisplayName { get; set; } = null!;
     public string Id { get; set; } = null!;
@@ -59,7 +59,7 @@ public partial class TwitchTeam : RefCounted, ITwitcherSharp<TwitchTeam>
     }
     
     /// <summary> 
-    /// The list of team members. 
+    /// The list of team members. This field is omitted if the team has no members. 
     /// </summary>
     public partial class TwitchResponseUsers : RefCounted, ITwitcherSharp<TwitchResponseUsers>
     {

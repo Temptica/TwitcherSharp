@@ -8,7 +8,7 @@ public partial class TwitchSendExtensionPubSubMessageBody : RefCounted, ITwitche
 {
     private GodotObject? _data;
     public string[] Target { get; set; } = null!;
-    public string BroadcasterId { get; set; } = null!;
+    public string? BroadcasterId { get; set; }
     public bool? IsGlobalBroadcast { get; set; }
     public string Message { get; set; } = null!;
 

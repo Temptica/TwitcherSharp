@@ -31,7 +31,7 @@ public partial class TwitchUpdateConduitsResponse : RefCounted, ITwitcherSharp<T
     }
     
     /// <summary> 
-    /// List of information about the client’s conduits. 
+    /// A list that contains the updated conduit. 
     /// </summary>
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {

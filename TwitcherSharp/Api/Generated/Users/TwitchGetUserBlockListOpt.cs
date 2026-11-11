@@ -11,6 +11,7 @@ namespace TwitcherSharp.Api.Generated.Users;
 public partial class TwitchGetUserBlockListOpt : RefCounted, ITwitcherSharp<TwitchGetUserBlockListOpt>
 {
     private GodotObject? _data;
+    public string[]? UserId { get; set; }
     public int? First { get; set; }
     public string? After { get; set; }
 
@@ -22,6 +23,7 @@ public partial class TwitchGetUserBlockListOpt : RefCounted, ITwitcherSharp<Twit
         if(data == null) return null;
         var instance = new TwitchGetUserBlockListOpt
         {
+            UserId = data.Get("user_id").AsStringArray(),
             First = data.Get("first").AsInt32(),
             After = data.Get("after").AsString(),
         };
@@ -35,6 +37,7 @@ public partial class TwitchGetUserBlockListOpt : RefCounted, ITwitcherSharp<Twit
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_get_user_block_list.gd");
         var optClass = script.Get("Opt").AsGodotObject();
         var request = optClass.Call("new").AsGodotObject();
+        if(UserId != null) request.Set("user_id", new Godot.Collections.Array<string>(UserId));
         if(First.HasValue) request.Set("first", First.Value);
         if(After != null) request.Set("after", After);
         return request;

@@ -13,7 +13,6 @@ public partial class TwitchGetTopGamesOpt : RefCounted, ITwitcherSharp<TwitchGet
     private GodotObject? _data;
     public int? First { get; set; }
     public string? After { get; set; }
-    public string? Before { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetTopGamesOpt object.
@@ -25,7 +24,6 @@ public partial class TwitchGetTopGamesOpt : RefCounted, ITwitcherSharp<TwitchGet
         {
             First = data.Get("first").AsInt32(),
             After = data.Get("after").AsString(),
-            Before = data.Get("before").AsString(),
         };
         
         instance._data = data;
@@ -39,7 +37,6 @@ public partial class TwitchGetTopGamesOpt : RefCounted, ITwitcherSharp<TwitchGet
         var request = optClass.Call("new").AsGodotObject();
         if(First.HasValue) request.Set("first", First.Value);
         if(After != null) request.Set("after", After);
-        if(Before != null) request.Set("before", Before);
         return request;
     }
 

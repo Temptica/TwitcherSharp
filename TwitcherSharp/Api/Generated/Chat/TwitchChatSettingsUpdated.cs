@@ -11,7 +11,7 @@ public partial class TwitchChatSettingsUpdated : RefCounted, ITwitcherSharp<Twit
     public bool EmoteMode { get; set; }
     public bool FollowerMode { get; set; }
     public int FollowerModeDuration { get; set; }
-    public string? ModeratorId { get; set; }
+    public string ModeratorId { get; set; } = null!;
     public bool NonModeratorChatDelay { get; set; }
     public int NonModeratorChatDelayDuration { get; set; }
     public bool SlowMode { get; set; }

@@ -31,7 +31,7 @@ public partial class TwitchWarnChatUserBody : RefCounted, ITwitcherSharp<TwitchW
     }
     
     /// <summary> 
-    /// A list that contains information about the warning. 
+    /// An object that contains information about the warning. 
     /// </summary>
     public partial class TwitchBodyData : RefCounted, ITwitcherSharp<TwitchBodyData>
     {

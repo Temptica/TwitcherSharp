@@ -41,7 +41,7 @@ public partial class TwitchExtensionAnalytics : RefCounted, ITwitcherSharp<Twitc
     }
     
     /// <summary> 
-    /// The reporting window’s start and end dates, in RFC3339 format. 
+    /// The earliest and latest dates that the report contains data for, in RFC3339 format. These dates can differ from the reporting window that you requested. 
     /// </summary>
     public partial class TwitchResponseDateRange : RefCounted, ITwitcherSharp<TwitchResponseDateRange>
     {

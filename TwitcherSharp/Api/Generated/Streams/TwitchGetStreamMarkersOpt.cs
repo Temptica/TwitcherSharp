@@ -13,8 +13,7 @@ public partial class TwitchGetStreamMarkersOpt : RefCounted, ITwitcherSharp<Twit
     private GodotObject? _data;
     public string? UserId { get; set; }
     public string? VideoId { get; set; }
-    public string? First { get; set; }
-    public string? Before { get; set; }
+    public int? First { get; set; }
     public string? After { get; set; }
 
     /// <summary> 
@@ -27,8 +26,7 @@ public partial class TwitchGetStreamMarkersOpt : RefCounted, ITwitcherSharp<Twit
         {
             UserId = data.Get("user_id").AsString(),
             VideoId = data.Get("video_id").AsString(),
-            First = data.Get("first").AsString(),
-            Before = data.Get("before").AsString(),
+            First = data.Get("first").AsInt32(),
             After = data.Get("after").AsString(),
         };
         
@@ -43,8 +41,7 @@ public partial class TwitchGetStreamMarkersOpt : RefCounted, ITwitcherSharp<Twit
         var request = optClass.Call("new").AsGodotObject();
         if(UserId != null) request.Set("user_id", UserId);
         if(VideoId != null) request.Set("video_id", VideoId);
-        if(First != null) request.Set("first", First);
-        if(Before != null) request.Set("before", Before);
+        if(First.HasValue) request.Set("first", First.Value);
         if(After != null) request.Set("after", After);
         return request;
     }

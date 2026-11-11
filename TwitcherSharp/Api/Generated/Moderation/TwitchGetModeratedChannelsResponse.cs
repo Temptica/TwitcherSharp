@@ -28,7 +28,7 @@ public partial class TwitchGetModeratedChannelsResponse : RefCounted, ITwitcherS
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
         if(Data != null) request.Set("data", Data.ToGodotArray());
-        if(Pagination != null) request.Set("pagination", Pagination);
+        if(Pagination != null) request.Set("pagination", Pagination.ToGodotObject());
         return request;
     }
     public async Task<TwitchGetModeratedChannelsResponse> NextPage() =>
@@ -69,7 +69,7 @@ public partial class TwitchGetModeratedChannelsResponse : RefCounted, ITwitcherS
     }
     
     /// <summary> 
-    /// The list of channels that the user has moderator privileges in. 
+    /// The list of channels that the user has moderator privileges in. The list doesn't include the user's own channel or channels that are deleted or suspended. 
     /// </summary>
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {

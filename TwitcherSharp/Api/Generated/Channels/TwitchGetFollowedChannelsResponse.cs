@@ -32,7 +32,7 @@ public partial class TwitchGetFollowedChannelsResponse : RefCounted, ITwitcherSh
         var responseClass = script.Get("Response").AsGodotObject();
         var request = responseClass.Call("new").AsGodotObject();
         if(Data != null) request.Set("data", Data.ToGodotArray());
-        if(Pagination != null) request.Set("pagination", Pagination);
+        if(Pagination != null) request.Set("pagination", Pagination.ToGodotObject());
         request.Set("total", Total);
         return request;
     }
@@ -74,7 +74,7 @@ public partial class TwitchGetFollowedChannelsResponse : RefCounted, ITwitcherSh
     }
     
     /// <summary> 
-    /// The list of broadcasters that the user follows. The list is in descending order by `followed_at` (with the most recently followed broadcaster first). The list is empty if the user doesn’t follow anyone. 
+    /// The list of broadcasters that the user follows. The list is in descending order by `followed_at` (with the most recently followed broadcaster first). The list is empty if the user doesn't follow anyone. 
     /// </summary>
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {

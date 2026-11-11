@@ -26,8 +26,8 @@ public partial class TwitchCheermoteImages : RefCounted, ITwitcherSharp<TwitchCh
     {
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_cheermote_images.gd");
         var request = script.Call("new").AsGodotObject();
-        if(Light != null) request.Set("light", Light);
-        if(Dark != null) request.Set("dark", Dark);
+        if(Light != null) request.Set("light", Light.ToGodotObject());
+        if(Dark != null) request.Set("dark", Dark.ToGodotObject());
         return request;
     }
 

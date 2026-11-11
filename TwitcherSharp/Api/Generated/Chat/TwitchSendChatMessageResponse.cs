@@ -59,12 +59,12 @@ public partial class TwitchSendChatMessageResponse : RefCounted, ITwitcherSharp<
             var request = twitchResponseDataClass.Call("new").AsGodotObject();
             if(MessageId != null) request.Set("message_id", MessageId);
             request.Set("is_sent", IsSent);
-            if(DropReason != null) request.Set("drop_reason", DropReason);
+            if(DropReason != null) request.Set("drop_reason", DropReason.ToGodotObject());
             return request;
         }
         
         /// <summary> 
-        /// The reason the message was dropped, if any. 
+        /// The reason the message was dropped, if any. Is **null** if the message was sent. 
         /// </summary>
         public partial class TwitchResponseDropReason : RefCounted, ITwitcherSharp<TwitchResponseDropReason>
         {

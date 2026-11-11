@@ -18,7 +18,7 @@ public partial class TwitchGetVideosOpt : RefCounted, ITwitcherSharp<TwitchGetVi
     public string? Period { get; set; }
     public string? Sort { get; set; }
     public string? Type { get; set; }
-    public string? First { get; set; }
+    public int? First { get; set; }
     public string? After { get; set; }
     public string? Before { get; set; }
 
@@ -37,7 +37,7 @@ public partial class TwitchGetVideosOpt : RefCounted, ITwitcherSharp<TwitchGetVi
             Period = data.Get("period").AsString(),
             Sort = data.Get("sort").AsString(),
             Type = data.Get("type").AsString(),
-            First = data.Get("first").AsString(),
+            First = data.Get("first").AsInt32(),
             After = data.Get("after").AsString(),
             Before = data.Get("before").AsString(),
         };
@@ -58,7 +58,7 @@ public partial class TwitchGetVideosOpt : RefCounted, ITwitcherSharp<TwitchGetVi
         if(Period != null) request.Set("period", Period);
         if(Sort != null) request.Set("sort", Sort);
         if(Type != null) request.Set("type", Type);
-        if(First != null) request.Set("first", First);
+        if(First.HasValue) request.Set("first", First.Value);
         if(After != null) request.Set("after", After);
         if(Before != null) request.Set("before", Before);
         return request;

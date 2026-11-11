@@ -33,7 +33,7 @@ public partial class TwitchGetUserEmotesResponse : RefCounted, ITwitcherSharp<Tw
         var request = responseClass.Call("new").AsGodotObject();
         if(Data != null) request.Set("data", Data.ToGodotArray());
         if(Template != null) request.Set("template", Template);
-        if(Pagination != null) request.Set("pagination", Pagination);
+        if(Pagination != null) request.Set("pagination", Pagination.ToGodotObject());
         return request;
     }
     public async Task<TwitchGetUserEmotesResponse> NextPage() =>

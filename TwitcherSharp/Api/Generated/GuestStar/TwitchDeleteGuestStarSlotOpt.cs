@@ -11,7 +11,7 @@ namespace TwitcherSharp.Api.Generated.GuestStar;
 public partial class TwitchDeleteGuestStarSlotOpt : RefCounted, ITwitcherSharp<TwitchDeleteGuestStarSlotOpt>
 {
     private GodotObject? _data;
-    public string? ShouldReinviteGuest { get; set; }
+    public bool? ShouldReinviteGuest { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchDeleteGuestStarSlotOpt object.
@@ -21,7 +21,7 @@ public partial class TwitchDeleteGuestStarSlotOpt : RefCounted, ITwitcherSharp<T
         if(data == null) return null;
         var instance = new TwitchDeleteGuestStarSlotOpt
         {
-            ShouldReinviteGuest = data.Get("should_reinvite_guest").AsString(),
+            ShouldReinviteGuest = data.Get("should_reinvite_guest").AsBool(),
         };
         
         instance._data = data;
@@ -33,7 +33,7 @@ public partial class TwitchDeleteGuestStarSlotOpt : RefCounted, ITwitcherSharp<T
         var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_delete_guest_star_slot.gd");
         var optClass = script.Get("Opt").AsGodotObject();
         var request = optClass.Call("new").AsGodotObject();
-        if(ShouldReinviteGuest != null) request.Set("should_reinvite_guest", ShouldReinviteGuest);
+        if(ShouldReinviteGuest.HasValue) request.Set("should_reinvite_guest", ShouldReinviteGuest.Value);
         return request;
     }
 
