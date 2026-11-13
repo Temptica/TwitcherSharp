@@ -51,7 +51,7 @@ public partial class TwitchChannelPointsCustomRewardRedemptionUpdateEvent : RefC
     public string? UserInput { get; set; }
 
     /// <summary> 
-    /// Will be fulfilled or canceled. Possible values are unknown, unfulfilled, fulfilled, and canceled.
+    /// Will be **fulfilled** or **canceled**. Possible values are **unknown**, **unfulfilled**, **fulfilled**, and **canceled**.
     /// </summary>
     public string? Status { get; set; }
 

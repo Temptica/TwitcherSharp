@@ -26,7 +26,7 @@ public partial class TwitchTopPredictors : RefCounted, ITwitcherSharpEventSub<Tw
     public string? UserName { get; set; }
 
     /// <summary> 
-    /// The number of Channel Points won. This value is always null in the event payload for Prediction progress and Prediction lock. This value is 0 if the outcome did not win or if the Prediction was canceled and Channel Points were refunded.
+    /// The number of Channel Points won. This value is always **null** in the event payload for Prediction progress and Prediction lock. This value is 0 if the outcome did not win or if the Prediction was canceled and Channel Points were refunded.
     /// </summary>
     public int ChannelPointsWon { get; set; }
 

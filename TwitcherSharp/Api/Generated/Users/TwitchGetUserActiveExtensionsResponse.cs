@@ -24,7 +24,7 @@ public partial class TwitchGetUserActiveExtensionsResponse : RefCounted, ITwitch
     public GodotObject ToGodotObject()
     {
         var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_user_active_extensions.gd", "Response");
-        if(Data != null) request.SetValue("data", Data);
+        if(Data != null) request.SetObject("data", Data);
         return request;
     }
 

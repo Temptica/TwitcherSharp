@@ -10,12 +10,12 @@ public partial class TwitchChatSettings : RefCounted, ITwitcherSharp<TwitchChatS
     public string BroadcasterId { get; set; } = null!;
     public bool EmoteMode { get; set; }
     public bool FollowerMode { get; set; }
-    public int FollowerModeDuration { get; set; }
+    public int? FollowerModeDuration { get; set; }
     public string? ModeratorId { get; set; }
     public bool? NonModeratorChatDelay { get; set; }
     public int? NonModeratorChatDelayDuration { get; set; }
     public bool SlowMode { get; set; }
-    public int SlowModeWaitTime { get; set; }
+    public int? SlowModeWaitTime { get; set; }
     public bool SubscriberMode { get; set; }
     public bool UniqueChatMode { get; set; }
 
@@ -50,12 +50,12 @@ public partial class TwitchChatSettings : RefCounted, ITwitcherSharp<TwitchChatS
         if(BroadcasterId != null) request.SetValue("broadcaster_id", BroadcasterId);
         request.SetValue("emote_mode", EmoteMode);
         request.SetValue("follower_mode", FollowerMode);
-        request.SetValue("follower_mode_duration", FollowerModeDuration);
+        if(FollowerModeDuration.HasValue) request.SetValue("follower_mode_duration", FollowerModeDuration.Value);
         if(ModeratorId != null) request.SetValue("moderator_id", ModeratorId);
         if(NonModeratorChatDelay.HasValue) request.SetValue("non_moderator_chat_delay", NonModeratorChatDelay.Value);
         if(NonModeratorChatDelayDuration.HasValue) request.SetValue("non_moderator_chat_delay_duration", NonModeratorChatDelayDuration.Value);
         request.SetValue("slow_mode", SlowMode);
-        request.SetValue("slow_mode_wait_time", SlowModeWaitTime);
+        if(SlowModeWaitTime.HasValue) request.SetValue("slow_mode_wait_time", SlowModeWaitTime.Value);
         request.SetValue("subscriber_mode", SubscriberMode);
         request.SetValue("unique_chat_mode", UniqueChatMode);
         return request;

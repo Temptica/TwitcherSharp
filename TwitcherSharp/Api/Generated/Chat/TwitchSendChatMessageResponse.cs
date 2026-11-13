@@ -62,7 +62,7 @@ public partial class TwitchSendChatMessageResponse : RefCounted, ITwitcherSharp<
             var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_send_chat_message.gd", "ResponseData");
             if(MessageId != null) request.SetValue("message_id", MessageId);
             request.SetValue("is_sent", IsSent);
-            if(DropReason != null) request.SetValue("drop_reason", DropReason);
+            if(DropReason != null) request.SetObject("drop_reason", DropReason);
             return request;
         }
     
@@ -74,7 +74,7 @@ public partial class TwitchSendChatMessageResponse : RefCounted, ITwitcherSharp<
         }
         
         /// <summary> 
-        /// The reason the message was dropped, if any. 
+        /// The reason the message was dropped, if any. Is **null** if the message was sent. 
         /// </summary>
         public partial class TwitchResponseDropReason : RefCounted, ITwitcherSharp<TwitchResponseDropReason>
         {

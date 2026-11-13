@@ -9,7 +9,7 @@ public partial class TwitchAutoModSettings : RefCounted, ITwitcherSharp<TwitchAu
     private Variant _data;
     public string BroadcasterId { get; set; } = null!;
     public string ModeratorId { get; set; } = null!;
-    public int OverallLevel { get; set; }
+    public int? OverallLevel { get; set; }
     public int Disability { get; set; }
     public int Aggression { get; set; }
     public int SexualitySexOrGender { get; set; }
@@ -49,7 +49,7 @@ public partial class TwitchAutoModSettings : RefCounted, ITwitcherSharp<TwitchAu
         var request = InteropExtension.NewObject("res://addons/twitcher/generated/twitch_auto_mod_settings.gd");
         if(BroadcasterId != null) request.SetValue("broadcaster_id", BroadcasterId);
         if(ModeratorId != null) request.SetValue("moderator_id", ModeratorId);
-        request.SetValue("overall_level", OverallLevel);
+        if(OverallLevel.HasValue) request.SetValue("overall_level", OverallLevel.Value);
         request.SetValue("disability", Disability);
         request.SetValue("aggression", Aggression);
         request.SetValue("sexuality_sex_or_gender", SexualitySexOrGender);

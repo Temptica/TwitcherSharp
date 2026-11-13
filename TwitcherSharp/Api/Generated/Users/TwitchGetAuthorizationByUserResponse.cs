@@ -36,7 +36,7 @@ public partial class TwitchGetAuthorizationByUserResponse : RefCounted, ITwitche
     }
     
     /// <summary> 
-    /// List of users and their authorized scopes. 
+    /// List of users and their authorized scopes. The list is in the same order as the *user_id* query parameters and doesn't include IDs that don't match a user. 
     /// </summary>
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {

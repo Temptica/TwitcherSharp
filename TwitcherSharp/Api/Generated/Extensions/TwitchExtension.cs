@@ -103,7 +103,7 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
     }
     
     /// <summary> 
-    /// Describes all views-related information such as how the extension is displayed on mobile devices. 
+    /// Describes all views-related information such as how the extension is displayed on mobile devices. The object includes only the views that the extension supports. 
     /// </summary>
     public partial class TwitchViews : RefCounted, ITwitcherSharp<TwitchViews>
     {

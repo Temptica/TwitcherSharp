@@ -16,32 +16,32 @@ public partial class TwitchChannelUnbanRequestResolveEvent : RefCounted, ITwitch
     public string? Id { get; set; }
 
     /// <summary> 
-    /// The broadcaster’s user ID for the channel the unban request was updated for.
+    /// The broadcaster's user ID for the channel the unban request was updated for.
     /// </summary>
     public string? BroadcasterUserId { get; set; }
 
     /// <summary> 
-    /// The broadcaster’s login name.
+    /// The broadcaster's login name.
     /// </summary>
     public string? BroadcasterUserLogin { get; set; }
 
     /// <summary> 
-    /// The broadcaster’s display name.
+    /// The broadcaster's display name.
     /// </summary>
     public string? BroadcasterUserName { get; set; }
 
     /// <summary> 
-    /// Optional. User ID of moderator who approved/denied the request.
+    /// User ID of moderator who approved/denied the request.
     /// </summary>
     public string? ModeratorUserId { get; set; }
 
     /// <summary> 
-    /// Optional. The moderator’s login name
+    /// The moderator's login name
     /// </summary>
     public string? ModeratorUserLogin { get; set; }
 
     /// <summary> 
-    /// Optional. The moderator’s display name
+    /// The moderator's display name
     /// </summary>
     public string? ModeratorUserName { get; set; }
 
@@ -51,22 +51,22 @@ public partial class TwitchChannelUnbanRequestResolveEvent : RefCounted, ITwitch
     public string? UserId { get; set; }
 
     /// <summary> 
-    /// The user’s login name.
+    /// The user's login name.
     /// </summary>
     public string? UserLogin { get; set; }
 
     /// <summary> 
-    /// The user’s display name.
+    /// The user's display name.
     /// </summary>
     public string? UserName { get; set; }
 
     /// <summary> 
-    /// Optional. Resolution text supplied by the mod/broadcaster upon approval/denial of the request.
+    /// Resolution text supplied by the mod/broadcaster upon approval/denial of the request.
     /// </summary>
     public string? ResolutionText { get; set; }
 
     /// <summary> 
-    /// Dictates whether the unban request was approved or denied. Can be the following: approvedcanceleddenied
+    /// Dictates whether the unban request was approved or denied. Can be the following. Possible values: - `approved` - `canceled` - `denied`
     /// </summary>
     public string? Status { get; set; }
 

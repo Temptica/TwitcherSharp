@@ -25,8 +25,8 @@ public partial class TwitchCheermoteImageTheme : RefCounted, ITwitcherSharp<Twit
     public GodotObject ToGodotObject()
     {
         var request = InteropExtension.NewObject("res://addons/twitcher/generated/twitch_cheermote_image_theme.gd");
-        if(Animated != null) request.SetValue("animated_format", Animated);
-        if(Static != null) request.SetValue("static_format", Static);
+        if(Animated != null) request.SetObject("animated_format", Animated);
+        if(Static != null) request.SetObject("static_format", Static);
         return request;
     }
 

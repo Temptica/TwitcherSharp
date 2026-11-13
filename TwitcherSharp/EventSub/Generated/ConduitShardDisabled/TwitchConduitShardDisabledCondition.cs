@@ -13,12 +13,12 @@ public partial class TwitchConduitShardDisabledCondition(string clientId) : RefC
     public string Name => nameof(TwitchConduitShardDisabledCondition);
 
     /// <summary> 
-    /// Your application’s client id. The provided client_id must match the client ID in the application access token.
+    /// Your application's client id. The provided client_id must match the client ID in the application access token.
     /// </summary>
     public string ClientId { get; set; } = clientId;
 
     /// <summary> 
-    /// The conduit ID to receive events for. If omitted, events for all of this client’s conduits are sent.
+    /// The conduit ID to receive events for. If omitted, events for all of this client's conduits are sent.
     /// </summary>
     public string? ConduitId { get; set; }
 

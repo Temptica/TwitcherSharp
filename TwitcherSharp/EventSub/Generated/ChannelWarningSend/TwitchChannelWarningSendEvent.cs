@@ -56,12 +56,12 @@ public partial class TwitchChannelWarningSendEvent : RefCounted, ITwitcherSharpE
     public string? UserName { get; set; }
 
     /// <summary> 
-    /// Optional. The reason given for the warning.
+    /// The reason given for the warning.
     /// </summary>
     public string? Reason { get; set; }
 
     /// <summary> 
-    /// Optional. The chat rules cited for the warning.
+    /// The chat rules cited for the warning.
     /// </summary>
     public string[]? ChatRulesCited { get; set; }
 
@@ -83,7 +83,6 @@ public partial class TwitchChannelWarningSendEvent : RefCounted, ITwitcherSharpE
             UserLogin = data.ReadAsString("user_login"),
             UserName = data.ReadAsString("user_name"),
             Reason = data.ReadAsString("reason"),
-            ChatRulesCited = data.ReadAsStringArray("chat_rules_cited"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -103,7 +102,7 @@ public partial class TwitchChannelWarningSendEvent : RefCounted, ITwitcherSharpE
         if(UserLogin != null) request.SetValue("user_login", UserLogin);
         if(UserName != null) request.SetValue("user_name", UserName);
         if(Reason != null) request.SetValue("reason", Reason);
-        if(ChatRulesCited != null) request.SetValue("chat_rules_cited", ChatRulesCited);
+        if(ChatRulesCited != null) request.SetValue("chat_rules_cited", new Godot.Collections.Array<string>(ChatRulesCited));
         return request;
     }
 

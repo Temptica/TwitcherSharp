@@ -80,7 +80,7 @@ public partial class TwitchGetSharedChatSessionResponse : RefCounted, ITwitcherS
         }
         
         /// <summary> 
-        /// The list of participants in the session. 
+        /// The list of channels that are active participants in the session. Channels that were invited but haven't joined, or that left the session, aren't included. 
         /// </summary>
         public partial class TwitchResponseParticipants : RefCounted, ITwitcherSharp<TwitchResponseParticipants>
         {

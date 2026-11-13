@@ -31,17 +31,17 @@ public partial class TwitchAutomodTermsUpdateEvent : RefCounted, ITwitcherSharpE
     public string? ModeratorUserId { get; set; }
 
     /// <summary> 
-    /// The moderator’s login.
+    /// The moderator's login.
     /// </summary>
     public string? ModeratorUserLogin { get; set; }
 
     /// <summary> 
-    /// The moderator’s user name.
+    /// The moderator's user name.
     /// </summary>
     public string? ModeratorUserName { get; set; }
 
     /// <summary> 
-    /// The status change applied to the terms. Possible options are: add_permittedremove_permittedadd_blockedremove_blocked
+    /// The status change applied to the terms. Possible values: - `add_permitted` - `remove_permitted` - `add_blocked` - `remove_blocked`
     /// </summary>
     public string? Action { get; set; }
 

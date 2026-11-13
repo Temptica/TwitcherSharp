@@ -119,7 +119,7 @@ public partial class TwitchExtensionTransaction : RefCounted, ITwitcherSharp<Twi
         }
         
         /// <summary> 
-        /// Contains details about the digital product’s cost. 
+        /// Contains details about the digital product's cost. 
         /// </summary>
         public partial class TwitchResponseCost : RefCounted, ITwitcherSharp<TwitchResponseCost>
         {

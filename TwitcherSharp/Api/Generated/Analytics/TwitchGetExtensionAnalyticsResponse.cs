@@ -26,7 +26,7 @@ public partial class TwitchGetExtensionAnalyticsResponse : RefCounted, ITwitcher
     {
         var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_extension_analytics.gd", "Response");
         if(Data != null) request.SetArray("data", Data);
-        if(Pagination != null) request.SetValue("pagination", Pagination);
+        if(Pagination != null) request.SetObject("pagination", Pagination);
         return request;
     }
 

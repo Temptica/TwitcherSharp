@@ -5,15 +5,12 @@ using ClassGenerator.GenObjects.EventSub;
 namespace ClassGenerator.Parsers;
 
 /// <summary>
-/// Mistakes of the EventSub reference tables that the parser cannot see, the same list as SCHEMA_CORRECTIONS of the
+/// Mistakes of the EventSub reference that the parser cannot see, the same list as SCHEMA_CORRECTIONS of the
 /// EventSub swagger generator (https://github.com/kanimaru/twitch-eventsub-swagger, generator.py) that twitcher is
 /// generated from. Every correction there is checked against the payloads Twitch sends; keep both lists in sync.
 /// </summary>
 public static class EventSubCorrections
 {
-    private const string FragmentTypeDescription =
-        "The type of message fragment. Possible values: text, emote, cheermote.";
-
     private abstract record Correction(string Component, string Path, string Evidence);
 
     private record Rename(string Component, string Path, string NewName, string Evidence)
@@ -25,6 +22,8 @@ public static class EventSubCorrections
     private record Add(string Component, string Path, string Type, string Description, string? After, string Evidence)
         : Correction(Component, Path, Evidence);
 
+    private record ToArray(string Component, string Path, string Evidence) : Correction(Component, Path, Evidence);
+
     private record SameAs(string Component, string Path, string Sibling, string Evidence)
         : Correction(Component, Path, Evidence);
 
@@ -33,27 +32,15 @@ public static class EventSubCorrections
     /// </summary>
     private static readonly Correction[] Corrections =
     [
-        new Rename("ChannelUnbanRequestResolveEvent", "moderator_id", "moderator_user_id", "docs example and Twitch CLI"),
-        new Rename("ChannelUnbanRequestResolveEvent", "moderator_login", "moderator_user_login",
-            "docs example and Twitch CLI"),
-        new Rename("ChannelUnbanRequestResolveEvent", "moderator_name", "moderator_user_name",
-            "docs example and Twitch CLI"),
-        new Add("ChannelChatNotificationEvent", "chatter_user_login", "string", "The chatter's login name.",
-            "chatter_user_name", "both docs examples"),
-        new SetType("ChannelChatNotificationEvent", "message.text", "string", "both docs examples"),
+        new Add("Transport", "secret", "string",
+            "The secret used to verify the signature. Specify this field only if method is set to webhook.", "callback",
+            "the transport of the subscription objects; twitch_es_transport.gd"),
+        new ToArray("DropEntitlementGrantEvent", "data", "twitch_es_drop_entitlement_grant.gd reads data as a list"),
         new SameAs("ChannelChatNotificationEvent", "shared_chat_unraid", "unraid", "shared chat docs example"),
         new SameAs("ChannelChatNotificationEvent", "shared_chat_bits_badge_tier", "bits_badge_tier",
             "shared chat docs example"),
         new SameAs("ChannelChatNotificationEvent", "shared_chat_charity_donation", "charity_donation",
             "shared chat docs example"),
-        new Add("ChannelChatUserMessageHoldEvent", "message.fragments.type", "string", FragmentTypeDescription, null,
-            "docs example"),
-        new Add("ChannelChatUserMessageUpdateEvent", "message.fragments.type", "string", FragmentTypeDescription, null,
-            "docs example"),
-        new SetType("ChannelSuspiciousUserMessageEvent", "message.fragments.cheermote.bits", "integer",
-            "docs example; the cheermote of every other message fragment"),
-        new SetType("ChannelSuspiciousUserMessageEvent", "message.fragments.cheermote.tier", "integer",
-            "docs example; the cheermote of every other message fragment"),
         ..new[] { "ChannelGuestStarSessionBeginEvent", "ChannelGuestStarSessionEndEvent" }.SelectMany(component =>
             new Correction[]
             {
@@ -108,6 +95,15 @@ public static class EventSubCorrections
                         setType.Type, field!.IsRequired);
                     if (typed.Type == field.Type) NoLongerNeeded(correction);
                     else Replace(component, field, typed);
+                    break;
+                case ToArray:
+                    var item = Required(field, correction);
+                    if (item.IsArray) NoLongerNeeded(correction);
+                    else Replace(component, item, new TwitchEventSubGenField(fieldName, item.Description, item.Type + "[]")
+                    {
+                        IsArray = true,
+                        TypedComponent = item.TypedComponent,
+                    });
                     break;
                 case Add add:
                     Insert(component, new TwitchEventSubGenField(fieldName, add.Description, add.Type), add.After);

@@ -37,7 +37,7 @@ public partial class TwitchGetEventSubSubscriptionsResponse<T> : RefCounted, ITw
         request.SetValue("total", Total);
         request.SetValue("total_cost", TotalCost);
         request.SetValue("max_total_cost", MaxTotalCost);
-        if(Pagination != null) request.SetValue("pagination", Pagination);
+        if(Pagination != null) request.SetObject("pagination", Pagination);
         return request;
     }
 

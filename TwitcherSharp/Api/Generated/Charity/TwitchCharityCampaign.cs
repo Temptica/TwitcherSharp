@@ -109,7 +109,7 @@ public partial class TwitchCharityCampaign : RefCounted, ITwitcherSharp<TwitchCh
     }
     
     /// <summary> 
-    /// The campaign’s fundraising goal. This field is **null** if the broadcaster has not defined a fundraising goal. 
+    /// The campaign's fundraising goal. If the broadcaster has not defined a fundraising goal, `value` is 0. 
     /// </summary>
     public partial class TwitchResponseTargetAmount : RefCounted, ITwitcherSharp<TwitchResponseTargetAmount>
     {

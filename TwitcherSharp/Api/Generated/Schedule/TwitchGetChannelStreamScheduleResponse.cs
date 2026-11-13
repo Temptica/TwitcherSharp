@@ -36,7 +36,7 @@ public partial class TwitchGetChannelStreamScheduleResponse : RefCounted, ITwitc
     }
     
     /// <summary> 
-    /// The broadcaster’s streaming schedule. 
+    /// The broadcaster's streaming schedule. 
     /// </summary>
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
@@ -73,7 +73,7 @@ public partial class TwitchGetChannelStreamScheduleResponse : RefCounted, ITwitc
             if(BroadcasterName != null) request.SetValue("broadcaster_name", BroadcasterName);
             if(BroadcasterLogin != null) request.SetValue("broadcaster_login", BroadcasterLogin);
             if(Vacation != null) request.SetObject("vacation", Vacation);
-            if(Pagination != null) request.SetValue("pagination", Pagination);
+            if(Pagination != null) request.SetObject("pagination", Pagination);
             return request;
         }
     

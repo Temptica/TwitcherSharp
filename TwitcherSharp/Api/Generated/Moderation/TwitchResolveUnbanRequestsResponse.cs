@@ -41,17 +41,17 @@ public partial class TwitchResolveUnbanRequestsResponse : RefCounted, ITwitcherS
         public string BroadcasterId { get; set; } = null!;
         public string BroadcasterLogin { get; set; } = null!;
         public string BroadcasterName { get; set; } = null!;
-        public string ModeratorId { get; set; } = null!;
-        public string ModeratorLogin { get; set; } = null!;
-        public string ModeratorName { get; set; } = null!;
+        public string? ModeratorId { get; set; }
+        public string? ModeratorLogin { get; set; }
+        public string? ModeratorName { get; set; }
         public string UserId { get; set; } = null!;
         public string UserLogin { get; set; } = null!;
         public string UserName { get; set; } = null!;
         public string Text { get; set; } = null!;
         public string Status { get; set; } = null!;
         public string CreatedAt { get; set; } = null!;
-        public string ResolvedAt { get; set; } = null!;
-        public string ResolutionText { get; set; } = null!;
+        public string? ResolvedAt { get; set; }
+        public string? ResolutionText { get; set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseData object.

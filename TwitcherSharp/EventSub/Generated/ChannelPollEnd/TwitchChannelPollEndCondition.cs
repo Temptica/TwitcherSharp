@@ -13,7 +13,7 @@ public partial class TwitchChannelPollEndCondition(string broadcasterUserId) : R
     public string Name => nameof(TwitchChannelPollEndCondition);
 
     /// <summary> 
-    /// The broadcaster user ID of the channel for which “poll end” notifications will be received.
+    /// The broadcaster user ID of the channel for which "poll end" notifications will be received.
     /// </summary>
     public string BroadcasterUserId { get; set; } = broadcasterUserId;
 

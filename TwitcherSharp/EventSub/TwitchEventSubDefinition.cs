@@ -108,27 +108,15 @@ public partial class TwitchEventSubDefinition() : RefCounted, ITwitcherSharp<Twi
         "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#automodmessagehold",
         "automod_message_hold");
 
-    public static readonly TwitchEventSubDefinition AutomodMessageHoldV2 = new(
-        TwitchEventSubDefinitionType.AutomodMessageHoldV2, "automod.message.hold", "2",
-        ["broadcaster_user_id", "moderator_user_id"], ["moderator:manage:automod"],
-        "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#automodmessagehold-v2",
-        "automod_message_hold");
-
     public static readonly TwitchEventSubDefinition AutomodMessageUpdate = new(
         TwitchEventSubDefinitionType.AutomodMessageUpdate, "automod.message.update", "1",
         ["broadcaster_user_id", "moderator_user_id"], ["moderator:manage:automod"],
         "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#automodmessageupdate",
         "automod_message_update");
 
-    public static readonly TwitchEventSubDefinition AutomodMessageUpdateV2 = new(
-        TwitchEventSubDefinitionType.AutomodMessageUpdateV2, "automod.message.update", "2",
-        ["broadcaster_user_id", "moderator_user_id"], ["moderator:manage:automod"],
-        "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#automodmessageupdate-v2",
-        "automod_message_update");
-
     public static readonly TwitchEventSubDefinition AutomodSettingsUpdate = new(
         TwitchEventSubDefinitionType.AutomodSettingsUpdate, "automod.settings.update", "1",
-        ["broadcaster_user_id", "moderator_user_id"], ["moderator:read:automod_settings"],
+        ["broadcaster_user_id", "moderator_user_id"], ["moderator:manage:automod_settings"],
         "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#automodsettingsupdate",
         "automod_settings_update");
 
@@ -137,12 +125,6 @@ public partial class TwitchEventSubDefinition() : RefCounted, ITwitcherSharp<Twi
         ["broadcaster_user_id", "moderator_user_id"], ["moderator:manage:automod"],
         "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#automodtermsupdate",
         "automod_terms_update");
-
-    public static readonly TwitchEventSubDefinition ChannelBitsUse = new(
-        TwitchEventSubDefinitionType.ChannelBitsUse, "channel.bits.use", "1",
-        ["broadcaster_user_id"], ["bits:read"],
-        "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelbitsuse",
-        "channel_bits_use");
 
     public static readonly TwitchEventSubDefinition ChannelUpdate = new(
         TwitchEventSubDefinitionType.ChannelUpdate, "channel.update", "2",
@@ -272,7 +254,7 @@ public partial class TwitchEventSubDefinition() : RefCounted, ITwitcherSharp<Twi
 
     public static readonly TwitchEventSubDefinition ChannelModerate = new(
         TwitchEventSubDefinitionType.ChannelModerate, "channel.moderate", "1",
-        ["broadcaster_user_id", "moderator_user_id"], ["moderator:read:blocked_terms", "moderator:manage:blocked_terms", "moderator:read:chat_settings", "moderator:manage:chat_settings", "moderator:read:unban_requests", "moderator:manage:unban_requests", "moderator:read:banned_users", "moderator:manage:banned_users", "moderator:read:chat_messages", "moderator:manage:chat_messages", "moderator:read:moderators", "moderator:read:vips"],
+        ["broadcaster_user_id", "moderator_user_id"], ["moderator:read:blocked_terms", "moderator:manage:blocked_terms", "moderator:read:chat_settings", "moderator:manage:chat_settings", "moderator:read:unban_requests", "moderator:manage:unban_requests", "moderator:read:banned_users", "moderator:manage:banned_users", "moderator:read:chat_messages", "moderator:manage:chat_messages", "moderator:read:warnings", "moderator:manage:warnings", "moderator:read:moderators", "moderator:read:vips"],
         "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelmoderate",
         "channel_moderate");
 
@@ -324,12 +306,6 @@ public partial class TwitchEventSubDefinition() : RefCounted, ITwitcherSharp<Twi
         "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelchannel_points_automatic_reward_redemptionadd",
         "channel_points_automatic_reward_redemption_add");
 
-    public static readonly TwitchEventSubDefinition ChannelChannelPointsAutomaticRewardRedemptionAddV2 = new(
-        TwitchEventSubDefinitionType.ChannelChannelPointsAutomaticRewardRedemptionAddV2, "channel.channel_points_automatic_reward_redemption.add", "2",
-        ["broadcaster_user_id"], ["channel:read:redemptions", "channel:manage:redemptions"],
-        "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelchannel_points_automatic_reward_redemptionadd-v2",
-        "channel_points_automatic_reward_redemption_add");
-
     public static readonly TwitchEventSubDefinition ChannelChannelPointsCustomRewardAdd = new(
         TwitchEventSubDefinitionType.ChannelChannelPointsCustomRewardAdd, "channel.channel_points_custom_reward.add", "1",
         ["broadcaster_user_id"], ["channel:read:redemptions", "channel:manage:redemptions"],
@@ -359,12 +335,6 @@ public partial class TwitchEventSubDefinition() : RefCounted, ITwitcherSharp<Twi
         ["broadcaster_user_id", "reward_id"], ["channel:read:redemptions", "channel:manage:redemptions"],
         "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelchannel_points_custom_reward_redemptionupdate",
         "channel_points_custom_reward_redemption_update");
-
-    public static readonly TwitchEventSubDefinition ChannelCustomPowerUpRedemptionAdd = new(
-        TwitchEventSubDefinitionType.ChannelCustomPowerUpRedemptionAdd, "channel.custom_power_up_redemption.add", "1",
-        ["broadcaster_user_id", "reward_id"], ["bits:read"],
-        "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelcustom_power_up_redemptionadd",
-        "channel_custom_power_up_redemption_add");
 
     public static readonly TwitchEventSubDefinition ChannelPollBegin = new(
         TwitchEventSubDefinitionType.ChannelPollBegin, "channel.poll.begin", "1",
@@ -590,7 +560,7 @@ public partial class TwitchEventSubDefinition() : RefCounted, ITwitcherSharp<Twi
 
     public static readonly TwitchEventSubDefinition UserUpdate = new(
         TwitchEventSubDefinitionType.UserUpdate, "user.update", "1",
-        ["user_id"], ["user:read:email"],
+        ["user_id"], [],
         "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#userupdate",
         "user_update");
 
@@ -600,31 +570,61 @@ public partial class TwitchEventSubDefinition() : RefCounted, ITwitcherSharp<Twi
         "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#userwhispermessage",
         "whisper_received");
 
+    public static readonly TwitchEventSubDefinition AutomodMessageHoldV2 = new(
+        TwitchEventSubDefinitionType.AutomodMessageHoldV2, "automod.message.hold", "2",
+        ["broadcaster_user_id", "moderator_user_id"], ["moderator:manage:automod"],
+        "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#automodmessagehold-v2",
+        "automod_message_hold");
+
+    public static readonly TwitchEventSubDefinition AutomodMessageUpdateV2 = new(
+        TwitchEventSubDefinitionType.AutomodMessageUpdateV2, "automod.message.update", "2",
+        ["broadcaster_user_id", "moderator_user_id"], ["moderator:manage:automod"],
+        "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#automodmessageupdate-v2",
+        "automod_message_update");
+
+    public static readonly TwitchEventSubDefinition ChannelBitsUse = new(
+        TwitchEventSubDefinitionType.ChannelBitsUse, "channel.bits.use", "1",
+        ["broadcaster_user_id"], ["bits:read"],
+        "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelbitsuse",
+        "channel_bits_use");
+
+    public static readonly TwitchEventSubDefinition ChannelChannelPointsAutomaticRewardRedemptionAddV2 = new(
+        TwitchEventSubDefinitionType.ChannelChannelPointsAutomaticRewardRedemptionAddV2, "channel.channel_points_automatic_reward_redemption.add", "2",
+        ["broadcaster_user_id"], ["channel:read:redemptions", "channel:manage:redemptions"],
+        "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelchannel_points_automatic_reward_redemptionadd-v2",
+        "channel_points_automatic_reward_redemption_add");
+
+    public static readonly TwitchEventSubDefinition ChannelCustomPowerUpRedemptionAdd = new(
+        TwitchEventSubDefinitionType.ChannelCustomPowerUpRedemptionAdd, "channel.custom_power_up_redemption.add", "1",
+        ["broadcaster_user_id", "reward_id"], ["bits:read"],
+        "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelcustom_power_up_redemptionadd",
+        "channel_custom_power_up_redemption_add");
+
     #endregion
 
     private static readonly List<TwitchEventSubDefinition> AllList =
     [
-        AutomodMessageHold, AutomodMessageHoldV2, AutomodMessageUpdate, AutomodMessageUpdateV2, AutomodSettingsUpdate,
-        AutomodTermsUpdate, ChannelBitsUse, ChannelUpdate, ChannelFollow, ChannelAdBreakBegin, ChannelChatClear,
-        ChannelChatClearUserMessages, ChannelChatMessage, ChannelChatMessageDelete, ChannelChatNotification,
-        ChannelChatSettingsUpdate, ChannelChatUserMessageHold, ChannelChatUserMessageUpdate, ChannelSubscribe,
-        ChannelSubscriptionEnd, ChannelSubscriptionGift, ChannelSubscriptionMessage, ChannelCheer, ChannelRaid,
-        ChannelBan, ChannelUnban, ChannelUnbanRequestCreate, ChannelUnbanRequestResolve, ChannelModerate,
-        ChannelModerateV2, ChannelModeratorAdd, ChannelModeratorRemove, ChannelGuestStarSessionBegin,
-        ChannelGuestStarSessionEnd, ChannelGuestStarGuestUpdate, ChannelGuestStarSettingsUpdate,
-        ChannelChannelPointsAutomaticRewardRedemptionAdd, ChannelChannelPointsAutomaticRewardRedemptionAddV2,
+        AutomodMessageHold, AutomodMessageUpdate, AutomodSettingsUpdate, AutomodTermsUpdate, ChannelUpdate,
+        ChannelFollow, ChannelAdBreakBegin, ChannelChatClear, ChannelChatClearUserMessages, ChannelChatMessage,
+        ChannelChatMessageDelete, ChannelChatNotification, ChannelChatSettingsUpdate, ChannelChatUserMessageHold,
+        ChannelChatUserMessageUpdate, ChannelSubscribe, ChannelSubscriptionEnd, ChannelSubscriptionGift,
+        ChannelSubscriptionMessage, ChannelCheer, ChannelRaid, ChannelBan, ChannelUnban, ChannelUnbanRequestCreate,
+        ChannelUnbanRequestResolve, ChannelModerate, ChannelModerateV2, ChannelModeratorAdd, ChannelModeratorRemove,
+        ChannelGuestStarSessionBegin, ChannelGuestStarSessionEnd, ChannelGuestStarGuestUpdate,
+        ChannelGuestStarSettingsUpdate, ChannelChannelPointsAutomaticRewardRedemptionAdd,
         ChannelChannelPointsCustomRewardAdd, ChannelChannelPointsCustomRewardUpdate,
         ChannelChannelPointsCustomRewardRemove, ChannelChannelPointsCustomRewardRedemptionAdd,
-        ChannelChannelPointsCustomRewardRedemptionUpdate, ChannelCustomPowerUpRedemptionAdd, ChannelPollBegin,
-        ChannelPollProgress, ChannelPollEnd, ChannelPredictionBegin, ChannelPredictionProgress, ChannelPredictionLock,
-        ChannelPredictionEnd, ChannelSuspiciousUserUpdate, ChannelSuspiciousUserMessage, ChannelVipAdd, ChannelVipRemove,
+        ChannelChannelPointsCustomRewardRedemptionUpdate, ChannelPollBegin, ChannelPollProgress, ChannelPollEnd,
+        ChannelPredictionBegin, ChannelPredictionProgress, ChannelPredictionLock, ChannelPredictionEnd,
+        ChannelSuspiciousUserUpdate, ChannelSuspiciousUserMessage, ChannelVipAdd, ChannelVipRemove,
         ChannelWarningAcknowledge, ChannelWarningSend, ChannelHypeTrainBegin, ChannelHypeTrainProgress,
         ChannelHypeTrainEnd, ChannelCharityCampaignDonate, ChannelCharityCampaignStart, ChannelCharityCampaignProgress,
         ChannelCharityCampaignStop, ChannelSharedChatBegin, ChannelSharedChatUpdate, ChannelSharedChatEnd,
         ChannelShieldModeBegin, ChannelShieldModeEnd, ChannelShoutoutCreate, ChannelShoutoutReceive,
         ConduitShardDisabled, DropEntitlementGrant, ExtensionBitsTransactionCreate, ChannelGoalBegin,
         ChannelGoalProgress, ChannelGoalEnd, StreamOnline, StreamOffline, UserAuthorizationGrant,
-        UserAuthorizationRevoke, UserUpdate, UserWhisperMessage
+        UserAuthorizationRevoke, UserUpdate, UserWhisperMessage, AutomodMessageHoldV2, AutomodMessageUpdateV2,
+        ChannelBitsUse, ChannelChannelPointsAutomaticRewardRedemptionAddV2, ChannelCustomPowerUpRedemptionAdd
     ];
 
     /// <summary>

@@ -11,7 +11,7 @@ public partial class TwitchExtensionBitsProduct : RefCounted, ITwitcherSharp<Twi
     public TwitchCost Cost { get => field ??= _data.Get<TwitchCost>("cost")!; set; } = null!;
     public bool InDevelopment { get; set; }
     public string DisplayName { get; set; } = null!;
-    public string Expiration { get; set; } = null!;
+    public string? Expiration { get; set; }
     public bool IsBroadcast { get; set; }
 
     /// <summary> 

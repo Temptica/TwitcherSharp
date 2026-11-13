@@ -30,7 +30,7 @@ public partial class TwitchGetChannelFollowersResponse : RefCounted, ITwitcherSh
     {
         var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_channel_followers.gd", "Response");
         if(Data != null) request.SetArray("data", Data);
-        if(Pagination != null) request.SetValue("pagination", Pagination);
+        if(Pagination != null) request.SetObject("pagination", Pagination);
         request.SetValue("total", Total);
         return request;
     }
@@ -84,7 +84,7 @@ public partial class TwitchGetChannelFollowersResponse : RefCounted, ITwitcherSh
     }
     
     /// <summary> 
-    /// The list of users that follow the specified broadcaster. The list is in descending order by `followed_at` (with the most recent follower first). The list is empty if nobody follows the broadcaster, the specified `user_id` isn’t in the follower list, the user access token is missing the **moderator:read:followers** scope, or the user isn’t the broadcaster or moderator for the channel. 
+    /// The list of users that follow the specified broadcaster. The list is in descending order by `followed_at` (with the most recent follower first). The list is empty if nobody follows the broadcaster, the specified _user\_id_ isn't in the follower list, the user access token is missing the **moderator:read:followers** scope, or the user isn't the broadcaster or moderator for the channel. 
     /// </summary>
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {

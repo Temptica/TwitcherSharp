@@ -85,7 +85,7 @@ public partial class TwitchUpdateConduitShardsBody : RefCounted, ITwitcherSharp<
         public partial class TwitchBodyTransport : RefCounted, ITwitcherSharp<TwitchBodyTransport>
         {
             private Variant _data;
-            public string? Method { get; set; }
+            public string Method { get; set; } = null!;
             public string? Callback { get; set; }
             public string? Secret { get; set; }
             public string? SessionId { get; set; }

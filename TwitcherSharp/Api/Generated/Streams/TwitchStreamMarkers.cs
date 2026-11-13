@@ -86,7 +86,7 @@ public partial class TwitchStreamMarkers : RefCounted, ITwitcherSharp<TwitchStre
         }
         
         /// <summary> 
-        /// The list of markers in this video. The list in ascending order by when the marker was created. 
+        /// The list of markers in this video. The list is in ascending order by the marker's position in the video (see `position_seconds`). 
         /// </summary>
         public partial class TwitchResponseMarkers : RefCounted, ITwitcherSharp<TwitchResponseMarkers>
         {

@@ -26,7 +26,7 @@ public partial class TwitchGetUnbanRequestsResponse : RefCounted, ITwitcherSharp
     {
         var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_unban_requests.gd", "Response");
         if(Data != null) request.SetArray("data", Data);
-        if(Pagination != null) request.SetValue("pagination", Pagination);
+        if(Pagination != null) request.SetObject("pagination", Pagination);
         return request;
     }
 
@@ -79,26 +79,26 @@ public partial class TwitchGetUnbanRequestsResponse : RefCounted, ITwitcherSharp
     }
     
     /// <summary> 
-    /// A list that contains information about the channel's unban requests. 
+    /// A list that contains information about the channel's unban requests. The list is empty if the user in *moderator_id* doesn't have permission to view the broadcaster's unban requests. Requests from users whose accounts are deleted or suspended aren't included, so a page may contain fewer than *first* items. 
     /// </summary>
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
         private Variant _data;
         public string Id { get; set; } = null!;
         public string BroadcasterId { get; set; } = null!;
-        public string BroadcasterName { get; set; } = null!;
         public string BroadcasterLogin { get; set; } = null!;
-        public string ModeratorId { get; set; } = null!;
-        public string ModeratorLogin { get; set; } = null!;
-        public string ModeratorName { get; set; } = null!;
+        public string BroadcasterName { get; set; } = null!;
+        public string? ModeratorId { get; set; }
+        public string? ModeratorLogin { get; set; }
+        public string? ModeratorName { get; set; }
         public string UserId { get; set; } = null!;
         public string UserLogin { get; set; } = null!;
         public string UserName { get; set; } = null!;
         public string Text { get; set; } = null!;
         public string Status { get; set; } = null!;
         public string CreatedAt { get; set; } = null!;
-        public string ResolvedAt { get; set; } = null!;
-        public string ResolutionText { get; set; } = null!;
+        public string? ResolvedAt { get; set; }
+        public string? ResolutionText { get; set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseData object.
@@ -110,8 +110,8 @@ public partial class TwitchGetUnbanRequestsResponse : RefCounted, ITwitcherSharp
             {
                 Id = data.ReadAsString("id"),
                 BroadcasterId = data.ReadAsString("broadcaster_id"),
-                BroadcasterName = data.ReadAsString("broadcaster_name"),
                 BroadcasterLogin = data.ReadAsString("broadcaster_login"),
+                BroadcasterName = data.ReadAsString("broadcaster_name"),
                 ModeratorId = data.ReadAsString("moderator_id"),
                 ModeratorLogin = data.ReadAsString("moderator_login"),
                 ModeratorName = data.ReadAsString("moderator_name"),
@@ -134,8 +134,8 @@ public partial class TwitchGetUnbanRequestsResponse : RefCounted, ITwitcherSharp
             var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_unban_requests.gd", "ResponseData");
             if(Id != null) request.SetValue("id", Id);
             if(BroadcasterId != null) request.SetValue("broadcaster_id", BroadcasterId);
-            if(BroadcasterName != null) request.SetValue("broadcaster_name", BroadcasterName);
             if(BroadcasterLogin != null) request.SetValue("broadcaster_login", BroadcasterLogin);
+            if(BroadcasterName != null) request.SetValue("broadcaster_name", BroadcasterName);
             if(ModeratorId != null) request.SetValue("moderator_id", ModeratorId);
             if(ModeratorLogin != null) request.SetValue("moderator_login", ModeratorLogin);
             if(ModeratorName != null) request.SetValue("moderator_name", ModeratorName);

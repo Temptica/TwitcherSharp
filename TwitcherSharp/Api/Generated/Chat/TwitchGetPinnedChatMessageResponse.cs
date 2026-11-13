@@ -49,9 +49,9 @@ public partial class TwitchGetPinnedChatMessageResponse : RefCounted, ITwitcherS
         public string PinnedByUserId { get; set; } = null!;
         public string PinnedByUserLogin { get; set; } = null!;
         public string PinnedByUserName { get; set; } = null!;
-        public TwitchResponseMessage Message { get => field ??= _data.Get<TwitchResponseMessage>("message")!; set; } = null!;
+        public TwitchResponseMessage? Message { get => field ??= _data.Get<TwitchResponseMessage>("message"); set; }
         public string StartsAt { get; set; } = null!;
-        public string EndsAt { get; set; } = null!;
+        public string? EndsAt { get; set; }
         public string UpdatedAt { get; set; } = null!;
     
         /// <summary> 
@@ -105,7 +105,7 @@ public partial class TwitchGetPinnedChatMessageResponse : RefCounted, ITwitcherS
         }
         
         /// <summary> 
-        /// The pinned message content. 
+        /// The pinned message content. Null if the content isn't available. 
         /// </summary>
         public partial class TwitchResponseMessage : RefCounted, ITwitcherSharp<TwitchResponseMessage>
         {
@@ -151,16 +151,16 @@ public partial class TwitchGetPinnedChatMessageResponse : RefCounted, ITwitcherS
                 private Variant _data;
                 public string Type { get; set; } = null!;
                 public string Text { get; set; } = null!;
-                public Variant Cheermote { get; set; }
+                public Variant? Cheermote { get; set; }
                 public string Prefix { get; set; } = null!;
                 public int Bits { get; set; }
                 public int Tier { get; set; }
-                public Variant Emote { get; set; }
+                public Variant? Emote { get; set; }
                 public string Id { get; set; } = null!;
                 public string EmoteSetId { get; set; } = null!;
                 public string OwnerId { get; set; } = null!;
                 public string[] Format { get; set; } = null!;
-                public Variant Mention { get; set; }
+                public Variant? Mention { get; set; }
                 public string UserId { get; set; } = null!;
                 public string UserLogin { get; set; } = null!;
                 public string UserName { get; set; } = null!;
@@ -199,16 +199,16 @@ public partial class TwitchGetPinnedChatMessageResponse : RefCounted, ITwitcherS
                     var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_pinned_chat_message.gd", "ResponseFragments");
                     if(Type != null) request.SetValue("type", Type);
                     if(Text != null) request.SetValue("text", Text);
-                    request.SetValue("cheermote", Cheermote);
+                    if(Cheermote.HasValue) request.SetValue("cheermote", Cheermote.Value);
                     if(Prefix != null) request.SetValue("prefix", Prefix);
                     request.SetValue("bits", Bits);
                     request.SetValue("tier", Tier);
-                    request.SetValue("emote", Emote);
+                    if(Emote.HasValue) request.SetValue("emote", Emote.Value);
                     if(Id != null) request.SetValue("id", Id);
                     if(EmoteSetId != null) request.SetValue("emote_set_id", EmoteSetId);
                     if(OwnerId != null) request.SetValue("owner_id", OwnerId);
                     if(Format != null) request.SetValue("format", new Godot.Collections.Array<string>(Format));
-                    request.SetValue("mention", Mention);
+                    if(Mention.HasValue) request.SetValue("mention", Mention.Value);
                     if(UserId != null) request.SetValue("user_id", UserId);
                     if(UserLogin != null) request.SetValue("user_login", UserLogin);
                     if(UserName != null) request.SetValue("user_name", UserName);

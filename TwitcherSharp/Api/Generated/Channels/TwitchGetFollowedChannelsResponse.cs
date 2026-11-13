@@ -30,7 +30,7 @@ public partial class TwitchGetFollowedChannelsResponse : RefCounted, ITwitcherSh
     {
         var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_followed_channels.gd", "Response");
         if(Data != null) request.SetArray("data", Data);
-        if(Pagination != null) request.SetValue("pagination", Pagination);
+        if(Pagination != null) request.SetObject("pagination", Pagination);
         request.SetValue("total", Total);
         return request;
     }
@@ -84,7 +84,7 @@ public partial class TwitchGetFollowedChannelsResponse : RefCounted, ITwitcherSh
     }
     
     /// <summary> 
-    /// The list of broadcasters that the user follows. The list is in descending order by `followed_at` (with the most recently followed broadcaster first). The list is empty if the user doesn’t follow anyone. 
+    /// The list of broadcasters that the user follows. The list is in descending order by `followed_at` (with the most recently followed broadcaster first). The list is empty if the user doesn't follow anyone. 
     /// </summary>
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {

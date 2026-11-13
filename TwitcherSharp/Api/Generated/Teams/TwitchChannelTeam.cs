@@ -10,12 +10,12 @@ public partial class TwitchChannelTeam : RefCounted, ITwitcherSharp<TwitchChanne
     public string BroadcasterId { get; set; } = null!;
     public string BroadcasterLogin { get; set; } = null!;
     public string BroadcasterName { get; set; } = null!;
-    public string BackgroundImageUrl { get; set; } = null!;
-    public string Banner { get; set; } = null!;
-    public string CreatedAt { get; set; } = null!;
-    public string UpdatedAt { get; set; } = null!;
+    public string? BackgroundImageUrl { get; set; }
+    public string? Banner { get; set; }
+    public string? CreatedAt { get; set; }
+    public string? UpdatedAt { get; set; }
     public string Info { get; set; } = null!;
-    public string ThumbnailUrl { get; set; } = null!;
+    public string? ThumbnailUrl { get; set; }
     public string TeamName { get; set; } = null!;
     public string TeamDisplayName { get; set; } = null!;
     public string Id { get; set; } = null!;

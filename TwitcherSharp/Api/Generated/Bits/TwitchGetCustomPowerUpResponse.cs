@@ -36,7 +36,7 @@ public partial class TwitchGetCustomPowerUpResponse : RefCounted, ITwitcherSharp
     }
     
     /// <summary> 
-    /// A list of custom Power-ups. The list is in ascending order by `id`. If the broadcaster hasn’t created custom Power-ups, the list is empty. 
+    /// A list of custom Power-ups. The list is in ascending order by `id`. If the broadcaster hasn't created custom Power-ups, the list is empty. 
     /// </summary>
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
@@ -48,7 +48,7 @@ public partial class TwitchGetCustomPowerUpResponse : RefCounted, ITwitcherSharp
         public string Title { get; set; } = null!;
         public string Prompt { get; set; } = null!;
         public int Bits { get; set; }
-        public TwitchResponseImage Image { get => field ??= _data.Get<TwitchResponseImage>("image")!; set; } = null!;
+        public TwitchResponseImage? Image { get => field ??= _data.Get<TwitchResponseImage>("image"); set; }
         public TwitchResponseDefaultImage DefaultImage { get => field ??= _data.Get<TwitchResponseDefaultImage>("default_image")!; set; } = null!;
         public string BackgroundColor { get; set; } = null!;
         public bool IsEnabled { get; set; }
@@ -58,8 +58,8 @@ public partial class TwitchGetCustomPowerUpResponse : RefCounted, ITwitcherSharp
         public TwitchResponseGlobalCooldownSetting GlobalCooldownSetting { get => field ??= _data.Get<TwitchResponseGlobalCooldownSetting>("global_cooldown_setting")!; set; } = null!;
         public bool IsPaused { get; set; }
         public bool IsInStock { get; set; }
-        public int RedemptionsRedeemedCurrentStream { get; set; }
-        public string CooldownExpiresAt { get; set; } = null!;
+        public int? RedemptionsRedeemedCurrentStream { get; set; }
+        public string? CooldownExpiresAt { get; set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseData object.
@@ -109,7 +109,7 @@ public partial class TwitchGetCustomPowerUpResponse : RefCounted, ITwitcherSharp
             if(GlobalCooldownSetting != null) request.SetObject("global_cooldown_setting", GlobalCooldownSetting);
             request.SetValue("is_paused", IsPaused);
             request.SetValue("is_in_stock", IsInStock);
-            request.SetValue("redemptions_redeemed_current_stream", RedemptionsRedeemedCurrentStream);
+            if(RedemptionsRedeemedCurrentStream.HasValue) request.SetValue("redemptions_redeemed_current_stream", RedemptionsRedeemedCurrentStream.Value);
             if(CooldownExpiresAt != null) request.SetValue("cooldown_expires_at", CooldownExpiresAt);
             return request;
         }
@@ -122,7 +122,7 @@ public partial class TwitchGetCustomPowerUpResponse : RefCounted, ITwitcherSharp
         }
         
         /// <summary> 
-        /// A set of custom images for the custom Power-up. This field is **null** if the broadcaster didn’t upload images. 
+        /// A set of custom images for the custom Power-up. This field is **null** if the broadcaster didn't upload images. 
         /// </summary>
         public partial class TwitchResponseImage : RefCounted, ITwitcherSharp<TwitchResponseImage>
         {

@@ -36,7 +36,7 @@ public partial class TwitchSnoozeNextAdResponse : RefCounted, ITwitcherSharp<Twi
     }
     
     /// <summary> 
-    /// A list that contains information about the channel’s snoozes and next upcoming ad after successfully snoozing. 
+    /// A list that contains information about the channel's snoozes and next upcoming ad after successfully snoozing. 
     /// </summary>
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {

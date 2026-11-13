@@ -6,7 +6,7 @@ namespace TwitcherSharp.Api.Generated.Extensions;
 
 
 /// <summary> 
-/// A dictionary that contains URLs to different sizes of the default icon. The dictionary’s key identifies the icon’s size (for example, 24x24), and the dictionary’s value contains the URL to the icon. 
+/// A dictionary that contains URLs to different sizes of the default icon. The dictionary's key identifies the icon's size (for example, 24x24), and the dictionary's value contains the URL to the icon. 
 /// </summary>
 public partial class TwitchExtensionIconUrls : RefCounted, ITwitcherSharp<TwitchExtensionIconUrls>
 {

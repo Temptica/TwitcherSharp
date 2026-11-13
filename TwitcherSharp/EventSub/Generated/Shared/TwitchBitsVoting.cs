@@ -11,7 +11,7 @@ public partial class TwitchBitsVoting : RefCounted, ITwitcherSharpEventSub<Twitc
     private Variant _data;
     
     /// <summary> 
-    /// Not used; will be set to false.
+    /// Not used; will be set to **false**.
     /// </summary>
     public bool IsEnabled { get; set; }
 

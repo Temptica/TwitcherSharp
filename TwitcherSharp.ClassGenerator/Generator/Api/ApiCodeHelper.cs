@@ -1,4 +1,4 @@
-using System.Text;
+﻿using System.Text;
 using ClassGenerator.Extensions;
 using ClassGenerator.GenObjects.Api;
 
@@ -391,7 +391,7 @@ public static class ApiCodeHelper
                     }
 
                     code.AppendIndentedLine($"if({field.Name} != null) " + (
-                            field.Type == "Object"
+                            field.IsTyped
                                 ? $"request.SetObject(\"{field.GodotName}\", {field.Name});"
                                 : $"request.SetValue(\"{field.GodotName}\", {field.Name});"),
                         2);

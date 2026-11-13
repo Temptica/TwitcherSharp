@@ -43,7 +43,7 @@ public partial class TwitchGetBitsLeaderboardResponse : RefCounted, ITwitcherSha
     }
     
     /// <summary> 
-    /// The reporting window’s start and end dates, in RFC3339 format. The dates are calculated by using the _started\_at_ and _period_ query parameters. If you don’t specify the _started\_at_ query parameter, the fields contain empty strings. 
+    /// The reporting window's start and end dates, in RFC3339 format. The dates are calculated by using the *started_at* and *period* query parameters. If you don't specify the *started_at* query parameter, the fields contain empty strings. 
     /// </summary>
     public partial class TwitchResponseDateRange : RefCounted, ITwitcherSharp<TwitchResponseDateRange>
     {

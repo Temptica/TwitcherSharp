@@ -105,7 +105,7 @@ public class TwitchEventSubDefinitionGenerator
                                                     /// The type of an event by its value and version; twitcher's own numbers differ from TwitchEventSubDefinitionType.
                                                     /// </summary>
                                                     public static TwitchEventSubDefinitionType? FindType(StringName value, StringName version) =>
-                                                        All.FirstOrDefault(definition => definition.Value == value && definition.Version == version)?.Type;
+                                                        All.FirstOrDefault(definition => definition.Value.Value == value && definition.Value.Version == version).Key;
 
                                                     private const string basePath = "res://addons/twitcher/generated_eventsub/twitch_es_";
 
@@ -126,10 +126,17 @@ public class TwitchEventSubDefinitionGenerator
                                                 {{Definitions}}
                                                     #endregion
 
-                                                    public static readonly List<TwitchEventSubDefinition> All =
+                                                    private static readonly List<TwitchEventSubDefinition> AllList =
                                                     [
                                                         {{AllList}}
                                                     ];
+
+                                                    /// <summary>
+                                                    /// All supported subscriptions, keyed by their <see cref="TwitchEventSubDefinitionType"/> to mirror
+                                                    /// twitcher's <c>TwitchEventsubDefinition.ALL</c> dictionary.
+                                                    /// </summary>
+                                                    public static readonly Dictionary<TwitchEventSubDefinitionType, TwitchEventSubDefinition> All =
+                                                        AllList.ToDictionary(x => x.Type);
                                                 }
                                                 """;
 
@@ -141,12 +148,13 @@ public class TwitchEventSubDefinitionGenerator
         var enumOrder = ReadGdTypeOrder(gdDefinitionScript);
         var ordered = definitions
             .OrderBy(d => enumOrder.TryGetValue(NormalizeName(d.EnumName), out var index) ? index : int.MaxValue)
+            .ThenBy(d => d.EnumName, StringComparer.Ordinal)
             .ToList();
         foreach (var missing in definitions.Where(d => !enumOrder.ContainsKey(NormalizeName(d.EnumName))))
             Console.WriteLine($"Warning: '{missing.EnumName}' is not in the GDScript Type enum, its int value won't match");
 
         File.WriteAllText(Path.Combine(eventSubDir, "TwitchEventSubDefinitionType.cs"), GenerateTypeEnum(ordered) + "\n");
-        File.WriteAllText(Path.Combine(eventSubDir, "TwitchEventSubDefinition.cs"), GenerateDefinition(definitions) + "\n");
+        File.WriteAllText(Path.Combine(eventSubDir, "TwitchEventSubDefinition.cs"), GenerateDefinition(ordered) + "\n");
     }
 
     /// <summary>Index of every value in the GDScript <c>enum Type { ... }</c>, keyed by <see cref="NormalizeName"/>.</summary>

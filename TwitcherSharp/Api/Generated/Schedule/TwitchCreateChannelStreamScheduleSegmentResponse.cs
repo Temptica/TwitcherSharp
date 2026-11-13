@@ -36,7 +36,7 @@ public partial class TwitchCreateChannelStreamScheduleSegmentResponse : RefCount
     }
     
     /// <summary> 
-    /// The broadcaster’s streaming scheduled. 
+    /// The broadcaster's streaming scheduled. 
     /// </summary>
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {

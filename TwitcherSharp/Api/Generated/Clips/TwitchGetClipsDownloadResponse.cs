@@ -36,14 +36,14 @@ public partial class TwitchGetClipsDownloadResponse : RefCounted, ITwitcherSharp
     }
     
     /// <summary> 
-    /// List of clips and their download URLs. 
+    /// List of clips and their download URLs. Clips that weren't found, that the editor may not access, or that belong to a different broadcaster are left out of the list. 
     /// </summary>
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
         private Variant _data;
         public string ClipId { get; set; } = null!;
-        public string LandscapeDownloadUrl { get; set; } = null!;
-        public string PortraitDownloadUrl { get; set; } = null!;
+        public string? LandscapeDownloadUrl { get; set; }
+        public string? PortraitDownloadUrl { get; set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseData object.

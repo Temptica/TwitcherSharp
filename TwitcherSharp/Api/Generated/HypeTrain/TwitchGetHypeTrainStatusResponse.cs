@@ -40,7 +40,7 @@ public partial class TwitchGetHypeTrainStatusResponse : RefCounted, ITwitcherSha
     }
     
     /// <summary> 
-    /// A list that contains information related to the channel’s Hype Train. 
+    /// A list that contains information related to the channel's Hype Train. 
     /// </summary>
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {
@@ -245,7 +245,7 @@ public partial class TwitchGetHypeTrainStatusResponse : RefCounted, ITwitcherSha
     }
     
     /// <summary> 
-    /// An object with information about the channel’s Hype Train records. Null if a Hype Train has not occurred. 
+    /// An object with information about the channel's Hype Train records. Null if a Hype Train has not occurred. 
     /// </summary>
     public partial class TwitchResponseAllTimeHigh : RefCounted, ITwitcherSharp<TwitchResponseAllTimeHigh>
     {
@@ -290,7 +290,7 @@ public partial class TwitchGetHypeTrainStatusResponse : RefCounted, ITwitcherSha
     }
     
     /// <summary> 
-    /// An object with information about the channel’s shared Hype Train records. Null if a Hype Train has not occurred. 
+    /// An object with information about the channel's shared Hype Train records. Null if the channel hasn't taken part in a shared Hype Train. 
     /// </summary>
     public partial class TwitchResponseSharedAllTimeHigh : RefCounted, ITwitcherSharp<TwitchResponseSharedAllTimeHigh>
     {

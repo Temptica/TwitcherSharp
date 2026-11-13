@@ -46,12 +46,12 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
     public string? Id { get; set; }
 
     /// <summary> 
-    /// 
+    /// An object that contains the reward information.
     /// </summary>
     public TwitchReward? Reward { get => field ??= _data.Get<TwitchReward>("reward"); set; }
 
     /// <summary> 
-    /// 
+    /// An object that contains the user message and emote information needed to recreate the message.
     /// </summary>
     public TwitchMessage? Message { get => field ??= _data.Get<TwitchMessage>("message"); set; }
 
@@ -111,7 +111,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
         private Variant _data;
         
         /// <summary> 
-        /// The type of reward. One of:  single_message_bypass_sub_modesend_highlighted_messagerandom_sub_emote_unlockchosen_sub_emote_unlockchosen_modified_sub_emote_unlock
+        /// The type of reward. Possible values: - `single_message_bypass_sub_mode` - `send_highlighted_message` - `random_sub_emote_unlock` - `chosen_sub_emote_unlock` - `chosen_modified_sub_emote_unlock`
         /// </summary>
         public string? Type { get; set; }
     
@@ -121,7 +121,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
         public int ChannelPoints { get; set; }
     
         /// <summary> 
-        /// Optional. Emote associated with the reward.
+        /// Emote associated with the reward.
         /// </summary>
         public TwitchEmote? Emote { get => field ??= _data.Get<TwitchEmote>("emote"); set; }
     
@@ -260,12 +260,12 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddV2Event : Re
             public string? Text { get; set; }
         
             /// <summary> 
-            /// The type of message fragment. Possible values are: textemote
+            /// The type of message fragment. Possible values: - `text` - `emote`
             /// </summary>
             public string? Type { get; set; }
         
             /// <summary> 
-            /// Optional. The metadata pertaining to the emote.
+            /// The metadata pertaining to the emote.
             /// </summary>
             public TwitchEmote? Emote { get => field ??= _data.Get<TwitchEmote>("emote"); set; }
         

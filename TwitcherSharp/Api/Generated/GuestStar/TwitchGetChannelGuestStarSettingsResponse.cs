@@ -11,7 +11,7 @@ public partial class TwitchGetChannelGuestStarSettingsResponse : RefCounted, ITw
     public int SlotCount { get; set; }
     public bool IsBrowserSourceAudioEnabled { get; set; }
     public string GroupLayout { get; set; } = null!;
-    public string BrowserSourceToken { get; set; } = null!;
+    public string? BrowserSourceToken { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetChannelGuestStarSettingsResponse object.

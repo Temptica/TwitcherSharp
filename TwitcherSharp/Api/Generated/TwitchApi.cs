@@ -6,16 +6,16 @@ using TwitcherSharp.Lib.Http;
 using TwitcherSharp.Api.Generated.Ads;
 using TwitcherSharp.Api.Generated.Analytics;
 using TwitcherSharp.Api.Generated.Bits;
-using TwitcherSharp.Api.Generated.Channels;
+using TwitcherSharp.Api.Generated.CCLs;
 using TwitcherSharp.Api.Generated.ChannelPoints;
+using TwitcherSharp.Api.Generated.Channels;
 using TwitcherSharp.Api.Generated.Charity;
 using TwitcherSharp.Api.Generated.Chat;
 using TwitcherSharp.Api.Generated.Clips;
 using TwitcherSharp.Api.Generated.Conduits;
-using TwitcherSharp.Api.Generated.CCLs;
 using TwitcherSharp.Api.Generated.Entitlements;
-using TwitcherSharp.Api.Generated.Extensions;
 using TwitcherSharp.Api.Generated.EventSub;
+using TwitcherSharp.Api.Generated.Extensions;
 using TwitcherSharp.Api.Generated.Games;
 using TwitcherSharp.Api.Generated.Goals;
 using TwitcherSharp.Api.Generated.GuestStar;
@@ -28,7 +28,6 @@ using TwitcherSharp.Api.Generated.Schedule;
 using TwitcherSharp.Api.Generated.Search;
 using TwitcherSharp.Api.Generated.Streams;
 using TwitcherSharp.Api.Generated.Subscriptions;
-using TwitcherSharp.Api.Generated.Tags;
 using TwitcherSharp.Api.Generated.Teams;
 using TwitcherSharp.Api.Generated.Users;
 using TwitcherSharp.Api.Generated.Videos;
@@ -112,20 +111,9 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Starts a commercial on the specified channel.
-    /// </summary>
-    /// <param name="body"><see cref="TwitchStartCommercialBody"/></param>
-    /// <returns><see cref="TwitchStartCommercialResponse"/></returns>
-    public async Task<TwitchStartCommercialResponse> StartCommercial(TwitchStartCommercialBody body)
-    {
-        using var bodyArg = GodotObjectExtension.ToVariant(body);
-        return await _data!.CallAsync<TwitchStartCommercialResponse>("start_commercial", bodyArg); 
-    }
-
-    /// <summary>
     /// Returns ad schedule related information.
     /// </summary>
-    /// <param name="broadcasterId">Provided `broadcaster_id` must match the `user_id` in the auth token.</param>
+    /// <param name="broadcasterId">Provided _broadcaster_id_ must match the `user_id` in the authentication token.</param>
     /// <returns><see cref="TwitchGetAdScheduleResponse"/></returns>
     public async Task<TwitchGetAdScheduleResponse> GetAdSchedule(string broadcasterId)
     {
@@ -135,11 +123,22 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <summary>
     /// Pushes back the timestamp of the upcoming automatic mid-roll ad by 5 minutes.
     /// </summary>
-    /// <param name="broadcasterId">Provided `broadcaster_id` must match the `user_id` in the auth token.</param>
+    /// <param name="broadcasterId">Provided _broadcaster_id_ must match the `user_id` in the authentication token.</param>
     /// <returns><see cref="TwitchSnoozeNextAdResponse"/></returns>
     public async Task<TwitchSnoozeNextAdResponse> SnoozeNextAd(string broadcasterId)
     {
         return await _data!.CallAsync<TwitchSnoozeNextAdResponse>("snooze_next_ad", broadcasterId); 
+    }
+
+    /// <summary>
+    /// Starts a commercial on the specified channel.
+    /// </summary>
+    /// <param name="body"><see cref="TwitchStartCommercialBody"/></param>
+    /// <returns><see cref="TwitchStartCommercialResponse"/></returns>
+    public async Task<TwitchStartCommercialResponse> StartCommercial(TwitchStartCommercialBody body)
+    {
+        using var bodyArg = GodotObjectExtension.ToVariant(body);
+        return await _data!.CallAsync<TwitchStartCommercialResponse>("start_commercial", bodyArg); 
     }
 
     /// <summary>
@@ -165,17 +164,6 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Gets the Bits leaderboard for the authenticated broadcaster.
-    /// </summary>
-    /// <param name="opt"><see cref="TwitchGetBitsLeaderboardOpt"/></param>
-    /// <returns><see cref="TwitchGetBitsLeaderboardResponse"/></returns>
-    public async Task<TwitchGetBitsLeaderboardResponse> GetBitsLeaderboard(TwitchGetBitsLeaderboardOpt? opt = null)
-    {
-        using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
-        return await _data!.CallAsync<TwitchGetBitsLeaderboardResponse>("get_bits_leaderboard", optArg); 
-    }
-
-    /// <summary>
     /// Gets a list of Cheermotes that users can use to cheer Bits.
     /// </summary>
     /// <param name="opt"><see cref="TwitchGetCheermotesOpt"/></param>
@@ -187,7 +175,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// NEW Gets a list of custom Power-ups that the specified broadcaster created.
+    /// Gets a list of custom Power-ups that the specified broadcaster created.
     /// </summary>
     /// <param name="opt"><see cref="TwitchGetCustomPowerUpOpt"/></param>
     /// <param name="broadcasterId">The ID of the broadcaster whose custom Power-ups you want to get. This ID must match the user ID found in the OAuth token.</param>
@@ -199,7 +187,18 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Gets an extension’s list of transactions.
+    /// Gets the Bits leaderboard for the authenticated broadcaster.
+    /// </summary>
+    /// <param name="opt"><see cref="TwitchGetBitsLeaderboardOpt"/></param>
+    /// <returns><see cref="TwitchGetBitsLeaderboardResponse"/></returns>
+    public async Task<TwitchGetBitsLeaderboardResponse> GetBitsLeaderboard(TwitchGetBitsLeaderboardOpt? opt = null)
+    {
+        using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
+        return await _data!.CallAsync<TwitchGetBitsLeaderboardResponse>("get_bits_leaderboard", optArg); 
+    }
+
+    /// <summary>
+    /// Gets an extension's list of transactions.
     /// </summary>
     /// <param name="opt"><see cref="TwitchGetExtensionTransactionsOpt"/></param>
     /// <param name="extensionId">The ID of the extension whose list of transactions you want to get.</param>
@@ -211,82 +210,14 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Gets information about one or more channels.
+    /// Gets information about Twitch content classification labels.
     /// </summary>
-    /// <param name="broadcasterId">The ID of the broadcaster whose channel you want to get. To specify more than one ID, include this parameter for each broadcaster you want to get. For example, `broadcaster_id=1234&broadcaster_id=5678`. You may specify a maximum of 100 IDs. The API ignores duplicate IDs and IDs that are not found.</param>
-    /// <returns><see cref="TwitchGetChannelInformationResponse"/></returns>
-    public async Task<TwitchGetChannelInformationResponse> GetChannelInformation(string[] broadcasterId)
-    {
-        return await _data!.CallAsync<TwitchGetChannelInformationResponse>("get_channel_information", new Godot.Collections.Array<string>(broadcasterId)); 
-    }
-
-    /// <summary>
-    /// Updates a channel’s properties.
-    /// </summary>
-    /// <param name="body"><see cref="TwitchModifyChannelInformationBody"/></param>
-    /// <param name="broadcasterId">The ID of the broadcaster whose channel you want to update. This ID must match the user ID in the user access token.</param>
-    /// <returns><see cref="ResponseData"/></returns>
-    public async Task<ResponseData> ModifyChannelInformation(TwitchModifyChannelInformationBody body, string broadcasterId)
-    {
-        using var bodyArg = GodotObjectExtension.ToVariant(body);
-        return await _data!.CallAsync<ResponseData>("modify_channel_information", bodyArg, broadcasterId); 
-    }
-
-    /// <summary>
-    /// Gets the broadcaster’s list editors.
-    /// </summary>
-    /// <param name="broadcasterId">The ID of the broadcaster that owns the channel. This ID must match the user ID in the access token.</param>
-    /// <returns><see cref="TwitchGetChannelEditorsResponse"/></returns>
-    public async Task<TwitchGetChannelEditorsResponse> GetChannelEditors(string broadcasterId)
-    {
-        return await _data!.CallAsync<TwitchGetChannelEditorsResponse>("get_channel_editors", broadcasterId); 
-    }
-
-    /// <summary>
-    /// Gets a list of broadcasters that the specified user follows. You can also use this endpoint to see whether a user follows a specific broadcaster.
-    /// </summary>
-    /// <param name="opt"><see cref="TwitchGetFollowedChannelsOpt"/></param>
-    /// <param name="userId">A user’s ID. Returns the list of broadcasters that this user follows. This ID must match the user ID in the user OAuth token.</param>
-    /// <returns><see cref="TwitchGetFollowedChannelsResponse"/></returns>
-    public async Task<TwitchGetFollowedChannelsResponse> GetFollowedChannels(string userId, TwitchGetFollowedChannelsOpt? opt = null)
+    /// <param name="opt"><see cref="TwitchGetContentClassificationLabelsOpt"/></param>
+    /// <returns><see cref="TwitchGetContentClassificationLabelsResponse"/></returns>
+    public async Task<TwitchGetContentClassificationLabelsResponse> GetContentClassificationLabels(TwitchGetContentClassificationLabelsOpt? opt = null)
     {
         using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
-        return await _data!.CallAsync<TwitchGetFollowedChannelsResponse>("get_followed_channels", optArg, userId); 
-    }
-
-    /// <summary>
-    /// Gets a list of users that follow the specified broadcaster. You can also use this endpoint to see whether a specific user follows the broadcaster.
-    /// </summary>
-    /// <param name="opt"><see cref="TwitchGetChannelFollowersOpt"/></param>
-    /// <param name="broadcasterId">The broadcaster’s ID. Returns the list of users that follow this broadcaster.</param>
-    /// <returns><see cref="TwitchGetChannelFollowersResponse"/></returns>
-    public async Task<TwitchGetChannelFollowersResponse> GetChannelFollowers(string broadcasterId, TwitchGetChannelFollowersOpt? opt = null)
-    {
-        using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
-        return await _data!.CallAsync<TwitchGetChannelFollowersResponse>("get_channel_followers", optArg, broadcasterId); 
-    }
-
-    /// <summary>
-    /// Creates a Custom Reward in the broadcaster’s channel.
-    /// </summary>
-    /// <param name="body"><see cref="TwitchCreateCustomRewardsBody"/></param>
-    /// <param name="broadcasterId">The ID of the broadcaster to add the custom reward to. This ID must match the user ID found in the OAuth token.</param>
-    /// <returns><see cref="TwitchCreateCustomRewardsResponse"/></returns>
-    public async Task<TwitchCreateCustomRewardsResponse> CreateCustomRewards(TwitchCreateCustomRewardsBody body, string broadcasterId)
-    {
-        using var bodyArg = GodotObjectExtension.ToVariant(body);
-        return await _data!.CallAsync<TwitchCreateCustomRewardsResponse>("create_custom_rewards", bodyArg, broadcasterId); 
-    }
-
-    /// <summary>
-    /// Deletes a custom reward that the broadcaster created.
-    /// </summary>
-    /// <param name="broadcasterId">The ID of the broadcaster that created the custom reward. This ID must match the user ID found in the OAuth token.</param>
-    /// <param name="id">The ID of the custom reward to delete.</param>
-    /// <returns><see cref="ResponseData"/></returns>
-    public async Task<ResponseData> DeleteCustomReward(string broadcasterId, string id)
-    {
-        return await _data!.CallAsync<ResponseData>("delete_custom_reward", broadcasterId, id); 
+        return await _data!.CallAsync<TwitchGetContentClassificationLabelsResponse>("get_content_classification_labels", optArg); 
     }
 
     /// <summary>
@@ -302,16 +233,39 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
+    /// Creates a Custom Reward in the broadcaster's channel.
+    /// </summary>
+    /// <param name="body"><see cref="TwitchCreateCustomRewardsBody"/></param>
+    /// <param name="broadcasterId">The ID of the broadcaster to add the custom reward to. This ID must match the user ID found in the OAuth token.</param>
+    /// <returns><see cref="TwitchCreateCustomRewardsResponse"/></returns>
+    public async Task<TwitchCreateCustomRewardsResponse> CreateCustomRewards(TwitchCreateCustomRewardsBody body, string broadcasterId)
+    {
+        using var bodyArg = GodotObjectExtension.ToVariant(body);
+        return await _data!.CallAsync<TwitchCreateCustomRewardsResponse>("create_custom_rewards", bodyArg, broadcasterId); 
+    }
+
+    /// <summary>
     /// Updates a custom reward.
     /// </summary>
     /// <param name="body"><see cref="TwitchUpdateCustomRewardBody"/></param>
-    /// <param name="broadcasterId">The ID of the broadcaster that’s updating the reward. This ID must match the user ID found in the OAuth token.</param>
+    /// <param name="broadcasterId">The ID of the broadcaster that's updating the reward. This ID must match the user ID found in the OAuth token.</param>
     /// <param name="id">The ID of the reward to update.</param>
     /// <returns><see cref="TwitchUpdateCustomRewardResponse"/></returns>
     public async Task<TwitchUpdateCustomRewardResponse> UpdateCustomReward(TwitchUpdateCustomRewardBody body, string broadcasterId, string id)
     {
         using var bodyArg = GodotObjectExtension.ToVariant(body);
         return await _data!.CallAsync<TwitchUpdateCustomRewardResponse>("update_custom_reward", bodyArg, broadcasterId, id); 
+    }
+
+    /// <summary>
+    /// Deletes a custom reward that the broadcaster created.
+    /// </summary>
+    /// <param name="broadcasterId">The ID of the broadcaster that created the custom reward. This ID must match the user ID found in the OAuth token.</param>
+    /// <param name="id">The ID of the custom reward to delete.</param>
+    /// <returns><see cref="ResponseData"/></returns>
+    public async Task<ResponseData> DeleteCustomReward(string broadcasterId, string id)
+    {
+        return await _data!.CallAsync<ResponseData>("delete_custom_reward", broadcasterId, id); 
     }
 
     /// <summary>
@@ -328,12 +282,12 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Updates a redemption’s status.
+    /// Updates a redemption's status.
     /// </summary>
     /// <param name="body"><see cref="TwitchUpdateRedemptionStatusBody"/></param>
-    /// <param name="id">A list of IDs that identify the redemptions to update. To specify more than one ID, include this parameter for each redemption you want to update. For example, `id=1234&id=5678`. You may specify a maximum of 50 IDs.</param>
-    /// <param name="broadcasterId">The ID of the broadcaster that’s updating the redemption. This ID must match the user ID in the user access token.</param>
-    /// <param name="rewardId">The ID that identifies the reward that’s been redeemed.</param>
+    /// <param name="id">A list of IDs that identify the redemptions to update. To specify more than one ID, include this parameter for each redemption you want to update. For example, 'id=1234&id=5678'. You may specify a maximum of 50 IDs.</param>
+    /// <param name="broadcasterId">The ID of the broadcaster that's updating the redemption. This ID must match the user ID in the user access token.</param>
+    /// <param name="rewardId">The ID that identifies the reward that's been redeemed.</param>
     /// <returns><see cref="TwitchUpdateRedemptionStatusResponse"/></returns>
     public async Task<TwitchUpdateRedemptionStatusResponse> UpdateRedemptionStatus(TwitchUpdateRedemptionStatusBody body, string[] id, string broadcasterId, string rewardId)
     {
@@ -342,9 +296,65 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Gets information about the broadcaster’s active charity campaign.
+    /// Gets information about one or more channels.
     /// </summary>
-    /// <param name="broadcasterId">The ID of the broadcaster that’s currently running a charity campaign. This ID must match the user ID in the access token.</param>
+    /// <param name="broadcasterId">The ID of the broadcaster whose channel you want to get. To specify more than one ID, include this parameter for each broadcaster you want to get. For example, 'broadcaster_id=1234&broadcaster_id=5678'. You may specify a maximum of 100 IDs. The API ignores duplicate IDs and IDs that are not found.</param>
+    /// <returns><see cref="TwitchGetChannelInformationResponse"/></returns>
+    public async Task<TwitchGetChannelInformationResponse> GetChannelInformation(string[] broadcasterId)
+    {
+        return await _data!.CallAsync<TwitchGetChannelInformationResponse>("get_channel_information", new Godot.Collections.Array<string>(broadcasterId)); 
+    }
+
+    /// <summary>
+    /// Updates a channel's properties.
+    /// </summary>
+    /// <param name="body"><see cref="TwitchModifyChannelInformationBody"/></param>
+    /// <param name="broadcasterId">The ID of the broadcaster whose channel you want to update. This ID must match the user ID in the user access token.</param>
+    /// <returns><see cref="ResponseData"/></returns>
+    public async Task<ResponseData> ModifyChannelInformation(TwitchModifyChannelInformationBody body, string broadcasterId)
+    {
+        using var bodyArg = GodotObjectExtension.ToVariant(body);
+        return await _data!.CallAsync<ResponseData>("modify_channel_information", bodyArg, broadcasterId); 
+    }
+
+    /// <summary>
+    /// Gets the broadcaster's list editors.
+    /// </summary>
+    /// <param name="broadcasterId">The ID of the broadcaster that owns the channel. This ID must match the user ID in the access token.</param>
+    /// <returns><see cref="TwitchGetChannelEditorsResponse"/></returns>
+    public async Task<TwitchGetChannelEditorsResponse> GetChannelEditors(string broadcasterId)
+    {
+        return await _data!.CallAsync<TwitchGetChannelEditorsResponse>("get_channel_editors", broadcasterId); 
+    }
+
+    /// <summary>
+    /// Gets a list of broadcasters that the specified user follows, or checks if a user follows a specific broadcaster.
+    /// </summary>
+    /// <param name="opt"><see cref="TwitchGetFollowedChannelsOpt"/></param>
+    /// <param name="userId">A user's ID. Returns the list of broadcasters that this user follows. This ID must match the user ID in the user OAuth token.</param>
+    /// <returns><see cref="TwitchGetFollowedChannelsResponse"/></returns>
+    public async Task<TwitchGetFollowedChannelsResponse> GetFollowedChannels(string userId, TwitchGetFollowedChannelsOpt? opt = null)
+    {
+        using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
+        return await _data!.CallAsync<TwitchGetFollowedChannelsResponse>("get_followed_channels", optArg, userId); 
+    }
+
+    /// <summary>
+    /// Gets a list of users that follow the specified broadcaster, or checks if a specific user follows the broadcaster.
+    /// </summary>
+    /// <param name="opt"><see cref="TwitchGetChannelFollowersOpt"/></param>
+    /// <param name="broadcasterId">The broadcaster's ID. Returns the list of users that follow this broadcaster.</param>
+    /// <returns><see cref="TwitchGetChannelFollowersResponse"/></returns>
+    public async Task<TwitchGetChannelFollowersResponse> GetChannelFollowers(string broadcasterId, TwitchGetChannelFollowersOpt? opt = null)
+    {
+        using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
+        return await _data!.CallAsync<TwitchGetChannelFollowersResponse>("get_channel_followers", optArg, broadcasterId); 
+    }
+
+    /// <summary>
+    /// Gets information about the broadcaster's active charity campaign.
+    /// </summary>
+    /// <param name="broadcasterId">The ID of the broadcaster that's currently running a charity campaign. This ID must match the user ID in the access token.</param>
     /// <returns><see cref="TwitchGetCharityCampaignResponse"/></returns>
     public async Task<TwitchGetCharityCampaignResponse> GetCharityCampaign(string broadcasterId)
     {
@@ -352,10 +362,10 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Gets the list of donations that users have made to the broadcaster’s active charity campaign.
+    /// Gets the list of donations that users have made to the broadcaster's active charity campaign.
     /// </summary>
     /// <param name="opt"><see cref="TwitchGetCharityCampaignDonationsOpt"/></param>
-    /// <param name="broadcasterId">The ID of the broadcaster that’s currently running a charity campaign. This ID must match the user ID in the access token.</param>
+    /// <param name="broadcasterId">The ID of the broadcaster that's currently running a charity campaign. This ID must match the user ID in the access token.</param>
     /// <returns><see cref="TwitchGetCharityCampaignDonationsResponse"/></returns>
     public async Task<TwitchGetCharityCampaignDonationsResponse> GetCharityCampaignDonations(string broadcasterId, TwitchGetCharityCampaignDonationsOpt? opt = null)
     {
@@ -364,11 +374,43 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Gets the list of users that are connected to the broadcaster’s chat session.
+    /// Sends an announcement to the broadcaster's chat room.
+    /// </summary>
+    /// <param name="body"><see cref="TwitchSendChatAnnouncementBody"/></param>
+    /// <param name="broadcasterId">The ID of the broadcaster that owns the chat room to send the announcement to.</param>
+    /// <param name="moderatorId">The ID of a user who has permission to moderate the broadcaster's chat room, or the broadcaster's ID if they're sending the announcement. This ID must match the user ID in the user access token.</param>
+    /// <returns><see cref="ResponseData"/></returns>
+    public async Task<ResponseData> SendChatAnnouncement(TwitchSendChatAnnouncementBody body, string broadcasterId, string moderatorId)
+    {
+        using var bodyArg = GodotObjectExtension.ToVariant(body);
+        return await _data!.CallAsync<ResponseData>("send_chat_announcement", bodyArg, broadcasterId, moderatorId); 
+    }
+
+    /// <summary>
+    /// Gets the broadcaster's list of custom chat badges.
+    /// </summary>
+    /// <param name="broadcasterId">The ID of the broadcaster whose chat badges you want to get.</param>
+    /// <returns><see cref="TwitchGetChannelChatBadgesResponse"/></returns>
+    public async Task<TwitchGetChannelChatBadgesResponse> GetChannelChatBadges(string broadcasterId)
+    {
+        return await _data!.CallAsync<TwitchGetChannelChatBadgesResponse>("get_channel_chat_badges", broadcasterId); 
+    }
+
+    /// <summary>
+    /// Gets Twitch's list of chat badges.
+    /// </summary>
+    /// <returns><see cref="TwitchGetGlobalChatBadgesResponse"/></returns>
+    public async Task<TwitchGetGlobalChatBadgesResponse> GetGlobalChatBadges()
+    {
+        return await _data!.CallAsync<TwitchGetGlobalChatBadgesResponse>("get_global_chat_badges"); 
+    }
+
+    /// <summary>
+    /// Gets the list of users that are connected to the broadcaster's chat session.
     /// </summary>
     /// <param name="opt"><see cref="TwitchGetChattersOpt"/></param>
     /// <param name="broadcasterId">The ID of the broadcaster whose list of chatters you want to get.</param>
-    /// <param name="moderatorId">The ID of the broadcaster or one of the broadcaster’s moderators. This ID must match the user ID in the user access token.</param>
+    /// <param name="moderatorId">The ID of the broadcaster or one of the broadcaster's moderators. This ID must match the user ID in the user access token.</param>
     /// <returns><see cref="TwitchGetChattersResponse"/></returns>
     public async Task<TwitchGetChattersResponse> GetChatters(string broadcasterId, string moderatorId, TwitchGetChattersOpt? opt = null)
     {
@@ -377,7 +419,48 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Gets the broadcaster’s list of custom emotes.
+    /// Gets the color used for the user's name in chat.
+    /// </summary>
+    /// <param name="userId">The ID of the user whose username color you want to get. To specify more than one user, include the <list type="bullet">
+    /// <item>user_id<item> parameter for each user to get. For example, '&user_id=1234&user_id=5678'. The maximum number of IDs that you may specify is 100.</item></item>
+    /// </list>
+    /// 
+    /// The API ignores duplicate IDs and IDs that weren't found, but duplicate IDs count toward the maximum.</param>
+    /// <returns><see cref="TwitchGetUserChatColorResponse"/></returns>
+    public async Task<TwitchGetUserChatColorResponse> GetUserChatColor(string[] userId)
+    {
+        return await _data!.CallAsync<TwitchGetUserChatColorResponse>("get_user_chat_color", new Godot.Collections.Array<string>(userId)); 
+    }
+
+    /// <summary>
+    /// Updates the color used for the user's name in chat.
+    /// </summary>
+    /// <param name="userId">The ID of the user whose chat color you want to update. This ID must match the user ID in the access token.</param>
+    /// <param name="color">The color to use for the user's name in chat. All users may specify one of the following named color values. Possible values:
+    /// - `(any hex code)`: Turbo and Prime users may specify a named color or a Hex color code such as \#9146FF. If you use a Hex color code, remember to URL encode it.
+    /// - `blue`
+    /// - `blue_violet`
+    /// - `cadet_blue`
+    /// - `chocolate`
+    /// - `coral`
+    /// - `dodger_blue`
+    /// - `firebrick`
+    /// - `golden_rod`
+    /// - `green`
+    /// - `hot_pink`
+    /// - `orange_red`
+    /// - `red`
+    /// - `sea_green`
+    /// - `spring_green`
+    /// - `yellow_green`</param>
+    /// <returns><see cref="ResponseData"/></returns>
+    public async Task<ResponseData> UpdateUserChatColor(string userId, string color)
+    {
+        return await _data!.CallAsync<ResponseData>("update_user_chat_color", userId, color); 
+    }
+
+    /// <summary>
+    /// Gets the broadcaster's list of custom emotes.
     /// </summary>
     /// <param name="broadcasterId">An ID that identifies the broadcaster whose emotes you want to get.</param>
     /// <returns><see cref="TwitchGetChannelEmotesResponse"/></returns>
@@ -398,67 +481,13 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <summary>
     /// Gets emotes for one or more specified emote sets.
     /// </summary>
-    /// <param name="emoteSetId">An ID that identifies the emote set to get. Include this parameter for each emote set you want to get. For example, `emote_set_id=1234&emote_set_id=5678`. You may specify a maximum of 25 IDs. The response contains only the IDs that were found and ignores duplicate IDs.  
-    ///   
-    /// To get emote set IDs, use the [Get Channel Emotes](https://dev.twitch.tv/docs/api/reference#get-channel-emotes) API.</param>
+    /// <param name="emoteSetId">An ID that identifies the emote set to get. Include this parameter for each emote set you want to get. For example, 'emote_set_id=1234&emote_set_id=5678'. You may specify a maximum of 25 IDs. The response contains only the IDs that were found and ignores duplicate IDs.
+    /// 
+    /// To get emote set IDs, use the [Get Channel Emotes](#get-channel-emotes) API.</param>
     /// <returns><see cref="TwitchGetEmoteSetsResponse"/></returns>
     public async Task<TwitchGetEmoteSetsResponse> GetEmoteSets(string[] emoteSetId)
     {
         return await _data!.CallAsync<TwitchGetEmoteSetsResponse>("get_emote_sets", new Godot.Collections.Array<string>(emoteSetId)); 
-    }
-
-    /// <summary>
-    /// Gets the broadcaster’s list of custom chat badges.
-    /// </summary>
-    /// <param name="broadcasterId">The ID of the broadcaster whose chat badges you want to get.</param>
-    /// <returns><see cref="TwitchGetChannelChatBadgesResponse"/></returns>
-    public async Task<TwitchGetChannelChatBadgesResponse> GetChannelChatBadges(string broadcasterId)
-    {
-        return await _data!.CallAsync<TwitchGetChannelChatBadgesResponse>("get_channel_chat_badges", broadcasterId); 
-    }
-
-    /// <summary>
-    /// Gets Twitch’s list of chat badges.
-    /// </summary>
-    /// <returns><see cref="TwitchGetGlobalChatBadgesResponse"/></returns>
-    public async Task<TwitchGetGlobalChatBadgesResponse> GetGlobalChatBadges()
-    {
-        return await _data!.CallAsync<TwitchGetGlobalChatBadgesResponse>("get_global_chat_badges"); 
-    }
-
-    /// <summary>
-    /// Gets the broadcaster’s chat settings.
-    /// </summary>
-    /// <param name="opt"><see cref="TwitchGetChatSettingsOpt"/></param>
-    /// <param name="broadcasterId">The ID of the broadcaster whose chat settings you want to get.</param>
-    /// <returns><see cref="TwitchGetChatSettingsResponse"/></returns>
-    public async Task<TwitchGetChatSettingsResponse> GetChatSettings(string broadcasterId, TwitchGetChatSettingsOpt? opt = null)
-    {
-        using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
-        return await _data!.CallAsync<TwitchGetChatSettingsResponse>("get_chat_settings", optArg, broadcasterId); 
-    }
-
-    /// <summary>
-    /// Updates the broadcaster’s chat settings.
-    /// </summary>
-    /// <param name="body"><see cref="TwitchUpdateChatSettingsBody"/></param>
-    /// <param name="broadcasterId">The ID of the broadcaster whose chat settings you want to update.</param>
-    /// <param name="moderatorId">The ID of a user that has permission to moderate the broadcaster’s chat room, or the broadcaster’s ID if they’re making the update. This ID must match the user ID in the user access token.</param>
-    /// <returns><see cref="TwitchUpdateChatSettingsResponse"/></returns>
-    public async Task<TwitchUpdateChatSettingsResponse> UpdateChatSettings(TwitchUpdateChatSettingsBody body, string broadcasterId, string moderatorId)
-    {
-        using var bodyArg = GodotObjectExtension.ToVariant(body);
-        return await _data!.CallAsync<TwitchUpdateChatSettingsResponse>("update_chat_settings", bodyArg, broadcasterId, moderatorId); 
-    }
-
-    /// <summary>
-    /// Retrieves the active shared chat session for a channel.
-    /// </summary>
-    /// <param name="broadcasterId">The User ID of the channel broadcaster.</param>
-    /// <returns><see cref="TwitchGetSharedChatSessionResponse"/></returns>
-    public async Task<TwitchGetSharedChatSessionResponse> GetSharedChatSession(string broadcasterId)
-    {
-        return await _data!.CallAsync<TwitchGetSharedChatSessionResponse>("get_shared_chat_session", broadcasterId); 
     }
 
     /// <summary>
@@ -474,32 +503,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Sends an announcement to the broadcaster’s chat room.
-    /// </summary>
-    /// <param name="body"><see cref="TwitchSendChatAnnouncementBody"/></param>
-    /// <param name="broadcasterId">The ID of the broadcaster that owns the chat room to send the announcement to.</param>
-    /// <param name="moderatorId">The ID of a user who has permission to moderate the broadcaster’s chat room, or the broadcaster’s ID if they’re sending the announcement.</param>
-    /// <returns><see cref="ResponseData"/></returns>
-    public async Task<ResponseData> SendChatAnnouncement(TwitchSendChatAnnouncementBody body, string broadcasterId, string moderatorId)
-    {
-        using var bodyArg = GodotObjectExtension.ToVariant(body);
-        return await _data!.CallAsync<ResponseData>("send_chat_announcement", bodyArg, broadcasterId, moderatorId); 
-    }
-
-    /// <summary>
-    /// Sends a Shoutout to the specified broadcaster.
-    /// </summary>
-    /// <param name="fromBroadcasterId">The ID of the broadcaster that’s sending the Shoutout.</param>
-    /// <param name="toBroadcasterId">The ID of the broadcaster that’s receiving the Shoutout.</param>
-    /// <param name="moderatorId">The ID of the broadcaster or a user that is one of the broadcaster’s moderators. This ID must match the user ID in the access token.</param>
-    /// <returns><see cref="ResponseData"/></returns>
-    public async Task<ResponseData> SendAShoutout(string fromBroadcasterId, string toBroadcasterId, string moderatorId)
-    {
-        return await _data!.CallAsync<ResponseData>("send_a_shoutout", fromBroadcasterId, toBroadcasterId, moderatorId); 
-    }
-
-    /// <summary>
-    /// Sends a message to the broadcaster’s chat room.
+    /// Sends a message to the broadcaster's chat room.
     /// </summary>
     /// <param name="body"><see cref="TwitchSendChatMessageBody"/></param>
     /// <returns><see cref="TwitchSendChatMessageResponse"/></returns>
@@ -510,10 +514,10 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// NEW Gets the currently pinned message for the broadcaster’s chat room.
+    /// Gets the currently pinned message for the broadcaster's chat room.
     /// </summary>
     /// <param name="broadcasterId">The ID of the broadcaster that owns the chat room.</param>
-    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster’s chat room.</param>
+    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster's chat room. This ID must match the user ID in the user access token.</param>
     /// <returns><see cref="TwitchGetPinnedChatMessageResponse"/></returns>
     public async Task<TwitchGetPinnedChatMessageResponse> GetPinnedChatMessage(string broadcasterId, string moderatorId)
     {
@@ -521,11 +525,11 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// NEW Pins a chat message to the specified broadcaster’s chat room.
+    /// Pins a chat message to the specified broadcaster's chat room.
     /// </summary>
     /// <param name="opt"><see cref="TwitchPinChatMessageOpt"/></param>
     /// <param name="broadcasterId">The ID of the broadcaster that owns the chat room.</param>
-    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster’s chat room.</param>
+    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster's chat room. This ID must match the user ID in the user access token.</param>
     /// <param name="messageId">The ID of the message to pin.</param>
     /// <returns><see cref="ResponseData"/></returns>
     public async Task<ResponseData> PinChatMessage(string broadcasterId, string moderatorId, string messageId, TwitchPinChatMessageOpt? opt = null)
@@ -535,11 +539,11 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// NEW Updates the duration of a pinned chat message.
+    /// Updates the duration of a pinned chat message.
     /// </summary>
     /// <param name="opt"><see cref="TwitchUpdatePinnedChatMessageOpt"/></param>
     /// <param name="broadcasterId">The ID of the broadcaster that owns the chat room.</param>
-    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster’s chat room.</param>
+    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster's chat room. This ID must match the user ID in the user access token.</param>
     /// <param name="messageId">The ID of the pinned message to update.</param>
     /// <returns><see cref="ResponseData"/></returns>
     public async Task<ResponseData> UpdatePinnedChatMessage(string broadcasterId, string moderatorId, string messageId, TwitchUpdatePinnedChatMessageOpt? opt = null)
@@ -549,10 +553,10 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// NEW Unpins a pinned chat message from the broadcaster’s chat room.
+    /// Unpins a pinned chat message from the broadcaster's chat room.
     /// </summary>
     /// <param name="broadcasterId">The ID of the broadcaster that owns the chat room.</param>
-    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster’s chat room.</param>
+    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster's chat room. This ID must match the user ID in the user access token.</param>
     /// <param name="messageId">The ID of the message to unpin.</param>
     /// <returns><see cref="ResponseData"/></returns>
     public async Task<ResponseData> UnpinChatMessage(string broadcasterId, string moderatorId, string messageId)
@@ -561,58 +565,50 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Gets the color used for the user’s name in chat.
+    /// Gets the broadcaster's chat settings.
     /// </summary>
-    /// <param name="userId">The ID of the user whose username color you want to get. To specify more than one user, include the _user_id_ parameter for each user to get. For example, `&user_id=1234&user_id=5678`. The maximum number of IDs that you may specify is 100.  
-    ///   
-    /// The API ignores duplicate IDs and IDs that weren’t found.</param>
-    /// <returns><see cref="TwitchGetUserChatColorResponse"/></returns>
-    public async Task<TwitchGetUserChatColorResponse> GetUserChatColor(string[] userId)
-    {
-        return await _data!.CallAsync<TwitchGetUserChatColorResponse>("get_user_chat_color", new Godot.Collections.Array<string>(userId)); 
-    }
-
-    /// <summary>
-    /// Updates the color used for the user’s name in chat.
-    /// </summary>
-    /// <param name="userId">The ID of the user whose chat color you want to update. This ID must match the user ID in the access token.</param>
-    /// <param name="color">The color to use for the user's name in chat. All users may specify one of the following named color values.  
-    ///   
-    /// <list type="bullet">
-    /// <item> blue</item>
-    /// <item> blue_violet</item>
-    /// <item> cadet_blue</item>
-    /// <item> chocolate</item>
-    /// <item> coral</item>
-    /// <item> dodger_blue</item>
-    /// <item> firebrick</item>
-    /// <item> golden_rod</item>
-    /// <item> green</item>
-    /// <item> hot_pink</item>
-    /// <item> orange_red</item>
-    /// <item> red</item>
-    /// <item> sea_green</item>
-    /// <item> spring_green</item>
-    /// <item> yellow_green</item>
-    /// </list>
-    ///   
-    /// Turbo and Prime users may specify a named color or a Hex color code like #9146FF. If you use a Hex color code, remember to URL encode it.</param>
-    /// <returns><see cref="ResponseData"/></returns>
-    public async Task<ResponseData> UpdateUserChatColor(string userId, string color)
-    {
-        return await _data!.CallAsync<ResponseData>("update_user_chat_color", userId, color); 
-    }
-
-    /// <summary>
-    /// Creates a clip from the broadcaster’s stream.
-    /// </summary>
-    /// <param name="opt"><see cref="TwitchCreateClipOpt"/></param>
-    /// <param name="broadcasterId">The ID of the broadcaster whose stream you want to create a clip from.</param>
-    /// <returns><see cref="TwitchCreateClipResponse"/></returns>
-    public async Task<TwitchCreateClipResponse> CreateClip(string broadcasterId, TwitchCreateClipOpt? opt = null)
+    /// <param name="opt"><see cref="TwitchGetChatSettingsOpt"/></param>
+    /// <param name="broadcasterId">The ID of the broadcaster whose chat settings you want to get.</param>
+    /// <returns><see cref="TwitchGetChatSettingsResponse"/></returns>
+    public async Task<TwitchGetChatSettingsResponse> GetChatSettings(string broadcasterId, TwitchGetChatSettingsOpt? opt = null)
     {
         using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
-        return await _data!.CallAsync<TwitchCreateClipResponse>("create_clip", optArg, broadcasterId); 
+        return await _data!.CallAsync<TwitchGetChatSettingsResponse>("get_chat_settings", optArg, broadcasterId); 
+    }
+
+    /// <summary>
+    /// Updates the broadcaster's chat settings.
+    /// </summary>
+    /// <param name="body"><see cref="TwitchUpdateChatSettingsBody"/></param>
+    /// <param name="broadcasterId">The ID of the broadcaster whose chat settings you want to update.</param>
+    /// <param name="moderatorId">The ID of a user that has permission to moderate the broadcaster's chat room, or the broadcaster's ID if they're making the update. This ID must match the user ID in the user access token.</param>
+    /// <returns><see cref="TwitchUpdateChatSettingsResponse"/></returns>
+    public async Task<TwitchUpdateChatSettingsResponse> UpdateChatSettings(TwitchUpdateChatSettingsBody body, string broadcasterId, string moderatorId)
+    {
+        using var bodyArg = GodotObjectExtension.ToVariant(body);
+        return await _data!.CallAsync<TwitchUpdateChatSettingsResponse>("update_chat_settings", bodyArg, broadcasterId, moderatorId); 
+    }
+
+    /// <summary>
+    /// Sends a Shoutout to the specified broadcaster.
+    /// </summary>
+    /// <param name="fromBroadcasterId">The ID of the broadcaster that's sending the Shoutout.</param>
+    /// <param name="toBroadcasterId">The ID of the broadcaster that's receiving the Shoutout.</param>
+    /// <param name="moderatorId">The ID of the broadcaster or a user that is one of the broadcaster's moderators. This ID must match the user ID in the access token.</param>
+    /// <returns><see cref="ResponseData"/></returns>
+    public async Task<ResponseData> SendAShoutout(string fromBroadcasterId, string toBroadcasterId, string moderatorId)
+    {
+        return await _data!.CallAsync<ResponseData>("send_a_shoutout", fromBroadcasterId, toBroadcasterId, moderatorId); 
+    }
+
+    /// <summary>
+    /// Retrieves the active shared chat session for a channel.
+    /// </summary>
+    /// <param name="broadcasterId">The User ID of the channel broadcaster.</param>
+    /// <returns><see cref="TwitchGetSharedChatSessionResponse"/></returns>
+    public async Task<TwitchGetSharedChatSessionResponse> GetSharedChatSession(string broadcasterId)
+    {
+        return await _data!.CallAsync<TwitchGetSharedChatSessionResponse>("get_shared_chat_session", broadcasterId); 
     }
 
     /// <summary>
@@ -627,31 +623,43 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// NEW Creates a clip from the broadcaster’s VOD.
+    /// Creates a clip from the broadcaster's stream.
+    /// </summary>
+    /// <param name="opt"><see cref="TwitchCreateClipOpt"/></param>
+    /// <param name="broadcasterId">The ID of the broadcaster whose stream you want to create a clip from.</param>
+    /// <returns><see cref="TwitchCreateClipResponse"/></returns>
+    public async Task<TwitchCreateClipResponse> CreateClip(string broadcasterId, TwitchCreateClipOpt? opt = null)
+    {
+        using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
+        return await _data!.CallAsync<TwitchCreateClipResponse>("create_clip", optArg, broadcasterId); 
+    }
+
+    /// <summary>
+    /// Provides URLs to download the video file(s) for the specified clips.
+    /// </summary>
+    /// <param name="editorId">The User ID of the editor for the channel you want to download a clip for. If using the broadcaster's auth token, this is the same as _broadcaster_id_. This must match the `user_id` in the user access token.</param>
+    /// <param name="broadcasterId">The ID of the broadcaster you want to download clips for.</param>
+    /// <param name="clipId">The ID that identifies the clip you want to download. Include this parameter for each clip you want to download, up to a maximum of 10 clips. For example, 'clip_id=SleepyGiftedPeppermintNerfRedBlaster-KbkBXYt3lOk3jy8-&clip_id=WimpyAltruisticKleeKeyboardCat-EiY5yMrEwZ4i4gwC'.</param>
+    /// <returns><see cref="TwitchGetClipsDownloadResponse"/></returns>
+    public async Task<TwitchGetClipsDownloadResponse> GetClipsDownload(string editorId, string broadcasterId, string[] clipId)
+    {
+        return await _data!.CallAsync<TwitchGetClipsDownloadResponse>("get_clips_download", editorId, broadcasterId, new Godot.Collections.Array<string>(clipId)); 
+    }
+
+    /// <summary>
+    /// Creates a clip from the broadcaster's VOD.
     /// </summary>
     /// <param name="opt"><see cref="TwitchCreateClipFromVodOpt"/></param>
-    /// <param name="editorId">The user ID of the editor for the channel you want to create a clip for. If using the broadcaster’s auth token, this is the same as broadcaster_id. This must match the user_id in the user access token.</param>
+    /// <param name="editorId">The user ID of the editor for the channel you want to create a clip for. If using the broadcaster's auth token, this is the same as broadcaster_id. This must match the user_id in the user access token.</param>
     /// <param name="broadcasterId">The user ID for the channel you want to create a clip for.</param>
     /// <param name="vodId">ID of the VOD the user wants to clip.</param>
-    /// <param name="vodOffset">The zero-based offset, in seconds, to where the clip should end in the video (VOD). See this endpoint’s description for more information on how to use this parameter.</param>
+    /// <param name="vodOffset">The zero-based offset, in seconds, to where the clip should end in the video (VOD). See this endpoint's description for more information on how to use this parameter.</param>
     /// <param name="title">The title of the clip.</param>
     /// <returns><see cref="TwitchCreateClipFromVODResponse"/></returns>
     public async Task<TwitchCreateClipFromVODResponse> CreateClipFromVod(string editorId, string broadcasterId, string vodId, int vodOffset, string title, TwitchCreateClipFromVodOpt? opt = null)
     {
         using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
         return await _data!.CallAsync<TwitchCreateClipFromVODResponse>("create_clip_from_vod", optArg, editorId, broadcasterId, vodId, vodOffset, title); 
-    }
-
-    /// <summary>
-    /// NEW Provides URLs to download the video file(s) for the specified clips.
-    /// </summary>
-    /// <param name="editorId">The User ID of the editor for the channel you want to download a clip for. If using the broadcaster’s auth token, this is the same as `broadcaster_id`. This must match the `user_id` in the user access token.</param>
-    /// <param name="broadcasterId">The ID of the broadcaster you want to download clips for.</param>
-    /// <param name="clipId">The ID that identifies the clip you want to download. Include this parameter for each clip you want to download, up to a maximum of 10 clips. For example, `clip_id=SleepyGiftedPeppermintNerfRedBlaster-KbkBXYt3lOk3jy8-&clip_id=WimpyAltruisticKleeKeyboardCat-EiY5yMrEwZ4i4gwC`.</param>
-    /// <returns><see cref="TwitchGetClipsDownloadResponse"/></returns>
-    public async Task<TwitchGetClipsDownloadResponse> GetClipsDownload(string editorId, string broadcasterId, string[] clipId)
-    {
-        return await _data!.CallAsync<TwitchGetClipsDownloadResponse>("get_clips_download", editorId, broadcasterId, new Godot.Collections.Array<string>(clipId)); 
     }
 
     /// <summary>
@@ -675,7 +683,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Updates a conduit’s shard count.
+    /// Updates a conduit's shard count.
     /// </summary>
     /// <param name="body"><see cref="TwitchUpdateConduitsBody"/></param>
     /// <returns><see cref="TwitchUpdateConduitsResponse"/></returns>
@@ -696,7 +704,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Gets a lists of all shards for a conduit.
+    /// Gets a list of shards for a conduit.
     /// </summary>
     /// <param name="opt"><see cref="TwitchGetConduitShardsOpt"/></param>
     /// <param name="conduitId">Conduit ID.</param>
@@ -719,18 +727,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Gets information about Twitch content classification labels.
-    /// </summary>
-    /// <param name="opt"><see cref="TwitchGetContentClassificationLabelsOpt"/></param>
-    /// <returns><see cref="TwitchGetContentClassificationLabelsResponse"/></returns>
-    public async Task<TwitchGetContentClassificationLabelsResponse> GetContentClassificationLabels(TwitchGetContentClassificationLabelsOpt? opt = null)
-    {
-        using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
-        return await _data!.CallAsync<TwitchGetContentClassificationLabelsResponse>("get_content_classification_labels", optArg); 
-    }
-
-    /// <summary>
-    /// Gets an organization’s list of entitlements that have been granted to a game, a user, or both.
+    /// Gets an organization's list of entitlements that have been granted to a game, a user, or both.
     /// </summary>
     /// <param name="opt"><see cref="TwitchGetDropsEntitlementsOpt"/></param>
     /// <returns><see cref="TwitchGetDropsEntitlementsResponse"/></returns>
@@ -741,7 +738,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Updates the Drop entitlement’s fulfillment status.
+    /// Updates the Drop entitlement's fulfillment status.
     /// </summary>
     /// <param name="body"><see cref="TwitchUpdateDropsEntitlementsBody"/></param>
     /// <returns><see cref="TwitchUpdateDropsEntitlementsResponse"/></returns>
@@ -752,127 +749,37 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Gets the specified configuration segment from the specified extension.
+    /// Gets a list of EventSub subscriptions that the client in the access token created.
     /// </summary>
-    /// <param name="opt"><see cref="TwitchGetExtensionConfigurationSegmentOpt"/></param>
-    /// <param name="extensionId">The ID of the extension that contains the configuration segment you want to get.</param>
-    /// <param name="segment">The type of configuration segment to get. Possible case-sensitive values are:   
-    ///   
-    /// <list type="bullet">
-    /// <item> broadcaster</item>
-    /// <item> developer</item>
-    /// <item> global</item>
-    /// </list>
-    ///   
-    /// You may specify one or more segments. To specify multiple segments, include the `segment` parameter for each segment to get. For example, `segment=broadcaster&segment=developer`. Ignores duplicate segments.</param>
-    /// <returns><see cref="TwitchGetExtensionConfigurationSegmentResponse"/></returns>
-    public async Task<TwitchGetExtensionConfigurationSegmentResponse> GetExtensionConfigurationSegment(string extensionId, string segment, TwitchGetExtensionConfigurationSegmentOpt? opt = null)
-    {
-        using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
-        return await _data!.CallAsync<TwitchGetExtensionConfigurationSegmentResponse>("get_extension_configuration_segment", optArg, extensionId, segment); 
-    }
-
-    /// <summary>
-    /// Updates a configuration segment.
-    /// </summary>
-    /// <param name="body"><see cref="TwitchSetExtensionConfigurationSegmentBody"/></param>
-    /// <returns><see cref="ResponseData"/></returns>
-    public async Task<ResponseData> SetExtensionConfigurationSegment(TwitchSetExtensionConfigurationSegmentBody body)
+    /// <param name="body"><see cref="TwitchGetEventSubSubscriptionsResponse&lt;T&gt;"/></param>
+    /// <param name="opt"><see cref="TwitchGetEventsubSubscriptionsOpt"/></param>
+    /// <returns><see cref="TwitchGetEventSubSubscriptionsResponse&lt;T&gt;"/></returns>
+    public async Task<TwitchGetEventSubSubscriptionsResponse<T>> GetEventsubSubscriptions<T>(TwitchGetEventSubSubscriptionsResponse<T> body, TwitchGetEventsubSubscriptionsOpt? opt = null) where T : RefCounted, ITwitcherSharpCondition<T>
     {
         using var bodyArg = GodotObjectExtension.ToVariant(body);
-        return await _data!.CallAsync<ResponseData>("set_extension_configuration_segment", bodyArg); 
+        using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
+        return await _data!.CallAsync<TwitchGetEventSubSubscriptionsResponse<T>>("get_eventsub_subscriptions", bodyArg, optArg); 
     }
 
     /// <summary>
-    /// Updates the extension’s required_configuration string.
+    /// Creates an EventSub subscription.
     /// </summary>
-    /// <param name="body"><see cref="TwitchSetExtensionRequiredConfigurationBody"/></param>
-    /// <param name="broadcasterId">The ID of the broadcaster that installed the extension on their channel.</param>
-    /// <returns><see cref="ResponseData"/></returns>
-    public async Task<ResponseData> SetExtensionRequiredConfiguration(TwitchSetExtensionRequiredConfigurationBody body, string broadcasterId)
+    /// <param name="body"><see cref="TwitchCreateEventSubSubscriptionBody&lt;T&gt;"/></param>
+    /// <returns><see cref="TwitchCreateEventSubSubscriptionResponse&lt;T&gt;"/></returns>
+    public async Task<TwitchCreateEventSubSubscriptionResponse<T>> CreateEventsubSubscription<T>(TwitchCreateEventSubSubscriptionBody<T> body) where T : RefCounted, ITwitcherSharpCondition<T>
     {
         using var bodyArg = GodotObjectExtension.ToVariant(body);
-        return await _data!.CallAsync<ResponseData>("set_extension_required_configuration", bodyArg, broadcasterId); 
+        return await _data!.CallAsync<TwitchCreateEventSubSubscriptionResponse<T>>("create_eventsub_subscription", bodyArg); 
     }
 
     /// <summary>
-    /// Sends a message to one or more viewers.
+    /// Deletes an EventSub subscription.
     /// </summary>
-    /// <param name="body"><see cref="TwitchSendExtensionPubSubMessageBody"/></param>
+    /// <param name="id">The ID of the subscription to delete.</param>
     /// <returns><see cref="ResponseData"/></returns>
-    public async Task<ResponseData> SendExtensionPubsubMessage(TwitchSendExtensionPubSubMessageBody body)
+    public async Task<ResponseData> DeleteEventsubSubscription(string id)
     {
-        using var bodyArg = GodotObjectExtension.ToVariant(body);
-        return await _data!.CallAsync<ResponseData>("send_extension_pubsub_message", bodyArg); 
-    }
-
-    /// <summary>
-    /// Gets a list of broadcasters that are streaming live and have installed or activated the extension.
-    /// </summary>
-    /// <param name="opt"><see cref="TwitchGetExtensionLiveChannelsOpt"/></param>
-    /// <param name="extensionId">The ID of the extension to get. Returns the list of broadcasters that are live and that have installed or activated this extension.</param>
-    /// <returns><see cref="TwitchGetExtensionLiveChannelsResponse"/></returns>
-    public async Task<TwitchGetExtensionLiveChannelsResponse> GetExtensionLiveChannels(string extensionId, TwitchGetExtensionLiveChannelsOpt? opt = null)
-    {
-        using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
-        return await _data!.CallAsync<TwitchGetExtensionLiveChannelsResponse>("get_extension_live_channels", optArg, extensionId); 
-    }
-
-    /// <summary>
-    /// Gets an extension’s list of shared secrets.
-    /// </summary>
-    /// <returns><see cref="TwitchGetExtensionSecretsResponse"/></returns>
-    public async Task<TwitchGetExtensionSecretsResponse> GetExtensionSecrets()
-    {
-        return await _data!.CallAsync<TwitchGetExtensionSecretsResponse>("get_extension_secrets"); 
-    }
-
-    /// <summary>
-    /// Creates a shared secret used to sign and verify JWT tokens.
-    /// </summary>
-    /// <param name="opt"><see cref="TwitchCreateExtensionSecretOpt"/></param>
-    /// <param name="extensionId">The ID of the extension to apply the shared secret to.</param>
-    /// <returns><see cref="TwitchCreateExtensionSecretResponse"/></returns>
-    public async Task<TwitchCreateExtensionSecretResponse> CreateExtensionSecret(string extensionId, TwitchCreateExtensionSecretOpt? opt = null)
-    {
-        using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
-        return await _data!.CallAsync<TwitchCreateExtensionSecretResponse>("create_extension_secret", optArg, extensionId); 
-    }
-
-    /// <summary>
-    /// Sends a message to the specified broadcaster’s chat room.
-    /// </summary>
-    /// <param name="body"><see cref="TwitchSendExtensionChatMessageBody"/></param>
-    /// <param name="broadcasterId">The ID of the broadcaster that has activated the extension.</param>
-    /// <returns><see cref="ResponseData"/></returns>
-    public async Task<ResponseData> SendExtensionChatMessage(TwitchSendExtensionChatMessageBody body, string broadcasterId)
-    {
-        using var bodyArg = GodotObjectExtension.ToVariant(body);
-        return await _data!.CallAsync<ResponseData>("send_extension_chat_message", bodyArg, broadcasterId); 
-    }
-
-    /// <summary>
-    /// Gets information about an extension.
-    /// </summary>
-    /// <param name="opt"><see cref="TwitchGetExtensionsOpt"/></param>
-    /// <param name="extensionId">The ID of the extension to get.</param>
-    /// <returns><see cref="TwitchGetExtensionsResponse"/></returns>
-    public async Task<TwitchGetExtensionsResponse> GetExtensions(string extensionId, TwitchGetExtensionsOpt? opt = null)
-    {
-        using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
-        return await _data!.CallAsync<TwitchGetExtensionsResponse>("get_extensions", optArg, extensionId); 
-    }
-
-    /// <summary>
-    /// Gets information about a released extension.
-    /// </summary>
-    /// <param name="opt"><see cref="TwitchGetReleasedExtensionsOpt"/></param>
-    /// <param name="extensionId">The ID of the extension to get.</param>
-    /// <returns><see cref="TwitchGetReleasedExtensionsResponse"/></returns>
-    public async Task<TwitchGetReleasedExtensionsResponse> GetReleasedExtensions(string extensionId, TwitchGetReleasedExtensionsOpt? opt = null)
-    {
-        using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
-        return await _data!.CallAsync<TwitchGetReleasedExtensionsResponse>("get_released_extensions", optArg, extensionId); 
+        return await _data!.CallAsync<ResponseData>("delete_eventsub_subscription", id); 
     }
 
     /// <summary>
@@ -898,52 +805,126 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Creates an EventSub subscription.
+    /// Gets information about an extension.
     /// </summary>
-    /// <param name="body"><see cref="TwitchCreateEventSubSubscriptionBody&lt;T&gt;"/></param>
-    /// <returns><see cref="TwitchCreateEventSubSubscriptionResponse&lt;T&gt;"/></returns>
-    public async Task<TwitchCreateEventSubSubscriptionResponse<T>> CreateEventsubSubscription<T>(TwitchCreateEventSubSubscriptionBody<T> body) where T : RefCounted, ITwitcherSharpCondition<T>
+    /// <param name="opt"><see cref="TwitchGetExtensionsOpt"/></param>
+    /// <param name="extensionId">The ID of the extension to get.</param>
+    /// <returns><see cref="TwitchGetExtensionsResponse"/></returns>
+    public async Task<TwitchGetExtensionsResponse> GetExtensions(string extensionId, TwitchGetExtensionsOpt? opt = null)
     {
-        using var bodyArg = GodotObjectExtension.ToVariant(body);
-        return await _data!.CallAsync<TwitchCreateEventSubSubscriptionResponse<T>>("create_eventsub_subscription", bodyArg); 
+        using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
+        return await _data!.CallAsync<TwitchGetExtensionsResponse>("get_extensions", optArg, extensionId); 
     }
 
     /// <summary>
-    /// Deletes an EventSub subscription.
+    /// Sends a message to the specified broadcaster's chat room.
     /// </summary>
-    /// <param name="id">The ID of the subscription to delete.</param>
+    /// <param name="body"><see cref="TwitchSendExtensionChatMessageBody"/></param>
+    /// <param name="broadcasterId">The ID of the broadcaster that has activated the extension.</param>
     /// <returns><see cref="ResponseData"/></returns>
-    public async Task<ResponseData> DeleteEventsubSubscription(string id)
-    {
-        return await _data!.CallAsync<ResponseData>("delete_eventsub_subscription", id); 
-    }
-
-    /// <summary>
-    /// Gets a list of EventSub subscriptions that the client in the access token created.
-    /// </summary>
-    /// <param name="body"><see cref="TwitchGetEventSubSubscriptionsResponse&lt;T&gt;"/></param>
-    /// <param name="opt"><see cref="TwitchGetEventsubSubscriptionsOpt"/></param>
-    /// <returns><see cref="TwitchGetEventSubSubscriptionsResponse&lt;T&gt;"/></returns>
-    public async Task<TwitchGetEventSubSubscriptionsResponse<T>> GetEventsubSubscriptions<T>(TwitchGetEventSubSubscriptionsResponse<T> body, TwitchGetEventsubSubscriptionsOpt? opt = null) where T : RefCounted, ITwitcherSharpCondition<T>
+    public async Task<ResponseData> SendExtensionChatMessage(TwitchSendExtensionChatMessageBody body, string broadcasterId)
     {
         using var bodyArg = GodotObjectExtension.ToVariant(body);
-        using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
-        return await _data!.CallAsync<TwitchGetEventSubSubscriptionsResponse<T>>("get_eventsub_subscriptions", bodyArg, optArg); 
+        return await _data!.CallAsync<ResponseData>("send_extension_chat_message", bodyArg, broadcasterId); 
     }
 
     /// <summary>
-    /// Gets information about all broadcasts on Twitch.
+    /// Gets the specified configuration segment from the specified extension.
     /// </summary>
-    /// <param name="opt"><see cref="TwitchGetTopGamesOpt"/></param>
-    /// <returns><see cref="TwitchGetTopGamesResponse"/></returns>
-    public async Task<TwitchGetTopGamesResponse> GetTopGames(TwitchGetTopGamesOpt? opt = null)
+    /// <param name="opt"><see cref="TwitchGetExtensionConfigurationSegmentOpt"/></param>
+    /// <param name="extensionId">The ID of the extension that contains the configuration segment you want to get.</param>
+    /// <param name="segment">The type of configuration segment to get. To get more than one segment, include this parameter for each segment, for example, `segment=broadcaster&segment=developer`. If you don't specify a segment, the list in the response is empty. Possible values:
+    /// - `broadcaster`
+    /// - `developer`
+    /// - `global`</param>
+    /// <returns><see cref="TwitchGetExtensionConfigurationSegmentResponse"/></returns>
+    public async Task<TwitchGetExtensionConfigurationSegmentResponse> GetExtensionConfigurationSegment(string extensionId, string segment, TwitchGetExtensionConfigurationSegmentOpt? opt = null)
     {
         using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
-        return await _data!.CallAsync<TwitchGetTopGamesResponse>("get_top_games", optArg); 
+        return await _data!.CallAsync<TwitchGetExtensionConfigurationSegmentResponse>("get_extension_configuration_segment", optArg, extensionId, segment); 
     }
 
     /// <summary>
-    /// Gets information about specified games.
+    /// Updates a configuration segment.
+    /// </summary>
+    /// <param name="body"><see cref="TwitchSetExtensionConfigurationSegmentBody"/></param>
+    /// <returns><see cref="ResponseData"/></returns>
+    public async Task<ResponseData> SetExtensionConfigurationSegment(TwitchSetExtensionConfigurationSegmentBody body)
+    {
+        using var bodyArg = GodotObjectExtension.ToVariant(body);
+        return await _data!.CallAsync<ResponseData>("set_extension_configuration_segment", bodyArg); 
+    }
+
+    /// <summary>
+    /// Gets an extension's list of shared secrets.
+    /// </summary>
+    /// <returns><see cref="TwitchGetExtensionSecretsResponse"/></returns>
+    public async Task<TwitchGetExtensionSecretsResponse> GetExtensionSecrets()
+    {
+        return await _data!.CallAsync<TwitchGetExtensionSecretsResponse>("get_extension_secrets"); 
+    }
+
+    /// <summary>
+    /// Creates a shared secret used to sign and verify JWT tokens.
+    /// </summary>
+    /// <param name="opt"><see cref="TwitchCreateExtensionSecretOpt"/></param>
+    /// <param name="extensionId">The ID of the extension to apply the shared secret to.</param>
+    /// <returns><see cref="TwitchCreateExtensionSecretResponse"/></returns>
+    public async Task<TwitchCreateExtensionSecretResponse> CreateExtensionSecret(string extensionId, TwitchCreateExtensionSecretOpt? opt = null)
+    {
+        using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
+        return await _data!.CallAsync<TwitchCreateExtensionSecretResponse>("create_extension_secret", optArg, extensionId); 
+    }
+
+    /// <summary>
+    /// Gets a list of broadcasters that are streaming live and have installed or activated the extension.
+    /// </summary>
+    /// <param name="opt"><see cref="TwitchGetExtensionLiveChannelsOpt"/></param>
+    /// <param name="extensionId">The ID of the extension to get. Returns the list of broadcasters that are live and that have installed or activated this extension.</param>
+    /// <returns><see cref="TwitchGetExtensionLiveChannelsResponse"/></returns>
+    public async Task<TwitchGetExtensionLiveChannelsResponse> GetExtensionLiveChannels(string extensionId, TwitchGetExtensionLiveChannelsOpt? opt = null)
+    {
+        using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
+        return await _data!.CallAsync<TwitchGetExtensionLiveChannelsResponse>("get_extension_live_channels", optArg, extensionId); 
+    }
+
+    /// <summary>
+    /// Sends a message to one or more viewers.
+    /// </summary>
+    /// <param name="body"><see cref="TwitchSendExtensionPubSubMessageBody"/></param>
+    /// <returns><see cref="ResponseData"/></returns>
+    public async Task<ResponseData> SendExtensionPubsubMessage(TwitchSendExtensionPubSubMessageBody body)
+    {
+        using var bodyArg = GodotObjectExtension.ToVariant(body);
+        return await _data!.CallAsync<ResponseData>("send_extension_pubsub_message", bodyArg); 
+    }
+
+    /// <summary>
+    /// Gets information about a released extension.
+    /// </summary>
+    /// <param name="opt"><see cref="TwitchGetReleasedExtensionsOpt"/></param>
+    /// <param name="extensionId">The ID of the extension to get.</param>
+    /// <returns><see cref="TwitchGetReleasedExtensionsResponse"/></returns>
+    public async Task<TwitchGetReleasedExtensionsResponse> GetReleasedExtensions(string extensionId, TwitchGetReleasedExtensionsOpt? opt = null)
+    {
+        using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
+        return await _data!.CallAsync<TwitchGetReleasedExtensionsResponse>("get_released_extensions", optArg, extensionId); 
+    }
+
+    /// <summary>
+    /// Updates the extension's _required_configuration_ string.
+    /// </summary>
+    /// <param name="body"><see cref="TwitchSetExtensionRequiredConfigurationBody"/></param>
+    /// <param name="broadcasterId">The ID of the broadcaster that installed the extension on their channel.</param>
+    /// <returns><see cref="ResponseData"/></returns>
+    public async Task<ResponseData> SetExtensionRequiredConfiguration(TwitchSetExtensionRequiredConfigurationBody body, string broadcasterId)
+    {
+        using var bodyArg = GodotObjectExtension.ToVariant(body);
+        return await _data!.CallAsync<ResponseData>("set_extension_required_configuration", bodyArg, broadcasterId); 
+    }
+
+    /// <summary>
+    /// Gets information about specified categories or games.
     /// </summary>
     /// <param name="opt"><see cref="TwitchGetGamesOpt"/></param>
     /// <returns><see cref="TwitchGetGamesResponse"/></returns>
@@ -954,7 +935,18 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Gets the broadcaster’s list of active goals.
+    /// Gets information about the categories and games that have the most viewers on Twitch.
+    /// </summary>
+    /// <param name="opt"><see cref="TwitchGetTopGamesOpt"/></param>
+    /// <returns><see cref="TwitchGetTopGamesResponse"/></returns>
+    public async Task<TwitchGetTopGamesResponse> GetTopGames(TwitchGetTopGamesOpt? opt = null)
+    {
+        using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
+        return await _data!.CallAsync<TwitchGetTopGamesResponse>("get_top_games", optArg); 
+    }
+
+    /// <summary>
+    /// Gets the broadcaster's list of active goals.
     /// </summary>
     /// <param name="broadcasterId">The ID of the broadcaster that created the goals. This ID must match the user ID in the user access token.</param>
     /// <returns><see cref="TwitchGetCreatorGoalsResponse"/></returns>
@@ -964,10 +956,10 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// BETA Gets the channel settings for configuration of the Guest Star feature for a particular host.
+    /// Gets the channel settings for configuration of the Guest Star feature for a particular host.
     /// </summary>
     /// <param name="broadcasterId">The ID of the broadcaster you want to get guest star settings for.</param>
-    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster’s chat room. This ID must match the user ID in the user access token.</param>
+    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster's chat room. This ID must match the user ID in the user access token.</param>
     /// <returns><see cref="TwitchGetChannelGuestStarSettingsResponse"/></returns>
     public async Task<TwitchGetChannelGuestStarSettingsResponse> GetChannelGuestStarSettings(string broadcasterId, string moderatorId)
     {
@@ -975,7 +967,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// BETA Mutates the channel settings for configuration of the Guest Star feature for a particular host.
+    /// Mutates the channel settings for configuration of the Guest Star feature for a particular host.
     /// </summary>
     /// <param name="body"><see cref="TwitchUpdateChannelGuestStarSettingsBody"/></param>
     /// <param name="broadcasterId">The ID of the broadcaster you want to update Guest Star settings for.</param>
@@ -987,42 +979,10 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// BETA Gets information about an ongoing Guest Star session for a particular channel.
-    /// </summary>
-    /// <param name="broadcasterId">ID for the user hosting the Guest Star session.</param>
-    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster’s chat room. This ID must match the user ID in the user access token.</param>
-    /// <returns><see cref="TwitchGetGuestStarSessionResponse"/></returns>
-    public async Task<TwitchGetGuestStarSessionResponse> GetGuestStarSession(string broadcasterId, string moderatorId)
-    {
-        return await _data!.CallAsync<TwitchGetGuestStarSessionResponse>("get_guest_star_session", broadcasterId, moderatorId); 
-    }
-
-    /// <summary>
-    /// BETA Programmatically creates a Guest Star session on behalf of the broadcaster.
-    /// </summary>
-    /// <param name="broadcasterId">The ID of the broadcaster you want to create a Guest Star session for. Provided `broadcaster_id` must match the `user_id` in the auth token.</param>
-    /// <returns><see cref="TwitchCreateGuestStarSessionResponse"/></returns>
-    public async Task<TwitchCreateGuestStarSessionResponse> CreateGuestStarSession(string broadcasterId)
-    {
-        return await _data!.CallAsync<TwitchCreateGuestStarSessionResponse>("create_guest_star_session", broadcasterId); 
-    }
-
-    /// <summary>
-    /// BETA Programmatically ends a Guest Star session on behalf of the broadcaster.
-    /// </summary>
-    /// <param name="broadcasterId">The ID of the broadcaster you want to end a Guest Star session for. Provided `broadcaster_id` must match the `user_id` in the auth token.</param>
-    /// <param name="sessionId">ID for the session to end on behalf of the broadcaster.</param>
-    /// <returns><see cref="TwitchEndGuestStarSessionResponse"/></returns>
-    public async Task<TwitchEndGuestStarSessionResponse> EndGuestStarSession(string broadcasterId, string sessionId)
-    {
-        return await _data!.CallAsync<TwitchEndGuestStarSessionResponse>("end_guest_star_session", broadcasterId, sessionId); 
-    }
-
-    /// <summary>
-    /// BETA Provides the caller with a list of pending invites to a Guest Star session.
+    /// Provides the caller with a list of pending invites to a Guest Star session.
     /// </summary>
     /// <param name="broadcasterId">The ID of the broadcaster running the Guest Star session.</param>
-    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster’s chat room. This ID must match the `user_id` in the user access token.</param>
+    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster's chat room. This ID must match the `user_id` in the user access token.</param>
     /// <param name="sessionId">The session ID to query for invite status.</param>
     /// <returns><see cref="TwitchGetGuestStarInvitesResponse"/></returns>
     public async Task<TwitchGetGuestStarInvitesResponse> GetGuestStarInvites(string broadcasterId, string moderatorId, string sessionId)
@@ -1031,10 +991,10 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// BETA Sends an invite to a specified guest on behalf of the broadcaster for a Guest Star session in progress.
+    /// Sends an invite to a specified guest on behalf of the broadcaster for a Guest Star session in progress.
     /// </summary>
     /// <param name="broadcasterId">The ID of the broadcaster running the Guest Star session.</param>
-    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster’s chat room. This ID must match the `user_id` in the user access token.</param>
+    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster's chat room. This ID must match the `user_id` in the user access token.</param>
     /// <param name="sessionId">The session ID for the invite to be sent on behalf of the broadcaster.</param>
     /// <param name="guestId">Twitch User ID for the guest to invite to the Guest Star session.</param>
     /// <returns><see cref="ResponseData"/></returns>
@@ -1044,10 +1004,10 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// BETA Revokes a previously sent invite for a Guest Star session.
+    /// Revokes a previously sent invite for a Guest Star
     /// </summary>
     /// <param name="broadcasterId">The ID of the broadcaster running the Guest Star session.</param>
-    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster’s chat room. This ID must match the `user_id` in the user access token.</param>
+    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster's chat room. This ID must match the `user_id` in the user access token.</param>
     /// <param name="sessionId">The ID of the session for the invite to be revoked on behalf of the broadcaster.</param>
     /// <param name="guestId">Twitch User ID for the guest to revoke the Guest Star session invite from.</param>
     /// <returns><see cref="ResponseData"/></returns>
@@ -1057,13 +1017,45 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// BETA Allows a previously invited user to be assigned a slot within the active Guest Star session.
+    /// Gets information about an ongoing Guest Star session for a particular channel.
+    /// </summary>
+    /// <param name="broadcasterId">ID for the user hosting the Guest Star session.</param>
+    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster's chat room. This ID must match the user ID in the user access token.</param>
+    /// <returns><see cref="TwitchGetGuestStarSessionResponse"/></returns>
+    public async Task<TwitchGetGuestStarSessionResponse> GetGuestStarSession(string broadcasterId, string moderatorId)
+    {
+        return await _data!.CallAsync<TwitchGetGuestStarSessionResponse>("get_guest_star_session", broadcasterId, moderatorId); 
+    }
+
+    /// <summary>
+    /// Programmatically creates a Guest Star session on behalf
+    /// </summary>
+    /// <param name="broadcasterId">The ID of the broadcaster you want to create a Guest Star session for. Provided _broadcaster_id_ must match the `user_id` in the authentication token.</param>
+    /// <returns><see cref="TwitchCreateGuestStarSessionResponse"/></returns>
+    public async Task<TwitchCreateGuestStarSessionResponse> CreateGuestStarSession(string broadcasterId)
+    {
+        return await _data!.CallAsync<TwitchCreateGuestStarSessionResponse>("create_guest_star_session", broadcasterId); 
+    }
+
+    /// <summary>
+    /// Programmatically ends a Guest Star session on behalf of the broadcaster.
+    /// </summary>
+    /// <param name="broadcasterId">The ID of the broadcaster you want to end a Guest Star session for. Provided _broadcaster_id_ must match the `user_id` in the authentication token.</param>
+    /// <param name="sessionId">ID for the session to end on behalf of the broadcaster.</param>
+    /// <returns><see cref="TwitchEndGuestStarSessionResponse"/></returns>
+    public async Task<TwitchEndGuestStarSessionResponse> EndGuestStarSession(string broadcasterId, string sessionId)
+    {
+        return await _data!.CallAsync<TwitchEndGuestStarSessionResponse>("end_guest_star_session", broadcasterId, sessionId); 
+    }
+
+    /// <summary>
+    /// Allows a previously invited user to be assigned a slot
     /// </summary>
     /// <param name="broadcasterId">The ID of the broadcaster running the Guest Star session.</param>
-    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster’s chat room. This ID must match the `user_id` in the user access token.</param>
+    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster's chat room. This ID must match the `user_id` in the user access token.</param>
     /// <param name="sessionId">The ID of the Guest Star session in which to assign the slot.</param>
     /// <param name="guestId">The Twitch User ID corresponding to the guest to assign a slot in the session. This user must already have an invite to this session, and have indicated that they are ready to join.</param>
-    /// <param name="slotId">The slot assignment to give to the user. Must be a numeric identifier between “1” and “N” where N is the max number of slots for the session. Max number of slots allowed for the session is reported by [Get Channel Guest Star Settings](https://dev.twitch.tv/docs/api/reference#get-channel-guest-star-settings).</param>
+    /// <param name="slotId">The slot assignment to give to the user. Must be a numeric identifier between "1" and "N" where N is the max number of slots for the session. Max number of slots allowed for the session is reported by [Get Channel Guest Star Settings](#get-channel-guest-star-settings). If another guest already holds the slot, that guest is removed from the slot and replaced.</param>
     /// <returns><see cref="ResponseData"/></returns>
     public async Task<ResponseData> AssignGuestStarSlot(string broadcasterId, string moderatorId, string sessionId, string guestId, string slotId)
     {
@@ -1071,11 +1063,11 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// BETA Allows a user to update the assigned slot for a particular user within the active Guest Star session.
+    /// Allows a user to update the assigned slot for a particular user within the active Guest Star session.
     /// </summary>
     /// <param name="opt"><see cref="TwitchUpdateGuestStarSlotOpt"/></param>
     /// <param name="broadcasterId">The ID of the broadcaster running the Guest Star session.</param>
-    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster’s chat room. This ID must match the `user_id` in the user access token.</param>
+    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster's chat room. This ID must match the `user_id` in the user access token.</param>
     /// <param name="sessionId">The ID of the Guest Star session in which to update slot settings.</param>
     /// <param name="sourceSlotId">The slot assignment previously assigned to a user.</param>
     /// <returns><see cref="ResponseData"/></returns>
@@ -1086,11 +1078,11 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// BETA Allows a caller to remove a slot assignment from a user participating in an active Guest Star session.
+    /// Allows a caller to remove a slot assignment from a user participating in an active Guest Star session.
     /// </summary>
     /// <param name="opt"><see cref="TwitchDeleteGuestStarSlotOpt"/></param>
     /// <param name="broadcasterId">The ID of the broadcaster running the Guest Star session.</param>
-    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster’s chat room. This ID must match the user ID in the user access token.</param>
+    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster's chat room. This ID must match the user ID in the user access token.</param>
     /// <param name="sessionId">The ID of the Guest Star session in which to remove the slot assignment.</param>
     /// <param name="guestId">The Twitch User ID corresponding to the guest to remove from the session.</param>
     /// <param name="slotId">The slot ID representing the slot assignment to remove from the session.</param>
@@ -1102,12 +1094,12 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// BETA Allows a user to update slot settings for a particular guest within a Guest Star session.
+    /// Allows a user to update slot settings for a particular guest within a Guest Star session.
     /// </summary>
     /// <param name="opt"><see cref="TwitchUpdateGuestStarSlotSettingsOpt"/></param>
     /// <param name="broadcasterId">The ID of the broadcaster running the Guest Star session.</param>
-    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster’s chat room. This ID must match the user ID in the user access token.</param>
-    /// <param name="sessionId">The ID of the Guest Star session in which to update a slot’s settings.</param>
+    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster's chat room. This ID must match the user ID in the user access token.</param>
+    /// <param name="sessionId">The ID of the Guest Star session in which to update a slot's settings.</param>
     /// <param name="slotId">The slot assignment that has previously been assigned to a user.</param>
     /// <returns><see cref="ResponseData"/></returns>
     public async Task<ResponseData> UpdateGuestStarSlotSettings(string broadcasterId, string moderatorId, string sessionId, string slotId, TwitchUpdateGuestStarSlotSettingsOpt? opt = null)
@@ -1127,15 +1119,37 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Checks whether AutoMod would flag the specified message for review.
+    /// Gets a list of the broadcaster's VIPs.
     /// </summary>
-    /// <param name="body"><see cref="TwitchCheckAutoModStatusBody"/></param>
-    /// <param name="broadcasterId">The ID of the broadcaster whose AutoMod settings and list of blocked terms are used to check the message. This ID must match the user ID in the access token.</param>
-    /// <returns><see cref="TwitchCheckAutoModStatusResponse"/></returns>
-    public async Task<TwitchCheckAutoModStatusResponse> CheckAutomodStatus(TwitchCheckAutoModStatusBody body, string broadcasterId)
+    /// <param name="opt"><see cref="TwitchGetVipsOpt"/></param>
+    /// <param name="broadcasterId">The ID of the broadcaster whose list of VIPs you want to get. This ID must match the user ID in the access token.</param>
+    /// <returns><see cref="TwitchGetVIPsResponse"/></returns>
+    public async Task<TwitchGetVIPsResponse> GetVips(string broadcasterId, TwitchGetVipsOpt? opt = null)
     {
-        using var bodyArg = GodotObjectExtension.ToVariant(body);
-        return await _data!.CallAsync<TwitchCheckAutoModStatusResponse>("check_automod_status", bodyArg, broadcasterId); 
+        using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
+        return await _data!.CallAsync<TwitchGetVIPsResponse>("get_vips", optArg, broadcasterId); 
+    }
+
+    /// <summary>
+    /// Adds the specified user as a VIP in the broadcaster's channel.
+    /// </summary>
+    /// <param name="userId">The ID of the user to give VIP status to.</param>
+    /// <param name="broadcasterId">The ID of the broadcaster that's adding the user as a VIP. This ID must match the user ID in the access token.</param>
+    /// <returns><see cref="ResponseData"/></returns>
+    public async Task<ResponseData> AddChannelVip(string userId, string broadcasterId)
+    {
+        return await _data!.CallAsync<ResponseData>("add_channel_vip", userId, broadcasterId); 
+    }
+
+    /// <summary>
+    /// Removes the specified user as a VIP in the broadcaster's channel.
+    /// </summary>
+    /// <param name="userId">The ID of the user to remove VIP status from.</param>
+    /// <param name="broadcasterId">The ID of the broadcaster who owns the channel where the user has VIP status.</param>
+    /// <returns><see cref="ResponseData"/></returns>
+    public async Task<ResponseData> RemoveChannelVip(string userId, string broadcasterId)
+    {
+        return await _data!.CallAsync<ResponseData>("remove_channel_vip", userId, broadcasterId); 
     }
 
     /// <summary>
@@ -1150,10 +1164,10 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Gets the broadcaster’s AutoMod settings.
+    /// Gets the broadcaster's AutoMod settings.
     /// </summary>
     /// <param name="broadcasterId">The ID of the broadcaster whose AutoMod settings you want to get.</param>
-    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster’s chat room. This ID must match the user ID in the user access token.</param>
+    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster's chat room. This ID must match the user ID in the user access token.</param>
     /// <returns><see cref="TwitchGetAutoModSettingsResponse"/></returns>
     public async Task<TwitchGetAutoModSettingsResponse> GetAutomodSettings(string broadcasterId, string moderatorId)
     {
@@ -1161,11 +1175,11 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Updates the broadcaster’s AutoMod settings.
+    /// Updates the broadcaster's AutoMod settings.
     /// </summary>
     /// <param name="body"><see cref="TwitchUpdateAutoModSettingsBody"/></param>
     /// <param name="broadcasterId">The ID of the broadcaster whose AutoMod settings you want to update.</param>
-    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster’s chat room. This ID must match the user ID in the user access token.</param>
+    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster's chat room. This ID must match the user ID in the user access token.</param>
     /// <returns><see cref="TwitchUpdateAutoModSettingsResponse"/></returns>
     public async Task<TwitchUpdateAutoModSettingsResponse> UpdateAutomodSettings(TwitchUpdateAutoModSettingsBody body, string broadcasterId, string moderatorId)
     {
@@ -1186,11 +1200,11 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Bans a user from participating in a broadcaster’s chat room or puts them in a timeout.
+    /// Bans a user from participating in a broadcaster's chat room or puts them in a timeout.
     /// </summary>
     /// <param name="body"><see cref="TwitchBanUserBody"/></param>
     /// <param name="broadcasterId">The ID of the broadcaster whose chat room the user is being banned from.</param>
-    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster’s chat room. This ID must match the user ID in the user access token.</param>
+    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster's chat room. This ID must match the user ID in the user access token.</param>
     /// <returns><see cref="TwitchBanUserResponse"/></returns>
     public async Task<TwitchBanUserResponse> BanUser(TwitchBanUserBody body, string broadcasterId, string moderatorId)
     {
@@ -1202,7 +1216,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// Removes the ban or timeout that was placed on the specified user.
     /// </summary>
     /// <param name="broadcasterId">The ID of the broadcaster whose chat room the user is banned from chatting in.</param>
-    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster’s chat room. This ID must match the user ID in the user access token.</param>
+    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster's chat room. This ID must match the user ID in the user access token.</param>
     /// <param name="userId">The ID of the user to remove the ban or timeout from.</param>
     /// <returns><see cref="ResponseData"/></returns>
     public async Task<ResponseData> UnbanUser(string broadcasterId, string moderatorId, string userId)
@@ -1211,53 +1225,11 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Gets a list of unban requests for a broadcaster’s channel.
-    /// </summary>
-    /// <param name="opt"><see cref="TwitchGetUnbanRequestsOpt"/></param>
-    /// <param name="broadcasterId">The ID of the broadcaster whose channel is receiving unban requests.</param>
-    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster’s unban requests. This ID must match the user ID in the user access token.</param>
-    /// <param name="status">Filter by a status.  
-    ///   
-    /// <list type="bullet">
-    /// <item> pending</item>
-    /// <item> approved</item>
-    /// <item> denied</item>
-    /// <item> acknowledged</item>
-    /// <item> canceled</item>
-    /// </list></param>
-    /// <returns><see cref="TwitchGetUnbanRequestsResponse"/></returns>
-    public async Task<TwitchGetUnbanRequestsResponse> GetUnbanRequests(string broadcasterId, string moderatorId, string status, TwitchGetUnbanRequestsOpt? opt = null)
-    {
-        using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
-        return await _data!.CallAsync<TwitchGetUnbanRequestsResponse>("get_unban_requests", optArg, broadcasterId, moderatorId, status); 
-    }
-
-    /// <summary>
-    /// Resolves an unban request by approving or denying it.
-    /// </summary>
-    /// <param name="opt"><see cref="TwitchResolveUnbanRequestsOpt"/></param>
-    /// <param name="broadcasterId">The ID of the broadcaster whose channel is approving or denying the unban request.</param>
-    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster’s unban requests. This ID must match the user ID in the user access token.</param>
-    /// <param name="unbanRequestId">The ID of the Unban Request to resolve.</param>
-    /// <param name="status">Resolution status.   
-    ///   
-    /// <list type="bullet">
-    /// <item> approved</item>
-    /// <item> denied</item>
-    /// </list></param>
-    /// <returns><see cref="TwitchResolveUnbanRequestsResponse"/></returns>
-    public async Task<TwitchResolveUnbanRequestsResponse> ResolveUnbanRequests(string broadcasterId, string moderatorId, string unbanRequestId, string status, TwitchResolveUnbanRequestsOpt? opt = null)
-    {
-        using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
-        return await _data!.CallAsync<TwitchResolveUnbanRequestsResponse>("resolve_unban_requests", optArg, broadcasterId, moderatorId, unbanRequestId, status); 
-    }
-
-    /// <summary>
-    /// Gets the broadcaster’s list of non-private, blocked words or phrases.
+    /// Gets the broadcaster's list of blocked words or phrases.
     /// </summary>
     /// <param name="opt"><see cref="TwitchGetBlockedTermsOpt"/></param>
-    /// <param name="broadcasterId">The ID of the broadcaster whose blocked terms you’re getting.</param>
-    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster’s chat room. This ID must match the user ID in the user access token.</param>
+    /// <param name="broadcasterId">The ID of the broadcaster whose blocked terms you're getting.</param>
+    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster's chat room. This ID must match the user ID in the user access token.</param>
     /// <returns><see cref="TwitchGetBlockedTermsResponse"/></returns>
     public async Task<TwitchGetBlockedTermsResponse> GetBlockedTerms(string broadcasterId, string moderatorId, TwitchGetBlockedTermsOpt? opt = null)
     {
@@ -1266,11 +1238,11 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Adds a word or phrase to the broadcaster’s list of blocked terms.
+    /// Adds a word or phrase to the broadcaster's list of blocked terms.
     /// </summary>
     /// <param name="body"><see cref="TwitchAddBlockedTermBody"/></param>
     /// <param name="broadcasterId">The ID of the broadcaster that owns the list of blocked terms.</param>
-    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster’s chat room. This ID must match the user ID in the user access token.</param>
+    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster's chat room. This ID must match the user ID in the user access token.</param>
     /// <returns><see cref="TwitchAddBlockedTermResponse"/></returns>
     public async Task<TwitchAddBlockedTermResponse> AddBlockedTerm(TwitchAddBlockedTermBody body, string broadcasterId, string moderatorId)
     {
@@ -1279,11 +1251,11 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Removes the word or phrase from the broadcaster’s list of blocked terms.
+    /// Removes the word or phrase from the broadcaster's list of blocked terms.
     /// </summary>
     /// <param name="broadcasterId">The ID of the broadcaster that owns the list of blocked terms.</param>
-    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster’s chat room. This ID must match the user ID in the user access token.</param>
-    /// <param name="id">The ID of the blocked term to remove from the broadcaster’s list of blocked terms.</param>
+    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster's chat room. This ID must match the user ID in the user access token.</param>
+    /// <param name="id">The ID of the blocked term to remove from the broadcaster's list of blocked terms.</param>
     /// <returns><see cref="ResponseData"/></returns>
     public async Task<ResponseData> RemoveBlockedTerm(string broadcasterId, string moderatorId, string id)
     {
@@ -1291,23 +1263,10 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Removes a single chat message or all chat messages from the broadcaster’s chat room.
-    /// </summary>
-    /// <param name="opt"><see cref="TwitchDeleteChatMessagesOpt"/></param>
-    /// <param name="broadcasterId">The ID of the broadcaster that owns the chat room to remove messages from.</param>
-    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster’s chat room. This ID must match the user ID in the user access token.</param>
-    /// <returns><see cref="ResponseData"/></returns>
-    public async Task<ResponseData> DeleteChatMessages(string broadcasterId, string moderatorId, TwitchDeleteChatMessagesOpt? opt = null)
-    {
-        using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
-        return await _data!.CallAsync<ResponseData>("delete_chat_messages", optArg, broadcasterId, moderatorId); 
-    }
-
-    /// <summary>
     /// Gets a list of channels that the specified user has moderator privileges in.
     /// </summary>
     /// <param name="opt"><see cref="TwitchGetModeratedChannelsOpt"/></param>
-    /// <param name="userId">A user’s ID. Returns the list of channels that this user has moderator privileges in. This ID must match the user ID in the user OAuth token</param>
+    /// <param name="userId">A user's ID. Returns the list of channels that this user has moderator privileges in. This ID must match the user ID in the user OAuth token</param>
     /// <returns><see cref="TwitchGetModeratedChannelsResponse"/></returns>
     public async Task<TwitchGetModeratedChannelsResponse> GetModeratedChannels(string userId, TwitchGetModeratedChannelsOpt? opt = null)
     {
@@ -1316,7 +1275,32 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Gets all users allowed to moderate the broadcaster’s chat room.
+    /// Removes a single chat message or all chat messages from the broadcaster's chat room.
+    /// </summary>
+    /// <param name="opt"><see cref="TwitchDeleteChatMessagesOpt"/></param>
+    /// <param name="broadcasterId">The ID of the broadcaster that owns the chat room to remove messages from.</param>
+    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster's chat room. This ID must match the user ID in the user access token.</param>
+    /// <returns><see cref="ResponseData"/></returns>
+    public async Task<ResponseData> DeleteChatMessages(string broadcasterId, string moderatorId, TwitchDeleteChatMessagesOpt? opt = null)
+    {
+        using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
+        return await _data!.CallAsync<ResponseData>("delete_chat_messages", optArg, broadcasterId, moderatorId); 
+    }
+
+    /// <summary>
+    /// Checks whether AutoMod would flag the specified message for review.
+    /// </summary>
+    /// <param name="body"><see cref="TwitchCheckAutoModStatusBody"/></param>
+    /// <param name="broadcasterId">The ID of the broadcaster whose AutoMod settings and list of blocked terms are used to check the message. This ID must match the user ID in the access token.</param>
+    /// <returns><see cref="TwitchCheckAutoModStatusResponse"/></returns>
+    public async Task<TwitchCheckAutoModStatusResponse> CheckAutomodStatus(TwitchCheckAutoModStatusBody body, string broadcasterId)
+    {
+        using var bodyArg = GodotObjectExtension.ToVariant(body);
+        return await _data!.CallAsync<TwitchCheckAutoModStatusResponse>("check_automod_status", bodyArg, broadcasterId); 
+    }
+
+    /// <summary>
+    /// Gets all users allowed to moderate the broadcaster's chat room.
     /// </summary>
     /// <param name="opt"><see cref="TwitchGetModeratorsOpt"/></param>
     /// <param name="broadcasterId">The ID of the broadcaster whose list of moderators you want to get. This ID must match the user ID in the access token.</param>
@@ -1328,10 +1312,10 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Adds a moderator to the broadcaster’s chat room.
+    /// Adds a moderator to the broadcaster's chat room.
     /// </summary>
     /// <param name="broadcasterId">The ID of the broadcaster that owns the chat room. This ID must match the user ID in the access token.</param>
-    /// <param name="userId">The ID of the user to add as a moderator in the broadcaster’s chat room.</param>
+    /// <param name="userId">The ID of the user to add as a moderator in the broadcaster's chat room.</param>
     /// <returns><see cref="ResponseData"/></returns>
     public async Task<ResponseData> AddChannelModerator(string broadcasterId, string userId)
     {
@@ -1339,10 +1323,12 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Removes a moderator from the broadcaster’s chat room.
+    /// Removes a moderator from the broadcaster's chat room.
     /// </summary>
-    /// <param name="broadcasterId">The ID of the broadcaster that owns the chat room. This ID must match the user ID in the access token.</param>
-    /// <param name="userId">The ID of the user to remove as a moderator from the broadcaster’s chat room.</param>
+    /// <param name="broadcasterId">The ID of the broadcaster that owns the chat room. This ID must match the user ID in the access token, unless a moderator is removing themselves; in that case, the ID in <list type="bullet">
+    /// <item>user_id<item> must match the user ID in the access token.</item></item>
+    /// </list></param>
+    /// <param name="userId">The ID of the user to remove as a moderator from the broadcaster's chat room.</param>
     /// <returns><see cref="ResponseData"/></returns>
     public async Task<ResponseData> RemoveChannelModerator(string broadcasterId, string userId)
     {
@@ -1350,45 +1336,22 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Gets a list of the broadcaster’s VIPs.
+    /// Gets the broadcaster's Shield Mode activation status.
     /// </summary>
-    /// <param name="opt"><see cref="TwitchGetVipsOpt"/></param>
-    /// <param name="broadcasterId">The ID of the broadcaster whose list of VIPs you want to get. This ID must match the user ID in the access token.</param>
-    /// <returns><see cref="TwitchGetVIPsResponse"/></returns>
-    public async Task<TwitchGetVIPsResponse> GetVips(string broadcasterId, TwitchGetVipsOpt? opt = null)
+    /// <param name="broadcasterId">The ID of the broadcaster whose Shield Mode activation status you want to get.</param>
+    /// <param name="moderatorId">The ID of the broadcaster or a user that is one of the broadcaster's moderators. This ID must match the user ID in the access token.</param>
+    /// <returns><see cref="TwitchGetShieldModeStatusResponse"/></returns>
+    public async Task<TwitchGetShieldModeStatusResponse> GetShieldModeStatus(string broadcasterId, string moderatorId)
     {
-        using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
-        return await _data!.CallAsync<TwitchGetVIPsResponse>("get_vips", optArg, broadcasterId); 
+        return await _data!.CallAsync<TwitchGetShieldModeStatusResponse>("get_shield_mode_status", broadcasterId, moderatorId); 
     }
 
     /// <summary>
-    /// Adds the specified user as a VIP in the broadcaster’s channel.
-    /// </summary>
-    /// <param name="userId">The ID of the user to give VIP status to.</param>
-    /// <param name="broadcasterId">The ID of the broadcaster that’s adding the user as a VIP. This ID must match the user ID in the access token.</param>
-    /// <returns><see cref="ResponseData"/></returns>
-    public async Task<ResponseData> AddChannelVip(string userId, string broadcasterId)
-    {
-        return await _data!.CallAsync<ResponseData>("add_channel_vip", userId, broadcasterId); 
-    }
-
-    /// <summary>
-    /// Removes the specified user as a VIP in the broadcaster’s channel.
-    /// </summary>
-    /// <param name="userId">The ID of the user to remove VIP status from.</param>
-    /// <param name="broadcasterId">The ID of the broadcaster who owns the channel where the user has VIP status.</param>
-    /// <returns><see cref="ResponseData"/></returns>
-    public async Task<ResponseData> RemoveChannelVip(string userId, string broadcasterId)
-    {
-        return await _data!.CallAsync<ResponseData>("remove_channel_vip", userId, broadcasterId); 
-    }
-
-    /// <summary>
-    /// Activates or deactivates the broadcaster’s Shield Mode.
+    /// Activates or deactivates the broadcaster's Shield Mode.
     /// </summary>
     /// <param name="body"><see cref="TwitchUpdateShieldModeStatusBody"/></param>
     /// <param name="broadcasterId">The ID of the broadcaster whose Shield Mode you want to activate or deactivate.</param>
-    /// <param name="moderatorId">The ID of the broadcaster or a user that is one of the broadcaster’s moderators. This ID must match the user ID in the access token.</param>
+    /// <param name="moderatorId">The ID of the broadcaster or a user that is one of the broadcaster's moderators. This ID must match the user ID in the access token.</param>
     /// <returns><see cref="TwitchUpdateShieldModeStatusResponse"/></returns>
     public async Task<TwitchUpdateShieldModeStatusResponse> UpdateShieldModeStatus(TwitchUpdateShieldModeStatusBody body, string broadcasterId, string moderatorId)
     {
@@ -1397,18 +1360,72 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Gets the broadcaster’s Shield Mode activation status.
+    /// Adds a suspicious user status to a chatter on the broadcaster's channel.
     /// </summary>
-    /// <param name="broadcasterId">The ID of the broadcaster whose Shield Mode activation status you want to get.</param>
-    /// <param name="moderatorId">The ID of the broadcaster or a user that is one of the broadcaster’s moderators. This ID must match the user ID in the access token.</param>
-    /// <returns><see cref="TwitchGetShieldModeStatusResponse"/></returns>
-    public async Task<TwitchGetShieldModeStatusResponse> GetShieldModeStatus(string broadcasterId, string moderatorId)
+    /// <param name="body"><see cref="TwitchAddSuspiciousStatusToChatUserBody"/></param>
+    /// <param name="broadcasterId">The user ID of the broadcaster, indicating the channel where the status is being applied.</param>
+    /// <param name="moderatorId">The user ID of the moderator who is applying the status. This ID must match the user ID in the user access token.</param>
+    /// <returns><see cref="TwitchAddSuspiciousStatusToChatUserResponse"/></returns>
+    public async Task<TwitchAddSuspiciousStatusToChatUserResponse> AddSuspiciousStatusToChatUser(TwitchAddSuspiciousStatusToChatUserBody body, string broadcasterId, string moderatorId)
     {
-        return await _data!.CallAsync<TwitchGetShieldModeStatusResponse>("get_shield_mode_status", broadcasterId, moderatorId); 
+        using var bodyArg = GodotObjectExtension.ToVariant(body);
+        return await _data!.CallAsync<TwitchAddSuspiciousStatusToChatUserResponse>("add_suspicious_status_to_chat_user", bodyArg, broadcasterId, moderatorId); 
     }
 
     /// <summary>
-    /// Warns a user in the specified broadcaster’s chat room, preventing them from chat interaction until the warning is acknowledged.
+    /// Remove a suspicious user status from a chatter on broadcaster's channel.
+    /// </summary>
+    /// <param name="broadcasterId">The user ID of the broadcaster, indicating the channel where the status is being removed.</param>
+    /// <param name="moderatorId">The user ID of the moderator who is removing the status. This ID must match the user ID in the user access token.</param>
+    /// <param name="userId">The ID of the user having the suspicious status removed.</param>
+    /// <returns><see cref="TwitchRemoveSuspiciousStatusFromChatUserResponse"/></returns>
+    public async Task<TwitchRemoveSuspiciousStatusFromChatUserResponse> RemoveSuspiciousStatusFromChatUser(string broadcasterId, string moderatorId, string userId)
+    {
+        return await _data!.CallAsync<TwitchRemoveSuspiciousStatusFromChatUserResponse>("remove_suspicious_status_from_chat_user", broadcasterId, moderatorId, userId); 
+    }
+
+    /// <summary>
+    /// Gets a list of unban requests for a broadcaster's channel.
+    /// </summary>
+    /// <param name="opt"><see cref="TwitchGetUnbanRequestsOpt"/></param>
+    /// <param name="broadcasterId">The ID of the broadcaster whose channel is receiving unban requests.</param>
+    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster's unban requests. This ID must match the user ID in the user access token. To get your own unban requests, set this parameter and *user_id* to your user ID; the *moderator_id*, `moderator_login` and `moderator_name` fields in the response are then **null**.</param>
+    /// <param name="status">Filter by a status. The value is case sensitive.
+    /// 
+    /// - pending
+    /// - approved
+    /// - denied
+    /// - acknowledged
+    /// - canceled</param>
+    /// <returns><see cref="TwitchGetUnbanRequestsResponse"/></returns>
+    public async Task<TwitchGetUnbanRequestsResponse> GetUnbanRequests(string broadcasterId, string moderatorId, string status, TwitchGetUnbanRequestsOpt? opt = null)
+    {
+        using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
+        return await _data!.CallAsync<TwitchGetUnbanRequestsResponse>("get_unban_requests", optArg, broadcasterId, moderatorId, status); 
+    }
+
+    /// <summary>
+    /// Resolves an unban request by approving or denying it.
+    /// </summary>
+    /// <param name="opt"><see cref="TwitchResolveUnbanRequestsOpt"/></param>
+    /// <param name="broadcasterId">The ID of the broadcaster whose channel is approving or denying the unban request. The request is identified by <list type="bullet">
+    /// <item>unban_request_id<item> alone; the response's `broadcaster_id` echoes this ID, and `broadcaster_login` and `broadcaster_name` are empty strings if it isn't the request's broadcaster.</item></item>
+    /// </list></param>
+    /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster's unban requests. This ID must match the user ID in the user access token.</param>
+    /// <param name="unbanRequestId">The ID of the Unban Request to resolve.</param>
+    /// <param name="status">Resolution status.
+    /// 
+    /// - approved
+    /// - denied</param>
+    /// <returns><see cref="TwitchResolveUnbanRequestsResponse"/></returns>
+    public async Task<TwitchResolveUnbanRequestsResponse> ResolveUnbanRequests(string broadcasterId, string moderatorId, string unbanRequestId, string status, TwitchResolveUnbanRequestsOpt? opt = null)
+    {
+        using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
+        return await _data!.CallAsync<TwitchResolveUnbanRequestsResponse>("resolve_unban_requests", optArg, broadcasterId, moderatorId, unbanRequestId, status); 
+    }
+
+    /// <summary>
+    /// Warns a user in the specified broadcaster's chat room, preventing them from chat interaction until the warning is acknowledged.
     /// </summary>
     /// <param name="body"><see cref="TwitchWarnChatUserBody"/></param>
     /// <param name="broadcasterId">The ID of the channel in which the warning will take effect.</param>
@@ -1418,31 +1435,6 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     {
         using var bodyArg = GodotObjectExtension.ToVariant(body);
         return await _data!.CallAsync<TwitchWarnChatUserResponse>("warn_chat_user", bodyArg, broadcasterId, moderatorId); 
-    }
-
-    /// <summary>
-    /// NEW Adds a suspicious user status to a chatter on the broadcaster’s channel.
-    /// </summary>
-    /// <param name="body"><see cref="TwitchAddSuspiciousStatusToChatUserBody"/></param>
-    /// <param name="broadcasterId">The user ID of the broadcaster, indicating the channel where the status is being applied.</param>
-    /// <param name="moderatorId">The user ID of the moderator who is applying the status.</param>
-    /// <returns><see cref="TwitchAddSuspiciousStatusToChatUserResponse"/></returns>
-    public async Task<TwitchAddSuspiciousStatusToChatUserResponse> AddSuspiciousStatusToChatUser(TwitchAddSuspiciousStatusToChatUserBody body, string broadcasterId, string moderatorId)
-    {
-        using var bodyArg = GodotObjectExtension.ToVariant(body);
-        return await _data!.CallAsync<TwitchAddSuspiciousStatusToChatUserResponse>("add_suspicious_status_to_chat_user", bodyArg, broadcasterId, moderatorId); 
-    }
-
-    /// <summary>
-    /// NEW Remove a suspicious user status from a chatter on broadcaster’s channel.
-    /// </summary>
-    /// <param name="broadcasterId">The user ID of the broadcaster, indicating the channel where the status is being removed.</param>
-    /// <param name="moderatorId">The user ID of the moderator who is removing the status.</param>
-    /// <param name="userId">The ID of the user having the suspicious status removed.</param>
-    /// <returns><see cref="TwitchRemoveSuspiciousStatusFromChatUserResponse"/></returns>
-    public async Task<TwitchRemoveSuspiciousStatusFromChatUserResponse> RemoveSuspiciousStatusFromChatUser(string broadcasterId, string moderatorId, string userId)
-    {
-        return await _data!.CallAsync<TwitchRemoveSuspiciousStatusFromChatUserResponse>("remove_suspicious_status_from_chat_user", broadcasterId, moderatorId, userId); 
     }
 
     /// <summary>
@@ -1458,7 +1450,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Creates a poll that viewers in the broadcaster’s channel can vote on.
+    /// Creates a poll that viewers in the broadcaster's channel can vote on.
     /// </summary>
     /// <param name="body"><see cref="TwitchCreatePollBody"/></param>
     /// <returns><see cref="TwitchCreatePollResponse"/></returns>
@@ -1514,7 +1506,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Raid another channel by sending the broadcaster’s viewers to the targeted channel.
+    /// Raid another channel by sending the broadcaster's viewers to the targeted channel.
     /// </summary>
     /// <param name="opt"><see cref="TwitchStartARaidOpt"/></param>
     /// <returns><see cref="TwitchStartARaidResponse"/></returns>
@@ -1535,7 +1527,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Gets the broadcaster’s streaming schedule.
+    /// Gets the broadcaster's streaming schedule.
     /// </summary>
     /// <param name="opt"><see cref="TwitchGetChannelStreamScheduleOpt"/></param>
     /// <param name="broadcasterId">The ID of the broadcaster that owns the streaming schedule you want to get.</param>
@@ -1547,7 +1539,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Gets the broadcaster’s streaming schedule as an iCalendar.
+    /// Gets the broadcaster's streaming schedule as an [iCalendar](https://datatracker.ietf.org/doc/html/rfc5545).
     /// </summary>
     /// <param name="broadcasterId">The ID of the broadcaster that owns the streaming schedule you want to get.</param>
     /// <returns><see cref="ResponseData"/></returns>
@@ -1557,19 +1549,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Updates the broadcaster’s schedule settings, such as scheduling a vacation.
-    /// </summary>
-    /// <param name="opt"><see cref="TwitchUpdateChannelStreamScheduleOpt"/></param>
-    /// <param name="broadcasterId">The ID of the broadcaster whose schedule settings you want to update. The ID must match the user ID in the user access token.</param>
-    /// <returns><see cref="ResponseData"/></returns>
-    public async Task<ResponseData> UpdateChannelStreamSchedule(string broadcasterId, TwitchUpdateChannelStreamScheduleOpt? opt = null)
-    {
-        using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
-        return await _data!.CallAsync<ResponseData>("update_channel_stream_schedule", optArg, broadcasterId); 
-    }
-
-    /// <summary>
-    /// Adds a single or recurring broadcast to the broadcaster’s streaming schedule.
+    /// Adds a single or recurring broadcast to the broadcaster's streaming schedule.
     /// </summary>
     /// <param name="body"><see cref="TwitchCreateChannelStreamScheduleSegmentBody"/></param>
     /// <param name="broadcasterId">The ID of the broadcaster that owns the schedule to add the broadcast segment to. This ID must match the user ID in the user access token.</param>
@@ -1594,7 +1574,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Deletes a broadcast from the broadcaster’s streaming schedule.
+    /// Deletes a broadcast from the broadcaster's streaming schedule.
     /// </summary>
     /// <param name="broadcasterId">The ID of the broadcaster that owns the streaming schedule. This ID must match the user ID in the user access token.</param>
     /// <param name="id">The ID of the broadcast segment to remove.</param>
@@ -1605,10 +1585,24 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
+    /// Updates the broadcaster's schedule settings, such as scheduling a vacation.
+    /// </summary>
+    /// <param name="opt"><see cref="TwitchUpdateChannelStreamScheduleOpt"/></param>
+    /// <param name="broadcasterId">The ID of the broadcaster whose schedule settings you want to update. The ID must match the user ID in the user access token.</param>
+    /// <returns><see cref="ResponseData"/></returns>
+    public async Task<ResponseData> UpdateChannelStreamSchedule(string broadcasterId, TwitchUpdateChannelStreamScheduleOpt? opt = null)
+    {
+        using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
+        return await _data!.CallAsync<ResponseData>("update_channel_stream_schedule", optArg, broadcasterId); 
+    }
+
+    /// <summary>
     /// Gets the games or categories that match the specified query.
     /// </summary>
     /// <param name="opt"><see cref="TwitchSearchCategoriesOpt"/></param>
-    /// <param name="query">The URI-encoded search string. For example, encode _#archery_ as `%23archery` and search strings like _angel of death_ as `angel%20of%20death`.</param>
+    /// <param name="query">The URI-encoded search string. For example, encode <list type="bullet">
+    /// <item>#archery<item> as '%23archery' and search strings like <item>angel of death<item> as 'angel%20of%20death'.</item></item></item></item>
+    /// </list></param>
     /// <returns><see cref="TwitchSearchCategoriesResponse"/></returns>
     public async Task<TwitchSearchCategoriesResponse> SearchCategories(string query, TwitchSearchCategoriesOpt? opt = null)
     {
@@ -1617,25 +1611,17 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Gets the channels that match the specified query and have streamed content within the past 6 months.
+    /// Gets the channels that match the specified query.
     /// </summary>
     /// <param name="opt"><see cref="TwitchSearchChannelsOpt"/></param>
-    /// <param name="query">The URI-encoded search string. For example, encode search strings like _angel of death_ as `angel%20of%20death`.</param>
+    /// <param name="query">The URI-encoded search string. For example, encode search strings like <list type="bullet">
+    /// <item>angel of death<item> as 'angel%20of%20death'.</item></item>
+    /// </list></param>
     /// <returns><see cref="TwitchSearchChannelsResponse"/></returns>
     public async Task<TwitchSearchChannelsResponse> SearchChannels(string query, TwitchSearchChannelsOpt? opt = null)
     {
         using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
         return await _data!.CallAsync<TwitchSearchChannelsResponse>("search_channels", optArg, query); 
-    }
-
-    /// <summary>
-    /// Gets the channel’s stream key.
-    /// </summary>
-    /// <param name="broadcasterId">The ID of the broadcaster that owns the channel. The ID must match the user ID in the access token.</param>
-    /// <returns><see cref="TwitchGetStreamKeyResponse"/></returns>
-    public async Task<TwitchGetStreamKeyResponse> GetStreamKey(string broadcasterId)
-    {
-        return await _data!.CallAsync<TwitchGetStreamKeyResponse>("get_stream_key", broadcasterId); 
     }
 
     /// <summary>
@@ -1662,6 +1648,27 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
+    /// Gets the channel's stream key.
+    /// </summary>
+    /// <param name="broadcasterId">The ID of the broadcaster that owns the channel. The ID must match the user ID in the access token.</param>
+    /// <returns><see cref="TwitchGetStreamKeyResponse"/></returns>
+    public async Task<TwitchGetStreamKeyResponse> GetStreamKey(string broadcasterId)
+    {
+        return await _data!.CallAsync<TwitchGetStreamKeyResponse>("get_stream_key", broadcasterId); 
+    }
+
+    /// <summary>
+    /// Gets a list of markers from the user's most recent stream or from the specified VOD/video.
+    /// </summary>
+    /// <param name="opt"><see cref="TwitchGetStreamMarkersOpt"/></param>
+    /// <returns><see cref="TwitchGetStreamMarkersResponse"/></returns>
+    public async Task<TwitchGetStreamMarkersResponse> GetStreamMarkers(TwitchGetStreamMarkersOpt? opt = null)
+    {
+        using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
+        return await _data!.CallAsync<TwitchGetStreamMarkersResponse>("get_stream_markers", optArg); 
+    }
+
+    /// <summary>
     /// Adds a marker to a live stream.
     /// </summary>
     /// <param name="body"><see cref="TwitchCreateStreamMarkerBody"/></param>
@@ -1673,21 +1680,10 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Gets a list of markers from the user’s most recent stream or from the specified VOD/video.
-    /// </summary>
-    /// <param name="opt"><see cref="TwitchGetStreamMarkersOpt"/></param>
-    /// <returns><see cref="TwitchGetStreamMarkersResponse"/></returns>
-    public async Task<TwitchGetStreamMarkersResponse> GetStreamMarkers(TwitchGetStreamMarkersOpt? opt = null)
-    {
-        using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
-        return await _data!.CallAsync<TwitchGetStreamMarkersResponse>("get_stream_markers", optArg); 
-    }
-
-    /// <summary>
     /// Gets a list of users that subscribe to the specified broadcaster.
     /// </summary>
     /// <param name="opt"><see cref="TwitchGetBroadcasterSubscriptionsOpt"/></param>
-    /// <param name="broadcasterId">The broadcaster’s ID. This ID must match the user ID in the access token.</param>
+    /// <param name="broadcasterId">The broadcaster's ID. This ID must match the user ID in the access token.</param>
     /// <returns><see cref="TwitchGetBroadcasterSubscriptionsResponse"/></returns>
     public async Task<TwitchGetBroadcasterSubscriptionsResponse> GetBroadcasterSubscriptions(string broadcasterId, TwitchGetBroadcasterSubscriptionsOpt? opt = null)
     {
@@ -1696,45 +1692,14 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Checks whether the user subscribes to the broadcaster’s channel.
+    /// Checks whether the user subscribes to the broadcaster's channel.
     /// </summary>
     /// <param name="broadcasterId">The ID of a partner or affiliate broadcaster.</param>
-    /// <param name="userId">The ID of the user that you’re checking to see whether they subscribe to the broadcaster in _broadcaster_id_. This ID must match the user ID in the access Token.</param>
+    /// <param name="userId">The ID of the user that you're checking to see whether they subscribe to the broadcaster in *broadcaster_id*. If you use a user access token, this ID must match the user ID in the token.</param>
     /// <returns><see cref="TwitchCheckUserSubscriptionResponse"/></returns>
     public async Task<TwitchCheckUserSubscriptionResponse> CheckUserSubscription(string broadcasterId, string userId)
     {
         return await _data!.CallAsync<TwitchCheckUserSubscriptionResponse>("check_user_subscription", broadcasterId, userId); 
-    }
-
-    /// <summary>
-    /// Gets the list of all stream tags that Twitch defines. You can also filter the list by one or more tag IDs.
-    /// </summary>
-    /// <param name="opt"><see cref="TwitchGetAllStreamTagsOpt"/></param>
-    /// <returns><see cref="TwitchGetAllStreamTagsResponse"/></returns>
-    public async Task<TwitchGetAllStreamTagsResponse> GetAllStreamTags(TwitchGetAllStreamTagsOpt? opt = null)
-    {
-        using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
-        return await _data!.CallAsync<TwitchGetAllStreamTagsResponse>("get_all_stream_tags", optArg); 
-    }
-
-    /// <summary>
-    /// Gets the list of stream tags that the broadcaster or Twitch added to their channel.
-    /// </summary>
-    /// <param name="broadcasterId">The ID of the broadcaster whose stream tags you want to get.</param>
-    /// <returns><see cref="TwitchGetStreamTagsResponse"/></returns>
-    public async Task<TwitchGetStreamTagsResponse> GetStreamTags(string broadcasterId)
-    {
-        return await _data!.CallAsync<TwitchGetStreamTagsResponse>("get_stream_tags", broadcasterId); 
-    }
-
-    /// <summary>
-    /// Gets the list of Twitch teams that the broadcaster is a member of.
-    /// </summary>
-    /// <param name="broadcasterId">The ID of the broadcaster whose teams you want to get.</param>
-    /// <returns><see cref="TwitchGetChannelTeamsResponse"/></returns>
-    public async Task<TwitchGetChannelTeamsResponse> GetChannelTeams(string broadcasterId)
-    {
-        return await _data!.CallAsync<TwitchGetChannelTeamsResponse>("get_channel_teams", broadcasterId); 
     }
 
     /// <summary>
@@ -1749,6 +1714,26 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
+    /// Gets the list of Twitch teams that the broadcaster is a member of.
+    /// </summary>
+    /// <param name="broadcasterId">The ID of the broadcaster whose teams you want to get.</param>
+    /// <returns><see cref="TwitchGetChannelTeamsResponse"/></returns>
+    public async Task<TwitchGetChannelTeamsResponse> GetChannelTeams(string broadcasterId)
+    {
+        return await _data!.CallAsync<TwitchGetChannelTeamsResponse>("get_channel_teams", broadcasterId); 
+    }
+
+    /// <summary>
+    /// Gets the authorization scopes that the specified user has granted the application.
+    /// </summary>
+    /// <param name="userId">The ID of the user(s) you want to check authorization for. To specify more than one user, include the user_id parameter for each user to get. For example, 'user_id=1234&user_id=5678'. The maximum number of IDs you may specify is 10.</param>
+    /// <returns><see cref="TwitchGetAuthorizationByUserResponse"/></returns>
+    public async Task<TwitchGetAuthorizationByUserResponse> GetAuthorizationByUser(string[] userId)
+    {
+        return await _data!.CallAsync<TwitchGetAuthorizationByUserResponse>("get_authorization_by_user", new Godot.Collections.Array<string>(userId)); 
+    }
+
+    /// <summary>
     /// Gets information about one or more users.
     /// </summary>
     /// <param name="opt"><see cref="TwitchGetUsersOpt"/></param>
@@ -1760,7 +1745,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Updates the user’s information.
+    /// Updates the user's information.
     /// </summary>
     /// <param name="opt"><see cref="TwitchUpdateUserOpt"/></param>
     /// <returns><see cref="TwitchUpdateUserResponse"/></returns>
@@ -1768,16 +1753,6 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     {
         using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
         return await _data!.CallAsync<TwitchUpdateUserResponse>("update_user", optArg); 
-    }
-
-    /// <summary>
-    /// NEW Gets the authorization scopes that the specified user has granted the application.
-    /// </summary>
-    /// <param name="userId">The ID of the user(s) you want to check authorization for. To specify more than one user, include the user_id parameter for each user to get. For example, `user_id=1234&user_id=5678`. The maximum number of IDs you may specify is 10.</param>
-    /// <returns><see cref="TwitchGetAuthorizationByUserResponse"/></returns>
-    public async Task<TwitchGetAuthorizationByUserResponse> GetAuthorizationByUser(string[] userId)
-    {
-        return await _data!.CallAsync<TwitchGetAuthorizationByUserResponse>("get_authorization_by_user", new Godot.Collections.Array<string>(userId)); 
     }
 
     /// <summary>
@@ -1796,7 +1771,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// Blocks the specified user from interacting with or having contact with the broadcaster.
     /// </summary>
     /// <param name="opt"><see cref="TwitchBlockUserOpt"/></param>
-    /// <param name="targetUserId">The ID of the user to block. The API ignores the request if the broadcaster has already blocked the user.</param>
+    /// <param name="targetUserId">The ID of the user to block. If the broadcaster has already blocked the user, the API replaces the existing block.</param>
     /// <returns><see cref="ResponseData"/></returns>
     public async Task<ResponseData> BlockUser(string targetUserId, TwitchBlockUserOpt? opt = null)
     {
@@ -1805,22 +1780,13 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Removes the user from the broadcaster’s list of blocked users.
+    /// Removes the user from the broadcaster's list of blocked users.
     /// </summary>
-    /// <param name="targetUserId">The ID of the user to remove from the broadcaster’s list of blocked users. The API ignores the request if the broadcaster hasn’t blocked the user.</param>
+    /// <param name="targetUserId">The ID of the user to remove from the broadcaster's list of blocked users. The API ignores the request if the broadcaster hasn't blocked the user.</param>
     /// <returns><see cref="ResponseData"/></returns>
     public async Task<ResponseData> UnblockUser(string targetUserId)
     {
         return await _data!.CallAsync<ResponseData>("unblock_user", targetUserId); 
-    }
-
-    /// <summary>
-    /// Gets a list of all extensions (both active and inactive) that the broadcaster has installed.
-    /// </summary>
-    /// <returns><see cref="TwitchGetUserExtensionsResponse"/></returns>
-    public async Task<TwitchGetUserExtensionsResponse> GetUserExtensions()
-    {
-        return await _data!.CallAsync<TwitchGetUserExtensionsResponse>("get_user_extensions"); 
     }
 
     /// <summary>
@@ -1835,7 +1801,7 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     }
 
     /// <summary>
-    /// Updates an installed extension’s information.
+    /// Updates an installed extension's information.
     /// </summary>
     /// <param name="body"><see cref="TwitchUpdateUserExtensionsBody"/></param>
     /// <returns><see cref="TwitchUpdateUserExtensionsResponse"/></returns>
@@ -1843,6 +1809,15 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     {
         using var bodyArg = GodotObjectExtension.ToVariant(body);
         return await _data!.CallAsync<TwitchUpdateUserExtensionsResponse>("update_user_extensions", bodyArg); 
+    }
+
+    /// <summary>
+    /// Gets a list of all extensions (both active and inactive) that the broadcaster has installed.
+    /// </summary>
+    /// <returns><see cref="TwitchGetUserExtensionsResponse"/></returns>
+    public async Task<TwitchGetUserExtensionsResponse> GetUserExtensions()
+    {
+        return await _data!.CallAsync<TwitchGetUserExtensionsResponse>("get_user_extensions"); 
     }
 
     /// <summary>
@@ -1859,9 +1834,11 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <summary>
     /// Deletes one or more videos.
     /// </summary>
-    /// <param name="id">The list of videos to delete. To specify more than one video, include the _id_ parameter for each video to delete. For example, `id=1234&id=5678`. You can delete a maximum of 5 videos per request. Ignores invalid video IDs.  
-    ///   
-    /// If the user doesn’t have permission to delete one of the videos in the list, none of the videos are deleted.</param>
+    /// <param name="id">The list of videos to delete. To specify more than one video, include the <list type="bullet">
+    /// <item>id<item> parameter for each video to delete. For example, 'id=1234&id=5678'. You can delete a maximum of 5 videos per request.</item></item>
+    /// </list>
+    /// 
+    /// If any ID doesn't identify a video that the user has permission to delete, none of the videos are deleted.</param>
     /// <returns><see cref="TwitchDeleteVideosResponse"/></returns>
     public async Task<TwitchDeleteVideosResponse> DeleteVideos(string[] id)
     {

@@ -36,7 +36,7 @@ public partial class TwitchGetShieldModeStatusResponse : RefCounted, ITwitcherSh
     }
     
     /// <summary> 
-    /// A list that contains a single object with the broadcaster’s Shield Mode status. 
+    /// A list that contains a single object with the broadcaster's Shield Mode status. 
     /// </summary>
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {

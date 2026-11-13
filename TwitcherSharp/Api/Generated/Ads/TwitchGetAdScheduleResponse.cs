@@ -36,7 +36,7 @@ public partial class TwitchGetAdScheduleResponse : RefCounted, ITwitcherSharp<Tw
     }
     
     /// <summary> 
-    /// A list that contains information related to the channel’s ad schedule. 
+    /// A list that contains information related to the channel's ad schedule. 
     /// </summary>
     public partial class TwitchResponseData : RefCounted, ITwitcherSharp<TwitchResponseData>
     {

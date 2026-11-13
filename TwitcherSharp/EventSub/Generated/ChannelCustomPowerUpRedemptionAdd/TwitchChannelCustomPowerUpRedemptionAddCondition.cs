@@ -18,7 +18,7 @@ public partial class TwitchChannelCustomPowerUpRedemptionAddCondition(string bro
     public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
     /// <summary> 
-    /// Optional. Specify a reward id to only receive notifications for a specific custom Power-up.
+    /// Specify a reward id to only receive notifications for a specific custom Power-up.
     /// </summary>
     public string? RewardId { get; set; }
 

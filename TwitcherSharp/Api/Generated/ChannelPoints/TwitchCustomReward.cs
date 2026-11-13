@@ -91,7 +91,7 @@ public partial class TwitchCustomReward : RefCounted, ITwitcherSharp<TwitchCusto
     }
     
     /// <summary> 
-    /// A set of custom images for the reward. This field is **null** if the broadcaster didn’t upload images. 
+    /// A set of custom images for the reward. This field is **null** if the broadcaster didn't upload images. 
     /// </summary>
     public partial class TwitchImage : RefCounted, ITwitcherSharp<TwitchImage>
     {

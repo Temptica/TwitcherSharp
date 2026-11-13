@@ -61,7 +61,7 @@ public partial class TwitchGuest : RefCounted, ITwitcherSharp<TwitchGuest>
     }
     
     /// <summary> 
-    /// Information about the guest’s audio settings 
+    /// Information about the guest's audio settings 
     /// </summary>
     public partial class TwitchAudioSettings : RefCounted, ITwitcherSharp<TwitchAudioSettings>
     {
@@ -106,7 +106,7 @@ public partial class TwitchGuest : RefCounted, ITwitcherSharp<TwitchGuest>
     }
     
     /// <summary> 
-    /// Information about the guest’s video settings 
+    /// Information about the guest's video settings 
     /// </summary>
     public partial class TwitchVideoSettings : RefCounted, ITwitcherSharp<TwitchVideoSettings>
     {
