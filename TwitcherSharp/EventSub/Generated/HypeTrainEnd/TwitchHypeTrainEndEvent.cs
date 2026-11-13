@@ -2,7 +2,7 @@ using Godot;
 using Godot.Collections;
 using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
-
+using TwitcherSharp.EventSub.Generated.Shared;
 
 namespace TwitcherSharp.EventSub.Generated.HypeTrainEnd;
 
@@ -46,7 +46,7 @@ public partial class TwitchHypeTrainEndEvent : RefCounted, ITwitcherSharpEventSu
     public int Level { get; set; }
 
     /// <summary> 
-    /// Optional. Non-null for a shared Hype Train. Contains the list of broadcasters in the shared Hype Train.
+    /// Non-null for a shared Hype Train. Contains the list of broadcasters in the shared Hype Train.
     /// </summary>
     public TwitchSharedTrainParticipants[]? SharedTrainParticipants { get => field ??= _data.GetArray<TwitchSharedTrainParticipants>("shared_train_participants"); set; }
 
@@ -66,12 +66,12 @@ public partial class TwitchHypeTrainEndEvent : RefCounted, ITwitcherSharpEventSu
     public string? EndedAt { get; set; }
 
     /// <summary> 
-    /// The type of the Hype Train. Possible values are: treasure golden_kapparegular
+    /// The type of the Hype Train. Possible values: - `treasure` - `golden_kappa` - `regular`
     /// </summary>
     public string? Type { get; set; }
 
     /// <summary> 
-    /// Indicates if the Hype Train is shared. When true, shared_train_participants will contain the list of broadcasters the train is shared with.
+    /// Indicates if the Hype Train is shared. When true, `shared_train_participants` will contain the list of broadcasters the train is shared with.
     /// </summary>
     public bool IsSharedTrain { get; set; }
 
@@ -126,73 +126,6 @@ public partial class TwitchHypeTrainEndEvent : RefCounted, ITwitcherSharpEventSu
         base.Dispose(disposing);
     }
 
-
-    public partial class TwitchTopContributions : RefCounted, ITwitcherSharpEventSub<TwitchTopContributions>
-    {
-        private Variant _data;
-        
-        /// <summary> 
-        /// The ID of the user that made the contribution.
-        /// </summary>
-        public string? UserId { get; set; }
-    
-        /// <summary> 
-        /// The user’s login name.
-        /// </summary>
-        public string? UserLogin { get; set; }
-    
-        /// <summary> 
-        /// The user’s display name.
-        /// </summary>
-        public string? UserName { get; set; }
-    
-        /// <summary> 
-        /// The contribution method used. Possible values are: bits - Bits contributions with Cheering, Power-ups, and Extensions. subscription - Subscription activity like subscribing or gifting subscriptions. other - Covers other contribution methods not listed.
-        /// </summary>
-        public string? Type { get; set; }
-    
-        /// <summary> 
-        /// The total amount contributed. If type is bits, total represents the amount of Bits used. If type is subscription, total is 500, 1000, or 2500 to represent tier 1, 2, or 3 subscriptions, respectively.
-        /// </summary>
-        public int Total { get; set; }
-    
-        /// <summary> 
-        /// Transforms the godot data into a TwitchTopContributions object.
-        /// </summary> 
-        public static TwitchTopContributions? FromObject(GodotObject? data)
-        {
-            if(data == null) return null;
-            var instance = new TwitchTopContributions
-            {
-                UserId = data.ReadAsString("user_id"),
-                UserLogin = data.ReadAsString("user_login"),
-                UserName = data.ReadAsString("user_name"),
-                Type = data.ReadAsString("type"),
-                Total = data.ReadAsInt32("total"),
-            };
-            
-            instance._data = Variant.CreateFrom(data);
-            return instance;
-        }
-    
-        public GodotObject ToGodotObject()
-        {
-            var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_hype_train_end.gd", "TopContributions");
-            if(UserId != null) request.SetValue("user_id", UserId);
-            if(UserLogin != null) request.SetValue("user_login", UserLogin);
-            if(UserName != null) request.SetValue("user_name", UserName);
-            if(Type != null) request.SetValue("type", Type);
-            request.SetValue("total", Total);
-            return request;
-        }
-    
-        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing) _data.Dispose();
-            base.Dispose(disposing);
-        }
-    }
 
     public partial class TwitchSharedTrainParticipants : RefCounted, ITwitcherSharpEventSub<TwitchSharedTrainParticipants>
     {

@@ -148,12 +148,13 @@ public class TwitchEventSubDefinitionGenerator
         var enumOrder = ReadGdTypeOrder(gdDefinitionScript);
         var ordered = definitions
             .OrderBy(d => enumOrder.TryGetValue(NormalizeName(d.EnumName), out var index) ? index : int.MaxValue)
+            .ThenBy(d => d.EnumName, StringComparer.Ordinal)
             .ToList();
         foreach (var missing in definitions.Where(d => !enumOrder.ContainsKey(NormalizeName(d.EnumName))))
             Console.WriteLine($"Warning: '{missing.EnumName}' is not in the GDScript Type enum, its int value won't match");
 
         File.WriteAllText(Path.Combine(eventSubDir, "TwitchEventSubDefinitionType.cs"), GenerateTypeEnum(ordered) + "\n");
-        File.WriteAllText(Path.Combine(eventSubDir, "TwitchEventSubDefinition.cs"), GenerateDefinition(definitions) + "\n");
+        File.WriteAllText(Path.Combine(eventSubDir, "TwitchEventSubDefinition.cs"), GenerateDefinition(ordered) + "\n");
     }
 
     /// <summary>Index of every value in the GDScript <c>enum Type { ... }</c>, keyed by <see cref="NormalizeName"/>.</summary>

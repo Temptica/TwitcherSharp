@@ -41,7 +41,7 @@ public partial class TwitchChannelSubscriptionMessageEvent : RefCounted, ITwitch
     public string? BroadcasterUserName { get; set; }
 
     /// <summary> 
-    /// The tier of the user’s subscription.
+    /// The tier of the user's subscription.
     /// </summary>
     public string? Tier { get; set; }
 
@@ -56,7 +56,7 @@ public partial class TwitchChannelSubscriptionMessageEvent : RefCounted, ITwitch
     public int CumulativeMonths { get; set; }
 
     /// <summary> 
-    /// The number of consecutive months the user’s current subscription has been active. This value is null if the user has opted out of sharing this information.
+    /// The number of consecutive months the user's current subscription has been active. This value is **null** if the user has opted out of sharing this information.
     /// </summary>
     public int StreakMonths { get; set; }
 

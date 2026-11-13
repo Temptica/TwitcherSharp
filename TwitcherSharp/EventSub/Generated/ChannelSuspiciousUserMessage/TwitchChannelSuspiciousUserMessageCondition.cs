@@ -13,7 +13,7 @@ public partial class TwitchChannelSuspiciousUserMessageCondition(string moderato
     public string Name => nameof(TwitchChannelSuspiciousUserMessageCondition);
 
     /// <summary> 
-    /// The ID of a user that has permission to moderate the broadcaster’s channel and has granted your app permission to subscribe to this subscription type.
+    /// The ID of a user that has permission to moderate the broadcaster's channel and has granted your app permission to subscribe to this subscription type.
     /// </summary>
     public string ModeratorUserId { get; set; } = moderatorUserId;
 

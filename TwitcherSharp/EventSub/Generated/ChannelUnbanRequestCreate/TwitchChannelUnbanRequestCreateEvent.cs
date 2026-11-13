@@ -16,17 +16,17 @@ public partial class TwitchChannelUnbanRequestCreateEvent : RefCounted, ITwitche
     public string? Id { get; set; }
 
     /// <summary> 
-    /// The broadcaster’s user ID for the channel the unban request was created for.
+    /// The broadcaster's user ID for the channel the unban request was created for.
     /// </summary>
     public string? BroadcasterUserId { get; set; }
 
     /// <summary> 
-    /// The broadcaster’s login name.
+    /// The broadcaster's login name.
     /// </summary>
     public string? BroadcasterUserLogin { get; set; }
 
     /// <summary> 
-    /// The broadcaster’s display name.
+    /// The broadcaster's display name.
     /// </summary>
     public string? BroadcasterUserName { get; set; }
 
@@ -36,12 +36,12 @@ public partial class TwitchChannelUnbanRequestCreateEvent : RefCounted, ITwitche
     public string? UserId { get; set; }
 
     /// <summary> 
-    /// The user’s login name.
+    /// The user's login name.
     /// </summary>
     public string? UserLogin { get; set; }
 
     /// <summary> 
-    /// The user’s display name.
+    /// The user's display name.
     /// </summary>
     public string? UserName { get; set; }
 

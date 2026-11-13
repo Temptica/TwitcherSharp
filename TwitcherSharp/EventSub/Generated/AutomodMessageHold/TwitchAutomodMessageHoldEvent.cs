@@ -11,42 +11,42 @@ public partial class TwitchAutomodMessageHoldEvent : RefCounted, ITwitcherSharpE
     private Variant _data;
     
     /// <summary> 
-    /// The ID of the broadcaster specified in the request.
+    /// The ID of the broadcaster specified in the subscription condition.
     /// </summary>
     public string? BroadcasterUserId { get; set; }
 
     /// <summary> 
-    /// The login of the broadcaster specified in the request.
+    /// The login of the broadcaster specified in the subscription condition.
     /// </summary>
     public string? BroadcasterUserLogin { get; set; }
 
     /// <summary> 
-    /// The user name of the broadcaster specified in the request.
+    /// The display name of the broadcaster specified in the subscription condition.
     /// </summary>
     public string? BroadcasterUserName { get; set; }
 
     /// <summary> 
-    /// The message sender’s user ID.
+    /// The message sender's User ID.
     /// </summary>
     public string? UserId { get; set; }
 
     /// <summary> 
-    /// The message sender’s login name.
+    /// The message sender's login name.
     /// </summary>
     public string? UserLogin { get; set; }
 
     /// <summary> 
-    /// The message sender’s display name.
+    /// The message sender's display name.
     /// </summary>
     public string? UserName { get; set; }
 
     /// <summary> 
-    /// The ID of the message that was flagged by automod.
+    /// The ID of the message that was flagged by AutoMod.
     /// </summary>
     public string? MessageId { get; set; }
 
     /// <summary> 
-    /// 
+    /// The body of the message.
     /// </summary>
     public TwitchMessage? Message { get => field ??= _data.Get<TwitchMessage>("message"); set; }
 
@@ -61,7 +61,7 @@ public partial class TwitchAutomodMessageHoldEvent : RefCounted, ITwitcherSharpE
     public int Level { get; set; }
 
     /// <summary> 
-    /// The timestamp of when automod saved the message.
+    /// The timestamp of when AutoMod saved the message.
     /// </summary>
     public string? HeldAt { get; set; }
 
@@ -119,7 +119,7 @@ public partial class TwitchAutomodMessageHoldEvent : RefCounted, ITwitcherSharpE
         private Variant _data;
         
         /// <summary> 
-        /// The contents of the message caught by automod.
+        /// The contents of the message caught by AutoMod.
         /// </summary>
         public string? Text { get; set; }
     
@@ -164,17 +164,17 @@ public partial class TwitchAutomodMessageHoldEvent : RefCounted, ITwitcherSharpE
             private Variant _data;
             
             /// <summary> 
-            /// Message text in a fragment.
+            /// Message text within a fragment.
             /// </summary>
             public string? Text { get; set; }
         
             /// <summary> 
-            /// Optional. Metadata pertaining to the emote.
+            /// Metadata pertaining to the emote.
             /// </summary>
             public TwitchEmote? Emote { get => field ??= _data.Get<TwitchEmote>("emote"); set; }
         
             /// <summary> 
-            /// Optional. Metadata pertaining to the cheermote.
+            /// Metadata pertaining to the cheermote.
             /// </summary>
             public TwitchCheermote? Cheermote { get => field ??= _data.Get<TwitchCheermote>("cheermote"); set; }
         
@@ -261,7 +261,7 @@ public partial class TwitchAutomodMessageHoldEvent : RefCounted, ITwitcherSharpE
                 private Variant _data;
                 
                 /// <summary> 
-                /// The name portion of the Cheermote string that you use in chat to cheer Bits, converted to lowercase. The full Cheermote string is the concatenation of {prefix} + {number of Bits}.For example, if the prefix is “cheer” and you want to cheer 100 Bits, the full Cheermote string is cheer100. When the Cheermote string is entered in chat, Twitch converts it to the image associated with the Bits tier that was cheered.
+                /// The name portion of the Cheermote string that you use in chat to cheer Bits, converted to lowercase. The full Cheermote string is the concatenation of {prefix} + {number of Bits}. **For example**, if the prefix is "cheer" and you want to cheer 100 Bits, the full Cheermote string is cheer100. When the Cheermote string is entered in chat, Twitch converts it to the image associated with the Bits tier that was cheered.
                 /// </summary>
                 public string? Prefix { get; set; }
             

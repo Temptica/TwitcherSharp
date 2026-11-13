@@ -13,7 +13,7 @@ public partial class TwitchChannelPollBeginCondition(string broadcasterUserId) :
     public string Name => nameof(TwitchChannelPollBeginCondition);
 
     /// <summary> 
-    /// The broadcaster user ID of the channel for which “poll begin” notifications will be received.
+    /// The broadcaster user ID of the channel for which "poll begin" notifications will be received.
     /// </summary>
     public string BroadcasterUserId { get; set; } = broadcasterUserId;
 

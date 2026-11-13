@@ -16,7 +16,7 @@ public partial class TwitchDropEntitlementGrantEvent : RefCounted, ITwitcherShar
     public string? Id { get; set; }
 
     /// <summary> 
-    /// Entitlement object.
+    /// The granted entitlement.
     /// </summary>
     public TwitchData[]? Data { get => field ??= _data.GetArray<TwitchData>("data"); set; }
 

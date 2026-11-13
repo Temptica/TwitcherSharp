@@ -16,22 +16,22 @@ public partial class TwitchStreamOnlineEvent : RefCounted, ITwitcherSharpEventSu
     public string? Id { get; set; }
 
     /// <summary> 
-    /// The broadcaster’s user id.
+    /// The broadcaster's user id.
     /// </summary>
     public string? BroadcasterUserId { get; set; }
 
     /// <summary> 
-    /// The broadcaster’s user login.
+    /// The broadcaster's user login.
     /// </summary>
     public string? BroadcasterUserLogin { get; set; }
 
     /// <summary> 
-    /// The broadcaster’s user display name.
+    /// The broadcaster's user display name.
     /// </summary>
     public string? BroadcasterUserName { get; set; }
 
     /// <summary> 
-    /// The stream type. Valid values are: live, playlist, watch_party, premiere, rerun.
+    /// The stream type. Valid values are: **live**, **playlist**, **watch_party**, **premiere**, **rerun**.
     /// </summary>
     public string? Type { get; set; }
 

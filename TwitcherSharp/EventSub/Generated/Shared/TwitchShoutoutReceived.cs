@@ -16,12 +16,12 @@ public partial class TwitchShoutoutReceived : RefCounted, ITwitcherSharpEventSub
     public string? BroadcasterUserId { get; set; }
 
     /// <summary> 
-    /// The broadcaster’s login name.
+    /// The broadcaster's login name.
     /// </summary>
     public string? BroadcasterUserLogin { get; set; }
 
     /// <summary> 
-    /// The broadcaster’s display name.
+    /// The broadcaster's display name.
     /// </summary>
     public string? BroadcasterUserName { get; set; }
 
@@ -31,17 +31,17 @@ public partial class TwitchShoutoutReceived : RefCounted, ITwitcherSharpEventSub
     public string? FromBroadcasterUserId { get; set; }
 
     /// <summary> 
-    /// The broadcaster’s login name.
+    /// The broadcaster's login name.
     /// </summary>
     public string? FromBroadcasterUserLogin { get; set; }
 
     /// <summary> 
-    /// The broadcaster’s display name.
+    /// The broadcaster's display name.
     /// </summary>
     public string? FromBroadcasterUserName { get; set; }
 
     /// <summary> 
-    /// The number of users that were watching the from-broadcaster’s stream at the time of the Shoutout.
+    /// The number of users that were watching the from-broadcaster's stream at the time of the Shoutout.
     /// </summary>
     public int ViewerCount { get; set; }
 

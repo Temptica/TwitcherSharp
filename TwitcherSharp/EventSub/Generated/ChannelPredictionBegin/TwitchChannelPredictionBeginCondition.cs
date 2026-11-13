@@ -13,7 +13,7 @@ public partial class TwitchChannelPredictionBeginCondition(string broadcasterUse
     public string Name => nameof(TwitchChannelPredictionBeginCondition);
 
     /// <summary> 
-    /// The broadcaster user ID of the channel for which “prediction begin” notifications will be received.
+    /// The broadcaster user ID of the channel for which "prediction begin" notifications will be received.
     /// </summary>
     public string BroadcasterUserId { get; set; } = broadcasterUserId;
 

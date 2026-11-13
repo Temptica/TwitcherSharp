@@ -46,7 +46,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddEvent : RefC
     public string? Id { get; set; }
 
     /// <summary> 
-    /// 
+    /// An object that contains the reward information.
     /// </summary>
     public TwitchReward? Reward { get => field ??= _data.Get<TwitchReward>("reward"); set; }
 
@@ -56,17 +56,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddEvent : RefC
     public TwitchMessage? Message { get => field ??= _data.Get<TwitchMessage>("message"); set; }
 
     /// <summary> 
-    /// The text of the chat message.
-    /// </summary>
-    public string? Text { get; set; }
-
-    /// <summary> 
-    /// An array that includes the emote ID and start and end positions for where the emote appears in the text.
-    /// </summary>
-    public TwitchEmotes[]? Emotes { get => field ??= _data.GetArray<TwitchEmotes>("emotes"); set; }
-
-    /// <summary> 
-    /// Optional. A string that the user entered if the reward requires input.
+    /// A string that the user entered if the reward requires input.
     /// </summary>
     public string? UserInput { get; set; }
 
@@ -90,7 +80,6 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddEvent : RefC
             UserLogin = data.ReadAsString("user_login"),
             UserName = data.ReadAsString("user_name"),
             Id = data.ReadAsString("id"),
-            Text = data.ReadAsString("text"),
             UserInput = data.ReadAsString("user_input"),
             RedeemedAt = data.ReadAsString("redeemed_at"),
         };
@@ -111,8 +100,6 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddEvent : RefC
         if(Id != null) request.SetValue("id", Id);
         if(Reward != null) request.SetObject("reward", Reward);
         if(Message != null) request.SetObject("message", Message);
-        if(Text != null) request.SetValue("text", Text);
-        if(Emotes != null) request.SetArray("emotes", Emotes);
         if(UserInput != null) request.SetValue("user_input", UserInput);
         if(RedeemedAt != null) request.SetValue("redeemed_at", RedeemedAt);
         return request;
@@ -131,7 +118,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddEvent : RefC
         private Variant _data;
         
         /// <summary> 
-        /// The type of reward. One of: single_message_bypass_sub_modesend_highlighted_messagerandom_sub_emote_unlockchosen_sub_emote_unlockchosen_modified_sub_emote_unlockmessage_effectgigantify_an_emotecelebration
+        /// The type of reward. Possible values: - `single_message_bypass_sub_mode` - `send_highlighted_message` - `random_sub_emote_unlock` - `chosen_sub_emote_unlock` - `chosen_modified_sub_emote_unlock` - `message_effect` - `gigantify_an_emote` - `celebration`
         /// </summary>
         public string? Type { get; set; }
     
@@ -141,7 +128,7 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddEvent : RefC
         public int Cost { get; set; }
     
         /// <summary> 
-        /// Optional. Emote that was unlocked.
+        /// Emote that was unlocked.
         /// </summary>
         public TwitchUnlockedEmote? UnlockedEmote { get => field ??= _data.Get<TwitchUnlockedEmote>("unlocked_emote"); set; }
     
@@ -222,59 +209,6 @@ public partial class TwitchChannelPointsAutomaticRewardRedemptionAddEvent : RefC
                 if (disposing) _data.Dispose();
                 base.Dispose(disposing);
             }
-        }
-    }
-
-    public partial class TwitchEmotes : RefCounted, ITwitcherSharpEventSub<TwitchEmotes>
-    {
-        private Variant _data;
-        
-        /// <summary> 
-        /// The emote ID.
-        /// </summary>
-        public string? Id { get; set; }
-    
-        /// <summary> 
-        /// The index of where the Emote starts in the text.
-        /// </summary>
-        public int Begin { get; set; }
-    
-        /// <summary> 
-        /// The index of where the Emote ends in the text.
-        /// </summary>
-        public int End { get; set; }
-    
-        /// <summary> 
-        /// Transforms the godot data into a TwitchEmotes object.
-        /// </summary> 
-        public static TwitchEmotes? FromObject(GodotObject? data)
-        {
-            if(data == null) return null;
-            var instance = new TwitchEmotes
-            {
-                Id = data.ReadAsString("id"),
-                Begin = data.ReadAsInt32("begin"),
-                End = data.ReadAsInt32("end"),
-            };
-            
-            instance._data = Variant.CreateFrom(data);
-            return instance;
-        }
-    
-        public GodotObject ToGodotObject()
-        {
-            var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_points_automatic_reward_redemption_add.gd", "Emotes");
-            if(Id != null) request.SetValue("id", Id);
-            request.SetValue("begin", Begin);
-            request.SetValue("end", End);
-            return request;
-        }
-    
-        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing) _data.Dispose();
-            base.Dispose(disposing);
         }
     }
 }

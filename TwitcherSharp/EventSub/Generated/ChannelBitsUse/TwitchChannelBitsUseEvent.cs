@@ -46,22 +46,22 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
     public int Bits { get; set; }
 
     /// <summary> 
-    /// Possible values are: cheerpower_upcustom_power_up
+    /// Possible values: - `cheer` - `power_up` - `custom_power_up`
     /// </summary>
     public string? Type { get; set; }
 
     /// <summary> 
-    /// 
+    /// An object that contains the user message and emote information needed to recreate the message.
     /// </summary>
     public TwitchMessage? Message { get => field ??= _data.Get<TwitchMessage>("message"); set; }
 
     /// <summary> 
-    /// Optional. Data about a default (i.e. built-in) Power-up.
+    /// Data about a default (i.e. built-in) Power-up.
     /// </summary>
     public TwitchPowerUp? PowerUp { get => field ??= _data.Get<TwitchPowerUp>("power_up"); set; }
 
     /// <summary> 
-    /// 
+    /// Data about a custom Power-up.
     /// </summary>
     public TwitchCustomPowerUp? CustomPowerUp { get => field ??= _data.Get<TwitchCustomPowerUp>("custom_power_up"); set; }
 
@@ -167,17 +167,17 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
             public string? Text { get; set; }
         
             /// <summary> 
-            /// The type of message fragment. Possible values are: textcheermoteemote
+            /// The type of message fragment. Possible values: - `text` - `cheermote` - `emote`
             /// </summary>
             public string? Type { get; set; }
         
             /// <summary> 
-            /// Optional. The metadata pertaining to the emote.
+            /// The metadata pertaining to the emote.
             /// </summary>
             public TwitchEmote? Emote { get => field ??= _data.Get<TwitchEmote>("emote"); set; }
         
             /// <summary> 
-            /// Optional. The metadata pertaining to the cheermote.
+            /// The metadata pertaining to the cheermote.
             /// </summary>
             public TwitchCheermote? Cheermote { get => field ??= _data.Get<TwitchCheermote>("cheermote"); set; }
         
@@ -235,7 +235,7 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
                 public string? OwnerId { get; set; }
             
                 /// <summary> 
-                /// The formats that the emote is available in. For example, if the emote is available only as a static PNG, the array contains only static. But if the emote is available as a static PNG and an animated GIF, the array contains static and animated. The possible formats are: animated - An animated GIF is available for this emote.static - A static PNG file is available for this emote.
+                /// The formats that the emote is available in. For example, if the emote is available only as a static PNG, the array contains only static. But if the emote is available as a static PNG and an animated GIF, the array contains static and animated. Possible values: - `animated`: An animated GIF is available for this emote. - `static`: A static PNG file is available for this emote.
                 /// </summary>
                 public string[]? Format { get; set; }
             
@@ -279,7 +279,7 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
                 private Variant _data;
                 
                 /// <summary> 
-                /// The name portion of the Cheermote string that you use in chat to cheer Bits, converted to lowercase. The full Cheermote string is the concatenation of {prefix} + {number of Bits}.For example, if the prefix is “cheer” and you want to cheer 100 Bits, the full Cheermote string is cheer100. When the Cheermote string is entered in chat, Twitch converts it to the image associated with the Bits tier that was cheered.
+                /// The name portion of the Cheermote string that you use in chat to cheer Bits, converted to lowercase. The full Cheermote string is the concatenation of {prefix} + {number of Bits}. **For example**, if the prefix is "cheer" and you want to cheer 100 Bits, the full Cheermote string is cheer100. When the Cheermote string is entered in chat, Twitch converts it to the image associated with the Bits tier that was cheered.
                 /// </summary>
                 public string? Prefix { get; set; }
             
@@ -334,17 +334,17 @@ public partial class TwitchChannelBitsUseEvent : RefCounted, ITwitcherSharpEvent
         private Variant _data;
         
         /// <summary> 
-        /// Possible values: message_effectcelebrationgigantify_an_emote
+        /// Possible values: - `message_effect` - `celebration` - `gigantify_an_emote`
         /// </summary>
         public string? Type { get; set; }
     
         /// <summary> 
-        /// Optional. Emote associated with the reward.
+        /// Emote associated with the reward.
         /// </summary>
         public TwitchEmote? Emote { get => field ??= _data.Get<TwitchEmote>("emote"); set; }
     
         /// <summary> 
-        /// Optional. The ID of the message effect.
+        /// The ID of the message effect.
         /// </summary>
         public string? MessageEffectId { get; set; }
     

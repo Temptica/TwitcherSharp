@@ -56,7 +56,7 @@ public partial class TwitchHypeTrainProgressEvent : RefCounted, ITwitcherSharpEv
     public int Level { get; set; }
 
     /// <summary> 
-    /// Optional. Non-null for a shared Hype Train. Contains the list of broadcasters in the shared Hype Train.
+    /// Non-null for a shared Hype Train. Contains the list of broadcasters in the shared Hype Train.
     /// </summary>
     public TwitchSharedTrainParticipants[]? SharedTrainParticipants { get => field ??= _data.GetArray<TwitchSharedTrainParticipants>("shared_train_participants"); set; }
 
@@ -71,12 +71,12 @@ public partial class TwitchHypeTrainProgressEvent : RefCounted, ITwitcherSharpEv
     public string? ExpiresAt { get; set; }
 
     /// <summary> 
-    /// The type of the Hype Train. Possible values are: treasure golden_kapparegular
+    /// The type of the Hype Train. Possible values: - `treasure` - `golden_kappa` - `regular`
     /// </summary>
     public string? Type { get; set; }
 
     /// <summary> 
-    /// Indicates if the Hype Train is shared. When true, shared_train_participants will contain the list of broadcasters the train is shared with.
+    /// Indicates if the Hype Train is shared. When true, `shared_train_participants` will contain the list of broadcasters the train is shared with.
     /// </summary>
     public bool IsSharedTrain { get; set; }
 

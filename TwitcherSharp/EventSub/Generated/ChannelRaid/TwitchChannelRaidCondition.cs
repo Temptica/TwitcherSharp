@@ -13,12 +13,12 @@ public partial class TwitchChannelRaidCondition() : RefCounted, ITwitcherSharpCo
     public string Name => nameof(TwitchChannelRaidCondition);
 
     /// <summary> 
-    /// The broadcaster user ID that created the channel raid you want to get notifications for. Use this parameter if you want to know when a specific broadcaster raids another broadcaster. The channel raid condition must include either from_broadcaster_user_id or to_broadcaster_user_id.
+    /// The broadcaster user ID that created the channel raid you want to get notifications for. Use this parameter if you want to know when a specific broadcaster raids another broadcaster. The channel raid condition must include either *from_broadcaster_user_id* or *to_broadcaster_user_id*.
     /// </summary>
     public string? FromBroadcasterUserId { get; set; }
 
     /// <summary> 
-    /// The broadcaster user ID that received the channel raid you want to get notifications for. Use this parameter if you want to know when a specific broadcaster is raided by another broadcaster. The channel raid condition must include either from_broadcaster_user_id or to_broadcaster_user_id.
+    /// The broadcaster user ID that received the channel raid you want to get notifications for. Use this parameter if you want to know when a specific broadcaster is raided by another broadcaster. The channel raid condition must include either *from_broadcaster_user_id* or *to_broadcaster_user_id*.
     /// </summary>
     public string? ToBroadcasterUserId { get; set; }
 

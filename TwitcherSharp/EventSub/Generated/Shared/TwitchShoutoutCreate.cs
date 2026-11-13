@@ -16,12 +16,12 @@ public partial class TwitchShoutoutCreate : RefCounted, ITwitcherSharpEventSub<T
     public string? BroadcasterUserId { get; set; }
 
     /// <summary> 
-    /// The broadcaster’s login name.
+    /// The broadcaster's login name.
     /// </summary>
     public string? BroadcasterUserLogin { get; set; }
 
     /// <summary> 
-    /// The broadcaster’s display name.
+    /// The broadcaster's display name.
     /// </summary>
     public string? BroadcasterUserName { get; set; }
 
@@ -31,32 +31,32 @@ public partial class TwitchShoutoutCreate : RefCounted, ITwitcherSharpEventSub<T
     public string? ToBroadcasterUserId { get; set; }
 
     /// <summary> 
-    /// The broadcaster’s login name.
+    /// The broadcaster's login name.
     /// </summary>
     public string? ToBroadcasterUserLogin { get; set; }
 
     /// <summary> 
-    /// The broadcaster’s display name.
+    /// The broadcaster's display name.
     /// </summary>
     public string? ToBroadcasterUserName { get; set; }
 
     /// <summary> 
-    /// An ID that identifies the moderator that sent the Shoutout. If the broadcaster sent the Shoutout, this ID is the same as the ID in broadcaster_user_id.
+    /// An ID that identifies the moderator that sent the Shoutout. If the broadcaster sent the Shoutout, this ID is the same as the ID in `broadcaster_user_id`.
     /// </summary>
     public string? ModeratorUserId { get; set; }
 
     /// <summary> 
-    /// The moderator’s login name.
+    /// The moderator's login name.
     /// </summary>
     public string? ModeratorUserLogin { get; set; }
 
     /// <summary> 
-    /// The moderator’s display name.
+    /// The moderator's display name.
     /// </summary>
     public string? ModeratorUserName { get; set; }
 
     /// <summary> 
-    /// The number of users that were watching the broadcaster’s stream at the time of the Shoutout.
+    /// The number of users that were watching the broadcaster's stream at the time of the Shoutout.
     /// </summary>
     public int ViewerCount { get; set; }
 
@@ -71,7 +71,7 @@ public partial class TwitchShoutoutCreate : RefCounted, ITwitcherSharpEventSub<T
     public string? CooldownEndsAt { get; set; }
 
     /// <summary> 
-    /// The UTC timestamp (in RFC3339 format) of when the broadcaster may send another Shoutout to the broadcaster in to_broadcaster_user_id.
+    /// The UTC timestamp (in RFC3339 format) of when the broadcaster may send another Shoutout to the broadcaster in `to_broadcaster_user_id`.
     /// </summary>
     public string? TargetCooldownEndsAt { get; set; }
 

@@ -51,7 +51,6 @@ public class MappingTestComplex(Node testScene) : TestClass(testScene)
     private static readonly HashSet<string> KnownTwitcherMismatches =
     [
         "TwitcherSharp.EventSub.Generated.DropEntitlementGrant.TwitchDropEntitlementGrantEvent+TwitchData",
-        "TwitcherSharp.EventSub.Generated.ChannelChatMessage.TwitchChannelChatMessageEvent+TwitchMessage+TwitchFragments+TwitchGif",
     ];
 
     [Test]

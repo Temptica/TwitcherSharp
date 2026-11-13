@@ -21,37 +21,37 @@ public partial class TwitchExtensionBitsTransactionCreateEvent : RefCounted, ITw
     public string? Id { get; set; }
 
     /// <summary> 
-    /// The transaction’s broadcaster ID.
+    /// The transaction's broadcaster ID.
     /// </summary>
     public string? BroadcasterUserId { get; set; }
 
     /// <summary> 
-    /// The transaction’s broadcaster login.
+    /// The transaction's broadcaster login.
     /// </summary>
     public string? BroadcasterUserLogin { get; set; }
 
     /// <summary> 
-    /// The transaction’s broadcaster display name.
+    /// The transaction's broadcaster display name.
     /// </summary>
     public string? BroadcasterUserName { get; set; }
 
     /// <summary> 
-    /// The transaction’s user ID.
+    /// The transaction's user ID.
     /// </summary>
     public string? UserId { get; set; }
 
     /// <summary> 
-    /// The transaction’s user login.
+    /// The transaction's user login.
     /// </summary>
     public string? UserLogin { get; set; }
 
     /// <summary> 
-    /// The transaction’s user display name.
+    /// The transaction's user display name.
     /// </summary>
     public string? UserName { get; set; }
 
     /// <summary> 
-    /// Additional information about a product acquired via a Twitch Extension Bits transaction.
+    /// 
     /// </summary>
     public TwitchProduct? Product { get => field ??= _data.Get<TwitchProduct>("product"); set; }
 

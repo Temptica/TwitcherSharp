@@ -16,17 +16,17 @@ public partial class TwitchTopContributions : RefCounted, ITwitcherSharpEventSub
     public string? UserId { get; set; }
 
     /// <summary> 
-    /// The user’s login name.
+    /// The user's login name.
     /// </summary>
     public string? UserLogin { get; set; }
 
     /// <summary> 
-    /// The user’s display name.
+    /// The user's display name.
     /// </summary>
     public string? UserName { get; set; }
 
     /// <summary> 
-    /// The contribution method used. Possible values are: bits — Cheering with Bits.subscription — Subscription activity like subscribing or gifting subscriptions.other — Covers other contribution methods not listed.
+    /// The contribution method used. Possible values: - `bits`: Bits contributions with Cheering, Power-ups, and Extensions. - `subscription`: Subscription activity like subscribing or gifting subscriptions. - `other`: Covers other contribution methods not listed.
     /// </summary>
     public string? Type { get; set; }
 

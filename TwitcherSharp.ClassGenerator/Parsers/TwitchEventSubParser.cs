@@ -1,401 +1,227 @@
+using System.Text.RegularExpressions;
 using ClassGenerator.Extensions;
+using ClassGenerator.Generator.EventSub;
 using ClassGenerator.GenObjects.EventSub;
-using HtmlAgilityPack;
+using ClassGenerator.Markdown;
+using ClassGenerator.Parsers.EventSub;
+using static ClassGenerator.Parsers.EventSub.EventSubConventions;
 
 namespace ClassGenerator.Parsers;
 
-public class TwitchEventSubParser
+/// <summary>
+/// Turns the subscription types of the Markdown EventSub reference into the components the EventSub generator writes:
+/// one event (and condition) per twitcher script and version, plus the objects twitcher keeps in scripts of their own.
+/// </summary>
+public partial class TwitchEventSubParser
 {
-    //"https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/";
-    private const string Path = "EventSub.html";
-
     public List<TwitchEventSubGenComponent> Components { get; } = [];
     public List<TwitchEventSubGenComponent> SubComponents { get; } = [];
     public List<TwitchEventSubGenComponent> ConditionComponents { get; } = [];
+    public List<TwitchEventSubDefinitionInfo> Definitions { get; } = [];
 
-    public async Task ParseEventSub()
+    public void Parse(IReadOnlyList<EventSubSubscriptionType> types)
     {
-        await using var stream = Path.StartsWith("https://")
-            ? await new HttpClient().GetStreamAsync(Path)
-            : File.OpenRead(Path);
-        var html = await new StreamReader(stream).ReadToEndAsync();
+        foreach (var (name, (type, path)) in SharedObjectSources) AddSharedObject(name, Find(types, type, path));
 
-        var doc = new HtmlDocument();
-        doc.LoadHtml(html);
-
-        ParseSubComponents(doc);
-
-        foreach (var component in SubComponents)
+        foreach (var group in types.GroupBy(ScriptName))
         {
-            foreach (var field in component.Fields.Values.Where(f =>
-                         f.IsTyped && SubComponents.All(c => c != f.TypedComponent)))
+            var versions = group.Select(t => t.Version).Distinct().OrderBy(VersionOrder).ToList();
+            var conditions = new List<TwitchEventSubGenComponent>();
+            for (var i = 0; i < versions.Count; i++)
             {
-                var subComponent = SubComponents.First(c => c.ClassName == field.TypedComponent.ClassName);
-
-                component.SubComponents.Remove(field.TypedComponent.ClassName);
-                if (field.IsArray)
-                {
-                    // AddSubComponent would replace the array field with a single object field of the same name.
-                    component.SubComponents[subComponent.ClassName] = subComponent;
-                }
-                else
-                {
-                    component.AddSubComponent(subComponent);
-                }
-
-                field.TypedComponent = subComponent;
-                subComponent.IsShared = true;
+                var versionTypes = group.Where(t => t.Version == versions[i]).ToList();
+                AddEvent(group.Key, versionTypes, i > 0);
+                AddCondition(group.Key, versionTypes, i > 0, conditions);
             }
         }
 
-        ParseComponents(doc);
-        EventSubCorrections.Apply(Components);
-        ParseConditions(doc);
-
+        EventSubCorrections.Apply([..Components, ..SubComponents]);
+        AddDefinitions(types);
 
         Console.WriteLine($"{Components.Count} eventsub components parsed");
     }
 
-    private void ParseSubComponents(HtmlDocument doc)
+    private static string ScriptName(EventSubSubscriptionType type) => EventSubScriptNameResolver.ScriptName(type.Type);
+
+    private static int VersionOrder(string version) => int.TryParse(version, out var order) ? order : 0;
+
+    private static List<DocField> Find(IReadOnlyList<EventSubSubscriptionType> types, string type, string path)
     {
-        var objectsNode = doc.DocumentNode.SelectSingleNode("//h1[@id='objects']");
-        var lastNode = objectsNode;
-        while (lastNode.GetNextElementSibling() != null)
+        var fields = types.First(t => t.Type == type).Event;
+        foreach (var name in path.Split('.'))
         {
-            var h2Node = lastNode.GetNextElementSibling();
-            switch (h2Node.Id)
-            {
-                case "conditions" or "events" or "subscription":
-                {
-                    var nextNode = h2Node.GetNextElementSibling();
-                    while (nextNode?.Name != "h2")
-                    {
-                        if (nextNode is null) return;
-
-                        nextNode = nextNode.GetNextElementSibling();
-                    }
-
-                    lastNode = nextNode.PreviousSibling;
-                    continue;
-                }
-                case "transport":
-                {
-                    var transport = new TwitchEventSubGenComponent("Transport")
-                    {
-                        Description = h2Node.GetNextElementSibling().InnerText.Trim(),
-                        IsShared = true
-                    };
-
-                    var transportTable = h2Node.GetNextElementSibling().GetNextElementSibling();
-                    ParseTable(transportTable, transport);
-                    SubComponents.Add(transport);
-                    return;
-                }
-            }
-
-            var subComponent = new TwitchEventSubGenComponent(h2Node.InnerText.Trim())
-            {
-                IsShared = true
-            };
-
-            var p = h2Node.GetNextElementSibling();
-            HtmlNode table;
-
-            if (p.Name == "p")
-            {
-                subComponent.Description = p.InnerText.Trim();
-                table = p.GetNextElementSibling();
-            }
-            else
-            {
-                table = p;
-            }
-
-            ParseTable(table, subComponent);
-
-            SubComponents.Add(subComponent);
-
-            lastNode = table;
+            var field = fields.FirstOrDefault(f => f.Name == name)
+                        ?? throw new InvalidOperationException($"No {path} in the {type} event");
+            fields = field.Children;
         }
+
+        return fields;
     }
 
-    private void ParseComponents(HtmlDocument doc)
+    private void AddSharedObject(string name, List<DocField> fields)
     {
-        var events = doc.DocumentNode.SelectSingleNode("//h2[@id='events']");
-        var startPos = events.Line;
-        var nextH2Node = doc.DocumentNode.SelectNodes("//h2").FirstOrDefault(n => n.Line > startPos) ??
-                         doc.DocumentNode.LastChild;
-
-        var lastNode = events;
-        while (lastNode.GetNextElementSibling() != nextH2Node)
-        {
-            var h3Node = lastNode.GetNextElementSibling();
-
-            var eventSubComponent = new TwitchEventSubGenComponent(h3Node.InnerText.Trim());
-
-            var blockQuote = h3Node.GetNextElementSibling();
-            HtmlNode table;
-
-            if (blockQuote.Name is "blockquote" or "p")
-            {
-                eventSubComponent.Description = blockQuote.InnerText.Trim();
-                table = blockQuote.GetNextElementSibling();
-            }
-            else
-            {
-                table = blockQuote;
-            }
-
-            if (table.Name != "table") break;
-
-            //parse table
-            ParseTable(table, eventSubComponent);
-            Components.Add(eventSubComponent);
-
-            var nextSibling = table.GetNextElementSibling();
-            // ReSharper disable once ConditionIsAlwaysTrueOrFalse // can be null!!
-            if (nextSibling == null)
-            {
-                break;
-            }
-
-            if (nextSibling.Name == "p" && nextSibling.InnerText.Contains("Object"))
-                //To battle the stupidity of twitch (such as Drop Entitlement Grant Event)
-            {
-                table = nextSibling.GetNextElementSibling();
-                var dataComponent = eventSubComponent.SubComponents.FirstOrDefault(s => s.Key == "TwitchData");
-                if (dataComponent.Value != null) ParseTable(table, dataComponent.Value);
-            }
-
-            lastNode = table;
-        }
+        var component = new TwitchEventSubGenComponent(name) { IsShared = true };
+        AddFields(component, fields, false);
+        SubComponents.Add(component);
     }
 
-    private void ParseConditions(HtmlDocument doc)
+    private void AddEvent(string scriptName, List<EventSubSubscriptionType> versionTypes, bool isLaterVersion)
     {
-        var condition = doc.DocumentNode.SelectSingleNode("//h2[@id='conditions']");
-        var startPos = condition.Line;
-        var nextH2Node = doc.DocumentNode.SelectNodes("//h2").FirstOrDefault(n => n.Line > startPos) ??
-                         doc.DocumentNode.LastChild;
-
-        var lastNode = condition;
-        while (lastNode.GetNextElementSibling() != nextH2Node)
+        var fields = versionTypes.SelectMany(t => t.Event).DistinctBy(f => f.Name).ToList();
+        if (SharedEvents.Contains(scriptName))
         {
-            var h3Node = lastNode.GetNextElementSibling();
-            var conditionComponent = new TwitchEventSubGenComponent(h3Node.InnerText.Trim())
-            {
-                Id = h3Node.Id
-            };
-            var table = h3Node.GetNextElementSibling();
-            ParseTable(table, conditionComponent, true);
-            ConditionComponents.Add(conditionComponent);
-            lastNode = table;
+            var shared = new TwitchEventSubGenComponent(scriptName) { IsShared = true };
+            AddFields(shared, fields, false);
+            SubComponents.Add(shared);
+            return;
         }
+
+        var className = "Twitch" + ClassName(scriptName) +
+                        (isLaterVersion ? LaterVersionEventSuffixes.GetValueOrDefault(scriptName, "EventV2") : "Event");
+        var component = new TwitchEventSubGenComponent(className) { Description = Text(versionTypes[0].Description) };
+        AddFields(component, fields, false);
+        Components.Add(component);
+    }
+
+    private void AddCondition(string scriptName, List<EventSubSubscriptionType> versionTypes, bool isLaterVersion,
+        List<TwitchEventSubGenComponent> conditions)
+    {
+        var fields = versionTypes[0].Condition;
+        if (fields.Count == 0 || SharedEvents.Contains(scriptName)) return;
+        if (isLaterVersion && !OwnLaterVersionConditions.Contains(scriptName) &&
+            conditions.Any(c => HasSameFields(c, fields)))
+            return;
+
+        var className = "Twitch" + ClassName(scriptName) + (isLaterVersion ? "V2" : "") + "Condition";
+        var component = new TwitchEventSubGenComponent(className) { Description = Text(versionTypes[0].Description) };
+        AddFields(component, fields, true);
+        conditions.Add(component);
+        ConditionComponents.Add(component);
     }
 
     /// <summary>
-    /// Whether a field name is a plural noun (top_contributions), not a singular one ending in s (status).
+    /// A description on one line, as the doc comments take it.
     /// </summary>
-    private static bool IsPlural(string name) =>
-        name.EndsWith('s') && !name.EndsWith("ss") && !name.EndsWith("us") && !name.EndsWith("is");
+    private static string Text(string description) => WhiteSpace().Replace(description, " ").Trim();
 
-    private void ParseTable(HtmlNode table, TwitchEventSubGenComponent eventSubComponent, bool isCondition = false)
+    [GeneratedRegex(@"\s+")]
+    private static partial Regex WhiteSpace();
+
+    private static string ClassName(string scriptName) =>
+        ClassNameOverrides.GetValueOrDefault(scriptName) ?? scriptName.ToPascalCase();
+
+    private static bool HasSameFields(TwitchEventSubGenComponent component, List<DocField> fields) =>
+        component.Fields.Values.Select(f => f.RawName).SequenceEqual(fields.Select(f => f.Name));
+
+    private void AddFields(TwitchEventSubGenComponent parent, IEnumerable<DocField> fields, bool isCondition)
     {
-        var rows = table.ChildNodes
-            .First(n => n.Name == "tbody")
-            .ChildNodes
-            .Where(n => n.Name == "tr")
-            .ToList();
+        foreach (var field in fields) AddField(parent, field, isCondition);
+    }
 
-        var currentParent = eventSubComponent;
-        var parentWhiteSpaces = -1;
-        // Shared objects entered as a list via a plural type cell (see isListOfSharedObject).
-        var listedShared = new HashSet<TwitchEventSubGenComponent>();
-        // The previous row when it was a primitive field: (field, its indentation, its parent, its class name if
-        // it turns out to be an object).
-        (TwitchEventSubGenField, int, TwitchEventSubGenComponent, string)? lastPrimitive = null;
-        foreach (var row in rows)
+    private void AddField(TwitchEventSubGenComponent parent, DocField field, bool isCondition)
+    {
+        var required = isCondition && field.IsRequired;
+        if (field.Name.StartsWith(SharedChatPrefix) && AddSharedChatField(parent, field)) return;
+
+        if (field.Children.Count == 0)
         {
-            var whiteSpaces = row.GetFirstElementChild().GetDirectInnerText().TakeWhile(char.IsWhiteSpace).Count();
-
-            // example: current parent has 1 whitespace. You have 1 whitespace. This means you're a sibling, not a child.
-            // so parent goes one up and whitespaces go one up
-            if (whiteSpaces > 0) whiteSpaces /= 3;
-
-            // Two ways tables describe a shared object that is parsed already: its fields unindented right after it
-            // (the transport of conduit.shard.disabled), or repeated under a list of it (top_contributions of the hype
-            // train events). Those rows belong neither to the event nor to a copy of the object. Indented rows under
-            // other shared objects stay: there the event extends the object (message), which makes a copy of it.
-            // Rows indented under a field documented as a primitive make it an object (charity_donation of
-            // channel.chat.notification is typed "string" but has charity_name and amount below it).
-            if (lastPrimitive is var (primitive, primitiveWhiteSpaces, primitiveParent, className) &&
-                whiteSpaces > primitiveWhiteSpaces && currentParent == primitiveParent)
+            parent.AddField(new TwitchEventSubGenField(field.Name, Text(field.Description), ScalarType(field), required)
             {
-                primitiveParent.Fields.Remove(primitive.Name);
-                var objectComponent = new TwitchEventSubGenComponent(className) { Description = primitive.Description };
-                primitiveParent.AddSubComponent(objectComponent);
-                currentParent = objectComponent;
-                parentWhiteSpaces = primitiveWhiteSpaces;
-            }
-            lastPrimitive = null;
+                IsArray = field.IsArray,
+            });
+            return;
+        }
 
-            var rowName = row.SelectSingleNode("td[1]/code")?.InnerText.Trim();
-            if (currentParent != eventSubComponent && SubComponents.Contains(currentParent) && rowName != null &&
-                (whiteSpaces == parentWhiteSpaces || (whiteSpaces > parentWhiteSpaces && listedShared.Contains(currentParent))) &&
-                currentParent.Fields.ContainsKey(rowName.ToPascalCase()))
+        var sharedName = SharedObjectAliases.GetValueOrDefault(field.Name) ?? field.Name;
+        var shared = SubComponents.FirstOrDefault(c => c.ClassName == "Twitch" + sharedName.ToPascalCase());
+        var component = shared != null && IsSharedShape(shared, field)
+            ? shared
+            : NestedComponent(parent, field, shared);
+
+        if (field.IsArray)
+        {
+            parent.AddField(new TwitchEventSubGenField(field.Name, Text(field.Description), component.ClassName + "[]")
             {
-                continue;
-            }
-
-            if (whiteSpaces == parentWhiteSpaces && currentParent.Fields.Count == 0)
-            {
-                //Stupid twitch, make dictionary instead...
-                var dictionaryFieldName = currentParent.ClassName.Remove("Twitch");
-                currentParent.Parent.Fields.Remove(dictionaryFieldName);
-                currentParent.Parent.AddField(new TwitchEventSubGenField(dictionaryFieldName, currentParent.Description, "Dictionary"));
-                currentParent.Parent.SubComponents.Remove(currentParent.ClassName);
-                
-            }
-            
-            if (whiteSpaces <= parentWhiteSpaces)
-            {
-                var parent = currentParent;
-                for (var i = 0;
-                     i <= parentWhiteSpaces - whiteSpaces && parent != eventSubComponent && parent.Parent != null;
-                     i++)
-                {
-                    parent = parent.Parent;
-                }
-
-                currentParent = parent;
-                parentWhiteSpaces = whiteSpaces - 1;
-            }
-            else if (currentParent.IsShared && currentParent.Parent != null)
-            {
-                //This is an issue, must be a new component instead
-                var component = new TwitchEventSubGenComponent(currentParent.ClassName)
-                {
-                    Description = currentParent.Description
-                };
-                var parent = currentParent.Parent;
-                currentParent.Parent = null;
-                parent.AddSubComponent(component);
-                
-                currentParent = component;
-            }
-
-            var isParentV2 = currentParent.ClassName.EndsWith("V2");
-
-            var fieldName = row.SelectSingleNode("td[1]/code").InnerText.Trim();
-            var type = row.SelectSingleNode("td[2]").InnerText.Trim();
-            var required = isCondition && row.SelectSingleNode("td[3]").InnerText.Trim().Equals("Yes", StringComparison.CurrentCultureIgnoreCase);
-            var description = row.SelectSingleNode(isCondition ? "td[4]" : "td[3]").InnerText.Trim();
-
-            var isListOfSharedObject = type == fieldName && IsPlural(fieldName) &&
-                                       SubComponents.Any(c => c.ClassName == "Twitch" + type.ToPascalCase());
-
-            if (type.EndsWith("[]") || type == "array" || type == "Array" || isListOfSharedObject
-                || description.Contains("array", StringComparison.CurrentCultureIgnoreCase)
-                || (description.Contains("list ", StringComparison.CurrentCultureIgnoreCase) &&
-                    !type.Equals("string", StringComparison.CurrentCultureIgnoreCase) &&
-                    !type.Equals("integer", StringComparison.CurrentCultureIgnoreCase) &&
-                    !type.Equals("boolean", StringComparison.CurrentCultureIgnoreCase)))
-            {
-                var arrayField = new TwitchEventSubGenField(fieldName, description, type)
-                {
-                    IsArray = true,
-                };
-
-                if (type.Equals("string[]", StringComparison.CurrentCultureIgnoreCase) ||
-                    type.Equals("[]string", StringComparison.CurrentCultureIgnoreCase))
-                {
-                    currentParent.AddField(arrayField);
-                    continue;
-                }
-
-                var typedComponent =
-                    SubComponents.FirstOrDefault(c => c.ClassName == "Twitch" + type.ToPascalCase())
-                    ?? new TwitchEventSubGenComponent(fieldName+ (isParentV2 ? "V2" : ""))
-                    {
-                        Description = description
-                    };
-
-                arrayField.Type = typedComponent.ClassName + "[]";
-                arrayField.TypedComponent = typedComponent;
-                currentParent.AddField(arrayField);
-                if (isListOfSharedObject) listedShared.Add(typedComponent);
-                currentParent = typedComponent;
-                parentWhiteSpaces = whiteSpaces;
-            }
-            else if (type.Contains("Object", StringComparison.InvariantCultureIgnoreCase))
-            {
-                var subComponent = SubComponents.FirstOrDefault(c => c.ClassName == "Twitch" + fieldName.ToPascalCase())
-                                   ?? new TwitchEventSubGenComponent(fieldName + (isParentV2 ? "V2" : ""))
-                                   {
-                                       Description = description
-                                   };
-
-
-                if (fieldName.StartsWith("shared_chat_"))
-                {
-                    var nonSharedField = fieldName[12..];
-                    var sharedComponent =
-                        eventSubComponent.SubComponents.First(c => c.Key == "Twitch" + nonSharedField.ToPascalCase() + (isParentV2 ? "V2" : ""));
-                    eventSubComponent.AddField(new TwitchEventSubGenField(fieldName, description, sharedComponent.Key)
-                    {
-                        TypedComponent = sharedComponent.Value
-                    });
-
-                    continue;
-                }
-
-                currentParent.AddSubComponent(subComponent);
-                currentParent = subComponent;
-                parentWhiteSpaces = whiteSpaces;
-            }
-            else
-            {
-                if (currentParent == null) throw new Exception("current parent is null");
-
-                var subComponent = SubComponents.FirstOrDefault(c => c.ClassName == "Twitch" + type.ToPascalCase());
-                if (subComponent is null)
-                {
-                    var field = new TwitchEventSubGenField(fieldName, description, type, required);
-                    currentParent.AddField(field);
-                    if (field.Type is "string" or "int" or "bool")
-                    {
-                        lastPrimitive = (field, whiteSpaces, currentParent, fieldName + (isParentV2 ? "V2" : ""));
-                    }
-                }
-                else
-                {
-                    currentParent.AddSubComponent(subComponent);
-                }
-            }
+                IsArray = true,
+                TypedComponent = component,
+            });
+        }
+        else
+        {
+            parent.AddSubComponent(component);
         }
     }
+
+    private TwitchEventSubGenComponent NestedComponent(TwitchEventSubGenComponent parent, DocField field,
+        TwitchEventSubGenComponent shared)
+    {
+        var className = shared?.ClassName ??
+                        "Twitch" + field.Name.ToPascalCase() + (parent.ClassName.EndsWith("V2") ? "V2" : "");
+        var component = new TwitchEventSubGenComponent(className) { Description = Text(field.Description) };
+        AddFields(component, field.Children, false);
+        return component;
+    }
+
+    /// <summary>
+    /// A field uses a shared object when it has no fields the object lacks.
+    /// </summary>
+    private static bool IsSharedShape(TwitchEventSubGenComponent shared, DocField field) =>
+        field.Children.All(c => shared.Fields.Values.Any(f => f.RawName == c.Name || f.Name == c.Name.ToPascalCase()));
+
+    /// <summary>
+    /// shared_chat_ fields repeat the object of their sibling without the prefix, so they share its class.
+    /// </summary>
+    private static bool AddSharedChatField(TwitchEventSubGenComponent parent, DocField field)
+    {
+        var siblingName = field.Name[SharedChatPrefix.Length..].ToPascalCase();
+        var sibling = parent.Fields.Values.FirstOrDefault(f =>
+            f.TypedComponent != null && f.TypedComponent.ClassName.Remove("Twitch").Remove("V2") == siblingName);
+        if (sibling == null) return false;
+
+        parent.AddField(new TwitchEventSubGenField(field.Name, Text(field.Description), sibling.TypedComponent.ClassName)
+        {
+            IsArray = field.IsArray,
+            TypedComponent = sibling.TypedComponent,
+        });
+        return true;
+    }
+
+    private static string ScalarType(DocField field) => field.Type switch
+    {
+        "Object" => "Dictionary",
+        _ => field.Type,
+    };
+
+    private void AddDefinitions(IReadOnlyList<EventSubSubscriptionType> types)
+    {
+        foreach (var group in types.GroupBy(t => t.Type))
+        {
+            var lowest = group.Select(t => t.Version).OrderBy(VersionOrder).First();
+            foreach (var type in group.OrderBy(t => VersionOrder(t.Version)))
+            {
+                Definitions.Add(new TwitchEventSubDefinitionInfo
+                {
+                    EnumName = ToEnumName(type.Type) + (type.Version == lowest ? "" : "V" + type.Version),
+                    Value = type.Type,
+                    Version = type.Version,
+                    Conditions = type.Condition.Select(f => f.Name).ToList(),
+                    Scopes = type.Scopes,
+                    DocumentationLink = TwitcherDocumentationLink(type, type.Version == lowest),
+                });
+            }
+        }
+
+        Console.WriteLine($"{Definitions.Count} subscription type definitions parsed");
+    }
+
+    /// <summary>
+    /// twitcher's definitions still link the subscription types page that the Markdown reference replaced.
+    /// </summary>
+    private static string TwitcherDocumentationLink(EventSubSubscriptionType type, bool isLowestVersion) =>
+        "https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#" + type.Type.Replace(".", "") +
+        (isLowestVersion ? "" : "-v" + type.Version);
+
+    private static string ToEnumName(string dottedValue) =>
+        string.Concat(dottedValue.Split(['.', '_'], StringSplitOptions.RemoveEmptyEntries)
+            .Select(w => char.ToUpperInvariant(w[0]) + w[1..]));
 }
-
-//<h2 id="events">Events</h2>
-//<h3 ...> class name </h3>
-//<blockQuote> //optional description </blockQuote>
-//<table>
-//  <thead>
-//      <tr>
-//          <th>ignore</th>
-//          <th>ignore</th>
-//      </tr>
-//  </thead>
-//  <tbody>
-//      <tr>
-//            (optional, one level is 3 spaces)
-//          <td><code>event name</co    de></td>
-//          <td>type</td>
-//          <td>description</td> -> can have <strong>Optional</strong>
-//      </tr>
-//      ...//
-//  </tbody>
-//</table>
-
-
-//bug in their stuff -> Text is somewhere an object instead of string

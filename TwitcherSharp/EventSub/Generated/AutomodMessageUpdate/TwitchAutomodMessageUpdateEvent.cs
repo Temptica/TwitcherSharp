@@ -26,17 +26,17 @@ public partial class TwitchAutomodMessageUpdateEvent : RefCounted, ITwitcherShar
     public string? BroadcasterUserName { get; set; }
 
     /// <summary> 
-    /// The message sender’s user ID.
+    /// The message sender's user ID.
     /// </summary>
     public string? UserId { get; set; }
 
     /// <summary> 
-    /// The message sender’s login name.
+    /// The message sender's login name.
     /// </summary>
     public string? UserLogin { get; set; }
 
     /// <summary> 
-    /// The message sender’s display name.
+    /// The message sender's display name.
     /// </summary>
     public string? UserName { get; set; }
 
@@ -46,7 +46,7 @@ public partial class TwitchAutomodMessageUpdateEvent : RefCounted, ITwitcherShar
     public string? ModeratorUserId { get; set; }
 
     /// <summary> 
-    /// TThe moderator’s user name.
+    /// TThe moderator's user name.
     /// </summary>
     public string? ModeratorUserName { get; set; }
 
@@ -61,7 +61,7 @@ public partial class TwitchAutomodMessageUpdateEvent : RefCounted, ITwitcherShar
     public string? MessageId { get; set; }
 
     /// <summary> 
-    /// 
+    /// The body of the message.
     /// </summary>
     public TwitchMessage? Message { get => field ??= _data.Get<TwitchMessage>("message"); set; }
 
@@ -76,7 +76,7 @@ public partial class TwitchAutomodMessageUpdateEvent : RefCounted, ITwitcherShar
     public int Level { get; set; }
 
     /// <summary> 
-    /// The message’s status. Possible values are:ApprovedDeniedExpired
+    /// The message's status. Possible values: - `Approved` - `Denied` - `Expired`
     /// </summary>
     public string? Status { get; set; }
 
@@ -197,12 +197,12 @@ public partial class TwitchAutomodMessageUpdateEvent : RefCounted, ITwitcherShar
             public string? Text { get; set; }
         
             /// <summary> 
-            /// Optional. Metadata pertaining to the emote.
+            /// Metadata pertaining to the emote.
             /// </summary>
             public TwitchEmote? Emote { get => field ??= _data.Get<TwitchEmote>("emote"); set; }
         
             /// <summary> 
-            /// Optional. Metadata pertaining to the cheermote.
+            /// Metadata pertaining to the cheermote.
             /// </summary>
             public TwitchCheermote? Cheermote { get => field ??= _data.Get<TwitchCheermote>("cheermote"); set; }
         
@@ -289,7 +289,7 @@ public partial class TwitchAutomodMessageUpdateEvent : RefCounted, ITwitcherShar
                 private Variant _data;
                 
                 /// <summary> 
-                /// The name portion of the Cheermote string that you use in chat to cheer Bits, converted to lowercase. The full Cheermote string is the concatenation of {prefix} + {number of Bits}.For example, if the prefix is “cheer” and you want to cheer 100 Bits, the full Cheermote string is cheer100. When the Cheermote string is entered in chat, Twitch converts it to the image associated with the Bits tier that was cheered.
+                /// The name portion of the Cheermote string that you use in chat to cheer Bits, converted to lowercase. The full Cheermote string is the concatenation of {prefix} + {number of Bits}. **For example**, if the prefix is "cheer" and you want to cheer 100 Bits, the full Cheermote string is cheer100. When the Cheermote string is entered in chat, Twitch converts it to the image associated with the Bits tier that was cheered.
                 /// </summary>
                 public string? Prefix { get; set; }
             

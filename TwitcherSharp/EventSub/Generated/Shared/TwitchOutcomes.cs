@@ -21,7 +21,7 @@ public partial class TwitchOutcomes : RefCounted, ITwitcherSharpEventSub<TwitchO
     public string? Title { get; set; }
 
     /// <summary> 
-    /// The color for the outcome. Valid values are pink and blue.
+    /// The color for the outcome. Valid values are **pink** and **blue**.
     /// </summary>
     public string? Color { get; set; }
 

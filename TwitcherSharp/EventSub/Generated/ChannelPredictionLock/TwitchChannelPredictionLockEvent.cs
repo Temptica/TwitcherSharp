@@ -36,7 +36,7 @@ public partial class TwitchChannelPredictionLockEvent : RefCounted, ITwitcherSha
     public string? Title { get; set; }
 
     /// <summary> 
-    /// An array of outcomes for the Channel Points Prediction. Includes top_predictors.
+    /// An array of outcomes for the Channel Points Prediction. Includes `top_predictors`.
     /// </summary>
     public TwitchOutcomes[]? Outcomes { get => field ??= _data.GetArray<TwitchOutcomes>("outcomes"); set; }
 

@@ -26,17 +26,17 @@ public partial class TwitchChannelModerateEvent : RefCounted, ITwitcherSharpEven
     public string? BroadcasterUserName { get; set; }
 
     /// <summary> 
-    /// The channel in which the action originally occurred. Is the same as the broadcaster_user_id if not in shared chat.
+    /// The channel in which the action originally occurred. Is the same as the `broadcaster_user_id` if not in shared chat.
     /// </summary>
     public string? SourceBroadcasterUserId { get; set; }
 
     /// <summary> 
-    /// The channel in which the action originally occurred. Is the same as the broadcaster_user_login if not in shared chat.
+    /// The channel in which the action originally occurred. Is the same as the `broadcaster_user_login` if not in shared chat.
     /// </summary>
     public string? SourceBroadcasterUserLogin { get; set; }
 
     /// <summary> 
-    /// The channel in which the action originally occurred. Is null when the moderator action happens in the same channel as the broadcaster. Is not null when in a shared chat session, and the action happens in the channel of a participant other than the broadcaster.
+    /// The channel in which the action originally occurred. Is **null** when the moderator action happens in the same channel as the broadcaster. Is not **null** when in a shared chat session, and the action happens in the channel of a participant other than the broadcaster.
     /// </summary>
     public string? SourceBroadcasterUserName { get; set; }
 
@@ -56,107 +56,107 @@ public partial class TwitchChannelModerateEvent : RefCounted, ITwitcherSharpEven
     public string? ModeratorUserName { get; set; }
 
     /// <summary> 
-    /// The type of action: Possible values are: bantimeoutunbanuntimeoutclearemoteonlyemoteonlyofffollowersfollowersoffuniquechatuniquechatoffslowslowoffsubscriberssubscribersoffunraiddeleteunvipvipraidadd_blocked_termadd_permitted_termremove_blocked_termremove_permitted_termmodunmodapprove_unban_requestdeny_unban_requestshared_chat_banshared_chat_timeoutshared_chat_untimeoutshared_chat_unbanshared_chat_delete
+    /// The type of action: Possible values are. Possible values: - `ban` - `timeout` - `unban` - `untimeout` - `clear` - `emoteonly` - `emoteonlyoff` - `followers` - `followersoff` - `uniquechat` - `uniquechatoff` - `slow` - `slowoff` - `subscribers` - `subscribersoff` - `unraid` - `delete` - `unvip` - `vip` - `raid` - `add_blocked_term` - `add_permitted_term` - `remove_blocked_term` - `remove_permitted_term` - `mod` - `unmod` - `approve_unban_request` - `deny_unban_request` - `shared_chat_ban` - `shared_chat_timeout` - `shared_chat_untimeout` - `shared_chat_unban` - `shared_chat_delete`
     /// </summary>
     public string? Action { get; set; }
 
     /// <summary> 
-    /// Optional.. Metadata associated with the followers command.
+    /// Metadata associated with the followers command.
     /// </summary>
     public TwitchFollowers? Followers { get => field ??= _data.Get<TwitchFollowers>("followers"); set; }
 
     /// <summary> 
-    /// Optional. Metadata associated with the slow command.
+    /// Metadata associated with the slow command.
     /// </summary>
     public TwitchSlow? Slow { get => field ??= _data.Get<TwitchSlow>("slow"); set; }
 
     /// <summary> 
-    /// Optional. Metadata associated with the vip command.
+    /// Metadata associated with the vip command.
     /// </summary>
     public TwitchVip? Vip { get => field ??= _data.Get<TwitchVip>("vip"); set; }
 
     /// <summary> 
-    /// Optional. Metadata associated with the unvip command.
+    /// Metadata associated with the unvip command.
     /// </summary>
     public TwitchUnvip? Unvip { get => field ??= _data.Get<TwitchUnvip>("unvip"); set; }
 
     /// <summary> 
-    /// Optional. Metadata associated with the mod command.
+    /// Metadata associated with the mod command.
     /// </summary>
     public TwitchMod? Mod { get => field ??= _data.Get<TwitchMod>("mod"); set; }
 
     /// <summary> 
-    /// Optional. Metadata associated with the unmod command.
+    /// Metadata associated with the unmod command.
     /// </summary>
     public TwitchUnmod? Unmod { get => field ??= _data.Get<TwitchUnmod>("unmod"); set; }
 
     /// <summary> 
-    /// Optional. Metadata associated with the ban command.
+    /// Metadata associated with the ban command.
     /// </summary>
     public TwitchBan? Ban { get => field ??= _data.Get<TwitchBan>("ban"); set; }
 
     /// <summary> 
-    /// Optional. Metadata associated with the unban command.
+    /// Metadata associated with the unban command.
     /// </summary>
     public TwitchUnban? Unban { get => field ??= _data.Get<TwitchUnban>("unban"); set; }
 
     /// <summary> 
-    /// Optional.. Metadata associated with the timeout command.
+    /// Metadata associated with the timeout command.
     /// </summary>
     public TwitchTimeout? Timeout { get => field ??= _data.Get<TwitchTimeout>("timeout"); set; }
 
     /// <summary> 
-    /// Optional. Metadata associated with the untimeout command.
+    /// Metadata associated with the untimeout command.
     /// </summary>
     public TwitchUntimeout? Untimeout { get => field ??= _data.Get<TwitchUntimeout>("untimeout"); set; }
 
     /// <summary> 
-    /// Optional. Metadata associated with the raid command.
+    /// Metadata associated with the raid command.
     /// </summary>
     public TwitchRaid? Raid { get => field ??= _data.Get<TwitchRaid>("raid"); set; }
 
     /// <summary> 
-    /// Optional. Metadata associated with the unraid command.
+    /// Metadata associated with the unraid command.
     /// </summary>
     public TwitchUnraid? Unraid { get => field ??= _data.Get<TwitchUnraid>("unraid"); set; }
 
     /// <summary> 
-    /// Optional. Metadata associated with the delete command.
+    /// Metadata associated with the delete command.
     /// </summary>
     public TwitchDelete? Delete { get => field ??= _data.Get<TwitchDelete>("delete"); set; }
 
     /// <summary> 
-    /// Optional. Metadata associated with the automod terms changes.
+    /// Metadata associated with the automod terms changes.
     /// </summary>
     public TwitchAutomodTerms? AutomodTerms { get => field ??= _data.Get<TwitchAutomodTerms>("automod_terms"); set; }
 
     /// <summary> 
-    /// Optional. Metadata associated with an unban request.
+    /// Metadata associated with an unban request.
     /// </summary>
     public TwitchUnbanRequest? UnbanRequest { get => field ??= _data.Get<TwitchUnbanRequest>("unban_request"); set; }
 
     /// <summary> 
-    /// Optional. Information about the shared_chat_ban event. Is null if action is not shared_chat_ban. This field has the same information as the ban field but for a action that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
+    /// Information about the `shared_chat_ban` event. Is null if `action` is not `shared_chat_ban`. This field has the same information as the `ban` field but for a action that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
     public TwitchBan? SharedChatBan { get => field ??= _data.Get<TwitchBan>("shared_chat_ban"); set; }
 
     /// <summary> 
-    /// Optional. Information about the shared_chat_unban event. Is null if action is not shared_chat_unban. This field has the same information as the unban field but for a action that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
+    /// Information about the `shared_chat_unban` event. Is null if `action` is not `shared_chat_unban`. This field has the same information as the `unban` field but for a action that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
     public TwitchUnban? SharedChatUnban { get => field ??= _data.Get<TwitchUnban>("shared_chat_unban"); set; }
 
     /// <summary> 
-    /// Optional. Information about the shared_chat_timeout event. Is null if action is not shared_chat_timeout. This field has the same information as the timeout field but for a action that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
+    /// Information about the `shared_chat_timeout` event. Is null if `action` is not `shared_chat_timeout`. This field has the same information as the `timeout` field but for a action that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
     public TwitchTimeout? SharedChatTimeout { get => field ??= _data.Get<TwitchTimeout>("shared_chat_timeout"); set; }
 
     /// <summary> 
-    /// Optional. Information about the shared_chat_untimeout event. Is null if action is not shared_chat_untimeout. This field has the same information as the untimeout field but for a action that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
+    /// Information about the `shared_chat_untimeout` event. Is null if `action` is not `shared_chat_untimeout`. This field has the same information as the `untimeout` field but for a action that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
     public TwitchUntimeout? SharedChatUntimeout { get => field ??= _data.Get<TwitchUntimeout>("shared_chat_untimeout"); set; }
 
     /// <summary> 
-    /// Optional. Information about the shared_chat_delete event. Is null if action is not shared_chat_delete. This field has the same information as the delete field but for a action that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
+    /// Information about the `shared_chat_delete` event. Is null if `action` is not `shared_chat_delete`. This field has the same information as the `delete` field but for a action that happened for a channel in a shared chat session other than the broadcaster in the subscription condition.
     /// </summary>
     public TwitchDelete? SharedChatDelete { get => field ??= _data.Get<TwitchDelete>("shared_chat_delete"); set; }
 
@@ -538,7 +538,7 @@ public partial class TwitchChannelModerateEvent : RefCounted, ITwitcherSharpEven
         public string? UserName { get; set; }
     
         /// <summary> 
-        /// Optional. Reason given for the ban.
+        /// Reason given for the ban.
         /// </summary>
         public string? Reason { get; set; }
     
@@ -651,7 +651,7 @@ public partial class TwitchChannelModerateEvent : RefCounted, ITwitcherSharpEven
         public string? UserName { get; set; }
     
         /// <summary> 
-        /// Optional.. The reason given for the timeout.
+        /// The reason given for the timeout.
         /// </summary>
         public string? Reason { get; set; }
     

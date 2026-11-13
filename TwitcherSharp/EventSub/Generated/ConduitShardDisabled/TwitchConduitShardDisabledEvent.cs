@@ -26,7 +26,7 @@ public partial class TwitchConduitShardDisabledEvent : RefCounted, ITwitcherShar
     public string? Status { get; set; }
 
     /// <summary> 
-    /// Defines the transport details that you want Twitch to use when sending you event notifications.
+    /// 
     /// </summary>
     public TwitchTransport? Transport { get => field ??= _data.Get<TwitchTransport>("transport"); set; }
 

@@ -31,17 +31,17 @@ public partial class TwitchChannelPointsCustomRewardUpdateEvent : RefCounted, IT
     public string? BroadcasterUserName { get; set; }
 
     /// <summary> 
-    /// Is the reward currently enabled. If false, the reward won’t show up to viewers.
+    /// Is the reward currently enabled. If false, the reward won't show up to viewers.
     /// </summary>
     public bool IsEnabled { get; set; }
 
     /// <summary> 
-    /// Is the reward currently paused. If true, viewers can’t redeem.
+    /// Is the reward currently paused. If true, viewers can't redeem.
     /// </summary>
     public bool IsPaused { get; set; }
 
     /// <summary> 
-    /// Is the reward currently in stock. If false, viewers can’t redeem.
+    /// Is the reward currently in stock. If false, viewers can't redeem.
     /// </summary>
     public bool IsInStock { get; set; }
 
@@ -66,7 +66,7 @@ public partial class TwitchChannelPointsCustomRewardUpdateEvent : RefCounted, IT
     public bool IsUserInputRequired { get; set; }
 
     /// <summary> 
-    /// Should redemptions be set to fulfilled status immediately when redeemed and skip the request queue instead of the normal unfulfilled status.
+    /// Should redemptions be set to **fulfilled** status immediately when redeemed and skip the request queue instead of the normal **unfulfilled** status.
     /// </summary>
     public bool ShouldRedemptionsSkipRequestQueue { get; set; }
 
@@ -81,7 +81,7 @@ public partial class TwitchChannelPointsCustomRewardUpdateEvent : RefCounted, IT
     public TwitchMaxPerUserPerStream? MaxPerUserPerStream { get => field ??= _data.Get<TwitchMaxPerUserPerStream>("max_per_user_per_stream"); set; }
 
     /// <summary> 
-    /// Custom background color for the reward. Format: Hex with # prefix. Example: #FA1ED2.
+    /// Custom background color for the reward. Format: Hex with \# prefix. Example: `#FA1ED2`.
     /// </summary>
     public string? BackgroundColor { get; set; }
 
@@ -96,12 +96,12 @@ public partial class TwitchChannelPointsCustomRewardUpdateEvent : RefCounted, IT
     public TwitchGlobalCooldown? GlobalCooldown { get => field ??= _data.Get<TwitchGlobalCooldown>("global_cooldown"); set; }
 
     /// <summary> 
-    /// Timestamp of the cooldown expiration. null if the reward isn’t on cooldown.
+    /// Timestamp of the cooldown expiration. **null** if the reward isn't on cooldown.
     /// </summary>
     public string? CooldownExpiresAt { get; set; }
 
     /// <summary> 
-    /// The number of redemptions redeemed during the current live stream. Counts against the max_per_stream limit. null if the broadcasters stream isn’t live or max_per_stream isn’t enabled.
+    /// The number of redemptions redeemed during the current live stream. Counts against the `max_per_stream` limit. **null** if the broadcasters stream isn't live or `max_per_stream` isn't enabled.
     /// </summary>
     public int RedemptionsRedeemedCurrentStream { get; set; }
 
