@@ -30,7 +30,7 @@ TwitcherSharp is a C# wrapper around the Godot Twitcher addon made by kanimaru. 
 
    ```xml
    <ItemGroup>
-     <PackageReference Include="Temptica.TwitcherSharp" Version="2.5.2" />
+     <PackageReference Include="Temptica.TwitcherSharp" Version="2.6.0" />
    </ItemGroup>
    ```
 
