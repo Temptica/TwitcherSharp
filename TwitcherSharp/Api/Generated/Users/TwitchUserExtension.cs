@@ -6,7 +6,7 @@ namespace TwitcherSharp.Api.Generated.Users;
 
 public partial class TwitchUserExtension : RefCounted, ITwitcherSharp<TwitchUserExtension>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string Id { get; set; } = null!;
     public string Version { get; set; } = null!;
     public string Name { get; set; } = null!;
@@ -21,27 +21,33 @@ public partial class TwitchUserExtension : RefCounted, ITwitcherSharp<TwitchUser
         if(data == null) return null;
         var instance = new TwitchUserExtension
         {
-            Id = data.Get("id").AsString(),
-            Version = data.Get("version").AsString(),
-            Name = data.Get("name").AsString(),
-            CanActivate = data.Get("can_activate").AsBool(),
-            Type = data.Get("type").AsStringArray(),
+            Id = data.ReadAsString("id"),
+            Version = data.ReadAsString("version"),
+            Name = data.ReadAsString("name"),
+            CanActivate = data.ReadAsBool("can_activate"),
+            Type = data.ReadAsStringArray("type"),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_user_extension.gd");
-        var request = script.Call("new").AsGodotObject();
-        if(Id != null) request.Set("id", Id);
-        if(Version != null) request.Set("version", Version);
-        if(Name != null) request.Set("name", Name);
-        request.Set("can_activate", CanActivate);
-        if(Type != null) request.Set("type", new Godot.Collections.Array<string>(Type));
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated/twitch_user_extension.gd");
+        if(Id != null) request.SetValue("id", Id);
+        if(Version != null) request.SetValue("version", Version);
+        if(Name != null) request.SetValue("name", Name);
+        request.SetValue("can_activate", CanActivate);
+        if(Type != null) request.SetValue("type", new Godot.Collections.Array<string>(Type));
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

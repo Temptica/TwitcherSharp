@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.CharityCampaignStart;
 
 public partial class TwitchCharityCampaignStartEvent : RefCounted, ITwitcherSharpEventSub<TwitchCharityCampaignStartEvent>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// An ID that identifies the charity campaign.
@@ -16,22 +16,22 @@ public partial class TwitchCharityCampaignStartEvent : RefCounted, ITwitcherShar
     public string? Id { get; set; }
 
     /// <summary> 
-    /// An ID that identifies the broadcaster that's running the campaign.
+    /// An ID that identifies the broadcaster that’s running the campaign.
     /// </summary>
     public string? BroadcasterId { get; set; }
 
     /// <summary> 
-    /// The broadcaster's login name.
+    /// The broadcaster’s login name.
     /// </summary>
     public string? BroadcasterLogin { get; set; }
 
     /// <summary> 
-    /// The broadcaster's display name.
+    /// The broadcaster’s display name.
     /// </summary>
     public string? BroadcasterName { get; set; }
 
     /// <summary> 
-    /// The charity's name.
+    /// The charity’s name.
     /// </summary>
     public string? CharityName { get; set; }
 
@@ -41,24 +41,24 @@ public partial class TwitchCharityCampaignStartEvent : RefCounted, ITwitcherShar
     public string? CharityDescription { get; set; }
 
     /// <summary> 
-    /// A URL to an image of the charity's logo. The image's type is PNG and its size is 100px X 100px.
+    /// A URL to an image of the charity’s logo. The image’s type is PNG and its size is 100px X 100px.
     /// </summary>
     public string? CharityLogo { get; set; }
 
     /// <summary> 
-    /// A URL to the charity's website.
+    /// A URL to the charity’s website.
     /// </summary>
     public string? CharityWebsite { get; set; }
 
     /// <summary> 
     /// An object that contains the current amount of donations that the campaign has received.
     /// </summary>
-    public TwitchCurrentAmount? CurrentAmount { get => field ??= _data?.Get<TwitchCurrentAmount>("current_amount"); set; }
+    public TwitchCurrentAmount? CurrentAmount { get => field ??= _data.Get<TwitchCurrentAmount>("current_amount"); set; }
 
     /// <summary> 
-    /// An object that contains the campaign's target fundraising goal.
+    /// An object that contains the campaign’s target fundraising goal.
     /// </summary>
-    public TwitchTargetAmount? TargetAmount { get => field ??= _data?.Get<TwitchTargetAmount>("target_amount"); set; }
+    public TwitchTargetAmount? TargetAmount { get => field ??= _data.Get<TwitchTargetAmount>("target_amount"); set; }
 
     /// <summary> 
     /// The UTC timestamp (in RFC3339 format) of when the broadcaster started the campaign.
@@ -73,59 +73,62 @@ public partial class TwitchCharityCampaignStartEvent : RefCounted, ITwitcherShar
         if(data == null) return null;
         var instance = new TwitchCharityCampaignStartEvent
         {
-            Id = data.Get("id").AsString(),
-            BroadcasterId = data.Get("broadcaster_id").AsString(),
-            BroadcasterLogin = data.Get("broadcaster_login").AsString(),
-            BroadcasterName = data.Get("broadcaster_name").AsString(),
-            CharityName = data.Get("charity_name").AsString(),
-            CharityDescription = data.Get("charity_description").AsString(),
-            CharityLogo = data.Get("charity_logo").AsString(),
-            CharityWebsite = data.Get("charity_website").AsString(),
-            StartedAt = data.Get("started_at").AsString(),
+            Id = data.ReadAsString("id"),
+            BroadcasterId = data.ReadAsString("broadcaster_id"),
+            BroadcasterLogin = data.ReadAsString("broadcaster_login"),
+            BroadcasterName = data.ReadAsString("broadcaster_name"),
+            CharityName = data.ReadAsString("charity_name"),
+            CharityDescription = data.ReadAsString("charity_description"),
+            CharityLogo = data.ReadAsString("charity_logo"),
+            CharityWebsite = data.ReadAsString("charity_website"),
+            StartedAt = data.ReadAsString("started_at"),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_charity_campaign_start.gd");
-        var eventClass = script.Get("Event").As<GDScript>();
-        var request = eventClass.New().AsGodotObject();
-        if(Id != null) request.Set("id", Id);
-        if(BroadcasterId != null) request.Set("broadcaster_id", BroadcasterId);
-        if(BroadcasterLogin != null) request.Set("broadcaster_login", BroadcasterLogin);
-        if(BroadcasterName != null) request.Set("broadcaster_name", BroadcasterName);
-        if(CharityName != null) request.Set("charity_name", CharityName);
-        if(CharityDescription != null) request.Set("charity_description", CharityDescription);
-        if(CharityLogo != null) request.Set("charity_logo", CharityLogo);
-        if(CharityWebsite != null) request.Set("charity_website", CharityWebsite);
-        if(CurrentAmount != null) request.Set("current_amount", CurrentAmount.ToGodotObject());
-        if(TargetAmount != null) request.Set("target_amount", TargetAmount.ToGodotObject());
-        if(StartedAt != null) request.Set("started_at", StartedAt);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_charity_campaign_start.gd", "Event");
+        if(Id != null) request.SetValue("id", Id);
+        if(BroadcasterId != null) request.SetValue("broadcaster_id", BroadcasterId);
+        if(BroadcasterLogin != null) request.SetValue("broadcaster_login", BroadcasterLogin);
+        if(BroadcasterName != null) request.SetValue("broadcaster_name", BroadcasterName);
+        if(CharityName != null) request.SetValue("charity_name", CharityName);
+        if(CharityDescription != null) request.SetValue("charity_description", CharityDescription);
+        if(CharityLogo != null) request.SetValue("charity_logo", CharityLogo);
+        if(CharityWebsite != null) request.SetValue("charity_website", CharityWebsite);
+        if(CurrentAmount != null) request.SetObject("current_amount", CurrentAmount);
+        if(TargetAmount != null) request.SetObject("target_amount", TargetAmount);
+        if(StartedAt != null) request.SetValue("started_at", StartedAt);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 
     public partial class TwitchCurrentAmount : RefCounted, ITwitcherSharpEventSub<TwitchCurrentAmount>
     {
-        private GodotObject? _data;
+        private Variant _data;
         
         /// <summary> 
-        /// The monetary amount. The amount is specified in the currency's minor unit. For example, the minor units for USD is cents, so if the amount is $5.50 USD, `value` is set to 550.
+        /// The monetary amount. The amount is specified in the currency’s minor unit. For example, the minor units for USD is cents, so if the amount is $5.50 USD, value is set to 550.
         /// </summary>
         public int Value { get; set; }
     
         /// <summary> 
-        /// The number of decimal places used by the currency. For example, USD uses two decimal places. Use this number to translate `value` from minor units to major units by using the formula:
-        /// 
-        /// `value / 10^decimal_places`
+        /// The number of decimal places used by the currency. For example, USD uses two decimal places. Use this number to translate value from minor units to major units by using the formula:value / 10^decimal_places
         /// </summary>
         public int DecimalPlaces { get; set; }
     
         /// <summary> 
-        /// The ISO-4217 three-letter currency code that identifies the type of currency in `value`.
+        /// The ISO-4217 three-letter currency code that identifies the type of currency in value.
         /// </summary>
         public string? Currency { get; set; }
     
@@ -137,45 +140,48 @@ public partial class TwitchCharityCampaignStartEvent : RefCounted, ITwitcherShar
             if(data == null) return null;
             var instance = new TwitchCurrentAmount
             {
-                Value = data.Get("value").AsInt32(),
-                DecimalPlaces = data.Get("decimal_places").AsInt32(),
-                Currency = data.Get("currency").AsString(),
+                Value = data.ReadAsInt32("value"),
+                DecimalPlaces = data.ReadAsInt32("decimal_places"),
+                Currency = data.ReadAsString("currency"),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_charity_campaign_start.gd");
-            var currentAmountClass = script.Get("CurrentAmount").As<GDScript>();
-            var request = currentAmountClass.New().AsGodotObject();
-            request.Set("value", Value);
-            request.Set("decimal_places", DecimalPlaces);
-            if(Currency != null) request.Set("currency", Currency);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_charity_campaign_start.gd", "CurrentAmount");
+            request.SetValue("value", Value);
+            request.SetValue("decimal_places", DecimalPlaces);
+            if(Currency != null) request.SetValue("currency", Currency);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     }
 
     public partial class TwitchTargetAmount : RefCounted, ITwitcherSharpEventSub<TwitchTargetAmount>
     {
-        private GodotObject? _data;
+        private Variant _data;
         
         /// <summary> 
-        /// The monetary amount. The amount is specified in the currency's minor unit. For example, the minor units for USD is cents, so if the amount is $5.50 USD, `value` is set to 550.
+        /// The monetary amount. The amount is specified in the currency’s minor unit. For example, the minor units for USD is cents, so if the amount is $5.50 USD, value is set to 550.
         /// </summary>
         public int Value { get; set; }
     
         /// <summary> 
-        /// The number of decimal places used by the currency. For example, USD uses two decimal places. Use this number to translate `value` from minor units to major units by using the formula:
-        /// 
-        /// `value / 10^decimal_places`
+        /// The number of decimal places used by the currency. For example, USD uses two decimal places. Use this number to translate value from minor units to major units by using the formula:value / 10^decimal_places
         /// </summary>
         public int DecimalPlaces { get; set; }
     
         /// <summary> 
-        /// The ISO-4217 three-letter currency code that identifies the type of currency in `value`.
+        /// The ISO-4217 three-letter currency code that identifies the type of currency in value.
         /// </summary>
         public string? Currency { get; set; }
     
@@ -187,24 +193,29 @@ public partial class TwitchCharityCampaignStartEvent : RefCounted, ITwitcherShar
             if(data == null) return null;
             var instance = new TwitchTargetAmount
             {
-                Value = data.Get("value").AsInt32(),
-                DecimalPlaces = data.Get("decimal_places").AsInt32(),
-                Currency = data.Get("currency").AsString(),
+                Value = data.ReadAsInt32("value"),
+                DecimalPlaces = data.ReadAsInt32("decimal_places"),
+                Currency = data.ReadAsString("currency"),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_charity_campaign_start.gd");
-            var targetAmountClass = script.Get("TargetAmount").As<GDScript>();
-            var request = targetAmountClass.New().AsGodotObject();
-            request.Set("value", Value);
-            request.Set("decimal_places", DecimalPlaces);
-            if(Currency != null) request.Set("currency", Currency);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_charity_campaign_start.gd", "TargetAmount");
+            request.SetValue("value", Value);
+            request.SetValue("decimal_places", DecimalPlaces);
+            if(Currency != null) request.SetValue("currency", Currency);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

@@ -1,4 +1,5 @@
 using Godot;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.Chat;
@@ -8,14 +9,20 @@ namespace TwitcherSharp.Chat;
 /// </summary>
 public partial class TwitchCommandRegex : TwitchCommandBase, ITwitcherSharp<TwitchCommandRegex>
 {
-    public string RegexToListen { get; set; } = null!;
+    /// <summary>
+    /// Regex it listens for and triggers on
+    /// </summary>
+    public string RegexToListen
+    {
+        get => LinkedRead(field, "regex_to_listen", static v => v.AsString());
+        set => LinkedWrite(ref field, value, "regex_to_listen", value);
+    } = null!;
 
     public static TwitchCommandRegex? FromObject(GodotObject? data)
     {
         if (data == null) return null;
-        var regex = new TwitchCommandRegex();
-        regex.RegexToListen = data.Get("regex_to_listen").AsString();
-        regex.Data = data;
+        // The properties are read from the node.
+        var regex = new TwitchCommandRegex { Data = data };
         regex.SetBaseProperties();
         
         return regex;
@@ -23,8 +30,8 @@ public partial class TwitchCommandRegex : TwitchCommandBase, ITwitcherSharp<Twit
 
     public override GodotObject ToGodotObject()
     {
-        var data = GD.Load<GDScript>("res://addons/twitcher/chat/twitch_command_regex.gd").New().AsGodotObject();
-        data.Set("regex_to_listen", RegexToListen);
+        var data = InteropExtension.NewObject("res://addons/twitcher/chat/twitch_command_regex.gd");
+        data.SetValue("regex_to_listen", RegexToListen);
         GetBaseProperties(data);
         return data;
     }

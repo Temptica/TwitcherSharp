@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.Goals;
 
 public partial class TwitchGoalsEvent : RefCounted, ITwitcherSharpEventSub<TwitchGoalsEvent>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// An ID that identifies this event.
@@ -21,24 +21,17 @@ public partial class TwitchGoalsEvent : RefCounted, ITwitcherSharpEventSub<Twitc
     public string? BroadcasterUserId { get; set; }
 
     /// <summary> 
-    /// The broadcaster's display name.
+    /// The broadcaster’s display name.
     /// </summary>
     public string? BroadcasterUserName { get; set; }
 
     /// <summary> 
-    /// The broadcaster's user handle.
+    /// The broadcaster’s user handle.
     /// </summary>
     public string? BroadcasterUserLogin { get; set; }
 
     /// <summary> 
-    /// The type of goal. Possible values:
-    /// - `follow`: The goal is to increase followers.
-    /// - `subscription`: The goal is to increase subscriptions. This type shows the net increase or decrease in tier points associated with the subscriptions.
-    /// - `subscription_count`: The goal is to increase subscriptions. This type shows the net increase or decrease in the number of subscriptions.
-    /// - `new_subscription`: The goal is to increase subscriptions. This type shows only the net increase in tier points associated with the subscriptions (it does not account for users that unsubscribed since the goal started).
-    /// - `new_subscription_count`: The goal is to increase subscriptions. This type shows only the net increase in the number of subscriptions (it does not account for users that unsubscribed since the goal started).
-    /// - `new_bit`: The goal is to increase the amount of Bits used on the channel.
-    /// - `new_cheerer`: The goal is to increase the number of unique Cheerers to Cheer on the channel.
+    /// The type of goal. Possible values are: follow — The goal is to increase followers.subscription — The goal is to increase subscriptions. This type shows the net increase or decrease in tier points associated with the subscriptions.subscription_count — The goal is to increase subscriptions. This type shows the net increase or decrease in the number of subscriptions.new_subscription — The goal is to increase subscriptions. This type shows only the net increase in tier points associated with the subscriptions (it does not account for users that unsubscribed since the goal started).new_subscription_count — The goal is to increase subscriptions. This type shows only the net increase in the number of subscriptions (it does not account for users that unsubscribed since the goal started).new_bit — The goal is to increase the amount of Bits used on the channel.new_cheerer — The goal is to increase the number of unique Cheerers to Cheer on the channel.
     /// </summary>
     public string? Type { get; set; }
 
@@ -48,39 +41,27 @@ public partial class TwitchGoalsEvent : RefCounted, ITwitcherSharpEventSub<Twitc
     public string? Description { get; set; }
 
     /// <summary> 
-    /// A Boolean value that indicates whether the broadcaster achieved their goal. Is **true** if the goal was achieved; otherwise, **false**.
-    /// 
-    /// Only the **channel.goal.end** event includes this field.
+    /// A Boolean value that indicates whether the broadcaster achieved their goal. Is true if the goal was achieved; otherwise, false.Only the channel.goal.end event includes this field.
     /// </summary>
     public bool IsAchieved { get; set; }
 
     /// <summary> 
-    /// The goal's current value.
-    /// 
-    /// The goal's `type` determines how this value is increased or decreased.
-    /// 
-    /// - If `type` is follow, this field is set to the broadcaster's current number of followers. This number increases with new followers and decreases when users unfollow the broadcaster.
-    /// - If `type` is subscription, this field is increased and decreased by the points value associated with the subscription tier. For example, if a tier-two subscription is worth 2 points, this field is increased or decreased by 2, not 1.
-    /// - If `type` is subscription_count, this field is increased by 1 for each new subscription and decreased by 1 for each user that unsubscribes.
-    /// - If `type` is new_subscription, this field is increased by the points value associated with the subscription tier. For example, if a tier-two subscription is worth 2 points, this field is increased by 2, not 1.
-    /// - If `type` is new_subscription_count, this field is increased by 1 for each new subscription.
+    /// The goal’s current value.The goal’s type determines how this value is increased or decreased.If type is follow, this field is set to the broadcaster's current number of followers. This number increases with new followers and decreases when users unfollow the broadcaster.If type is subscription, this field is increased and decreased by the points value associated with the subscription tier. For example, if a tier-two subscription is worth 2 points, this field is increased or decreased by 2, not 1.If type is subscription_count, this field is increased by 1 for each new subscription and decreased by 1 for each user that unsubscribes.If type is new_subscription, this field is increased by the points value associated with the subscription tier. For example, if a tier-two subscription is worth 2 points, this field is increased by 2, not 1.If type is new_subscription_count, this field is increased by 1 for each new subscription.
     /// </summary>
     public int CurrentAmount { get; set; }
 
     /// <summary> 
-    /// The goal's target value. For example, if the broadcaster has 200 followers before creating the goal, and their goal is to double that number, this field is set to 400.
+    /// The goal’s target value. For example, if the broadcaster has 200 followers before creating the goal, and their goal is to double that number, this field is set to 400.
     /// </summary>
     public int TargetAmount { get; set; }
 
     /// <summary> 
-    /// The UTC timestamp in [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) format, which indicates when the broadcaster created the goal.
+    /// The UTC timestamp in RFC 3339 format, which indicates when the broadcaster created the goal.
     /// </summary>
     public string? StartedAt { get; set; }
 
     /// <summary> 
-    /// The UTC timestamp in [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) format, which indicates when the broadcaster ended the goal.
-    /// 
-    /// Only the **channel.goal.end** event includes this field.
+    /// The UTC timestamp in RFC 3339 format, which indicates when the broadcaster ended the goal.Only the channel.goal.end event includes this field.
     /// </summary>
     public string? EndedAt { get; set; }
 
@@ -92,39 +73,44 @@ public partial class TwitchGoalsEvent : RefCounted, ITwitcherSharpEventSub<Twitc
         if(data == null) return null;
         var instance = new TwitchGoalsEvent
         {
-            Id = data.Get("id").AsString(),
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-            BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
-            BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
-            Type = data.Get("type").AsString(),
-            Description = data.Get("description").AsString(),
-            IsAchieved = data.Get("is_achieved").AsBool(),
-            CurrentAmount = data.Get("current_amount").AsInt32(),
-            TargetAmount = data.Get("target_amount").AsInt32(),
-            StartedAt = data.Get("started_at").AsString(),
-            EndedAt = data.Get("ended_at").AsString(),
+            Id = data.ReadAsString("id"),
+            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+            Type = data.ReadAsString("type"),
+            Description = data.ReadAsString("description"),
+            IsAchieved = data.ReadAsBool("is_achieved"),
+            CurrentAmount = data.ReadAsInt32("current_amount"),
+            TargetAmount = data.ReadAsInt32("target_amount"),
+            StartedAt = data.ReadAsString("started_at"),
+            EndedAt = data.ReadAsString("ended_at"),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_goals.gd");
-        var eventClass = script.Get("Event").As<GDScript>();
-        var request = eventClass.New().AsGodotObject();
-        if(Id != null) request.Set("id", Id);
-        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
-        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
-        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        if(Type != null) request.Set("type", Type);
-        if(Description != null) request.Set("description", Description);
-        request.Set("is_achieved", IsAchieved);
-        request.Set("current_amount", CurrentAmount);
-        request.Set("target_amount", TargetAmount);
-        if(StartedAt != null) request.Set("started_at", StartedAt);
-        if(EndedAt != null) request.Set("ended_at", EndedAt);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_goals.gd", "Event");
+        if(Id != null) request.SetValue("id", Id);
+        if(BroadcasterUserId != null) request.SetValue("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserName != null) request.SetValue("broadcaster_user_name", BroadcasterUserName);
+        if(BroadcasterUserLogin != null) request.SetValue("broadcaster_user_login", BroadcasterUserLogin);
+        if(Type != null) request.SetValue("type", Type);
+        if(Description != null) request.SetValue("description", Description);
+        request.SetValue("is_achieved", IsAchieved);
+        request.SetValue("current_amount", CurrentAmount);
+        request.SetValue("target_amount", TargetAmount);
+        if(StartedAt != null) request.SetValue("started_at", StartedAt);
+        if(EndedAt != null) request.SetValue("ended_at", EndedAt);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 }

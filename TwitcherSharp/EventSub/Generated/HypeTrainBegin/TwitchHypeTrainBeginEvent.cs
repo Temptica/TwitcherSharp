@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.HypeTrainBegin;
 
 public partial class TwitchHypeTrainBeginEvent : RefCounted, ITwitcherSharpEventSub<TwitchHypeTrainBeginEvent>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// The Hype Train ID.
@@ -48,7 +48,7 @@ public partial class TwitchHypeTrainBeginEvent : RefCounted, ITwitcherSharpEvent
     /// <summary> 
     /// The contributors with the most points contributed.
     /// </summary>
-    public TwitchTopContributions[]? TopContributions { get => field ??= _data?.GetArray<TwitchTopContributions>("top_contributions"); set; }
+    public TwitchTopContributions[]? TopContributions { get => field ??= _data.GetArray<TwitchTopContributions>("top_contributions"); set; }
 
     /// <summary> 
     /// The current level of the Hype Train.
@@ -66,9 +66,9 @@ public partial class TwitchHypeTrainBeginEvent : RefCounted, ITwitcherSharpEvent
     public int AllTimeHighTotal { get; set; }
 
     /// <summary> 
-    /// Non-null for a shared Hype Train. Contains the list of broadcasters in the shared Hype Train.
+    /// Optional. Non-null for a shared Hype Train. Contains the list of broadcasters in the shared Hype Train.
     /// </summary>
-    public TwitchSharedTrainParticipants[]? SharedTrainParticipants { get => field ??= _data?.GetArray<TwitchSharedTrainParticipants>("shared_train_participants"); set; }
+    public TwitchSharedTrainParticipants[]? SharedTrainParticipants { get => field ??= _data.GetArray<TwitchSharedTrainParticipants>("shared_train_participants"); set; }
 
     /// <summary> 
     /// The time when the Hype Train started.
@@ -81,15 +81,12 @@ public partial class TwitchHypeTrainBeginEvent : RefCounted, ITwitcherSharpEvent
     public string? ExpiresAt { get; set; }
 
     /// <summary> 
-    /// The type of the Hype Train. Possible values:
-    /// - `treasure`
-    /// - `golden_kappa`
-    /// - `regular`
+    /// The type of the Hype Train. Possible values are: treasure golden_kapparegular
     /// </summary>
     public string? Type { get; set; }
 
     /// <summary> 
-    /// Indicates if the Hype Train is shared. When true, `shared_train_participants` will contain the list of broadcasters the train is shared with.
+    /// Indicates if the Hype Train is shared. When true, shared_train_participants will contain the list of broadcasters the train is shared with.
     /// </summary>
     public bool IsSharedTrain { get; set; }
 
@@ -101,54 +98,59 @@ public partial class TwitchHypeTrainBeginEvent : RefCounted, ITwitcherSharpEvent
         if(data == null) return null;
         var instance = new TwitchHypeTrainBeginEvent
         {
-            Id = data.Get("id").AsString(),
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-            BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
-            BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
-            Total = data.Get("total").AsInt32(),
-            Progress = data.Get("progress").AsInt32(),
-            Goal = data.Get("goal").AsInt32(),
-            Level = data.Get("level").AsInt32(),
-            AllTimeHighLevel = data.Get("all_time_high_level").AsInt32(),
-            AllTimeHighTotal = data.Get("all_time_high_total").AsInt32(),
-            StartedAt = data.Get("started_at").AsString(),
-            ExpiresAt = data.Get("expires_at").AsString(),
-            Type = data.Get("type").AsString(),
-            IsSharedTrain = data.Get("is_shared_train").AsBool(),
+            Id = data.ReadAsString("id"),
+            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+            Total = data.ReadAsInt32("total"),
+            Progress = data.ReadAsInt32("progress"),
+            Goal = data.ReadAsInt32("goal"),
+            Level = data.ReadAsInt32("level"),
+            AllTimeHighLevel = data.ReadAsInt32("all_time_high_level"),
+            AllTimeHighTotal = data.ReadAsInt32("all_time_high_total"),
+            StartedAt = data.ReadAsString("started_at"),
+            ExpiresAt = data.ReadAsString("expires_at"),
+            Type = data.ReadAsString("type"),
+            IsSharedTrain = data.ReadAsBool("is_shared_train"),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_hype_train_begin.gd");
-        var eventClass = script.Get("Event").As<GDScript>();
-        var request = eventClass.New().AsGodotObject();
-        if(Id != null) request.Set("id", Id);
-        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
-        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
-        request.Set("total", Total);
-        request.Set("progress", Progress);
-        request.Set("goal", Goal);
-        if(TopContributions != null) request.Set("top_contributions", TopContributions.ToGodotArray());
-        request.Set("level", Level);
-        request.Set("all_time_high_level", AllTimeHighLevel);
-        request.Set("all_time_high_total", AllTimeHighTotal);
-        if(SharedTrainParticipants != null) request.Set("shared_train_participants", SharedTrainParticipants.ToGodotArray());
-        if(StartedAt != null) request.Set("started_at", StartedAt);
-        if(ExpiresAt != null) request.Set("expires_at", ExpiresAt);
-        if(Type != null) request.Set("type", Type);
-        request.Set("is_shared_train", IsSharedTrain);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_hype_train_begin.gd", "Event");
+        if(Id != null) request.SetValue("id", Id);
+        if(BroadcasterUserId != null) request.SetValue("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserLogin != null) request.SetValue("broadcaster_user_login", BroadcasterUserLogin);
+        if(BroadcasterUserName != null) request.SetValue("broadcaster_user_name", BroadcasterUserName);
+        request.SetValue("total", Total);
+        request.SetValue("progress", Progress);
+        request.SetValue("goal", Goal);
+        if(TopContributions != null) request.SetArray("top_contributions", TopContributions);
+        request.SetValue("level", Level);
+        request.SetValue("all_time_high_level", AllTimeHighLevel);
+        request.SetValue("all_time_high_total", AllTimeHighTotal);
+        if(SharedTrainParticipants != null) request.SetArray("shared_train_participants", SharedTrainParticipants);
+        if(StartedAt != null) request.SetValue("started_at", StartedAt);
+        if(ExpiresAt != null) request.SetValue("expires_at", ExpiresAt);
+        if(Type != null) request.SetValue("type", Type);
+        request.SetValue("is_shared_train", IsSharedTrain);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 
     public partial class TwitchSharedTrainParticipants : RefCounted, ITwitcherSharpEventSub<TwitchSharedTrainParticipants>
     {
-        private GodotObject? _data;
+        private Variant _data;
         
         /// <summary> 
         /// The ID of the broadcaster participating in the shared Hype Train.
@@ -173,24 +175,29 @@ public partial class TwitchHypeTrainBeginEvent : RefCounted, ITwitcherSharpEvent
             if(data == null) return null;
             var instance = new TwitchSharedTrainParticipants
             {
-                BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-                BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
-                BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
+                BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+                BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+                BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_hype_train_begin.gd");
-            var sharedTrainParticipantsClass = script.Get("SharedTrainParticipants").As<GDScript>();
-            var request = sharedTrainParticipantsClass.New().AsGodotObject();
-            if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
-            if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
-            if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_hype_train_begin.gd", "SharedTrainParticipants");
+            if(BroadcasterUserId != null) request.SetValue("broadcaster_user_id", BroadcasterUserId);
+            if(BroadcasterUserLogin != null) request.SetValue("broadcaster_user_login", BroadcasterUserLogin);
+            if(BroadcasterUserName != null) request.SetValue("broadcaster_user_name", BroadcasterUserName);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

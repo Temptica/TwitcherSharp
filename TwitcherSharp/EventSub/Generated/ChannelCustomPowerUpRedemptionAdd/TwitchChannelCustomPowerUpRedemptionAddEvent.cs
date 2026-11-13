@@ -2,13 +2,13 @@ using Godot;
 using Godot.Collections;
 using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
-
+using TwitcherSharp.EventSub.Generated.Shared;
 
 namespace TwitcherSharp.EventSub.Generated.ChannelCustomPowerUpRedemptionAdd;
 
 public partial class TwitchChannelCustomPowerUpRedemptionAddEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelCustomPowerUpRedemptionAddEvent>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// The redemption identifier.
@@ -51,14 +51,14 @@ public partial class TwitchChannelCustomPowerUpRedemptionAddEvent : RefCounted, 
     public string? UserInput { get; set; }
 
     /// <summary> 
-    /// Defaults to **unfulfilled**. Possible values are **unknown**, **unfulfilled**, **fulfilled**, and **canceled**.
+    /// Defaults to unfulfilled. Possible values are unknown, unfulfilled, fulfilled, and canceled.
     /// </summary>
     public string? Status { get; set; }
 
     /// <summary> 
-    /// Basic information about the custom Power-up that was redeemed, at the time it was redeemed.
+    /// 
     /// </summary>
-    public TwitchCustomPowerUp? CustomPowerUp { get => field ??= _data?.Get<TwitchCustomPowerUp>("custom_power_up"); set; }
+    public TwitchCustomPowerUp? CustomPowerUp { get => field ??= _data.Get<TwitchCustomPowerUp>("custom_power_up"); set; }
 
     /// <summary> 
     /// RFC3339 timestamp of when the custom Power-up was redeemed.
@@ -73,94 +73,43 @@ public partial class TwitchChannelCustomPowerUpRedemptionAddEvent : RefCounted, 
         if(data == null) return null;
         var instance = new TwitchChannelCustomPowerUpRedemptionAddEvent
         {
-            Id = data.Get("id").AsString(),
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-            BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
-            BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
-            UserId = data.Get("user_id").AsString(),
-            UserLogin = data.Get("user_login").AsString(),
-            UserName = data.Get("user_name").AsString(),
-            UserInput = data.Get("user_input").AsString(),
-            Status = data.Get("status").AsString(),
-            RedeemedAt = data.Get("redeemed_at").AsString(),
+            Id = data.ReadAsString("id"),
+            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+            UserId = data.ReadAsString("user_id"),
+            UserLogin = data.ReadAsString("user_login"),
+            UserName = data.ReadAsString("user_name"),
+            UserInput = data.ReadAsString("user_input"),
+            Status = data.ReadAsString("status"),
+            RedeemedAt = data.ReadAsString("redeemed_at"),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_custom_power_up_redemption_add.gd");
-        var eventClass = script.Get("Event").As<GDScript>();
-        var request = eventClass.New().AsGodotObject();
-        if(Id != null) request.Set("id", Id);
-        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
-        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
-        if(UserId != null) request.Set("user_id", UserId);
-        if(UserLogin != null) request.Set("user_login", UserLogin);
-        if(UserName != null) request.Set("user_name", UserName);
-        if(UserInput != null) request.Set("user_input", UserInput);
-        if(Status != null) request.Set("status", Status);
-        if(CustomPowerUp != null) request.Set("custom_power_up", CustomPowerUp.ToGodotObject());
-        if(RedeemedAt != null) request.Set("redeemed_at", RedeemedAt);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_custom_power_up_redemption_add.gd", "Event");
+        if(Id != null) request.SetValue("id", Id);
+        if(BroadcasterUserId != null) request.SetValue("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserLogin != null) request.SetValue("broadcaster_user_login", BroadcasterUserLogin);
+        if(BroadcasterUserName != null) request.SetValue("broadcaster_user_name", BroadcasterUserName);
+        if(UserId != null) request.SetValue("user_id", UserId);
+        if(UserLogin != null) request.SetValue("user_login", UserLogin);
+        if(UserName != null) request.SetValue("user_name", UserName);
+        if(UserInput != null) request.SetValue("user_input", UserInput);
+        if(Status != null) request.SetValue("status", Status);
+        if(CustomPowerUp != null) request.SetObject("custom_power_up", CustomPowerUp);
+        if(RedeemedAt != null) request.SetValue("redeemed_at", RedeemedAt);
         return request;
     }
 
-
-    public partial class TwitchCustomPowerUp : RefCounted, ITwitcherSharpEventSub<TwitchCustomPowerUp>
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
     {
-        private GodotObject? _data;
-        
-        /// <summary> 
-        /// The unique ID for this Custom Power-up.
-        /// </summary>
-        public string? Id { get; set; }
-    
-        /// <summary> 
-        /// The user-viewable name of this Custom Power-up.
-        /// </summary>
-        public string? Title { get; set; }
-    
-        /// <summary> 
-        /// The cost of the Custom Power-up to redeem.
-        /// </summary>
-        public int Bits { get; set; }
-    
-        /// <summary> 
-        /// The creator-provided description for this Power-up.
-        /// </summary>
-        public string? Prompt { get; set; }
-    
-        /// <summary> 
-        /// Transforms the godot data into a TwitchCustomPowerUp object.
-        /// </summary> 
-        public static TwitchCustomPowerUp? FromObject(GodotObject? data)
-        {
-            if(data == null) return null;
-            var instance = new TwitchCustomPowerUp
-            {
-                Id = data.Get("id").AsString(),
-                Title = data.Get("title").AsString(),
-                Bits = data.Get("bits").AsInt32(),
-                Prompt = data.Get("prompt").AsString(),
-            };
-            
-            instance._data = data;
-            return instance;
-        }
-    
-        public GodotObject ToGodotObject()
-        {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_custom_power_up_redemption_add.gd");
-            var customPowerUpClass = script.Get("CustomPowerUp").As<GDScript>();
-            var request = customPowerUpClass.New().AsGodotObject();
-            if(Id != null) request.Set("id", Id);
-            if(Title != null) request.Set("title", Title);
-            request.Set("bits", Bits);
-            if(Prompt != null) request.Set("prompt", Prompt);
-            return request;
-        }
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 }

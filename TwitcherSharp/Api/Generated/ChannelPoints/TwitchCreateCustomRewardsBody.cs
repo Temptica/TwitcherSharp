@@ -6,9 +6,9 @@ namespace TwitcherSharp.Api.Generated.ChannelPoints;
 
 public partial class TwitchCreateCustomRewardsBody : RefCounted, ITwitcherSharp<TwitchCreateCustomRewardsBody>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string Title { get; set; } = null!;
-    public int Cost { get; set; }
+    public long Cost { get; set; }
     public string? Prompt { get; set; }
     public bool? IsEnabled { get; set; }
     public string? BackgroundColor { get; set; }
@@ -29,44 +29,49 @@ public partial class TwitchCreateCustomRewardsBody : RefCounted, ITwitcherSharp<
         if(data == null) return null;
         var instance = new TwitchCreateCustomRewardsBody
         {
-            Title = data.Get("title").AsString(),
-            Cost = data.Get("cost").AsInt32(),
-            Prompt = data.Get("prompt").AsString(),
-            IsEnabled = data.Get("is_enabled").AsBool(),
-            BackgroundColor = data.Get("background_color").AsString(),
-            IsUserInputRequired = data.Get("is_user_input_required").AsBool(),
-            IsMaxPerStreamEnabled = data.Get("is_max_per_stream_enabled").AsBool(),
-            MaxPerStream = data.Get("max_per_stream").AsInt32(),
-            IsMaxPerUserPerStreamEnabled = data.Get("is_max_per_user_per_stream_enabled").AsBool(),
-            MaxPerUserPerStream = data.Get("max_per_user_per_stream").AsInt32(),
-            IsGlobalCooldownEnabled = data.Get("is_global_cooldown_enabled").AsBool(),
-            GlobalCooldownSeconds = data.Get("global_cooldown_seconds").AsInt32(),
-            ShouldRedemptionsSkipRequestQueue = data.Get("should_redemptions_skip_request_queue").AsBool(),
+            Title = data.ReadAsString("title"),
+            Cost = data.ReadAsInt64("cost"),
+            Prompt = data.ReadAsString("prompt"),
+            IsEnabled = data.ReadAsBool("is_enabled"),
+            BackgroundColor = data.ReadAsString("background_color"),
+            IsUserInputRequired = data.ReadAsBool("is_user_input_required"),
+            IsMaxPerStreamEnabled = data.ReadAsBool("is_max_per_stream_enabled"),
+            MaxPerStream = data.ReadAsInt32("max_per_stream"),
+            IsMaxPerUserPerStreamEnabled = data.ReadAsBool("is_max_per_user_per_stream_enabled"),
+            MaxPerUserPerStream = data.ReadAsInt32("max_per_user_per_stream"),
+            IsGlobalCooldownEnabled = data.ReadAsBool("is_global_cooldown_enabled"),
+            GlobalCooldownSeconds = data.ReadAsInt32("global_cooldown_seconds"),
+            ShouldRedemptionsSkipRequestQueue = data.ReadAsBool("should_redemptions_skip_request_queue"),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_create_custom_rewards.gd");
-        var bodyClass = script.Get("Body").AsGodotObject();
-        var request = bodyClass.Call("new").AsGodotObject();
-        if(Title != null) request.Set("title", Title);
-        request.Set("cost", Cost);
-        if(Prompt != null) request.Set("prompt", Prompt);
-        if(IsEnabled.HasValue) request.Set("is_enabled", IsEnabled.Value);
-        if(BackgroundColor != null) request.Set("background_color", BackgroundColor);
-        if(IsUserInputRequired.HasValue) request.Set("is_user_input_required", IsUserInputRequired.Value);
-        if(IsMaxPerStreamEnabled.HasValue) request.Set("is_max_per_stream_enabled", IsMaxPerStreamEnabled.Value);
-        if(MaxPerStream.HasValue) request.Set("max_per_stream", MaxPerStream.Value);
-        if(IsMaxPerUserPerStreamEnabled.HasValue) request.Set("is_max_per_user_per_stream_enabled", IsMaxPerUserPerStreamEnabled.Value);
-        if(MaxPerUserPerStream.HasValue) request.Set("max_per_user_per_stream", MaxPerUserPerStream.Value);
-        if(IsGlobalCooldownEnabled.HasValue) request.Set("is_global_cooldown_enabled", IsGlobalCooldownEnabled.Value);
-        if(GlobalCooldownSeconds.HasValue) request.Set("global_cooldown_seconds", GlobalCooldownSeconds.Value);
-        if(ShouldRedemptionsSkipRequestQueue.HasValue) request.Set("should_redemptions_skip_request_queue", ShouldRedemptionsSkipRequestQueue.Value);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_create_custom_rewards.gd", "Body");
+        if(Title != null) request.SetValue("title", Title);
+        request.SetValue("cost", Cost);
+        if(Prompt != null) request.SetValue("prompt", Prompt);
+        if(IsEnabled.HasValue) request.SetValue("is_enabled", IsEnabled.Value);
+        if(BackgroundColor != null) request.SetValue("background_color", BackgroundColor);
+        if(IsUserInputRequired.HasValue) request.SetValue("is_user_input_required", IsUserInputRequired.Value);
+        if(IsMaxPerStreamEnabled.HasValue) request.SetValue("is_max_per_stream_enabled", IsMaxPerStreamEnabled.Value);
+        if(MaxPerStream.HasValue) request.SetValue("max_per_stream", MaxPerStream.Value);
+        if(IsMaxPerUserPerStreamEnabled.HasValue) request.SetValue("is_max_per_user_per_stream_enabled", IsMaxPerUserPerStreamEnabled.Value);
+        if(MaxPerUserPerStream.HasValue) request.SetValue("max_per_user_per_stream", MaxPerUserPerStream.Value);
+        if(IsGlobalCooldownEnabled.HasValue) request.SetValue("is_global_cooldown_enabled", IsGlobalCooldownEnabled.Value);
+        if(GlobalCooldownSeconds.HasValue) request.SetValue("global_cooldown_seconds", GlobalCooldownSeconds.Value);
+        if(ShouldRedemptionsSkipRequestQueue.HasValue) request.SetValue("should_redemptions_skip_request_queue", ShouldRedemptionsSkipRequestQueue.Value);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

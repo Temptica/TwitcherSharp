@@ -8,12 +8,12 @@ namespace TwitcherSharp.EventSub.Generated.ChannelGuestStarSessionBegin;
 
 public partial class TwitchChannelGuestStarSessionBeginCondition(string broadcasterUserId, string moderatorUserId) : RefCounted, ITwitcherSharpCondition<TwitchChannelGuestStarSessionBeginCondition>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     public string Name => nameof(TwitchChannelGuestStarSessionBeginCondition);
 
     /// <summary> 
-    /// The broadcaster user ID for the channel you want to receive Guest Star session begin notifications for.
+    /// The broadcaster user ID of the channel hosting the Guest Star Session
     /// </summary>
     public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
@@ -28,20 +28,25 @@ public partial class TwitchChannelGuestStarSessionBeginCondition(string broadcas
     public static TwitchChannelGuestStarSessionBeginCondition? FromObject(GodotObject? data)
     {
         if(data == null) return null;
-        var instance = new TwitchChannelGuestStarSessionBeginCondition(data.Get("broadcaster_user_id").AsString(), data.Get("moderator_user_id").AsString());
+        var instance = new TwitchChannelGuestStarSessionBeginCondition(data.ReadAsString("broadcaster_user_id"), data.ReadAsString("moderator_user_id"));
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_guest_star_session_begin.gd");
-        var conditionClass = script.Get("Condition").As<GDScript>();
-        var request = conditionClass.New().AsGodotObject();
-        request.Set("broadcaster_user_id", BroadcasterUserId);
-        request.Set("moderator_user_id", ModeratorUserId);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_guest_star_session_begin.gd", "Condition");
+        request.SetValue("broadcaster_user_id", BroadcasterUserId);
+        request.SetValue("moderator_user_id", ModeratorUserId);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
     public static TwitchChannelGuestStarSessionBeginCondition FromDictionary(Dictionary data)

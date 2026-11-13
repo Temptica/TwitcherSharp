@@ -3,7 +3,6 @@ using ClassGenerator.Generator.Api;
 using ClassGenerator.Generator.EventSub;
 using ClassGenerator.Docs;
 using ClassGenerator.Parsers;
-using ClassGenerator.Parsers.EventSub;
 using ClassGenerator.Parsers.Helix;
 
 // Resolved relative to this source file (not the process's current directory) so generation
@@ -27,17 +26,23 @@ Directory.CreateDirectory(eventSubGeneratedPath);
 
 var helixReference = await new TwitchDocsSource(Path.Combine(snapshotPath, "Api"), offline)
     .LoadAsync("https://dev.twitch.tv/docs/api/reference.md");
-var helixDocument = HelixOpenApiBuilder.Build(HelixReferenceParser.Parse(helixReference));
+var helixEndpoints = HelixReferenceParser.Parse(helixReference);
+HelixCorrections.Apply(helixEndpoints);
+var helixDocument = HelixOpenApiBuilder.Build(helixEndpoints);
 
 var apiParser = new TwitchApiParser();
 apiParser.ParseApi(helixDocument);
 var apiGenerator = new TwitchApiGenerator();
 apiGenerator.GenerateApi(apiPath, apiParser);
 
-var eventSubReference = await new TwitchDocsSource(Path.Combine(snapshotPath, "EventSub"), offline)
-    .LoadAsync("https://dev.twitch.tv/docs/eventsub/reference.md");
-
 var eventSubParser = new TwitchEventSubParser();
-eventSubParser.Parse(EventSubReferenceParser.Parse(eventSubReference));
+await eventSubParser.ParseEventSub();
 TwitchEventSubGenerator.GenerateEventSub(eventSubGeneratedPath, eventSubParser);
-TwitchEventSubDefinitionGenerator.Generate(eventSubPath, eventSubParser.Definitions);
+
+var subscriptionTypeParser = new TwitchEventSubSubscriptionTypeParser();
+await subscriptionTypeParser.ParseSubscriptionTypes(eventSubParser.ConditionComponents);
+EventSubScriptNameResolver.Resolve(subscriptionTypeParser.Definitions);
+
+var gdDefinitionScript = Path.Combine(projectDir, "..", "TwitcherSharp.Demo", "addons", "twitcher", "eventsub",
+    "twitch_eventsub_definition.gd");
+TwitchEventSubDefinitionGenerator.Generate(eventSubPath, subscriptionTypeParser.Definitions, gdDefinitionScript);

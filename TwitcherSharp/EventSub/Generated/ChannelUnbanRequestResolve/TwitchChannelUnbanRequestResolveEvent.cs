@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelUnbanRequestResolve;
 
 public partial class TwitchChannelUnbanRequestResolveEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelUnbanRequestResolveEvent>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// The ID of the unban request.
@@ -16,32 +16,32 @@ public partial class TwitchChannelUnbanRequestResolveEvent : RefCounted, ITwitch
     public string? Id { get; set; }
 
     /// <summary> 
-    /// The broadcaster's user ID for the channel the unban request was updated for.
+    /// The broadcaster’s user ID for the channel the unban request was updated for.
     /// </summary>
     public string? BroadcasterUserId { get; set; }
 
     /// <summary> 
-    /// The broadcaster's login name.
+    /// The broadcaster’s login name.
     /// </summary>
     public string? BroadcasterUserLogin { get; set; }
 
     /// <summary> 
-    /// The broadcaster's display name.
+    /// The broadcaster’s display name.
     /// </summary>
     public string? BroadcasterUserName { get; set; }
 
     /// <summary> 
-    /// User ID of moderator who approved/denied the request.
+    /// Optional. User ID of moderator who approved/denied the request.
     /// </summary>
     public string? ModeratorUserId { get; set; }
 
     /// <summary> 
-    /// The moderator's login name
+    /// Optional. The moderator’s login name
     /// </summary>
     public string? ModeratorUserLogin { get; set; }
 
     /// <summary> 
-    /// The moderator's display name
+    /// Optional. The moderator’s display name
     /// </summary>
     public string? ModeratorUserName { get; set; }
 
@@ -51,25 +51,22 @@ public partial class TwitchChannelUnbanRequestResolveEvent : RefCounted, ITwitch
     public string? UserId { get; set; }
 
     /// <summary> 
-    /// The user's login name.
+    /// The user’s login name.
     /// </summary>
     public string? UserLogin { get; set; }
 
     /// <summary> 
-    /// The user's display name.
+    /// The user’s display name.
     /// </summary>
     public string? UserName { get; set; }
 
     /// <summary> 
-    /// Resolution text supplied by the mod/broadcaster upon approval/denial of the request.
+    /// Optional. Resolution text supplied by the mod/broadcaster upon approval/denial of the request.
     /// </summary>
     public string? ResolutionText { get; set; }
 
     /// <summary> 
-    /// Dictates whether the unban request was approved or denied. Can be the following. Possible values:
-    /// - `approved`
-    /// - `canceled`
-    /// - `denied`
+    /// Dictates whether the unban request was approved or denied. Can be the following: approvedcanceleddenied
     /// </summary>
     public string? Status { get; set; }
 
@@ -81,41 +78,46 @@ public partial class TwitchChannelUnbanRequestResolveEvent : RefCounted, ITwitch
         if(data == null) return null;
         var instance = new TwitchChannelUnbanRequestResolveEvent
         {
-            Id = data.Get("id").AsString(),
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-            BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
-            BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
-            ModeratorUserId = data.Get("moderator_user_id").AsString(),
-            ModeratorUserLogin = data.Get("moderator_user_login").AsString(),
-            ModeratorUserName = data.Get("moderator_user_name").AsString(),
-            UserId = data.Get("user_id").AsString(),
-            UserLogin = data.Get("user_login").AsString(),
-            UserName = data.Get("user_name").AsString(),
-            ResolutionText = data.Get("resolution_text").AsString(),
-            Status = data.Get("status").AsString(),
+            Id = data.ReadAsString("id"),
+            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+            ModeratorUserId = data.ReadAsString("moderator_user_id"),
+            ModeratorUserLogin = data.ReadAsString("moderator_user_login"),
+            ModeratorUserName = data.ReadAsString("moderator_user_name"),
+            UserId = data.ReadAsString("user_id"),
+            UserLogin = data.ReadAsString("user_login"),
+            UserName = data.ReadAsString("user_name"),
+            ResolutionText = data.ReadAsString("resolution_text"),
+            Status = data.ReadAsString("status"),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_unban_request_resolve.gd");
-        var eventClass = script.Get("Event").As<GDScript>();
-        var request = eventClass.New().AsGodotObject();
-        if(Id != null) request.Set("id", Id);
-        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
-        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
-        if(ModeratorUserId != null) request.Set("moderator_user_id", ModeratorUserId);
-        if(ModeratorUserLogin != null) request.Set("moderator_user_login", ModeratorUserLogin);
-        if(ModeratorUserName != null) request.Set("moderator_user_name", ModeratorUserName);
-        if(UserId != null) request.Set("user_id", UserId);
-        if(UserLogin != null) request.Set("user_login", UserLogin);
-        if(UserName != null) request.Set("user_name", UserName);
-        if(ResolutionText != null) request.Set("resolution_text", ResolutionText);
-        if(Status != null) request.Set("status", Status);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_unban_request_resolve.gd", "Event");
+        if(Id != null) request.SetValue("id", Id);
+        if(BroadcasterUserId != null) request.SetValue("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserLogin != null) request.SetValue("broadcaster_user_login", BroadcasterUserLogin);
+        if(BroadcasterUserName != null) request.SetValue("broadcaster_user_name", BroadcasterUserName);
+        if(ModeratorUserId != null) request.SetValue("moderator_user_id", ModeratorUserId);
+        if(ModeratorUserLogin != null) request.SetValue("moderator_user_login", ModeratorUserLogin);
+        if(ModeratorUserName != null) request.SetValue("moderator_user_name", ModeratorUserName);
+        if(UserId != null) request.SetValue("user_id", UserId);
+        if(UserLogin != null) request.SetValue("user_login", UserLogin);
+        if(UserName != null) request.SetValue("user_name", UserName);
+        if(ResolutionText != null) request.SetValue("resolution_text", ResolutionText);
+        if(Status != null) request.SetValue("status", Status);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 }

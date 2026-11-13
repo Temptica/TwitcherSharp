@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelFollow;
 
 public partial class TwitchChannelFollowEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelFollowEvent>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// The user ID for the user now following the specified channel.
@@ -53,31 +53,36 @@ public partial class TwitchChannelFollowEvent : RefCounted, ITwitcherSharpEventS
         if(data == null) return null;
         var instance = new TwitchChannelFollowEvent
         {
-            UserId = data.Get("user_id").AsString(),
-            UserLogin = data.Get("user_login").AsString(),
-            UserName = data.Get("user_name").AsString(),
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-            BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
-            BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
-            FollowedAt = data.Get("followed_at").AsString(),
+            UserId = data.ReadAsString("user_id"),
+            UserLogin = data.ReadAsString("user_login"),
+            UserName = data.ReadAsString("user_name"),
+            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+            FollowedAt = data.ReadAsString("followed_at"),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_follow.gd");
-        var eventClass = script.Get("Event").As<GDScript>();
-        var request = eventClass.New().AsGodotObject();
-        if(UserId != null) request.Set("user_id", UserId);
-        if(UserLogin != null) request.Set("user_login", UserLogin);
-        if(UserName != null) request.Set("user_name", UserName);
-        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
-        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
-        if(FollowedAt != null) request.Set("followed_at", FollowedAt);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_follow.gd", "Event");
+        if(UserId != null) request.SetValue("user_id", UserId);
+        if(UserLogin != null) request.SetValue("user_login", UserLogin);
+        if(UserName != null) request.SetValue("user_name", UserName);
+        if(BroadcasterUserId != null) request.SetValue("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserLogin != null) request.SetValue("broadcaster_user_login", BroadcasterUserLogin);
+        if(BroadcasterUserName != null) request.SetValue("broadcaster_user_name", BroadcasterUserName);
+        if(FollowedAt != null) request.SetValue("followed_at", FollowedAt);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 }

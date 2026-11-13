@@ -1,5 +1,5 @@
-﻿using ClassGenerator.Parsers;
-using ClassGenerator.GenObjects.EventSub;
+using ClassGenerator.Parsers;
+using ClassGenerator.Extensions;
 
 namespace ClassGenerator.Generator.EventSub;
 
@@ -7,21 +7,30 @@ public class TwitchEventSubGenerator
 {
     public static void GenerateEventSub(string path, TwitchEventSubParser parser)
     {
-        foreach (var component in parser.SubComponents.Concat(parser.Components))
+        foreach (var component in parser.SubComponents)
         {
-            Write(path, component, EventSubCodeHelper.MainEventSub(component, component.NameSpace));
+            var code = EventSubCodeHelper.MainEventSub(component, "Shared");
+            var actualPath = Path.Combine(path, "Shared");
+            Directory.CreateDirectory(actualPath);
+            File.WriteAllText(Path.Combine(actualPath, $"{component.ClassName}.cs"), code);
+        }
+        
+        foreach (var component in parser.Components)
+        {
+            var nameSpace = component.ClassName.Remove("Twitch").Remove("Event").Remove("V2");
+            var code = EventSubCodeHelper.MainEventSub(component, nameSpace);
+            var actualPath = Path.Combine(path, nameSpace);
+            Directory.CreateDirectory(actualPath);
+            File.WriteAllText(Path.Combine(actualPath, $"{component.ClassName}.cs"), code);
         }
 
         foreach (var component in parser.ConditionComponents)
         {
-            Write(path, component, EventSubCodeHelper.MainEventSub(component, component.NameSpace, true));
+            var nameSpace = component.ClassName.Remove("Twitch").Remove("Condition").Remove("V2");
+            var code = EventSubCodeHelper.MainEventSub(component, nameSpace, true);
+            var actualPath = Path.Combine(path, nameSpace);
+            Directory.CreateDirectory(actualPath);
+            File.WriteAllText(Path.Combine(actualPath, $"{component.ClassName}.cs"), code);
         }
-    }
-
-    private static void Write(string path, TwitchEventSubGenComponent component, string code)
-    {
-        var directory = Path.Combine(path, component.NameSpace);
-        Directory.CreateDirectory(directory);
-        File.WriteAllText(Path.Combine(directory, $"{component.ClassName}.cs"), code);
     }
 }

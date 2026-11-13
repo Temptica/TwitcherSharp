@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+using System.Text.RegularExpressions;
+using ClassGenerator.GenObjects.EventSub;
 
 namespace ClassGenerator.Generator.EventSub;
 
@@ -36,12 +37,20 @@ public static class EventSubScriptNameResolver
         ["channel.shoutout.receive"] = "shoutout_received",
     };
 
-    public static string ScriptName(string type)
+    public static void Resolve(List<TwitchEventSubDefinitionInfo> definitions)
     {
-        if (Overrides.TryGetValue(type, out var overrideName)) return overrideName;
+        foreach (var definition in definitions)
+        {
+            if (Overrides.TryGetValue(definition.Value, out var overrideName))
+            {
+                definition.ScriptName = overrideName;
+                continue;
+            }
 
-        // Twitch's own type name sometimes repeats "channel_" (e.g. channel.channel_points_custom_reward...),
-        // but the addon's script names don't - safe to dedupe unconditionally.
-        return Regex.Replace(type.Replace(".", "_"), "^channel_channel_", "channel_");
+            // Twitch's own type name sometimes repeats "channel_" (e.g. channel.channel_points_custom_reward...),
+            // but the addon's script names don't - safe to dedupe unconditionally.
+            var defaultCandidate = definition.Value.Replace(".", "_");
+            definition.ScriptName = Regex.Replace(defaultCandidate, "^channel_channel_", "channel_");
+        }
     }
 }

@@ -2,7 +2,7 @@ namespace ClassGenerator.Markdown;
 
 public sealed class DocField
 {
-    public required string Name { get; init; }
+    public required string Name { get; set; }
     public required string Path { get; init; }
     public required string Type { get; set; }
     public bool IsRequired { get; set; }

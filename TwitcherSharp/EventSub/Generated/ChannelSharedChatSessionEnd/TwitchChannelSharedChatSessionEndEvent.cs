@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelSharedChatSessionEnd;
 
 public partial class TwitchChannelSharedChatSessionEndEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelSharedChatSessionEndEvent>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// The unique identifier for the shared chat session.
@@ -53,31 +53,36 @@ public partial class TwitchChannelSharedChatSessionEndEvent : RefCounted, ITwitc
         if(data == null) return null;
         var instance = new TwitchChannelSharedChatSessionEndEvent
         {
-            SessionId = data.Get("session_id").AsString(),
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-            BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
-            BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
-            HostBroadcasterUserId = data.Get("host_broadcaster_user_id").AsString(),
-            HostBroadcasterUserName = data.Get("host_broadcaster_user_name").AsString(),
-            HostBroadcasterUserLogin = data.Get("host_broadcaster_user_login").AsString(),
+            SessionId = data.ReadAsString("session_id"),
+            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+            HostBroadcasterUserId = data.ReadAsString("host_broadcaster_user_id"),
+            HostBroadcasterUserName = data.ReadAsString("host_broadcaster_user_name"),
+            HostBroadcasterUserLogin = data.ReadAsString("host_broadcaster_user_login"),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_shared_chat_session_end.gd");
-        var eventClass = script.Get("Event").As<GDScript>();
-        var request = eventClass.New().AsGodotObject();
-        if(SessionId != null) request.Set("session_id", SessionId);
-        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
-        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
-        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        if(HostBroadcasterUserId != null) request.Set("host_broadcaster_user_id", HostBroadcasterUserId);
-        if(HostBroadcasterUserName != null) request.Set("host_broadcaster_user_name", HostBroadcasterUserName);
-        if(HostBroadcasterUserLogin != null) request.Set("host_broadcaster_user_login", HostBroadcasterUserLogin);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_shared_chat_session_end.gd", "Event");
+        if(SessionId != null) request.SetValue("session_id", SessionId);
+        if(BroadcasterUserId != null) request.SetValue("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserName != null) request.SetValue("broadcaster_user_name", BroadcasterUserName);
+        if(BroadcasterUserLogin != null) request.SetValue("broadcaster_user_login", BroadcasterUserLogin);
+        if(HostBroadcasterUserId != null) request.SetValue("host_broadcaster_user_id", HostBroadcasterUserId);
+        if(HostBroadcasterUserName != null) request.SetValue("host_broadcaster_user_name", HostBroadcasterUserName);
+        if(HostBroadcasterUserLogin != null) request.SetValue("host_broadcaster_user_login", HostBroadcasterUserLogin);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 }

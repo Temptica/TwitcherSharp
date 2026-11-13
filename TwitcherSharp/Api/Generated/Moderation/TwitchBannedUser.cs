@@ -6,7 +6,7 @@ namespace TwitcherSharp.Api.Generated.Moderation;
 
 public partial class TwitchBannedUser : RefCounted, ITwitcherSharp<TwitchBannedUser>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string UserId { get; set; } = null!;
     public string UserLogin { get; set; } = null!;
     public string UserName { get; set; } = null!;
@@ -25,35 +25,41 @@ public partial class TwitchBannedUser : RefCounted, ITwitcherSharp<TwitchBannedU
         if(data == null) return null;
         var instance = new TwitchBannedUser
         {
-            UserId = data.Get("user_id").AsString(),
-            UserLogin = data.Get("user_login").AsString(),
-            UserName = data.Get("user_name").AsString(),
-            ExpiresAt = data.Get("expires_at").AsString(),
-            CreatedAt = data.Get("created_at").AsString(),
-            Reason = data.Get("reason").AsString(),
-            ModeratorId = data.Get("moderator_id").AsString(),
-            ModeratorLogin = data.Get("moderator_login").AsString(),
-            ModeratorName = data.Get("moderator_name").AsString(),
+            UserId = data.ReadAsString("user_id"),
+            UserLogin = data.ReadAsString("user_login"),
+            UserName = data.ReadAsString("user_name"),
+            ExpiresAt = data.ReadAsString("expires_at"),
+            CreatedAt = data.ReadAsString("created_at"),
+            Reason = data.ReadAsString("reason"),
+            ModeratorId = data.ReadAsString("moderator_id"),
+            ModeratorLogin = data.ReadAsString("moderator_login"),
+            ModeratorName = data.ReadAsString("moderator_name"),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_banned_user.gd");
-        var request = script.Call("new").AsGodotObject();
-        if(UserId != null) request.Set("user_id", UserId);
-        if(UserLogin != null) request.Set("user_login", UserLogin);
-        if(UserName != null) request.Set("user_name", UserName);
-        if(ExpiresAt != null) request.Set("expires_at", ExpiresAt);
-        if(CreatedAt != null) request.Set("created_at", CreatedAt);
-        if(Reason != null) request.Set("reason", Reason);
-        if(ModeratorId != null) request.Set("moderator_id", ModeratorId);
-        if(ModeratorLogin != null) request.Set("moderator_login", ModeratorLogin);
-        if(ModeratorName != null) request.Set("moderator_name", ModeratorName);
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated/twitch_banned_user.gd");
+        if(UserId != null) request.SetValue("user_id", UserId);
+        if(UserLogin != null) request.SetValue("user_login", UserLogin);
+        if(UserName != null) request.SetValue("user_name", UserName);
+        if(ExpiresAt != null) request.SetValue("expires_at", ExpiresAt);
+        if(CreatedAt != null) request.SetValue("created_at", CreatedAt);
+        if(Reason != null) request.SetValue("reason", Reason);
+        if(ModeratorId != null) request.SetValue("moderator_id", ModeratorId);
+        if(ModeratorLogin != null) request.SetValue("moderator_login", ModeratorLogin);
+        if(ModeratorName != null) request.SetValue("moderator_name", ModeratorName);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

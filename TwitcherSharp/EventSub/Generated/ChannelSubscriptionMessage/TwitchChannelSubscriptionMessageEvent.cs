@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelSubscriptionMessage;
 
 public partial class TwitchChannelSubscriptionMessageEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelSubscriptionMessageEvent>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// The user ID of the user who sent a resubscription chat message.
@@ -41,14 +41,14 @@ public partial class TwitchChannelSubscriptionMessageEvent : RefCounted, ITwitch
     public string? BroadcasterUserName { get; set; }
 
     /// <summary> 
-    /// The tier of the user's subscription.
+    /// The tier of the user’s subscription.
     /// </summary>
     public string? Tier { get; set; }
 
     /// <summary> 
-    /// An object that contains the resubscription message and emote information needed to recreate the message.
+    /// 
     /// </summary>
-    public TwitchMessage? Message { get => field ??= _data?.Get<TwitchMessage>("message"); set; }
+    public TwitchMessage? Message { get => field ??= _data.Get<TwitchMessage>("message"); set; }
 
     /// <summary> 
     /// The total number of months the user has been subscribed to the channel.
@@ -56,7 +56,7 @@ public partial class TwitchChannelSubscriptionMessageEvent : RefCounted, ITwitch
     public int CumulativeMonths { get; set; }
 
     /// <summary> 
-    /// The number of consecutive months the user's current subscription has been active. This value is **null** if the user has opted out of sharing this information.
+    /// The number of consecutive months the user’s current subscription has been active. This value is null if the user has opted out of sharing this information.
     /// </summary>
     public int StreakMonths { get; set; }
 
@@ -73,79 +73,43 @@ public partial class TwitchChannelSubscriptionMessageEvent : RefCounted, ITwitch
         if(data == null) return null;
         var instance = new TwitchChannelSubscriptionMessageEvent
         {
-            UserId = data.Get("user_id").AsString(),
-            UserLogin = data.Get("user_login").AsString(),
-            UserName = data.Get("user_name").AsString(),
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-            BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
-            BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
-            Tier = data.Get("tier").AsString(),
-            CumulativeMonths = data.Get("cumulative_months").AsInt32(),
-            StreakMonths = data.Get("streak_months").AsInt32(),
-            DurationMonths = data.Get("duration_months").AsInt32(),
+            UserId = data.ReadAsString("user_id"),
+            UserLogin = data.ReadAsString("user_login"),
+            UserName = data.ReadAsString("user_name"),
+            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+            Tier = data.ReadAsString("tier"),
+            CumulativeMonths = data.ReadAsInt32("cumulative_months"),
+            StreakMonths = data.ReadAsInt32("streak_months"),
+            DurationMonths = data.ReadAsInt32("duration_months"),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_subscription_message.gd");
-        var eventClass = script.Get("Event").As<GDScript>();
-        var request = eventClass.New().AsGodotObject();
-        if(UserId != null) request.Set("user_id", UserId);
-        if(UserLogin != null) request.Set("user_login", UserLogin);
-        if(UserName != null) request.Set("user_name", UserName);
-        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
-        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
-        if(Tier != null) request.Set("tier", Tier);
-        if(Message != null) request.Set("message", Message.ToGodotObject());
-        request.Set("cumulative_months", CumulativeMonths);
-        request.Set("streak_months", StreakMonths);
-        request.Set("duration_months", DurationMonths);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_subscription_message.gd", "Event");
+        if(UserId != null) request.SetValue("user_id", UserId);
+        if(UserLogin != null) request.SetValue("user_login", UserLogin);
+        if(UserName != null) request.SetValue("user_name", UserName);
+        if(BroadcasterUserId != null) request.SetValue("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserLogin != null) request.SetValue("broadcaster_user_login", BroadcasterUserLogin);
+        if(BroadcasterUserName != null) request.SetValue("broadcaster_user_name", BroadcasterUserName);
+        if(Tier != null) request.SetValue("tier", Tier);
+        if(Message != null) request.SetObject("message", Message);
+        request.SetValue("cumulative_months", CumulativeMonths);
+        request.SetValue("streak_months", StreakMonths);
+        request.SetValue("duration_months", DurationMonths);
         return request;
     }
 
-
-    public partial class TwitchMessage : RefCounted, ITwitcherSharpEventSub<TwitchMessage>
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
     {
-        private GodotObject? _data;
-        
-        /// <summary> 
-        /// The text of the resubscription chat message.
-        /// </summary>
-        public string? Text { get; set; }
-    
-        /// <summary> 
-        /// An array that includes the emote ID and start and end positions for where the emote appears in the text.
-        /// </summary>
-        public TwitchEmotes[]? Emotes { get => field ??= _data?.GetArray<TwitchEmotes>("emotes"); set; }
-    
-        /// <summary> 
-        /// Transforms the godot data into a TwitchMessage object.
-        /// </summary> 
-        public static TwitchMessage? FromObject(GodotObject? data)
-        {
-            if(data == null) return null;
-            var instance = new TwitchMessage
-            {
-                Text = data.Get("text").AsString(),
-            };
-            
-            instance._data = data;
-            return instance;
-        }
-    
-        public GodotObject ToGodotObject()
-        {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_subscription_message.gd");
-            var messageClass = script.Get("Message").As<GDScript>();
-            var request = messageClass.New().AsGodotObject();
-            if(Text != null) request.Set("text", Text);
-            if(Emotes != null) request.Set("emotes", Emotes.ToGodotArray());
-            return request;
-        }
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 }

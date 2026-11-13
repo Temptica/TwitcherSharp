@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelChatSettingsUpdate;
 
 public partial class TwitchChannelChatSettingsUpdateEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelChatSettingsUpdateEvent>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// The ID of the broadcaster specified in the request.
@@ -31,48 +31,32 @@ public partial class TwitchChannelChatSettingsUpdateEvent : RefCounted, ITwitche
     public bool EmoteMode { get; set; }
 
     /// <summary> 
-    /// A Boolean value that determines whether the broadcaster restricts the chat room to followers only, based on how long they've followed.
-    /// 
-    /// True if the broadcaster restricts the chat room to followers only; otherwise false.
-    /// 
-    /// See `follower_mode_duration_minutes` for how long the followers must have followed the broadcaster to participate in the chat room.
+    /// A Boolean value that determines whether the broadcaster restricts the chat room to followers only, based on how long they’ve followed.True if the broadcaster restricts the chat room to followers only; otherwise false.See follower_mode_duration_minutes for how long the followers must have followed the broadcaster to participate in the chat room.
     /// </summary>
     public bool FollowerMode { get; set; }
 
     /// <summary> 
-    /// The length of time, in minutes, that the followers must have followed the broadcaster to participate in the chat room. See `follower_mode`.
-    /// 
-    /// Null if `follower_mode` is false.
+    /// The length of time, in minutes, that the followers must have followed the broadcaster to participate in the chat room. See follower_mode.Null if follower_mode is false.
     /// </summary>
     public int FollowerModeDurationMinutes { get; set; }
 
     /// <summary> 
-    /// A Boolean value that determines whether the broadcaster limits how often users in the chat room are allowed to send messages.
-    /// 
-    /// Is true, if the broadcaster applies a delay; otherwise, false.
-    /// 
-    /// See `slow_mode_wait_time_seconds` for the delay.
+    /// A Boolean value that determines whether the broadcaster limits how often users in the chat room are allowed to send messages.Is true, if the broadcaster applies a delay; otherwise, false.See slow_mode_wait_time_seconds for the delay.
     /// </summary>
     public bool SlowMode { get; set; }
 
     /// <summary> 
-    /// The amount of time, in seconds, that users need to wait between sending messages. See `slow_mode`.
-    /// 
-    /// Null if `slow_mode` is false.
+    /// The amount of time, in seconds, that users need to wait between sending messages. See slow_mode.Null if slow_mode is false.
     /// </summary>
     public int SlowModeWaitTimeSeconds { get; set; }
 
     /// <summary> 
-    /// A Boolean value that determines whether only users that subscribe to the broadcaster's channel can talk in the chat room.
-    /// 
-    /// True if the broadcaster restricts the chat room to subscribers only; otherwise false.
+    /// A Boolean value that determines whether only users that subscribe to the broadcaster’s channel can talk in the chat room.True if the broadcaster restricts the chat room to subscribers only; otherwise false.
     /// </summary>
     public bool SubscriberMode { get; set; }
 
     /// <summary> 
-    /// A Boolean value that determines whether the broadcaster requires users to post only unique messages in the chat room.
-    /// 
-    /// True if the broadcaster requires unique messages only; otherwise false.
+    /// A Boolean value that determines whether the broadcaster requires users to post only unique messages in the chat room.True if the broadcaster requires unique messages only; otherwise false.
     /// </summary>
     public bool UniqueChatMode { get; set; }
 
@@ -84,37 +68,42 @@ public partial class TwitchChannelChatSettingsUpdateEvent : RefCounted, ITwitche
         if(data == null) return null;
         var instance = new TwitchChannelChatSettingsUpdateEvent
         {
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-            BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
-            BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
-            EmoteMode = data.Get("emote_mode").AsBool(),
-            FollowerMode = data.Get("follower_mode").AsBool(),
-            FollowerModeDurationMinutes = data.Get("follower_mode_duration_minutes").AsInt32(),
-            SlowMode = data.Get("slow_mode").AsBool(),
-            SlowModeWaitTimeSeconds = data.Get("slow_mode_wait_time_seconds").AsInt32(),
-            SubscriberMode = data.Get("subscriber_mode").AsBool(),
-            UniqueChatMode = data.Get("unique_chat_mode").AsBool(),
+            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+            EmoteMode = data.ReadAsBool("emote_mode"),
+            FollowerMode = data.ReadAsBool("follower_mode"),
+            FollowerModeDurationMinutes = data.ReadAsInt32("follower_mode_duration_minutes"),
+            SlowMode = data.ReadAsBool("slow_mode"),
+            SlowModeWaitTimeSeconds = data.ReadAsInt32("slow_mode_wait_time_seconds"),
+            SubscriberMode = data.ReadAsBool("subscriber_mode"),
+            UniqueChatMode = data.ReadAsBool("unique_chat_mode"),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_settings_update.gd");
-        var eventClass = script.Get("Event").As<GDScript>();
-        var request = eventClass.New().AsGodotObject();
-        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
-        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
-        request.Set("emote_mode", EmoteMode);
-        request.Set("follower_mode", FollowerMode);
-        request.Set("follower_mode_duration_minutes", FollowerModeDurationMinutes);
-        request.Set("slow_mode", SlowMode);
-        request.Set("slow_mode_wait_time_seconds", SlowModeWaitTimeSeconds);
-        request.Set("subscriber_mode", SubscriberMode);
-        request.Set("unique_chat_mode", UniqueChatMode);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_settings_update.gd", "Event");
+        if(BroadcasterUserId != null) request.SetValue("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserLogin != null) request.SetValue("broadcaster_user_login", BroadcasterUserLogin);
+        if(BroadcasterUserName != null) request.SetValue("broadcaster_user_name", BroadcasterUserName);
+        request.SetValue("emote_mode", EmoteMode);
+        request.SetValue("follower_mode", FollowerMode);
+        request.SetValue("follower_mode_duration_minutes", FollowerModeDurationMinutes);
+        request.SetValue("slow_mode", SlowMode);
+        request.SetValue("slow_mode_wait_time_seconds", SlowModeWaitTimeSeconds);
+        request.SetValue("subscriber_mode", SubscriberMode);
+        request.SetValue("unique_chat_mode", UniqueChatMode);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 }

@@ -6,14 +6,16 @@ namespace TwitcherSharp.Api.Generated.GuestStar;
 
 public partial class TwitchGuest : RefCounted, ITwitcherSharp<TwitchGuest>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string SlotId { get; set; } = null!;
     public bool IsLive { get; set; }
     public string UserId { get; set; } = null!;
+    public string UserDisplayName { get; set; } = null!;
+    public string UserLogin { get; set; } = null!;
     public int Volume { get; set; }
     public string AssignedAt { get; set; } = null!;
-    public TwitchAudio Audio { get => field ??= _data?.Get<TwitchAudio>("audio")!; set; } = null!;
-    public TwitchVideo Video { get => field ??= _data?.Get<TwitchVideo>("video")!; set; } = null!;
+    public TwitchAudioSettings AudioSettings { get => field ??= _data.Get<TwitchAudioSettings>("audio_settings")!; set; } = null!;
+    public TwitchVideoSettings VideoSettings { get => field ??= _data.Get<TwitchVideoSettings>("video_settings")!; set; } = null!;
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGuest object.
@@ -23,67 +25,82 @@ public partial class TwitchGuest : RefCounted, ITwitcherSharp<TwitchGuest>
         if(data == null) return null;
         var instance = new TwitchGuest
         {
-            SlotId = data.Get("slot_id").AsString(),
-            IsLive = data.Get("is_live").AsBool(),
-            UserId = data.Get("user_id").AsString(),
-            Volume = data.Get("volume").AsInt32(),
-            AssignedAt = data.Get("assigned_at").AsString(),
+            SlotId = data.ReadAsString("slot_id"),
+            IsLive = data.ReadAsBool("is_live"),
+            UserId = data.ReadAsString("user_id"),
+            UserDisplayName = data.ReadAsString("user_display_name"),
+            UserLogin = data.ReadAsString("user_login"),
+            Volume = data.ReadAsInt32("volume"),
+            AssignedAt = data.ReadAsString("assigned_at"),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_guest.gd");
-        var request = script.Call("new").AsGodotObject();
-        if(SlotId != null) request.Set("slot_id", SlotId);
-        request.Set("is_live", IsLive);
-        if(UserId != null) request.Set("user_id", UserId);
-        request.Set("volume", Volume);
-        if(AssignedAt != null) request.Set("assigned_at", AssignedAt);
-        if(Audio != null) request.Set("audio", Audio.ToGodotObject());
-        if(Video != null) request.Set("video", Video.ToGodotObject());
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated/twitch_guest.gd");
+        if(SlotId != null) request.SetValue("slot_id", SlotId);
+        request.SetValue("is_live", IsLive);
+        if(UserId != null) request.SetValue("user_id", UserId);
+        if(UserDisplayName != null) request.SetValue("user_display_name", UserDisplayName);
+        if(UserLogin != null) request.SetValue("user_login", UserLogin);
+        request.SetValue("volume", Volume);
+        if(AssignedAt != null) request.SetValue("assigned_at", AssignedAt);
+        if(AudioSettings != null) request.SetObject("audio_settings", AudioSettings);
+        if(VideoSettings != null) request.SetObject("video_settings", VideoSettings);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
     
     /// <summary> 
     /// Information about the guest's audio settings 
     /// </summary>
-    public partial class TwitchAudio : RefCounted, ITwitcherSharp<TwitchAudio>
+    public partial class TwitchAudioSettings : RefCounted, ITwitcherSharp<TwitchAudioSettings>
     {
-        private GodotObject? _data;
+        private Variant _data;
         public bool IsHostEnabled { get; set; }
         public bool IsGuestEnabled { get; set; }
         public bool IsAvailable { get; set; }
     
         /// <summary> 
-        /// Transforms the godot data into a TwitchAudio object.
+        /// Transforms the godot data into a TwitchAudioSettings object.
         /// </summary> 
-        public static TwitchAudio? FromObject(GodotObject? data)
+        public static TwitchAudioSettings? FromObject(GodotObject? data)
         {
             if(data == null) return null;
-            var instance = new TwitchAudio
+            var instance = new TwitchAudioSettings
             {
-                IsHostEnabled = data.Get("is_host_enabled").AsBool(),
-                IsGuestEnabled = data.Get("is_guest_enabled").AsBool(),
-                IsAvailable = data.Get("is_available").AsBool(),
+                IsHostEnabled = data.ReadAsBool("is_host_enabled"),
+                IsGuestEnabled = data.ReadAsBool("is_guest_enabled"),
+                IsAvailable = data.ReadAsBool("is_available"),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_guest.gd");
-            var twitchAudioClass = script.Get("Audio").AsGodotObject();
-            var request = twitchAudioClass.Call("new").AsGodotObject();
-            request.Set("is_host_enabled", IsHostEnabled);
-            request.Set("is_guest_enabled", IsGuestEnabled);
-            request.Set("is_available", IsAvailable);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_guest.gd", "AudioSettings");
+            request.SetValue("is_host_enabled", IsHostEnabled);
+            request.SetValue("is_guest_enabled", IsGuestEnabled);
+            request.SetValue("is_available", IsAvailable);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     
     }
@@ -91,39 +108,44 @@ public partial class TwitchGuest : RefCounted, ITwitcherSharp<TwitchGuest>
     /// <summary> 
     /// Information about the guest's video settings 
     /// </summary>
-    public partial class TwitchVideo : RefCounted, ITwitcherSharp<TwitchVideo>
+    public partial class TwitchVideoSettings : RefCounted, ITwitcherSharp<TwitchVideoSettings>
     {
-        private GodotObject? _data;
+        private Variant _data;
         public bool IsHostEnabled { get; set; }
         public bool IsGuestEnabled { get; set; }
         public bool IsAvailable { get; set; }
     
         /// <summary> 
-        /// Transforms the godot data into a TwitchVideo object.
+        /// Transforms the godot data into a TwitchVideoSettings object.
         /// </summary> 
-        public static TwitchVideo? FromObject(GodotObject? data)
+        public static TwitchVideoSettings? FromObject(GodotObject? data)
         {
             if(data == null) return null;
-            var instance = new TwitchVideo
+            var instance = new TwitchVideoSettings
             {
-                IsHostEnabled = data.Get("is_host_enabled").AsBool(),
-                IsGuestEnabled = data.Get("is_guest_enabled").AsBool(),
-                IsAvailable = data.Get("is_available").AsBool(),
+                IsHostEnabled = data.ReadAsBool("is_host_enabled"),
+                IsGuestEnabled = data.ReadAsBool("is_guest_enabled"),
+                IsAvailable = data.ReadAsBool("is_available"),
             };
             
-            instance._data = data;
+            instance._data = Variant.CreateFrom(data);
             return instance;
         }
     
         public GodotObject ToGodotObject()
         {
-            var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_guest.gd");
-            var twitchVideoClass = script.Get("Video").AsGodotObject();
-            var request = twitchVideoClass.Call("new").AsGodotObject();
-            request.Set("is_host_enabled", IsHostEnabled);
-            request.Set("is_guest_enabled", IsGuestEnabled);
-            request.Set("is_available", IsAvailable);
+            var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_guest.gd", "VideoSettings");
+            request.SetValue("is_host_enabled", IsHostEnabled);
+            request.SetValue("is_guest_enabled", IsGuestEnabled);
+            request.SetValue("is_available", IsAvailable);
             return request;
+        }
+    
+        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _data.Dispose();
+            base.Dispose(disposing);
         }
     
     }
