@@ -63,7 +63,7 @@ public static class ApiCodeStrings
                                                   };
                                                   
                                                   Instance = twitchApi;
-                                                  data.SetMeta("_twitcher_sharp_instance", Instance);
+                                                  data.SetMeta("_twitcher_sharp_instance", twitchApi);
                                                   twitchApi.ConnectSignals();
                                                   return twitchApi;
                                               }
@@ -72,8 +72,7 @@ public static class ApiCodeStrings
                                               {
                                                   if (_data is not null) return _data;
                                               
-                                                  var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_api.gd");
-                                                  _data = script.New().AsGodotObject();
+                                                  _data = InteropExtension.NewObject(ScriptPath);
                                                   _data.SetMeta("_twitcher_sharp_instance", this);
                                               
                                                   return _data;
@@ -108,13 +107,13 @@ public static class ApiCodeStrings
     public const string ComponentHeader = """
                                           public partial class {{className}} : RefCounted, ITwitcherSharp<{{className}}>{{interfaces}}
                                           {
-                                              private GodotObject? _data;
+                                              private Variant _data;
                                           """;
 
     public const string GenericComponentHeader = """
                                                  public partial class {{className}}<T> : RefCounted, ITwitcherSharp<{{className}}<T>>{{interfaces}} where T : {{type}}
                                                  {
-                                                     private GodotObject? _data;
+                                                     private Variant _data;
                                                  """;
 
     public const string ComponentFromBody = """
@@ -148,7 +147,7 @@ public static class ApiCodeStrings
     /// </summary>
     public const string NextPageCode = """
                                        public async Task<{{response}}> NextPage() =>
-                                           await _data!.CallAsync<{{response}}>("next_page");
+                                           await _data.CallAsync<{{response}}>("next_page");
                                        """;
     
 }

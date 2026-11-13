@@ -33,13 +33,23 @@ public class TwitchEventSubParser
                 var subComponent = SubComponents.First(c => c.ClassName == field.TypedComponent.ClassName);
 
                 component.SubComponents.Remove(field.TypedComponent.ClassName);
-                component.AddSubComponent(subComponent);
+                if (field.IsArray)
+                {
+                    // AddSubComponent would replace the array field with a single object field of the same name.
+                    component.SubComponents[subComponent.ClassName] = subComponent;
+                }
+                else
+                {
+                    component.AddSubComponent(subComponent);
+                }
+
                 field.TypedComponent = subComponent;
                 subComponent.IsShared = true;
             }
         }
 
         ParseComponents(doc);
+        EventSubCorrections.Apply(Components);
         ParseConditions(doc);
 
 
@@ -183,6 +193,12 @@ public class TwitchEventSubParser
         }
     }
 
+    /// <summary>
+    /// Whether a field name is a plural noun (top_contributions), not a singular one ending in s (status).
+    /// </summary>
+    private static bool IsPlural(string name) =>
+        name.EndsWith('s') && !name.EndsWith("ss") && !name.EndsWith("us") && !name.EndsWith("is");
+
     private void ParseTable(HtmlNode table, TwitchEventSubGenComponent eventSubComponent, bool isCondition = false)
     {
         var rows = table.ChildNodes
@@ -193,6 +209,11 @@ public class TwitchEventSubParser
 
         var currentParent = eventSubComponent;
         var parentWhiteSpaces = -1;
+        // Shared objects entered as a list via a plural type cell (see isListOfSharedObject).
+        var listedShared = new HashSet<TwitchEventSubGenComponent>();
+        // The previous row when it was a primitive field: (field, its indentation, its parent, its class name if
+        // it turns out to be an object).
+        (TwitchEventSubGenField, int, TwitchEventSubGenComponent, string)? lastPrimitive = null;
         foreach (var row in rows)
         {
             var whiteSpaces = row.GetFirstElementChild().GetDirectInnerText().TakeWhile(char.IsWhiteSpace).Count();
@@ -200,6 +221,31 @@ public class TwitchEventSubParser
             // example: current parent has 1 whitespace. You have 1 whitespace. This means you're a sibling, not a child.
             // so parent goes one up and whitespaces go one up
             if (whiteSpaces > 0) whiteSpaces /= 3;
+
+            // Two ways tables describe a shared object that is parsed already: its fields unindented right after it
+            // (the transport of conduit.shard.disabled), or repeated under a list of it (top_contributions of the hype
+            // train events). Those rows belong neither to the event nor to a copy of the object. Indented rows under
+            // other shared objects stay: there the event extends the object (message), which makes a copy of it.
+            // Rows indented under a field documented as a primitive make it an object (charity_donation of
+            // channel.chat.notification is typed "string" but has charity_name and amount below it).
+            if (lastPrimitive is var (primitive, primitiveWhiteSpaces, primitiveParent, className) &&
+                whiteSpaces > primitiveWhiteSpaces && currentParent == primitiveParent)
+            {
+                primitiveParent.Fields.Remove(primitive.Name);
+                var objectComponent = new TwitchEventSubGenComponent(className) { Description = primitive.Description };
+                primitiveParent.AddSubComponent(objectComponent);
+                currentParent = objectComponent;
+                parentWhiteSpaces = primitiveWhiteSpaces;
+            }
+            lastPrimitive = null;
+
+            var rowName = row.SelectSingleNode("td[1]/code")?.InnerText.Trim();
+            if (currentParent != eventSubComponent && SubComponents.Contains(currentParent) && rowName != null &&
+                (whiteSpaces == parentWhiteSpaces || (whiteSpaces > parentWhiteSpaces && listedShared.Contains(currentParent))) &&
+                currentParent.Fields.ContainsKey(rowName.ToPascalCase()))
+            {
+                continue;
+            }
 
             if (whiteSpaces == parentWhiteSpaces && currentParent.Fields.Count == 0)
             {
@@ -245,7 +291,10 @@ public class TwitchEventSubParser
             var required = isCondition && row.SelectSingleNode("td[3]").InnerText.Trim().Equals("Yes", StringComparison.CurrentCultureIgnoreCase);
             var description = row.SelectSingleNode(isCondition ? "td[4]" : "td[3]").InnerText.Trim();
 
-            if (type.EndsWith("[]") || type == "array" || type == "Array"
+            var isListOfSharedObject = type == fieldName && IsPlural(fieldName) &&
+                                       SubComponents.Any(c => c.ClassName == "Twitch" + type.ToPascalCase());
+
+            if (type.EndsWith("[]") || type == "array" || type == "Array" || isListOfSharedObject
                 || description.Contains("array", StringComparison.CurrentCultureIgnoreCase)
                 || (description.Contains("list ", StringComparison.CurrentCultureIgnoreCase) &&
                     !type.Equals("string", StringComparison.CurrentCultureIgnoreCase) &&
@@ -274,6 +323,7 @@ public class TwitchEventSubParser
                 arrayField.Type = typedComponent.ClassName + "[]";
                 arrayField.TypedComponent = typedComponent;
                 currentParent.AddField(arrayField);
+                if (isListOfSharedObject) listedShared.Add(typedComponent);
                 currentParent = typedComponent;
                 parentWhiteSpaces = whiteSpaces;
             }
@@ -312,6 +362,10 @@ public class TwitchEventSubParser
                 {
                     var field = new TwitchEventSubGenField(fieldName, description, type, required);
                     currentParent.AddField(field);
+                    if (field.Type is "string" or "int" or "bool")
+                    {
+                        lastPrimitive = (field, whiteSpaces, currentParent, fieldName + (isParentV2 ? "V2" : ""));
+                    }
                 }
                 else
                 {

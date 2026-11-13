@@ -60,3 +60,9 @@ riderModule.iml
 
 # graphify
 graphify-out/
+# Twitcher addon of the test project: a link to a twitcher clone or checkout (see TwitcherSharp.GoDotTests/fetch-twitcher.sh)
+TwitcherSharp.GoDotTests/addons/twitcher
+TwitcherSharp.GoDotTests/.twitcher/
+
+# Godot editor cache
+.godot/

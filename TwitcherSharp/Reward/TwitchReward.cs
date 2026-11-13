@@ -1,4 +1,5 @@
 using Godot;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Api.Generated.Users;
 using TwitcherSharp.Interfaces;
 
@@ -31,7 +32,7 @@ public partial class TwitchReward : Resource, ITwitcherSharp<TwitchReward>
     /// <summary>
     /// The cost of the reward in Channel Points.
     /// </summary>
-    public int Cost { get; set; } = 1;
+    public long Cost { get; set; } = 1;
 
     // Custom Images
     public Image? Image1 { get; set; }
@@ -56,17 +57,17 @@ public partial class TwitchReward : Resource, ITwitcherSharp<TwitchReward>
     public bool ShouldRedemptionsSkipRequestQueue { get; set; }
 
     public bool IsMaxPerStreamEnabled { get; set; }
-    public int MaxPerStream { get; set; }
+    public long MaxPerStream { get; set; }
     public bool IsMaxPerUserPerStreamEnabled { get; set; }
-    public int MaxPerUserPerStream { get; set; }
+    public long MaxPerUserPerStream { get; set; }
     public bool IsGlobalCooldownEnabled { get; set; }
-    public int GlobalCooldownSeconds { get; set; }
+    public long GlobalCooldownSeconds { get; set; }
 
     #region Temporary
 
     public bool IsInStock { get; set; }
 
-    public int RedemptionsRedeemedCurrentStream { get; set; }
+    public long RedemptionsRedeemedCurrentStream { get; set; }
 
     public string? CooldownExpiresAt { get; set; }
 
@@ -91,59 +92,65 @@ public partial class TwitchReward : Resource, ITwitcherSharp<TwitchReward>
     {
         if (data == null) return null;
 
-        return new TwitchReward
-        {
-            Id = data.Get("id").AsString(),
-            BroadcasterUser = TwitchUser.FromObject(data.Get("broadcaster_user").AsGodotObject())!,
-            Title = data.Get("title").AsString(),
-            Description = data.Get("description").AsString(),
-            Cost = data.Get("cost").AsInt32(),
-            Image1 = data.Get("image_1").As<Image>(),
-            Image2 = data.Get("image_2").As<Image>(),
-            Image4 = data.Get("image_4").As<Image>(),
-            BackgroundColor = data.Get("background_color").AsColor(),
-            IsEnabled = data.Get("is_enabled").AsBool(),
-            IsUserInputRequired = data.Get("is_user_input_required").AsBool(),
-            IsPaused = data.Get("is_paused").AsBool(),
-            ShouldRedemptionsSkipRequestQueue = data.Get("should_redemptions_skip_request_queue").AsBool(),
-            IsMaxPerStreamEnabled = data.Get("is_max_per_stream_enabled").AsBool(),
-            MaxPerStream = data.Get("max_per_stream").AsInt32(),
-            IsMaxPerUserPerStreamEnabled = data.Get("is_max_per_user_per_stream_enabled").AsBool(),
-            MaxPerUserPerStream = data.Get("max_per_user_per_stream").AsInt32(),
-            IsGlobalCooldownEnabled = data.Get("is_global_cooldown_enabled").AsBool(),
-            GlobalCooldownSeconds = data.Get("global_cooldown_seconds").AsInt32(),
-            IsInStock = data.Get("is_in_stock").AsBool(),
-            RedemptionsRedeemedCurrentStream = data.Get("redemptions_redeemed_current_stream").AsInt32(),
-            CooldownExpiresAt = data.Get("cooldown_expires_at").AsString(),
-        };
+        var reward = new TwitchReward();
+        reward.ReadFrom(data);
+        return reward;
+    }
+
+    /// <summary>
+    /// Copies the fields of a twitcher TwitchReward into this reward, e.g. after twitcher changed it in place.
+    /// </summary>
+    internal void ReadFrom(GodotObject data)
+    {
+        Id = data.ReadAsString("id");
+        BroadcasterUser = data.Get<TwitchUser>("broadcaster_user")!;
+        Title = data.ReadAsString("title");
+        Description = data.ReadAsString("description");
+        Cost = data.ReadAsInt64("cost");
+        Image1 = data.Read("image_1", static v => v.As<Image>());
+        Image2 = data.Read("image_2", static v => v.As<Image>());
+        Image4 = data.Read("image_4", static v => v.As<Image>());
+        BackgroundColor = data.Read("background_color", static v => v.AsColor());
+        IsEnabled = data.ReadAsBool("is_enabled");
+        IsUserInputRequired = data.ReadAsBool("is_user_input_required");
+        IsPaused = data.ReadAsBool("is_paused");
+        ShouldRedemptionsSkipRequestQueue = data.ReadAsBool("should_redemptions_skip_request_queue");
+        IsMaxPerStreamEnabled = data.ReadAsBool("is_max_per_stream_enabled");
+        MaxPerStream = data.ReadAsInt64("max_per_stream");
+        IsMaxPerUserPerStreamEnabled = data.ReadAsBool("is_max_per_user_per_stream_enabled");
+        MaxPerUserPerStream = data.ReadAsInt64("max_per_user_per_stream");
+        IsGlobalCooldownEnabled = data.ReadAsBool("is_global_cooldown_enabled");
+        GlobalCooldownSeconds = data.ReadAsInt64("global_cooldown_seconds");
+        IsInStock = data.ReadAsBool("is_in_stock");
+        RedemptionsRedeemedCurrentStream = data.ReadAsInt64("redemptions_redeemed_current_stream");
+        CooldownExpiresAt = data.ReadAsString("cooldown_expires_at");
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/reward/twitch_reward.gd");
-        var reward = script.New().AsGodotObject();
-        reward.Set("id", Id);
-        reward.Set("broadcaster_user", BroadcasterUser.ToGodotObject());
-        reward.Set("title", Title);
-        reward.Set("description", Description);
-        reward.Set("cost", Cost);
-        if (Image1 != null) reward.Set("image_1", Image1);
-        if (Image2 != null) reward.Set("image_2", Image2);
-        if (Image4 != null) reward.Set("image_4", Image4);
-        reward.Set("background_color", BackgroundColor);
-        reward.Set("is_enabled", IsEnabled);
-        reward.Set("is_user_input_required", IsUserInputRequired);
-        reward.Set("is_paused", IsPaused);
-        reward.Set("should_redemptions_skip_request_queue", ShouldRedemptionsSkipRequestQueue);
-        reward.Set("is_max_per_stream_enabled", IsMaxPerStreamEnabled);
-        reward.Set("max_per_stream", MaxPerStream);
-        reward.Set("is_max_per_user_per_stream_enabled", IsMaxPerUserPerStreamEnabled);
-        reward.Set("max_per_user_per_stream", MaxPerUserPerStream);
-        reward.Set("is_global_cooldown_enabled", IsGlobalCooldownEnabled);
-        reward.Set("global_cooldown_seconds", GlobalCooldownSeconds);
-        reward.Set("is_in_stock", IsInStock);
-        reward.Set("redemptions_redeemed_current_stream", RedemptionsRedeemedCurrentStream);
-        if (CooldownExpiresAt != null) reward.Set("cooldown_expires_at", CooldownExpiresAt);
+        var reward = InteropExtension.NewObject("res://addons/twitcher/reward/twitch_reward.gd");
+        reward.SetValue("id", Id);
+        reward.SetObject("broadcaster_user", BroadcasterUser);
+        reward.SetValue("title", Title);
+        reward.SetValue("description", Description);
+        reward.SetValue("cost", Cost);
+        if (Image1 != null) reward.SetValue("image_1", Image1);
+        if (Image2 != null) reward.SetValue("image_2", Image2);
+        if (Image4 != null) reward.SetValue("image_4", Image4);
+        reward.SetValue("background_color", BackgroundColor);
+        reward.SetValue("is_enabled", IsEnabled);
+        reward.SetValue("is_user_input_required", IsUserInputRequired);
+        reward.SetValue("is_paused", IsPaused);
+        reward.SetValue("should_redemptions_skip_request_queue", ShouldRedemptionsSkipRequestQueue);
+        reward.SetValue("is_max_per_stream_enabled", IsMaxPerStreamEnabled);
+        reward.SetValue("max_per_stream", MaxPerStream);
+        reward.SetValue("is_max_per_user_per_stream_enabled", IsMaxPerUserPerStreamEnabled);
+        reward.SetValue("max_per_user_per_stream", MaxPerUserPerStream);
+        reward.SetValue("is_global_cooldown_enabled", IsGlobalCooldownEnabled);
+        reward.SetValue("global_cooldown_seconds", GlobalCooldownSeconds);
+        reward.SetValue("is_in_stock", IsInStock);
+        reward.SetValue("redemptions_redeemed_current_stream", RedemptionsRedeemedCurrentStream);
+        if (CooldownExpiresAt != null) reward.SetValue("cooldown_expires_at", CooldownExpiresAt);
         
         return reward;
     }
