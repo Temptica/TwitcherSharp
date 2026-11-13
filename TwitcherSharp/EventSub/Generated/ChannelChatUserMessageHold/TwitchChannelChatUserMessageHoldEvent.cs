@@ -31,12 +31,12 @@ public partial class TwitchChannelChatUserMessageHoldEvent : RefCounted, ITwitch
     public string? UserId { get; set; }
 
     /// <summary> 
-    /// The message sender’s login.
+    /// The message sender's login.
     /// </summary>
     public string? UserLogin { get; set; }
 
     /// <summary> 
-    /// The message sender’s display name.
+    /// The message sender's display name.
     /// </summary>
     public string? UserName { get; set; }
 
@@ -46,7 +46,7 @@ public partial class TwitchChannelChatUserMessageHoldEvent : RefCounted, ITwitch
     public string? MessageId { get; set; }
 
     /// <summary> 
-    /// 
+    /// The body of the message.
     /// </summary>
     public TwitchMessage? Message { get => field ??= _data.Get<TwitchMessage>("message"); set; }
 
@@ -143,7 +143,7 @@ public partial class TwitchChannelChatUserMessageHoldEvent : RefCounted, ITwitch
             private Variant _data;
             
             /// <summary> 
-            /// The type of message fragment. Possible values: text, emote, cheermote.
+            /// The type of message fragment. Possible values: - `text` - `cheermote` - `emote` - `mention` - `gif`
             /// </summary>
             public string? Type { get; set; }
         
@@ -153,12 +153,12 @@ public partial class TwitchChannelChatUserMessageHoldEvent : RefCounted, ITwitch
             public string? Text { get; set; }
         
             /// <summary> 
-            /// Optional. Metadata pertaining to the emote.
+            /// Metadata pertaining to the emote.
             /// </summary>
             public TwitchEmote? Emote { get => field ??= _data.Get<TwitchEmote>("emote"); set; }
         
             /// <summary> 
-            /// Optional. Metadata pertaining to the cheermote.
+            /// Metadata pertaining to the cheermote.
             /// </summary>
             public TwitchCheermote? Cheermote { get => field ??= _data.Get<TwitchCheermote>("cheermote"); set; }
         
@@ -247,7 +247,7 @@ public partial class TwitchChannelChatUserMessageHoldEvent : RefCounted, ITwitch
                 private Variant _data;
                 
                 /// <summary> 
-                /// The name portion of the Cheermote string that you use in chat to cheer Bits, converted to lowercase. The full Cheermote string is the concatenation of {prefix} + {number of Bits}.For example, if the prefix is “cheer” and you want to cheer 100 Bits, the full Cheermote string is cheer100. When the Cheermote string is entered in chat, Twitch converts it to the image associated with the Bits tier that was cheered.
+                /// The name portion of the Cheermote string that you use in chat to cheer Bits, converted to lowercase. The full Cheermote string is the concatenation of {prefix} + {number of Bits}. **For example**, if the prefix is "cheer" and you want to cheer 100 Bits, the full Cheermote string is cheer100. When the Cheermote string is entered in chat, Twitch converts it to the image associated with the Bits tier that was cheered.
                 /// </summary>
                 public string? Prefix { get; set; }
             

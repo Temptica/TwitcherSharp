@@ -39,18 +39,13 @@ public static class EventSubScriptNameResolver
 
     public static void Resolve(List<TwitchEventSubDefinitionInfo> definitions)
     {
-        foreach (var definition in definitions)
-        {
-            if (Overrides.TryGetValue(definition.Value, out var overrideName))
-            {
-                definition.ScriptName = overrideName;
-                continue;
-            }
+        foreach (var definition in definitions) definition.ScriptName = ScriptName(definition.Value);
+    }
 
+    public static string ScriptName(string type) =>
+        Overrides.TryGetValue(type, out var overrideName)
+            ? overrideName
             // Twitch's own type name sometimes repeats "channel_" (e.g. channel.channel_points_custom_reward...),
             // but the addon's script names don't - safe to dedupe unconditionally.
-            var defaultCandidate = definition.Value.Replace(".", "_");
-            definition.ScriptName = Regex.Replace(defaultCandidate, "^channel_channel_", "channel_");
-        }
-    }
+            : Regex.Replace(type.Replace(".", "_"), "^channel_channel_", "channel_");
 }

@@ -21,12 +21,12 @@ public partial class TwitchUserAuthorizationRevokeEvent : RefCounted, ITwitcherS
     public string? UserId { get; set; }
 
     /// <summary> 
-    /// The user login for the user who has revoked authorization for your client id. This is null if the user no longer exists.
+    /// The user login for the user who has revoked authorization for your client id. This is **null** if the user no longer exists.
     /// </summary>
     public string? UserLogin { get; set; }
 
     /// <summary> 
-    /// The user display name for the user who has revoked authorization for your client id. This is null if the user no longer exists.
+    /// The user display name for the user who has revoked authorization for your client id. This is **null** if the user no longer exists.
     /// </summary>
     public string? UserName { get; set; }
 

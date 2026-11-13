@@ -51,7 +51,7 @@ public partial class TwitchChannelPointsCustomRewardRedemptionAddEvent : RefCoun
     public string? UserInput { get; set; }
 
     /// <summary> 
-    /// Defaults to unfulfilled. Possible values are unknown, unfulfilled, fulfilled, and canceled.
+    /// Defaults to **unfulfilled**. Possible values are **unknown**, **unfulfilled**, **fulfilled**, and **canceled**.
     /// </summary>
     public string? Status { get; set; }
 

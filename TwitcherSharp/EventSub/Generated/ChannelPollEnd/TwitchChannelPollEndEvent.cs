@@ -41,7 +41,7 @@ public partial class TwitchChannelPollEndEvent : RefCounted, ITwitcherSharpEvent
     public TwitchChoices[]? Choices { get => field ??= _data.GetArray<TwitchChoices>("choices"); set; }
 
     /// <summary> 
-    /// NOTE: Bits voting is not supported.
+    /// 
     /// </summary>
     public TwitchBitsVoting? BitsVoting { get => field ??= _data.Get<TwitchBitsVoting>("bits_voting"); set; }
 
@@ -51,7 +51,7 @@ public partial class TwitchChannelPollEndEvent : RefCounted, ITwitcherSharpEvent
     public TwitchChannelPointsVoting? ChannelPointsVoting { get => field ??= _data.Get<TwitchChannelPointsVoting>("channel_points_voting"); set; }
 
     /// <summary> 
-    /// The status of the poll. Valid values are completed, archived, and terminated.
+    /// The status of the poll. Valid values are **completed**, **archived**, and **terminated**.
     /// </summary>
     public string? Status { get; set; }
 

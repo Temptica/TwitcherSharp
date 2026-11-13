@@ -46,12 +46,12 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
     public string? MessageId { get; set; }
 
     /// <summary> 
-    /// 
+    /// The structured chat message.
     /// </summary>
     public TwitchMessage? Message { get => field ??= _data.Get<TwitchMessage>("message"); set; }
 
     /// <summary> 
-    /// The type of message. Possible values: textchannel_points_highlightedchannel_points_sub_onlyuser_intropower_ups_message_effectpower_ups_gigantified_emote
+    /// The type of message. Possible values: - `text` - `channel_points_highlighted` - `channel_points_sub_only` - `user_intro` - `power_ups_message_effect` - `power_ups_gigantified_emote`
     /// </summary>
     public string? MessageType { get; set; }
 
@@ -61,52 +61,52 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
     public TwitchBadges[]? Badges { get => field ??= _data.GetArray<TwitchBadges>("badges"); set; }
 
     /// <summary> 
-    /// Optional. Metadata if this message is a cheer.
+    /// Metadata if this message is a cheer.
     /// </summary>
     public TwitchCheer? Cheer { get => field ??= _data.Get<TwitchCheer>("cheer"); set; }
 
     /// <summary> 
-    /// The color of the user’s name in the chat room. This is a hexadecimal RGB color code in the form, #&amp;lt;RGB&amp;gt;. This tag may be empty if it is never set.
+    /// The color of the user's name in the chat room. This is a hexadecimal RGB color code in the form, `#<RGB>`. This tag may be empty if it is never set.
     /// </summary>
     public string? Color { get; set; }
 
     /// <summary> 
-    /// Optional. Metadata if this message is a reply.
+    /// Metadata if this message is a reply.
     /// </summary>
     public TwitchReply? Reply { get => field ??= _data.Get<TwitchReply>("reply"); set; }
 
     /// <summary> 
-    /// Optional. The ID of a channel points custom reward that was redeemed.
+    /// The ID of a channel points custom reward that was redeemed.
     /// </summary>
     public string? ChannelPointsCustomRewardId { get; set; }
 
     /// <summary> 
-    /// Optional. The broadcaster user ID of the channel the message was sent from. Is null when the message happens in the same channel as the broadcaster. Is not null when in a shared chat session, and the action happens in the channel of a participant other than the broadcaster.
+    /// The broadcaster user ID of the channel the message was sent from. Is null when the message happens in the same channel as the broadcaster. Is not null when in a shared chat session, and the action happens in the channel of a participant other than the broadcaster.
     /// </summary>
     public string? SourceBroadcasterUserId { get; set; }
 
     /// <summary> 
-    /// Optional. The user name of the broadcaster of the channel the message was sent from. Is null when the message happens in the same channel as the broadcaster. Is not null when in a shared chat session, and the action happens in the channel of a participant other than the broadcaster.
+    /// The user name of the broadcaster of the channel the message was sent from. Is null when the message happens in the same channel as the broadcaster. Is not null when in a shared chat session, and the action happens in the channel of a participant other than the broadcaster.
     /// </summary>
     public string? SourceBroadcasterUserName { get; set; }
 
     /// <summary> 
-    /// Optional. The login of the broadcaster of the channel the message was sent from. Is null when the message happens in the same channel as the broadcaster. Is not null when in a shared chat session, and the action happens in the channel of a participant other than the broadcaster.
+    /// The login of the broadcaster of the channel the message was sent from. Is null when the message happens in the same channel as the broadcaster. Is not null when in a shared chat session, and the action happens in the channel of a participant other than the broadcaster.
     /// </summary>
     public string? SourceBroadcasterUserLogin { get; set; }
 
     /// <summary> 
-    /// Optional. The UUID that identifies the source message from the channel the message was sent from. Is null when the message happens in the same channel as the broadcaster. Is not null when in a shared chat session, and the action happens in the channel of a participant other than the broadcaster.
+    /// The UUID that identifies the source message from the channel the message was sent from. Is null when the message happens in the same channel as the broadcaster. Is not null when in a shared chat session, and the action happens in the channel of a participant other than the broadcaster.
     /// </summary>
     public string? SourceMessageId { get; set; }
 
     /// <summary> 
-    /// Optional. The list of chat badges for the chatter in the channel the message was sent from. Is null when the message happens in the same channel as the broadcaster. Is not null when in a shared chat session, and the action happens in the channel of a participant other than the broadcaster.
+    /// The list of chat badges for the chatter in the channel the message was sent from. Is null when the message happens in the same channel as the broadcaster. Is not null when in a shared chat session, and the action happens in the channel of a participant other than the broadcaster.
     /// </summary>
     public TwitchSourceBadges[]? SourceBadges { get => field ??= _data.GetArray<TwitchSourceBadges>("source_badges"); set; }
 
     /// <summary> 
-    /// Optional. Determines if a message delivered during a shared chat session is only sent to the source channel. Has no effect if the message is not sent during a shared chat session.
+    /// Determines if a message delivered during a shared chat session is only sent to the source channel. Has no effect if the message is not sent during a shared chat session.
     /// </summary>
     public bool IsSourceOnly { get; set; }
 
@@ -223,7 +223,7 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
             private Variant _data;
             
             /// <summary> 
-            /// The type of message fragment. Possible values: textcheermoteemotementiongif
+            /// The type of message fragment. Possible values: - `text` - `cheermote` - `emote` - `mention` - `gif`
             /// </summary>
             public string? Type { get; set; }
         
@@ -233,22 +233,22 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
             public string? Text { get; set; }
         
             /// <summary> 
-            /// Optional. Metadata pertaining to the cheermote.
+            /// Metadata pertaining to the cheermote.
             /// </summary>
             public TwitchCheermote? Cheermote { get => field ??= _data.Get<TwitchCheermote>("cheermote"); set; }
         
             /// <summary> 
-            /// Optional. Metadata pertaining to the emote.
+            /// Metadata pertaining to the emote.
             /// </summary>
             public TwitchEmote? Emote { get => field ??= _data.Get<TwitchEmote>("emote"); set; }
         
             /// <summary> 
-            /// Optional. Metadata pertaining to the mention.
+            /// Metadata pertaining to the mention.
             /// </summary>
             public TwitchMention? Mention { get => field ??= _data.Get<TwitchMention>("mention"); set; }
         
             /// <summary> 
-            /// Optional. Metadata pertaining to the GIF.
+            /// Metadata pertaining to the GIF.
             /// </summary>
             public TwitchGif? Gif { get => field ??= _data.Get<TwitchGif>("gif"); set; }
         
@@ -293,7 +293,7 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
                 private Variant _data;
                 
                 /// <summary> 
-                /// The name portion of the Cheermote string that you use in chat to cheer Bits, converted to lowercase. The full Cheermote string is the concatenation of {prefix} + {number of Bits}.For example, if the prefix is “cheer” and you want to cheer 100 Bits, the full Cheermote string is cheer100. When the Cheermote string is entered in chat, Twitch converts it to the image associated with the Bits tier that was cheered.
+                /// The name portion of the Cheermote string that you use in chat to cheer Bits, converted to lowercase. The full Cheermote string is the concatenation of {prefix} + {number of Bits}. **For example**, if the prefix is "cheer" and you want to cheer 100 Bits, the full Cheermote string is cheer100. When the Cheermote string is entered in chat, Twitch converts it to the image associated with the Bits tier that was cheered.
                 /// </summary>
                 public string? Prefix { get; set; }
             
@@ -361,7 +361,7 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
                 public string? OwnerId { get; set; }
             
                 /// <summary> 
-                /// The formats that the emote is available in. For example, if the emote is available only as a static PNG, the array contains only static. But if the emote is available as a static PNG and an animated GIF, the array contains static and animated. The possible formats are: animated - An animated GIF is available for this emote.static - A static PNG file is available for this emote.
+                /// The formats that the emote is available in. For example, if the emote is available only as a static PNG, the array contains only static. But if the emote is available as a static PNG and an animated GIF, the array contains static and animated. Possible values: - `animated`: An animated GIF is available for this emote. - `static`: A static PNG file is available for this emote.
                 /// </summary>
                 public string[]? Format { get; set; }
             
@@ -460,7 +460,7 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
                 /// <summary> 
                 /// An ID that uniquely identifies this GIF.
                 /// </summary>
-                public string? GifId { get; set; }
+                public string? Id { get; set; }
             
                 /// <summary> 
                 /// The URL of the GIF asset. Applications rendering the GIF must use the full URL provided; it must not be modified.
@@ -475,7 +475,7 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
                     if(data == null) return null;
                     var instance = new TwitchGif
                     {
-                        GifId = data.ReadAsString("gif_id"),
+                        Id = data.ReadAsString("id"),
                         Url = data.ReadAsString("url"),
                     };
                     
@@ -486,7 +486,7 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
                 public GodotObject ToGodotObject()
                 {
                     var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_chat_message.gd", "Gif");
-                    if(GifId != null) request.SetValue("gif_id", GifId);
+                    if(Id != null) request.SetValue("id", Id);
                     if(Url != null) request.SetValue("url", Url);
                     return request;
                 }
@@ -628,17 +628,17 @@ public partial class TwitchChannelChatMessageEvent : RefCounted, ITwitcherSharpE
         public string? ThreadMessageId { get; set; }
     
         /// <summary> 
-        /// User ID of the sender of the thread’s parent message.
+        /// User ID of the sender of the thread's parent message.
         /// </summary>
         public string? ThreadUserId { get; set; }
     
         /// <summary> 
-        /// User name of the sender of the thread’s parent message.
+        /// User name of the sender of the thread's parent message.
         /// </summary>
         public string? ThreadUserName { get; set; }
     
         /// <summary> 
-        /// User login of the sender of the thread’s parent message.
+        /// User login of the sender of the thread's parent message.
         /// </summary>
         public string? ThreadUserLogin { get; set; }
     

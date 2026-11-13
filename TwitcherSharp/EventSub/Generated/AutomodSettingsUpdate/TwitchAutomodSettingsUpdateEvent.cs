@@ -31,12 +31,12 @@ public partial class TwitchAutomodSettingsUpdateEvent : RefCounted, ITwitcherSha
     public string? ModeratorUserId { get; set; }
 
     /// <summary> 
-    /// The moderator’s login.
+    /// The moderator's login.
     /// </summary>
     public string? ModeratorUserLogin { get; set; }
 
     /// <summary> 
-    /// The moderator’s user name.
+    /// The moderator's user name.
     /// </summary>
     public string? ModeratorUserName { get; set; }
 

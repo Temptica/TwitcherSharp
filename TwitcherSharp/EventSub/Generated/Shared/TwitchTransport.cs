@@ -11,32 +11,32 @@ public partial class TwitchTransport : RefCounted, ITwitcherSharpEventSub<Twitch
     private Variant _data;
     
     /// <summary> 
-    /// yes
+    /// **websocket** or **webhook**
     /// </summary>
     public string? Method { get; set; }
 
     /// <summary> 
-    /// no
+    /// Webhook callback URL. Null if `method` is set to **websocket**.
     /// </summary>
     public string? Callback { get; set; }
 
     /// <summary> 
-    /// no
+    /// The secret used to verify the signature. Specify this field only if method is set to webhook.
     /// </summary>
     public string? Secret { get; set; }
 
     /// <summary> 
-    /// no
+    /// WebSocket session ID. Null if `method` is set to **webhook**.
     /// </summary>
     public string? SessionId { get; set; }
 
     /// <summary> 
-    /// no
+    /// Time that the WebSocket session connected. Null if `method` is set to **webhook**.
     /// </summary>
     public string? ConnectedAt { get; set; }
 
     /// <summary> 
-    /// no
+    /// Time that the WebSocket session disconnected. Null if `method` is set to **webhook**.
     /// </summary>
     public string? DisconnectedAt { get; set; }
 

@@ -13,7 +13,7 @@ public partial class TwitchChannelGuestStarSettingsUpdateCondition(string broadc
     public string Name => nameof(TwitchChannelGuestStarSettingsUpdateCondition);
 
     /// <summary> 
-    /// The broadcaster user ID of the channel hosting the Guest Star Session
+    /// The broadcaster user ID for the channel you want to receive Guest Star settings update notifications for.
     /// </summary>
     public string BroadcasterUserId { get; set; } = broadcasterUserId;
 
