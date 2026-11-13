@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.Shared;
 
 public partial class TwitchTransport : RefCounted, ITwitcherSharpEventSub<TwitchTransport>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// yes
@@ -48,28 +48,34 @@ public partial class TwitchTransport : RefCounted, ITwitcherSharpEventSub<Twitch
         if(data == null) return null;
         var instance = new TwitchTransport
         {
-            Method = data.Get("method").AsString(),
-            Callback = data.Get("callback").AsString(),
-            Secret = data.Get("secret").AsString(),
-            SessionId = data.Get("session_id").AsString(),
-            ConnectedAt = data.Get("connected_at").AsString(),
-            DisconnectedAt = data.Get("disconnected_at").AsString(),
+            Method = data.ReadAsString("method"),
+            Callback = data.ReadAsString("callback"),
+            Secret = data.ReadAsString("secret"),
+            SessionId = data.ReadAsString("session_id"),
+            ConnectedAt = data.ReadAsString("connected_at"),
+            DisconnectedAt = data.ReadAsString("disconnected_at"),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_transport.gd");
-        var request = script.New().AsGodotObject();
-        if(Method != null) request.Set("method", Method);
-        if(Callback != null) request.Set("callback", Callback);
-        if(Secret != null) request.Set("secret", Secret);
-        if(SessionId != null) request.Set("session_id", SessionId);
-        if(ConnectedAt != null) request.Set("connected_at", ConnectedAt);
-        if(DisconnectedAt != null) request.Set("disconnected_at", DisconnectedAt);
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated_eventsub/twitch_es_transport.gd");
+        if(Method != null) request.SetValue("method", Method);
+        if(Callback != null) request.SetValue("callback", Callback);
+        if(Secret != null) request.SetValue("secret", Secret);
+        if(SessionId != null) request.SetValue("session_id", SessionId);
+        if(ConnectedAt != null) request.SetValue("connected_at", ConnectedAt);
+        if(DisconnectedAt != null) request.SetValue("disconnected_at", DisconnectedAt);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 }

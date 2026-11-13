@@ -6,7 +6,7 @@ namespace TwitcherSharp.Api.Generated.Streams;
 
 public partial class TwitchStream : RefCounted, ITwitcherSharp<TwitchStream>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string Id { get; set; } = null!;
     public string UserId { get; set; } = null!;
     public string UserLogin { get; set; } = null!;
@@ -31,47 +31,53 @@ public partial class TwitchStream : RefCounted, ITwitcherSharp<TwitchStream>
         if(data == null) return null;
         var instance = new TwitchStream
         {
-            Id = data.Get("id").AsString(),
-            UserId = data.Get("user_id").AsString(),
-            UserLogin = data.Get("user_login").AsString(),
-            UserName = data.Get("user_name").AsString(),
-            GameId = data.Get("game_id").AsString(),
-            GameName = data.Get("game_name").AsString(),
-            Type = data.Get("type").AsString(),
-            Title = data.Get("title").AsString(),
-            ViewerCount = data.Get("viewer_count").AsInt32(),
-            StartedAt = data.Get("started_at").AsString(),
-            Language = data.Get("language").AsString(),
-            ThumbnailUrl = data.Get("thumbnail_url").AsString(),
-            TagIds = data.Get("tag_ids").AsStringArray(),
-            Tags = data.Get("tags").AsStringArray(),
-            IsMature = data.Get("is_mature").AsBool(),
+            Id = data.ReadAsString("id"),
+            UserId = data.ReadAsString("user_id"),
+            UserLogin = data.ReadAsString("user_login"),
+            UserName = data.ReadAsString("user_name"),
+            GameId = data.ReadAsString("game_id"),
+            GameName = data.ReadAsString("game_name"),
+            Type = data.ReadAsString("type"),
+            Title = data.ReadAsString("title"),
+            ViewerCount = data.ReadAsInt32("viewer_count"),
+            StartedAt = data.ReadAsString("started_at"),
+            Language = data.ReadAsString("language"),
+            ThumbnailUrl = data.ReadAsString("thumbnail_url"),
+            TagIds = data.ReadAsStringArray("tag_ids"),
+            Tags = data.ReadAsStringArray("tags"),
+            IsMature = data.ReadAsBool("is_mature"),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_stream.gd");
-        var request = script.Call("new").AsGodotObject();
-        if(Id != null) request.Set("id", Id);
-        if(UserId != null) request.Set("user_id", UserId);
-        if(UserLogin != null) request.Set("user_login", UserLogin);
-        if(UserName != null) request.Set("user_name", UserName);
-        if(GameId != null) request.Set("game_id", GameId);
-        if(GameName != null) request.Set("game_name", GameName);
-        if(Type != null) request.Set("type", Type);
-        if(Title != null) request.Set("title", Title);
-        request.Set("viewer_count", ViewerCount);
-        if(StartedAt != null) request.Set("started_at", StartedAt);
-        if(Language != null) request.Set("language", Language);
-        if(ThumbnailUrl != null) request.Set("thumbnail_url", ThumbnailUrl);
-        if(TagIds != null) request.Set("tag_ids", new Godot.Collections.Array<string>(TagIds));
-        if(Tags != null) request.Set("tags", new Godot.Collections.Array<string>(Tags));
-        request.Set("is_mature", IsMature);
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated/twitch_stream.gd");
+        if(Id != null) request.SetValue("id", Id);
+        if(UserId != null) request.SetValue("user_id", UserId);
+        if(UserLogin != null) request.SetValue("user_login", UserLogin);
+        if(UserName != null) request.SetValue("user_name", UserName);
+        if(GameId != null) request.SetValue("game_id", GameId);
+        if(GameName != null) request.SetValue("game_name", GameName);
+        if(Type != null) request.SetValue("type", Type);
+        if(Title != null) request.SetValue("title", Title);
+        request.SetValue("viewer_count", ViewerCount);
+        if(StartedAt != null) request.SetValue("started_at", StartedAt);
+        if(Language != null) request.SetValue("language", Language);
+        if(ThumbnailUrl != null) request.SetValue("thumbnail_url", ThumbnailUrl);
+        if(TagIds != null) request.SetValue("tag_ids", new Godot.Collections.Array<string>(TagIds));
+        if(Tags != null) request.SetValue("tags", new Godot.Collections.Array<string>(Tags));
+        request.SetValue("is_mature", IsMature);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }

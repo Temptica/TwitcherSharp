@@ -15,24 +15,29 @@ public interface ITwitcherSharpSingleton<out TSelf> : ITwitcherSharpSingleton, I
     static abstract string ScriptPath { get; }
 
     /// <summary>
-    /// Get the current Instance. Else it will try to find an existing GDScript instance.
-    /// <p>This object will also be added to the metaData of the linked node. When that node is removed from the scene, it will also remove this refCounted object</p>
+    /// The wrapper of twitcher's current node of this type: the one in the script's static <c>instance</c>, which a
+    /// twitcher node sets when it enters the tree and clears when it leaves. Never creates a node.
+    /// <p>The wrapper is cached while it is linked to that node; once the node left the tree this returns null, or the
+    /// wrapper of the node that took its place.</p>
     /// </summary>
     /// <returns>The Instance when found, else returns null</returns>
     public static TSelf? Instance {
         get
         {
-            if (field is not null)
+            // The static is read from the script itself; instantiating the script to read it would create a node.
+            GodotObject? node;
+            using (var script = GD.Load<GDScript>(TSelf.ScriptPath))
+            using (var current = script.Get("instance"))
+            {
+                node = current.AsGodotObject();
+            }
+
+            if (node is null || !GodotObject.IsInstanceValid(node)) return field = null;
+
+            if (field is { IsLinked: true } && field.ToGodotObject().GetInstanceId() == node.GetInstanceId())
                 return field;
 
-            var script = GD.Load<GDScript>(TSelf.ScriptPath);
-            var gdObject = script.New().AsGodotObject();
-
-            var instance = gdObject.Get("instance");
-        
-            field = instance.VariantType != Variant.Type.Object ? null : TSelf.FromObject(instance.AsGodotObject());
-        
-            return field;
+            return field = TSelf.FromObject(node);
         } 
         set;
     }
@@ -56,15 +61,16 @@ public interface ITwitcherSharpSingleton<out TSelf> : ITwitcherSharpSingleton, I
     // public static abstract TSelf CreateInstance(Action<TSelf> configure = null);
     public static TSelf CreateInstance(Action<TSelf>? configure = null)
     {
-        Instance = new TSelf();
-        configure?.Invoke(Instance);
+        var instance = new TSelf();
+        configure?.Invoke(instance);
+        Instance = instance;
 
-        var gdNode = Instance.ToGodotObject();
+        var gdNode = instance.ToGodotObject();
 
         var root = (Engine.GetMainLoop() as SceneTree)!.Root;
         root.AddChild(gdNode as Node);
 
-        return Instance;
+        return instance;
     }
 }
 

@@ -1,8 +1,8 @@
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Chickensoft.GoDotTest;
 using Chickensoft.Log;
 using Godot;
+using Shouldly;
 using TwitcherSharp.Api.Generated;
 using TwitcherSharp.Api.Generated.Channels;
 using TwitcherSharp.GoDotTests.Helper;
@@ -17,16 +17,17 @@ public class ApiIntegrationTest(Main testScene) : TestClass(testScene)
     [SetupAll]
     public void Setup()
     {
-        _twitchApi = TwitchApi.CreateInstance();
+        // The TwitchAPI node of the test scene, wired to the mock's token handler.
+        _twitchApi = TwitchApi.Required;
     }
 
     [Test]
     public async Task TestGetChannelFollows()
     {
         var response = await _twitchApi.GetChannelFollowers(Main.UserId);
-        Debug.Assert(response != null);
-        Debug.Assert(response.Data != null);
-        Debug.Assert(response.Data[0].UserName != null);
+        response.ShouldNotBeNull();
+        response.Data.ShouldNotBeEmpty();
+        response.Data[0].UserName.ShouldNotBeNull();
         _log.Print(response.Data[0].UserName);
         
     }
@@ -34,13 +35,7 @@ public class ApiIntegrationTest(Main testScene) : TestClass(testScene)
     [Test]
     public async Task TestApiIntegration()
     {
-        var user = await TwitchService.Instance.GetCurrentUser();
-        Debug.Assert(user != null);
-    }
-
-    [CleanupAll]
-    public void Cleanup()
-    {
-        TwitchMockupHelper.Stop();
+        var user = await TwitchService.Required.GetCurrentUser();
+        user.ShouldNotBeNull();
     }
 }

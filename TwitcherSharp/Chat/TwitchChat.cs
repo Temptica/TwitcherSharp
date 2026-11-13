@@ -26,26 +26,27 @@ public partial class TwitchChat : RefCounted, ITwitcherSharpSingleton<TwitchChat
     public static TwitchChat Required => ITwitcherSharpSingleton<TwitchChat>.Required;
 
     /// <summary>
-    /// Twitch API (Will automatically look for first TwitchApi (twitcher) in the scene tree. Else will create a new one and add it to the root)
+    /// Twitch API used to send messages. Defaults to <see cref="TwitchApi.Instance"/>, the TwitchAPI node in the tree;
+    /// no node is created for it.
     /// </summary>
-    public static TwitchApi Api { get; set; } = TwitchApi.Instance??TwitchApi.CreateInstance();
+    public static TwitchApi? Api { get => field ?? TwitchApi.Instance; set; }
 
     public TwitchUser? BroadcasterUser
     {
-        get => _data != null ? TwitchUser.FromObject(_data.Get("broadcaster_user").AsGodotObject()) : field;
+        get => _data != null ? _data.Get<TwitchUser>("broadcaster_user") : field;
         set
         {
-            _data?.Set("broadcaster_user", value?.ToGodotObject() ?? new Variant());
+            _data?.SetObject("broadcaster_user", value);
             field = value;
         }
     }
 
     public TwitchUser? SenderUser
     {
-        get => _data != null ? TwitchUser.FromObject(_data.Get("sender_user").AsGodotObject()) : field;
+        get => _data != null ? _data.Get<TwitchUser>("sender_user") : field;
         set
         {
-            _data?.Set("sender_user", value?.ToGodotObject() ?? new Variant());
+            _data?.SetObject("sender_user", value);
             field = value;
         }
     }
@@ -53,7 +54,7 @@ public partial class TwitchChat : RefCounted, ITwitcherSharpSingleton<TwitchChat
     /// <summary>
     /// Media loader it uses for emotes and badges. (Will automatically look for first TwitchMediaLoader (twitcher) in the scene tree)
     /// </summary>
-    public TwitchMediaLoader? MediaLoader { get; set; } = TwitchMediaLoader.Instance;
+    public TwitchMediaLoader? MediaLoader { get => field ?? TwitchMediaLoader.Instance; set; }
 
     /// <summary>
     /// Should it subscribe on ready
@@ -63,7 +64,7 @@ public partial class TwitchChat : RefCounted, ITwitcherSharpSingleton<TwitchChat
     [Signal]
     public delegate void MessageReceivedEventHandler(TwitchChatMessage message);
 
-    public void Subscribe() => _data!.Call("subscribe");
+    public async Task Subscribe() => await _data!.InvokeAsync("subscribe");
 
     /// <summary>
     /// Sends a message to the chat. If twitchApi is connected and linked, it will use the c# code.
@@ -76,7 +77,8 @@ public partial class TwitchChat : RefCounted, ITwitcherSharpSingleton<TwitchChat
     public async Task<TwitchSendChatMessageResponse.TwitchResponseData[]> SendMessage(string message,
         string? replyParentMessageId = null)
     {
-        if (!Api.IsLinked)
+        var api = Api;
+        if (api is not { IsLinked: true })
         {
             if (!IsLinked) throw new Exception("TwitchChat is not linked to TwitchApi");
 
@@ -98,7 +100,7 @@ public partial class TwitchChat : RefCounted, ITwitcherSharpSingleton<TwitchChat
             ReplyParentMessageId = replyParentMessageId
         };
 
-        var response = await Api.SendChatMessage(request);
+        var response = await api.SendChatMessage(request);
         return response.Data ?? [];
     }
 
@@ -112,11 +114,11 @@ public partial class TwitchChat : RefCounted, ITwitcherSharpSingleton<TwitchChat
     {
         if (data == null) return null;
 
-        Instance = new TwitchChat();
-        Instance._data = data;
-        Instance.SetMeta("_twitcher_sharp_instance", Instance);
-        Instance.ConnectSignals();
-        return Instance;
+        var chat = new TwitchChat { _data = data };
+        chat.SetMeta("_twitcher_sharp_instance", chat);
+        chat.ConnectSignals();
+        Instance = chat;
+        return chat;
     }
 
     public GodotObject ToGodotObject()
@@ -126,10 +128,9 @@ public partial class TwitchChat : RefCounted, ITwitcherSharpSingleton<TwitchChat
             return _data;
         }
 
-        var script = GD.Load<GDScript>(ScriptPath);
-        var instance = script.New().AsGodotObject();
-        instance.Set("broadcaster_user", BroadcasterUser?.ToGodotObject() ?? new Variant());
-        instance.Set("sender_user", SenderUser?.ToGodotObject() ?? new Variant());
+        var instance = InteropExtension.NewObject(ScriptPath);
+        instance.SetObject("broadcaster_user", BroadcasterUser);
+        instance.SetObject("sender_user", SenderUser);
         instance.SetMeta("_twitcher_sharp_instance", this);
         _data = instance;
         ConnectSignals();

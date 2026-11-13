@@ -21,6 +21,32 @@ public class TwitchGenField : IEquatable<TwitchGenField>
         };
     }
 
+    /// <summary>
+    /// The key in the API's JSON. twitcher names its properties after it, also when it is camelCase.
+    /// </summary>
+    public string? JsonName { get; init; }
+
+    /// <summary>
+    /// twitcher's property name: the JSON key with the renames of twitcher's TwitchGenField (keywords, numbers).
+    /// Fields without a JSON key (optional query parameters, pagination) are snake_case in twitcher already.
+    /// </summary>
+    public string GodotName => JsonName switch
+    {
+        null => Name.ToSnakeCase(),
+        "animated" => "animated_format",
+        "static" => "static_format",
+        "1" => "_1",
+        "2" => "_2",
+        "3" => "_3",
+        "4" => "_4",
+        "1.5" => "_1_5",
+        "100x100" => "_100x100",
+        "24x24" => "_24x24",
+        "300x200" => "_300x200",
+        "source-only" => "source_only",
+        _ => JsonName,
+    };
+
     public string Description { get; set; }
     public string Type { get; set; }
     public bool IsRequired { get; set; }
@@ -33,7 +59,7 @@ public class TwitchGenField : IEquatable<TwitchGenField>
     /// <summary>
     /// A scalar C# value type (non-array, non-class).
     /// </summary>
-    public bool IsValueType => !IsArray && !IsTyped && Type is "int" or "bool" or "double" or "float" or "Variant";
+    public bool IsValueType => !IsArray && !IsTyped && Type is "int" or "long" or "bool" or "double" or "float" or "Variant";
 
     /// <summary>
     /// The nullability suffix to append to a property type under <c>&lt;Nullable&gt;enable</c>.
@@ -65,6 +91,7 @@ public class TwitchGenField : IEquatable<TwitchGenField>
             "string" => "AsString()",
             "bool" => "AsBool()",
             "int" => "AsInt32()",
+            "long" => "AsInt64()",
             "double" => "AsDouble()",
             "string[]" => "AsStringArray()",
             "int[]" => "AsInt32Array()",

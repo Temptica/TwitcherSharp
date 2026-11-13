@@ -8,7 +8,7 @@ namespace TwitcherSharp.EventSub.Generated.ChannelAdBreakBegin;
 
 public partial class TwitchChannelAdBreakBeginEvent : RefCounted, ITwitcherSharpEventSub<TwitchChannelAdBreakBeginEvent>
 {
-    private GodotObject? _data;
+    private Variant _data;
     
     /// <summary> 
     /// Length in seconds of the mid-roll ad break requested
@@ -63,35 +63,40 @@ public partial class TwitchChannelAdBreakBeginEvent : RefCounted, ITwitcherSharp
         if(data == null) return null;
         var instance = new TwitchChannelAdBreakBeginEvent
         {
-            DurationSeconds = data.Get("duration_seconds").AsInt32(),
-            StartedAt = data.Get("started_at").AsString(),
-            IsAutomatic = data.Get("is_automatic").AsBool(),
-            BroadcasterUserId = data.Get("broadcaster_user_id").AsString(),
-            BroadcasterUserLogin = data.Get("broadcaster_user_login").AsString(),
-            BroadcasterUserName = data.Get("broadcaster_user_name").AsString(),
-            RequesterUserId = data.Get("requester_user_id").AsString(),
-            RequesterUserLogin = data.Get("requester_user_login").AsString(),
-            RequesterUserName = data.Get("requester_user_name").AsString(),
+            DurationSeconds = data.ReadAsInt32("duration_seconds"),
+            StartedAt = data.ReadAsString("started_at"),
+            IsAutomatic = data.ReadAsBool("is_automatic"),
+            BroadcasterUserId = data.ReadAsString("broadcaster_user_id"),
+            BroadcasterUserLogin = data.ReadAsString("broadcaster_user_login"),
+            BroadcasterUserName = data.ReadAsString("broadcaster_user_name"),
+            RequesterUserId = data.ReadAsString("requester_user_id"),
+            RequesterUserLogin = data.ReadAsString("requester_user_login"),
+            RequesterUserName = data.ReadAsString("requester_user_name"),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated_eventsub/twitch_es_channel_ad_break_begin.gd");
-        var eventClass = script.Get("Event").As<GDScript>();
-        var request = eventClass.New().AsGodotObject();
-        request.Set("duration_seconds", DurationSeconds);
-        if(StartedAt != null) request.Set("started_at", StartedAt);
-        request.Set("is_automatic", IsAutomatic);
-        if(BroadcasterUserId != null) request.Set("broadcaster_user_id", BroadcasterUserId);
-        if(BroadcasterUserLogin != null) request.Set("broadcaster_user_login", BroadcasterUserLogin);
-        if(BroadcasterUserName != null) request.Set("broadcaster_user_name", BroadcasterUserName);
-        if(RequesterUserId != null) request.Set("requester_user_id", RequesterUserId);
-        if(RequesterUserLogin != null) request.Set("requester_user_login", RequesterUserLogin);
-        if(RequesterUserName != null) request.Set("requester_user_name", RequesterUserName);
+        var request = InteropExtension.NewInner("res://addons/twitcher/generated_eventsub/twitch_es_channel_ad_break_begin.gd", "Event");
+        request.SetValue("duration_seconds", DurationSeconds);
+        if(StartedAt != null) request.SetValue("started_at", StartedAt);
+        request.SetValue("is_automatic", IsAutomatic);
+        if(BroadcasterUserId != null) request.SetValue("broadcaster_user_id", BroadcasterUserId);
+        if(BroadcasterUserLogin != null) request.SetValue("broadcaster_user_login", BroadcasterUserLogin);
+        if(BroadcasterUserName != null) request.SetValue("broadcaster_user_name", BroadcasterUserName);
+        if(RequesterUserId != null) request.SetValue("requester_user_id", RequesterUserId);
+        if(RequesterUserLogin != null) request.SetValue("requester_user_login", RequesterUserLogin);
+        if(RequesterUserName != null) request.SetValue("requester_user_name", RequesterUserName);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 }

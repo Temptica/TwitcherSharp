@@ -1,4 +1,5 @@
 using Godot;
+using TwitcherSharp.Extensions;
 using TwitcherSharp.Interfaces;
 
 namespace TwitcherSharp.Auth;
@@ -15,8 +16,8 @@ public partial class TwitchScopes(StringName val, string description, string cat
     public static TwitchScopes? FromObject(GodotObject? data)
     {
         if (data == null) return null;
-        return new TwitchScopes(data.Get("value").AsStringName(), data.Get("description").AsStringName(),
-            data.Get("category").AsStringName());
+        return new TwitchScopes(data.Read("value", static v => v.AsStringName()), data.Read("description", static v => v.AsStringName()),
+            data.Read("category", static v => v.AsStringName()));
     }
 
     public override string ToString()
@@ -24,10 +25,13 @@ public partial class TwitchScopes(StringName val, string description, string cat
         return Value;
     }
 
+    /// <summary>
+    /// A new TwitchScope.Definition. That is a plain Object, not reference counted: the caller frees it.
+    /// </summary>
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/auth/twitch_scopes.gdscript");
-        return script.Get("Definition").As<GDScript>().New(Value, Description, Category).AsGodotObject();
+        return InteropExtension.NewInner("res://addons/twitcher/auth/twitch_scope.gd", "Definition", Value,
+            Description, Category);
     }
 
 

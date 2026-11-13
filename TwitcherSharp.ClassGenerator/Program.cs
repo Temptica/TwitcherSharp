@@ -33,4 +33,6 @@ var subscriptionTypeParser = new TwitchEventSubSubscriptionTypeParser();
 await subscriptionTypeParser.ParseSubscriptionTypes(eventSubParser.ConditionComponents);
 EventSubScriptNameResolver.Resolve(subscriptionTypeParser.Definitions);
 
-TwitchEventSubDefinitionGenerator.Generate(eventSubPath, subscriptionTypeParser.Definitions);
+var gdDefinitionScript = Path.Combine(projectDir, "..", "TwitcherSharp.Demo", "addons", "twitcher", "eventsub",
+    "twitch_eventsub_definition.gd");
+TwitchEventSubDefinitionGenerator.Generate(eventSubPath, subscriptionTypeParser.Definitions, gdDefinitionScript);

@@ -6,7 +6,7 @@ namespace TwitcherSharp.Api.Generated.Search;
 
 public partial class TwitchChannel : RefCounted, ITwitcherSharp<TwitchChannel>
 {
-    private GodotObject? _data;
+    private Variant _data;
     public string BroadcasterLanguage { get; set; } = null!;
     public string BroadcasterLogin { get; set; } = null!;
     public string DisplayName { get; set; } = null!;
@@ -28,41 +28,47 @@ public partial class TwitchChannel : RefCounted, ITwitcherSharp<TwitchChannel>
         if(data == null) return null;
         var instance = new TwitchChannel
         {
-            BroadcasterLanguage = data.Get("broadcaster_language").AsString(),
-            BroadcasterLogin = data.Get("broadcaster_login").AsString(),
-            DisplayName = data.Get("display_name").AsString(),
-            GameId = data.Get("game_id").AsString(),
-            GameName = data.Get("game_name").AsString(),
-            Id = data.Get("id").AsString(),
-            IsLive = data.Get("is_live").AsBool(),
-            TagIds = data.Get("tag_ids").AsStringArray(),
-            Tags = data.Get("tags").AsStringArray(),
-            ThumbnailUrl = data.Get("thumbnail_url").AsString(),
-            Title = data.Get("title").AsString(),
-            StartedAt = data.Get("started_at").AsString(),
+            BroadcasterLanguage = data.ReadAsString("broadcaster_language"),
+            BroadcasterLogin = data.ReadAsString("broadcaster_login"),
+            DisplayName = data.ReadAsString("display_name"),
+            GameId = data.ReadAsString("game_id"),
+            GameName = data.ReadAsString("game_name"),
+            Id = data.ReadAsString("id"),
+            IsLive = data.ReadAsBool("is_live"),
+            TagIds = data.ReadAsStringArray("tag_ids"),
+            Tags = data.ReadAsStringArray("tags"),
+            ThumbnailUrl = data.ReadAsString("thumbnail_url"),
+            Title = data.ReadAsString("title"),
+            StartedAt = data.ReadAsString("started_at"),
         };
         
-        instance._data = data;
+        instance._data = Variant.CreateFrom(data);
         return instance;
     }
 
     public GodotObject ToGodotObject()
     {
-        var script = GD.Load<GDScript>("res://addons/twitcher/generated/twitch_channel.gd");
-        var request = script.Call("new").AsGodotObject();
-        if(BroadcasterLanguage != null) request.Set("broadcaster_language", BroadcasterLanguage);
-        if(BroadcasterLogin != null) request.Set("broadcaster_login", BroadcasterLogin);
-        if(DisplayName != null) request.Set("display_name", DisplayName);
-        if(GameId != null) request.Set("game_id", GameId);
-        if(GameName != null) request.Set("game_name", GameName);
-        if(Id != null) request.Set("id", Id);
-        request.Set("is_live", IsLive);
-        if(TagIds != null) request.Set("tag_ids", new Godot.Collections.Array<string>(TagIds));
-        if(Tags != null) request.Set("tags", new Godot.Collections.Array<string>(Tags));
-        if(ThumbnailUrl != null) request.Set("thumbnail_url", ThumbnailUrl);
-        if(Title != null) request.Set("title", Title);
-        if(StartedAt != null) request.Set("started_at", StartedAt);
+        var request = InteropExtension.NewObject("res://addons/twitcher/generated/twitch_channel.gd");
+        if(BroadcasterLanguage != null) request.SetValue("broadcaster_language", BroadcasterLanguage);
+        if(BroadcasterLogin != null) request.SetValue("broadcaster_login", BroadcasterLogin);
+        if(DisplayName != null) request.SetValue("display_name", DisplayName);
+        if(GameId != null) request.SetValue("game_id", GameId);
+        if(GameName != null) request.SetValue("game_name", GameName);
+        if(Id != null) request.SetValue("id", Id);
+        request.SetValue("is_live", IsLive);
+        if(TagIds != null) request.SetValue("tag_ids", new Godot.Collections.Array<string>(TagIds));
+        if(Tags != null) request.SetValue("tags", new Godot.Collections.Array<string>(Tags));
+        if(ThumbnailUrl != null) request.SetValue("thumbnail_url", ThumbnailUrl);
+        if(Title != null) request.SetValue("title", Title);
+        if(StartedAt != null) request.SetValue("started_at", StartedAt);
         return request;
+    }
+
+    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _data.Dispose();
+        base.Dispose(disposing);
     }
 
 }
