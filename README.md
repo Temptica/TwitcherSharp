@@ -11,7 +11,7 @@ TwitcherSharp is a C# wrapper around the Godot Twitcher addon made by kanimaru. 
 ## Requirements
 
 - [Godot 4.7+](https://godotengine.org/) with C# support (.NET build)
-- [.NET SDK 10.0+](https://dotnet.microsoft.com/download)
+- [.NET SDK 10.0+](https://dotnet.microsoft.com/download). The package ships builds for both `net10.0` and `net11.0`, so your project can target either.
 - The [Twitcher](https://github.com/kanimaru/twitcher) addon, installed and configured (see below)
 
 ## Installation
