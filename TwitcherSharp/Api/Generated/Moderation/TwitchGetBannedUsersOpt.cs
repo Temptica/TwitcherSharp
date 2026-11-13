@@ -14,6 +14,7 @@ public partial class TwitchGetBannedUsersOpt : RefCounted, ITwitcherSharp<Twitch
     public string[]? UserId { get; set; }
     public int? First { get; set; }
     public string? After { get; set; }
+    public string? Before { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetBannedUsersOpt object.
@@ -26,6 +27,7 @@ public partial class TwitchGetBannedUsersOpt : RefCounted, ITwitcherSharp<Twitch
             UserId = data.ReadAsStringArray("user_id"),
             First = data.ReadAsInt32("first"),
             After = data.ReadAsString("after"),
+            Before = data.ReadAsString("before"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -38,6 +40,7 @@ public partial class TwitchGetBannedUsersOpt : RefCounted, ITwitcherSharp<Twitch
         if(UserId != null) request.SetValue("user_id", new Godot.Collections.Array<string>(UserId));
         if(First.HasValue) request.SetValue("first", First.Value);
         if(After != null) request.SetValue("after", After);
+        if(Before != null) request.SetValue("before", Before);
         return request;
     }
 

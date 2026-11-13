@@ -14,6 +14,7 @@ public partial class TwitchUpdateGuestStarSlotSettingsOpt : RefCounted, ITwitche
     public bool? IsAudioEnabled { get; set; }
     public bool? IsVideoEnabled { get; set; }
     public bool? IsLive { get; set; }
+    public int? Volume { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchUpdateGuestStarSlotSettingsOpt object.
@@ -26,6 +27,7 @@ public partial class TwitchUpdateGuestStarSlotSettingsOpt : RefCounted, ITwitche
             IsAudioEnabled = data.ReadAsBool("is_audio_enabled"),
             IsVideoEnabled = data.ReadAsBool("is_video_enabled"),
             IsLive = data.ReadAsBool("is_live"),
+            Volume = data.ReadAsInt32("volume"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -38,6 +40,7 @@ public partial class TwitchUpdateGuestStarSlotSettingsOpt : RefCounted, ITwitche
         if(IsAudioEnabled.HasValue) request.SetValue("is_audio_enabled", IsAudioEnabled.Value);
         if(IsVideoEnabled.HasValue) request.SetValue("is_video_enabled", IsVideoEnabled.Value);
         if(IsLive.HasValue) request.SetValue("is_live", IsLive.Value);
+        if(Volume.HasValue) request.SetValue("volume", Volume.Value);
         return request;
     }
 

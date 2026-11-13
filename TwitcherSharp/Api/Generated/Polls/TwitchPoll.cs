@@ -13,6 +13,8 @@ public partial class TwitchPoll : RefCounted, ITwitcherSharp<TwitchPoll>
     public string BroadcasterLogin { get; set; } = null!;
     public string Title { get; set; } = null!;
     public TwitchChoices[] Choices { get => field ??= _data.GetArray<TwitchChoices>("choices")!; set; } = null!;
+    public bool BitsVotingEnabled { get; set; }
+    public int BitsPerVote { get; set; }
     public bool ChannelPointsVotingEnabled { get; set; }
     public int ChannelPointsPerVote { get; set; }
     public string Status { get; set; } = null!;
@@ -33,6 +35,8 @@ public partial class TwitchPoll : RefCounted, ITwitcherSharp<TwitchPoll>
             BroadcasterName = data.ReadAsString("broadcaster_name"),
             BroadcasterLogin = data.ReadAsString("broadcaster_login"),
             Title = data.ReadAsString("title"),
+            BitsVotingEnabled = data.ReadAsBool("bits_voting_enabled"),
+            BitsPerVote = data.ReadAsInt32("bits_per_vote"),
             ChannelPointsVotingEnabled = data.ReadAsBool("channel_points_voting_enabled"),
             ChannelPointsPerVote = data.ReadAsInt32("channel_points_per_vote"),
             Status = data.ReadAsString("status"),
@@ -54,6 +58,8 @@ public partial class TwitchPoll : RefCounted, ITwitcherSharp<TwitchPoll>
         if(BroadcasterLogin != null) request.SetValue("broadcaster_login", BroadcasterLogin);
         if(Title != null) request.SetValue("title", Title);
         if(Choices != null) request.SetArray("choices", Choices);
+        request.SetValue("bits_voting_enabled", BitsVotingEnabled);
+        request.SetValue("bits_per_vote", BitsPerVote);
         request.SetValue("channel_points_voting_enabled", ChannelPointsVotingEnabled);
         request.SetValue("channel_points_per_vote", ChannelPointsPerVote);
         if(Status != null) request.SetValue("status", Status);
@@ -80,6 +86,7 @@ public partial class TwitchPoll : RefCounted, ITwitcherSharp<TwitchPoll>
         public string Title { get; set; } = null!;
         public int Votes { get; set; }
         public int ChannelPointsVotes { get; set; }
+        public int BitsVotes { get; set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchChoices object.
@@ -93,6 +100,7 @@ public partial class TwitchPoll : RefCounted, ITwitcherSharp<TwitchPoll>
                 Title = data.ReadAsString("title"),
                 Votes = data.ReadAsInt32("votes"),
                 ChannelPointsVotes = data.ReadAsInt32("channel_points_votes"),
+                BitsVotes = data.ReadAsInt32("bits_votes"),
             };
             
             instance._data = Variant.CreateFrom(data);
@@ -106,6 +114,7 @@ public partial class TwitchPoll : RefCounted, ITwitcherSharp<TwitchPoll>
             if(Title != null) request.SetValue("title", Title);
             request.SetValue("votes", Votes);
             request.SetValue("channel_points_votes", ChannelPointsVotes);
+            request.SetValue("bits_votes", BitsVotes);
             return request;
         }
     

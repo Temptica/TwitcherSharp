@@ -13,7 +13,7 @@ public partial class TwitchGetChannelStreamScheduleOpt : RefCounted, ITwitcherSh
     private Variant _data;
     public string[]? Id { get; set; }
     public string? StartTime { get; set; }
-    public int? UtcOffset { get; set; }
+    public string? UtcOffset { get; set; }
     public int? First { get; set; }
     public string? After { get; set; }
 
@@ -27,7 +27,7 @@ public partial class TwitchGetChannelStreamScheduleOpt : RefCounted, ITwitcherSh
         {
             Id = data.ReadAsStringArray("id"),
             StartTime = data.ReadAsString("start_time"),
-            UtcOffset = data.ReadAsInt32("utc_offset"),
+            UtcOffset = data.ReadAsString("utc_offset"),
             First = data.ReadAsInt32("first"),
             After = data.ReadAsString("after"),
         };
@@ -41,7 +41,7 @@ public partial class TwitchGetChannelStreamScheduleOpt : RefCounted, ITwitcherSh
         var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_channel_stream_schedule.gd", "Opt");
         if(Id != null) request.SetValue("id", new Godot.Collections.Array<string>(Id));
         if(StartTime != null) request.SetValue("start_time", StartTime);
-        if(UtcOffset.HasValue) request.SetValue("utc_offset", UtcOffset.Value);
+        if(UtcOffset != null) request.SetValue("utc_offset", UtcOffset);
         if(First.HasValue) request.SetValue("first", First.Value);
         if(After != null) request.SetValue("after", After);
         return request;

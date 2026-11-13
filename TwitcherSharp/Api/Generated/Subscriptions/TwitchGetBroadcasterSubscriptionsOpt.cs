@@ -12,7 +12,7 @@ public partial class TwitchGetBroadcasterSubscriptionsOpt : RefCounted, ITwitche
 {
     private Variant _data;
     public string[]? UserId { get; set; }
-    public int? First { get; set; }
+    public string? First { get; set; }
     public string? After { get; set; }
     public string? Before { get; set; }
 
@@ -25,7 +25,7 @@ public partial class TwitchGetBroadcasterSubscriptionsOpt : RefCounted, ITwitche
         var instance = new TwitchGetBroadcasterSubscriptionsOpt
         {
             UserId = data.ReadAsStringArray("user_id"),
-            First = data.ReadAsInt32("first"),
+            First = data.ReadAsString("first"),
             After = data.ReadAsString("after"),
             Before = data.ReadAsString("before"),
         };
@@ -38,7 +38,7 @@ public partial class TwitchGetBroadcasterSubscriptionsOpt : RefCounted, ITwitche
     {
         var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_broadcaster_subscriptions.gd", "Opt");
         if(UserId != null) request.SetValue("user_id", new Godot.Collections.Array<string>(UserId));
-        if(First.HasValue) request.SetValue("first", First.Value);
+        if(First != null) request.SetValue("first", First);
         if(After != null) request.SetValue("after", After);
         if(Before != null) request.SetValue("before", Before);
         return request;

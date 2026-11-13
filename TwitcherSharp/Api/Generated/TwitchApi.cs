@@ -833,11 +833,15 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// </summary>
     /// <param name="opt"><see cref="TwitchGetExtensionConfigurationSegmentOpt"/></param>
     /// <param name="extensionId">The ID of the extension that contains the configuration segment you want to get.</param>
+    /// <param name="segment">The type of configuration segment to get. To get more than one segment, include this parameter for each segment, for example, `segment=broadcaster&segment=developer`. If you don't specify a segment, the list in the response is empty. Possible values:
+    /// - `broadcaster`
+    /// - `developer`
+    /// - `global`</param>
     /// <returns><see cref="TwitchGetExtensionConfigurationSegmentResponse"/></returns>
-    public async Task<TwitchGetExtensionConfigurationSegmentResponse> GetExtensionConfigurationSegment(string extensionId, TwitchGetExtensionConfigurationSegmentOpt? opt = null)
+    public async Task<TwitchGetExtensionConfigurationSegmentResponse> GetExtensionConfigurationSegment(string extensionId, string segment, TwitchGetExtensionConfigurationSegmentOpt? opt = null)
     {
         using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
-        return await _data!.CallAsync<TwitchGetExtensionConfigurationSegmentResponse>("get_extension_configuration_segment", optArg, extensionId); 
+        return await _data!.CallAsync<TwitchGetExtensionConfigurationSegmentResponse>("get_extension_configuration_segment", optArg, extensionId, segment); 
     }
 
     /// <summary>
@@ -854,11 +858,10 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <summary>
     /// Gets an extension's list of shared secrets.
     /// </summary>
-    /// <param name="extensionId">The ID of the extension whose shared secrets you want to get.</param>
     /// <returns><see cref="TwitchGetExtensionSecretsResponse"/></returns>
-    public async Task<TwitchGetExtensionSecretsResponse> GetExtensionSecrets(string extensionId)
+    public async Task<TwitchGetExtensionSecretsResponse> GetExtensionSecrets()
     {
-        return await _data!.CallAsync<TwitchGetExtensionSecretsResponse>("get_extension_secrets", extensionId); 
+        return await _data!.CallAsync<TwitchGetExtensionSecretsResponse>("get_extension_secrets"); 
     }
 
     /// <summary>
@@ -1062,15 +1065,16 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <summary>
     /// Allows a user to update the assigned slot for a particular user within the active Guest Star session.
     /// </summary>
+    /// <param name="opt"><see cref="TwitchUpdateGuestStarSlotOpt"/></param>
     /// <param name="broadcasterId">The ID of the broadcaster running the Guest Star session.</param>
     /// <param name="moderatorId">The ID of the broadcaster or a user that has permission to moderate the broadcaster's chat room. This ID must match the `user_id` in the user access token.</param>
     /// <param name="sessionId">The ID of the Guest Star session in which to update slot settings.</param>
     /// <param name="sourceSlotId">The slot assignment previously assigned to a user.</param>
-    /// <param name="destinationSlotId">The slot to move this user assignment to. If the destination slot is occupied, the user assigned will be swapped into *source_slot_id*.</param>
     /// <returns><see cref="ResponseData"/></returns>
-    public async Task<ResponseData> UpdateGuestStarSlot(string broadcasterId, string moderatorId, string sessionId, string sourceSlotId, string destinationSlotId)
+    public async Task<ResponseData> UpdateGuestStarSlot(string broadcasterId, string moderatorId, string sessionId, string sourceSlotId, TwitchUpdateGuestStarSlotOpt? opt = null)
     {
-        return await _data!.CallAsync<ResponseData>("update_guest_star_slot", broadcasterId, moderatorId, sessionId, sourceSlotId, destinationSlotId); 
+        using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
+        return await _data!.CallAsync<ResponseData>("update_guest_star_slot", optArg, broadcasterId, moderatorId, sessionId, sourceSlotId); 
     }
 
     /// <summary>
@@ -1504,12 +1508,12 @@ public partial class TwitchApi : RefCounted, ITwitcherSharpSingleton<TwitchApi>
     /// <summary>
     /// Raid another channel by sending the broadcaster's viewers to the targeted channel.
     /// </summary>
-    /// <param name="fromBroadcasterId">The ID of the broadcaster that's sending the raiding party. This ID must match the user ID in the user access token.</param>
-    /// <param name="toBroadcasterId">The ID of the broadcaster to raid.</param>
+    /// <param name="opt"><see cref="TwitchStartARaidOpt"/></param>
     /// <returns><see cref="TwitchStartARaidResponse"/></returns>
-    public async Task<TwitchStartARaidResponse> StartARaid(string fromBroadcasterId, string toBroadcasterId)
+    public async Task<TwitchStartARaidResponse> StartARaid(TwitchStartARaidOpt? opt = null)
     {
-        return await _data!.CallAsync<TwitchStartARaidResponse>("start_a_raid", fromBroadcasterId, toBroadcasterId); 
+        using var optArg = opt is null ? default : GodotObjectExtension.ToVariant(opt);
+        return await _data!.CallAsync<TwitchStartARaidResponse>("start_a_raid", optArg); 
     }
 
     /// <summary>

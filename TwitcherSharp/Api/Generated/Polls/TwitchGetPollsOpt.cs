@@ -12,7 +12,7 @@ public partial class TwitchGetPollsOpt : RefCounted, ITwitcherSharp<TwitchGetPol
 {
     private Variant _data;
     public string[]? Id { get; set; }
-    public int? First { get; set; }
+    public string? First { get; set; }
     public string? After { get; set; }
 
     /// <summary> 
@@ -24,7 +24,7 @@ public partial class TwitchGetPollsOpt : RefCounted, ITwitcherSharp<TwitchGetPol
         var instance = new TwitchGetPollsOpt
         {
             Id = data.ReadAsStringArray("id"),
-            First = data.ReadAsInt32("first"),
+            First = data.ReadAsString("first"),
             After = data.ReadAsString("after"),
         };
         
@@ -36,7 +36,7 @@ public partial class TwitchGetPollsOpt : RefCounted, ITwitcherSharp<TwitchGetPol
     {
         var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_polls.gd", "Opt");
         if(Id != null) request.SetValue("id", new Godot.Collections.Array<string>(Id));
-        if(First.HasValue) request.SetValue("first", First.Value);
+        if(First != null) request.SetValue("first", First);
         if(After != null) request.SetValue("after", After);
         return request;
     }

@@ -9,7 +9,7 @@ public partial class TwitchCreateChannelStreamScheduleSegmentBody : RefCounted, 
     private Variant _data;
     public string StartTime { get; set; } = null!;
     public string Timezone { get; set; } = null!;
-    public int Duration { get; set; }
+    public string Duration { get; set; } = null!;
     public bool? IsRecurring { get; set; }
     public string? CategoryId { get; set; }
     public string? Title { get; set; }
@@ -24,7 +24,7 @@ public partial class TwitchCreateChannelStreamScheduleSegmentBody : RefCounted, 
         {
             StartTime = data.ReadAsString("start_time"),
             Timezone = data.ReadAsString("timezone"),
-            Duration = data.ReadAsInt32("duration"),
+            Duration = data.ReadAsString("duration"),
             IsRecurring = data.ReadAsBool("is_recurring"),
             CategoryId = data.ReadAsString("category_id"),
             Title = data.ReadAsString("title"),
@@ -39,7 +39,7 @@ public partial class TwitchCreateChannelStreamScheduleSegmentBody : RefCounted, 
         var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_create_channel_stream_schedule_segment.gd", "Body");
         if(StartTime != null) request.SetValue("start_time", StartTime);
         if(Timezone != null) request.SetValue("timezone", Timezone);
-        request.SetValue("duration", Duration);
+        if(Duration != null) request.SetValue("duration", Duration);
         if(IsRecurring.HasValue) request.SetValue("is_recurring", IsRecurring.Value);
         if(CategoryId != null) request.SetValue("category_id", CategoryId);
         if(Title != null) request.SetValue("title", Title);

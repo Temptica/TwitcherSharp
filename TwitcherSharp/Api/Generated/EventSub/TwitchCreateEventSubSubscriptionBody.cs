@@ -11,7 +11,6 @@ public partial class TwitchCreateEventSubSubscriptionBody<T> : RefCounted, ITwit
     public string Version { get; set; } = null!;
     public ITwitcherSharpCondition<T> Condition { get => field ??= T.FromDictionary(_data.Read("condition", static v => v.AsGodotDictionary())!); set; } = null!;
     public TwitchBodyTransport Transport { get => field ??= _data.Get<TwitchBodyTransport>("transport")!; set; } = null!;
-    public bool? IsBatchingEnabled { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchCreateEventSubSubscriptionBody object.
@@ -23,7 +22,6 @@ public partial class TwitchCreateEventSubSubscriptionBody<T> : RefCounted, ITwit
         {
             Type = data.ReadAsString("type"),
             Version = data.ReadAsString("version"),
-            IsBatchingEnabled = data.ReadAsBool("is_batching_enabled"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -37,7 +35,6 @@ public partial class TwitchCreateEventSubSubscriptionBody<T> : RefCounted, ITwit
         if(Version != null) request.SetValue("version", Version);
         if(Condition != null) request.SetValue("condition", new Godot.Collections.Dictionary<string,Variant>(Condition.ToDictionary()));
         if(Transport != null) request.SetObject("transport", Transport);
-        if(IsBatchingEnabled.HasValue) request.SetValue("is_batching_enabled", IsBatchingEnabled.Value);
         return request;
     }
 

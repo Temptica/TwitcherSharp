@@ -13,7 +13,8 @@ public partial class TwitchGetStreamMarkersOpt : RefCounted, ITwitcherSharp<Twit
     private Variant _data;
     public string? UserId { get; set; }
     public string? VideoId { get; set; }
-    public int? First { get; set; }
+    public string? First { get; set; }
+    public string? Before { get; set; }
     public string? After { get; set; }
 
     /// <summary> 
@@ -26,7 +27,8 @@ public partial class TwitchGetStreamMarkersOpt : RefCounted, ITwitcherSharp<Twit
         {
             UserId = data.ReadAsString("user_id"),
             VideoId = data.ReadAsString("video_id"),
-            First = data.ReadAsInt32("first"),
+            First = data.ReadAsString("first"),
+            Before = data.ReadAsString("before"),
             After = data.ReadAsString("after"),
         };
         
@@ -39,7 +41,8 @@ public partial class TwitchGetStreamMarkersOpt : RefCounted, ITwitcherSharp<Twit
         var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_stream_markers.gd", "Opt");
         if(UserId != null) request.SetValue("user_id", UserId);
         if(VideoId != null) request.SetValue("video_id", VideoId);
-        if(First.HasValue) request.SetValue("first", First.Value);
+        if(First != null) request.SetValue("first", First);
+        if(Before != null) request.SetValue("before", Before);
         if(After != null) request.SetValue("after", After);
         return request;
     }

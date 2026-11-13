@@ -26,7 +26,9 @@ Directory.CreateDirectory(eventSubGeneratedPath);
 
 var helixReference = await new TwitchDocsSource(Path.Combine(snapshotPath, "Api"), offline)
     .LoadAsync("https://dev.twitch.tv/docs/api/reference.md");
-var helixDocument = HelixOpenApiBuilder.Build(HelixReferenceParser.Parse(helixReference));
+var helixEndpoints = HelixReferenceParser.Parse(helixReference);
+HelixCorrections.Apply(helixEndpoints);
+var helixDocument = HelixOpenApiBuilder.Build(helixEndpoints);
 
 var apiParser = new TwitchApiParser();
 apiParser.ParseApi(helixDocument);

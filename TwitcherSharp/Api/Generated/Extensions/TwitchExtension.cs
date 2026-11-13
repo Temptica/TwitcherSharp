@@ -113,7 +113,6 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
         public TwitchVideoOverlay VideoOverlay { get => field ??= _data.Get<TwitchVideoOverlay>("video_overlay")!; set; } = null!;
         public TwitchComponent Component { get => field ??= _data.Get<TwitchComponent>("component")!; set; } = null!;
         public TwitchConfig Config { get => field ??= _data.Get<TwitchConfig>("config")!; set; } = null!;
-        public TwitchLiveConfig LiveConfig { get => field ??= _data.Get<TwitchLiveConfig>("live_config")!; set; } = null!;
     
         /// <summary> 
         /// Transforms the godot data into a TwitchViews object.
@@ -135,7 +134,6 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
             if(VideoOverlay != null) request.SetObject("video_overlay", VideoOverlay);
             if(Component != null) request.SetObject("component", Component);
             if(Config != null) request.SetObject("config", Config);
-            if(LiveConfig != null) request.SetObject("live_config", LiveConfig);
             return request;
         }
     
@@ -279,16 +277,11 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
         {
             private Variant _data;
             public string ViewerUrl { get; set; } = null!;
-            public int AspectWidth { get; set; }
-            public int AspectHeight { get; set; }
             public int AspectRatioX { get; set; }
             public int AspectRatioY { get; set; }
             public bool Autoscale { get; set; }
             public int ScalePixels { get; set; }
             public int TargetHeight { get; set; }
-            public double Size { get; set; }
-            public bool Zoom { get; set; }
-            public int ZoomPixels { get; set; }
             public bool CanLinkExternalContent { get; set; }
         
             /// <summary> 
@@ -300,16 +293,11 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
                 var instance = new TwitchComponent
                 {
                     ViewerUrl = data.ReadAsString("viewer_url"),
-                    AspectWidth = data.ReadAsInt32("aspect_width"),
-                    AspectHeight = data.ReadAsInt32("aspect_height"),
                     AspectRatioX = data.ReadAsInt32("aspect_ratio_x"),
                     AspectRatioY = data.ReadAsInt32("aspect_ratio_y"),
                     Autoscale = data.ReadAsBool("autoscale"),
                     ScalePixels = data.ReadAsInt32("scale_pixels"),
                     TargetHeight = data.ReadAsInt32("target_height"),
-                    Size = data.ReadAsDouble("size"),
-                    Zoom = data.ReadAsBool("zoom"),
-                    ZoomPixels = data.ReadAsInt32("zoom_pixels"),
                     CanLinkExternalContent = data.ReadAsBool("can_link_external_content"),
                 };
                 
@@ -321,16 +309,11 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
             {
                 var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_extension.gd", "Component");
                 if(ViewerUrl != null) request.SetValue("viewer_url", ViewerUrl);
-                request.SetValue("aspect_width", AspectWidth);
-                request.SetValue("aspect_height", AspectHeight);
                 request.SetValue("aspect_ratio_x", AspectRatioX);
                 request.SetValue("aspect_ratio_y", AspectRatioY);
                 request.SetValue("autoscale", Autoscale);
                 request.SetValue("scale_pixels", ScalePixels);
                 request.SetValue("target_height", TargetHeight);
-                request.SetValue("size", Size);
-                request.SetValue("zoom", Zoom);
-                request.SetValue("zoom_pixels", ZoomPixels);
                 request.SetValue("can_link_external_content", CanLinkExternalContent);
                 return request;
             }
@@ -372,48 +355,6 @@ public partial class TwitchExtension : RefCounted, ITwitcherSharp<TwitchExtensio
             public GodotObject ToGodotObject()
             {
                 var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_extension.gd", "Config");
-                if(ViewerUrl != null) request.SetValue("viewer_url", ViewerUrl);
-                request.SetValue("can_link_external_content", CanLinkExternalContent);
-                return request;
-            }
-        
-            /// <summary> Releases the twitcher object this instance was mapped from. </summary>
-            protected override void Dispose(bool disposing)
-            {
-                if (disposing) _data.Dispose();
-                base.Dispose(disposing);
-            }
-        
-        }
-        
-        /// <summary> 
-        /// Describes the view that is shown to broadcasters in the Live module of the dashboard. 
-        /// </summary>
-        public partial class TwitchLiveConfig : RefCounted, ITwitcherSharp<TwitchLiveConfig>
-        {
-            private Variant _data;
-            public string ViewerUrl { get; set; } = null!;
-            public bool CanLinkExternalContent { get; set; }
-        
-            /// <summary> 
-            /// Transforms the godot data into a TwitchLiveConfig object.
-            /// </summary> 
-            public static TwitchLiveConfig? FromObject(GodotObject? data)
-            {
-                if(data == null) return null;
-                var instance = new TwitchLiveConfig
-                {
-                    ViewerUrl = data.ReadAsString("viewer_url"),
-                    CanLinkExternalContent = data.ReadAsBool("can_link_external_content"),
-                };
-                
-                instance._data = Variant.CreateFrom(data);
-                return instance;
-            }
-        
-            public GodotObject ToGodotObject()
-            {
-                var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_extension.gd", "LiveConfig");
                 if(ViewerUrl != null) request.SetValue("viewer_url", ViewerUrl);
                 request.SetValue("can_link_external_content", CanLinkExternalContent);
                 return request;

@@ -8,7 +8,6 @@ public partial class TwitchGetChannelStreamScheduleResponse : RefCounted, ITwitc
 {
     private Variant _data;
     public TwitchResponseData Data { get => field ??= _data.Get<TwitchResponseData>("data")!; set; } = null!;
-    public ResponsePagination? Pagination { get => field ??= _data.Get<ResponsePagination>("pagination"); set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetChannelStreamScheduleResponse object.
@@ -26,7 +25,6 @@ public partial class TwitchGetChannelStreamScheduleResponse : RefCounted, ITwitc
     {
         var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_channel_stream_schedule.gd", "Response");
         if(Data != null) request.SetObject("data", Data);
-        if(Pagination != null) request.SetObject("pagination", Pagination);
         return request;
     }
 
@@ -35,47 +33,6 @@ public partial class TwitchGetChannelStreamScheduleResponse : RefCounted, ITwitc
     {
         if (disposing) _data.Dispose();
         base.Dispose(disposing);
-    }
-    public async Task<TwitchGetChannelStreamScheduleResponse> NextPage() =>
-        await _data.CallAsync<TwitchGetChannelStreamScheduleResponse>("next_page");
-    
-    /// <summary> 
-    /// Contains the information used to page through the list of results. The object is empty if there are no more pages left to page through 
-    /// </summary>
-    public partial class ResponsePagination : RefCounted, ITwitcherSharp<ResponsePagination>
-    {
-        private Variant _data;
-        public string? Cursor { get; set; }
-    
-        /// <summary> 
-        /// Transforms the godot data into a ResponsePagination object.
-        /// </summary> 
-        public static ResponsePagination? FromObject(GodotObject? data)
-        {
-            if(data == null) return null;
-            var instance = new ResponsePagination
-            {
-                Cursor = data.ReadAsString("cursor"),
-            };
-            
-            instance._data = Variant.CreateFrom(data);
-            return instance;
-        }
-    
-        public GodotObject ToGodotObject()
-        {
-            var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_channel_stream_schedule.gd", "ResponsePagination");
-            if(Cursor != null) request.SetValue("cursor", Cursor);
-            return request;
-        }
-    
-        /// <summary> Releases the twitcher object this instance was mapped from. </summary>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing) _data.Dispose();
-            base.Dispose(disposing);
-        }
-    
     }
     
     /// <summary> 
@@ -89,6 +46,7 @@ public partial class TwitchGetChannelStreamScheduleResponse : RefCounted, ITwitc
         public string BroadcasterName { get; set; } = null!;
         public string BroadcasterLogin { get; set; } = null!;
         public TwitchResponseVacation Vacation { get => field ??= _data.Get<TwitchResponseVacation>("vacation")!; set; } = null!;
+        public ResponsePagination? Pagination { get => field ??= _data.Get<ResponsePagination>("pagination"); set; }
     
         /// <summary> 
         /// Transforms the godot data into a TwitchResponseData object.
@@ -115,6 +73,7 @@ public partial class TwitchGetChannelStreamScheduleResponse : RefCounted, ITwitc
             if(BroadcasterName != null) request.SetValue("broadcaster_name", BroadcasterName);
             if(BroadcasterLogin != null) request.SetValue("broadcaster_login", BroadcasterLogin);
             if(Vacation != null) request.SetObject("vacation", Vacation);
+            if(Pagination != null) request.SetObject("pagination", Pagination);
             return request;
         }
     
@@ -123,6 +82,47 @@ public partial class TwitchGetChannelStreamScheduleResponse : RefCounted, ITwitc
         {
             if (disposing) _data.Dispose();
             base.Dispose(disposing);
+        }
+        public async Task<TwitchResponseData> NextPage() =>
+            await _data.CallAsync<TwitchResponseData>("next_page");
+        
+        /// <summary> 
+        /// Contains the information used to page through the list of results. The object is empty if there are no more pages left to page through 
+        /// </summary>
+        public partial class ResponsePagination : RefCounted, ITwitcherSharp<ResponsePagination>
+        {
+            private Variant _data;
+            public string? Cursor { get; set; }
+        
+            /// <summary> 
+            /// Transforms the godot data into a ResponsePagination object.
+            /// </summary> 
+            public static ResponsePagination? FromObject(GodotObject? data)
+            {
+                if(data == null) return null;
+                var instance = new ResponsePagination
+                {
+                    Cursor = data.ReadAsString("cursor"),
+                };
+                
+                instance._data = Variant.CreateFrom(data);
+                return instance;
+            }
+        
+            public GodotObject ToGodotObject()
+            {
+                var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_channel_stream_schedule.gd", "ResponsePagination");
+                if(Cursor != null) request.SetValue("cursor", Cursor);
+                return request;
+            }
+        
+            /// <summary> Releases the twitcher object this instance was mapped from. </summary>
+            protected override void Dispose(bool disposing)
+            {
+                if (disposing) _data.Dispose();
+                base.Dispose(disposing);
+            }
+        
         }
         
         /// <summary> 

@@ -95,7 +95,7 @@ public partial class TwitchStreamMarkers : RefCounted, ITwitcherSharp<TwitchStre
             public string CreatedAt { get; set; } = null!;
             public string Description { get; set; } = null!;
             public int PositionSeconds { get; set; }
-            public string URL { get; set; } = null!;
+            public string Url { get; set; } = null!;
         
             /// <summary> 
             /// Transforms the godot data into a TwitchResponseMarkers object.
@@ -109,7 +109,7 @@ public partial class TwitchStreamMarkers : RefCounted, ITwitcherSharp<TwitchStre
                     CreatedAt = data.ReadAsString("created_at"),
                     Description = data.ReadAsString("description"),
                     PositionSeconds = data.ReadAsInt32("position_seconds"),
-                    URL = data.ReadAsString("URL"),
+                    Url = data.ReadAsString("url"),
                 };
                 
                 instance._data = Variant.CreateFrom(data);
@@ -123,7 +123,7 @@ public partial class TwitchStreamMarkers : RefCounted, ITwitcherSharp<TwitchStre
                 if(CreatedAt != null) request.SetValue("created_at", CreatedAt);
                 if(Description != null) request.SetValue("description", Description);
                 request.SetValue("position_seconds", PositionSeconds);
-                if(URL != null) request.SetValue("URL", URL);
+                if(Url != null) request.SetValue("url", Url);
                 return request;
             }
         

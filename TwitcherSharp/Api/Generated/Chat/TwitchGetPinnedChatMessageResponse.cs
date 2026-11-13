@@ -151,9 +151,19 @@ public partial class TwitchGetPinnedChatMessageResponse : RefCounted, ITwitcherS
                 private Variant _data;
                 public string Type { get; set; } = null!;
                 public string Text { get; set; } = null!;
-                public TwitchResponseCheermote? Cheermote { get => field ??= _data.Get<TwitchResponseCheermote>("cheermote"); set; }
-                public TwitchResponseEmote? Emote { get => field ??= _data.Get<TwitchResponseEmote>("emote"); set; }
-                public TwitchResponseMention? Mention { get => field ??= _data.Get<TwitchResponseMention>("mention"); set; }
+                public Variant? Cheermote { get; set; }
+                public string Prefix { get; set; } = null!;
+                public int Bits { get; set; }
+                public int Tier { get; set; }
+                public Variant? Emote { get; set; }
+                public string Id { get; set; } = null!;
+                public string EmoteSetId { get; set; } = null!;
+                public string OwnerId { get; set; } = null!;
+                public string[] Format { get; set; } = null!;
+                public Variant? Mention { get; set; }
+                public string UserId { get; set; } = null!;
+                public string UserLogin { get; set; } = null!;
+                public string UserName { get; set; } = null!;
             
                 /// <summary> 
                 /// Transforms the godot data into a TwitchResponseFragments object.
@@ -165,6 +175,19 @@ public partial class TwitchGetPinnedChatMessageResponse : RefCounted, ITwitcherS
                     {
                         Type = data.ReadAsString("type"),
                         Text = data.ReadAsString("text"),
+                        Cheermote = data.Read("cheermote", static v => v.As<Variant>()),
+                        Prefix = data.ReadAsString("prefix"),
+                        Bits = data.ReadAsInt32("bits"),
+                        Tier = data.ReadAsInt32("tier"),
+                        Emote = data.Read("emote", static v => v.As<Variant>()),
+                        Id = data.ReadAsString("id"),
+                        EmoteSetId = data.ReadAsString("emote_set_id"),
+                        OwnerId = data.ReadAsString("owner_id"),
+                        Format = data.ReadAsStringArray("format"),
+                        Mention = data.Read("mention", static v => v.As<Variant>()),
+                        UserId = data.ReadAsString("user_id"),
+                        UserLogin = data.ReadAsString("user_login"),
+                        UserName = data.ReadAsString("user_name"),
                     };
                     
                     instance._data = Variant.CreateFrom(data);
@@ -176,9 +199,19 @@ public partial class TwitchGetPinnedChatMessageResponse : RefCounted, ITwitcherS
                     var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_pinned_chat_message.gd", "ResponseFragments");
                     if(Type != null) request.SetValue("type", Type);
                     if(Text != null) request.SetValue("text", Text);
-                    if(Cheermote != null) request.SetObject("cheermote", Cheermote);
-                    if(Emote != null) request.SetObject("emote", Emote);
-                    if(Mention != null) request.SetObject("mention", Mention);
+                    if(Cheermote.HasValue) request.SetValue("cheermote", Cheermote.Value);
+                    if(Prefix != null) request.SetValue("prefix", Prefix);
+                    request.SetValue("bits", Bits);
+                    request.SetValue("tier", Tier);
+                    if(Emote.HasValue) request.SetValue("emote", Emote.Value);
+                    if(Id != null) request.SetValue("id", Id);
+                    if(EmoteSetId != null) request.SetValue("emote_set_id", EmoteSetId);
+                    if(OwnerId != null) request.SetValue("owner_id", OwnerId);
+                    if(Format != null) request.SetValue("format", new Godot.Collections.Array<string>(Format));
+                    if(Mention.HasValue) request.SetValue("mention", Mention.Value);
+                    if(UserId != null) request.SetValue("user_id", UserId);
+                    if(UserLogin != null) request.SetValue("user_login", UserLogin);
+                    if(UserName != null) request.SetValue("user_name", UserName);
                     return request;
                 }
             
@@ -187,144 +220,6 @@ public partial class TwitchGetPinnedChatMessageResponse : RefCounted, ITwitcherS
                 {
                     if (disposing) _data.Dispose();
                     base.Dispose(disposing);
-                }
-                
-                /// <summary> 
-                /// Cheermote metadata. Null if not a cheermote fragment. 
-                /// </summary>
-                public partial class TwitchResponseCheermote : RefCounted, ITwitcherSharp<TwitchResponseCheermote>
-                {
-                    private Variant _data;
-                    public string Prefix { get; set; } = null!;
-                    public int Bits { get; set; }
-                    public int Tier { get; set; }
-                
-                    /// <summary> 
-                    /// Transforms the godot data into a TwitchResponseCheermote object.
-                    /// </summary> 
-                    public static TwitchResponseCheermote? FromObject(GodotObject? data)
-                    {
-                        if(data == null) return null;
-                        var instance = new TwitchResponseCheermote
-                        {
-                            Prefix = data.ReadAsString("prefix"),
-                            Bits = data.ReadAsInt32("bits"),
-                            Tier = data.ReadAsInt32("tier"),
-                        };
-                        
-                        instance._data = Variant.CreateFrom(data);
-                        return instance;
-                    }
-                
-                    public GodotObject ToGodotObject()
-                    {
-                        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_pinned_chat_message.gd", "ResponseCheermote");
-                        if(Prefix != null) request.SetValue("prefix", Prefix);
-                        request.SetValue("bits", Bits);
-                        request.SetValue("tier", Tier);
-                        return request;
-                    }
-                
-                    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
-                    protected override void Dispose(bool disposing)
-                    {
-                        if (disposing) _data.Dispose();
-                        base.Dispose(disposing);
-                    }
-                
-                }
-                
-                /// <summary> 
-                /// Emote metadata. Null if not an emote fragment. 
-                /// </summary>
-                public partial class TwitchResponseEmote : RefCounted, ITwitcherSharp<TwitchResponseEmote>
-                {
-                    private Variant _data;
-                    public string Id { get; set; } = null!;
-                    public string EmoteSetId { get; set; } = null!;
-                    public string OwnerId { get; set; } = null!;
-                    public string[] Format { get; set; } = null!;
-                
-                    /// <summary> 
-                    /// Transforms the godot data into a TwitchResponseEmote object.
-                    /// </summary> 
-                    public static TwitchResponseEmote? FromObject(GodotObject? data)
-                    {
-                        if(data == null) return null;
-                        var instance = new TwitchResponseEmote
-                        {
-                            Id = data.ReadAsString("id"),
-                            EmoteSetId = data.ReadAsString("emote_set_id"),
-                            OwnerId = data.ReadAsString("owner_id"),
-                            Format = data.ReadAsStringArray("format"),
-                        };
-                        
-                        instance._data = Variant.CreateFrom(data);
-                        return instance;
-                    }
-                
-                    public GodotObject ToGodotObject()
-                    {
-                        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_pinned_chat_message.gd", "ResponseEmote");
-                        if(Id != null) request.SetValue("id", Id);
-                        if(EmoteSetId != null) request.SetValue("emote_set_id", EmoteSetId);
-                        if(OwnerId != null) request.SetValue("owner_id", OwnerId);
-                        if(Format != null) request.SetValue("format", new Godot.Collections.Array<string>(Format));
-                        return request;
-                    }
-                
-                    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
-                    protected override void Dispose(bool disposing)
-                    {
-                        if (disposing) _data.Dispose();
-                        base.Dispose(disposing);
-                    }
-                
-                }
-                
-                /// <summary> 
-                /// Mention metadata. Null if not a mention fragment. 
-                /// </summary>
-                public partial class TwitchResponseMention : RefCounted, ITwitcherSharp<TwitchResponseMention>
-                {
-                    private Variant _data;
-                    public string UserId { get; set; } = null!;
-                    public string UserLogin { get; set; } = null!;
-                    public string UserName { get; set; } = null!;
-                
-                    /// <summary> 
-                    /// Transforms the godot data into a TwitchResponseMention object.
-                    /// </summary> 
-                    public static TwitchResponseMention? FromObject(GodotObject? data)
-                    {
-                        if(data == null) return null;
-                        var instance = new TwitchResponseMention
-                        {
-                            UserId = data.ReadAsString("user_id"),
-                            UserLogin = data.ReadAsString("user_login"),
-                            UserName = data.ReadAsString("user_name"),
-                        };
-                        
-                        instance._data = Variant.CreateFrom(data);
-                        return instance;
-                    }
-                
-                    public GodotObject ToGodotObject()
-                    {
-                        var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_pinned_chat_message.gd", "ResponseMention");
-                        if(UserId != null) request.SetValue("user_id", UserId);
-                        if(UserLogin != null) request.SetValue("user_login", UserLogin);
-                        if(UserName != null) request.SetValue("user_name", UserName);
-                        return request;
-                    }
-                
-                    /// <summary> Releases the twitcher object this instance was mapped from. </summary>
-                    protected override void Dispose(bool disposing)
-                    {
-                        if (disposing) _data.Dispose();
-                        base.Dispose(disposing);
-                    }
-                
                 }
             
             }

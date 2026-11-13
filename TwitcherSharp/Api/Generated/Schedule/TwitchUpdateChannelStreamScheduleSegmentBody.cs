@@ -8,7 +8,7 @@ public partial class TwitchUpdateChannelStreamScheduleSegmentBody : RefCounted, 
 {
     private Variant _data;
     public string? StartTime { get; set; }
-    public int? Duration { get; set; }
+    public string? Duration { get; set; }
     public string? CategoryId { get; set; }
     public string? Title { get; set; }
     public bool? IsCanceled { get; set; }
@@ -23,7 +23,7 @@ public partial class TwitchUpdateChannelStreamScheduleSegmentBody : RefCounted, 
         var instance = new TwitchUpdateChannelStreamScheduleSegmentBody
         {
             StartTime = data.ReadAsString("start_time"),
-            Duration = data.ReadAsInt32("duration"),
+            Duration = data.ReadAsString("duration"),
             CategoryId = data.ReadAsString("category_id"),
             Title = data.ReadAsString("title"),
             IsCanceled = data.ReadAsBool("is_canceled"),
@@ -38,7 +38,7 @@ public partial class TwitchUpdateChannelStreamScheduleSegmentBody : RefCounted, 
     {
         var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_update_channel_stream_schedule_segment.gd", "Body");
         if(StartTime != null) request.SetValue("start_time", StartTime);
-        if(Duration.HasValue) request.SetValue("duration", Duration.Value);
+        if(Duration != null) request.SetValue("duration", Duration);
         if(CategoryId != null) request.SetValue("category_id", CategoryId);
         if(Title != null) request.SetValue("title", Title);
         if(IsCanceled.HasValue) request.SetValue("is_canceled", IsCanceled.Value);

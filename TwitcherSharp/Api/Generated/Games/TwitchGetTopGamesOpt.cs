@@ -13,6 +13,7 @@ public partial class TwitchGetTopGamesOpt : RefCounted, ITwitcherSharp<TwitchGet
     private Variant _data;
     public int? First { get; set; }
     public string? After { get; set; }
+    public string? Before { get; set; }
 
     /// <summary> 
     /// Transforms the godot data into a TwitchGetTopGamesOpt object.
@@ -24,6 +25,7 @@ public partial class TwitchGetTopGamesOpt : RefCounted, ITwitcherSharp<TwitchGet
         {
             First = data.ReadAsInt32("first"),
             After = data.ReadAsString("after"),
+            Before = data.ReadAsString("before"),
         };
         
         instance._data = Variant.CreateFrom(data);
@@ -35,6 +37,7 @@ public partial class TwitchGetTopGamesOpt : RefCounted, ITwitcherSharp<TwitchGet
         var request = InteropExtension.NewInner("res://addons/twitcher/generated/twitch_get_top_games.gd", "Opt");
         if(First.HasValue) request.SetValue("first", First.Value);
         if(After != null) request.SetValue("after", After);
+        if(Before != null) request.SetValue("before", Before);
         return request;
     }
 
